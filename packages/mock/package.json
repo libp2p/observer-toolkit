@@ -1,0 +1,19 @@
+{
+  "name": "mock",
+  "version": "0.0.1",
+  "description": "Node.js scripts generating mock libp2p introspection data in protobuf format",
+  "author": "AlanSl <alan.slater@nearform.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}

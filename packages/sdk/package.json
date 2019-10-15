@@ -1,0 +1,19 @@
+{
+  "name": "sdk",
+  "version": "0.0.1",
+  "description": "Core components, utilities and API for building libp2p introspection ui components",
+  "author": "AlanSl <alan.slater@nearform.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
