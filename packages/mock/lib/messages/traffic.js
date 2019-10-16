@@ -1,6 +1,6 @@
 'use strict'
 
-const { DataGauge, Traffic } = require('proto-def')
+const { DataGauge, Traffic } = require('../../protobuf/introspection_pb')
 
 const {
   randomNormalDistribution,

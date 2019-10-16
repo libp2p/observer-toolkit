@@ -1,6 +1,6 @@
 'use strict'
 
-const { Stream } = require('proto-def')
+const { Stream } = require('../../protobuf/introspection_pb')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
 const { encodeNumToBin, random, randomLatency, randomOpenClose } = require('../utils')

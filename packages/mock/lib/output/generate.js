@@ -5,15 +5,15 @@ const {
   randomOpenClose,
 } = require('./utils')
 
-const { createBufferSegment } = require('../output/buffers')
+const { createBufferSegment } = require('../utils/binary')
 const {
   createConnection,
   mockConnectionActivity,
   updateConnection,
   addStreamsToConnection,
-} = require('../messages/connections')
-const { createState } = require('../messages/states')
-const { statusList } = require('../enums/statusList')
+} = require('./messages/connections')
+const { createState } = require('./messages/states')
+const { statusList } = require('./enums/statusList')
 
 function generate(connectionsCount, durationSeconds) {
   let now = Date.now() - durationSeconds * 1000
@@ -30,7 +30,8 @@ function generate(connectionsCount, durationSeconds) {
     now += 1000
     connections.forEach(connection => updateConnection(connection, now))
 
-    if (randomOpenClose(connectionsCount)) {
+    // Chance of new connection, _after_ first iteration so initial connections === connectionsCount
+    if (bufferSegments.length && randomOpenClose(connectionsCount)) {
       // Open a new connection
       const connection = createConnection({
         status: statusList.getNum('OPENING'),
@@ -45,7 +46,7 @@ function generate(connectionsCount, durationSeconds) {
     bufferSegments.push(bufferSegment)
   }
 
-  return bufferSegments
+  return Buffer.concat(bufferSegments)
 }
 
 module.exports = generate

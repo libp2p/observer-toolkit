@@ -7,7 +7,7 @@ const {
   Connection,
   EndpointPair,
   StreamList,
-} = require('proto-def')
+} = require('../../protobuf/introspection_pb')
 
 const {
   HOST_PEER_ID,

@@ -5,7 +5,7 @@ const {
   Runtime,
   Version,
   Subsystems,
-} = require('proto-def')
+} = require('../../protobuf/introspection_pb')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
 const { SNAPSHOT_DURATION } = require('../utils')
