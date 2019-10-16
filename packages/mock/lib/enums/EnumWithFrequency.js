@@ -1,5 +1,7 @@
 'use strict'
 
+import { random } from '../utils'
+
 // Creates enums where some items may be more frequent than others,
 // based on having a higher probability of being randomly chosen
 class EnumWithFrequency {
@@ -25,7 +27,7 @@ class EnumWithFrequency {
   }
   getRandom(index = 0, filterTo) {
     // Picks a random entry where higher frequency => more likely to be picked
-    const rand = Math.random()
+    const rand = random()
     const items = filterTo
       ? this.items.filter(item => filterTo.includes(item[index]))
       : this.items

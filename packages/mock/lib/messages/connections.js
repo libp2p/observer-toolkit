@@ -15,6 +15,7 @@ const {
   DEFAULT_STREAMS,
   decodeBinToNum,
   encodeNumToBin,
+  random,
   randomNormalDistribution,
   randomLatency,
   randomOpenClose,
@@ -74,7 +75,7 @@ function createConnection({
 }
 
 function addStreamsToConnection(connection, { secondsOpen, now }) {
-  const newStreamsCount = Math.ceil(0.5 + Math.random() * streamsPerConnection)
+  const newStreamsCount = Math.ceil(0.5 + random() * streamsPerConnection)
 
   const streamList = new StreamList()
 
@@ -110,7 +111,7 @@ function updateConnection(connection, now) {
   switch (statusName) {
     case 'OPENING':
       newStatusName = 'ACTIVE'
-      secondsOpen = Math.random()
+      secondsOpen = random()
       mockConnectionTimeline({
         timeline,
         open: now - 1000 + secondsOpen * 1000,
@@ -125,13 +126,13 @@ function updateConnection(connection, now) {
       newStatusName = 'CLOSED'
       mockConnectionTimeline({
         timeline,
-        close: now - Math.random() * 1000,
+        close: now - random() * 1000,
       })
       break
     case 'ACTIVE':
       if (randomOpenClose()) {
         newStatusName = 'CLOSING'
-        secondsOpen = Math.random()
+        secondsOpen = random()
       }
       break
     default:
@@ -216,7 +217,7 @@ function getTransportFromConnection(connection) {
 }
 
 function generateHashId() {
-  const randomNumber = Math.pow(0.5 / Math.random(), 5 / Math.random())
+  const randomNumber = Math.pow(0.5 / random(), 5 / random())
   return createHash('sha256')
     .update(randomNumber.toString())
     .digest('hex')

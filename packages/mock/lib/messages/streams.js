@@ -3,7 +3,7 @@
 const { Stream } = require('proto-def')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
-const { encodeNumToBin, randomLatency, randomOpenClose } = require('../utils')
+const { encodeNumToBin, random, randomLatency, randomOpenClose } = require('../utils')
 const { protocolList } = require('../enums/protocolList')
 const { roleList } = require('../enums/roleList')
 const { statusList, randomChildStatus } = require('../enums/statusList')
@@ -53,14 +53,14 @@ function updateStream(
   switch (statusName) {
     case 'OPENING':
       newStatusName = 'ACTIVE'
-      secondsOpen = Math.random() * connectionSecondsOpen
+      secondsOpen = random() * connectionSecondsOpen
       mockStreamTimeline(stream.getTimeline(), {
         open: now - secondsOpen,
       })
       break
     case 'CLOSING':
       newStatusName = 'CLOSED'
-      secondsOpen = Math.random() * connectionSecondsOpen
+      secondsOpen = random() * connectionSecondsOpen
       mockStreamTimeline(stream.getTimeline(), {
         close: now - 1000 + secondsOpen * 1000,
       })

@@ -1,6 +1,7 @@
 'use strict'
 
 const {
+  random,
   randomOpenClose,
 } = require('./utils')
 
@@ -34,7 +35,7 @@ function generate(connectionsCount, durationSeconds) {
       const connection = createConnection({
         status: statusList.getNum('OPENING'),
       })
-      addStreamsToConnection(connection, { now, secondsOpen: Math.random() })
+      addStreamsToConnection(connection, { now, secondsOpen: random() })
 
       connections.push(connection)
     }
