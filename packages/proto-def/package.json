@@ -1,5 +1,5 @@
 {
-  "name": "proto",
+  "name": "proto-def",
   "version": "0.0.1",
   "description": "JavaScript encoder and decoder for the libp2p-introspection protobuf definition",
   "author": "AlanSl <alan.slater@nearform.com>",
