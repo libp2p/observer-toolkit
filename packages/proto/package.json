@@ -1,0 +1,16 @@
+{
+  "name": "proto",
+  "version": "0.0.1",
+  "description": "Protobuf definition, JavaScript protobuf encoder/decorder, and scripts generating mock libp2p introspection data",
+  "author": "AlanSl <alan.slater@nearform.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "google-protobuf": "^3.10.0",
+    "tap": "^14.7.1"
+  }
+}

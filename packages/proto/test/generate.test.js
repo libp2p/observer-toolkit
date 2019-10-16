@@ -51,8 +51,8 @@ test('Open connections increase traffic', (t) => {
     const endPacketsIn = getTraffic(connectionAtEnd, 'in', 'packets')
     const endPacketsOut = getTraffic(connectionAtEnd, 'out', 'packets')
 
-    t.ok(endBytesIn > startBytesIn)
-    t.ok(endBytesOut > startBytesOut)
+    t.ok(endBytesIn > startBytesIn, `${endBytesIn} > ${startBytesIn}`)
+    t.ok(endBytesOut > startBytesOut, `${endBytesOut} > ${startBytesOut}`)
     t.ok(endPacketsIn > startPacketsIn, `${endPacketsIn} > ${startPacketsIn}`)
     t.ok(endPacketsOut > startPacketsOut, `${endPacketsOut} > ${startPacketsOut}`)
   }
@@ -80,10 +80,10 @@ test('Closed connections have static traffic', (t) => {
     const endPacketsIn = getTraffic(connectionAtEnd, 'in', 'packets')
     const endPacketsOut = getTraffic(connectionAtEnd, 'out', 'packets')
 
-    t.equals(endBytesIn, startBytesIn)
-    t.equals(endBytesOut, startBytesOut)
-    t.equals(endPacketsIn, startPacketsIn)
-    t.equals(endPacketsOut, startPacketsOut)
+    t.equals(endBytesIn, startBytesIn, `${endBytesIn} > ${startBytesIn}`)
+    t.equals(endBytesOut, startBytesOut, `${endBytesOut} > ${startBytesOut}`)
+    t.equals(endPacketsIn, startPacketsIn, `${endPacketsIn} > ${startPacketsIn}`)
+    t.equals(endPacketsOut, startPacketsOut, `${endPacketsOut} > ${startPacketsOut}`)
   }
   t.end()
 })
