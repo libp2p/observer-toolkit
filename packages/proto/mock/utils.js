@@ -19,13 +19,16 @@ const HOST_PEER_ID = 'peer-id-of-host'
 
 function getRandomiser() {
   // Use real random numbers in real mocks, consistent ones in tests
-  const isTest = process.env.NODE_ENV === 'test' || process.env.JEST_WORKER_ID !== undefined
+
+  const isTest = !!process.env.TAP
+
+  /* istanbul ignore if */
   if (!isTest) return Math.random
 
   let index = 0
   const pseudoRandom = () => {
     // Avoid flakey test failures with varied but consistent values
-    index = index <= 20 ? index + 1 : 1
+    index = index < 19 ? index + 1 : 1
     const decimal = index / 2 * 0.1
     // 0.05, 0.9, 0.15, 0.8, 0.25, 0.7...
     return index % 2 ? decimal : 1 - decimal
@@ -34,12 +37,8 @@ function getRandomiser() {
 }
 const random = getRandomiser()
 
-function randomFractionOfSecond() {
-  return random() * 1000
-}
-
 // Adapted from https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
-function randomNormalDistribution({ min, max, skew = 1 }) {
+function randomNormalDistribution({ min, max, skew }) {
   let u = random()
   let v = random()
   let num = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v)
@@ -112,5 +111,4 @@ module.exports = {
   randomLatency,
   randomBandwidth,
   randomOpenClose,
-  randomFractionOfSecond,
 }
