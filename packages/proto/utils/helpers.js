@@ -68,7 +68,7 @@ function getTraffic(connection, direction, type) {
     [byType]()
 }
 
-export {
+module.exports = {
   getAge,
   getAllConnections,
   getConnections,

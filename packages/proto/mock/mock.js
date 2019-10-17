@@ -31,7 +31,7 @@ const {
   DEFAULT_FILE,
   randomOpenClose,
 } = require('./utils')
-const generate = require('./output/generate')
+const generate = require('./generate')
 
 const {
   connections: connectionsCount = DEFAULT_CONNECTIONS,
@@ -44,4 +44,5 @@ const bufferSegments = generate(connectionsCount, durationSeconds)
 
 // TODO: write to file works, but process.stdout > file writes broken binary
 const writer = filePath ? createWriteStream(filePath) : process.stdout
-writer.write(Buffer.concat(bufferSegments))
+
+writer.write(bufferSegments)

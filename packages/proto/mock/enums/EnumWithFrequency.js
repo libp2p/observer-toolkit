@@ -1,6 +1,6 @@
 'use strict'
 
-import { random } from '../utils'
+const { random } = require('../utils')
 
 // Creates enums where some items may be more frequent than others,
 // based on having a higher probability of being randomly chosen

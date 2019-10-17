@@ -11,7 +11,7 @@ const role = {
   1: 'RESPONDER',
 }
 
-export {
+module.exports = {
   status,
   role,
 }

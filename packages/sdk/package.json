@@ -6,6 +6,9 @@
   "homepage": "",
   "license": "MIT",
   "main": "index.js",
+  "dependencies": {
+    "proto": "^0.0.1"
+  },
   "directories": {
     "lib": "lib",
     "test": "__tests__"

@@ -1,4 +1,4 @@
-import { State } from '../protobuf/introspection_pb'
+const { State } = require('../protobuf/introspection_pb')
 
 function parseBuffer(buf) {
   // Expects a binary file with this repeating structure:
@@ -50,7 +50,7 @@ function createBufferSegment(state, version) {
   return Buffer.concat([lengthBuffer, contentBuffer])
 }
 
-export {
+module.exports = {
   createBufferSegment,
   parseBuffer,
 }
