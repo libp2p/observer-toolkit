@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { childrenToString } from './utils'
+import { childrenToString } from '../utils/helpers'
 
 const StyledSpan = styled.span`
   font-family: plex-mono;
