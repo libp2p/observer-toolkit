@@ -1,6 +1,6 @@
 import { area, scaleLinear, scaleTime, stack } from 'd3'
 
-import { getDefaultTime, getTime, getTraffic, getConnections } from '../utils'
+import { getDefaultTime, getTime, getTraffic, getConnections } from 'proto'
 
 function getMaxAreaPeak(stackedData) {
   return stackedData.reduce(

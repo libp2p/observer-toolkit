@@ -3,8 +3,8 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
+import { getTime } from 'proto'
 import { DataContext, SetterContext } from '../DataProvider'
-import { getTime } from '../utils'
 import { stackData, fitDataToPaths } from './utils'
 import TimelinePaths from './TimelinePaths'
 

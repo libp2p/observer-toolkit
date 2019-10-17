@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useRef, createContext } from 'react'
 import T from 'prop-types'
 
-import { getDefaultTime } from './utils'
+import { getDefaultTime } from 'proto'
 
 const SetterContext = createContext()
 

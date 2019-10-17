@@ -1,7 +1,7 @@
-export * as DataTable from './DataTable'
-export * as Timeline from './Timeline'
+export * from './DataTable'
+export * from './Timeline'
 
-export DataProvider from './DataProvider'
-export ThemeSetter from './ThemeSetter'
-export PeerId from './PeerId'
-export Icon from './Icon'
+export { default as DataProvider } from './DataProvider'
+export { default as ThemeSetter } from './ThemeSetter'
+export { default as PeerId } from './PeerId'
+export { default as Icon } from './Icon'

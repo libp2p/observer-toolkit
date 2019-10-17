@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { childrenToString } from '../utils/helpers'
+import { childrenToString } from '../../utils/helpers'
 
 function FormatedNumber({ value, units, initialWeight = 0, children }) {
   const Unit = styled.span`

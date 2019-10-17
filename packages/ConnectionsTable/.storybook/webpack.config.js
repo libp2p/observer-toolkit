@@ -9,6 +9,15 @@ module.exports = async ({ config }) => {
     loader: 'file-loader',
   })
 
+  config.module.rules.push({
+    test: /\.js$/,
+    loader: 'babel-loader',
+    exclude: /node_modules/,
+    options: {
+      rootMode: 'upward',
+    }
+  })
+
   config.devtool = 'source-map'
 
   return config

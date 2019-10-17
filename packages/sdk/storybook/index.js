@@ -1,1 +1,1 @@
-export StorybookWrapper from './StorybookWrapper'
+export { default as StorybookWrapper } from './StorybookWrapper'

@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 import { DataProvider } from '../components/DataProvider'
 import ThemeSetter from '../components/ThemeSetter'
-import { parseBuffer } from '../components/utils'
 import Timeline from '../components/Timeline/Timeline'
 
 import {
