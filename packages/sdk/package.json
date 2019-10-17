@@ -7,7 +7,9 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "proto": "^0.0.1"
+    "proto": "^0.0.1",
+    "react": "^16.10.2",
+    "styled-components": "^4.4.0"
   },
   "directories": {
     "lib": "lib",
@@ -18,5 +20,12 @@
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2"
   }
 }

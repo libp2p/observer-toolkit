@@ -14,6 +14,22 @@
     "lib"
   ],
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "storybook": "start-storybook -p 9009 -s public"
+  },
+  "dependencies": {
+    "proto": "^0.0.1",
+    "react": "^16.10.2",
+    "sdk": "^0.0.1",
+    "styled-components": "^4.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@storybook/react": "^5.2.4",
+    "arraybuffer-loader": "^1.0.8",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "storybook": "^5.1.11"
   }
 }

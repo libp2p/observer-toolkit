@@ -1,12 +1,23 @@
 import React, { useContext, useMemo } from 'react'
 
-import DataTable from './DataTable'
-import PeerId from '../PeerId'
-import { DataContext, TimeContext } from '../DataProvider'
-import { useCurrentTime, getTraffic, getConnections, getAge } from '../utils'
-import { numericSorter, stringSorter, statusSorter } from './sorters'
-import ConnectionsTableRow from './ConnectionsTableRow'
-import { TimeNumber, DataNumber } from './numberFields'
+import {
+  DataTable,
+  PeerId,
+  DataContext,
+  TimeContext,
+  TimeNumber,
+  DataNumber,
+  useCurrentTime,
+  numericSorter,
+  stringSorter,
+  statusSorter,
+}  from 'sdk'
+
+import {
+  getAge,
+  getConnections,
+  getTraffic
+} from 'proto'
 
 function copyToClipboard(text) {
   // TODO: expand this and include a toast notice on success
