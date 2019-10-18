@@ -1,10 +1,11 @@
 import { useMemo } from 'react'
+import { getLatestTimepoint, getTime } from 'proto'
 
 function useCurrentTime(dataset, time) {
   const currentTimepoint = useMemo(
     () =>
       dataset.find(timepoint => getTime(timepoint) >= time) ||
-      getDefaultTime(dataset),
+      getLatestTimepoint(dataset).getInstantTs(),
     [dataset, time]
   )
 

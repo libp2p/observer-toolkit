@@ -1,8 +1,6 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
-import { PeerContext, SetterContext } from '../DataProvider'
-
-import DataTableRow from './DataTableRow'
+import { DataTableRow, PeerContext, SetterContext } from 'sdk'
 
 function ConnectionsTableRow({ row, columns }) {
   const globalPeerId = useContext(PeerContext)

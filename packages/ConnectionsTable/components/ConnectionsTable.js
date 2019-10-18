@@ -1,6 +1,13 @@
 import React, { useContext, useMemo } from 'react'
 
 import {
+  getAge,
+  getConnections,
+  getTraffic,
+  statusNames,
+  transportNames,
+} from 'proto'
+import {
   DataTable,
   PeerId,
   DataContext,
@@ -11,22 +18,14 @@ import {
   numericSorter,
   stringSorter,
   statusSorter,
-}  from 'sdk'
+} from 'sdk'
 
-import {
-  getAge,
-  getConnections,
-  getTraffic
-} from 'proto'
+import ConnectionsTableRow from './ConnectionsTableRow'
 
 function copyToClipboard(text) {
   // TODO: expand this and include a toast notice on success
   navigator.clipboard.writeText(text)
 }
-
-// TODO: share these with mock
-const statuses = ['ACTIVE', 'CLOSED', 'OPENING', 'CLOSING', 'ERROR']
-const transports = ['TCP', 'UDP', 'QUIC', 'RDP']
 
 function ConnectionsTable() {
   const dataset = useContext(DataContext)
@@ -68,12 +67,13 @@ function ConnectionsTable() {
     () =>
       getConnections(currentTime).map(connection => {
         const peerId = connection.getPeerId()
-        const status = statuses[connection.getStatus()]
+        const status = statusNames[connection.getStatus()]
 
         const openTs = connection.getTimeline().getOpenTs()
         const closeTs = connection.getTimeline().getCloseTs()
 
         const age = getAge(time, openTs, closeTs)
+
         const transportIdBin = connection.getTransportId()
         const transportIdInt = Buffer.from(transportIdBin).readUIntLE(
           0,
@@ -120,7 +120,7 @@ function ConnectionsTable() {
             content: connection.getStreams().getStreamsList().length,
           },
           {
-            content: transports[transportIdInt],
+            content: transportNames[transportIdInt],
           },
           {
             content: status,

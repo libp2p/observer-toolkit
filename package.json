@@ -8,6 +8,10 @@
   },
   "author": "NearForm",
   "license": "MIT",
+  "dependencies": {
+    "react": "^16.10.2",
+    "styled-components": "^4.4.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",

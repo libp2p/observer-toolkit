@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { childrenToString } from '../../utils/helpers'
 
 function FormatedNumber({ value, units, initialWeight = 0, children }) {
+  if (isNaN(value)) throw new Error(`Non-numeric value passed to FormatedNumber (${value}, typeof "${typeof value}")`)
+
   const Unit = styled.span`
     // Use cell right padding for units, aligning with icons
     width: ${({ theme }) => theme.spacing(4)};
@@ -13,6 +15,7 @@ function FormatedNumber({ value, units, initialWeight = 0, children }) {
     display: inline-block;
     text-align: left;
   `
+
   //TODO: ditch "title" attr and use child node if present to render proper tooltip
   const title = childrenToString(children)
 
@@ -27,7 +30,6 @@ function FormatedNumber({ value, units, initialWeight = 0, children }) {
   const unitEntries = Object.entries(units).sort(
     (a, b) => (a[1] > b[1] && -1) || a[1] < b[1]
   )
-
   const unitIndex = unitEntries.findIndex(([_, divider]) => value >= divider)
   const [unit, divider] = unitEntries[unitIndex]
 

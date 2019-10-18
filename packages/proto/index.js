@@ -8,7 +8,7 @@ const helpers = require('./utils/helpers')
 module.exports = {
   protobuf,
   samples,
-  binary,
-  enums,
-  helpers,
+  ...enums,
+  ...binary,
+  ...helpers,
 }

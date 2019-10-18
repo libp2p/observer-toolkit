@@ -15,5 +15,9 @@
     "react-scripts": "^3.2.0",
     "sdk": "^0.0.1",
     "styled-components": "^4.4.0"
+  },
+  "devDependencies": {
+    "@storybook/react": "^5.2.4",
+    "storybook": "^5.1.11"
   }
 }

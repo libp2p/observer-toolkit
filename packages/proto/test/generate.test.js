@@ -2,7 +2,7 @@ const { test } = require('tap')
 
 const generate = require('../mock/generate')
 const { parseBuffer } = require('../utils/binary')
-const { status } = require('../utils/enums')
+const { statusNames } = require('../utils/enums')
 const {
   getAllConnections,
   getConnections,
@@ -30,10 +30,9 @@ test('Expected connections exist', (t) => {
 })
 
 test('Open connections increase traffic', (t) => {
-  const activeStatus = getEnumByName('ACTIVE', status)
+  const activeStatus = getEnumByName('ACTIVE', statusNames)
   const openConnections = getAllConnections(timepointsExceptLatest, { filter: connection => connection.getStatus() === activeStatus })
 
-  console.log('openConnections.length', openConnections.length)
   t.ok(openConnections.length >= initialConnectionsCount)
 
   for (const connectionAtStart of openConnections) {
@@ -60,10 +59,8 @@ test('Open connections increase traffic', (t) => {
 })
 
 test('Closed connections have static traffic', (t) => {
-  const closedStatus = getEnumByName('CLOSED', status)
+  const closedStatus = getEnumByName('CLOSED', statusNames)
   const closedConnections = getAllConnections(timepointsExceptLatest, { filter: connection => connection.getStatus() === closedStatus })
-
-  console.log('closedConnections.length', closedConnections.length)
 
   for (const connectionAtStart of closedConnections) {
     const connectionId = connectionAtStart.getId().toString()

@@ -8,9 +8,8 @@ import Timeline from '../components/Timeline/Timeline'
 
 import {
   samples,
-  binary,
+  parseBuffer,
 } from 'proto'
-const { parseBuffer } = binary
 
 const mockBuffer = Buffer.from(samples[0])
 const mockData = parseBuffer(mockBuffer)
@@ -46,7 +45,7 @@ const Controls = styled.div`
   margin-left: -${({ theme }) => theme.spacing()};
   padding-left: ${({ theme }) => theme.spacing()};
 `
-function StorybookWrapper(children) {
+function StorybookWrapper({ children }) {
   return (
     <ThemeSetter>
       <DataProvider initialData={mockData}>

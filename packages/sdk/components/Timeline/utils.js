@@ -1,6 +1,7 @@
 import { area, scaleLinear, scaleTime, stack } from 'd3'
 
-import { getDefaultTime, getTime, getTraffic, getConnections } from 'proto'
+import { getLatestTimepoint, getTime, getTraffic, getConnections } from 'proto'
+import { validateNumbers } from '../../utils/helpers'
 
 function getMaxAreaPeak(stackedData) {
   return stackedData.reduce(
@@ -79,6 +80,7 @@ function getTrafficForAllPeers(
     },
     { time: getTime(timepoint) }
   )
+  validateNumbers(trafficByPeer)
   return trafficByPeer
 }
 
@@ -125,7 +127,14 @@ function stackData(dataset) {
   const yScaleOut = scaleLinear()
 
   const minTime = getTime(dataset[0])
-  const maxTime = getDefaultTime(dataset)
+  const maxTime = getLatestTimepoint(dataset).getInstantTs()
+
+  validateNumbers({
+    maxIn,
+    maxOut,
+    minTime,
+    maxTime,
+  })
 
   xScale.domain([minTime, maxTime])
   yScaleIn.domain([0, maxIn])

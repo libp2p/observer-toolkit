@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useRef, createContext } from 'react'
 import T from 'prop-types'
 
-import { getDefaultTime } from 'proto'
+import { getLatestTimepoint } from 'proto'
 
 const SetterContext = createContext()
 
@@ -38,7 +38,7 @@ function replaceDataSet(newData) {
 
 function DataProvider({
   initialData = [],
-  initialTime = getDefaultTime(initialData),
+  initialTime = getLatestTimepoint(initialData).getInstantTs(),
   children,
 }) {
   const [dataset, dispatchDataset] = useReducer(updateData, initialData)
