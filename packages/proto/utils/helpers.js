@@ -1,3 +1,5 @@
+'use strict'
+
 // Convenience functions for extracting data from decoded protobuf
 
 function getAge(time, openTs, closeTs) {
@@ -10,19 +12,20 @@ function getAge(time, openTs, closeTs) {
 function getAllConnections(timepoints, { filter, latest = false } = {}) {
   const test = testConnection => !filter || filter(testConnection)
 
-  const allConnections = timepoints.reduce(
-    (previousConns, timepoint) => {
-      const newConns = getConnections(timepoint).filter(
-        testConn =>
-          test(testConn) && !previousConns.some(
-            existingConn => testConn.getId().toString() === existingConn.getId().toString()
-          )
+  const allConnections = timepoints.reduce((previousConns, timepoint) => {
+    const newConns = getConnections(timepoint).filter(
+      testConn =>
+        test(testConn) &&
+        !previousConns.some(
+          existingConn =>
+            testConn.getId().toString() === existingConn.getId().toString()
         )
-      if (!newConns.length) return previousConns
-      return latest ? [...newConns, ...previousConns] : [...previousConns, ...newConns]
-    },
-    []
-  )
+    )
+    if (!newConns.length) return previousConns
+    return latest
+      ? [...newConns, ...previousConns]
+      : [...previousConns, ...newConns]
+  }, [])
 
   return allConnections
 }
@@ -34,7 +37,8 @@ function getConnections(timepoint) {
 
 function getEnumByName(name, obj) {
   const entry = Object.entries(obj).find(([_, value]) => value === name)
-  if (!entry) throw new Error(`"${name}" not one of "${Object.values(obj).join('", "')}"`)
+  if (!entry)
+    throw new Error(`"${name}" not one of "${Object.values(obj).join('", "')}"`)
   return parseInt(entry[0])
 }
 

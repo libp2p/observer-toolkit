@@ -1,3 +1,5 @@
+'use strict'
+
 const { test } = require('tap')
 
 const generate = require('../mock/generate')
@@ -22,16 +24,18 @@ const timepointsExceptLatest = timepoints.slice(0, -1)
 const initialConnectionsList = getConnections(timepoints[0])
 const lastConnectionsList = getConnections(getLatestTimepoint(timepoints))
 
-test('Expected connections exist', (t) => {
+test('Expected connections exist', t => {
   t.equals(timepoints.length, durationSeconds)
   t.equals(initialConnectionsList.length, initialConnectionsCount)
   t.ok(lastConnectionsList.length > initialConnectionsCount)
   t.end()
 })
 
-test('Open connections increase traffic', (t) => {
+test('Open connections increase traffic', t => {
   const activeStatus = getEnumByName('ACTIVE', statusNames)
-  const openConnections = getAllConnections(timepointsExceptLatest, { filter: connection => connection.getStatus() === activeStatus })
+  const openConnections = getAllConnections(timepointsExceptLatest, {
+    filter: connection => connection.getStatus() === activeStatus,
+  })
 
   t.ok(openConnections.length >= initialConnectionsCount)
 
@@ -43,7 +47,9 @@ test('Open connections increase traffic', (t) => {
     const startPacketsIn = getTraffic(connectionAtStart, 'in', 'packets')
     const startPacketsOut = getTraffic(connectionAtStart, 'out', 'packets')
 
-    const connectionAtEnd = lastConnectionsList.find(connection => connection.getId().toString() === connectionId)
+    const connectionAtEnd = lastConnectionsList.find(
+      connection => connection.getId().toString() === connectionId
+    )
 
     const endBytesIn = getTraffic(connectionAtEnd, 'in', 'bytes')
     const endBytesOut = getTraffic(connectionAtEnd, 'out', 'bytes')
@@ -53,14 +59,19 @@ test('Open connections increase traffic', (t) => {
     t.ok(endBytesIn > startBytesIn, `${endBytesIn} > ${startBytesIn}`)
     t.ok(endBytesOut > startBytesOut, `${endBytesOut} > ${startBytesOut}`)
     t.ok(endPacketsIn > startPacketsIn, `${endPacketsIn} > ${startPacketsIn}`)
-    t.ok(endPacketsOut > startPacketsOut, `${endPacketsOut} > ${startPacketsOut}`)
+    t.ok(
+      endPacketsOut > startPacketsOut,
+      `${endPacketsOut} > ${startPacketsOut}`
+    )
   }
   t.end()
 })
 
-test('Closed connections have static traffic', (t) => {
+test('Closed connections have static traffic', t => {
   const closedStatus = getEnumByName('CLOSED', statusNames)
-  const closedConnections = getAllConnections(timepointsExceptLatest, { filter: connection => connection.getStatus() === closedStatus })
+  const closedConnections = getAllConnections(timepointsExceptLatest, {
+    filter: connection => connection.getStatus() === closedStatus,
+  })
 
   for (const connectionAtStart of closedConnections) {
     const connectionId = connectionAtStart.getId().toString()
@@ -70,7 +81,9 @@ test('Closed connections have static traffic', (t) => {
     const startPacketsIn = getTraffic(connectionAtStart, 'in', 'packets')
     const startPacketsOut = getTraffic(connectionAtStart, 'out', 'packets')
 
-    const connectionAtEnd = lastConnectionsList.find(connection => connection.getId().toString() === connectionId)
+    const connectionAtEnd = lastConnectionsList.find(
+      connection => connection.getId().toString() === connectionId
+    )
 
     const endBytesIn = getTraffic(connectionAtEnd, 'in', 'bytes')
     const endBytesOut = getTraffic(connectionAtEnd, 'out', 'bytes')
@@ -79,8 +92,16 @@ test('Closed connections have static traffic', (t) => {
 
     t.equals(endBytesIn, startBytesIn, `${endBytesIn} > ${startBytesIn}`)
     t.equals(endBytesOut, startBytesOut, `${endBytesOut} > ${startBytesOut}`)
-    t.equals(endPacketsIn, startPacketsIn, `${endPacketsIn} > ${startPacketsIn}`)
-    t.equals(endPacketsOut, startPacketsOut, `${endPacketsOut} > ${startPacketsOut}`)
+    t.equals(
+      endPacketsIn,
+      startPacketsIn,
+      `${endPacketsIn} > ${startPacketsIn}`
+    )
+    t.equals(
+      endPacketsOut,
+      startPacketsOut,
+      `${endPacketsOut} > ${startPacketsOut}`
+    )
   }
   t.end()
 })

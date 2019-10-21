@@ -1,9 +1,6 @@
 'use strict'
 
-const {
-  random,
-  randomOpenClose,
-} = require('./utils')
+const { random, randomOpenClose } = require('./utils')
 
 const { createBufferSegment } = require('../utils/binary')
 const {

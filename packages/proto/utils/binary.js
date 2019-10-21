@@ -1,3 +1,5 @@
+'use strict'
+
 const { State } = require('../protobuf/introspection_pb')
 
 function parseBuffer(buf) {

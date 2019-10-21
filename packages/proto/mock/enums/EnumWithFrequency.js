@@ -14,7 +14,8 @@ class EnumWithFrequency {
     }, {})
   }
   getItem(num) {
-    if (!this.byNum.hasOwnProperty(num)) throw this.targetNotValid(num, 0)
+    if (!Object.prototype.hasOwnProperty.call(this.byNum, num))
+      throw this.targetNotValid(num, 0)
     return this.byNum[num]
   }
   getNum(target) {

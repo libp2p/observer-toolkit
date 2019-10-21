@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-module.exports = catalogue;
+module.exports = catalogue
 
 function catalogue() {
-    // TODO
+  // TODO
 }

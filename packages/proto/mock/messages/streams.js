@@ -3,11 +3,19 @@
 const { Stream } = require('../../protobuf/introspection_pb')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
-const { encodeNumToBin, random, randomLatency, randomOpenClose } = require('../utils')
+const {
+  encodeNumToBin,
+  random,
+  randomLatency,
+  randomOpenClose,
+} = require('../utils')
 const { protocolList } = require('../enums/protocolList')
 const { roleList } = require('../enums/roleList')
 const { statusList, randomChildStatus } = require('../enums/statusList')
-const { createTraffic, mockTrafficRandomUpdate } = require('../messages/traffic')
+const {
+  createTraffic,
+  mockTrafficRandomUpdate,
+} = require('../messages/traffic')
 
 // Ensure each created stream gets a unique ID
 let lastId = 0

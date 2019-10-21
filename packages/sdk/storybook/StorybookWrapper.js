@@ -6,10 +6,7 @@ import { DataProvider } from '../components/DataProvider'
 import ThemeSetter from '../components/ThemeSetter'
 import Timeline from '../components/Timeline/Timeline'
 
-import {
-  samples,
-  parseBuffer,
-} from 'proto'
+import { samples, parseBuffer } from 'proto'
 
 const mockBuffer = Buffer.from(samples[0])
 const mockData = parseBuffer(mockBuffer)
@@ -50,9 +47,7 @@ function StorybookWrapper({ children }) {
     <ThemeSetter>
       <DataProvider initialData={mockData}>
         <Page>
-          <Content>
-            {children}
-          </Content>
+          <Content>{children}</Content>
           <Controls>
             <Timeline />
           </Controls>

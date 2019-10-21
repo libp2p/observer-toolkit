@@ -1,7 +1,7 @@
 'use strict'
 
 const EnumWithFrequency = require('./EnumWithFrequency')
-const { randomNormalDistribution } = require('../utils')
+const { random, randomNormalDistribution } = require('../utils')
 
 const statusList = new EnumWithFrequency([
   [0, 'ACTIVE', 80],

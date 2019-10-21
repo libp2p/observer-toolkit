@@ -21,7 +21,11 @@ const {
   randomOpenClose,
 } = require('../utils')
 const { createTraffic, sumTraffic } = require('../messages/traffic')
-const { createStream, mockStreamActivity, updateStream } = require('../messages/streams')
+const {
+  createStream,
+  mockStreamActivity,
+  updateStream,
+} = require('../messages/streams')
 const { encryptionList } = require('../enums/encryptionList')
 const { multiplexerList } = require('../enums/multiplexerList')
 const { roleList } = require('../enums/roleList')

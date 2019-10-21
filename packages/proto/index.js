@@ -1,3 +1,5 @@
+'use strict'
+
 const protobuf = require('./protobuf/introspection_pb')
 const samples = require('./samples')
 

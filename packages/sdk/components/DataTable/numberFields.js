@@ -5,7 +5,10 @@ import styled from 'styled-components'
 import { childrenToString } from '../../utils/helpers'
 
 function FormatedNumber({ value, units, initialWeight = 0, children }) {
-  if (isNaN(value)) throw new Error(`Non-numeric value passed to FormatedNumber (${value}, typeof "${typeof value}")`)
+  if (isNaN(value))
+    throw new Error(
+      `Non-numeric value passed to FormatedNumber (${value}, typeof "${typeof value}")`
+    )
 
   const Unit = styled.span`
     // Use cell right padding for units, aligning with icons

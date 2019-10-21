@@ -29,7 +29,6 @@ const {
   DEFAULT_CONNECTIONS,
   DEFAULT_DURATION,
   DEFAULT_FILE,
-  randomOpenClose,
 } = require('./utils')
 const generate = require('./generate')
 
