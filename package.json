@@ -8,6 +8,7 @@
     "lint-fix": "eslint . --ext .js --fix",
     "prettier": "prettier --check './**/*.js'",
     "prettier-fix": "prettier --write './**/*.js'",
+    "storybook:connections-table": "lerna exec --scope connections-table -- npm run storybook",
     "test": "test"
   },
   "author": "NearForm",
