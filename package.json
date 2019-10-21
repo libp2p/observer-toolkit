@@ -1,0 +1,55 @@
+{
+  "name": "libp2p-introspection-ui",
+  "version": "0.0.1",
+  "description": "User interface for visualising libp2p introspection data",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . --ext .js",
+    "lint-fix": "eslint . --ext .js --fix",
+    "prettier": "prettier --check './**/*.js'",
+    "prettier-fix": "prettier --write './**/*.js'",
+    "storybook:connections-table": "lerna exec --scope connections-table -- npm run storybook",
+    "test": "test"
+  },
+  "author": "NearForm",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.10.2",
+    "styled-components": "^4.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@storybook/react": "^5.2.4",
+    "arraybuffer-loader": "^1.0.8",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.1.2",
+    "husky": "^3.0.9",
+    "lerna": "^3.17.0",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2",
+    "storybook": "^5.1.11"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run lint"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
