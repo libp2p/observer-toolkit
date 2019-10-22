@@ -3,17 +3,13 @@ import T from 'prop-types'
 
 import { TableRow, TableCell } from './styledTable'
 
-function DataTableRow({ row, columns, ...props }) {
+function DataTableRow({ rowContentProps, columnDefs, ...rowProps }) {
   return (
-    <TableRow {...props}>
-      {row.map((cell, cellIndex) => {
-        const column = columns[cellIndex]
+    <TableRow {...rowProps}>
+      {columnDefs.map(({ renderContent, name, cellProps = {} }, cellIndex) => {
         return (
-          <TableCell
-            key={column.name}
-            cellProps={Object.assign({}, column.cellProps, cell.cellProps)}
-          >
-            {cell.content}
+          <TableCell key={name} {...cellProps}>
+            {renderContent(rowContentProps[cellIndex])}
           </TableCell>
         )
       })}
@@ -22,8 +18,8 @@ function DataTableRow({ row, columns, ...props }) {
 }
 
 DataTableRow.propTypes = {
-  row: T.array.isRequired,
-  columns: T.array.isRequired,
+  rowContentProps: T.array.isRequired,
+  columnDefs: T.array.isRequired,
 }
 
 export default DataTableRow

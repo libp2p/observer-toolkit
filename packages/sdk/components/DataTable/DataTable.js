@@ -1,68 +1,46 @@
-import React, { useMemo, useState } from 'react'
+import React from 'react'
 import T from 'prop-types'
 
 import DataTableRow from './DataTableRow'
 import DataTableHead from './DataTableHead'
 import { Table } from './styledTable'
 
-function prepareRows(rows, columns, sortBy, filters, sortDirection) {
-  const filteredRows = filters
-    ? rows.filter(
-        row => !filters.some(({ filter, colIndex }) => !filter(row, colIndex))
-      )
-    : // If no filters, clone array so we don't mutate original
-      [...rows]
-
-  if (typeof sortBy === 'number') {
-    const column = columns[sortBy]
-    const sorter = column.sort(sortDirection, sortBy, column.sortKey)
-    filteredRows.sort(sorter)
-  }
-
-  return filteredRows
-}
-
 function DataTable({
-  rows,
-  columns,
+  tableContentProps,
+  columnDefs,
   TableRow = DataTableRow,
   TableHead = DataTableHead,
-  defaultSortBy = null,
-  defaultFilters = [],
-  defaultSortDirection = 'asc',
+  sortColumn,
+  setSortColumn,
+  sortDirection,
+  setSortDirection,
 }) {
-  const [sortBy, setSortBy] = useState(defaultSortBy)
-  const [sortDirection, setSortDirection] = useState(defaultSortDirection)
-  const [filters, setFilters] = useState(defaultFilters)
-
-  const preparedRows = useMemo(
-    () => prepareRows(rows, columns, sortBy, filters, sortDirection),
-    [rows, columns, sortBy, filters, sortDirection]
-  )
-
   return (
     <Table>
       <thead>
         <tr>
-          {columns.map((column, cellIndex) => (
+          {columnDefs.map((columnDef, cellIndex) => (
             <TableHead
-              key={column.name}
-              column={column}
+              key={columnDef.name}
+              columnDef={columnDef}
               cellIndex={cellIndex}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
+              sortColumn={sortColumn}
+              setSortColumn={setSortColumn}
               sortDirection={sortDirection}
               setSortDirection={setSortDirection}
-              defaultSortDirection={defaultSortDirection}
-              filters={filters}
-              setFilters={setFilters}
+              // filters={filters}
+              // setFilters={setFilters}
             />
           ))}
         </tr>
       </thead>
       <tbody>
-        {preparedRows.map((row, rowIndex) => (
-          <TableRow key={`row_${rowIndex}`} row={row} columns={columns} />
+        {tableContentProps.map((rowContentProps, rowIndex) => (
+          <TableRow
+            key={`row_${rowIndex}`}
+            rowContentProps={rowContentProps}
+            columnDefs={columnDefs}
+          ></TableRow>
         ))}
       </tbody>
     </Table>
@@ -70,13 +48,14 @@ function DataTable({
 }
 
 DataTable.propTypes = {
-  rows: T.array.isRequired,
-  columns: T.array.isRequired,
+  tableContentProps: T.array.isRequired,
+  columnDefs: T.array.isRequired,
   TableRow: T.any,
   TableHead: T.any,
-  defaultSortBy: T.number,
-  defaultFilters: T.array,
-  defaultSortDirection: T.string,
+  sortColumn: T.string,
+  setSortColumn: T.func,
+  sortDirection: T.string,
+  setSortDirection: T.func,
 }
 
 export default DataTable
