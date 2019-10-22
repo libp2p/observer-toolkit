@@ -34,7 +34,7 @@ function DataTableHead({
 
   const sortIconAction = () => {
     if (sortIconType === 'sort') {
-      setSortDirection(columnDef.name)
+      setSortColumn(columnDef.name)
       const defaultSortDirection = columnDef.sort.defaultDirection
       if (sortDirection !== defaultSortDirection)
         setSortDirection(defaultSortDirection)

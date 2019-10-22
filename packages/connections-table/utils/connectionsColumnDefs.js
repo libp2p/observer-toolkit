@@ -3,7 +3,13 @@ import T from 'prop-types'
 
 import { getAge, getTraffic, statusNames, transportNames } from 'proto'
 
-import { PeerId, TimeNumber, DataNumber } from 'sdk'
+import {
+  PeerId,
+  TimeNumber,
+  DataNumber,
+  getStringSorter,
+  getNumericSorter,
+} from 'sdk'
 
 import * as statusSorter from '../utils/statusSorter'
 
@@ -51,14 +57,22 @@ function copyToClipboard(text) {
 
 // Column definitions:
 
+const stringSorter = {
+  getSorter: getStringSorter,
+  defaultDirection: 'asc',
+}
+
+const numericSorter = {
+  getSorter: getNumericSorter,
+  defaultDirection: 'desc',
+}
+
 const peerIdCol = {
   name: 'peerId',
   header: 'Peer ID',
   getProps: connection => ({ value: connection.getPeerId() }),
   renderContent: PeerIdContent,
-  sort: {
-    preset: 'string',
-  },
+  sort: stringSorter,
 }
 
 const dataInCol = {
@@ -69,9 +83,7 @@ const dataInCol = {
     label: 'inbound',
   }),
   renderContent: BytesContent,
-  sort: {
-    preset: 'number',
-  },
+  sort: numericSorter,
 }
 
 const dataOutCol = {
@@ -82,9 +94,7 @@ const dataOutCol = {
     label: 'outbound',
   }),
   renderContent: BytesContent,
-  sort: {
-    preset: 'number',
-  },
+  sort: numericSorter,
 }
 
 const ageCol = {
@@ -98,9 +108,7 @@ const ageCol = {
     return { value: age }
   },
   renderContent: AgeContent,
-  sort: {
-    preset: 'number',
-  },
+  sort: numericSorter,
 }
 
 const streamsCol = {
@@ -108,9 +116,7 @@ const streamsCol = {
   getProps: connection => ({
     value: connection.getStreams().getStreamsList().length,
   }),
-  sort: {
-    preset: 'number',
-  },
+  sort: numericSorter,
 }
 
 const transportCol = {
@@ -123,9 +129,7 @@ const transportCol = {
     )
     return { value: transportNames[transportIdInt] }
   },
-  sort: {
-    preset: 'string',
-  },
+  sort: stringSorter,
 }
 
 const statusCol = {

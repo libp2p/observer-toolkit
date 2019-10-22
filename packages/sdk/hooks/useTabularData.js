@@ -47,7 +47,7 @@ function useTabularData({ columns, data, defaultSort, defaultFilter }) {
 
   const columnDefs = applyColumnDefaults(columns)
   const sortDef =
-    defaultSort && columnDefs.find(col => col.name === defaultSort).sort
+    sortColumn && columnDefs.find(col => col.name === sortColumn).sort
 
   const { sorter, sortDirection, setSortDirection } = useSorter(
     sortDef
@@ -58,15 +58,16 @@ function useTabularData({ columns, data, defaultSort, defaultFilter }) {
       : { disabled: true }
   )
 
-  const processedProps = useMemo(() => {
+  const tableContentProps = useMemo(() => {
     const tableContentProps = getTableContentProps(data, columnDefs, timepoint)
     // TODO: filter here
-    return [...tableContentProps].sort(sorter)
+    tableContentProps.sort(sorter)
+    return tableContentProps
   }, [data, columnDefs, timepoint, sorter])
 
   return {
     columnDefs,
-    tableContentProps: processedProps,
+    tableContentProps,
     sortColumn,
     setSortColumn,
     sortDirection,
@@ -85,7 +86,6 @@ useTabularData.propTypes = {
         sorter: T.func,
         defaultDirection: T.string,
         directionOptions: T.instanceOf(Map),
-        preset: T.string,
       }),
       filter: T.obj,
     })

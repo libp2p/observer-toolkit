@@ -40,7 +40,6 @@ function makeSorter(sortDirection, getSorter, mapSorter) {
 const defaultOptions = [['asc', 'ascending'], ['desc', 'descending']]
 
 function useSorter({
-  preset,
   getSorter,
   mapSorter,
   defaultDirection,
@@ -50,18 +49,6 @@ function useSorter({
   const [sortDirection, setSortDirection] = useState(defaultDirection || null)
 
   if (disabled) return { sorter: () => 0, sortDirection, setSortDirection }
-
-  // Presets for sort options that often go together
-  switch (preset) {
-    case 'string':
-      defaultDirection = 'asc'
-      getSorter = getStringSorter
-      break
-    case 'number':
-      defaultDirection = 'desc'
-      getSorter = getNumericSorter
-      break
-  }
 
   validateDirection(sortDirection, directionOptions)
   const sorter = makeSorter(sortDirection, getSorter, mapSorter)
@@ -75,7 +62,6 @@ function useSorter({
 
 useSorter.propTypes = {
   data: T.array.isRequired,
-  preset: T.string,
   getSorter: T.func,
   mapSorter: T.func,
   defaultDirection: T.string,
