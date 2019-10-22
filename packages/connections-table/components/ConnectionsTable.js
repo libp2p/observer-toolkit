@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 
 import { getConnections } from 'proto'
 import { DataTable, TimeContext, useTabularData } from 'sdk'

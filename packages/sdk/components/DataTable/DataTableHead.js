@@ -87,7 +87,7 @@ DataTableHead.propTypes = {
   columnDef: T.object.isRequired,
   cellIndex: T.number.isRequired,
   sortColumn: T.string,
-  setSortBy: T.func,
+  setSortColumn: T.func,
   sortDirection: T.string,
   setSortDirection: T.func,
   filters: T.array,
