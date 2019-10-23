@@ -2,6 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 
 import { TableHead } from './styledTable'
+import FilterButton from './FilterButton'
 import Icon from '../Icon'
 
 const NON_BREAKING_SPACE = '\u00A0'
@@ -19,16 +20,11 @@ function DataTableHead({
   setSortColumn,
   sortDirection,
   setSortDirection,
-  filters,
-  setFilters,
   ...props
 }) {
   const isSortable = !!columnDef.sort
   const isSorted = isSortable && sortColumn === columnDef.name
-
-  const isFilterable = filters && !!columnDef.filter
-  const isFiltered =
-    isFilterable && filters.includes(({ colIndex }) => colIndex === cellIndex)
+  const isFilterable = !!columnDef.filter
 
   const sortIconType = getSortType(isSortable, isSorted, sortDirection)
 
@@ -42,18 +38,13 @@ function DataTableHead({
     }
     setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
   }
-  const filterIconAction = cellIndex => {
-    // TODO: implement an example filter
-    setFilters(columnDef.filter())
-  }
 
   return (
     <TableHead
       key={columnDef.name}
       sortable={isSortable}
       sortDirection={isSorted ? sortDirection : null}
-      filterable={!!columnDef.filter}
-      isFiltered={isFiltered}
+      filterable={isFilterable}
       {...props}
     >
       {columnDef.header}
@@ -71,11 +62,9 @@ function DataTableHead({
       {isFilterable && (
         <>
           {NON_BREAKING_SPACE}
-          <Icon
-            type="filter"
-            active={isFiltered}
-            onClick={() => filterIconAction(cellIndex)}
-            offset
+          <FilterButton
+            FilterUi={columnDef.filter.filterUi}
+            updateValues={columnDef.filter.updateValues}
           />
         </>
       )}
@@ -91,7 +80,6 @@ DataTableHead.propTypes = {
   sortDirection: T.string,
   setSortDirection: T.func,
   filters: T.array,
-  setFilters: T.func,
 }
 
 export default DataTableHead

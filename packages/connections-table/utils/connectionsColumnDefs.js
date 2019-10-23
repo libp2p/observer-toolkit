@@ -12,6 +12,7 @@ import {
 } from 'sdk'
 
 import * as statusSorter from '../utils/statusSorter'
+import * as statusFilter from '../utils/statusFilter'
 
 // Content renderers:
 // TODO: move to components dir
@@ -136,11 +137,7 @@ const statusCol = {
   name: 'status',
   getProps: connection => ({ value: statusNames[connection.getStatus()] }),
   sort: statusSorter,
-  filter: {
-    applyFilter: (excludeArray, connection) =>
-      !excludeArray.has(statusNames[connection.getStatus()]),
-    defaultFilterSelection: [],
-  },
+  filter: statusFilter,
 }
 
 // Define column order
