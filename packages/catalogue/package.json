@@ -5,14 +5,7 @@
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
   "license": "MIT",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
+  "main": "src/index.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
