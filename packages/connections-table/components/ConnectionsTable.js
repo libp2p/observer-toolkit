@@ -4,7 +4,7 @@ import { getConnections } from 'proto'
 import { DataTable, TimeContext, useTabularData } from 'sdk'
 
 import ConnectionsTableRow from './ConnectionsTableRow'
-import connectionsColumnDefs from '../utils/connectionsColumnDefs'
+import connectionsColumnDefs from '../definitions/connectionsColumns'
 
 function ConnectionsTable() {
   const timepoint = useContext(TimeContext)
