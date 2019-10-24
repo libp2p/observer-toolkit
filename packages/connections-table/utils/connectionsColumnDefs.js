@@ -136,11 +136,6 @@ const statusCol = {
   name: 'status',
   getProps: connection => ({ value: statusNames[connection.getStatus()] }),
   sort: statusSorter,
-  filter: {
-    applyFilter: (excludeArray, connection) =>
-      !excludeArray.has(statusNames[connection.getStatus()]),
-    defaultFilterSelection: [],
-  },
 }
 
 // Define column order

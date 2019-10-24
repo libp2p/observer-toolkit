@@ -62,7 +62,6 @@ An array of objects defining the "columns" of the data, following this schema (d
  - **`getProps`** (`function` (`datum`::_`object`_), default returns `{ value: datum[name] }`): This processes the raw datum relating to this cell and returns a props object that can be passed to the appropriate component render function. The returned object always has a `value` key, and may have any other custom props required.
  - **`render`** (`function` (`props`::_`object`_): User-facing React component that renders the cell content from the props returned by `getProps`.
  - **`sort`** (`object`): Properties for [`useSorter`](link) if this column is sortable
- - **`filter`** (`object`): Properties for [`useFilter`](link) if this column is filterable
 
 #### `data`
 > _`array` required_
@@ -73,10 +72,3 @@ An array of objects, where each object is a raw datum containing data representi
 > _`string`_
 
 If this data contains columns that are sortable, and should be sorted by default, this object contains the `name` of the column that should be used to sort the data when no sort selection has been made.
-
-#### `defaultFilter`
-> _`object`_
-
-TODO...
-
-
