@@ -1,17 +1,16 @@
 import React from 'react'
-import { }
+import T from 'prop-types'
+import { ThemeSetter, DataProvider } from 'sdk'
 
-function ContextWrappers() {
+function ContextWrappers({ children }) {
   return (
     <ThemeSetter>
-      <DataProvider initialData={mockData}>
-        <Page>
-          <Content>{children}</Content>
-          <Controls>
-            <Timeline />
-          </Controls>
-        </Page>
-      </DataProvider>
+      <DataProvider>{children}</DataProvider>
     </ThemeSetter>
   )
 }
+ContextWrappers.propTypes = {
+  children: T.node,
+}
+
+export default ContextWrappers
