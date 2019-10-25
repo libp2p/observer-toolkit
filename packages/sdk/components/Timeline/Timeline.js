@@ -3,7 +3,6 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import { getTime } from 'proto'
 import { DataContext, SetterContext } from '../DataProvider'
 import { stackData, fitDataToPaths } from './utils'
 import TimelinePaths from './TimelinePaths'
@@ -11,7 +10,7 @@ import TimelinePaths from './TimelinePaths'
 // TODO: make width responsive, filling space
 function Timeline({ width = 700, height = 128 }) {
   const dataset = useContext(DataContext)
-  const { setTime } = useContext(SetterContext)
+  const { setTimepoint } = useContext(SetterContext)
   const sliderRef = useRef(null)
 
   const svgHeight = height / 2 - 28
@@ -40,12 +39,10 @@ function Timeline({ width = 700, height = 128 }) {
 
   const offset = 20
 
-  // TODO: Use a better base range slider! UX is horrible
-  // and despite memo and context separation, it re-renders on every context change
   const prerenderedSlider = useMemo(() => {
     const onChangeHandler = e => {
       const newTimeIndex = e.currentTarget.value
-      setTime(getTime(dataset[newTimeIndex]))
+      setTimepoint(dataset[newTimeIndex])
     }
 
     const StyledSlider = styled.input`
@@ -65,7 +62,7 @@ function Timeline({ width = 700, height = 128 }) {
         ref={sliderRef}
       />
     )
-  }, [width, dataset, setTime])
+  }, [width, dataset, setTimepoint])
 
   const Container = styled.div`
     margin: ${({ theme }) => theme.spacing(2)} -${offset / 2}px;

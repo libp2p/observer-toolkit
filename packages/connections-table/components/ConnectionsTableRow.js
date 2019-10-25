@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { DataTableRow, PeerContext, SetterContext } from 'sdk'
 
-function ConnectionsTableRow({ row, columns }) {
+function ConnectionsTableRow({ rowContentProps, columnDefs }) {
   const globalPeerId = useContext(PeerContext)
   const { setPeerId } = useContext(SetterContext)
 
-  const peerId = row[0].peerId
+  const peerId = rowContentProps[0].value
 
   function mouseEnterHandler() {
     if (peerId !== globalPeerId) setPeerId(peerId)
@@ -17,8 +17,8 @@ function ConnectionsTableRow({ row, columns }) {
 
   return (
     <DataTableRow
-      row={row}
-      columns={columns}
+      rowContentProps={rowContentProps}
+      columnDefs={columnDefs}
       onMouseEnter={mouseEnterHandler}
       onMouseLeave={mouseLeaveHandler}
       highlighted={peerId === globalPeerId}
@@ -27,8 +27,8 @@ function ConnectionsTableRow({ row, columns }) {
 }
 
 ConnectionsTableRow.propTypes = {
-  row: T.array.isRequired,
-  columns: T.array.isRequired,
+  rowContentProps: T.array.isRequired,
+  columnDefs: T.array.isRequired,
 }
 
 export default ConnectionsTableRow

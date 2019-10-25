@@ -38,11 +38,11 @@ function replaceDataSet(newData) {
 
 function DataProvider({
   initialData = [],
-  initialTime = getLatestTimepoint(initialData).getInstantTs(),
+  initialTime = getLatestTimepoint(initialData),
   children,
 }) {
   const [dataset, dispatchDataset] = useReducer(updateData, initialData)
-  const [time, setTime] = useState(initialTime)
+  const [timepoint, setTimepoint] = useState(initialTime)
 
   // TODO: It's theoretically possible to have multiple connections to the same peer
   // - investigate using a connection id vs highlighting all connections to a peer
@@ -54,7 +54,7 @@ function DataProvider({
   // causes context `value` to see a new object each run, causing re-renders every time
   const dataSetters = useRef({
     dispatchDataset,
-    setTime,
+    setTimepoint,
     setPeerId,
   })
 
@@ -62,7 +62,7 @@ function DataProvider({
   // then rerendering themselves because their useContext hook consumes that value
   return (
     <DataContext.Provider value={dataset}>
-      <TimeContext.Provider value={time}>
+      <TimeContext.Provider value={timepoint}>
         <PeerContext.Provider value={peerId}>
           <SetterContext.Provider value={dataSetters.current}>
             {children}

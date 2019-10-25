@@ -13,68 +13,45 @@ function getSortType(isSortable, isSorted, sortDirection) {
 }
 
 function DataTableHead({
-  column,
+  columnDef,
   cellIndex,
-  sortBy,
-  setSortBy,
+  sortColumn,
+  setSortColumn,
   sortDirection,
   setSortDirection,
-  defaultSortDirection,
-  filters,
-  setFilters,
   ...props
 }) {
-  const isSortable = !!column.sort
-  const isSorted = isSortable && sortBy === cellIndex
-
-  const isFilterable = !!column.filter
-  const isFiltered =
-    isFilterable && filters.includes(({ colIndex }) => colIndex === cellIndex)
+  const isSortable = !!columnDef.sort
+  const isSorted = isSortable && sortColumn === columnDef.name
 
   const sortIconType = getSortType(isSortable, isSorted, sortDirection)
 
-  const sortIconAction = cellIndex => {
+  const sortIconAction = () => {
     if (sortIconType === 'sort') {
-      setSortBy(cellIndex)
+      setSortColumn(columnDef.name)
+      const defaultSortDirection = columnDef.sort.defaultDirection
       if (sortDirection !== defaultSortDirection)
         setSortDirection(defaultSortDirection)
       return
     }
     setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
   }
-  const filterIconAction = cellIndex => {
-    // TODO: implement an example filter
-    setFilters(column.filter())
-  }
 
   return (
     <TableHead
-      key={column.name}
+      key={columnDef.name}
       sortable={isSortable}
       sortDirection={isSorted ? sortDirection : null}
-      filterable={!!column.filter}
-      filter={filters.find(({ colIndex }) => colIndex === cellIndex)}
       {...props}
     >
-      {column.content || column.name}
+      {columnDef.header}
       {isSortable && (
         <>
           {NON_BREAKING_SPACE}
           <Icon
             type={sortIconType}
             active={sortIconType !== 'sort'}
-            onClick={() => sortIconAction(cellIndex)}
-            offset
-          />
-        </>
-      )}
-      {isFilterable && (
-        <>
-          {NON_BREAKING_SPACE}
-          <Icon
-            type="filter"
-            active={isFiltered}
-            onClick={() => filterIconAction(cellIndex)}
+            onClick={() => sortIconAction()}
             offset
           />
         </>
@@ -84,15 +61,12 @@ function DataTableHead({
 }
 
 DataTableHead.propTypes = {
-  column: T.object.isRequired,
+  columnDef: T.object.isRequired,
   cellIndex: T.number.isRequired,
-  sortBy: T.number,
-  setSortBy: T.func.isRequired,
+  sortColumn: T.string,
+  setSortColumn: T.func,
   sortDirection: T.string,
-  setSortDirection: T.func.isRequired,
-  defaultSortDirection: T.string.isRequired,
-  filters: T.array,
-  setFilters: T.func.isRequired,
+  setSortDirection: T.func,
 }
 
 export default DataTableHead

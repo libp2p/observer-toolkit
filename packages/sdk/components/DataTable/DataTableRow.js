@@ -1,29 +1,33 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import T from 'prop-types'
 
 import { TableRow, TableCell } from './styledTable'
 
-function DataTableRow({ row, columns, ...props }) {
-  return (
-    <TableRow {...props}>
-      {row.map((cell, cellIndex) => {
-        const column = columns[cellIndex]
-        return (
-          <TableCell
-            key={column.name}
-            cellProps={Object.assign({}, column.cellProps, cell.cellProps)}
-          >
-            {cell.content}
-          </TableCell>
-        )
-      })}
-    </TableRow>
+function DataTableRow({ rowContentProps, columnDefs, ...rowProps }) {
+  // Don't re-render all cells (often expensive) when only row props change
+  const prerenderedCells = useMemo(
+    () => (
+      <>
+        {columnDefs.map(
+          ({ renderContent, name, cellProps = {} }, cellIndex) => {
+            return (
+              <TableCell key={name} {...cellProps}>
+                {renderContent(rowContentProps[cellIndex])}
+              </TableCell>
+            )
+          }
+        )}
+      </>
+    ),
+    [rowContentProps, columnDefs]
   )
+
+  return <TableRow {...rowProps}>{prerenderedCells}</TableRow>
 }
 
 DataTableRow.propTypes = {
-  row: T.array.isRequired,
-  columns: T.array.isRequired,
+  rowContentProps: T.array.isRequired,
+  columnDefs: T.array.isRequired,
 }
 
 export default DataTableRow
