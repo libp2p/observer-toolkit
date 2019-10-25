@@ -13,6 +13,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@baristalabs/craco-raw-loader": "^1.1.1",
     "@craco/craco": "^5.5.0",
     "arraybuffer-loader": "^1.0.8",
     "connections-table": "^0.0.1",

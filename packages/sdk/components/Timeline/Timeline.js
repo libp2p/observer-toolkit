@@ -43,12 +43,9 @@ function Timeline({ width = 700, height = HEIGHT_DEFAULT }) {
 
   const prerenderedSlider = useMemo(() => {
     const onChangeHandler = e => {
-      console.log('in onChangeHandler')
       const newTimeIndex = e.currentTarget.value
       setTimepoint(dataset[newTimeIndex])
     }
-
-    console.log('in prerenderedSlider')
 
     const StyledSlider = styled.input`
       width: ${width - offset}px;
