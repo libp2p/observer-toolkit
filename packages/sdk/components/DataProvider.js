@@ -11,15 +11,14 @@ const TimeContext = createContext()
 
 const PeerContext = createContext()
 
-function updateData(action, newData, oldData) {
-  const actions = ['append', 'replace']
-  switch (actions.indexOf(action)) {
-    case 0:
-      return appendToDataSet(newData, oldData)
-    case 1:
-      return replaceDataSet(newData)
+function updateData(oldData, { action, data }) {
+  switch (action) {
+    case 'append':
+      return appendToDataSet(data, oldData)
+    case 'replace':
+      return replaceDataSet(data)
     default:
-      throw new Error(`Action ${action} not one of "${actions.join(', ')}"`)
+      throw new Error(`Action "${action}" not valid`)
   }
 }
 
@@ -31,9 +30,9 @@ function appendToDataSet(newData, oldData) {
   return [...oldData, ...newData]
 }
 
-function replaceDataSet(newData) {
+function replaceDataSet(data) {
   // E.g. after uploading a new file or connecting to a new source
-  return newData
+  return data
 }
 
 function DataProvider({
