@@ -9,6 +9,7 @@ function Page() {
     <div>
       {approvedViz.map(({ Component, name, description, tags }) => (
         <CatalogueItem
+          key={name}
           Component={Component}
           name={name}
           description={description}

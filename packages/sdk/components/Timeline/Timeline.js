@@ -7,13 +7,15 @@ import { DataContext, SetterContext } from '../DataProvider'
 import { stackData, fitDataToPaths } from './utils'
 import TimelinePaths from './TimelinePaths'
 
+const HEIGHT_DEFAULT = 128
+
 // TODO: make width responsive, filling space
-function Timeline({ width = 700, height = 128 }) {
+function Timeline({ width = 700, height = HEIGHT_DEFAULT }) {
   const dataset = useContext(DataContext)
   const { setTimepoint } = useContext(SetterContext)
   const sliderRef = useRef(null)
 
-  const svgHeight = height / 2 - 28
+  const svgHeight = Math.min(height / 2 - 28, HEIGHT_DEFAULT)
 
   const {
     stackedDataIn,
@@ -34,16 +36,19 @@ function Timeline({ width = 700, height = 128 }) {
   ]
   const { dataInPathDefs, dataOutPathDefs } = useMemo(
     () => fitDataToPaths(fitDataArgs),
-    [fitDataArgs]
+    fitDataArgs
   )
 
   const offset = 20
 
   const prerenderedSlider = useMemo(() => {
     const onChangeHandler = e => {
+      console.log('in onChangeHandler')
       const newTimeIndex = e.currentTarget.value
       setTimepoint(dataset[newTimeIndex])
     }
+
+    console.log('in prerenderedSlider')
 
     const StyledSlider = styled.input`
       width: ${width - offset}px;

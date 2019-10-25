@@ -32,7 +32,7 @@ function getAllConnections(timepoints, { filter, latest = false } = {}) {
 
 // Gets the connections in one timepoint
 function getConnections(timepoint) {
-  return timepoint.getSubsystems().getConnectionsList()
+  return timepoint ? timepoint.getSubsystems().getConnectionsList() : []
 }
 
 function getEnumByName(name, obj) {

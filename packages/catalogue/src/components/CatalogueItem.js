@@ -24,7 +24,7 @@ function CatalogueItem({ Component, name, description, tags }) {
       <ReactMarkdown source={description} />
       <ul>
         {tags.map(tag => (
-          <li>{tag}</li>
+          <li key={tag}>{tag}</li>
         ))}
       </ul>
     </div>
@@ -32,7 +32,7 @@ function CatalogueItem({ Component, name, description, tags }) {
 }
 
 CatalogueItem.propTypes = {
-  Component: T.node,
+  Component: T.elementType,
 }
 
 export default CatalogueItem

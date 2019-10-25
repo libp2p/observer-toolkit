@@ -47,6 +47,8 @@ function getTrafficForAllPeers(
   allPeerIds,
   direction
 ) {
+  if (!dataset || !timepoint) return []
+
   const connectionsById = getConnections(timepoint).reduce(
     (connectionsById, connection) => {
       connectionsById[connection.getPeerId()] = connection
@@ -85,6 +87,8 @@ function getTrafficForAllPeers(
 }
 
 function stackData(dataset) {
+  if (!dataset || !dataset.length) return {}
+
   const allConnections = dataset.reduce(
     (allConns, timepoint) => [
       ...getConnections(timepoint).filter(
@@ -159,6 +163,8 @@ function fitDataToPaths(fitDataArgs) {
     yScaleIn,
     yScaleOut,
   ] = fitDataArgs
+
+  if (!stackedDataIn) return {}
 
   xScale.range([0, availableWidth])
   yScaleIn.range([availableHeight, 0])
