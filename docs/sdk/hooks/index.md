@@ -10,8 +10,8 @@ They are [custom React hooks](https://reactjs.org/docs/hooks-intro.html), which 
 ### Data formatters
 
 - **[`useTabularData`](./useTabularData.md)** Prepares data in table-like structures, where each datum is a row-like array with each index following a column-like schema.
-- **useStackedData** _TBC_ data structures with ordered, keyed cumulative totals, based on [D3.stack](https://github.com/d3/d3-shape/blob/v1.3.5/README.md#stack)
-- **useHierachicalData** _TBC_ tree-like traversable and deep-sortable data structures based on [D3.hierarchy](https://github.com/d3/d3-hierarchy/blob/v1.1.8/README.md#hierarchy)
+- `useStackedData` _TBC_ data structures with ordered, keyed cumulative totals, based on [D3.stack](https://github.com/d3/d3-shape/blob/v1.3.5/README.md#stack)
+- `useHierachicalData` _TBC_ tree-like traversable and deep-sortable data structures based on [D3.hierarchy](https://github.com/d3/d3-hierarchy/blob/v1.1.8/README.md#hierarchy)
 
 ### Data manipulation
 
