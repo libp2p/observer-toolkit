@@ -21,3 +21,5 @@ function validateComponentFields(componentBundle) {
     tags,
   }
 }
+
+export { validateComponentFields }

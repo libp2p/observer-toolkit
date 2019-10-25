@@ -1,7 +1,7 @@
-import { validateComponentBundle } from './utils'
+import { validateComponentFields } from './utils'
 
 import * as connectionsTable from 'connections-table'
 
-const approvedViz = [validateComponentBundle(connectionsTable)]
+const approvedViz = [validateComponentFields(connectionsTable)]
 
 export default approvedViz

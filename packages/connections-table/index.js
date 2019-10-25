@@ -1,12 +1,7 @@
-const component = require('./components/ConnectionsTable')
-const description = require('./description.md')
+import Component from './components/ConnectionsTable'
+import description from './description.md'
 
 const name = 'Connections table'
 const tags = ['connections', 'traffic', 'streams', 'age']
 
-module.exports = {
-  component,
-  description,
-  name,
-  tags,
-}
+export { Component, description, name, tags }

@@ -7,8 +7,13 @@ import CatalogueItem from './CatalogueItem'
 function Page() {
   return (
     <div>
-      {approvedViz.map(viz => (
-        <CatalogueItem viz={viz} />
+      {approvedViz.map(({ Component, name, description, tags }) => (
+        <CatalogueItem
+          Component={Component}
+          name={name}
+          description={description}
+          tags={tags}
+        />
       ))}
       <Timeline />
     </div>
