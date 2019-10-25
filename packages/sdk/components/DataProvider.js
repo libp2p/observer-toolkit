@@ -43,6 +43,18 @@ function DataProvider({
   const [dataset, dispatchDataset] = useReducer(updateData, initialData)
   const [timepoint, setTimepoint] = useState(initialTime)
 
+  // Select a timepoint after a new dataset is added
+  if (dataset.length && (!timepoint || !dataset.includes(timepoint))) {
+    const latestTimepoint = getLatestTimepoint(dataset)
+
+    if (dataset.includes(latestTimepoint)) {
+      setTimepoint(latestTimepoint)
+    } else {
+      // Should be unreachable but if a bug is introduced, could cause an infinite rerender if allowed
+      throw new Error('Selected a timepoint not in the current dataset')
+    }
+  }
+
   // TODO: It's theoretically possible to have multiple connections to the same peer
   // - investigate using a connection id vs highlighting all connections to a peer
   const [peerId, setPeerId] = useState(null)

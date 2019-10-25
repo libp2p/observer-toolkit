@@ -36,7 +36,7 @@ function Timeline({ width = 700, height = HEIGHT_DEFAULT }) {
   ]
   const { dataInPathDefs, dataOutPathDefs } = useMemo(
     () => fitDataToPaths(fitDataArgs),
-    fitDataArgs
+    [fitDataArgs]
   )
 
   const offset = 20

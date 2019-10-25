@@ -17,9 +17,18 @@ function ThemeSetter({ children }) {
     ${fontFaces.join('')}
   `
 
+  const GlobalDefaults = createGlobalStyle`
+    * {
+      box-sizing: border-box;
+      ${({ theme }) => theme.text()};
+      color: ${({ theme }) => theme.color('text', 'mid')};
+    }
+  `
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalFontFaceStyles />
+      <GlobalDefaults />
       {children}
     </ThemeProvider>
   )

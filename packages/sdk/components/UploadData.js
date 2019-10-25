@@ -1,15 +1,23 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
+import styled from 'styled-components'
 
 import { parseBuffer } from 'proto'
 import { SetterContext } from './DataProvider'
 
 function UploadData() {
+  const [isLoading, setIsLoading] = useState(false)
   const { dispatchDataset } = useContext(SetterContext)
+  const fileInputRef = useRef()
+
+  function handleClick() {
+    fileInputRef.current.click()
+  }
 
   function handleUpload(event) {
     const reader = new FileReader()
     reader.onload = handleUploadComplete
     reader.readAsArrayBuffer(event.target.files[0])
+    setIsLoading(true)
   }
 
   function handleUploadComplete(event) {
@@ -20,9 +28,45 @@ function UploadData() {
       action: 'replace',
       data,
     })
+    setIsLoading(false)
   }
 
-  return <input type="file" name="file" onChange={handleUpload} />
+  const FileButton = styled.button`
+    padding: ${({ theme }) => theme.spacing()};
+    position: relative;
+    z-index: 5;
+    cursor: pointer;
+  `
+  const NativeFileInput = styled.input`
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  `
+
+  const ButtonWrapper = styled.span`
+    display: inline-block;
+    position: relative;
+    flex-grow: 1;
+    text-align: right;
+  `
+
+  const buttonText = isLoading
+    ? 'Loading...'
+    : (fileInputRef.current && fileInputRef.current.value) ||
+      'Choose protobuf data file'
+
+  return (
+    <ButtonWrapper>
+      <FileButton onClick={handleClick}>{buttonText}</FileButton>
+      <NativeFileInput
+        ref={fileInputRef}
+        type="file"
+        name="file"
+        onChange={handleUpload}
+      />
+    </ButtonWrapper>
+  )
 }
 
 export default UploadData
