@@ -1,7 +1,7 @@
 {
-  "name": "connections-table",
+  "name": "streams-table",
   "version": "0.0.1",
-  "description": "React component built on libp2p-introspection-ui SDK, visualizing libp2p connections in a data table",
+  "description": "React component built on libp2p-introspection-ui SDK, visualizing libp2p streams in a data table",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
   "license": "MIT",

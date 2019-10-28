@@ -11,15 +11,16 @@ const TimeContext = createContext()
 
 const PeerContext = createContext()
 
-function updateData(action, newData, oldData) {
-  const actions = ['append', 'replace']
-  switch (actions.indexOf(action)) {
-    case 0:
-      return appendToDataSet(newData, oldData)
-    case 1:
-      return replaceDataSet(newData)
+function updateData(oldData, { action, data }) {
+  switch (action) {
+    case 'append':
+      return appendToDataSet(data, oldData)
+    case 'replace':
+      return replaceDataSet(data)
+    case 'remove':
+      return []
     default:
-      throw new Error(`Action ${action} not one of "${actions.join(', ')}"`)
+      throw new Error(`Action "${action}" not valid`)
   }
 }
 
@@ -31,9 +32,9 @@ function appendToDataSet(newData, oldData) {
   return [...oldData, ...newData]
 }
 
-function replaceDataSet(newData) {
+function replaceDataSet(data) {
   // E.g. after uploading a new file or connecting to a new source
-  return newData
+  return data
 }
 
 function DataProvider({
@@ -43,6 +44,18 @@ function DataProvider({
 }) {
   const [dataset, dispatchDataset] = useReducer(updateData, initialData)
   const [timepoint, setTimepoint] = useState(initialTime)
+
+  // Select a timepoint after a new dataset is added
+  if (dataset.length && (!timepoint || !dataset.includes(timepoint))) {
+    const latestTimepoint = getLatestTimepoint(dataset)
+
+    if (dataset.includes(latestTimepoint)) {
+      setTimepoint(latestTimepoint)
+    } else {
+      // Should be unreachable but if a bug is introduced, could cause an infinite rerender if allowed
+      throw new Error('Selected a timepoint not in the current dataset')
+    }
+  }
 
   // TODO: It's theoretically possible to have multiple connections to the same peer
   // - investigate using a connection id vs highlighting all connections to a peer

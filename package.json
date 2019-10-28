@@ -3,19 +3,26 @@
   "version": "0.0.1",
   "description": "User interface for visualising libp2p introspection data",
   "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "lint": "eslint . --ext .js",
     "lint-fix": "eslint . --ext .js --fix",
     "prettier": "prettier --check './**/*.js'",
     "prettier-fix": "prettier --write './**/*.js'",
     "storybook:connections-table": "lerna exec --scope connections-table -- npm run storybook",
+    "storybook:streams-table": "lerna exec --scope streams-table -- npm run storybook",
+    "start:catalogue": "lerna exec --scope catalogue -- npm run start",
     "test": "test"
   },
   "author": "NearForm",
   "license": "MIT",
   "dependencies": {
     "react": "^16.10.2",
-    "styled-components": "^4.4.0"
+    "styled-components": "^4.4.0",
+    "webpack": "4.41.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -35,7 +42,8 @@
     "lerna": "^3.17.0",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
-    "storybook": "^5.1.11"
+    "storybook": "^5.1.11",
+    "yarn": "^1.19.1"
   },
   "eslintConfig": {
     "extends": "react-app"

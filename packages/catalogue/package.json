@@ -5,15 +5,39 @@
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
   "license": "MIT",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@baristalabs/craco-raw-loader": "^1.1.1",
+    "@craco/craco": "^5.5.0",
+    "arraybuffer-loader": "^1.0.8",
+    "connections-table": "^0.0.1",
+    "craco-babel-loader": "^0.1.4",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-markdown": "^4.2.2",
+    "react-scripts": "3.2.0",
+    "streams-table": "^0.0.1",
+    "webpack": "4.41.0"
+  },
+  "devDependencies": {
+    "create-react-app": "^3.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

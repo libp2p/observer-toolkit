@@ -32,7 +32,28 @@ function getAllConnections(timepoints, { filter, latest = false } = {}) {
 
 // Gets the connections in one timepoint
 function getConnections(timepoint) {
-  return timepoint.getSubsystems().getConnectionsList()
+  return timepoint ? timepoint.getSubsystems().getConnectionsList() : []
+}
+
+function getAllStreamsAtTime(timepoint) {
+  if (!timepoint) return []
+  const connections = getConnections(timepoint)
+
+  // Returns array of { connection, stream }
+  const streams = connections.reduce(
+    (streams, connection) => [
+      ...streams,
+      ...connection
+        .getStreams()
+        .getStreamsList()
+        .map(stream => ({
+          connection,
+          stream,
+        })),
+    ],
+    []
+  )
+  return streams
 }
 
 function getEnumByName(name, obj) {
@@ -75,6 +96,7 @@ function getTraffic(connection, direction, type) {
 module.exports = {
   getAge,
   getAllConnections,
+  getAllStreamsAtTime,
   getConnections,
   getEnumByName,
   getLatestTimepoint,
