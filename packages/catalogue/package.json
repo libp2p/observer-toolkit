@@ -22,6 +22,7 @@
     "react-dom": "^16.11.0",
     "react-markdown": "^4.2.2",
     "react-scripts": "3.2.0",
+    "streams-table": "^0.0.1",
     "webpack": "4.41.0"
   },
   "devDependencies": {

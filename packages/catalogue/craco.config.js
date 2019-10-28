@@ -7,14 +7,19 @@ const cracoBabelLoader = require('craco-babel-loader')
 const cracoRawLoaderPlugin = require('@baristalabs/craco-raw-loader')
 
 const appDirectory = fs.realpathSync(process.cwd())
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
+const resolvePackage = relativePath => path.resolve(appDirectory, relativePath)
 
 module.exports = {
   plugins: [
     {
       plugin: cracoBabelLoader,
       options: {
-        includes: [resolveApp('../sdk'), resolveApp('../connections-table')],
+        includes: [
+          // Without these, react app won't babelify peer packages and hits "unexpected token" error
+          resolvePackage('../sdk'),
+          resolvePackage('../connections-table'),
+          resolvePackage('../streams-table'),
+        ],
       },
     },
     {

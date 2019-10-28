@@ -13,6 +13,7 @@
     "prettier": "prettier --check './**/*.js'",
     "prettier-fix": "prettier --write './**/*.js'",
     "storybook:connections-table": "lerna exec --scope connections-table -- npm run storybook",
+    "storybook:streams-table": "lerna exec --scope streams-table -- npm run storybook",
     "start:catalogue": "lerna exec --scope catalogue -- npm run start",
     "test": "test"
   },
