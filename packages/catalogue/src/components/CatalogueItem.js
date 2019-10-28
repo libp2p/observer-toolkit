@@ -97,6 +97,7 @@ CatalogueItem.propTypes = {
   description: T.string, // Markdown string from .md file and webpack raw-loader
   tags: T.array,
   handleSelect: T.func,
+  screenshot: T.any,
 }
 
 export default CatalogueItem

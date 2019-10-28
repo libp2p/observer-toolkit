@@ -11,6 +11,9 @@ function TimelinePaths({ pathDefs, svgHeight, colorKey }) {
   const StyledSvg = styled.svg`
     width: 100%;
     height: ${svgHeight}px;
+
+    // TODO: make this less hacky, adjust in path defs
+    margin-bottom: -4px;
   `
 
   return (

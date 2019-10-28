@@ -130,17 +130,18 @@ function stackData(dataset) {
   const yScaleIn = scaleLinear()
   const yScaleOut = scaleLinear()
 
-  const minTime = getTime(dataset[0])
-  const maxTime = getLatestTimepoint(dataset).getInstantTs()
+  // Scaling from dataset[0] leaves a gap of the width of 1 datapoint
+  const minTimeForScale = getTime(dataset[1])
+  const maxTimeForScale = getLatestTimepoint(dataset).getInstantTs()
 
   validateNumbers({
     maxIn,
     maxOut,
-    minTime,
-    maxTime,
+    minTimeForScale,
+    maxTimeForScale,
   })
 
-  xScale.domain([minTime, maxTime])
+  xScale.domain([minTimeForScale, maxTimeForScale])
   yScaleIn.domain([0, maxIn])
   yScaleOut.domain([0, maxOut])
 

@@ -9,7 +9,7 @@ import HeaderTabs from './HeaderTabs'
 import SelectedComponent from './SelectedComponent'
 
 const HEADER_HEIGHT = '64px'
-const FOOTER_HEIGHT = '192px'
+const FOOTER_HEIGHT = 128
 
 function Page() {
   const [selected, setSelected] = useState(null)
@@ -42,11 +42,12 @@ function Page() {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: ${FOOTER_HEIGHT};
+    height: ${FOOTER_HEIGHT + 28}px;
     background: ${({ theme }) => theme.color('dark', 'mid')};
     color: ${({ theme }) => theme.color('light', 'light')};
     font-weight: bold;
-    padding: 0 ${({ theme }) => theme.spacing()};
+    padding: 0;
+    margin: 0;
     border-top: ${({ theme }) =>
       `${theme.spacing()} solid ${theme.color('dark', 'dark')}`};
   `
@@ -75,7 +76,7 @@ function Page() {
         </CatalogueBkg>
       </Main>
       <Footer>
-        <Timeline />
+        <Timeline height={FOOTER_HEIGHT} />
       </Footer>
     </div>
   )
