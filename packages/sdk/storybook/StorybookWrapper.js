@@ -2,8 +2,8 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { DataProvider } from '../components/DataProvider'
-import ThemeSetter from '../components/ThemeSetter'
+import { DataProvider } from '../components/context/DataProvider'
+import ThemeSetter from '../components/context/ThemeSetter'
 import Timeline from '../components/Timeline/Timeline'
 
 import { samples, parseBuffer } from 'proto'
@@ -40,7 +40,9 @@ const Controls = styled.div`
   padding-left: ${({ theme }) => theme.spacing()};
 `
 function StorybookWrapper({ children }) {
-  const mockBuffer = Buffer.from(samples[0])
+  const b64string = samples[0].default
+
+  const mockBuffer = Buffer.from(b64string, 'base64')
   const mockData = parseBuffer(mockBuffer)
 
   return (

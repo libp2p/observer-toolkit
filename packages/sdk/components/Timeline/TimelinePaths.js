@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { SetterContext, PeerContext } from '../DataProvider'
+import { SetterContext, PeerContext } from '../context/DataProvider'
 
 function TimelinePaths({ pathDefs, svgHeight, colorKey }) {
   const globalPeerId = useContext(PeerContext)

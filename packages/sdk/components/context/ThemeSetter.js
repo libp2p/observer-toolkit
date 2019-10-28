@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
-import fontFaces from '../theme/fontFaces'
-import theme from '../theme/theme.js'
+import fontFaces from '../../theme/fontFaces'
+import theme from '../../theme/theme.js'
 
 function ThemeSetter({ children }) {
   // Ensure we don't add global styles twice

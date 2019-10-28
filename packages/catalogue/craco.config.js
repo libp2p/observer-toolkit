@@ -20,7 +20,7 @@ module.exports = {
     {
       plugin: cracoRawLoaderPlugin,
       options: {
-        test: /\.md$/,
+        test: /(\.md$|\.base64$)/,
       },
     },
   ],

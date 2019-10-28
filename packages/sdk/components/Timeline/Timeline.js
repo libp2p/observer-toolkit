@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import { DataContext, SetterContext } from '../DataProvider'
+import { DataContext, SetterContext } from '../context/DataProvider'
 import { stackData, fitDataToPaths } from './utils'
 import TimelinePaths from './TimelinePaths'
 

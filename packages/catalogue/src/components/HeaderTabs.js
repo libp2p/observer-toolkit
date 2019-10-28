@@ -1,20 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 
-import { UploadData } from 'sdk'
+import { UploadDataButton, SampleDataButton, SetterContext } from 'sdk'
 
 function HeaderTabs() {
   const [selectedTab, setSelectedTab] = useState(1)
+  const { dispatchDataset } = useContext(SetterContext)
+
+  const changeTab = tabIndex => {
+    dispatchDataset({ action: 'remove' })
+    setSelectedTab(tabIndex)
+  }
 
   const TabsWrapper = styled.div`
     display: flex;
     height: 100%;
     padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
     font-weight: 700;
-    line-height: 1em;
   `
 
   const SelectedTab = styled.div`
+    line-height: 1em;
     display: flex;
     align-items: center;
     width: 50%;
@@ -24,6 +30,7 @@ function HeaderTabs() {
   `
 
   const UnselectedTab = styled.div`
+    line-height: 1em;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -34,47 +41,58 @@ function HeaderTabs() {
     color: ${({ theme }) => theme.color('light', 'light')};
   `
 
-  const Tab1 =
+  const ButtonWrapper = styled.span`
+    display: inline-block;
+    position: relative;
+    flex-grow: 1;
+    text-align: right;
+  `
+
+  const SampleDataTab =
     selectedTab === 1 ? (
       <SelectedTab>
-        <label>Upload data:</label>
-        <UploadData />
+        <label>Use sample data:</label>
+        <ButtonWrapper>
+          <SampleDataButton title="Apply example data sample" />
+        </ButtonWrapper>
       </SelectedTab>
     ) : (
-      <UnselectedTab onClick={() => setSelectedTab(1)}>
-        Upload data
+      <UnselectedTab onClick={() => changeTab(1)}>
+        Use sample data
       </UnselectedTab>
     )
 
-  const Tab2 =
+  const UploadDataTab =
     selectedTab === 2 ? (
       <SelectedTab>
-        <label>Connect websocket:</label>
-        <UploadData />
+        <label>Upload data:</label>
+        <ButtonWrapper>
+          <UploadDataButton title="Choose protobuf data file" />
+        </ButtonWrapper>
       </SelectedTab>
     ) : (
-      <UnselectedTab onClick={() => setSelectedTab(2)}>
-        Connect websocket
-      </UnselectedTab>
+      <UnselectedTab onClick={() => changeTab(2)}>Upload data</UnselectedTab>
     )
 
-  const Tab3 =
+  const ConnectWebsocketTab =
     selectedTab === 3 ? (
       <SelectedTab>
-        <label>Use sample data:</label>
-        <UploadData />
+        <label>Connect websocket:</label>
+        <ButtonWrapper>
+          <UploadDataButton title="Enter websocket URL" />
+        </ButtonWrapper>
       </SelectedTab>
     ) : (
-      <UnselectedTab onClick={() => setSelectedTab(3)}>
-        Use sample data
+      <UnselectedTab onClick={() => changeTab(3)}>
+        Connect websocket
       </UnselectedTab>
     )
 
   return (
     <TabsWrapper>
-      {Tab1}
-      {Tab2}
-      {Tab3}
+      {SampleDataTab}
+      {UploadDataTab}
+      {ConnectWebsocketTab}
     </TabsWrapper>
   )
 }

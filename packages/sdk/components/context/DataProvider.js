@@ -17,6 +17,8 @@ function updateData(oldData, { action, data }) {
       return appendToDataSet(data, oldData)
     case 'replace':
       return replaceDataSet(data)
+    case 'remove':
+      return []
     default:
       throw new Error(`Action "${action}" not valid`)
   }

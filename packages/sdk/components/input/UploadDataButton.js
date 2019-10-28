@@ -5,8 +5,16 @@ import styled from 'styled-components'
 import { parseBuffer } from 'proto'
 import { SetterContext } from '../context/DataProvider'
 
-function UploadData({ title }) {
+import StyledButton from './StyledButton'
+
+function getButtonText(isLoading, fileName, title) {
+  if (isLoading) return 'Loading...'
+  return fileName ? `Replace file '${fileName}'` : title
+}
+
+function UploadDataButton({ title }) {
   const [isLoading, setIsLoading] = useState(false)
+  const [fileName, setFileName] = useState('')
   const { dispatchDataset } = useContext(SetterContext)
   const fileInputRef = useRef()
 
@@ -16,12 +24,15 @@ function UploadData({ title }) {
 
   function handleUpload(event) {
     const reader = new FileReader()
-    reader.onload = handleUploadComplete
-    reader.readAsArrayBuffer(event.target.files[0])
+    const file = event.target.files[0]
+    if (!file) return
+
+    reader.onload = e => handleUploadComplete(e, file.name)
+    reader.readAsArrayBuffer(file)
     setIsLoading(true)
   }
 
-  function handleUploadComplete(event) {
+  function handleUploadComplete(event, newFileName) {
     const bin = event.currentTarget.result
     const buf = Buffer.from(bin)
     const data = parseBuffer(buf)
@@ -30,13 +41,12 @@ function UploadData({ title }) {
       data,
     })
     setIsLoading(false)
+    setFileName(newFileName)
   }
 
-  const FileButton = styled.button`
-    padding: ${({ theme }) => theme.spacing()};
+  const FileButton = styled(StyledButton)`
     position: relative;
     z-index: 5;
-    cursor: pointer;
   `
   const NativeFileInput = styled.input`
     opacity: 0;
@@ -49,9 +59,7 @@ function UploadData({ title }) {
     position: relative;
   `
 
-  const buttonText = isLoading
-    ? 'Loading...'
-    : (fileInputRef.current && fileInputRef.current.value) || title
+  const buttonText = getButtonText(isLoading, fileName, title)
 
   return (
     <RelativeSpan>
@@ -66,8 +74,8 @@ function UploadData({ title }) {
   )
 }
 
-UploadData.propTypes = {
+UploadDataButton.propTypes = {
   title: T.string.isRequired,
 }
 
-export default UploadData
+export default UploadDataButton
