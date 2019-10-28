@@ -6,15 +6,27 @@ import styled from 'styled-components'
 
 const CatalogueCard = styled.div`
   cursor: pointer;
+  position: relative;
   background-color: ${({ theme }) => theme.color('light', 'light')};
-  border: 4px solid
-    ${({ theme, isSelected }) =>
-      theme.color(isSelected ? 'primary' : 'light', 'mid')};
-  width: calc(50% - ${({ theme }) => theme.spacing(4)});
-  padding: ${({ theme }) => `${theme.spacing(2)} ${theme.spacing(4)}`};
+  width: calc(100% - ${({ theme }) => theme.spacing(4)});
+  @media (min-width: 480px) {
+    width: calc(50% - ${({ theme }) => theme.spacing(4)});
+  }
+  @media (min-width: 960px) {
+    width: calc(33% - ${({ theme }) => theme.spacing(4)});
+  }
+  @media (min-width: 1480px) {
+    width: calc(25% - ${({ theme }) => theme.spacing(4)});
+  }
   margin: ${({ theme }) => `${theme.spacing(2)}`};
   box-shadow: ${({ theme: { color, spacing } }) =>
     `0 ${spacing(0.5)} ${spacing(2)} ${color('light', 'dark')}`};
+  ${({ theme, isSelected }) =>
+    isSelected && `border: 4px solid ${theme.color('primary', 'mid')};`}
+`
+
+const CardContent = styled.div`
+  padding: 0 ${({ theme }) => `${theme.spacing(2)} ${theme.spacing(2)}`};
 `
 
 const Tag = styled.li`
@@ -31,16 +43,46 @@ const TagList = styled.ul`
   padding: 0;
 `
 
-function CatalogueItem({ isSelected, name, description, tags, handleSelect }) {
+const StyledImg = styled.img`
+  width: 100%;
+`
+
+const StyledHeader = styled.h3`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing()};
+  left: ${({ theme }) => theme.spacing()};
+`
+
+const StyledHeaderInner = styled.span`
+  padding: ${({ theme }) => theme.spacing()};
+  display: inline-block;
+  background: ${({ theme }) => theme.color('dark', 'mid', 0.8)};
+  color: ${({ theme }) => theme.color('light', 'light')};
+  line-height: 1em;
+`
+
+function CatalogueItem({
+  isSelected,
+  name,
+  description,
+  tags,
+  handleSelect,
+  screenshot,
+}) {
   return (
     <CatalogueCard onClick={handleSelect} isSelected={isSelected}>
-      <h3>{name}</h3>
-      <ReactMarkdown source={description} />
-      <TagList>
-        {tags.map(tag => (
-          <Tag key={tag}>{tag}</Tag>
-        ))}
-      </TagList>
+      <StyledImg src={screenshot} />
+      <StyledHeader>
+        <StyledHeaderInner>{name}</StyledHeaderInner>
+      </StyledHeader>
+      <CardContent>
+        <ReactMarkdown source={description} />
+        <TagList>
+          {tags.map(tag => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+        </TagList>
+      </CardContent>
     </CatalogueCard>
   )
 }

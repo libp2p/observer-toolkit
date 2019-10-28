@@ -1,5 +1,5 @@
 function validateComponentFields(componentBundle) {
-  const { name, Component, description, tags } = componentBundle
+  const { name, Component, description, tags, screenshot } = componentBundle
 
   if (!name || typeof name !== 'string')
     throw new Error(`Invalid component name "${name}" (${typeof name})`)
@@ -19,6 +19,7 @@ function validateComponentFields(componentBundle) {
     Component,
     description,
     tags,
+    screenshot,
   }
 }
 

@@ -27,6 +27,7 @@ function Page() {
 
   const Header = styled.div`
     position: fixed;
+    z-index: 50;
     top: 0;
     left: 0;
     width: 100%;
@@ -50,6 +51,12 @@ function Page() {
       `${theme.spacing()} solid ${theme.color('dark', 'dark')}`};
   `
 
+  console.log(
+    'approvedViz --- ',
+    approvedViz,
+    approvedViz.map(({ screenshot }) => screenshot)
+  )
+
   return (
     <div>
       <Header>
@@ -58,18 +65,22 @@ function Page() {
       <Main>
         {selected !== null && <SelectedComponent viz={approvedViz[selected]} />}
         <CatalogueBkg>
-          {approvedViz.map(({ name, description, tags }, index) => (
-            <CatalogueItem
-              key={name}
-              name={name}
-              description={description}
-              tags={tags}
-              handleSelect={() =>
-                setSelected(index === selected ? null : index)
-              }
-              isSelected={selected === index}
-            />
-          ))}
+          {approvedViz.map(
+            ({ name, description, tags, screenshot }, index) =>
+              console.log(typeof screenshot, screenshot) || (
+                <CatalogueItem
+                  key={name}
+                  name={name}
+                  description={description}
+                  tags={tags}
+                  screenshot={screenshot}
+                  handleSelect={() =>
+                    setSelected(index === selected ? null : index)
+                  }
+                  isSelected={selected === index}
+                />
+              )
+          )}
         </CatalogueBkg>
       </Main>
       <Footer>
