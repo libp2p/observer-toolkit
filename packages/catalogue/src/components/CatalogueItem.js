@@ -7,6 +7,8 @@ import styled from 'styled-components'
 const CatalogueCard = styled.div`
   cursor: pointer;
   position: relative;
+  display: flex;
+  flex-direction: column;
   background-color: ${({ theme }) => theme.color('light', 'light')};
   width: calc(100% - ${({ theme }) => theme.spacing(4)});
   @media (min-width: 480px) {
@@ -20,13 +22,14 @@ const CatalogueCard = styled.div`
   }
   margin: ${({ theme }) => `${theme.spacing(2)}`};
   box-shadow: ${({ theme: { color, spacing } }) =>
-    `0 ${spacing(0.5)} ${spacing(2)} ${color('light', 'dark')}`};
+    `0 0 ${spacing(2)} ${color('dark', 'light', 0.5)}`};
   ${({ theme, isSelected }) =>
     isSelected && `border: 4px solid ${theme.color('primary', 'mid')};`}
 `
 
 const CardContent = styled.div`
   padding: 0 ${({ theme }) => `${theme.spacing(2)} ${theme.spacing(2)}`};
+  flex-grow: 1;
 `
 
 const Tag = styled.li`
@@ -39,7 +42,8 @@ const Tag = styled.li`
 `
 
 const TagList = styled.ul`
-  margin: ${({ theme }) => `${theme.spacing(0.5)} 0`};
+  padding: 0 ${({ theme }) => `${theme.spacing(2)} ${theme.spacing(2)}`};
+  margin: ${({ theme }) => `${theme.spacing()}`};
   padding: 0;
 `
 
@@ -77,12 +81,12 @@ function CatalogueItem({
       </StyledHeader>
       <CardContent>
         <ReactMarkdown source={description} />
-        <TagList>
-          {tags.map(tag => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-        </TagList>
       </CardContent>
+      <TagList>
+        {tags.map(tag => (
+          <Tag key={tag}>{tag}</Tag>
+        ))}
+      </TagList>
     </CatalogueCard>
   )
 }

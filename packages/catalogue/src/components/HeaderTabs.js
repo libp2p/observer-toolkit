@@ -26,7 +26,8 @@ function HeaderTabs() {
     width: 50%;
     margin: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
     background: ${({ theme }) => theme.color('primary', 'mid')};
-    padding: ${({ theme }) => theme.spacing()};
+    padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
+    border-radius: 6px 6px 0 0;
   `
 
   const UnselectedTab = styled.div`
@@ -37,8 +38,9 @@ function HeaderTabs() {
     width: 25%;
     margin: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
     background: ${({ theme }) => theme.color('secondary', 'dark')};
-    padding: ${({ theme }) => theme.spacing()};
+    padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
     color: ${({ theme }) => theme.color('light', 'light')};
+    border-radius: 6px 6px 0 0;
   `
 
   const ButtonWrapper = styled.span`
