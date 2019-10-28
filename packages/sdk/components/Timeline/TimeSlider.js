@@ -64,22 +64,15 @@ function TimeSlider({ width }) {
     handleMouseMove(event)
   }
   const slideEnd = () => {
-    if (!isSliding) return
     setIsSliding(false)
-
-    // Handle in next tick
-    setTimeout(() => {
-      const { nearestIndex } = getSnapped(decimal)
-
-      if (timeIndex !== nearestIndex) setTimepoint(dataset[nearestIndex])
-    }, 50)
   }
   const handleMouseMove = e => {
     if (!isSliding) return
     const mouseX = e.nativeEvent.clientX - containerRef.current.offsetLeft
 
-    const { snappedDecimal } = getSnapped(mouseX / width)
+    const { snappedDecimal, nearestIndex } = getSnapped(mouseX / width)
     setDecimal(snappedDecimal)
+    if (timeIndex !== nearestIndex) setTimepoint(dataset[nearestIndex])
   }
 
   const timeMarkerLeft = `calc(${Math.round(decimal * 100) +
