@@ -25,3 +25,4 @@ And several example components built on the SDK:
 - Streams visualisation TBC
 - DHT visualisation TBC
 - Additional visualisation TBC
+- [**`packages/streams-table`**](tree/master/packages/streams-table) A very basic streams datatable added to demonstrate switching between visualizations in the catalogue.
