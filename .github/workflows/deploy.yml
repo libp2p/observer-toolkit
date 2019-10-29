@@ -10,5 +10,13 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      # checkout current branch
+      - uses: actions/checkout@v1
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Initialise monorepo
+        run: yarn install
+
       - name: Run deploy script
         run: npm run deploy:catalogue
