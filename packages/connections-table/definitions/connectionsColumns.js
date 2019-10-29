@@ -9,6 +9,7 @@ import {
 } from '../components/cellContent'
 
 import * as statusSorter from '../utils/statusSorter'
+import * as statusFilter from '../utils/statusFilter'
 
 const stringSorter = {
   getSorter: getStringSorter,
@@ -89,6 +90,7 @@ const statusCol = {
   name: 'status',
   getProps: connection => ({ value: statusNames[connection.getStatus()] }),
   sort: statusSorter,
+  filter: statusFilter,
 }
 
 // Define column order
