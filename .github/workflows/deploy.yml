@@ -1,0 +1,13 @@
+name: Deploy master to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Deploy
+    steps:
+      - name: Run deploy script
+        run: npm run deploy:catalogue

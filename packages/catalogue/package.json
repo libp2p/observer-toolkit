@@ -3,14 +3,16 @@
   "version": "0.0.1",
   "description": "React web app containing a browsable catalogue of ui components visualizing libp2p introspection data",
   "author": "AlanSl <alan.slater@nearform.com>",
-  "homepage": "",
+  "homepage": "https://nearform.github.io/libp2p-introspection-ui",
   "license": "MIT",
   "main": "src/index.js",
   "scripts": {
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@baristalabs/craco-raw-loader": "^1.1.1",
@@ -26,7 +28,8 @@
     "webpack": "4.41.0"
   },
   "devDependencies": {
-    "create-react-app": "^3.2.0"
+    "create-react-app": "^3.2.0",
+    "gh-pages": "^2.1.1"
   },
   "browserslist": {
     "production": [
