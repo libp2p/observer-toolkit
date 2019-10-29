@@ -127,7 +127,7 @@ function CheckboxList({
 }
 
 CheckboxList.propTypes = {
-  fieldNames: T.arrayOf([T.string]).isRequired,
+  fieldNames: T.arrayOf(T.string).isRequired,
   title: T.string.isRequired,
   initialValues: T.object,
   defaultValue: T.bool,

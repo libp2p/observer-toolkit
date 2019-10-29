@@ -6,13 +6,13 @@ import { CheckboxList, doFilterToWhitelist } from 'sdk'
 
 const statusValues = Object.values(statusNames)
 
-function StatusFilterUi({ onChange, isOpen }) {
+function StatusFilterUi({ onChange }) {
   const handleChange = values =>
     // Convert object like { a: true, b: false, c: true } to array like [ a, c ]
     onChange(Object.keys(values).filter(key => values[key]))
 
   return (
-    <div isOpen={isOpen}>
+    <div>
       <CheckboxList
         fieldNames={statusValues}
         defaultValue={true}
@@ -24,7 +24,6 @@ function StatusFilterUi({ onChange, isOpen }) {
 }
 StatusFilterUi.propTypes = {
   onChange: T.func.isRequired,
-  isOpen: T.bool,
 }
 
 const name = 'statusFilter'
