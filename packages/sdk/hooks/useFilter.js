@@ -30,8 +30,13 @@ function updateValues(filters, name, values) {
         .map(filter => filter.name)
         .join('", "')}"`
     )
+
+  // Return same array reference => nothing updates
+  if (existingFilter.values === values) return filters
+
   existingFilter.values = values
-  return filters
+  // Return different array reference => hook updates
+  return [...filters]
 }
 
 function addFilter(filters, newFilter) {

@@ -7,10 +7,16 @@ import desc from './icons/desc.svg'
 import sort from './icons/sort.svg'
 import filter from './icons/filter.svg'
 
+// Protocol Labs own icons
+import check from './icons/check.svg'
+import uncheck from './icons/uncheck.svg'
+
 // Export an object of url paths; importer picks path by key
 export default {
   asc,
   desc,
   sort,
   filter,
+  check,
+  uncheck,
 }

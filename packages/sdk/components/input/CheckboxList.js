@@ -2,6 +2,8 @@ import React from 'react'
 import { Formik, Field } from 'formik'
 import T from 'prop-types'
 
+import Icon from '../Icon'
+
 function areAllChecked(values) {
   return Object.values(values).every(value => value)
 }
@@ -69,7 +71,8 @@ function CheckboxList({
                     toggleField(values, name, setFieldValue, submitForm)
                   }
                 >
-                  <Field type="checkbox" name={name} value={values[name]} />
+                  <Field type="hidden" name={name} value={values[name]} />
+                  <Icon type={values[name] ? 'check' : 'uncheck'} />
                   {name}
                 </button>
               </li>

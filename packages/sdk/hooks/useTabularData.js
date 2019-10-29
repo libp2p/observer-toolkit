@@ -55,7 +55,7 @@ function getInitialSortDef(sortColumn, columnDefs) {
 }
 
 function getInitialFilters(columnDefs) {
-  return columnDefs.reduce((initialFilters, col) => {
+  const initialFilters = columnDefs.reduce((initialFilters, col) => {
     if (!col.filter) return initialFilters
     const { name, doFilter, initialValues } = col.filter
     initialFilters.push({
@@ -67,6 +67,8 @@ function getInitialFilters(columnDefs) {
     })
     return initialFilters
   }, [])
+
+  return initialFilters
 }
 
 function useTabularData({ columns, data, defaultSort, defaultFilter }) {
@@ -97,6 +99,7 @@ function useTabularData({ columns, data, defaultSort, defaultFilter }) {
   const tableContentProps = useMemo(() => {
     const rawContentProps = getTableContentProps(data, columnDefs, timepoint)
     const filteredContentProps = rawContentProps.filter(applyFilters)
+
     filteredContentProps.sort(sorter)
     return filteredContentProps
   }, [data, columnDefs, timepoint, sorter, applyFilters])
