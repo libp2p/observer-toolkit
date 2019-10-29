@@ -60,9 +60,10 @@ const StyledToggleButton = styled.button`
   font-weight: ${({ checked }) => (checked ? 600 : 300)};
   color: ${({ theme, checked }) =>
     theme.color(checked ? 'tertiary' : 'text', 'mid')};
-  :focus,
-  :hover {
+  :focus {
     outline: none;
+  }
+  :hover {
     background: ${({ theme }) => theme.color('light', 'dark')};
   }
 `

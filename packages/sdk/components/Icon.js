@@ -1,30 +1,35 @@
 import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
+
 import icons from '../theme/icons'
 
+const Container = styled.span`
+  display: inline-block;
+  vertical-align: middle;
+  width: ${({ theme }) => theme.spacing(3)};
+  height: ${({ theme }) => theme.spacing(3)};
+  ${({ theme, active }) =>
+    active && `color: ${theme.color('tertiary', 'mid')}`};
+  ${({ theme, offset }) => offset && `margin-right: -${theme.spacing(2)};`}
+  ${({ onClick, theme }) =>
+    onClick &&
+    `
+    cursor: pointer;
+    &:hover {
+      backgroundColor: ${theme.color('light', 'mid')};
+    }
+  `}
+`
+
 function Icon({ type, onClick, active }) {
-  const StyledIcon = styled.img.attrs(() => ({
-    src: `${icons[type]}`,
-    onClick: onClick,
-  }))`
-    width: ${({ theme }) => theme.spacing(3)};
-    height: ${({ theme }) => theme.spacing(3)};
-    // TODO: modify SVG to use currentColor
-    color: ${({ theme }) => theme.color(active ? 'secondary' : 'light', 'mid')};
-    object-fit: cover;
-    display: inline-block;
-    vertical-align: middle;
-    ${({ theme, offset }) => offset && `margin-right: -${theme.spacing(2)};`}
-    ${onClick &&
-      `
-      cursor: pointer;
-      &:hover {
-        backgroundColor: ${({ theme }) => theme.color('light', 'mid')};
-      }
-    `}
-  `
-  return <StyledIcon />
+  const IconSvg = icons[type]
+
+  return (
+    <Container onClick={onClick} active={active}>
+      <IconSvg />
+    </Container>
+  )
 }
 
 Icon.propTypes = {

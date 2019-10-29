@@ -65,6 +65,8 @@ function DataTableHead({
           <FilterButton
             FilterUi={columnDef.filter.filterUi}
             updateValues={columnDef.filter.updateValues}
+            initialValues={columnDef.filter.initialValues}
+            values={columnDef.filter.values}
           />
         </>
       )}

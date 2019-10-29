@@ -23,10 +23,11 @@ const BeforeTime = styled.div`
 `
 const TimeMarker = styled.div`
   position: absolute;
-  background-color: ${({ theme }) => theme.color('tertiary', 'mid', 0.3)};
+  background-color: ${({ theme }) => theme.color('tertiary', 'light', 0.3)};
   width: ${({ width }) => width}px;
-  border-left: 2px solid ${({ theme }) => theme.color('tertiary', 'mid', 0.2)};
-  border-right: 2px solid ${({ theme }) => theme.color('tertiary', 'mid', 0.2)};
+  border-left: 2px solid ${({ theme }) => theme.color('tertiary', 'light', 0.2)};
+  border-right: 2px solid
+    ${({ theme }) => theme.color('tertiary', 'light', 0.2)};
   height: 100%;
   cursor: col-resize;
 `
