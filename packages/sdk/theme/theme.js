@@ -25,7 +25,7 @@ const palette = {
   },
   light: {
     // white / cream
-    light: '247, 255, 255',
+    light: '252, 255, 253',
     mid: '235, 243, 243',
     dark: '201, 209, 209',
   },
@@ -55,7 +55,7 @@ const spacing = (num = 1) => `${num * 8}px`
 const typography = {
   default: `
     font-family: nexa, sans-serif;
-    line-height: 1.8em;
+    line-height: 1.6em;
   `,
   body: {
     small: `
@@ -105,7 +105,7 @@ const text = (elem, size, rgb) => {
   // css`` doesn't work here: adds commas breaking CSS rules
   return `
     ${typography.default}
-    ${typography[elem][size]}
+    ${elem && size ? typography[elem][size] : ''}
     ${rgb ? `color: ${rgb};` : ''}
   `
 }

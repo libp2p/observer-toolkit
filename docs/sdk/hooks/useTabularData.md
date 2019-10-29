@@ -78,5 +78,3 @@ If this data contains columns that are sortable, and should be sorted by default
 > _`object`_
 
 TODO...
-
-

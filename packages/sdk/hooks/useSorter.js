@@ -7,9 +7,9 @@ function getNumericSorter(direction) {
 }
 
 function getStringSorter(direction) {
+  const caselessSorter = Intl.Collator('en').compare
   const stringSorter = (a, b) => {
-    if (a === b) return 0
-    const sortNum = a.toLowerCase() > b.toLowerCase() ? 1 : -1
+    const sortNum = caselessSorter(a, b)
     return direction === 'asc' ? sortNum : sortNum * -1
   }
   return stringSorter

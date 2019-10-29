@@ -1,19 +1,20 @@
-import React, { useMemo, useContext, useRef } from 'react'
+import React, { useMemo, useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import { DataContext, SetterContext } from '../DataProvider'
+import { DataContext } from '../context/DataProvider'
 import { stackData, fitDataToPaths } from './utils'
 import TimelinePaths from './TimelinePaths'
+import TimeSlider from './TimeSlider'
+
+const HEIGHT_DEFAULT = 128
 
 // TODO: make width responsive, filling space
-function Timeline({ width = 700, height = 128 }) {
+function Timeline({ width = 700, height = HEIGHT_DEFAULT }) {
   const dataset = useContext(DataContext)
-  const { setTimepoint } = useContext(SetterContext)
-  const sliderRef = useRef(null)
 
-  const svgHeight = height / 2 - 28
+  const svgHeight = Math.min(height / 2 - 16, HEIGHT_DEFAULT)
 
   const {
     stackedDataIn,
@@ -37,36 +38,14 @@ function Timeline({ width = 700, height = 128 }) {
     [fitDataArgs]
   )
 
-  const offset = 20
-
-  const prerenderedSlider = useMemo(() => {
-    const onChangeHandler = e => {
-      const newTimeIndex = e.currentTarget.value
-      setTimepoint(dataset[newTimeIndex])
-    }
-
-    const StyledSlider = styled.input`
-      width: ${width - offset}px;
-      margin: 0 0 0 ${offset}px;
-    `
-
-    return (
-      <StyledSlider
-        type="range"
-        min={0}
-        max={dataset.length - 1}
-        defaultValue={
-          sliderRef.current ? sliderRef.current.value : dataset.length - 1
-        }
-        onChange={onChangeHandler}
-        ref={sliderRef}
-      />
-    )
-  }, [width, dataset, setTimepoint])
-
   const Container = styled.div`
-    margin: ${({ theme }) => theme.spacing(2)} -${offset / 2}px;
+    background: ${({ theme }) => theme.color('dark', 'mid')};
+    position: relative;
+    padding: ${({ theme }) => theme.spacing()} 0;
   `
+
+  if (!dataset || !dataset.length) return <Container />
+
   const PathsContainer = styled.div`
     position: relative;
   `
@@ -76,7 +55,7 @@ function Timeline({ width = 700, height = 128 }) {
     font-family: plex-sans;
     font-weight: 500;
     font-size: 8pt;
-    color: ${({ theme }) => theme.color('dark', 'light')};
+    color: ${({ theme }) => theme.color('light', 'light')};
     left: ${({ theme }) => theme.spacing()};
   `
   const DataInLabel = styled(Label)`
@@ -94,9 +73,9 @@ function Timeline({ width = 700, height = 128 }) {
           pathDefs={dataInPathDefs}
           svgHeight={svgHeight}
           colorKey="primary"
+          style={{ marginTop: '8px' }}
         />
       </PathsContainer>
-      <div>{prerenderedSlider}</div>
       <PathsContainer>
         <DataOutLabel>Data out</DataOutLabel>
         <TimelinePaths
@@ -105,6 +84,7 @@ function Timeline({ width = 700, height = 128 }) {
           colorKey="secondary"
         />
       </PathsContainer>
+      <TimeSlider width={width} />
     </Container>
   )
 }

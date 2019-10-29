@@ -12,8 +12,9 @@ function FormatedNumber({ value, units, initialWeight = 0, children }) {
 
   const Unit = styled.span`
     // Use cell right padding for units, aligning with icons
+    font-family: 'plex-sans';
     width: ${({ theme }) => theme.spacing(4)};
-    margin-right: -${({ theme }) => theme.spacing(4)};
+    margin-right: -${({ theme }) => theme.spacing(2)};
     padding-left: ${({ theme }) => theme.spacing(2)};
     display: inline-block;
     text-align: left;
@@ -41,6 +42,7 @@ function FormatedNumber({ value, units, initialWeight = 0, children }) {
   const weightAdjust = (unitEntries.length - unitIndex) * 200
 
   const NumWrapper = styled.span`
+    font-family: 'plex-mono';
     font-weight: ${initialWeight + weightAdjust};
     white-space: nowrap;
     color: ${({ theme }) =>

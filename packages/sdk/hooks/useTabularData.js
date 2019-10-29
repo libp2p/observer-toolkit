@@ -3,7 +3,7 @@ import T from 'prop-types'
 
 import useSorter from '../hooks/useSorter'
 import useFilter from '../hooks/useFilter'
-import { TimeContext } from '../components/DataProvider'
+import { TimeContext } from '../components/context/DataProvider'
 
 function mapSorterToColumn(colName, columnDefs) {
   const sortColumnIndex = columnDefs.findIndex(col => col.name === colName)
