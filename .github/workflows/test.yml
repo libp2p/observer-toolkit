@@ -1,0 +1,11 @@
+name: Run tests
+
+on: [push, pull-request]
+
+jobs:
+  build:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test scripts
+        run: npx lerna run test
