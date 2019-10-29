@@ -17,6 +17,7 @@ function StatusFilterUi({ onChange, isOpen }) {
         fieldNames={statusValues}
         defaultValue={true}
         onChange={handleChange}
+        title="Filter status"
       />
     </div>
   )

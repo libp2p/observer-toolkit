@@ -1,6 +1,7 @@
 import React from 'react'
-import { Formik, Field } from 'formik'
 import T from 'prop-types'
+import styled from 'styled-components'
+import { Formik, Field } from 'formik'
 
 import Icon from '../Icon'
 
@@ -11,8 +12,9 @@ function areAllChecked(values) {
 function toggleAll(values, fieldNames, setFieldValue, submitForm) {
   // tick everything, unless everything is already ticked, then tick nothing
   const newValue = !areAllChecked(values)
-  fieldNames.forEach(name => setFieldValue(name, newValue, false))
-  submitForm()
+  Promise.all(fieldNames.map(name => setFieldValue(name, newValue))).then(
+    submitForm
+  )
 }
 
 function toggleField(values, name, setFieldValue, submitForm) {
@@ -26,6 +28,44 @@ function getDefaultValues(fieldNames, defaultValue) {
     return values
   }, {})
 }
+
+const Container = styled.div`
+  display: flex;
+`
+
+const StyledHeader = styled.div`
+  border: 1px solid ${({ theme }) => theme.color('tertiary', 'mid')};
+  font-weight: 900;
+`
+
+const StyledList = styled.ul`
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  display: flex;
+`
+
+const StyledListItem = styled.li`
+  margin: 0 ${({ theme }) => theme.spacing(0.5)};
+  padding: 0;
+  list-style: none;
+`
+
+const StyledToggleButton = styled.button`
+  cursor: pointer;
+  border: none;
+  background: ${({ theme }) => theme.color('light', 'light')};
+  width: 100%;
+  text-align: left;
+  font-weight: ${({ checked }) => (checked ? 600 : 300)};
+  color: ${({ theme, checked }) =>
+    theme.color(checked ? 'tertiary' : 'text', 'mid')};
+  :focus,
+  :hover {
+    outline: none;
+    background: ${({ theme }) => theme.color('light', 'dark')};
+  }
+`
 
 function CheckboxList({
   fieldNames,
@@ -48,37 +88,39 @@ function CheckboxList({
       }}
     >
       {({ values, handleChange, setFieldValue, isSubmitting, submitForm }) => (
-        <div>
-          <h5>
-            <button
+        <Container>
+          <StyledHeader>
+            <StyledToggleButton
               onClick={() =>
                 toggleAll(values, fieldNames, setFieldValue, submitForm)
               }
             >
               <Field
-                type="checkbox"
+                type="hidden"
                 name="set-all"
                 value={areAllChecked(values)}
               />
+              <Icon type={areAllChecked(values) ? 'check' : 'uncheck'} />
               {title}
-            </button>
-          </h5>
-          <ul>
+            </StyledToggleButton>
+          </StyledHeader>
+          <StyledList>
             {fieldNames.map(name => (
-              <li key={name}>
-                <button
+              <StyledListItem key={name}>
+                <StyledToggleButton
                   onClick={() =>
                     toggleField(values, name, setFieldValue, submitForm)
                   }
+                  checked={values[name]}
                 >
                   <Field type="hidden" name={name} value={values[name]} />
                   <Icon type={values[name] ? 'check' : 'uncheck'} />
                   {name}
-                </button>
-              </li>
+                </StyledToggleButton>
+              </StyledListItem>
             ))}
-          </ul>
-        </div>
+          </StyledList>
+        </Container>
       )}
     </Formik>
   )
