@@ -1,12 +1,8 @@
 import { useReducer, useCallback } from 'react'
 import T from 'prop-types'
 
-function doFilterToWhitelist(arrayItem, values) {
-  if (!Array.isArray(values))
-    throw new Error(
-      `doFilterToWhitelist expects an array of values, got "${typeof values}"`
-    )
-  return values.includes(arrayItem)
+function doFilterToWhitelist(key, values) {
+  return !!values[key]
 }
 
 function updateFilters(filters, { action, name, doFilter, values }) {

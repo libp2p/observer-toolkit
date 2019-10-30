@@ -1,34 +1,18 @@
-import React from 'react'
-import T from 'prop-types'
-
-import { statusNames } from 'proto'
 import { CheckboxList, doFilterToWhitelist } from 'sdk'
+import { statusNames } from 'proto'
 
-const statusValues = Object.values(statusNames)
-
-function StatusFilterUi({ onChange }) {
-  const handleChange = values =>
-    // Convert object like { a: true, b: false, c: true } to array like [ a, c ]
-    onChange(Object.keys(values).filter(key => values[key]))
-
-  return (
-    <div>
-      <CheckboxList
-        fieldNames={statusValues}
-        defaultValue={true}
-        onChange={handleChange}
-        title="Filter status"
-      />
-    </div>
-  )
-}
-StatusFilterUi.propTypes = {
-  onChange: T.func.isRequired,
-}
+const statusKeys = Object.values(statusNames)
 
 const name = 'statusFilter'
 const doFilter = doFilterToWhitelist
-const filterUi = StatusFilterUi
-const initialValues = statusValues
+const FilterUi = CheckboxList
+const initialValues = statusKeys.reduce((values, key) => {
+  values[key] = true
+  return values
+}, {})
+const filterUiProps = {
+  fieldNames: statusKeys,
+  title: 'Filter by status:',
+}
 
-export { name, doFilter, filterUi, initialValues }
+export { name, doFilter, FilterUi, filterUiProps, initialValues }

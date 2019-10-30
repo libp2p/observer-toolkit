@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 
 import { TableHead } from './styledTable'
-import FilterButton from './FilterButton'
+import FilterButton from '../input/FilterButton'
 import Icon from '../Icon'
 
 const NON_BREAKING_SPACE = '\u00A0'
@@ -62,12 +62,7 @@ function DataTableHead({
       {isFilterable && (
         <>
           {NON_BREAKING_SPACE}
-          <FilterButton
-            FilterUi={columnDef.filter.filterUi}
-            updateValues={columnDef.filter.updateValues}
-            initialValues={columnDef.filter.initialValues}
-            values={columnDef.filter.values}
-          />
+          <FilterButton {...columnDef.filter} />
         </>
       )}
     </TableHead>
