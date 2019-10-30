@@ -42,7 +42,7 @@ function Page() {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: ${FOOTER_HEIGHT + 28}px;
+    height: ${FOOTER_HEIGHT + 14}px;
     background: ${({ theme }) => theme.color('dark', 'mid')};
     color: ${({ theme }) => theme.color('light', 'light')};
     font-weight: bold;

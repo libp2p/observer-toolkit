@@ -42,12 +42,33 @@ function Timeline({ width = 700, height = HEIGHT_DEFAULT }) {
     background: ${({ theme }) => theme.color('dark', 'mid')};
     position: relative;
     padding: ${({ theme }) => theme.spacing()} 0;
+    color: ${({ theme }) => theme.color('light', 'light')};
+    user-select: none;
   `
 
-  if (!dataset || !dataset.length) return <Container />
+  if (!dataset || !dataset.length)
+    return (
+      <Container
+        style={{
+          height: '96px',
+        }}
+      >
+        <p
+          style={{
+            // TODO: improve this
+            color: 'white',
+            textAlign: 'center',
+          }}
+        >
+          <b>No data selected.</b> Use the tabs at the top of the page to load
+          some data.
+        </p>
+      </Container>
+    )
 
   const PathsContainer = styled.div`
     position: relative;
+    user-select: none;
   `
   const Label = styled.div`
     position: absolute;
@@ -60,9 +81,11 @@ function Timeline({ width = 700, height = HEIGHT_DEFAULT }) {
   `
   const DataInLabel = styled(Label)`
     top: 0;
+    user-select: none;
   `
   const DataOutLabel = styled(Label)`
     bottom: 0;
+    user-select: none;
   `
 
   return (
