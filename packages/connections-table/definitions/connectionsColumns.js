@@ -1,6 +1,5 @@
 import { getAge, getTraffic, statusNames, transportNames } from 'proto'
-
-import { getStringSorter, getNumericSorter } from 'sdk'
+import { getStringSorter, getNumericSorter, getRangeFilter } from 'sdk'
 
 import {
   AgeContent,
@@ -9,7 +8,11 @@ import {
 } from '../components/cellContent'
 
 import * as statusSorter from '../utils/statusSorter'
-import * as statusFilter from '../utils/statusFilter'
+import statusFilter from '../utils/statusFilter'
+
+function getMaxValue(column) {
+  return column.reduce((max, { value }) => Math.max(max, value), 0)
+}
 
 const stringSorter = {
   getSorter: getStringSorter,
@@ -71,6 +74,14 @@ const streamsCol = {
     value: connection.getStreams().getStreamsList().length,
   }),
   sort: numericSorter,
+  calculate: {
+    filter: column =>
+      getRangeFilter({
+        min: 0,
+        max: getMaxValue(column),
+        name: 'Filter number of streams',
+      }),
+  },
 }
 
 const transportCol = {

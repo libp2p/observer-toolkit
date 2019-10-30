@@ -23,9 +23,9 @@ const AccordionContent = styled.div`
 function FilterButton({
   updateValues,
   FilterUi,
-  initialValues,
+  initialFieldValues,
   mapValues,
-  filterUiProps = {},
+  filterUiProps,
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = () => setIsOpen(!isOpen)
@@ -33,6 +33,9 @@ function FilterButton({
   const handleChange = newValues => {
     updateValues(mapValues ? mapValues(newValues) : newValues)
   }
+
+  const fieldNames = [...initialFieldValues.keys()]
+  const initialValues = Object.fromEntries(initialFieldValues)
 
   return (
     <Formik
@@ -47,9 +50,10 @@ function FilterButton({
           <Icon type="filter" onClick={toggleOpen} active={dirty} offset />
           <AccordionContent isOpen={isOpen}>
             <FilterUi
-              onChange={() => submitForm()}
+              onChange={submitForm}
               values={values}
               setFieldValue={setFieldValue}
+              fieldNames={fieldNames}
               {...filterUiProps}
             />
           </AccordionContent>
@@ -62,7 +66,7 @@ function FilterButton({
 FilterButton.propTypes = {
   updateValues: T.func.isRequired,
   FilterUi: T.elementType.isRequired,
-  initialValues: T.object.isRequired,
+  initialFieldValues: T.instanceOf(Map),
   mapValues: T.func,
   filterUiProps: T.object,
 }

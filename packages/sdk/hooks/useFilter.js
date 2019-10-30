@@ -1,10 +1,6 @@
 import { useReducer, useCallback } from 'react'
 import T from 'prop-types'
 
-function doFilterToWhitelist(key, values) {
-  return !!values[key]
-}
-
 function updateFilters(filters, { action, name, doFilter, values }) {
   switch (action) {
     case 'update':
@@ -51,8 +47,9 @@ function useFilter(initialFilters) {
   const applyFilters = useCallback(
     datum => {
       if (!filters.length) return true
-      return filters.every(({ doFilter, values, mapFilter = d => d }) =>
-        doFilter(mapFilter(datum), values)
+      return filters.every(
+        ({ doFilter, values, mapFilter = d => d }) =>
+          !values || doFilter(mapFilter(datum), values)
       )
     },
     [filters]
@@ -74,4 +71,3 @@ useFilter.propTypes = {
 }
 
 export default useFilter
-export { doFilterToWhitelist }

@@ -1,18 +1,11 @@
-import { CheckboxList, doFilterToWhitelist } from 'sdk'
+import { getListFilter } from 'sdk'
 import { statusNames } from 'proto'
 
-const statusKeys = Object.values(statusNames)
+const statusNamesList = Object.values(statusNames)
 
-const name = 'statusFilter'
-const doFilter = doFilterToWhitelist
-const FilterUi = CheckboxList
-const initialValues = statusKeys.reduce((values, key) => {
-  values[key] = true
-  return values
-}, {})
-const filterUiProps = {
-  fieldNames: statusKeys,
-  title: 'Filter by status:',
-}
+const statusFilter = getListFilter({
+  name: 'Filter by status',
+  options: statusNamesList,
+})
 
-export { name, doFilter, FilterUi, filterUiProps, initialValues }
+export default statusFilter

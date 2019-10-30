@@ -35,10 +35,26 @@ function applyColumnDefaults(columns) {
   )
 }
 
+function applyCalculations(columns, rawContentProps) {
+  return columns.map((column, columnIndex) => {
+    if (!column.calculate) return column
+    const columnProps = rawContentProps.map(row => row[columnIndex])
+
+    const calculated = Object.entries(column.calculate).reduce(
+      (calculated, [key, doCalc]) => {
+        calculated[key] = doCalc(columnProps)
+        return calculated
+      },
+      {}
+    )
+
+    return Object.assign({}, column, calculated)
+  })
+}
+
 function DefaultRenderer({ value }) {
   return <>{value}</>
 }
-
 DefaultRenderer.propTypes = {
   value: T.any,
 }
@@ -75,7 +91,13 @@ function useTabularData({ columns, data, defaultSort, defaultFilter }) {
   const [sortColumn, setSortColumn] = useState(defaultSort)
   const timepoint = useContext(TimeContext)
 
-  const columnDefs = applyColumnDefaults(columns)
+  const columnsWithDefaults = applyColumnDefaults(columns)
+
+  const rawContentProps = useMemo(() => {
+    return getTableContentProps(data, columnsWithDefaults, timepoint)
+  }, [data, columnsWithDefaults, timepoint])
+
+  const columnDefs = applyCalculations(columnsWithDefaults, rawContentProps)
 
   const { sorter, sortDirection, setSortDirection } = useSorter(
     getInitialSortDef(sortColumn, columnDefs)
@@ -86,6 +108,7 @@ function useTabularData({ columns, data, defaultSort, defaultFilter }) {
   )
 
   // Give each filterable column a function to update its column's filter values
+  // TODO: see if this can be made redundant using Formik
   columnDefs.forEach(col => {
     if (!col.filter || !!col.filter.updateValues) return
     col.filter.updateValues = newValues =>
@@ -97,12 +120,10 @@ function useTabularData({ columns, data, defaultSort, defaultFilter }) {
   })
 
   const tableContentProps = useMemo(() => {
-    const rawContentProps = getTableContentProps(data, columnDefs, timepoint)
     const filteredContentProps = rawContentProps.filter(applyFilters)
-
     filteredContentProps.sort(sorter)
     return filteredContentProps
-  }, [data, columnDefs, timepoint, sorter, applyFilters])
+  }, [rawContentProps, sorter, applyFilters])
 
   return {
     columnDefs,
