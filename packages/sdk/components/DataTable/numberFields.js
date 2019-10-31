@@ -4,21 +4,30 @@ import styled from 'styled-components'
 
 import { childrenToString } from '../../utils/helpers'
 
+const NumWrapper = styled.span`
+  font-family: 'plex-mono';
+  font-weight: ${({ initialWeight, weightAdjust }) =>
+    initialWeight + weightAdjust};
+  white-space: nowrap;
+  color: ${({ theme, weightAdjust }) =>
+    theme.color('dark', 'dark', weightAdjust / 2000 + 0.5)};
+`
+
+const Unit = styled.span`
+  // Use cell right padding for units, aligning with icons
+  margin-right: -${({ theme }) => theme.spacing(2)};
+  padding-left: ${({ theme }) => theme.spacing(2)};
+  font-family: 'plex-sans';
+  width: ${({ theme }) => theme.spacing(4)};
+  display: inline-block;
+  text-align: left;
+`
+
 function FormatedNumber({ value, units, initialWeight = 0, children }) {
   if (isNaN(value))
     throw new Error(
       `Non-numeric value passed to FormatedNumber (${value}, typeof "${typeof value}")`
     )
-
-  const Unit = styled.span`
-    // Use cell right padding for units, aligning with icons
-    font-family: 'plex-sans';
-    width: ${({ theme }) => theme.spacing(4)};
-    margin-right: -${({ theme }) => theme.spacing(2)};
-    padding-left: ${({ theme }) => theme.spacing(2)};
-    display: inline-block;
-    text-align: left;
-  `
 
   //TODO: ditch "title" attr and use child node if present to render proper tooltip
   const title = childrenToString(children)
@@ -41,16 +50,12 @@ function FormatedNumber({ value, units, initialWeight = 0, children }) {
 
   const weightAdjust = (unitEntries.length - unitIndex) * 200
 
-  const NumWrapper = styled.span`
-    font-family: 'plex-mono';
-    font-weight: ${initialWeight + weightAdjust};
-    white-space: nowrap;
-    color: ${({ theme }) =>
-      theme.color('dark', 'dark', weightAdjust / 2000 + 0.5)};
-  `
-
   return (
-    <NumWrapper title={title}>
+    <NumWrapper
+      title={title}
+      weightAdjust={weightAdjust}
+      initialWeight={initialWeight}
+    >
       {formattedValue}
       <Unit>{unit}</Unit>
     </NumWrapper>

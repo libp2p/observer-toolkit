@@ -11,46 +11,46 @@ import SelectedComponent from './SelectedComponent'
 const HEADER_HEIGHT = '64px'
 const FOOTER_HEIGHT = 128
 
+const Main = styled.div`
+  margin-top: ${HEADER_HEIGHT};
+  margin-bottom: ${FOOTER_HEIGHT};
+  background-color: ${({ theme }) => theme.color('light', 'mid')};
+  overflow-y: scroll;
+`
+
+const CatalogueBkg = styled.div`
+  display: flex;
+`
+
+const Header = styled.div`
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: ${HEADER_HEIGHT};
+  background: ${({ theme }) => theme.color('dark', 'mid')};
+  border-bottom: ${({ theme }) =>
+    `${theme.spacing()} solid ${theme.color('primary', 'mid')}`};
+`
+
+const Footer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: ${FOOTER_HEIGHT + 14}px;
+  background: ${({ theme }) => theme.color('dark', 'mid')};
+  color: ${({ theme }) => theme.color('light', 'light')};
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  border-top: ${({ theme }) =>
+    `${theme.spacing()} solid ${theme.color('dark', 'dark')}`};
+`
+
 function Page() {
   const [selected, setSelected] = useState(null)
-
-  const Main = styled.div`
-    margin-top: ${HEADER_HEIGHT};
-    margin-bottom: ${FOOTER_HEIGHT};
-    background-color: ${({ theme }) => theme.color('light', 'mid')};
-    overflow-y: scroll;
-  `
-
-  const CatalogueBkg = styled.div`
-    display: flex;
-  `
-
-  const Header = styled.div`
-    position: fixed;
-    z-index: 50;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: ${HEADER_HEIGHT};
-    background: ${({ theme }) => theme.color('dark', 'mid')};
-    border-bottom: ${({ theme }) =>
-      `${theme.spacing()} solid ${theme.color('primary', 'mid')}`};
-  `
-
-  const Footer = styled.div`
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: ${FOOTER_HEIGHT + 14}px;
-    background: ${({ theme }) => theme.color('dark', 'mid')};
-    color: ${({ theme }) => theme.color('light', 'light')};
-    font-weight: bold;
-    padding: 0;
-    margin: 0;
-    border-top: ${({ theme }) =>
-      `${theme.spacing()} solid ${theme.color('dark', 'dark')}`};
-  `
 
   return (
     <div>

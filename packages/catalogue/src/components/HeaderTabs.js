@@ -3,6 +3,44 @@ import styled from 'styled-components'
 
 import { UploadDataButton, SampleDataButton, SetterContext } from 'sdk'
 
+const TabsWrapper = styled.div`
+  display: flex;
+  height: 100%;
+  padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
+  font-weight: 700;
+`
+
+const SelectedTab = styled.div`
+  line-height: 1em;
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
+  background: ${({ theme }) => theme.color('primary', 'mid')};
+  padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
+  border-radius: 6px 6px 0 0;
+`
+
+const UnselectedTab = styled.div`
+  line-height: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 25%;
+  margin: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
+  background: ${({ theme }) => theme.color('secondary', 'dark')};
+  padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
+  color: ${({ theme }) => theme.color('light', 'light')};
+  border-radius: 6px 6px 0 0;
+`
+
+const ButtonWrapper = styled.span`
+  display: inline-block;
+  position: relative;
+  flex-grow: 1;
+  text-align: right;
+`
+
 function HeaderTabs() {
   const [selectedTab, setSelectedTab] = useState(1)
   const { dispatchDataset } = useContext(SetterContext)
@@ -11,44 +49,6 @@ function HeaderTabs() {
     dispatchDataset({ action: 'remove' })
     setSelectedTab(tabIndex)
   }
-
-  const TabsWrapper = styled.div`
-    display: flex;
-    height: 100%;
-    padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
-    font-weight: 700;
-  `
-
-  const SelectedTab = styled.div`
-    line-height: 1em;
-    display: flex;
-    align-items: center;
-    width: 50%;
-    margin: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
-    background: ${({ theme }) => theme.color('primary', 'mid')};
-    padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
-    border-radius: 6px 6px 0 0;
-  `
-
-  const UnselectedTab = styled.div`
-    line-height: 1em;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    width: 25%;
-    margin: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
-    background: ${({ theme }) => theme.color('secondary', 'dark')};
-    padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
-    color: ${({ theme }) => theme.color('light', 'light')};
-    border-radius: 6px 6px 0 0;
-  `
-
-  const ButtonWrapper = styled.span`
-    display: inline-block;
-    position: relative;
-    flex-grow: 1;
-    text-align: right;
-  `
 
   const SampleDataTab =
     selectedTab === 1 ? (

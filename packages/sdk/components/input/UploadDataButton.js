@@ -7,6 +7,21 @@ import { SetterContext } from '../context/DataProvider'
 
 import StyledButton from './StyledButton'
 
+const FileButton = styled(StyledButton)`
+  position: relative;
+  z-index: 5;
+`
+const NativeFileInput = styled.input`
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+`
+const RelativeSpan = styled.span`
+  position: relative;
+`
+
 function getButtonText(isLoading, fileName, title) {
   if (isLoading) return 'Loading...'
   return fileName ? `Replace file '${fileName}'` : title
@@ -43,21 +58,6 @@ function UploadDataButton({ title }) {
     setIsLoading(false)
     setFileName(newFileName)
   }
-
-  const FileButton = styled(StyledButton)`
-    position: relative;
-    z-index: 5;
-  `
-  const NativeFileInput = styled.input`
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-  `
-  const RelativeSpan = styled.span`
-    position: relative;
-  `
 
   const buttonText = getButtonText(isLoading, fileName, title)
 

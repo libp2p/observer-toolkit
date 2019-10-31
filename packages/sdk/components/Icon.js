@@ -46,6 +46,7 @@ Icon.propTypes = {
   onClick: T.func,
   active: T.bool,
   offset: T.bool,
+  size: T.number,
 }
 
 export default Icon

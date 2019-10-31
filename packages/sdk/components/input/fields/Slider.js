@@ -7,11 +7,6 @@ const CONTROL_WIDTH = 16
 const BAR_HEIGHT = 12
 const WIDTH = 340
 
-// TODO
-const Tooltip = styled.div`
-  display: none;
-`
-
 const Container = styled.div`
   padding: ${({ theme }) => `${theme.spacing(3)} ${theme.spacing(2)} 0`};
   user-select: none;
@@ -300,9 +295,7 @@ function Slider({
               width={controlWidth}
               onMouseDown={event => slideStart(event, fieldNames[1])}
               isUpper={isRange}
-            >
-              <Tooltip></Tooltip>
-            </Control>
+            ></Control>
           </>
         )}
         <InactiveSection style={{ width: abovePercent }} />
