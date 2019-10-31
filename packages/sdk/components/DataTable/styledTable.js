@@ -34,4 +34,9 @@ const TableCell = styled.td`
   font-family: plex-sans;
 `
 
-export { Table, TableRow, TableHead, TableCell }
+// Provide unstyled styled-components so users can provide overrides using `as`
+const THead = styled.thead``
+const THeadRow = styled.tr``
+const TBody = styled.tbody``
+
+export { Table, TableRow, TableHead, TableCell, THead, THeadRow, TBody }

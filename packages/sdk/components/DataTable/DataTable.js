@@ -1,26 +1,27 @@
 import React from 'react'
 import T from 'prop-types'
 
-import DataTableRow from './DataTableRow'
-import DataTableHead from './DataTableHead'
-import { Table } from './styledTable'
+import DefaultDataTableRow from './DataTableRow'
+import DefaultDataTableHead from './DataTableHead'
+import { Table, THead, THeadRow, TBody } from './styledTable'
 
 function DataTable({
   tableContentProps,
   columnDefs,
-  TableRow = DataTableRow,
-  TableHead = DataTableHead,
   sortColumn,
   setSortColumn,
   sortDirection,
   setSortDirection,
+  override = {},
 }) {
+  const DataTableRow = override.DataTableRow || DefaultDataTableRow
+  const DataTableHead = override.DataTableHead || DefaultDataTableHead
   return (
-    <Table>
-      <thead>
-        <tr>
+    <Table as={override.TableHead}>
+      <THead as={override.THead}>
+        <THeadRow as={override.THeadRow}>
           {columnDefs.map((columnDef, cellIndex) => (
-            <TableHead
+            <DataTableHead
               key={columnDef.name}
               columnDef={columnDef}
               cellIndex={cellIndex}
@@ -28,21 +29,19 @@ function DataTable({
               setSortColumn={setSortColumn}
               sortDirection={sortDirection}
               setSortDirection={setSortDirection}
-              // filters={filters}
-              // setFilters={setFilters}
             />
           ))}
-        </tr>
-      </thead>
-      <tbody>
+        </THeadRow>
+      </THead>
+      <TBody as={override.TBody}>
         {tableContentProps.map((rowContentProps, rowIndex) => (
-          <TableRow
+          <DataTableRow
             key={`row_${rowIndex}`}
             rowContentProps={rowContentProps}
             columnDefs={columnDefs}
-          ></TableRow>
+          />
         ))}
-      </tbody>
+      </TBody>
     </Table>
   )
 }
@@ -56,6 +55,7 @@ DataTable.propTypes = {
   setSortColumn: T.func,
   sortDirection: T.string,
   setSortDirection: T.func,
+  override: T.object,
 }
 
 export default DataTable
