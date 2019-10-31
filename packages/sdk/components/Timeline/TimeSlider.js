@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { Formik } from 'formik'
@@ -19,14 +19,17 @@ const Container = styled.div`
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
 `
 const Bar = styled.div`
+  position: relative;
   background: none;
   border: none;
   border-radius: 0;
-  width: 100%;
   height: 100%;
+  width: 100%;
+  // Push 0 index (left 0) control to the right, while being clickable
+  border-left: solid transparent
+    ${({ controlWidth }) => Math.round(controlWidth)}px;
 `
 const FirstSection = styled.div`
   background: none;
@@ -85,7 +88,7 @@ function TimeSlider({ width }) {
           onChange={submitForm}
           values={values}
           setFieldValue={setFieldValue}
-          max={dataset.length}
+          max={dataset.length - 1}
           controlWidth={widthPerTime}
           override={sliderOverrides}
           width={width}

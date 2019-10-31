@@ -273,9 +273,10 @@ function Slider({
       onMouseMove={handleMouseMove}
       ref={containerRef}
       width={width}
+      controlWidth={controlWidth}
       as={override.Container}
     >
-      <Bar onClick={handleClick} as={override.Bar}>
+      <Bar onClick={handleClick} controlWidth={controlWidth} as={override.Bar}>
         <FirstSection
           style={{ width: belowPercent }}
           as={override.FirstSection}
@@ -361,6 +362,7 @@ Slider.propTypes = {
   stepInterval: T.number,
   controlWidth: T.number,
   width: T.number,
+  overrides: T.object,
 }
 
 export default Slider
