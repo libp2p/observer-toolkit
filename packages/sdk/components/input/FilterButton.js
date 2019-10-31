@@ -40,7 +40,7 @@ function FilterButton({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting }) => {
         handleChange(values)
         setSubmitting(false)
       }}

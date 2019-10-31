@@ -130,11 +130,12 @@ function Slider({
   steps,
   stepInterval = 1,
   onChange,
-  fieldNames,
+  fieldNames = ['index'],
   values,
   setFieldValue,
   controlWidth = CONTROL_WIDTH,
   width = WIDTH,
+  override = {},
 }) {
   if (!steps) {
     // e.g. highest value is 4.3 mb, stepInterval every 500kb => 9 steps, max is 4.5 mb
@@ -272,14 +273,19 @@ function Slider({
       onMouseMove={handleMouseMove}
       ref={containerRef}
       width={width}
+      as={override.Container}
     >
-      <Bar onClick={handleClick}>
-        <FirstSection style={{ width: belowPercent }} />
+      <Bar onClick={handleClick} as={override.Bar}>
+        <FirstSection
+          style={{ width: belowPercent }}
+          as={override.FirstSection}
+        />
         <Control
           style={{ left: controlOffset }}
           width={controlWidth}
           onMouseDown={event => slideStart(event, fieldNames[0])}
           isLower={isRange}
+          as={override.Control}
         >
           <Field
             type="hidden"
@@ -289,20 +295,24 @@ function Slider({
         </Control>
         {isRange && (
           <>
-            <ActiveSection />
+            <ActiveSection as={override.ActiveSection} />
             <Control
               style={{ left: upperControlOffset }}
               width={controlWidth}
               onMouseDown={event => slideStart(event, fieldNames[1])}
               isUpper={isRange}
+              as={override.Control}
             ></Control>
           </>
         )}
-        <InactiveSection style={{ width: abovePercent }} />
+        <InactiveSection
+          style={{ width: abovePercent }}
+          as={override.InactiveSection}
+        />
       </Bar>
-      <NumberFieldsWrapper>
-        <NumberLabelWrapper>
-          {isRange && <NumberLabel>Min:</NumberLabel>}
+      <NumberFieldsWrapper as={override.NumberFieldsWrapper}>
+        <NumberLabelWrapper as={override.NumberLabelWrapper}>
+          {isRange && <NumberLabel as={override.NumberLabel}>Min:</NumberLabel>}
           <NumberInput
             type="number"
             ref={lowerInputRef}
@@ -314,11 +324,12 @@ function Slider({
             onBlur={() =>
               updateNumberInput(fieldNames[0], values[fieldNames[0]])
             }
+            as={override.NumberInput}
           />
         </NumberLabelWrapper>
         {isRange && (
-          <NumberLabelWrapper>
-            <NumberLabel>Max:</NumberLabel>
+          <NumberLabelWrapper as={override.NumberLabelWrapper}>
+            <NumberLabel as={override.NumberLabel}>Max:</NumberLabel>
             <NumberInput
               type="number"
               ref={upperInputRef}
@@ -330,6 +341,7 @@ function Slider({
               onBlur={() =>
                 updateNumberInput(fieldNames[1], values[fieldNames[1]])
               }
+              as={override.NumberInput}
             />
           </NumberLabelWrapper>
         )}
