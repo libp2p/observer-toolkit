@@ -60,24 +60,33 @@ const StyledToggleButton = styled.button`
   }
 `
 
-function CheckboxList({ title, fieldNames, setFieldValue, onChange, values }) {
+function CheckboxList({
+  title,
+  fieldNames,
+  setFieldValue,
+  onChange,
+  values,
+  override = {},
+}) {
   return (
-    <Container>
-      <StyledHeader>
+    <Container as={override.Container}>
+      <StyledHeader as={override.StyledHeader}>
         <StyledToggleButton
           onClick={() => toggleAll(values, fieldNames, setFieldValue, onChange)}
+          as={override.StyledToggleButton}
         >
           <Field type="hidden" name="set-all" value={areAllChecked(values)} />
           <Icon type={areAllChecked(values) ? 'check' : 'uncheck'} />
           {title}
         </StyledToggleButton>
       </StyledHeader>
-      <StyledList>
+      <StyledList as={override.StyledList}>
         {fieldNames.map(name => (
-          <StyledListItem key={name}>
+          <StyledListItem key={name} as={override.StyledListItem}>
             <StyledToggleButton
               onClick={() => toggleField(values, name, setFieldValue, onChange)}
               checked={values[name]}
+              as={override.StyledToggleButton}
             >
               <Field type="hidden" name={name} value={values[name]} />
               <Icon type={values[name] ? 'check' : 'uncheck'} />
@@ -96,6 +105,7 @@ CheckboxList.propTypes = {
   setFieldValue: T.func.isRequired,
   onChange: T.func.isRequired,
   values: T.object.isRequired,
+  override: T.object,
 }
 
 export default CheckboxList
