@@ -1,11 +1,19 @@
 import React from 'react'
 import T from 'prop-types'
+import styled from 'styled-components'
 
 import { TableHead } from './styledTable'
 import FilterButton from '../input/FilterButton'
 import Icon from '../Icon'
 
-const NON_BREAKING_SPACE = '\u00A0'
+const ButtonsTray = styled.span`
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin-left: ${({ theme }) => theme.spacing(2)};
+`
 
 function getSortType(isSortable, isSorted, sortDirection) {
   if (!isSortable) return null
@@ -48,23 +56,23 @@ function DataTableHead({
       {...props}
     >
       {columnDef.header}
-      {isSortable && (
-        <>
-          {NON_BREAKING_SPACE}
-          <Icon
-            type={sortIconType}
-            active={sortIconType !== 'sort'}
-            onClick={() => sortIconAction()}
-            offset
-          />
-        </>
-      )}
-      {isFilterable && (
-        <>
-          {NON_BREAKING_SPACE}
-          <FilterButton {...columnDef.filter} />
-        </>
-      )}
+      <ButtonsTray>
+        {isSortable && (
+          <>
+            <Icon
+              type={sortIconType}
+              active={sortIconType !== 'sort'}
+              onClick={() => sortIconAction()}
+              offset
+            />
+          </>
+        )}
+        {isFilterable && (
+          <>
+            <FilterButton {...columnDef.filter} />
+          </>
+        )}
+      </ButtonsTray>
     </TableHead>
   )
 }

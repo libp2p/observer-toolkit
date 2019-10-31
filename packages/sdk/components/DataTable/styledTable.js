@@ -17,6 +17,7 @@ const TableRow = styled.tr`
 
 const TableHead = styled.th`
   ${({ theme }) => theme.styles.tableCell}
+  padding-right: 0;
   font-family: plex-sans;
   font-weight: 400;
   border-bottom: 1px solid ${({ theme }) => theme.color('light', 'dark')};

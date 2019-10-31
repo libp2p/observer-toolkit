@@ -2,9 +2,8 @@ import React from 'react'
 
 const SvgDesc = props => (
   <svg
-    viewBox="15 15 74 74"
-    fillRule="evenodd"
-    clipRule="evenodd"
+    viewBox="16 16 70 70"
+    fill="currentColor"
     strokeLinejoin="round"
     strokeMiterlimit={1.414}
     {...props}

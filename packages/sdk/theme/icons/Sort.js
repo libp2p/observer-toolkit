@@ -2,7 +2,7 @@ import React from 'react'
 
 const SvgSort = props => (
   <svg
-    viewBox="15 15 79 79"
+    viewBox="14 14 74 74"
     fill="currentColor"
     strokeMiterlimit={1.414}
     {...props}

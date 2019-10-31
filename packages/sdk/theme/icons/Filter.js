@@ -2,7 +2,7 @@ import React from 'react'
 
 const SvgFilter = props => (
   <svg
-    viewBox="12 12 84 84"
+    viewBox="8 8 84 84"
     fill="currentColor"
     strokeMiterlimit={1.414}
     {...props}
