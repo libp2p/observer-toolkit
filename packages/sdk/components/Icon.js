@@ -20,9 +20,15 @@ const Container = styled.span`
       : `
       background: ${theme.color('light', 'light', 0.5)};
     `};
+  ${({ theme, disabled }) =>
+    disabled &&
+    `
+      color: ${theme.color('text', 'light', 0.5)};
+  `}
   ${({ theme, offset }) => offset && `margin-right: -${theme.spacing(2)};`}
-  ${({ onClick, theme }) =>
+  ${({ onClick, theme, disabled }) =>
     onClick &&
+    !disabled &&
     `
     cursor: pointer;
     &:hover {
@@ -31,11 +37,16 @@ const Container = styled.span`
   `}
 `
 
-function Icon({ type, onClick, active, size = 20 }) {
+function Icon({ type, onClick, active, disabled, size = 20 }) {
   const IconSvg = icons[type]
 
   return (
-    <Container onClick={onClick} active={active} size={size}>
+    <Container
+      onClick={disabled ? () => {} : onClick}
+      active={active}
+      disabled={disabled}
+      size={size}
+    >
       <IconSvg />
     </Container>
   )
@@ -45,6 +56,7 @@ Icon.propTypes = {
   type: T.string.isRequired,
   onClick: T.func,
   active: T.bool,
+  disabled: T.bool,
   offset: T.bool,
   size: T.number,
 }

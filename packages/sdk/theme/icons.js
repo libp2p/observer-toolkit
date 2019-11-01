@@ -8,6 +8,7 @@ import sort from './icons/Sort'
 import filter from './icons/Filter'
 
 // Protocol Labs own icons
+import cancel from './icons/Cancel'
 import check from './icons/Check'
 import uncheck from './icons/Uncheck'
 
@@ -17,6 +18,7 @@ export default {
   desc,
   sort,
   filter,
+  cancel,
   check,
   uncheck,
 }

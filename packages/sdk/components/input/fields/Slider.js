@@ -3,6 +3,8 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { Field } from 'formik'
 
+import Icon from '../../Icon'
+
 const CONTROL_WIDTH = 16
 const BAR_HEIGHT = 12
 const WIDTH = 340
@@ -350,6 +352,12 @@ function Slider({
             onBlur={() => updateNumberInput(fieldNames[0], null)}
             as={override.NumberInput}
           />
+          <Icon
+            type="cancel"
+            onClick={() => updateFieldValue(fieldNames[0], '')}
+            active={typeof values[fieldNames[0]] === 'number'}
+            disabled={typeof values[fieldNames[0]] !== 'number'}
+          />
         </NumberLabelWrapper>
         {isRange && (
           <NumberLabelWrapper as={override.NumberLabelWrapper}>
@@ -367,6 +375,12 @@ function Slider({
               onChange={event => handleNumberInput(event, fieldNames[1])}
               onBlur={() => updateNumberInput(fieldNames[1], null)}
               as={override.NumberInput}
+            />
+            <Icon
+              type="cancel"
+              onClick={() => updateFieldValue(fieldNames[1], '')}
+              active={typeof values[fieldNames[1]] === 'number'}
+              disabled={typeof values[fieldNames[1]] !== 'number'}
             />
           </NumberLabelWrapper>
         )}
