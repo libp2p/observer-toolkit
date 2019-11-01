@@ -73,8 +73,3 @@ An array of objects, where each object is a raw datum containing data representi
 > _`string`_
 
 If this data contains columns that are sortable, and should be sorted by default, this object contains the `name` of the column that should be used to sort the data when no sort selection has been made.
-
-#### `defaultFilter`
-> _`object`_
-
-TODO...
