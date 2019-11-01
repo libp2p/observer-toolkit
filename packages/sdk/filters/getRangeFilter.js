@@ -1,7 +1,12 @@
 import Slider from '../components/input/fields/Slider'
 
 const defaultFilter = (targetValue, values) => {
-  return targetValue >= values['min'] && targetValue <= values['max']
+  // If a value is null, that end of the rnage is unset, so allow all
+  if (typeof values['min'] === 'number' && targetValue < values['min'])
+    return false
+  if (typeof values['max'] === 'number' && targetValue > values['max'])
+    return false
+  return true
 }
 const DefaultUi = Slider
 
@@ -13,7 +18,8 @@ function getRangeFilter({
   doFilter = defaultFilter,
   FilterUi = DefaultUi,
 }) {
-  const initialFieldValues = new Map([['min', min], ['max', max]])
+  // Use empty strings for null values so form elements don't become uncontrolled
+  const initialFieldValues = new Map([['min', ''], ['max', '']])
 
   return {
     name,
