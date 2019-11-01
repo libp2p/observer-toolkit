@@ -1,13 +1,10 @@
-name: Deploy master to GitHub Pages
+name: Run tests
 
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
   build:
-    name: Deploy
+    name: Test
     runs-on: ubuntu-latest
     steps:
       # checkout current branch
@@ -22,5 +19,5 @@ jobs:
       - name: Initialise monorepo
         run: yarn install
 
-      - name: Run deploy script
-        run: npm run deploy:catalogue
+      - name: Run test scripts
+        run: npx lerna run test
