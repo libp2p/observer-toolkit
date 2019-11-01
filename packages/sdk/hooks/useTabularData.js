@@ -70,23 +70,6 @@ function getInitialSortDef(sortColumn, columnDefs) {
   }
 }
 
-function getInitialFilters(columnDefs) {
-  const initialFilters = columnDefs.reduce((initialFilters, col) => {
-    if (!col.filter) return initialFilters
-    const { name, doFilter, initialValues } = col.filter
-    initialFilters.push({
-      name,
-      doFilter,
-      values: initialValues,
-      mapFilter: row =>
-        row.find(({ columnName }) => columnName === col.name).value,
-    })
-    return initialFilters
-  }, [])
-
-  return initialFilters
-}
-
 function useTabularData({ columns, data, defaultSort, defaultFilter }) {
   const [sortColumn, setSortColumn] = useState(defaultSort)
   const timepoint = useContext(TimeContext)
@@ -103,19 +86,33 @@ function useTabularData({ columns, data, defaultSort, defaultFilter }) {
     getInitialSortDef(sortColumn, columnDefs)
   )
 
-  const { applyFilters, dispatchFilters } = useFilter(
-    getInitialFilters(columnDefs)
-  )
+  const { applyFilters, dispatchFilters } = useFilter([])
 
-  // Give each filterable column a function to update its column's filter values
-  // TODO: see if this can be made redundant using Formik
+  // Give each filterable column functions to update its column's filter values
   columnDefs.forEach(col => {
     if (!col.filter || !!col.filter.updateValues) return
-    col.filter.updateValues = newValues =>
+
+    col.filter.updateValues = values =>
       dispatchFilters({
         action: 'update',
         name: col.filter.name,
-        values: newValues,
+        values,
+      })
+
+    col.filter.addFilter = values =>
+      dispatchFilters({
+        action: 'add',
+        name: col.filter.name,
+        doFilter: col.filter.doFilter,
+        values,
+        mapFilter: row =>
+          row.find(({ columnName }) => columnName === col.name).value,
+      })
+
+    col.filter.removeFilter = () =>
+      dispatchFilters({
+        action: 'remove',
+        name: col.filter.name,
       })
   })
 

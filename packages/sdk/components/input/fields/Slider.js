@@ -87,19 +87,6 @@ const NumberLabel = styled.label`
   padding: ${({ theme }) => theme.spacing(0.5)};
 `
 
-function snapToStep(position, steps) {
-  const nearestStep = Math.round(steps * position)
-  const snappedPosition = nearestStep ? Math.min(1, nearestStep / steps) : 0
-  return {
-    snappedPosition,
-    nearestStep,
-  }
-}
-
-function getPosition(stepIndex, steps) {
-  return stepIndex / steps
-}
-
 function getMouseX(event, containerRef) {
   return (
     event.nativeEvent.clientX -
@@ -125,7 +112,7 @@ function getNearestFieldName(
 }
 
 function Slider({
-  min,
+  min = 0,
   max,
   steps,
   stepInterval = 1,
@@ -152,6 +139,23 @@ function Slider({
       `Slider supports up to 2 fields, received ${fieldNames.length}`
     )
 
+  const getPosition = stepIndex => {
+    const stepIndexWithinMin = Math.max(stepIndex, min)
+
+    if (!stepIndexWithinMin) return 0
+
+    return Math.min(stepIndexWithinMin, max) / steps
+  }
+
+  const snapToStep = position => {
+    const nearestStep = Math.round(steps * position)
+    const snappedPosition = Math.min(1, getPosition(nearestStep))
+    return {
+      snappedPosition,
+      nearestStep,
+    }
+  }
+
   const [fieldIsSliding, setFieldSliding] = useState('')
 
   // Position is a decimal number >=0 <=1 representing the % distance along the slider
@@ -170,11 +174,12 @@ function Slider({
   // Normally number input === field values, but they can temporarily diverge to allow invalid
   // number input values while typing; e.g. if min is 20, max is 75, user presses backspace in max
   // then 9, wanting '79', we should allow the invalid value '7' until user has finished typing
+  // TODO: only set and use this when input is acceptably invalid; show values when undefined.
   const [lowerNumberInput, setLowerNumberInput] = useState(
-    values[fieldNames[0]]
+    Math.max(values[fieldNames[0]], min)
   )
   const [upperNumberInput, setUpperNumberInput] = useState(
-    values[fieldNames[1]]
+    isRange && Math.min(values[fieldNames[1]], max)
   )
 
   const containerRef = useRef()
@@ -320,7 +325,7 @@ function Slider({
             step={stepInterval}
             min={min}
             max={max}
-            value={lowerNumberInput}
+            value={Math.max(lowerNumberInput, min)}
             onChange={event => handleNumberInput(event, fieldNames[0])}
             onBlur={() =>
               updateNumberInput(fieldNames[0], values[fieldNames[0]])
@@ -337,7 +342,7 @@ function Slider({
               step={stepInterval}
               min={min}
               max={max}
-              value={upperNumberInput}
+              value={Math.min(upperNumberInput, max)}
               onChange={event => handleNumberInput(event, fieldNames[1])}
               onBlur={() =>
                 updateNumberInput(fieldNames[1], values[fieldNames[1]])
@@ -352,17 +357,17 @@ function Slider({
 }
 
 Slider.propTypes = {
-  fieldNames: T.array.isRequired,
   onChange: T.func.isRequired,
   values: T.object.isRequired,
   setFieldValue: T.func.isRequired,
+  fieldNames: T.array,
   min: T.number,
   max: T.number,
   steps: T.number,
   stepInterval: T.number,
   controlWidth: T.number,
   width: T.number,
-  overrides: T.object,
+  override: T.object,
 }
 
 export default Slider

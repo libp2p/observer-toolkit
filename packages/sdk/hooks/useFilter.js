@@ -1,12 +1,12 @@
 import { useReducer, useCallback } from 'react'
 import T from 'prop-types'
 
-function updateFilters(filters, { action, name, doFilter, values }) {
+function updateFilters(filters, { action, name, doFilter, mapFilter, values }) {
   switch (action) {
     case 'update':
       return updateValues(filters, name, values)
     case 'add':
-      return addFilter(filters, { name, doFilter, values })
+      return addFilter(filters, { name, doFilter, mapFilter, values })
     case 'remove':
       return removeFilter(filters, name)
     default:
@@ -32,13 +32,19 @@ function updateValues(filters, name, values) {
 }
 
 function addFilter(filters, newFilter) {
-  filters.push(newFilter)
-  return filters
+  if (filters.some(filter => filter.name === newFilter.name)) {
+    return updateValues(filters, newFilter.name, newFilter.values)
+  }
+
+  return [...filters, newFilter]
 }
 
-function removeFilter(filters, existingFilter) {
-  filters.splice(filters.indexOf(existingFilter), 1)
-  return filters
+function removeFilter(filters, filterName) {
+  const filterIndex = filters.findIndex(filter => filter.name === filterName)
+  if (filterIndex === -1) return filters
+
+  filters.splice(filterIndex, 1)
+  return [...filters]
 }
 
 function useFilter(initialFilters) {
