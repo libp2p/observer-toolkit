@@ -2,7 +2,7 @@ import React from 'react'
 
 const SvgAsc = props => (
   <svg
-    viewBox="15 15 74 74"
+    viewBox="16 16 70 70"
     fill="currentColor"
     strokeLinejoin="round"
     strokeMiterlimit={1.414}
