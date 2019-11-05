@@ -58,8 +58,6 @@ function TimeSlider({ width }) {
   const timepoint = useContext(TimeContext)
   const { setTimepoint } = useContext(SetterContext)
 
-  // if (!dataset.length || !timepoint) return ''
-
   const timeIndex = dataset.indexOf(timepoint)
 
   const widthPerTime = width / dataset.length
