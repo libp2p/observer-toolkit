@@ -42,7 +42,7 @@ function Icon({ type, onClick, active, disabled, size = 20 }) {
 
   return (
     <Container
-      onClick={disabled ? () => {} : onClick}
+      onClick={disabled ? null : onClick}
       active={active}
       disabled={disabled}
       size={size}
