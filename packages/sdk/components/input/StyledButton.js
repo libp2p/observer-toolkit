@@ -14,7 +14,7 @@ const StyledButton = styled.button`
     const top = isActive ? 'dark' : 'light'
     const bottom = isActive ? 'light' : 'dark'
     return `
-      background: ${theme.color('tertiary', isActive ? 'dark' : 'mid')};
+      background: ${theme.color('tertiary', isActive ? 'dark' : 'light')};
       border-top: 4px solid ${theme.color(top, 'mid', 0.3)};
       border-left: 4px solid ${theme.color(top, 'mid', 0.3)};
       border-bottom: 4px solid ${theme.color(bottom, 'mid', 0.3)};

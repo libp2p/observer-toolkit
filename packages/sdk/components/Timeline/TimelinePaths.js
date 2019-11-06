@@ -4,20 +4,25 @@ import styled from 'styled-components'
 
 import { SetterContext, PeerContext } from '../context/DataProvider'
 
+const StyledSvg = styled.svg`
+  width: 100%;
+  height: ${({ svgHeight }) => svgHeight}px;
+
+  // TODO: make this less hacky, adjust in path defs
+  margin-bottom: -4px;
+`
+
+const StyledPath = styled.path`
+  fill: ${({ theme, colorKey, opacity }) =>
+    theme.color(colorKey, 'mid', opacity)};
+`
+
 function TimelinePaths({ pathDefs, svgHeight, colorKey }) {
   const globalPeerId = useContext(PeerContext)
   const { setPeerId } = useContext(SetterContext)
 
-  const StyledSvg = styled.svg`
-    width: 100%;
-    height: ${svgHeight}px;
-
-    // TODO: make this less hacky, adjust in path defs
-    margin-bottom: -4px;
-  `
-
   return (
-    <StyledSvg>
+    <StyledSvg svgHeight={svgHeight}>
       {pathDefs &&
         pathDefs.map(({ pathDef, peerId }, index) => {
           const isHighlighted = peerId === globalPeerId
@@ -29,23 +34,18 @@ function TimelinePaths({ pathDefs, svgHeight, colorKey }) {
             if (globalPeerId) setPeerId(null)
           }
 
-          const StyledPath = styled.path.attrs({
-            d: pathDef,
-            name: peerId,
-          })`
-            fill: ${({ theme }) =>
-              theme.color(
-                isHighlighted ? 'tertiary' : colorKey,
-                'mid',
-                index % 2 ? 0.6 : 0.8
-              )};
-          `
           const key = `${peerId}_paths`
           return (
             <StyledPath
               key={key}
+              d={pathDef}
+              name={peerId}
               onMouseEnter={mouseEnterHandler}
               onMouseLeave={mouseLeaveHandler}
+              colorKey={isHighlighted ? 'tertiary' : colorKey}
+              opacity={
+                (index % 2 ? 0.6 : 0.7) + (index / (pathDefs.length + 1)) * 0.3
+              }
             />
           )
         })}

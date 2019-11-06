@@ -4,7 +4,7 @@ User interface for visualising libp2p introspection data.
 
 This [Lerna monorepo](https://github.com/lerna/lerna), managed with [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/), will (TBC) be published to NPM under a namespace allowing packages to be installed and used individually (e.g. `npm i @libp2p-introspection-ui/sdk`). These packages comprise of:
 
-- [**`packages/sdk`**](tree/master/packages/sdk): _Status: needs extending, adding [filtering (WIP)](https://github.com/nearform/libp2p-introspection-ui/pull/4), more data structures, more base components including chart types and more input elements, and design improvements needed to the Timeline_. A Software Development Kit for building React components that consume and visualise LibP2P introspection data:
+- [**`packages/sdk`**](tree/master/packages/sdk): _Status: needs extending, more data structures, more base components including chart types and more input elements, and design improvements needed to the Timeline_. A Software Development Kit for building React components that consume and visualise LibP2P introspection data:
   - [`/components`](tree/master/packages/sdk/components): Base components which can be built on and extended. [**SDK components documentation**](docs/sdk/components/index.md)
   - [`/hooks`](tree/master/packages/sdk/hooks): Custom React Hooks for managing, formatting and manipulating LibP2P introspection data ready for consumption by components. [**SDK hooks documentation**](docs/sdk/hooks/index.md)
   - [`DataProvider`](tree/master/packages/sdk/components/DataProvider) contexts using [`useContext`](https://reactjs.org/docs/hooks-reference.html#usecontext) allowing data and user choices to be cleanly shared between components

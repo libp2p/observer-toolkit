@@ -5,6 +5,23 @@ import styled from 'styled-components'
 import { parseBuffer } from 'proto'
 import { SetterContext } from '../context/DataProvider'
 
+const FileButton = styled.button`
+  padding: ${({ theme }) => theme.spacing()};
+  position: relative;
+  z-index: 5;
+  cursor: pointer;
+`
+const NativeFileInput = styled.input`
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+`
+const RelativeSpan = styled.span`
+  position: relative;
+`
+
 function UploadData({ title }) {
   const [isLoading, setIsLoading] = useState(false)
   const { dispatchDataset } = useContext(SetterContext)
@@ -31,23 +48,6 @@ function UploadData({ title }) {
     })
     setIsLoading(false)
   }
-
-  const FileButton = styled.button`
-    padding: ${({ theme }) => theme.spacing()};
-    position: relative;
-    z-index: 5;
-    cursor: pointer;
-  `
-  const NativeFileInput = styled.input`
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-  `
-  const RelativeSpan = styled.span`
-    position: relative;
-  `
 
   const buttonText = isLoading
     ? 'Loading...'

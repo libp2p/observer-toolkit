@@ -2,6 +2,7 @@ import React, { useContext, useMemo, useState } from 'react'
 import T from 'prop-types'
 
 import useSorter from '../hooks/useSorter'
+import useFilter from '../hooks/useFilter'
 import { TimeContext } from '../components/context/DataProvider'
 
 function mapSorterToColumn(colName, columnDefs) {
@@ -15,6 +16,7 @@ function getTableContentProps(data, columnDefs, timepoint) {
       ...columnDef.getProps(datum, timepoint),
       rowIndex,
       columnIndex,
+      columnName: columnDef.name,
     }))
   )
 }
@@ -33,37 +35,92 @@ function applyColumnDefaults(columns) {
   )
 }
 
+function applyCalculations(columns, rawContentProps) {
+  return columns.map((column, columnIndex) => {
+    if (!column.calculate) return column
+    const columnProps = rawContentProps.map(row => row[columnIndex])
+
+    const calculated = Object.entries(column.calculate).reduce(
+      (calculated, [key, doCalc]) => {
+        calculated[key] = doCalc(columnProps)
+        return calculated
+      },
+      {}
+    )
+
+    return Object.assign({}, column, calculated)
+  })
+}
+
 function DefaultRenderer({ value }) {
   return <>{value}</>
 }
-
 DefaultRenderer.propTypes = {
   value: T.any,
+}
+
+function getInitialSortDef(sortColumn, columnDefs) {
+  const sortDef =
+    sortColumn && columnDefs.find(col => col.name === sortColumn).sort
+  if (!sortDef) return { disabled: true }
+
+  return {
+    ...sortDef,
+    mapSorter: mapSorterToColumn(sortColumn, columnDefs),
+  }
 }
 
 function useTabularData({ columns, data, defaultSort, defaultFilter }) {
   const [sortColumn, setSortColumn] = useState(defaultSort)
   const timepoint = useContext(TimeContext)
 
-  const columnDefs = applyColumnDefaults(columns)
-  const sortDef =
-    sortColumn && columnDefs.find(col => col.name === sortColumn).sort
+  const columnsWithDefaults = applyColumnDefaults(columns)
+
+  const rawContentProps = useMemo(() => {
+    return getTableContentProps(data, columnsWithDefaults, timepoint)
+  }, [data, columnsWithDefaults, timepoint])
+
+  const columnDefs = applyCalculations(columnsWithDefaults, rawContentProps)
 
   const { sorter, sortDirection, setSortDirection } = useSorter(
-    sortDef
-      ? {
-          ...sortDef,
-          mapSorter: mapSorterToColumn(sortColumn, columnDefs),
-        }
-      : { disabled: true }
+    getInitialSortDef(sortColumn, columnDefs)
   )
 
+  const { applyFilters, dispatchFilters } = useFilter([])
+
+  // Give each filterable column functions to update its column's filter values
+  columnDefs.forEach(col => {
+    if (!col.filter || !!col.filter.updateValues) return
+
+    col.filter.updateValues = values =>
+      dispatchFilters({
+        action: 'update',
+        name: col.filter.name,
+        values,
+      })
+
+    col.filter.addFilter = values =>
+      dispatchFilters({
+        action: 'add',
+        name: col.filter.name,
+        doFilter: col.filter.doFilter,
+        values,
+        mapFilter: row =>
+          row.find(({ columnName }) => columnName === col.name).value,
+      })
+
+    col.filter.removeFilter = () =>
+      dispatchFilters({
+        action: 'remove',
+        name: col.filter.name,
+      })
+  })
+
   const tableContentProps = useMemo(() => {
-    const tableContentProps = getTableContentProps(data, columnDefs, timepoint)
-    // TODO: filter here
-    tableContentProps.sort(sorter)
-    return tableContentProps
-  }, [data, columnDefs, timepoint, sorter])
+    const filteredContentProps = rawContentProps.filter(applyFilters)
+    filteredContentProps.sort(sorter)
+    return filteredContentProps
+  }, [rawContentProps, sorter, applyFilters])
 
   return {
     columnDefs,
@@ -87,7 +144,12 @@ useTabularData.propTypes = {
         defaultDirection: T.string,
         directionOptions: T.instanceOf(Map),
       }),
-      filter: T.obj,
+      filter: T.shape({
+        doFilter: T.func.isRequired,
+        initialValues: T.any,
+        filterUi: T.node,
+        updateValues: T.func,
+      }),
     })
   ).isRequired,
   data: T.arrayOf(T.object).isRequired,

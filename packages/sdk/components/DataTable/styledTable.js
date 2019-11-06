@@ -17,6 +17,7 @@ const TableRow = styled.tr`
 
 const TableHead = styled.th`
   ${({ theme }) => theme.styles.tableCell}
+  padding-right: 0;
   font-family: plex-sans;
   font-weight: 400;
   border-bottom: 1px solid ${({ theme }) => theme.color('light', 'dark')};
@@ -33,4 +34,9 @@ const TableCell = styled.td`
   font-family: plex-sans;
 `
 
-export { Table, TableRow, TableHead, TableCell }
+// Provide unstyled styled-components so users can provide overrides using `as`
+const THead = styled.thead``
+const THeadRow = styled.tr``
+const TBody = styled.tbody``
+
+export { Table, TableRow, TableHead, TableCell, THead, THeadRow, TBody }

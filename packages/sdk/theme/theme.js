@@ -13,8 +13,8 @@ const palette = {
   },
   tertiary: {
     // purple
-    light: '179, 65, 157',
-    mid: '154, 125, 151',
+    light: '234, 123, 162',
+    mid: '209, 13, 102',
     dark: '90, 10, 98',
   },
   notice: {

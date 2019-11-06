@@ -26,11 +26,11 @@ function ConnectionsTable() {
     <DataTable
       tableContentProps={tableContentProps}
       columnDefs={columnDefs}
-      TableRow={ConnectionsTableRow}
       sortColumn={sortColumn}
       setSortColumn={setSortColumn}
       sortDirection={sortDirection}
       setSortDirection={setSortDirection}
+      override={{ DataTableRow: ConnectionsTableRow }}
     />
   )
 }
