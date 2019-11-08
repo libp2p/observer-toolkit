@@ -22,8 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "react": "^16.10.2",
-    "styled-components": "^4.4.0",
-    "webpack": "4.41.0"
+    "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -31,6 +30,7 @@
     "@babel/preset-react": "^7.6.3",
     "@storybook/react": "^5.2.4",
     "arraybuffer-loader": "^1.0.8",
+    "babel": "^6.23.0",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
@@ -43,7 +43,10 @@
     "lerna": "^3.17.0",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
+    "raw-loader": "^3.1.0",
+    "react-scripts": "^3.2.0",
     "storybook": "^5.1.11",
+    "webpack": "^4.41.2",
     "yarn": "^1.19.1"
   },
   "eslintConfig": {
