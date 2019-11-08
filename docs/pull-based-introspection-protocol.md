@@ -4,7 +4,7 @@ There has been previous work and discussions which inform the pull-based protoco
 
 When the client starts up, it will look for the local introspection port of the LibP2P network. There will also be an option to connect to another host.  Once connected, the introspection module will start extracting the data defined in introspection message from other LibP2P modules such as swarm.
 
-The client listens for the data message from the ws connection and once received and processed for visualization will request for the next data set.  This process will take away the backpressure resposibilty from the server.
+The client listens for the data message from the WebSocket connection and once received and processed for visualization will request for the next data set. This process will take away the backpressure resposibilty from the server.
 
 ## Diagram
 
@@ -14,7 +14,7 @@ The specific functionality of this sequence of events is described in the sequen
 
 ## Specifics of protocol operation
 
-The UI client interacts via a websocket connection to the introspection server. When the websocket connects the server will send the client the current snapshot from the introspection node as a well formed protobuf message. Whenever any snapshot has been received, parsed, and stored in the UI datastore, the UI will send a message over the websocket connection to signal it is ready for the next snapshot.
+The UI client interacts via a WebSocket connection to the introspection server. When the WebSocket connects the server will send the client the current snapshot from the introspection node as a well formed protobuf message. Whenever any snapshot has been received, parsed, and stored in the UI datastore, the UI will send a message over the WebSocket connection to signal it is ready for the next snapshot.
 
 The content of this message is currently unspecified, and it could be used in the future for sending some control information about the next sample. The format of these messages should be kept to as small as possible.
 While developing the protocol sending simple strings should be good to use for operation to begin to crystalise the requirements of the format. This can then be formalised within a protobuf when it has been discovered the concrete needs of the protocol.
