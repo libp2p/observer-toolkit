@@ -16,8 +16,7 @@ The specific functionality of this sequence of events is described in the sequen
 
 The UI client interacts via a WebSocket connection to the introspection server. When the WebSocket connects the server will send the client the current snapshot from the introspection node as a well formed protobuf message. Whenever any snapshot has been received, parsed, and stored in the UI datastore, the UI will send a message over the WebSocket connection to signal it is ready for the next snapshot.
 
-The content of this message is currently unspecified, and it could be used in the future for sending some control information about the next sample. The format of these messages should be kept to as small as possible.
-While developing the protocol sending simple strings should be good to use for operation to begin to crystalise the requirements of the format. This can then be formalised within a protobuf when it has been discovered the concrete needs of the protocol.
+The content of this message is currently unspecified, and it could be used in the future for sending some control information as a protobuf about the next sample. The format of these messages should be kept to as small as possible.
 
 When the server receives the ready signal from the client it will then be able to send the next snapshot. The server should operate to send any snapshot only once even if the client signals it is ready before the next snapshot is generated. The server should not send snapshots if the client has not signaled it is ready to receive one. 
 
