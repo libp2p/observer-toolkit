@@ -19,6 +19,7 @@
     "arraybuffer-loader": "^1.0.8",
     "connections-table": "^0.0.1",
     "craco-babel-loader": "^0.1.4",
+    "libp2p-introspection-widget-list": "git://github.com/nearform/libp2p-introspection-widget-list.git",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-markdown": "^4.2.2",

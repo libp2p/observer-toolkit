@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import widgetList from 'libp2p-introspection-widget-list'
 import { Timeline } from 'sdk'
 
-import approvedViz from '../definitions/approvedViz'
 import CatalogueItem from './CatalogueItem'
 import HeaderTabs from './HeaderTabs'
 import SelectedComponent from './SelectedComponent'
@@ -58,9 +58,9 @@ function Page() {
         <HeaderTabs />
       </Header>
       <Main>
-        {selected !== null && <SelectedComponent viz={approvedViz[selected]} />}
+        {selected !== null && <SelectedComponent viz={widgetList[selected]} />}
         <CatalogueBkg>
-          {approvedViz.map(({ name, description, tags, screenshot }, index) => (
+          {widgetList.map(({ name, description, tags, screenshot }, index) => (
             <CatalogueItem
               key={name}
               name={name}
