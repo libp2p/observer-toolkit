@@ -16,7 +16,7 @@ The specific operation of the libp2p node introspection node collection of data 
 
 The UI client interacts via a websocket connection to the introspection server. When the websocket connects the server will send the client the current snapshot from the introspection node as a well formed protobuf message. Whenever any snapshot has been received, parsed, and stored in the UI datastore, the UI will send a message over the websocket connection to signal it is ready for the next snapshot.
 
-The content of this message is unspecified, and can be anything.
+The content of this message is currently unspecified, and it could be used in the future for sending some control information about the next sample.
 
 When the server receives the ready signal from the client it will then be able to send the next snapshot. The server should operate to send any snapshot only once even if the client signals it is ready before the next snapshot is generated. The server should not send snapshots if the client has not signaled it is ready to receive one. 
 
