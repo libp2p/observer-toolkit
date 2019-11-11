@@ -4,7 +4,7 @@ A command line tool can connect using the Websocket Protocol
 to consume and record the data samples at a given interval in a known
 file format that can be later used to process/interpret that data.
 In order to delimit messages, each message will be prefixed with its length,
-in fixed unsigned 64-bit encoding.
+in fixed unsigned 32-bit encoding.
 
 Each data sample will be a Protocol Buffer Message, one at a time,
 according to file format:
