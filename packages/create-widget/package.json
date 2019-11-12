@@ -15,6 +15,7 @@
     "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
   },
   "scripts": {
+    "prepublishOnly": "node ./prepublish.js",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {

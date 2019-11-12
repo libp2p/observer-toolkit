@@ -57,32 +57,30 @@ async function initWidget() {
   }
 
   await Promise.all([
-    copyFile('./index.js', replaceText),
-    copyFile('./description.md', replaceText),
-    copyFile('./README.md', replaceText),
+    copyFile('./index.js', { replaceText }),
+    copyFile('./description.md', { replaceText }),
+    copyFile('./README.md', { replaceText }),
 
-    copyFile(
-      './components/MainComponent.js',
+    copyFile('./components/MainComponent.js', {
       replaceText,
-      `${widgetNameCamel}.js`
-    ),
-    copyFile(
-      './components/MainComponent.stories.js',
+      outputFilename: `${widgetNameCamel}.js`,
+    }),
+    copyFile('./components/MainComponent.stories.js', {
       replaceText,
-      `${widgetNameCamel}.stories.js`
-    ),
+      outputFilename: `${widgetNameCamel}.stories.js`,
+    }),
 
     copyFile('./.storybook/config.js'),
     copyFile('./.storybook/webpack.config.js'),
 
     // Copy config from this repo where possible to avoid duplication
-    copyFile('../../../.eslintrc'),
-    copyFile('../../../.eslintignore'),
-    copyFile('../../../.prettierignore'),
-    copyFile('../../../.prettierrc'),
-    copyFile('../../../babel.config.js'),
+    copyFile('../root-repo/.eslintrc', { outputDirname: '.' }),
+    copyFile('../root-repo/.eslintignore', { outputDirname: '.' }),
+    copyFile('../root-repo/.prettierignore', { outputDirname: '.' }),
+    copyFile('../root-repo/.prettierrc', { outputDirname: '.' }),
+    copyFile('../root-repo/babel.config.js', { outputDirname: '.' }),
     // TODO: Check this avoids NPM's .gitignore ↳ .npmignore rename bugfeature
-    copyFile('../../../.gitignore'),
+    copyFile('../root-repo/.gitignore', { outputDirname: '.' }),
   ])
 
   const packageJsonContent = await getPackageJsonContent(

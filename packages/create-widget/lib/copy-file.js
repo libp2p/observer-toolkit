@@ -15,11 +15,7 @@ async function copyFile(
   } = {}
 ) {
   const inputPath = path.resolve(__dirname, '../template', filePath)
-  const outputPath = path.resolve(
-    '.',
-    path.dirname(filePath.replace(/(\.\.\/)+/, './')),
-    outputFilename
-  )
+  const outputPath = path.resolve('.', outputDirname, outputFilename)
 
   const inputText = await readFile(inputPath, 'utf8')
   const outputText = !replaceText
