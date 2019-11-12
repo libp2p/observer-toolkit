@@ -25,48 +25,29 @@ async function initWidget() {
     ? JSON.parse(await readFile(packageJsonPath))
     : {}
 
-  const nameDefault = existingPackageJson.name
-    ? ` (${existingPackageJson.name})`
-    : ''
-  const nameQuestion =
-    chalk.cyan('Name of widget: ') + chalk.grey(nameDefault + '\n')
-  let widgetName = await rlp.questionAsync(nameQuestion)
-  if (!widgetName) {
-    if (!existingPackageJson.name) {
-      console.error(chalk.red('Name of widget is required'))
-      initializeWidget()
-      return
-    }
-    console.log(existingPackageJson.name + '\n')
-    widgetName = existingPackageJson.name
+  const widgetName = await askQuestion(
+    existingPackageJson,
+    'name',
+    'Name of widget'
+  )
+  if (widgetName === false) {
+    console.error(chalk.red('Name of widget is required'))
+    initWidget()
+    return
   }
+  const widgetDesc = await askQuestion(
+    existingPackageJson,
+    'description',
+    'Short description of widget (optional)'
+  )
+  const widgetAuthor = await askQuestion(
+    existingPackageJson,
+    'author',
+    'Author, e.g. "name <email@example.com>" (optional)'
+  )
 
   const widgetNameCamel = upperFirst(camelCase(widgetName)) // ComponentNameStyle
   const widgetNameKebab = kebabCase(widgetName) // skewered-with-hyphens
-
-  const descDefault = existingPackageJson.description
-    ? ` (${existingPackageJson.description})`
-    : ''
-  const descQuestion =
-    chalk.cyan('Short description of widget (optional): ') +
-    chalk.grey(descDefault + '\n')
-  let widgetDesc = await rlp.questionAsync(descQuestion)
-  if (!widgetDesc) {
-    console.log(existingPackageJson.description + '\n')
-    widgetDesc = existingPackageJson.description || ''
-  }
-
-  const authorDefault = existingPackageJson.author
-    ? ` (${existingPackageJson.author})`
-    : ''
-  const authorQuestion =
-    chalk.cyan('Author (optional, like "name <email@example.com>"): ') +
-    chalk.grey(authorDefault + '\n')
-  let widgetAuthor = await rlp.questionAsync(authorQuestion)
-  if (!widgetAuthor) {
-    console.log(existingPackageJson.author + '\n')
-    widgetAuthor = existingPackageJson.author || ''
-  }
 
   const replaceText = {
     name: widgetNameKebab,
@@ -120,6 +101,24 @@ async function initWidget() {
   }
 
   successMessage(replaceText)
+}
+
+async function askQuestion(existingPackageJson, key, questionText) {
+  const defaultAnswer = existingPackageJson[key]
+    ? ` (${existingPackageJson[key]})`
+    : ''
+  const questionTextFormatted =
+    chalk.cyan(`${questionText}: `) + chalk.grey(`${defaultAnswer}\n`)
+
+  let answer = await rlp.questionAsync(questionTextFormatted)
+  if (!answer) {
+    if (!existingPackageJson[key]) return false
+
+    console.log(existingPackageJson[key] + '\n')
+    answer = existingPackageJson[key]
+  }
+
+  return answer
 }
 
 module.exports = initWidget

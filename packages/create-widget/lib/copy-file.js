@@ -8,8 +8,11 @@ const { mkdir, readFile, rename, writeFile } = fs.promises
 
 async function copyFile(
   filePath,
-  replaceText,
-  outputFilename = path.basename(filePath)
+  {
+    replaceText,
+    outputFilename = path.basename(filePath),
+    outputDirname = path.dirname(filePath),
+  } = {}
 ) {
   const inputPath = path.resolve(__dirname, '../template', filePath)
   const outputPath = path.resolve(
@@ -23,6 +26,7 @@ async function copyFile(
     ? inputText
     : inputText
         .replace(/\$WIDGET_NAME/g, replaceText.name)
+        .replace(/\$WIDGET_COMPONENT/g, replaceText.component)
         .replace(/\$WIDGET_DESCRIPTION/g, replaceText.description)
         .replace(/\$WIDGET_AUTHOR/g, replaceText.author)
 
