@@ -1,7 +1,7 @@
 import React from 'react'
 import T from 'prop-types'
 
-import { PeerId, TimeNumber, DataNumber } from 'sdk'
+import { PeerId, TimeNumber, DataNumber } from '@libp2p-observer/sdk'
 
 function PeerIdContent({ value }) {
   return (

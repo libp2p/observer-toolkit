@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 
-import { parseBuffer, samples } from 'proto'
-import { DataContext, SetterContext } from 'sdk'
+import { parseBuffer, samples } from '@libp2p-observer/proto'
+import { DataContext, SetterContext } from '@libp2p-observer/sdk'
 
 import StyledButton from './StyledButton'
 

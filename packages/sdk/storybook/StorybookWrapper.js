@@ -6,7 +6,7 @@ import { DataProvider } from '../components/context/DataProvider'
 import ThemeSetter from '../components/context/ThemeSetter'
 import Timeline from '../components/Timeline/Timeline'
 
-import { samples, parseBuffer } from 'proto'
+import { samples, parseBuffer } from '@libp2p-observer/proto'
 
 const Page = styled.div`
   display: flex;

@@ -1,6 +1,11 @@
 import { area, scaleLinear, scaleTime, stack } from 'd3'
 
-import { getLatestTimepoint, getTime, getTraffic, getConnections } from 'proto'
+import {
+  getLatestTimepoint,
+  getTime,
+  getTraffic,
+  getConnections,
+} from '@libp2p-observer/proto'
 import { validateNumbers } from '../../utils/helpers'
 
 function getMaxAreaPeak(stackedData) {

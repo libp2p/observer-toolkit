@@ -1,5 +1,5 @@
-import { getListFilter } from 'sdk'
-import { statusNames } from 'proto'
+import { getListFilter } from '@libp2p-observer/sdk'
+import { statusNames } from '@libp2p-observer/proto'
 
 const statusNamesList = Object.values(statusNames)
 

@@ -8,14 +8,14 @@
     "packages/*"
   ],
   "scripts": {
-    "deploy:catalogue": "lerna exec --scope catalogue -- npm run deploy",
+    "deploy:catalogue": "lerna exec --scope=\"@libp2p-observer/catalogue\" -- npm run deploy",
     "lint": "eslint . --ext .js",
     "lint-fix": "eslint . --ext .js --fix",
     "prettier": "prettier --check './**/*.js'",
     "prettier-fix": "prettier --write './**/*.js'",
-    "storybook:connections-table": "lerna exec --scope connections-table -- npm run storybook",
-    "storybook:streams-table": "lerna exec --scope streams-table -- npm run storybook",
-    "start:catalogue": "lerna exec --scope catalogue -- npm run start",
+    "storybook:connections-table": "lerna exec --scope=\"@libp2p-observer/connections-table\" -- npm run storybook",
+    "storybook:streams-table": "lerna exec --scope=\"@libp2p-observer/streams-table\" -- npm run storybook",
+    "start:catalogue": "lerna exec --scope=\"@libp2p-observer/catalogue\" -- npm run start",
     "test": "test"
   },
   "author": "NearForm",
@@ -46,7 +46,7 @@
     "raw-loader": "^3.1.0",
     "react-scripts": "^3.2.0",
     "storybook": "^5.1.11",
-    "webpack": "^4.41.2",
+    "webpack": "4.41.0",
     "yarn": "^1.19.1"
   },
   "eslintConfig": {

@@ -1,7 +1,11 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 
-import { UploadDataButton, SampleDataButton, SetterContext } from 'sdk'
+import {
+  UploadDataButton,
+  SampleDataButton,
+  SetterContext,
+} from '@libp2p-observer/sdk'
 
 const TabsWrapper = styled.div`
   display: flex;

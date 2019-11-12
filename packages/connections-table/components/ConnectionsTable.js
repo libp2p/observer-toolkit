@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
-import { getConnections } from 'proto'
-import { DataTable, TimeContext, useTabularData } from 'sdk'
+import { getConnections } from '@libp2p-observer/proto'
+import { DataTable, TimeContext, useTabularData } from '@libp2p-observer/sdk'
 
 import ConnectionsTableRow from './ConnectionsTableRow'
 import connectionsColumnDefs from '../definitions/connectionsColumns'
