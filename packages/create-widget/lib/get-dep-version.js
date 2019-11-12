@@ -10,16 +10,19 @@ function getDepVersion(depName, depType, corePackageJson) {
   let version = corePackageJson[depType][depName]
   if (!version) {
     // For sibling packages, use the latest version
-    const siblingMatch = depName.match(/^@libp2p-introspection-ui\/(.+)/)
+    const siblingMatch = depName.match(/^@libp2p-observer\/(.+)/)
     const isSiblingPackage = !!siblingMatch
 
     // For other dependencies, use the version used by the SDK
     const targetDir = siblingMatch ? siblingMatch[1] : 'sdk'
 
     const targetPackageJsonPath = path.resolve(
-      `../${targetDir}`,
+      __dirname,
+      '../root-repo',
+      targetDir,
       'package.json'
     )
+
     const targetPackageJson = JSON.parse(readFileSync(targetPackageJsonPath))
 
     version = isSiblingPackage

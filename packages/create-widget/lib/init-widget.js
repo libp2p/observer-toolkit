@@ -80,7 +80,10 @@ async function initWidget() {
     copyFile('../root-repo/.prettierrc', { outputDirname: '.' }),
     copyFile('../root-repo/babel.config.js', { outputDirname: '.' }),
     // TODO: Check this avoids NPM's .gitignore ↳ .npmignore rename bugfeature
-    copyFile('../root-repo/.gitignore', { outputDirname: '.' }),
+    copyFile('../root-repo/gitignore', {
+      outputDirname: '.',
+      outputFilename: '.gitignore',
+    }),
   ])
 
   const packageJsonContent = await getPackageJsonContent(

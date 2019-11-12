@@ -14,8 +14,20 @@ async function prepublish() {
     copyFile('../../../.prettierignore', copyProps),
     copyFile('../../../.prettierrc', copyProps),
     copyFile('../../../babel.config.js', copyProps),
-    // TODO: Check this avoids NPM's .gitignore ↳ .npmignore rename bugfeature
-    copyFile('../../../.gitignore', copyProps),
+    copyFile('../../../.gitignore', {
+      // Temporarily drop the `.` to dodge NPM's .gitignore >> .npmignore
+      // rename bugfeature explained here https://github.com/npm/npm/issues/7252
+      outputFilename: 'gitignore',
+      ...copyProps,
+    }),
+
+    copyFile('../../../package.json', copyProps),
+    copyFile('../../sdk/package.json', {
+      outputDirname: './root-repo/sdk',
+    }),
+    copyFile('../../proto/package.json', {
+      outputDirname: './root-repo/proto',
+    }),
   ]
 
   await Promise.all(copyPromises)

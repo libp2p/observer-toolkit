@@ -2,6 +2,7 @@
 
 const fs = require('fs')
 const { readFile } = fs.promises
+const path = require('path')
 
 const {
   dependenciesList,
@@ -13,7 +14,12 @@ async function getPackageJsonContent(
   existingPackageJson,
   { name, description, author }
 ) {
-  const corePackageJsonPath = '../../package.json'
+  const corePackageJsonPath = path.resolve(
+    __dirname,
+    '../root-repo',
+    'package.json'
+  )
+
   const corePackageJson = JSON.parse(await readFile(corePackageJsonPath))
 
   const dependencies = dependenciesList.reduce((newDeps, depName) => {
