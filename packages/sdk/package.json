@@ -1,5 +1,8 @@
 {
-  "name": "sdk",
+  "name": "@libp2p-observer/sdk",
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
   "version": "0.0.1",
   "description": "Core components, utilities and API for building libp2p introspection ui components",
   "author": "AlanSl <alan.slater@nearform.com>",
@@ -13,7 +16,7 @@
     "d3": "^5.12.0",
     "formik": "^1.5.8",
     "lodash.isequal": "^4.5.0",
-    "proto": "^0.0.1",
+    "@libp2p-observer/proto": "^0.0.1",
     "react": "^16.10.2",
     "react-resize-detector": "^4.2.1",
     "react-scripts": "^3.2.0",

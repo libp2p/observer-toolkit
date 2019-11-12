@@ -1,8 +1,8 @@
 // List of widget dependencies, for which versions are copied from package.jsons
 const dependencies = {
   dependenciesList: [
-    '@libp2p-introspection-ui/proto',
-    '@libp2p-introspection-ui/sdk',
+    '@libp2p-observer/proto',
+    '@libp2p-observer/sdk',
     'react',
     'styled-components',
   ],

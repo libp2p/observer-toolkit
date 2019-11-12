@@ -1,5 +1,8 @@
 {
-  "name": "streams-table",
+  "name": "@libp2p-observer/streams-table",
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
   "version": "0.0.1",
   "description": "React component built on libp2p-introspection-ui SDK, visualizing libp2p streams in a data table",
   "author": "AlanSl <alan.slater@nearform.com>",
@@ -10,10 +13,10 @@
     "storybook": "start-storybook -p 9009"
   },
   "dependencies": {
-    "proto": "^0.0.1",
+    "@libp2p-observer/proto": "^0.0.1",
     "react": "^16.10.2",
     "react-scripts": "^3.2.0",
-    "sdk": "^0.0.1",
+    "@libp2p-observer/sdk": "^0.0.1",
     "styled-components": "^4.4.0",
     "webpack": "4.41.0"
   },

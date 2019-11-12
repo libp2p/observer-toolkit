@@ -1,5 +1,8 @@
 {
-  "name": "create-libp2p-widget",
+  "name": "@libp2p-observer/create-widget",
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
   "version": "0.0.1",
   "description": "A quickstart script to bootstrap a new libp2p-introspection-ui widget package",
   "author": "AlanSl <alan.slater@nearform.com>",
