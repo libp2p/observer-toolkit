@@ -9,8 +9,7 @@ module.exports = function(api) {
     'transform-es2015-modules-commonjs',
   ]
 
-  const ignore = ['node_modules']
-
+  const ignore = [/node_modules[\\/](?!@libp2p-observer\b).*/]
   const babelrcRoots = ['.', 'packages/*', '.storybook']
 
   return {

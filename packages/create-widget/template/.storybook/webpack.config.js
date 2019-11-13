@@ -20,6 +20,11 @@ module.exports = async ({ config }) => {
     exclude: /node_modules/,
   })
 
+  config.module.rules.push({
+    test: /@libp2p-observer\b.+\.js$/,
+    loader: 'babel-loader',
+  })
+
   config.devtool = 'source-map'
 
   return config
