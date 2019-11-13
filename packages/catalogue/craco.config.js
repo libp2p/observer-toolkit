@@ -12,17 +12,6 @@ const resolvePackage = relativePath => path.resolve(appDirectory, relativePath)
 module.exports = {
   plugins: [
     {
-      plugin: cracoBabelLoader,
-      options: {
-        includes: [
-          // Without these, react app won't babelify peer packages and hits "unexpected token" error
-          resolvePackage('../sdk'),
-          resolvePackage('../connections-table'),
-          resolvePackage('../streams-table'),
-        ],
-      },
-    },
-    {
       plugin: cracoRawLoaderPlugin,
       options: {
         test: /(\.md$|\.base64$)/,

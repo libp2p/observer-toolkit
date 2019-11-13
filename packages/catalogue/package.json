@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },
-  "version": "0.0.1",
+  "version": "0.2.5",
   "description": "React web app containing a browsable catalogue of ui components visualizing libp2p introspection data",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://nearform.github.io/libp2p-introspection-ui",
@@ -19,14 +19,14 @@
   "dependencies": {
     "@baristalabs/craco-raw-loader": "^1.1.1",
     "@craco/craco": "^5.5.0",
+    "@libp2p-observer/connections-table": "^0.2.6",
+    "@libp2p-observer/streams-table": "^0.2.0",
     "arraybuffer-loader": "^1.0.8",
-    "@libp2p-observer/connections-table": "^0.0.1",
     "craco-babel-loader": "^0.1.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-markdown": "^4.2.2",
     "react-scripts": "3.2.0",
-    "@libp2p-observer/streams-table": "^0.0.1",
     "webpack": "4.41.0"
   },
   "devDependencies": {

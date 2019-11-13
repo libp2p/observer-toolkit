@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },
-  "version": "0.0.1",
+  "version": "0.2.1",
   "description": "A quickstart script to bootstrap a new libp2p-introspection-ui widget package",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://github.com/nearform/libp2p-introspection-ui#readme",

@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },
-  "version": "0.0.1",
+  "version": "0.2.1",
   "description": "Protobuf definition, JavaScript protobuf encoder/decorder, and scripts generating mock libp2p introspection data",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
