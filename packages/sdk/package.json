@@ -9,6 +9,7 @@
   "homepage": "",
   "license": "MIT",
   "main": "./build/index.js",
+  "module": "./index.js",
   "scripts": {
     "prepare": "webpack"
   },
