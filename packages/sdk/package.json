@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },
-  "version": "0.2.8",
+  "version": "0.0.1",
   "description": "Core components, utilities and API for building libp2p introspection ui components",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
@@ -14,22 +14,21 @@
     "prepare": "webpack"
   },
   "peerDependencies": {
-    "react": "^16.10.2"
+    "@libp2p-observer/data": "^0.0.1",
+    "react": "^16.10.2",
+    "styled-components": "^4.4.0"
   },
   "dependencies": {
-    "@libp2p-observer/proto": "^0.2.0",
     "d3": "^5.12.0",
     "formik": "^1.5.8",
     "lodash.isequal": "^4.5.0",
-    "react-resize-detector": "^4.2.1",
-    "react-scripts": "^3.2.0",
-    "styled-components": "^4.4.0"
+    "react-resize-detector": "^4.2.1"
   },
   "devDependencies": {
     "@svgr/cli": "^4.3.3",
-    "chalk": "^3.0.0",
+    "peer-deps-externals-webpack-plugin": "^1.0.4",
     "raw-loader": "^3.1.0",
-    "webpack-cli": "^3.3.10",
-    "webpack-node-externals": "^1.7.2"
+    "react-scripts": "^3.2.0",
+    "webpack-cli": "^3.3.10"
   }
 }

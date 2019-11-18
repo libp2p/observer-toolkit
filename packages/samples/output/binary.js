@@ -1,6 +1,8 @@
 'use strict'
 
-const { State } = require('../protobuf/introspection_pb')
+const {
+  proto: { State },
+} = require('proto')
 
 function parseBuffer(buf) {
   // Expects a binary file with this repeating structure:

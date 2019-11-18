@@ -1,3 +1,4 @@
+
 # Logs
 logs
 *.log
@@ -89,3 +90,6 @@ typings/
 
 # Module builds
 build/
+
+# Verdaccio docker module storage
+verdaccio/storage/

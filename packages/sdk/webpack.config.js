@@ -1,6 +1,5 @@
 const path = require('path')
-const nodeExternals = require('webpack-node-externals')
-const repoRootModulesPath = path.resolve(__dirname, '../../node_modules')
+const PeerDepsExternals = require('peer-deps-externals-webpack-plugin')
 
 module.exports = {
   entry: './index.js',
@@ -32,10 +31,5 @@ module.exports = {
       },
     ],
   },
-  externals: [
-    nodeExternals(),
-    nodeExternals({
-      modulesDir: repoRootModulesPath,
-    }),
-  ],
+  plugins: [new PeerDepsExternals()],
 }

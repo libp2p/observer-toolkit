@@ -1,7 +1,7 @@
 // List of widget dependencies, for which versions are copied from package.jsons
 const dependencies = {
-  dependenciesList: [
-    '@libp2p-observer/proto',
+  peerDependenciesList: [
+    '@libp2p-observer/data',
     '@libp2p-observer/sdk',
     'react',
     'styled-components',
@@ -10,6 +10,7 @@ const dependencies = {
     '@babel/core',
     '@babel/preset-env',
     '@babel/preset-react',
+    '@libp2p-observer/shell',
     '@storybook/react',
     'arraybuffer-loader',
     'babel',
@@ -23,6 +24,7 @@ const dependencies = {
     'eslint-plugin-react-hooks',
     'husky',
     'lint-staged',
+    'peer-deps-externals-webpack-plugin',
     'prettier',
     'raw-loader',
     'react-scripts',

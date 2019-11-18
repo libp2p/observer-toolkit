@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },
-  "version": "0.2.1",
+  "version": "0.0.1",
   "description": "React component built on libp2p-introspection-ui SDK, visualizing libp2p streams in a data table",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
@@ -12,16 +12,17 @@
   "scripts": {
     "storybook": "start-storybook -p 9009"
   },
-  "dependencies": {
-    "@libp2p-observer/proto": "^0.1.0",
+  "peerDependencies": {
+    "@libp2p-observer/data": "^0.0.1",
     "@libp2p-observer/sdk": "^0.0.1",
     "react": "^16.10.2",
-    "react-scripts": "^3.2.0",
-    "styled-components": "^4.4.0",
-    "webpack": "4.41.0"
+    "styled-components": "^4.4.0"
   },
   "devDependencies": {
+    "@libp2p-observer/shell": "^0.0.1",
     "@storybook/react": "^5.2.4",
+    "peer-deps-externals-webpack-plugin": "^1.0.4",
+    "raw-loader": "^3.1.0",
     "storybook": "^5.1.11"
   }
 }

@@ -4,6 +4,9 @@
   "description": "User interface for visualising libp2p introspection data",
   "main": "index.js",
   "private": true,
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
   "workspaces": [
     "packages/*"
   ],
