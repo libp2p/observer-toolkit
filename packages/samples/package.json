@@ -8,7 +8,7 @@
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://github.com/nearform/libp2p-introspection-ui#readme",
   "license": "MIT",
-  "main": "index.js",
+  "main": "./build/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
@@ -16,7 +16,8 @@
   "scripts": {
     "test": "tap",
     "mock": "node ./mock/mock.js --",
-    "mock-file": "node ./mock/mock.js --file"
+    "mock-file": "node ./mock/mock.js --file",
+    "prepare": "webpack"
   },
   "bugs": {
     "url": "https://github.com/nearform/libp2p-introspection-ui/issues"
@@ -24,5 +25,8 @@
   "dependencies": {
     "@libp2p-observer/data": "^0.0.1",
     "@libp2p-observer/proto": "^0.0.1"
+  },
+  "devDependencies": {
+    "tap": "^14.9.2"
   }
 }

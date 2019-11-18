@@ -1,12 +1,11 @@
 'use strict'
 
-const { deserializeBinary } = require('@libp2p-observer/proto')
-
+const binary = require('./lib/binary')
 const enums = require('./lib/enums')
 const helpers = require('./lib/helpers')
 
 module.exports = {
-  deserializeBinary,
+  ...binary,
   ...enums,
   ...helpers,
 }

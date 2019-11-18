@@ -16,6 +16,7 @@
   "peerDependencies": {
     "@libp2p-observer/data": "^0.0.1",
     "react": "^16.10.2",
+    "react-dom": "^16.11.0",
     "styled-components": "^4.4.0"
   },
   "dependencies": {

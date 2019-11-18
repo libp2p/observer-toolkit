@@ -2028,34 +2028,6 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@libp2p-observer/proto@^0.0.2":
-  version "0.0.2"
-  resolved "http://localhost:4873/@libp2p-observer%2fproto/-/proto-0.0.2.tgz#5530519ffa9b1fde499722745b8287afc96c93ff"
-  integrity sha512-8cIHCFmnDxLDN99zd23DvSkJpOAvtC/sforYfngQhcUQX1+JS/Jal+H10h1NznYlaovVFmKGb33MYruOkW5jqQ==
-  dependencies:
-    google-protobuf "^3.10.0"
-    tap "^14.7.1"
-
-"@libp2p-observer/proto@^0.1.0":
-  version "0.2.1"
-  dependencies:
-    google-protobuf "^3.10.0"
-    tap "^14.7.1"
-
-"@libp2p-observer/sdk@^0.0.1":
-  version "0.0.1"
-  resolved "http://localhost:4873/@libp2p-observer%2fsdk/-/sdk-0.0.1.tgz#7848e674a7774a66b7cda008ca4f596108a054ac"
-  integrity sha512-QdH3JfBkQf8aKiGnY6kxYnvzJ+O88Qplj/6Fldcs3S/9PbsUuSNllEiSJ2aNa2S/JjYaZklK4jIWWPp8OFx47w==
-  dependencies:
-    "@libp2p-observer/proto" "^0.0.2"
-    d3 "^5.12.0"
-    formik "^1.5.8"
-    lodash.isequal "^4.5.0"
-    react "^16.10.2"
-    react-resize-detector "^4.2.1"
-    react-scripts "^3.2.0"
-    styled-components "^4.4.0"
-
 "@mdx-js/mdx@^1.0.0":
   version "1.5.1"
   resolved "http://localhost:4873/@mdx-js%2fmdx/-/mdx-1.5.1.tgz#470ce07e01cef4f7b1d5051640e5235d5e75aebb"
@@ -12683,6 +12655,11 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+peer-deps-externals-webpack-plugin@^1.0.4:
+  version "1.0.4"
+  resolved "http://localhost:4873/peer-deps-externals-webpack-plugin/-/peer-deps-externals-webpack-plugin-1.0.4.tgz#191e8f116c70401364dbd8e6c44ab3f8844101dc"
+  integrity sha512-MIZk2xvwUqd74rSIkbM4R/qTn182Hvb1gEOYIHwAqlqeRuSqn6QOGsd8NJLJRzwlMBnyjvMCs8JZH62+mQjb9g==
+
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "http://localhost:4873/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -16031,7 +16008,7 @@ tap-yaml@^1.0.0:
   dependencies:
     yaml "^1.5.0"
 
-tap@^14.7.1:
+tap@^14.7.1, tap@^14.9.2:
   version "14.9.2"
   resolved "http://localhost:4873/tap/-/tap-14.9.2.tgz#7a40fb7a0198156a97448187b2275de02ff71cf6"
   integrity sha512-Fyy/sjsw4eb+Hnphin4oMtDtKxmrob/vrnaIDv/F3thFFQjQFqMg8xf45zRFGHxUfezlrO6KsH8TpWNlTDINfA==
@@ -17233,11 +17210,6 @@ webpack-merge@^4.2.2:
   integrity sha512-TUE1UGoTX2Cd42j3krGYqObZbOD+xF7u28WB7tfUordytSjbWTIjK/8V0amkBfTYN4/pB/GIDlJZZ657BGG19g==
   dependencies:
     lodash "^4.17.15"
-
-webpack-node-externals@^1.7.2:
-  version "1.7.2"
-  resolved "http://localhost:4873/webpack-node-externals/-/webpack-node-externals-1.7.2.tgz#6e1ee79ac67c070402ba700ef033a9b8d52ac4e3"
-  integrity sha512-ajerHZ+BJKeCLviLUUmnyd5B4RavLF76uv3cs6KNuO8W+HuQaEs0y0L7o40NQxdPy5w0pcv8Ew7yPUAQG0UdCg==
 
 webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-sources@^1.4.1:
   version "1.4.3"
