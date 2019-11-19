@@ -4,8 +4,9 @@ const { State } = require('../protobuf/introspection_pb')
 const fnv1a = require('./fnv1a')
 
 function parseBuffer(buf) {
-  // Expects a binary file with this repeating structure:
+  // Expects a binary file with this structure:
   // - 4-byte version number
+  // - The following is repeated
   // - 4-byte checksum of following message
   // - 4-byte length of following message
   // - message (typically state)
