@@ -26,7 +26,7 @@ function parseBuffer(buf) {
 
   // TODO - add async variant
   while (bytesParsed < byteLength) {
-    const stateMessageChecksum = buf.readUIntLE(bytesParsed, checksumLength)
+    const stateMessageChecksum = buf.readUIntLE(bytesParsed, stateMessageChecksumLength)
     bytesParsed += stateMessageChecksumLength
     const stateMessageSize = buf.readUIntLE(bytesParsed, stateMessageSizeLength)
     const stateMessageStart = bytesParsed + stateMessageSizeLength
