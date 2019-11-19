@@ -7,6 +7,12 @@ When the client starts up, it will look for the local introspection port of the 
 There will also be an option to connect to another host.
 Once connected, the introspection module will start extracting data defined in the introspection protobuf from other LibP2P modules such as swarm, or other source providers.
 
+The protocol is based on the premise of the server who is providing data is an "emitter".
+The client which connects to the server can then treat the data it provides much like an "event emitter", or pub-sub data source.
+The "emitter" emits data from several sources, each data message received on the client can be treated like an "event".
+The emitter should only send data to the client when the client has expressed interest via a signal for an event/data.
+Clients can either signal interest in a pull based single event provided by the server (siimilar to using an event emitter "once" construct), or they can signal interest in a push based many events being sent to them indefinitely by the server (similar to using an event emitter "on" construct)
+
 Generally the client listens for the data message from the WebSocket connection and once received and processed for visualization will request for the next data set.
 This process will take away the backpressure resposibilty from the server for snapshot emitting.
 
