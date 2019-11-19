@@ -279,18 +279,55 @@ message Subsystems {
 
 // Connections and streams output for a time interval is one of these.
 message State {
-  // Version of this protobuf
-  Version version                      = 1;
-  // system information
-  Runtime runtime                      = 2;
   // list of connections
-  Subsystems subsystems                = 3;
+  Subsystems subsystems                = 1;
   // overall traffic for this peer
-  Traffic traffic                      = 4;
+  Traffic traffic                      = 2;
   // moment this data snapshot and instantaneous values were taken
-  google.protobuf.Timestamp instant_ts = 5;
+  google.protobuf.Timestamp instant_ts = 3;
   // start of included data collection (cumulative values counted from here)
-  google.protobuf.Timestamp start_ts   = 6;
+  google.protobuf.Timestamp start_ts   = 4;
   // length of time up to instant_ts covered by this data snapshot
-  uint32 snapshot_duration_ms          = 7;
+  uint32 snapshot_duration_ms          = 5;
+}
+
+// ProtocolDataPacket wraps messages to be sent to clients to allow extension
+// based on new types of data sources
+message ProtocolDataPacket {
+  // Version of this protobuf
+  Version version     = 1;
+  // The Message this contains
+  oneof message {
+      State state     = 2;
+      Runtime runtime = 3;
+  }
+}
+
+// ClientSignal is a type of message to be sent from clients to the server to signal
+// within the operation of the protocol
+message ClientSignal {
+  // The signal to be sent to the server
+  enum Signal {
+    // SEND_DATA is used for pull-based data emitters
+    SEND_DATA            = 0;
+    // START_PUSH_EMITTER, STOP_PUSH_EMITTER, PAUSE_PUSH_EMITTER & UNPAUSE_PUSH_EMITTER
+    // are all used in the operation of push-based data emitters
+    START_PUSH_EMITTER   = 1;
+    STOP_PUSH_EMITTER    = 2;
+    PAUSE_PUSH_EMITTER   = 3;
+    UNPAUSE_PUSH_EMITTER = 4;
+  }
+
+  // The source the data is expected to come from
+  enum DataSource {
+    STATE   = 0; // A full state snapshot
+    RUNTIME = 1; // A runtime data message
+  }
+
+  // Version of this protobuf
+  Version version        = 1;
+  // Signal to be sent
+  Signal signal          = 2;
+  // Correlated DataSource for this signal (if any)
+  DataSource data_source = 3;
 }
