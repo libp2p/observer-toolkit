@@ -17,8 +17,8 @@ function parseBuffer(buf) {
   const messages = []
 
   const versionNumberLength = 4
-  const stateMessageChecksumLength = 4
-  const stateMessageSizeLength = 4
+  const messageChecksumLength = 4
+  const messageSizeLength = 4
 
 
   // Skip version number
@@ -26,25 +26,22 @@ function parseBuffer(buf) {
 
   // TODO - add async variant
   while (bytesParsed < byteLength) {
-    const stateMessageChecksum = buf.readUIntLE(bytesParsed, stateMessageChecksumLength)
-    bytesParsed += stateMessageChecksumLength
-    const stateMessageSize = buf.readUIntLE(bytesParsed, stateMessageSizeLength)
-    const stateMessageStart = bytesParsed + stateMessageSizeLength
-    const stateMessageEnd = stateMessageStart + stateMessageSize
-    const stateMessageBin = buf.toString(
-      'base64',
-      stateMessageStart,
-      stateMessageEnd
-    )
+    const messageChecksum = buf.readUIntLE(bytesParsed, messageChecksumLength)
+    bytesParsed += messageChecksumLength
+    const messageSize = buf.readUIntLE(bytesParsed, messageSizeLength)
+    const messageStart = bytesParsed + messageSizeLength
+    const messageEnd = messageStart + messageSize
 
-    const validChecksum = stateMessageChecksum === fnv1a(stateMessageBin)
+    const messageBin = buf.slice(messageStart, messageEnd)
+
+    const validChecksum = messageChecksum === fnv1a(messageBin)
 
     // TODO: bubble an error message for an invalid checksum
     if (validChecksum) {
-      const stateMessage = State.deserializeBinary(stateMessageBin)
-      messages.push(stateMessage)
+      const message = State.deserializeBinary(messageBin)
+      messages.push(message)
     }
-    bytesParsed = stateMessageEnd
+    bytesParsed = messageEnd
   }
 
   return messages
