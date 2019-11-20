@@ -2,6 +2,16 @@
 
 There has been previous work and discussions which inform the protocol for introspection data emitting.
 The existing understanding of the protocol is outlied below.
+This is a WebSocket based Protocol, due to the nature of WebSockets being natively enabled in the browser.
+
+<details>
+<summary>
+## Note on gRPC
+</summary>
+
+There was previous discussion around using gRPC, but due to the lack of native support in the browser and the requirement to use a third party proxy infront of the gRPC enabled servers, it was decided to move forward with a simpler and more widely supported WebSocket model.
+
+</details>
 
 When the client starts up, it will look for the local introspection port of the LibP2P network.
 There will also be an option to connect to another host.

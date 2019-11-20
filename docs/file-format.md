@@ -31,7 +31,14 @@ with fnv1a32. It can be treated as a 32 bit number.
 
 The maximum allowed chunk size is 4,294,967,295 bytes.
 
-The message itself is then stored. 
+The message itself is then stored. Messages themselves that are received are of the proto type
+`ProtocolDataPacket` which encodes messages of a specific type for future parsing and use.
 
 This file format can be written and read in a streaming fashion, as each data dump
 will have many messages which can generate a large amount of data over some period of time.
+
+Due to the format of the introspection data emitting protocol, it is expected for a client
+to connect to the server and immediately read and encode the static runtime metadata message
+and the initial state message. Once the state is recorded the client will signal it is ready
+for the next state. The receiving, encoding and signalling process for state messages is to
+be repeated as long as the client stays connected.
