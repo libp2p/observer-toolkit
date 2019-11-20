@@ -2,11 +2,10 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { DataProvider } from '../components/context/DataProvider'
-import ThemeSetter from '../components/context/ThemeSetter'
+import { DataProvider, ThemeSetter } from '@libp2p-observer/sdk'
+import { parseBuffer } from '@libp2p-observer/data'
+import samples from '@libp2p-observer/samples'
 import Timeline from '../components/Timeline/Timeline'
-
-import { samples, parseBuffer } from '@libp2p-observer/proto'
 
 const Page = styled.div`
   display: flex;
@@ -39,10 +38,10 @@ const Controls = styled.div`
   margin-left: -${({ theme }) => theme.spacing()};
   padding-left: ${({ theme }) => theme.spacing()};
 `
-function StorybookWrapper({ children }) {
-  const b64string = samples[0].default
 
-  const mockBuffer = Buffer.from(b64string, 'base64')
+// Standalone shell for demoing one component e.g. for staging in Storybook
+function DemoShell({ children }) {
+  const mockBuffer = Buffer.from(samples[0])
   const mockData = parseBuffer(mockBuffer)
 
   return (
@@ -59,8 +58,8 @@ function StorybookWrapper({ children }) {
   )
 }
 
-StorybookWrapper.propTypes = {
+DemoShell.propTypes = {
   children: T.node,
 }
 
-export default StorybookWrapper
+export default DemoShell
