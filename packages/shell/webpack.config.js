@@ -22,14 +22,6 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.md$/,
-        loader: 'raw-loader',
-      },
-      {
-        test: /\.(png|woff|woff2|eot|ttf|otf|svg)$/,
-        loader: 'file-loader',
-      },
     ],
   },
   plugins: [new PeerDepsExternals()],

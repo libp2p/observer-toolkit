@@ -15,7 +15,7 @@
     "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "prepare": "webpack"
   },
   "bugs": {
     "url": "https://github.com/nearform/libp2p-introspection-ui/issues"
