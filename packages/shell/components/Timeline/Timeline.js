@@ -3,7 +3,8 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import { DataContext } from '../context/DataProvider'
+import { DataContext } from '@libp2p-observer/sdk'
+
 import { stackData, fitDataToPaths } from './utils'
 import TimelinePaths from './TimelinePaths'
 import TimeSlider from './TimeSlider'

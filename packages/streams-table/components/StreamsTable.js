@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { getAllStreamsAtTime } from '@libp2p-observer/proto'
+import { getAllStreamsAtTime } from '@libp2p-observer/data'
 import { DataTable, TimeContext, useTabularData } from '@libp2p-observer/sdk'
 
 import streamsColumnDefs from '../definitions/streamsColumns'

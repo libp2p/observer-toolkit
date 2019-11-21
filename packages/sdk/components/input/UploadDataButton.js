@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { parseBuffer } from '@libp2p-observer/proto'
+import { parseBuffer } from '@libp2p-observer/data'
 import { SetterContext } from '../context/DataProvider'
 
 import StyledButton from './StyledButton'

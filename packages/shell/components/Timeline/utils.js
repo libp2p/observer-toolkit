@@ -5,8 +5,8 @@ import {
   getTime,
   getTraffic,
   getConnections,
-} from '@libp2p-observer/proto'
-import { validateNumbers } from '../../utils/helpers'
+} from '@libp2p-observer/data'
+import { validateNumbers } from '@libp2p-observer/sdk'
 
 function getMaxAreaPeak(stackedData) {
   return stackedData.reduce(

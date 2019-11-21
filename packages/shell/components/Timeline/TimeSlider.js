@@ -6,10 +6,9 @@ import { Formik } from 'formik'
 import {
   DataContext,
   SetterContext,
+  Slider,
   TimeContext,
-} from '../context/DataProvider'
-
-import Slider from '../input/fields/Slider'
+} from '@libp2p-observer/sdk'
 
 const Container = styled.div`
   display: flex;

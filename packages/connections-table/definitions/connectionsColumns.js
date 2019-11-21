@@ -3,7 +3,7 @@ import {
   getTraffic,
   statusNames,
   transportNames,
-} from '@libp2p-observer/proto'
+} from '@libp2p-observer/data'
 import {
   getStringSorter,
   getNumericSorter,

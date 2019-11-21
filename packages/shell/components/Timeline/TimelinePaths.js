@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { SetterContext, PeerContext } from '../context/DataProvider'
+import { SetterContext, PeerContext } from '@libp2p-observer/sdk'
 
 const StyledSvg = styled.svg`
   width: 100%;

@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useRef, createContext } from 'react'
 import T from 'prop-types'
 
-import { getLatestTimepoint } from '@libp2p-observer/proto'
+import { getLatestTimepoint } from '@libp2p-observer/data'
 
 const SetterContext = createContext()
 

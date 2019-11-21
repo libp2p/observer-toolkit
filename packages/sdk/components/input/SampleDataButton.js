@@ -1,15 +1,14 @@
 import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 
-import { parseBuffer, samples } from '@libp2p-observer/proto'
+import { parseImport } from '@libp2p-observer/data'
 import { DataContext, SetterContext } from '@libp2p-observer/sdk'
+import samples from '@libp2p-observer/samples'
 
 import StyledButton from './StyledButton'
 
 function getSampleData() {
-  const b64string = samples[0].default
-  const buf = Buffer.from(b64string, 'base64')
-  const data = parseBuffer(buf)
+  const data = parseImport(samples[0])
   data.isSample = true
   return data
 }
