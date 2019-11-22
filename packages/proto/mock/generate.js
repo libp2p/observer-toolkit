@@ -23,6 +23,10 @@ function generate(connectionsCount, durationSeconds) {
   }
 
   const bufferSegments = []
+
+  // add version number to start of buffer segments
+  bufferSegments.push(Buffer.alloc(4).writeUInt32LE(1, 0))
+
   while (bufferSegments.length < durationSeconds) {
     now += 1000
     connections.forEach(connection => updateConnection(connection, now))
