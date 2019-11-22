@@ -27,7 +27,7 @@ module.exports = {
         loader: 'raw-loader',
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|otf|svg)$/,
+        test: /\.(png|woff|woff2|eot|ttf|otf|svg|mock)$/,
         loader: 'file-loader',
       },
     ],
