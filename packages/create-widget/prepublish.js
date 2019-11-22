@@ -14,32 +14,47 @@ process.on('unhandledRejection', err => {
 })
 
 async function prepublish() {
+  // Track how many files were actually copied
+  let successes = 0
+
+  const copyAndCount = async (path, props) => {
+    const wasSuccess = await copyFile(path, props)
+    if (wasSuccess) successes++
+  }
+  const copyPackageJsonAndCount = async (pkg, outputDirname) => {
+    await copyAndCount(`../../${pkg}/package.json`, {
+      outputDirname: path.resolve(outputDirname, pkg),
+    })
+  }
+
   // Copy config from host root repo where possible to avoid duplication
   const copyPromises = [
-    copyFile('../../../.eslintrc', copyProps),
-    copyFile('../../../.eslintignore', copyProps),
-    copyFile('../../../.prettierignore', copyProps),
-    copyFile('../../../.prettierrc', copyProps),
-    copyFile('../../../babel.config.js', copyProps),
-    copyFile('../../../.gitignore', {
+    copyAndCount('../../../.eslintrc', copyProps),
+    copyAndCount('../../../.eslintignore', copyProps),
+    copyAndCount('../../../.prettierignore', copyProps),
+    copyAndCount('../../../.prettierrc', copyProps),
+    copyAndCount('../../../babel.config.js', copyProps),
+    copyAndCount('../../../jsx-packages.js', copyProps),
+    copyAndCount('../../../.gitignore', {
       // Temporarily drop the `.` to dodge NPM's .gitignore >> .npmignore
       // rename bugfeature explained here https://github.com/npm/npm/issues/7252
       outputFilename: 'gitignore',
       ...copyProps,
     }),
 
-    copyFile('../../../package.json', copyProps),
-    copyFile('../../sdk/package.json', {
-      outputDirname: path.resolve(outputDirname, 'sdk'),
-    }),
-    copyFile('../../proto/package.json', {
-      outputDirname: path.resolve(outputDirname, 'proto'),
-    }),
+    copyAndCount('../../../package.json', copyProps),
+    copyPackageJsonAndCount('sdk', outputDirname),
+    copyPackageJsonAndCount('data', outputDirname),
+    copyPackageJsonAndCount('shell', outputDirname),
   ]
 
   await Promise.all(copyPromises)
   console.log(
-    chalk.green(`Copied ${copyPromises.length} files to ${outputDirname}`)
+    chalk.green(
+      `Copied ${successes} file${
+        successes === 1 ? '' : 's'
+      } to ${outputDirname}`
+    )
   )
 }
 

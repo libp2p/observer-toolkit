@@ -35,7 +35,7 @@ async function copyFile(
       if (existingText === outputText) {
         message += chalk.green(` ↳ Files are identical. File not changed.`)
         console.log(message)
-        return
+        return false
       } else {
         const newPath = `${outputPath}.copy`
         await rename(outputPath, newPath)
@@ -47,7 +47,7 @@ async function copyFile(
         ` ↳ Cannot access existing file (${err.code}). File not copied.`
       )
       console.warn(message)
-      return
+      return false
     }
   }
 
@@ -56,12 +56,14 @@ async function copyFile(
   } catch (err) {
     if (err.code !== 'EEXIST' && err.code !== 'ENOENT') {
       console.error(`Error ${err.code} writing to ${outputPath}`)
+      return false
     }
 
     const outputDir = path.dirname(outputPath)
     await mkdir(outputDir, { recursive: true })
     await writeFile(outputPath, outputText)
   }
+  return true
 }
 
 module.exports = copyFile

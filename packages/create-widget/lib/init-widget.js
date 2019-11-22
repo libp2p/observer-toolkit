@@ -80,6 +80,7 @@ async function initWidget() {
     copyFile('../root-repo/.prettierignore', { outputDirname: '.' }),
     copyFile('../root-repo/.prettierrc', { outputDirname: '.' }),
     copyFile('../root-repo/babel.config.js', { outputDirname: '.' }),
+    copyFile('../root-repo/jsx-packages.js', { outputDirname: '.' }),
     // TODO: Check this avoids NPM's .gitignore ↳ .npmignore rename bugfeature
     copyFile('../root-repo/gitignore', {
       outputDirname: '.',

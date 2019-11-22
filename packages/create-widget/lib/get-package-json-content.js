@@ -32,6 +32,11 @@ async function getPackageJsonContent(
 
   const corePackageJson = JSON.parse(await readFile(corePackageJsonPath))
 
+  const scripts = {
+    prepare: 'webpack',
+    storybook: 'start-storybook -p 9009',
+  }
+
   const dependencies = extractDeps(
     dependenciesList,
     'dependencies',
@@ -53,6 +58,7 @@ async function getPackageJsonContent(
     description,
     author,
     main: 'index.js',
+    scripts,
     dependencies,
     devDependencies,
     peerDependencies,

@@ -7,7 +7,7 @@ const { readFileSync } = require('fs')
 function getDepVersion(depName, depType, corePackageJson) {
   // Mismatching versions can cause of bugs; automatically keep versions matching
   // Where possible, use the version used by the monorepo
-  let version = corePackageJson[depType][depName]
+  let version = corePackageJson[depType] && corePackageJson[depType][depName]
   if (!version) {
     // For sibling packages, use the latest version
     const siblingMatch = depName.match(/^@libp2p-observer\/(.+)/)
