@@ -1,5 +1,6 @@
 const path = require('path')
 const PeerDepsExternals = require('peer-deps-externals-webpack-plugin')
+const jsxPackages = require('../../jsx-packages')
 
 module.exports = {
   entry: './index.js',
@@ -14,7 +15,6 @@ module.exports = {
       {
         test: /\.js$/,
         include: path.resolve(__dirname),
-        exclude: /([\\/](node_modules|build|proto)[\\/]|webpack)/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -24,5 +24,6 @@ module.exports = {
       },
     ],
   },
+  externals: jsxPackages.map(name => `@libp2p-observer/${name}`),
   plugins: [new PeerDepsExternals()],
 }

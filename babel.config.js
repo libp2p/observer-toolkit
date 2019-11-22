@@ -8,7 +8,10 @@ module.exports = function(api) {
   const plugins = [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
-    'transform-es2015-modules-commonjs',
+
+    // TODO: confirm what change, most likely an dep, changed this from being
+    // essential to breaking the build with 'exports is undefined' errors:
+    // 'transform-es2015-modules-commonjs',
   ]
 
   // Ignore dependencies except for our specified lerna packages containing JSX etc
