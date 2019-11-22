@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { parseBuffer } from '@libp2p-observer/data'
+import { uploadDataFile } from '../../utils'
 import { SetterContext } from '../context/DataProvider'
 
 import StyledButton from './StyledButton'
@@ -38,25 +38,21 @@ function UploadDataButton({ title }) {
   }
 
   function handleUpload(event) {
-    const reader = new FileReader()
     const file = event.target.files[0]
-    if (!file) return
+    uploadDataFile(file, handleUploadStart, handleDataLoaded)
+  }
 
-    reader.onload = e => handleUploadComplete(e, file.name)
-    reader.readAsArrayBuffer(file)
+  function handleUploadStart() {
     setIsLoading(true)
   }
 
-  function handleUploadComplete(event, newFileName) {
-    const bin = event.currentTarget.result
-    const buf = Buffer.from(bin)
-    const data = parseBuffer(buf)
+  function handleDataLoaded(data, file) {
     dispatchDataset({
       action: 'replace',
       data,
     })
     setIsLoading(false)
-    setFileName(newFileName)
+    setFileName(file.name)
   }
 
   const buttonText = getButtonText(isLoading, fileName, title)

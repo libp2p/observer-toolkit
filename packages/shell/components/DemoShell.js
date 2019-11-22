@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { DataProvider, ThemeSetter } from '@libp2p-observer/sdk'
-import { parseBuffer } from '@libp2p-observer/data'
-import samples from '@libp2p-observer/samples'
+import {
+  DataProvider,
+  ThemeSetter,
+  applySampleData,
+} from '@libp2p-observer/sdk'
 import Timeline from '../components/Timeline/Timeline'
 
 const Page = styled.div`
@@ -41,10 +43,21 @@ const Controls = styled.div`
 
 // Standalone shell for demoing one component e.g. for staging in Storybook
 function DemoShell({ children }) {
-  const mockBuffer = Buffer.from(samples[0])
-  const mockData = parseBuffer(mockBuffer)
+  const [mockData, setMockData] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
-  return (
+  const onDataLoadStart = () => setIsLoading(true)
+  const onDataLoadComplete = data => {
+    setIsLoading(false)
+    setMockData(data)
+  }
+
+  if (!mockData && !isLoading)
+    applySampleData(0, onDataLoadStart, onDataLoadComplete)
+
+  return !mockData ? (
+    'Loading sample data...'
+  ) : (
     <ThemeSetter>
       <DataProvider initialData={mockData}>
         <Page>

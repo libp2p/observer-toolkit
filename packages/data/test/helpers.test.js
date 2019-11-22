@@ -3,7 +3,16 @@
 const { test } = require('tap')
 
 const { proto } = require('@libp2p-observer/proto')
-const samples = require('@libp2p-observer/samples')
+
+const { readFileSync } = require('fs')
+const path = require('path')
+const samplesPath = require.resolve('@libp2p-observer/samples')
+const sampleFilePath = path.resolve(
+  path.dirname(samplesPath),
+  'samples',
+  'sample.mock'
+)
+
 const { parseImport } = require('../lib/binary')
 
 const {
@@ -16,7 +25,7 @@ const {
   getTimeIndex,
 } = require('../index.js')
 
-const dataset = parseImport(samples[0])
+const dataset = parseImport(readFileSync(sampleFilePath))
 
 if (!dataset.length)
   throw new Error('Deserialization error prevents testing helpers')

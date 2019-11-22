@@ -16,7 +16,10 @@ module.exports = {
         test: /\.mock$/,
         include: path.resolve(__dirname),
         exclude: /node_modules/,
-        use: 'arraybuffer-loader',
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
+        },
       },
       {
         test: /\.base64$/,
