@@ -1,16 +1,11 @@
 module.exports = async ({ config }) => {
   config.module.rules.push({
-    test: /\.mock$/,
-    use: 'arraybuffer-loader',
-  })
-
-  config.module.rules.push({
     test: /\.base64$/,
     use: 'raw-loader',
   })
 
   config.module.rules.push({
-    test: /\.(png|woff|woff2|eot|ttf)$/,
+    test: /\.(png|woff|woff2|eot|ttf|otf|svg|mock)$/,
     loader: 'file-loader',
   })
 

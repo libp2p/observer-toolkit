@@ -33,7 +33,6 @@ async function getPackageJsonContent(
   const corePackageJson = JSON.parse(await readFile(corePackageJsonPath))
 
   const scripts = {
-    prepare: 'webpack',
     storybook: 'start-storybook -p 9009',
   }
 

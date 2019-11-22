@@ -22,6 +22,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.mock$/,
+        loader: 'file-loader',
+      },
     ],
   },
   externals: jsxPackages.map(name => `@libp2p-observer/${name}`),
