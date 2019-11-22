@@ -6,7 +6,7 @@ import { DataContext, SetterContext } from '@libp2p-observer/sdk'
 
 import StyledButton from './StyledButton'
 
-function SampleDataButton({ title }) {
+function SampleDataButton({ title, samplePath }) {
   const [isLoading, setIsLoading] = useState(false)
   const { dispatchDataset } = useContext(SetterContext)
   const dataset = useContext(DataContext)
@@ -19,7 +19,7 @@ function SampleDataButton({ title }) {
       return
     }
 
-    applySampleData(0, handleUploadStart, handleDataLoaded)
+    applySampleData(samplePath, handleUploadStart, handleDataLoaded)
   }
 
   function handleUploadStart() {
@@ -53,6 +53,7 @@ function SampleDataButton({ title }) {
 
 SampleDataButton.propTypes = {
   title: T.string.isRequired,
+  samplePath: T.string.isRequired,
 }
 
 export default SampleDataButton

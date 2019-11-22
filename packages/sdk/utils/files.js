@@ -1,5 +1,4 @@
 import { parseArrayBuffer } from '@libp2p-observer/data'
-import samples from '@libp2p-observer/samples'
 
 function uploadDataFile(file, onUploadStart, onDataLoaded) {
   if (!file) return
@@ -12,12 +11,10 @@ function uploadDataFile(file, onUploadStart, onDataLoaded) {
   if (onUploadStart) onUploadStart(file)
 }
 
-async function applySampleData(sampleIndex, onUploadStart, onDataLoaded) {
+async function applySampleData(samplePath, onUploadStart, onDataLoaded) {
   if (onUploadStart) onUploadStart()
 
-  const filePath = samples[sampleIndex]
-
-  const response = await fetch(filePath)
+  const response = await fetch(samplePath)
 
   if (!response.ok) {
     const { status, statusText, url } = response

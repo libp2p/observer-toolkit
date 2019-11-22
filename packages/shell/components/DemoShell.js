@@ -7,6 +7,8 @@ import {
   ThemeSetter,
   applySampleData,
 } from '@libp2p-observer/sdk'
+import samples from '@libp2p-observer/samples'
+
 import Timeline from '../components/Timeline/Timeline'
 
 const Page = styled.div`
@@ -52,8 +54,9 @@ function DemoShell({ children }) {
     setMockData(data)
   }
 
-  if (!mockData && !isLoading)
-    applySampleData(0, onDataLoadStart, onDataLoadComplete)
+  if (!mockData && !isLoading) {
+    applySampleData(samples[0], onDataLoadStart, onDataLoadComplete)
+  }
 
   return !mockData ? (
     'Loading sample data...'
