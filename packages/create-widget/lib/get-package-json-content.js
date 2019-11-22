@@ -7,8 +7,18 @@ const path = require('path')
 const {
   dependenciesList,
   devDependenciesList,
+  peerDependenciesList,
 } = require('../template/dependencies')
 const getDepVersion = require('./get-dep-version')
+
+function extractDeps(depList, depType, packageJson) {
+  return depList.reduce((newDeps, depName) => {
+    return {
+      ...newDeps,
+      [depName]: getDepVersion(depName, depType, packageJson),
+    }
+  }, {})
+}
 
 async function getPackageJsonContent(
   existingPackageJson,
@@ -22,19 +32,21 @@ async function getPackageJsonContent(
 
   const corePackageJson = JSON.parse(await readFile(corePackageJsonPath))
 
-  const dependencies = dependenciesList.reduce((newDeps, depName) => {
-    return {
-      ...newDeps,
-      [depName]: getDepVersion(depName, 'dependencies', corePackageJson),
-    }
-  }, {})
-
-  const devDependencies = devDependenciesList.reduce((newDeps, depName) => {
-    return {
-      ...newDeps,
-      [depName]: getDepVersion(depName, 'devDependencies', corePackageJson),
-    }
-  }, {})
+  const dependencies = extractDeps(
+    dependenciesList,
+    'dependencies',
+    corePackageJson
+  )
+  const devDependencies = extractDeps(
+    devDependenciesList,
+    'devDependencies',
+    corePackageJson
+  )
+  const peerDependencies = extractDeps(
+    peerDependenciesList,
+    'peerDependencies',
+    corePackageJson
+  )
 
   const newPackageJsonObj = Object.assign({}, existingPackageJson, {
     name,
@@ -43,6 +55,7 @@ async function getPackageJsonContent(
     main: 'index.js',
     dependencies,
     devDependencies,
+    peerDependencies,
   })
 
   return JSON.stringify(newPackageJsonObj, null, 2)
