@@ -28,7 +28,8 @@ async function initWidget() {
   const widgetName = await askQuestion(
     existingPackageJson,
     'name',
-    'Name of widget'
+    'Name of widget',
+    path.basename(path.resolve('.'))
   )
   if (widgetName === false) {
     console.error(chalk.red('Name of widget is required'))
@@ -104,22 +105,24 @@ async function initWidget() {
   successMessage(replaceText)
 }
 
-async function askQuestion(existingPackageJson, key, questionText) {
+async function askQuestion(
+  existingPackageJson,
+  key,
+  questionText,
+  fallbackDefaultAnswer = ''
+) {
   const defaultAnswer = existingPackageJson[key]
-    ? ` (${existingPackageJson[key]})`
-    : ''
-  const questionTextFormatted =
-    chalk.cyan(`${questionText}: `) + chalk.grey(`${defaultAnswer}\n`)
+    ? existingPackageJson[key]
+    : fallbackDefaultAnswer
 
-  let answer = await rlp.questionAsync(questionTextFormatted)
-  if (!answer) {
-    if (!existingPackageJson[key]) return false
+  let questionTextFormatted = chalk.cyan(`${questionText}: `)
+  if (defaultAnswer)
+    questionTextFormatted += chalk.grey(` (${defaultAnswer})\n`)
 
-    console.log(existingPackageJson[key] + '\n')
-    answer = existingPackageJson[key]
-  }
+  const answer = await rlp.questionAsync(questionTextFormatted)
 
-  return answer
+  if (!answer && defaultAnswer) console.log(chalk.grey(defaultAnswer))
+  return answer || defaultAnswer
 }
 
 module.exports = initWidget
