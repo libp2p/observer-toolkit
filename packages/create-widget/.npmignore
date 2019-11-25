@@ -1,0 +1,2 @@
+# Files copied during publishing - DON'T npmignore, we need them in the package tarball
+!root-repo/
