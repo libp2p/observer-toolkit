@@ -1,3 +1,4 @@
+'use strict'
 // Build array of loaded binary files
 
 const path = require('path')

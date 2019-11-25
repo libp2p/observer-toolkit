@@ -29,12 +29,14 @@ async function prepublish() {
 
   // Copy config from host root repo where possible to avoid duplication
   const copyPromises = [
-    copyAndCount('../../../.eslintrc', copyProps),
     copyAndCount('../../../.eslintignore', copyProps),
     copyAndCount('../../../.prettierignore', copyProps),
     copyAndCount('../../../.prettierrc', copyProps),
     copyAndCount('../../../babel.config.js', copyProps),
     copyAndCount('../../../jsx-packages.js', copyProps),
+    copyAndCount('../../../packages/.eslintrc', {
+      outputDirname: path.resolve(copyProps.outputDirname, 'packages'),
+    }),
     copyAndCount('../../../.gitignore', {
       // Temporarily drop the `.` to dodge NPM's .gitignore >> .npmignore
       // rename bugfeature explained here https://github.com/npm/npm/issues/7252

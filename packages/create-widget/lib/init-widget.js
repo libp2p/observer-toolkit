@@ -75,7 +75,8 @@ async function initWidget() {
     copyFile('./.storybook/webpack.config.js'),
 
     // Copy config from this repo where possible to avoid duplication
-    copyFile('../root-repo/.eslintrc', { outputDirname: '.' }),
+    // 'root-repo' files are copied on publication in prepublish script
+    copyFile('../root-repo/packages/.eslintrc', { outputDirname: '.' }),
     copyFile('../root-repo/.eslintignore', { outputDirname: '.' }),
     copyFile('../root-repo/.prettierignore', { outputDirname: '.' }),
     copyFile('../root-repo/.prettierrc', { outputDirname: '.' }),

@@ -3,6 +3,7 @@
 const fs = require('fs')
 const { readFile } = fs.promises
 const path = require('path')
+const chalk = require('chalk')
 
 const {
   dependenciesList,
@@ -32,9 +33,33 @@ async function getPackageJsonContent(
 
   const corePackageJson = JSON.parse(await readFile(corePackageJsonPath))
 
-  const scripts = {
-    storybook: 'start-storybook -p 9009',
-  }
+  const coreScriptsToCopy = [
+    'lint',
+    'lint-fix',
+    'prettier',
+    'prettier-fix',
+    'test',
+  ]
+
+  const scripts = coreScriptsToCopy.reduce(
+    (scripts, scriptName) => {
+      const scriptDef = corePackageJson.scripts[scriptName]
+      if (!scriptDef) {
+        throw new Error(
+          chalk.red(
+            `Script "${scriptName}" not found in root-repo package.json`
+          )
+        )
+      }
+      return {
+        [scriptName]: scriptDef,
+        ...scripts,
+      }
+    },
+    {
+      storybook: 'start-storybook -p 9009',
+    }
+  )
 
   const dependencies = extractDeps(
     dependenciesList,
