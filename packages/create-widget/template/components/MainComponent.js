@@ -24,16 +24,20 @@ function $WIDGET_COMPONENT({ children }) {
   const time = getTime(currentTimepoint)
   const timeIndex = getTimeIndex(timepoints, time)
 
+  // Allow user to try out data object methods in console
+  window.data = { time, currentTimepoint, timepoints }
+
   /* eslint-disable-next-line no-console */
-  console.log(time, currentTimepoint, timepoints)
+  console.log('window.data: ', window.data)
 
   return (
     <ExampleStyledContent>
       <ExampleStyledHeader>Hello $WIDGET_COMPONENT</ExampleStyledHeader>
       <p>
-        Currently selected time point {timeIndex + 1} of {timepoints.length}
-        reffering to {new Date(time).toLocaleString()}. Open console to inspect.
+        Time point <b>{timeIndex + 1}</b> of {timepoints.length} is selected,
+        containing data from <b>{new Date(time).toLocaleString()}</b>.
       </p>
+      <p>Open your browser's console to explore all available data.</p>
       {children}
     </ExampleStyledContent>
   )
