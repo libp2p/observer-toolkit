@@ -5,6 +5,7 @@ const devDependenciesList = [
   '@babel/core',
   '@babel/preset-env',
   '@babel/preset-react',
+  '@libp2p-observer/samples', // For populating demos in Storybook
   '@libp2p-observer/shell', // For testing this widget in Storybook
   '@storybook/react',
   'arraybuffer-loader',
@@ -21,7 +22,6 @@ const devDependenciesList = [
   'lint-staged',
   'peer-deps-externals-webpack-plugin',
   'prettier',
-  'raw-loader',
   'react-scripts',
   'storybook',
   'webpack',
