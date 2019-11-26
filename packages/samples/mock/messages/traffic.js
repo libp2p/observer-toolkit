@@ -1,6 +1,8 @@
 'use strict'
 
-const { DataGauge, Traffic } = require('../../protobuf/introspection_pb')
+const {
+  proto: { DataGauge, Traffic },
+} = require('@libp2p-observer/proto')
 
 const {
   randomNormalDistribution,

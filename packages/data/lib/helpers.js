@@ -30,9 +30,19 @@ function getAllConnections(timepoints, { filter, latest = false } = {}) {
   return allConnections
 }
 
+function getSubsystems(timepoint) {
+  if (!timepoint) return null
+
+  const state = timepoint.getState()
+  if (!state) return null // This is a runtime packet, not a state packet
+
+  return state.getSubsystems()
+}
+
 // Gets the connections in one timepoint
 function getConnections(timepoint) {
-  return timepoint ? timepoint.getSubsystems().getConnectionsList() : []
+  const subsystems = getSubsystems(timepoint)
+  return subsystems ? subsystems.getConnectionsList() : []
 }
 
 function getAllStreamsAtTime(timepoint) {
@@ -69,8 +79,10 @@ function getLatestTimepoint(timepoints) {
 }
 
 function getTime(timepoint, format) {
-  const timestamp = timepoint.getInstantTs().getSeconds()
-  // TODO: Check if protobuf treats timestamp as seconds not miliseconds
+  const timestamp = timepoint
+    .getState()
+    .getInstantTs()
+    .getSeconds()
 
   if (!format) return timestamp
   // TODO: add date formating options

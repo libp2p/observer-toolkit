@@ -1,6 +1,6 @@
 'use strict'
 
-const { Stream } = require('../../protobuf/introspection_pb')
+const { proto } = require('@libp2p-observer/proto')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
 const {
@@ -29,12 +29,12 @@ function createStream({
   latency = randomLatency(),
   role = roleList.getRandom(),
 } = {}) {
-  const stream = new Stream()
+  const stream = new proto.Stream()
 
   lastId++
   stream.setId(encodeNumToBin(lastId))
   stream.setProtocol(protocol)
-  stream.setConn(new Stream.ConnectionRef(connection))
+  stream.setConn(new proto.Stream.ConnectionRef(connection))
   stream.setTimeline(createStreamTimeline({ open, close }))
   stream.setRole(role)
   stream.setTraffic(createTraffic())
@@ -107,7 +107,7 @@ function mockStreamActivity(stream, now) {
 }
 
 function createStreamTimeline({ open = 0, close = 0 }) {
-  const streamTimeline = new Stream.Timeline([open, close])
+  const streamTimeline = new proto.Stream.Timeline([open, close])
 
   return streamTimeline
 }

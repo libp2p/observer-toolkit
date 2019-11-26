@@ -4,10 +4,8 @@ const { argv } = require('yargs')
 const { createHash } = require('crypto')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 const {
-  Connection,
-  EndpointPair,
-  StreamList,
-} = require('../../protobuf/introspection_pb')
+  proto: { Connection, EndpointPair, StreamList },
+} = require('@libp2p-observer/proto')
 
 const {
   HOST_PEER_ID,

@@ -137,7 +137,7 @@ function stackData(dataset) {
 
   // Scaling from dataset[0] leaves a gap of the width of 1 datapoint
   const minTimeForScale = getTime(dataset[1])
-  const maxTimeForScale = getLatestTimepoint(dataset).getInstantTs()
+  const maxTimeForScale = getTime(getLatestTimepoint(dataset))
 
   validateNumbers({
     maxIn,

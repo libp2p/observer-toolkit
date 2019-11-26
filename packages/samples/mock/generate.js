@@ -2,7 +2,7 @@
 
 const { random, randomOpenClose } = require('./utils')
 
-const { createBufferSegment } = require('../utils/binary')
+const { createBufferSegment } = require('../output/binary')
 const {
   createConnection,
   mockConnectionActivity,
@@ -24,8 +24,10 @@ function generate(connectionsCount, durationSeconds) {
 
   const bufferSegments = []
 
-  // add version number to start of buffer segments
-  bufferSegments.push(Buffer.alloc(4).writeUInt32LE(1, 0))
+  // add version number to start of file
+  const versionBuf = Buffer.alloc(4)
+  versionBuf.writeUInt32LE(1, 0)
+  bufferSegments.push(versionBuf)
 
   while (bufferSegments.length < durationSeconds) {
     now += 1000

@@ -2,7 +2,9 @@
 
 const { test } = require('tap')
 
-const { proto } = require('@libp2p-observer/proto')
+const {
+  proto: { Connection },
+} = require('@libp2p-observer/proto')
 
 const { readFileSync } = require('fs')
 const path = require('path')
@@ -39,7 +41,7 @@ test('Test connection getters', t => {
   // Check getAllConnections against getConnections to ensure it gets every connection exactly once
   const allConnectionIds_1 = new Set(
     allConnections.map(connection => {
-      if (connection.constructor !== proto.Connection) connTypeMismatches_1++
+      if (connection.constructor !== Connection) connTypeMismatches_1++
       return connection.getId().toString()
     })
   )
@@ -57,7 +59,7 @@ test('Test connection getters', t => {
     )
 
     for (const connection of connections) {
-      if (connection.constructor !== proto.Connection) connTypeMismatches_2++
+      if (connection.constructor !== Connection) connTypeMismatches_2++
       const id = connection.getId()
 
       allConnectionIds_2.add(id.toString())

@@ -1,5 +1,6 @@
 import {
   getAge,
+  getTime,
   getTraffic,
   statusNames,
   transportNames,
@@ -67,7 +68,7 @@ const ageCol = {
   name: 'age',
   header: 'Time open',
   getProps: (connection, timepoint) => {
-    const time = timepoint.getInstantTs()
+    const time = getTime(timepoint)
     const openTs = connection.getTimeline().getOpenTs()
     const closeTs = connection.getTimeline().getCloseTs()
     const age = getAge(time, openTs, closeTs)

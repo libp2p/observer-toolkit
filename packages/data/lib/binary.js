@@ -18,6 +18,7 @@ function parseBuffer(buf) {
   const versionNumberLength = 4
   const messageChecksumLength = 4
   const messageSizeLength = 4
+
   // Skip version number
   bytesParsed += versionNumberLength
 
@@ -37,7 +38,12 @@ function parseBuffer(buf) {
     if (validChecksum) {
       const message = deserializeBinary(messageBin)
       messages.push(message)
+    } else {
+      console.error(
+        `Skipped bytes from ${messageStart} to ${messageEnd} due to checksum mismatch`
+      )
     }
+
     bytesParsed = messageEnd
   }
 
