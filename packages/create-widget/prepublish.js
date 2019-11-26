@@ -48,6 +48,7 @@ async function prepublish() {
     copyPackageJsonAndCount('sdk', outputDirname),
     copyPackageJsonAndCount('data', outputDirname),
     copyPackageJsonAndCount('shell', outputDirname),
+    copyPackageJsonAndCount('samples', outputDirname),
   ]
 
   await Promise.all(copyPromises)
