@@ -3,20 +3,20 @@
 const { test } = require('tap')
 
 const generate = require('../mock/generate')
-const { parseBuffer } = require('../utils/binary')
-const { statusNames } = require('../utils/enums')
 const {
+  parseBuffer,
   getAllConnections,
   getConnections,
   getEnumByName,
   getLatestTimepoint,
   getTraffic,
-} = require('../utils/helpers')
+  statusNames,
+} = require('@libp2p-observer/data')
 
-const initialConnectionsCount = 6
+const initialConnCount = 6
 const durationSeconds = 60
 
-const bin = generate(initialConnectionsCount, durationSeconds)
+const bin = generate(initialConnCount, durationSeconds)
 const timepoints = parseBuffer(bin)
 
 const timepointsExceptLatest = timepoints.slice(0, -1)
@@ -25,9 +25,13 @@ const initialConnectionsList = getConnections(timepoints[0])
 const lastConnectionsList = getConnections(getLatestTimepoint(timepoints))
 
 test('Expected connections exist', t => {
+  const lastConnCount = lastConnectionsList.length
   t.equals(timepoints.length, durationSeconds)
-  t.equals(initialConnectionsList.length, initialConnectionsCount)
-  t.ok(lastConnectionsList.length > initialConnectionsCount)
+  t.equals(initialConnectionsList.length, initialConnCount)
+  t.ok(
+    lastConnCount >= initialConnCount,
+    `lastConnCount ${lastConnCount} >= initialConnCount ${initialConnCount}`
+  )
   t.end()
 })
 
@@ -37,7 +41,7 @@ test('Open connections increase traffic', t => {
     filter: connection => connection.getStatus() === activeStatus,
   })
 
-  t.ok(openConnections.length >= initialConnectionsCount)
+  t.ok(openConnections.length >= initialConnCount)
 
   for (const connectionAtStart of openConnections) {
     const connectionId = connectionAtStart.getId().toString()

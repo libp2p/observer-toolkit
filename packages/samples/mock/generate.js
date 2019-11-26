@@ -29,7 +29,7 @@ function generate(connectionsCount, durationSeconds) {
   versionBuf.writeUInt32LE(1, 0)
   bufferSegments.push(versionBuf)
 
-  while (bufferSegments.length < durationSeconds) {
+  while (bufferSegments.length < durationSeconds + 1) {
     now += 1000
     connections.forEach(connection => updateConnection(connection, now))
 
