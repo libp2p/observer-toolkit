@@ -18,7 +18,6 @@ function parseBuffer(buf) {
   const versionNumberLength = 4
   const messageChecksumLength = 4
   const messageSizeLength = 4
-
   // Skip version number
   bytesParsed += versionNumberLength
 
