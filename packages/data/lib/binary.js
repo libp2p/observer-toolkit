@@ -1,12 +1,14 @@
 'use strict'
 
-const { deserializeBinary } = require('@libp2p-observer/proto')
+const { deserializeBinary, fnv1a } = require('@libp2p-observer/proto')
 
 function parseBuffer(buf) {
-  // Expects a binary file with this repeating structure:
+  // Expects a binary file with this structure:
   // - 4-byte version number
-  // - 4-byte length of following State message
-  // - State message
+  // - The following is repeated
+  // - 4-byte checksum of following message
+  // - 4-byte length of following message
+  // - message (typically state)
 
   const byteLength = Buffer.byteLength(buf)
 
@@ -14,26 +16,30 @@ function parseBuffer(buf) {
   const messages = []
 
   const versionNumberLength = 4
-  const stateMessageSizeLength = 4
+  const messageChecksumLength = 4
+  const messageSizeLength = 4
+
+  // Skip version number
+  bytesParsed += versionNumberLength
 
   // TODO - add async variant
   while (bytesParsed < byteLength) {
-    // Skip version number
-    bytesParsed += versionNumberLength
+    const messageChecksum = buf.readUIntLE(bytesParsed, messageChecksumLength)
+    bytesParsed += messageChecksumLength
+    const messageSize = buf.readUIntLE(bytesParsed, messageSizeLength)
+    const messageStart = bytesParsed + messageSizeLength
+    const messageEnd = messageStart + messageSize
 
-    const stateMessageSize = buf.readUIntLE(bytesParsed, stateMessageSizeLength)
-    const stateMessageStart = bytesParsed + stateMessageSizeLength
-    const stateMessageEnd = stateMessageStart + stateMessageSize
-    const stateMessageBin = buf.toString(
-      'base64',
-      stateMessageStart,
-      stateMessageEnd
-    )
+    const messageBin = buf.slice(messageStart, messageEnd)
 
-    const stateMessage = deserializeBinary(stateMessageBin)
+    const validChecksum = messageChecksum === fnv1a(messageBin)
 
-    messages.push(stateMessage)
-    bytesParsed = stateMessageEnd
+    // TODO: bubble an error message for an invalid checksum
+    if (validChecksum) {
+      const message = deserializeBinary(messageBin)
+      messages.push(message)
+    }
+    bytesParsed = messageEnd
   }
 
   return messages
