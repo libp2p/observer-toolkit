@@ -1,7 +1,7 @@
 'use strict'
 
 const {
-  proto: { State, Runtime, Subsystems, Version },
+  proto: { State, Subsystems },
 } = require('@libp2p-observer/proto')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
