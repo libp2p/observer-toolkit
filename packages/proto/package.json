@@ -10,12 +10,10 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "tap",
     "protoc": "protoc --js_out=import_style=commonjs,binary:. protobuf/introspection.proto && node protobuf/prepend-disable-lint.js"
   },
   "dependencies": {
-    "google-protobuf": "^3.10.0",
-    "tap": "^14.7.1"
+    "google-protobuf": "^3.10.0"
   },
   "devDependencies": {
     "yargs": "^14.2.0"

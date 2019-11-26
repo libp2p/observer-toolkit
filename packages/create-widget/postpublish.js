@@ -18,13 +18,6 @@ async function removeRootRepoCopies() {
   try {
     await rimraf(dirPath)
   } catch (err) {
-    if (err.code === 'ENOTEMPTY') {
-      console.error(
-        chalk.red(
-          'Please use Node version 12.10 or greater (rmdir recursive not supported'
-        )
-      )
-    }
     if (err.code === 'EACCES') {
       console.error(chalk.red(`Permission denied to delete ${dirPath}`))
     }
