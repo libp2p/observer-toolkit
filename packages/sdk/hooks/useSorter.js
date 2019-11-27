@@ -1,20 +1,6 @@
 import { useState } from 'react'
 import T from 'prop-types'
 
-function getNumericSorter(direction) {
-  const numericSorter = (a, b) => (direction === 'asc' ? a - b : b - a)
-  return numericSorter
-}
-
-function getStringSorter(direction) {
-  const caselessSorter = Intl.Collator('en').compare
-  const stringSorter = (a, b) => {
-    const sortNum = caselessSorter(a, b)
-    return direction === 'asc' ? sortNum : sortNum * -1
-  }
-  return stringSorter
-}
-
 function validateDirection(sortDirection, directionOptions) {
   // null disables sorter
   if (!sortDirection) return
@@ -37,6 +23,10 @@ function makeSorter(sortDirection, getSorter, mapSorter) {
   return (a, b) => sorter(mapSorter(a), mapSorter(b))
 }
 
+function noopSorter() {
+  return 0
+}
+
 const defaultOptions = [
   ['asc', 'ascending'],
   ['desc', 'descending'],
@@ -51,7 +41,8 @@ function useSorter({
 }) {
   const [sortDirection, setSortDirection] = useState(defaultDirection || null)
 
-  if (disabled) return { sorter: () => 0, sortDirection, setSortDirection }
+  if (disabled || !getSorter)
+    return { noopSorter, sortDirection, setSortDirection }
 
   validateDirection(sortDirection, directionOptions)
   const sorter = makeSorter(sortDirection, getSorter, mapSorter)
@@ -65,19 +56,17 @@ function useSorter({
 
 useSorter.propTypes = {
   data: T.array.isRequired,
-  getSorter: T.func,
+  getSorter: T.func.isRequired,
   mapSorter: T.func,
   defaultDirection: T.string,
   directionOptions: T.arrayOf([
     T.arrayOf([
       T.string, // direction name
-      T.string, // user-facing direction label
-      T.node, // icon
+      T.string, // optional user-facing direction label
+      T.node, // optional icon
     ]),
   ]),
   disabled: T.bool,
 }
 
 export default useSorter
-
-export { getNumericSorter, getStringSorter }

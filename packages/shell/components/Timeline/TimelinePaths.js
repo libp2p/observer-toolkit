@@ -2,14 +2,20 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { SetterContext, PeerContext } from '@libp2p-observer/sdk'
+import {
+  SetterContext,
+  PeerContext,
+  useStackedData,
+  useAreaChart,
+  getNumericSorter,
+} from '@libp2p-observer/sdk'
+import { getTrafficChangesByPeer, getTotalTraffic, getPeerIds } from './utils'
+
+const height = 52
 
 const StyledSvg = styled.svg`
   width: 100%;
-  height: ${({ svgHeight }) => svgHeight}px;
-
-  // TODO: make this less hacky, adjust in path defs
-  margin-bottom: -4px;
+  height: ${height}px;
 `
 
 const StyledPath = styled.path`
@@ -17,12 +23,29 @@ const StyledPath = styled.path`
     theme.color(colorKey, 'mid', opacity)};
 `
 
-function TimelinePaths({ pathDefs, svgHeight, colorKey }) {
+function TimelinePaths({ width, dataDirection, colorKey }) {
   const globalPeerId = useContext(PeerContext)
   const { setPeerId } = useContext(SetterContext)
+  const flip = dataDirection === 'out'
+
+  const { stackedData, xScale, yScale } = useStackedData({
+    keyData: getTrafficChangesByPeer(dataDirection),
+    getKeys: getPeerIds,
+    getSorter: getNumericSorter,
+    mapSorter: getTotalTraffic,
+  })
+
+  const pathDefs = useAreaChart({
+    stackedData,
+    height,
+    width,
+    xScale,
+    yScale,
+    flip,
+  })
 
   return (
-    <StyledSvg svgHeight={svgHeight}>
+    <StyledSvg height={height}>
       {pathDefs &&
         pathDefs.map(({ pathDef, peerId }, index) => {
           const isHighlighted = peerId === globalPeerId
@@ -54,9 +77,10 @@ function TimelinePaths({ pathDefs, svgHeight, colorKey }) {
 }
 
 TimelinePaths.propTypes = {
-  pathDefs: T.array,
-  svgHeight: T.number.isRequired,
+  width: T.number.isRequired,
+  dataDirection: T.string.isRequired,
   colorKey: T.string.isRequired,
+  flip: T.bool,
 }
 
 export default TimelinePaths
