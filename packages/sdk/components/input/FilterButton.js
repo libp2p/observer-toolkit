@@ -17,7 +17,7 @@ const AccordionContent = styled.div`
   top: 100%;
   right: -${({ theme }) => theme.spacing()};
   padding: ${({ theme }) => theme.spacing()};
-  background: ${({ theme }) => theme.color('light', 'mid', 0.8)};
+  background: ${({ theme }) => theme.color('background', 1, 0.8)};
   z-index: 20;
 `
 

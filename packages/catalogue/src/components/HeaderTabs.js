@@ -21,7 +21,7 @@ const SelectedTab = styled.div`
   align-items: center;
   width: 50%;
   margin: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
-  background: ${({ theme }) => theme.color('primary', 'mid')};
+  background: ${({ theme }) => theme.color('primary')};
   padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
   border-radius: 6px 6px 0 0;
 `
@@ -33,9 +33,9 @@ const UnselectedTab = styled.div`
   align-items: center;
   width: 25%;
   margin: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
-  background: ${({ theme }) => theme.color('secondary', 'dark')};
+  background: ${({ theme }) => theme.color('secondary', 1)};
   padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
-  color: ${({ theme }) => theme.color('light', 'light')};
+  color: ${({ theme }) => theme.color('text', 2)};
   border-radius: 6px 6px 0 0;
 `
 

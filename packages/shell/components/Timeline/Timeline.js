@@ -9,10 +9,10 @@ import TimelinePaths from './TimelinePaths'
 import TimeSlider from './TimeSlider'
 
 const Container = styled.div`
-  background: ${({ theme }) => theme.color('dark', 'mid')};
+  background: ${({ theme }) => theme.color('contrast')};
   position: relative;
   padding: ${({ theme }) => theme.spacing()} 0;
-  color: ${({ theme }) => theme.color('light', 'light')};
+  color: ${({ theme }) => theme.color('text', 2)};
   user-select: none;
 `
 
@@ -27,7 +27,7 @@ const Label = styled.div`
   font-family: plex-sans;
   font-weight: 500;
   font-size: 8pt;
-  color: ${({ theme }) => theme.color('light', 'light')};
+  color: ${({ theme }) => theme.color('text', 2)};
   left: ${({ theme }) => theme.spacing()};
 `
 

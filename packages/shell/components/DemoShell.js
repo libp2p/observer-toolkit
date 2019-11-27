@@ -35,7 +35,7 @@ const Content = styled.div`
   }
 `
 const Controls = styled.div`
-  border-top: 2px solid ${({ theme }) => theme.color('light', 'dark')};
+  border-top: 2px solid ${({ theme }) => theme.color('background', 1)};
   height: 185px;
   flex-grow: 0;
   flex-shrink: 0;

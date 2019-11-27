@@ -21,8 +21,10 @@ const StyledSvg = styled.svg`
 `
 
 const StyledPath = styled.path`
-  fill: ${({ theme, colorKey, opacity }) =>
-    theme.color(colorKey, 'mid', opacity)};
+  fill: ${({ theme, colorKey, opacity, isHighlighted }) => {
+    if (isHighlighted) return theme.color('background', 1)
+    return theme.color(colorKey, 0, opacity)
+  }};
 `
 
 function TimelinePaths({ width, dataDirection, colorKey }) {
@@ -68,7 +70,8 @@ function TimelinePaths({ width, dataDirection, colorKey }) {
                 name={peerId}
                 onMouseEnter={mouseEnterHandler}
                 onMouseLeave={mouseLeaveHandler}
-                colorKey={isHighlighted ? 'tertiary' : colorKey}
+                colorKey={colorKey}
+                isHighlighted={isHighlighted}
                 opacity={
                   (index % 2 ? 0.6 : 0.7) +
                   (index / (pathDefs.length + 1)) * 0.3

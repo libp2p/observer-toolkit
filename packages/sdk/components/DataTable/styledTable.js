@@ -4,14 +4,14 @@ import styled from 'styled-components'
 const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
-  color: ${({ theme }) => theme.color('dark', 'mid')};
+  color: ${({ theme }) => theme.color('text')};
 `
 
 const TableRow = styled.tr`
-  border-bottom: 2px solid ${({ theme }) => theme.color('light', 'mid')};
+  border-bottom: 2px solid ${({ theme }) => theme.color('background', 1)};
   ${({ highlighted, theme }) =>
     highlighted
-      ? `background-color: ${theme.color('tertiary', 'light', 0.1)};`
+      ? `background-color: ${theme.color('background', 2, 0.5)};`
       : ''}
 `
 
@@ -19,10 +19,10 @@ const TableHead = styled.th`
   ${({ theme }) => theme.styles.tableCell}
   padding-right: 0;
   font-family: plex-sans;
-  font-weight: 400;
-  border-bottom: 1px solid ${({ theme }) => theme.color('light', 'dark')};
-  background-color: ${({ theme }) => theme.color('secondary', 'mid', 0.2)};
-  color: ${({ theme }) => theme.color('dark', 'light')};
+  font-weight: 600;
+  border-bottom: 1px solid ${({ theme }) => theme.color('background', 2)};
+  background-color: ${({ theme }) => theme.color('secondary', 1, 0.4)};
+  color: ${({ theme }) => theme.color('text', 0, 0.6)};
   text-transform: uppercase;
   white-space: nowrap;
 `

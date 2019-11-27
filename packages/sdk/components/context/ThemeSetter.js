@@ -23,7 +23,7 @@ function ThemeSetter({ children }) {
       ${({ theme }) => theme.text()};
     }
     p, li, h1, h2, h3, h4, h5, h6 {
-      color: ${({ theme }) => theme.color('text', 'mid')};
+      color: ${({ theme }) => theme.color('text', 1)};
     }
   `
 

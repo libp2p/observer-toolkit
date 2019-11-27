@@ -10,7 +10,7 @@ const ExampleStyledHeader = styled.h2`
 `
 
 const ExampleStyledContent = styled.div`
-  background: ${({ theme }) => theme.color('light', 'mid')};
+  background: ${({ theme }) => theme.color('background', 1)};
   border-radius: ${({ theme }) => theme.spacing()};
   padding: ${({ theme }) => theme.spacing(2)};
 `

@@ -16,9 +16,9 @@ const Container = styled.div`
 `
 
 const Bar = styled.div`
-  background: ${({ theme }) => theme.color('light', 'light')};
+  background: ${({ theme }) => theme.color('background')};
   border-radius: ${({ theme }) => theme.spacing()};
-  border: 2px solid ${({ theme }) => theme.color('light', 'dark')};
+  border: 2px solid ${({ theme }) => theme.color('background', 2)};
   height: ${BAR_HEIGHT}px;
   display: flex;
   position: relative;
@@ -27,7 +27,7 @@ const Bar = styled.div`
 
 const ActiveSection = styled.div`
   flex-grow: 1;
-  background: ${({ theme }) => theme.color('primary', 'mid')};
+  background: ${({ theme }) => theme.color('primary', 1)};
   height: 100%;
   border-radius: ${({ theme }) => theme.spacing()};
   user-select: none;
@@ -46,10 +46,10 @@ const Control = styled.div`
     `${!isUpper ? `${width}px ` : '0 '} ${
       !isLower ? `${width}px ${width}px ` : '0 0 '
     } ${!isUpper ? `${width}px` : '0'}`};
-  border: 2px solid ${({ theme }) => theme.color('light', 'dark')};
-  background: ${({ theme }) => theme.color('light', 'mid')};
+  border: 2px solid ${({ theme }) => theme.color('background', 2)};
+  background: ${({ theme }) => theme.color('primary')};
   text-align: center;
-  box-shadow: 0px 1px 2px ${({ theme }) => theme.color('dark', 'light')};
+  box-shadow: 0px 1px 2px ${({ theme }) => theme.color('contrast', 0, 0.5)};
   cursor: col-resize;
   ${({ isLower }) => isLower && `margin-left: 2px;`}
   ${({ isUpper, width }) => isUpper && `margin-left: ${width - 2}px;`}
@@ -64,13 +64,12 @@ const NumberFieldsWrapper = styled.div`
 
 const NumberInput = styled.input`
   font-family: 'plex-mono';
-  border: 1px solid ${({ theme }) => theme.color('light', 'dark')};
-  background: ${({ theme }) => theme.color('light', 'light')};
+  background: ${({ theme }) => theme.color('background', 1)};
   padding: ${({ theme }) =>
     `${theme.spacing(0.5)} 0 ${theme.spacing(0.5)} ${theme.spacing(8)}`};
   font-weight: 400;
   color: ${({ theme, isDefault }) =>
-    theme.color(isDefault ? 'text' : 'tertiary', isDefault ? 'light' : 'mid')};
+    theme.color(isDefault ? 'text' : 'highlight', 1)};
   :focus {
     font-weight: 800;
   }

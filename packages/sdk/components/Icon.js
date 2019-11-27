@@ -11,19 +11,12 @@ const Container = styled.span`
   height: ${({ size }) => size}px;
   border-radius: ${({ size }) => size}px;
 
-  ${({ theme, active }) =>
-    active
-      ? `
-      color: ${theme.color('tertiary', 'mid')};
-      background: ${theme.color('light', 'light')};
-    `
-      : `
-      background: ${theme.color('light', 'light', 0.5)};
-    `};
+  ${({ theme, active }) => active && `color: ${theme.color('highlight')};`}
+
   ${({ theme, disabled }) =>
     disabled &&
     `
-      color: ${theme.color('text', 'light', 0.5)};
+      color: ${theme.color('text', 2)};
   `}
   ${({ theme, offset }) => offset && `margin-right: -${theme.spacing(2)};`}
   ${({ onClick, theme, disabled }) =>
@@ -32,7 +25,7 @@ const Container = styled.span`
     `
     cursor: pointer;
     &:hover {
-      backgroundColor: ${theme.color('light', 'mid')};
+      backgroundColor: ${theme.color('background', 1, 0.3)};
     }
   `}
 `
