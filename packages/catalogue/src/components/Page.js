@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { Timeline } from '@libp2p-observer/shell'
+import { ControlPanel } from '@libp2p-observer/shell'
 
 import approvedViz from '../definitions/approvedViz'
 import CatalogueItem from './CatalogueItem'
@@ -23,7 +23,6 @@ const CatalogueBkg = styled.div`
 `
 
 const Header = styled.div`
-  position: fixed;
   z-index: 50;
   top: 0;
   left: 0;
@@ -76,7 +75,7 @@ function Page() {
         </CatalogueBkg>
       </Main>
       <Footer>
-        <Timeline height={FOOTER_HEIGHT} />
+        <ControlPanel />
       </Footer>
     </div>
   )
