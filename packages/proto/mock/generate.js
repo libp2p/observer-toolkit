@@ -10,6 +10,8 @@ const {
   addStreamsToConnection,
 } = require('./messages/connections')
 const { createState } = require('./messages/states')
+const { createRuntime } = require('./messages/runtime')
+const { createProtocolDataPacket } = require('./messages/protocol-data-packet')
 const { statusList } = require('./enums/statusList')
 
 function generate(connectionsCount, durationSeconds) {
@@ -24,10 +26,16 @@ function generate(connectionsCount, durationSeconds) {
 
   const bufferSegments = []
 
-  // add version number to start of buffer segments
+  // add file version number to start of buffer segments
   bufferSegments.push(Buffer.alloc(4).writeUInt32LE(1, 0))
 
-  while (bufferSegments.length < durationSeconds) {
+  const runtime = createRuntime()
+  const statePacket = createProtocolDataPacket(runtime, true)
+  bufferSegments.push(createBufferSegment(runtimePacket))
+
+  const numExpectedStatePackets = durationSeconds + 2
+
+  while (bufferSegments.length < numExpectedStatePackets) {
     now += 1000
     connections.forEach(connection => updateConnection(connection, now))
 
@@ -43,7 +51,8 @@ function generate(connectionsCount, durationSeconds) {
     }
 
     const state = createState(connections, now)
-    const bufferSegment = createBufferSegment(state)
+    const statePacket = createProtocolDataPacket(state)
+    const bufferSegment = createBufferSegment(statePacket)
     bufferSegments.push(bufferSegment)
   }
 

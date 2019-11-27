@@ -2,8 +2,6 @@
 
 const {
   State,
-  Runtime,
-  Version,
   Subsystems,
 } = require('../../protobuf/introspection_pb')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
@@ -13,16 +11,6 @@ const { createTraffic, sumTraffic } = require('../messages/traffic')
 
 function createState(connectionsList, now) {
   const state = new State()
-
-  state.setVersion(new Version(1))
-
-  state.setRuntime(
-    new Runtime([
-      'go-libp2p', // Implementation
-      '2', // Version
-      'macOS', // Platform
-    ])
-  )
 
   state.setInstantTs(new Timestamp([now]))
   state.setStartTs(new Timestamp([now - SNAPSHOT_DURATION + 1]))
