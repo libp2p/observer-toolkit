@@ -9,9 +9,11 @@ import {
   useAreaChart,
   getNumericSorter,
 } from '@libp2p-observer/sdk'
+
+import TimeTicks from './TimeTicks'
 import { getTrafficChangesByPeer, getTotalTraffic, getPeerIds } from './utils'
 
-const height = 52
+const height = 46
 
 const StyledSvg = styled.svg`
   width: 100%;
@@ -45,34 +47,38 @@ function TimelinePaths({ width, dataDirection, colorKey }) {
   })
 
   return (
-    <StyledSvg height={height}>
-      {pathDefs &&
-        pathDefs.map(({ pathDef, peerId }, index) => {
-          const isHighlighted = peerId === globalPeerId
+    <>
+      <StyledSvg height={height}>
+        {pathDefs &&
+          pathDefs.map(({ pathDef, peerId }, index) => {
+            const isHighlighted = peerId === globalPeerId
 
-          function mouseEnterHandler() {
-            if (peerId !== globalPeerId) setPeerId(peerId)
-          }
-          function mouseLeaveHandler() {
-            if (globalPeerId) setPeerId(null)
-          }
+            function mouseEnterHandler() {
+              if (peerId !== globalPeerId) setPeerId(peerId)
+            }
+            function mouseLeaveHandler() {
+              if (globalPeerId) setPeerId(null)
+            }
 
-          const key = `${peerId}_paths`
-          return (
-            <StyledPath
-              key={key}
-              d={pathDef}
-              name={peerId}
-              onMouseEnter={mouseEnterHandler}
-              onMouseLeave={mouseLeaveHandler}
-              colorKey={isHighlighted ? 'tertiary' : colorKey}
-              opacity={
-                (index % 2 ? 0.6 : 0.7) + (index / (pathDefs.length + 1)) * 0.3
-              }
-            />
-          )
-        })}
-    </StyledSvg>
+            const key = `${peerId}_paths`
+            return (
+              <StyledPath
+                key={key}
+                d={pathDef}
+                name={peerId}
+                onMouseEnter={mouseEnterHandler}
+                onMouseLeave={mouseLeaveHandler}
+                colorKey={isHighlighted ? 'tertiary' : colorKey}
+                opacity={
+                  (index % 2 ? 0.6 : 0.7) +
+                  (index / (pathDefs.length + 1)) * 0.3
+                }
+              />
+            )
+          })}
+      </StyledSvg>
+      {dataDirection === 'in' && <TimeTicks scale={xScale} />}
+    </>
   )
 }
 
