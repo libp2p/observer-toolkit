@@ -3,10 +3,11 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import { formatTime } from '@libp2p-observer/sdk'
+import { getTickOffsets } from './utils'
 
 const TicksContainer = styled.div`
   position: relative;
-  height: 16px;
+  height: 18px;
   width: 100%;
 `
 
@@ -18,30 +19,15 @@ const TickLabel = styled.label`
   ${({ theme }) => theme.text('label', 'small')}
 `
 
-function TimeTicks({ scale }) {
-  window.scale = scale
-
-  const ticks = scale.ticks()
-  const tickGap = ticks[1] - ticks[0]
-
-  const firstTickGap = ticks[0] - scale.domain()[0]
-  const lastTickGap = scale.domain()[1] - ticks[ticks.length - 1]
-
-  const totalGapValues =
-    firstTickGap + tickGap * (ticks.length - 1) + lastTickGap
-
-  const firstTickOffset = firstTickGap / totalGapValues
-  const tickOffset = tickGap / totalGapValues
-
-  const tickOffets = Array(ticks.length)
-    .fill()
-    .map((_, i) => firstTickOffset + i * tickOffset)
+function TimeTicks({ scale, width }) {
+  const ticks = scale.ticks(Math.round(width / 120))
+  const tickOffsets = getTickOffsets(ticks, scale)
 
   return (
     <TicksContainer>
       {ticks.map((tick, tickIndex) => (
         <TickLabel
-          style={{ left: `${tickOffets[tickIndex] * 100}%` }}
+          style={{ left: `${tickOffsets[tickIndex] * 100}%` }}
           key={`TimeTick[${tickIndex}]`}
         >
           {formatTime(tick)}

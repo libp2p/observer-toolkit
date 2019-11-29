@@ -2,22 +2,22 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import {
-  SetterContext,
-  PeerContext,
-  useStackedData,
-  useAreaChart,
-  getNumericSorter,
-} from '@libp2p-observer/sdk'
+import { SetterContext, PeerContext, useAreaChart } from '@libp2p-observer/sdk'
 
+import DataTicks from './DataTicks'
 import TimeTicks from './TimeTicks'
-import { getTrafficChangesByPeer, getTotalTraffic, getPeerIds } from './utils'
 
-const height = 46
+const height = 52
+
+const Container = styled.div`
+  position: relative;
+  padding: 0;
+`
 
 const StyledSvg = styled.svg`
   width: 100%;
   height: ${height}px;
+  background: ${({ theme }) => theme.color('contrast', 1)};
 `
 
 const StyledPath = styled.path`
@@ -27,17 +27,18 @@ const StyledPath = styled.path`
   }};
 `
 
-function TimelinePaths({ width, dataDirection, colorKey }) {
+function TimelinePaths({
+  width,
+  dataDirection,
+  colorKey,
+  xScale,
+  yScale,
+  stackedData,
+  leftGutter,
+}) {
   const globalPeerId = useContext(PeerContext)
   const { setPeerId } = useContext(SetterContext)
   const flip = dataDirection === 'out'
-
-  const { stackedData, xScale, yScale } = useStackedData({
-    keyData: getTrafficChangesByPeer(dataDirection),
-    getKeys: getPeerIds,
-    getSorter: getNumericSorter,
-    mapSorter: getTotalTraffic,
-  })
 
   const pathDefs = useAreaChart({
     stackedData,
@@ -49,7 +50,14 @@ function TimelinePaths({ width, dataDirection, colorKey }) {
   })
 
   return (
-    <>
+    <Container>
+      <DataTicks
+        scale={yScale}
+        width={leftGutter}
+        height={height}
+        dataDirection={dataDirection}
+        colorKey={colorKey}
+      />
       <StyledSvg height={height}>
         {pathDefs &&
           pathDefs.map(({ pathDef, peerId }, index) => {
@@ -80,8 +88,8 @@ function TimelinePaths({ width, dataDirection, colorKey }) {
             )
           })}
       </StyledSvg>
-      {dataDirection === 'in' && <TimeTicks scale={xScale} />}
-    </>
+      {dataDirection === 'in' && <TimeTicks scale={xScale} width={width} />}
+    </Container>
   )
 }
 

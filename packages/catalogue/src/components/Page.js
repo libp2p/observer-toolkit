@@ -9,11 +9,8 @@ import HeaderTabs from './HeaderTabs'
 import SelectedComponent from './SelectedComponent'
 
 const HEADER_HEIGHT = '64px'
-const FOOTER_HEIGHT = 128
 
 const Main = styled.div`
-  margin-top: ${HEADER_HEIGHT};
-  margin-bottom: ${FOOTER_HEIGHT};
   background-color: ${({ theme }) => theme.color('background')};
   overflow-y: scroll;
 `
@@ -38,14 +35,6 @@ const Footer = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: ${FOOTER_HEIGHT + 14}px;
-  background: ${({ theme }) => theme.color('contrast')};
-  color: ${({ theme }) => theme.color('text', 2)};
-  font-weight: bold;
-  padding: 0;
-  margin: 0;
-  border-top: ${({ theme }) =>
-    `${theme.spacing()} solid ${theme.color('contrast')}`};
 `
 
 function Page() {

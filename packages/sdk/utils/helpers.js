@@ -20,16 +20,4 @@ function validateNumbers(obj) {
   if (errors.length) throw new Error(errors.join('\n\n '))
 }
 
-function padZero(num) {
-  return num.toLocaleString(undefined, { minimumIntegerDigits: 2 })
-}
-
-function formatTime(timestamp) {
-  const time = new Date(timestamp)
-  const hr = padZero(time.getHours())
-  const min = padZero(time.getMinutes())
-  const sec = padZero(time.getSeconds())
-  return `${hr}:${min}:${sec}`
-}
-
-export { childrenToString, validateNumbers, padZero, formatTime }
+export { childrenToString, validateNumbers }

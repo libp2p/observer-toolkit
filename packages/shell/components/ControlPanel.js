@@ -6,6 +6,8 @@ import { DataContext, Icon } from '@libp2p-observer/sdk'
 import Timeline from './Timeline/Timeline'
 import DataTypeControl from './DataTypeControl'
 
+const leftGutter = 72
+
 const Container = styled.div`
   background: ${({ theme }) => theme.color('contrast', 0)};
   padding: ${({ theme }) => theme.spacing()};
@@ -25,7 +27,7 @@ const DataPanel = styled.div`
 const TimePanel = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
-  margin-left: 64px;
+  margin-left: ${leftGutter}px;
 `
 
 const DataPanelItem = styled.button`
@@ -45,14 +47,12 @@ const DataPanelItem = styled.button`
 
 function ControlPanel() {
   const dataset = useContext(DataContext)
-  if (!dataset) return ''
+  if (!dataset || !dataset.length) return ''
 
   return (
     <Container>
       <DataPanel>
-        <DataPanelItem>
-          <DataTypeControl metadata={dataset.metadata} />
-        </DataPanelItem>
+        <DataTypeControl metadata={dataset.metadata} />
 
         <DataPanelItem>
           <Icon type="filter" />0 filters applied
@@ -68,7 +68,7 @@ function ControlPanel() {
         </DataPanelItem>
       </DataPanel>
       <TimePanel>
-        <Timeline />
+        <Timeline leftGutter={leftGutter} />
       </TimePanel>
     </Container>
   )

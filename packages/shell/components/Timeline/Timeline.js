@@ -1,10 +1,15 @@
 import React, { useMemo, useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
-
-import { DataContext } from '@libp2p-observer/sdk'
 import { withResizeDetector } from 'react-resize-detector'
 
+import {
+  DataContext,
+  useStackedData,
+  getNumericSorter,
+} from '@libp2p-observer/sdk'
+
+import { getTrafficChangesByPeer, getTotalTraffic, getPeerIds } from './utils'
 import TimelinePaths from './TimelinePaths'
 import TimeSlider from './TimeSlider'
 
@@ -14,6 +19,7 @@ const Container = styled.div`
   padding: ${({ theme }) => theme.spacing()} 0;
   color: ${({ theme }) => theme.color('text', 2)};
   user-select: none;
+  margin-left: ${({ leftGutter }) => leftGutter};
 `
 
 const PathsContainer = styled.div`
@@ -31,30 +37,54 @@ const Label = styled.div`
   left: ${({ theme }) => theme.spacing()};
 `
 
-const DataInLabel = styled(Label)`
-  top: 0;
-  user-select: none;
-`
-
-const DataOutLabel = styled(Label)`
-  bottom: 0;
-  user-select: none;
-`
-
-function Timeline({ width }) {
+function Timeline({ width, leftGutter }) {
   const dataset = useContext(DataContext)
 
-  if (!dataset || !dataset.length) return ''
+  const { stackedData, xScale, yScale: yScaleIn } = useStackedData({
+    keyData: getTrafficChangesByPeer('in'),
+    getKeys: getPeerIds,
+    getSorter: getNumericSorter,
+    mapSorter: getTotalTraffic,
+  })
+
+  const { stackedData: stackedDataOut, yScale: yScaleOut } = useStackedData({
+    keyData: getTrafficChangesByPeer('out'),
+    getKeys: getPeerIds,
+    getSorter: getNumericSorter,
+    mapSorter: getTotalTraffic,
+  })
+
+  // Make sure both data in and out use the same scale
+  const yScaleInMax = yScaleIn.domain()[1]
+  const yScaleOutMax = yScaleOut.domain()[1]
+  const yScale = yScaleInMax > yScaleOutMax ? yScaleIn : yScaleOut
+
+  // Extend the yScale so that 3 tick labels fit nicely
+  yScale.nice(3)
 
   return (
-    <Container>
+    <Container leftGutter={leftGutter}>
       <PathsContainer>
-        <DataInLabel>Data in</DataInLabel>
-        <TimelinePaths dataDirection="in" width={width} colorKey="primary" />
+        <TimelinePaths
+          dataDirection="in"
+          width={width}
+          colorKey="primary"
+          stackedData={stackedData}
+          xScale={xScale}
+          yScale={yScale}
+          leftGutter={leftGutter}
+        />
       </PathsContainer>
       <PathsContainer>
-        <DataOutLabel>Data out</DataOutLabel>
-        <TimelinePaths dataDirection="out" width={width} colorKey="secondary" />
+        <TimelinePaths
+          dataDirection="out"
+          width={width}
+          colorKey="secondary"
+          stackedData={stackedDataOut}
+          xScale={xScale}
+          yScale={yScale}
+          leftGutter={leftGutter}
+        />
       </PathsContainer>
       <TimeSlider width={width} />
     </Container>

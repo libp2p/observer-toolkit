@@ -6,6 +6,25 @@ import {
 } from '@libp2p-observer/data'
 import { validateNumbers } from '@libp2p-observer/sdk'
 
+function getTickOffsets(ticks, scale) {
+  const tickGap = ticks[1] - ticks[0]
+
+  const firstTickGap = ticks[0] - scale.domain()[0]
+  const lastTickGap = scale.domain()[1] - ticks[ticks.length - 1]
+
+  const totalGapValues =
+    firstTickGap + tickGap * (ticks.length - 1) + lastTickGap
+
+  const firstTickOffset = firstTickGap / totalGapValues
+  const tickOffset = tickGap / totalGapValues
+
+  const tickOffsets = Array(ticks.length)
+    .fill()
+    .map((_, i) => firstTickOffset + i * tickOffset)
+
+  return tickOffsets
+}
+
 function getTrafficChangesByPeer(direction) {
   // Can't calculate bytes added in first timepoint, so skip where index is 0
   const keyData = (dataset, keys) =>
@@ -66,4 +85,4 @@ function getPeerIds(dataset, sorter, applyFilters) {
   return filteredConnections.map(conn => conn.getPeerId())
 }
 
-export { getTrafficChangesByPeer, getTotalTraffic, getPeerIds }
+export { getTickOffsets, getTrafficChangesByPeer, getTotalTraffic, getPeerIds }
