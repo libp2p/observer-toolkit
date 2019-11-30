@@ -1,5 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react'
-import T from 'prop-types'
+import { useContext, useMemo } from 'react'
 
 import useSorter from '../hooks/useSorter'
 import useFilter from '../hooks/useFilter'
@@ -7,7 +6,6 @@ import { DataContext } from '../components/context/DataProvider'
 
 import { scaleLinear, scaleTime, stack } from 'd3'
 
-import { getLatestTimepoint, getTime } from '@libp2p-observer/data'
 import { validateNumbers } from '@libp2p-observer/sdk'
 
 function getMaxAreaPeak(stackedData) {
@@ -74,7 +72,7 @@ function useStackedData({
 }) {
   const dataset = useContext(DataContext)
 
-  const { sorter, sortDirection, setSortDirection } = useSorter({
+  const { sorter, setSortDirection } = useSorter({
     getSorter,
     mapSorter: mapSorter,
     defaultDirection: 'desc',

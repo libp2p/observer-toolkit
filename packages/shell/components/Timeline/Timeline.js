@@ -1,13 +1,9 @@
-import React, { useMemo, useContext } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import {
-  DataContext,
-  useStackedData,
-  getNumericSorter,
-} from '@libp2p-observer/sdk'
+import { useStackedData, getNumericSorter } from '@libp2p-observer/sdk'
 
 import { getTrafficChangesByPeer, getTotalTraffic, getPeerIds } from './utils'
 import TimelinePaths from './TimelinePaths'
@@ -27,19 +23,7 @@ const PathsContainer = styled.div`
   user-select: none;
 `
 
-const Label = styled.div`
-  position: absolute;
-  text-transform: uppercase;
-  font-family: plex-sans;
-  font-weight: 500;
-  font-size: 8pt;
-  color: ${({ theme }) => theme.color('text', 2)};
-  left: ${({ theme }) => theme.spacing()};
-`
-
 function Timeline({ width, leftGutter }) {
-  const dataset = useContext(DataContext)
-
   const { stackedData, xScale, yScale: yScaleIn } = useStackedData({
     keyData: getTrafficChangesByPeer('in'),
     getKeys: getPeerIds,
@@ -93,6 +77,7 @@ function Timeline({ width, leftGutter }) {
 
 Timeline.propTypes = {
   width: T.number.isRequired, // Set by withResizeDetector
+  leftGutter: T.number.isRequired,
 }
 
 export default withResizeDetector(Timeline)

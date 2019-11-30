@@ -53,7 +53,8 @@ function DataTypeControl({ metadata }) {
 
   const { type, name } = metadata
 
-  const iconType = isHighlighted ? 'sort' : 'filter' // type
+  // TODO: remove 'filter' on adding icons
+  const iconType = isHighlighted ? 'sort' : 'filter' || type
 
   // TODO: When implementing live ws mode:
   //  - Make icon pulse gently while live
@@ -74,7 +75,7 @@ function DataTypeControl({ metadata }) {
 }
 
 DataTypeControl.propTypes = {
-  type: T.string.isRequired,
+  metadata: T.object,
 }
 
 export default DataTypeControl

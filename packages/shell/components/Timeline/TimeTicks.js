@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -39,6 +39,7 @@ function TimeTicks({ scale, width }) {
 
 TimeTicks.propTypes = {
   scale: T.func.isRequired,
+  width: T.number.isRequired,
 }
 
 export default TimeTicks

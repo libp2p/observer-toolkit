@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -89,6 +89,14 @@ function DataTicks({ scale, height, width, dataDirection, colorKey }) {
       ))}
     </TicksContainer>
   )
+}
+
+DataTicks.propTypes = {
+  scale: T.func.isRequired,
+  height: T.number.isRequired,
+  width: T.number.isRequired,
+  dataDirection: T.string.isRequired,
+  colorKey: T.string.isRequired,
 }
 
 export default DataTicks

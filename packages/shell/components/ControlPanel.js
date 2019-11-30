@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import T from 'prop-types'
 import styled from 'styled-components'
 
 import { DataContext, Icon } from '@libp2p-observer/sdk'

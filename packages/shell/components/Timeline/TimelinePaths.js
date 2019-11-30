@@ -98,6 +98,10 @@ TimelinePaths.propTypes = {
   dataDirection: T.string.isRequired,
   colorKey: T.string.isRequired,
   flip: T.bool,
+  xScale: T.func.isRequired,
+  yScale: T.func.isRequired,
+  stackedData: T.object.isRequired,
+  leftGutter: T.number.isRequired,
 }
 
 export default TimelinePaths
