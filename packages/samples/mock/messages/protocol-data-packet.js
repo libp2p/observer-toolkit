@@ -1,9 +1,8 @@
 'use strict'
 
 const {
-  Version,
-  ProtocolDataPacket,
-} = require('../../protobuf/introspection_pb')
+  proto: { ProtocolDataPacket, Version },
+} = require('@libp2p-observer/proto')
 
 function createProtocolDataPacket(message, isRuntime = false) {
   const dataPacket = new ProtocolDataPacket()

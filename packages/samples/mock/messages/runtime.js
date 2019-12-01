@@ -1,6 +1,8 @@
 'use strict'
 
-const { Runtime } = require('../../protobuf/introspection_pb')
+const {
+  proto: { Runtime },
+} = require('@libp2p-observer/proto')
 
 function createRuntime() {
   return new Runtime([
