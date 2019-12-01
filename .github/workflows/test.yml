@@ -1,6 +1,6 @@
 name: Run tests
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
           node-version: '12.x'
 
       - name: Initialise monorepo
-        run: yarn install --registry="https://registry.npmjs.org/"
+        run: yarn install
 
       - name: Run test scripts
         run: npx lerna run test

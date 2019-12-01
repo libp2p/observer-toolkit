@@ -4,7 +4,11 @@
     "packages/*"
   ],
   "version": "independent",
-  "registry": "http://localhost:4873/",
+  "command": {
+    "publish": {
+      "registry": "http://localhost:4873/"
+    }
+  },
   "npmClient": "yarn",
   "useWorkspaces": true
 }
