@@ -10,6 +10,8 @@ const {
   addStreamsToConnection,
 } = require('./messages/connections')
 const { createState } = require('./messages/states')
+const { createRuntime } = require('./messages/runtime')
+const { createProtocolDataPacket } = require('./messages/protocol-data-packet')
 const { statusList } = require('./enums/statusList')
 
 function generate(connectionsCount, durationSeconds) {
@@ -24,17 +26,22 @@ function generate(connectionsCount, durationSeconds) {
 
   const bufferSegments = []
 
-  // add version number to start of file
-  const versionBuf = Buffer.alloc(4)
-  versionBuf.writeUInt32LE(1, 0)
-  bufferSegments.push(versionBuf)
+  // add file version number to start of buffer segments
+  bufferSegments.push(Buffer.alloc(4).writeUInt32LE(1, 0))
 
-  while (bufferSegments.length < durationSeconds + 1) {
+  const runtime = createRuntime()
+  const runtimePacket = createProtocolDataPacket(runtime, true)
+  bufferSegments.push(createBufferSegment(runtimePacket))
+
+  const numExpectedStatePackets = durationSeconds + bufferSegments.length
+  let isFirstIteration = true
+
+  while (bufferSegments.length < numExpectedStatePackets) {
     now += 1000
     connections.forEach(connection => updateConnection(connection, now))
 
-    // Chance of new connection, _after_ first iteration so initial connections === connectionsCount
-    if (bufferSegments.length && randomOpenClose(connectionsCount)) {
+    // Ensure initial connections === connectionsCount at first iteration
+    if (!isFirstIteration && randomOpenClose(connectionsCount)) {
       // Open a new connection
       const connection = createConnection({
         status: statusList.getNum('OPENING'),
@@ -45,10 +52,13 @@ function generate(connectionsCount, durationSeconds) {
     }
 
     const state = createState(connections, now)
-    const bufferSegment = createBufferSegment(state)
+    const statePacket = createProtocolDataPacket(state)
+    const bufferSegment = createBufferSegment(statePacket)
     bufferSegments.push(bufferSegment)
+    isFirstIteration = false
   }
 
+  console.log(bufferSegments)
   return Buffer.concat(bufferSegments)
 }
 
