@@ -32,11 +32,7 @@ function getAllConnections(timepoints, { filter, latest = false } = {}) {
 
 function getSubsystems(timepoint) {
   if (!timepoint) return null
-
-  const state = timepoint.getState()
-  if (!state) return null // This is a runtime packet, not a state packet
-
-  return state.getSubsystems()
+  return timepoint.getSubsystems()
 }
 
 // Gets the connections in one timepoint
@@ -79,10 +75,7 @@ function getLatestTimepoint(timepoints) {
 }
 
 function getTime(timepoint, format) {
-  const timestamp = timepoint
-    .getState()
-    .getInstantTs()
-    .getSeconds()
+  const timestamp = timepoint.getInstantTs().getSeconds()
 
   if (!format) return timestamp
   // TODO: add date formating options

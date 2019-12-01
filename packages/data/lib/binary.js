@@ -13,7 +13,10 @@ function parseBuffer(buf) {
   const byteLength = Buffer.byteLength(buf)
 
   let bytesParsed = 0
-  const messages = []
+  const messages = {
+    states: [],
+    runtime: null,
+  }
 
   const versionNumberLength = 4
   const messageChecksumLength = 4
@@ -36,8 +39,7 @@ function parseBuffer(buf) {
 
     // TODO: bubble an error message for an invalid checksum
     if (validChecksum) {
-      const message = deserializeBinary(messageBin)
-      messages.push(message)
+      addMessageContent(messageBin, messages)
     } else {
       console.error(
         `Skipped bytes from ${messageStart} to ${messageEnd} due to checksum mismatch`
@@ -48,6 +50,22 @@ function parseBuffer(buf) {
   }
 
   return messages
+}
+
+function addMessageContent(messageBin, messages) {
+  const message = deserializeBinary(messageBin)
+
+  const runtimeContent = message.getRuntime()
+  const stateContent = message.getState()
+
+  if (stateContent) {
+    messages.states.push(stateContent)
+  }
+  if (runtimeContent) {
+    // By current proto def, runtime data can't reasonably change during a session, so,
+    // Runtime has no timestamp. If this changes, make `runtime` an array and push here.
+    messages.runtime = runtimeContent
+  }
 }
 
 function parseArrayBuffer(arrayBuf) {
