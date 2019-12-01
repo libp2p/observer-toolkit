@@ -26,8 +26,10 @@ function generate(connectionsCount, durationSeconds) {
 
   const bufferSegments = []
 
-  // add file version number to start of buffer segments
-  bufferSegments.push(Buffer.alloc(4).writeUInt32LE(1, 0))
+  // add version number to start of file
+  const versionBuf = Buffer.alloc(4)
+  versionBuf.writeUInt32LE(1, 0)
+  bufferSegments.push(versionBuf)
 
   const runtime = createRuntime()
   const runtimePacket = createProtocolDataPacket(runtime, true)
@@ -58,7 +60,6 @@ function generate(connectionsCount, durationSeconds) {
     isFirstIteration = false
   }
 
-  console.log(bufferSegments)
   return Buffer.concat(bufferSegments)
 }
 
