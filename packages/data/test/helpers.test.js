@@ -27,13 +27,13 @@ const {
   getTimeIndex,
 } = require('../index.js')
 
-const dataset = parseImport(readFileSync(sampleFilePath))
+const { states } = parseImport(readFileSync(sampleFilePath))
 
-if (!dataset.length)
+if (!states.length)
   throw new Error('Deserialization error prevents testing helpers')
 
 test('Test connection getters', t => {
-  const allConnections = getAllConnections(dataset)
+  const allConnections = getAllConnections(states)
   t.type(allConnections, Array)
 
   let connTypeMismatches_1 = 0
@@ -50,7 +50,7 @@ test('Test connection getters', t => {
   const allConnectionIds_2 = new Set()
   let connTypeMismatches_2 = 0
 
-  for (const timepoint of dataset) {
+  for (const timepoint of states) {
     const connections = getConnections(timepoint)
     t.type(connections, Array)
     t.ok(
@@ -76,7 +76,7 @@ test('Test connection getters', t => {
 })
 
 test('Test stream getters', t => {
-  for (const timepoint of dataset) {
+  for (const timepoint of states) {
     const allStreamsWithConnection = getAllStreamsAtTime(timepoint)
     const streamIds_1 = new Set(
       allStreamsWithConnection.map(({ stream }) => stream.getId().toString())
@@ -107,7 +107,7 @@ test('Test stream getters', t => {
 })
 
 test('Test traffic getters', t => {
-  const allConnections = getAllConnections(dataset)
+  const allConnections = getAllConnections(states)
   for (const connection of allConnections) {
     const bytesIn = getTraffic(connection, 'in', 'bytes')
     t.type(bytesIn, 'number')
@@ -131,8 +131,8 @@ test('Test traffic getters', t => {
 test('Test timepoint getters', t => {
   let index = 0
   let lastTimestamp = 0
-  for (const timepoint of dataset) {
-    t.equal(getTimeIndex(dataset, getTime(timepoint)), index)
+  for (const timepoint of states) {
+    t.equal(getTimeIndex(states, getTime(timepoint)), index)
     const timestamp = getTime(timepoint)
     t.ok(timestamp > lastTimestamp)
     t.type(timestamp, 'number')
@@ -140,6 +140,6 @@ test('Test timepoint getters', t => {
     lastTimestamp = timestamp
     index++
   }
-  t.strictSame(dataset[index - 1], getLatestTimepoint(dataset))
+  t.strictSame(states[index - 1], getLatestTimepoint(states))
   t.end()
 })

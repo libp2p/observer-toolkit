@@ -14,8 +14,8 @@ const sampleFilePath = path.resolve(
 const { parseImport } = require('../lib/binary')
 
 test('Sample data can be deserialized', t => {
-  const dataset = parseImport(readFileSync(sampleFilePath))
-  t.type(dataset, Array, 'Sample data deserializes to an array')
-  t.ok(dataset.length, 'Deserialized sample data array is not empty')
+  const { states } = parseImport(readFileSync(sampleFilePath))
+  t.type(states, Array, 'Sample data deserializes to an array')
+  t.ok(states, 'Deserialized sample data array is not empty')
   t.end()
 })
