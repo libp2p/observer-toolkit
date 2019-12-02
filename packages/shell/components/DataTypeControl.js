@@ -55,10 +55,8 @@ function DataTypeControl({ metadata }) {
 
   const iconNames = {
     sample: 'cloud',
-    upload: 'file',
+    upload: 'doc',
   }
-
-  console.log('type', type)
 
   const iconType = isHighlighted ? 'back' : iconNames[type]
 
