@@ -53,8 +53,14 @@ function DataTypeControl({ metadata }) {
 
   const { type, name } = metadata
 
-  // TODO: remove 'filter' on adding icons
-  const iconType = isHighlighted ? 'sort' : 'filter' || type
+  const iconNames = {
+    sample: 'cloud',
+    upload: 'file',
+  }
+
+  console.log('type', type)
+
+  const iconType = isHighlighted ? 'back' : iconNames[type]
 
   // TODO: When implementing live ws mode:
   //  - Make icon pulse gently while live

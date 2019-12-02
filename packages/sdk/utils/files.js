@@ -7,7 +7,7 @@ function uploadDataFile(file, onUploadStart, onDataLoaded) {
   // TODO: On integration with live output, share logic parsing file chunk by chunk
   reader.onload = e => {
     const metadata = {
-      type: 'file',
+      type: 'upload',
       name: file.name,
     }
 
@@ -36,7 +36,7 @@ async function applySampleData(samplePath, onUploadStart, onDataLoaded) {
   const arrbuf = await response.arrayBuffer()
 
   const metadata = {
-    type: 'filter',
+    type: 'sample',
     name: 'Sample data',
   }
 

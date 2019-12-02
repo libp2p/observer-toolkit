@@ -32,6 +32,7 @@ const Container = styled.span`
 
 function Icon({ type, onClick, active, disabled, size = 20 }) {
   const IconSvg = icons[type]
+  if (!IconSvg) throw new Error(`No icon found named "${type}"`)
 
   return (
     <Container

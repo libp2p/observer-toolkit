@@ -5,20 +5,30 @@
 import asc from './icons/Asc'
 import desc from './icons/Desc'
 import sort from './icons/Sort'
-import filter from './icons/Filter'
 
 // Protocol Labs own icons
 import cancel from './icons/Cancel'
 import check from './icons/Check'
 import uncheck from './icons/Uncheck'
 
+// Created based on Protocol Labs icons
+import filter from './icons/Filter'
+import back from './icons/Back'
+import forward from './icons/Forward'
+import doc from './icons/Doc'
+import cloud from './icons/Cloud'
+
 // Export an object of url paths; importer picks path by key
 export default {
   asc,
   desc,
   sort,
-  filter,
   cancel,
   check,
   uncheck,
+  filter,
+  back,
+  forward,
+  doc,
+  cloud,
 }

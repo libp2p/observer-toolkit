@@ -44,6 +44,11 @@ const DataPanelItem = styled.button`
   margin: 2px 0;
 `
 
+const IconContainer = styled.span`
+  margin-left: ${({ theme }) => theme.spacing(0.5)};
+  margin-right: ${({ theme }) => theme.spacing(0.5)};
+`
+
 function ControlPanel() {
   const dataset = useContext(DataContext)
   if (!dataset || !dataset.length) return ''
@@ -54,15 +59,22 @@ function ControlPanel() {
         <DataTypeControl metadata={dataset.metadata} />
 
         <DataPanelItem>
-          <Icon type="filter" />0 filters applied
+          <IconContainer>
+            <Icon type="filter" />
+          </IconContainer>
+          0 filters applied
         </DataPanelItem>
         <DataPanelItem>
-          <Icon type="filter" />
+          <IconContainer>
+            <Icon type="doc" />
+          </IconContainer>
           Export data
         </DataPanelItem>
         <DataPanelItem>Peer Id:</DataPanelItem>
         <DataPanelItem>
-          <Icon type="filter" />
+          <IconContainer>
+            <Icon type="forward" />
+          </IconContainer>
           About this peer
         </DataPanelItem>
       </DataPanel>

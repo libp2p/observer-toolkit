@@ -11,7 +11,8 @@
   "main": "./build/index.js",
   "module": "./index.js",
   "scripts": {
-    "prepare": "webpack"
+    "prepare": "webpack",
+    "svgr-icons": "npx @svgr/cli -d theme/icons theme/icons-src"
   },
   "peerDependencies": {
     "@libp2p-observer/data": "^0.0.1",
