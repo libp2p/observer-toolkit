@@ -88,3 +88,9 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Module builds
+build/
+
+# Verdaccio docker module storage
+verdaccio/storage/

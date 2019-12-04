@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
-import { DataTableRow, PeerContext, SetterContext } from 'sdk'
+import { DataTableRow, PeerContext, SetterContext } from '@libp2p-observer/sdk'
 
 function ConnectionsTableRow({ rowContentProps, columnDefs }) {
   const globalPeerId = useContext(PeerContext)

@@ -1,25 +1,17 @@
 import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 
-import { parseBuffer, samples } from 'proto'
-import { DataContext, SetterContext } from 'sdk'
+import { applySampleData } from '../../utils'
+import { DataContext, SetterContext } from '@libp2p-observer/sdk'
 
 import StyledButton from './StyledButton'
 
-function getSampleData() {
-  const b64string = samples[0].default
-  const buf = Buffer.from(b64string, 'base64')
-  const data = parseBuffer(buf)
-  data.isSample = true
-  return data
-}
-
-function SampleDataButton({ title }) {
+function SampleDataButton({ title, samplePath }) {
   const [isLoading, setIsLoading] = useState(false)
   const { dispatchDataset } = useContext(SetterContext)
   const dataset = useContext(DataContext)
 
-  const applySampleData = () => {
+  function handleButtonPress() {
     if (dataset.isSample) {
       dispatchDataset({
         action: 'remove',
@@ -27,15 +19,21 @@ function SampleDataButton({ title }) {
       return
     }
 
-    // Apply data on tick after setting loading state so indicator can show
+    applySampleData(samplePath, handleUploadStart, handleDataLoaded)
+  }
+
+  function handleUploadStart() {
     setIsLoading(true)
-    setTimeout(() => {
-      dispatchDataset({
-        action: 'replace',
-        data: getSampleData(),
-      })
-      setIsLoading(false)
-    }, 50)
+  }
+
+  function handleDataLoaded(data) {
+    data.isSample = true
+
+    dispatchDataset({
+      action: 'replace',
+      data,
+    })
+    setIsLoading(false)
   }
 
   const buttonText =
@@ -45,7 +43,7 @@ function SampleDataButton({ title }) {
 
   return (
     <StyledButton
-      onClick={applySampleData}
+      onClick={handleButtonPress}
       isActive={isLoading || dataset.isSample}
     >
       {buttonText}
@@ -55,6 +53,7 @@ function SampleDataButton({ title }) {
 
 SampleDataButton.propTypes = {
   title: T.string.isRequired,
+  samplePath: T.string.isRequired,
 }
 
 export default SampleDataButton

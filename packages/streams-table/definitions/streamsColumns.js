@@ -1,6 +1,10 @@
-import { getAge, getTraffic, statusNames, transportNames } from 'proto'
-
-import { getStringSorter, getNumericSorter } from 'sdk'
+import {
+  getAge,
+  getTraffic,
+  statusNames,
+  transportNames,
+} from '@libp2p-observer/data'
+import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
 
 import {
   AgeContent,

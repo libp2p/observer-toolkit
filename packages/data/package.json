@@ -1,0 +1,30 @@
+{
+  "name": "@libp2p-observer/data",
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
+  "version": "0.0.1",
+  "description": "Javascript protobuf decoder for libp2p-introspection messages, with helper functions",
+  "author": "AlanSl <alan.slater@nearform.com>",
+  "homepage": "https://github.com/nearform/libp2p-introspection-ui#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
+  },
+  "scripts": {
+    "test": "tap --no-esm"
+  },
+  "bugs": {
+    "url": "https://github.com/nearform/libp2p-introspection-ui/issues"
+  },
+  "dependencies": {
+    "@libp2p-observer/proto": "^0.0.1"
+  },
+  "devDependencies": {
+    "@libp2p-observer/samples": "^0.0.1",
+    "tap": "^14.9.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

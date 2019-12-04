@@ -1,7 +1,12 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 
-import { UploadDataButton, SampleDataButton, SetterContext } from 'sdk'
+import {
+  UploadDataButton,
+  SampleDataButton,
+  SetterContext,
+} from '@libp2p-observer/sdk'
+import samples from '@libp2p-observer/samples'
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -55,7 +60,10 @@ function HeaderTabs() {
       <SelectedTab>
         <label>Use sample data:</label>
         <ButtonWrapper>
-          <SampleDataButton title="Apply example data sample" />
+          <SampleDataButton
+            title="Apply example data sample"
+            samplePath={samples[0]}
+          />
         </ButtonWrapper>
       </SelectedTab>
     ) : (

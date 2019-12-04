@@ -1,5 +1,8 @@
 {
-  "name": "catalogue",
+  "name": "@libp2p-observer/catalogue",
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
   "version": "0.0.1",
   "description": "React web app containing a browsable catalogue of ui components visualizing libp2p introspection data",
   "author": "AlanSl <alan.slater@nearform.com>",
@@ -13,17 +16,25 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
+  "peerDependencies": {
+    "@libp2p-observer/data": "^0.0.1",
+    "@libp2p-observer/samples": "^0.0.1",
+    "@libp2p-observer/sdk": "^0.0.1",
+    "react": "^16.10.2",
+    "styled-components": "^4.4.0"
+  },
   "dependencies": {
     "@baristalabs/craco-raw-loader": "^1.1.1",
     "@craco/craco": "^5.5.0",
+    "@libp2p-observer/connections-table": "^0.0.1",
+    "@libp2p-observer/shell": "^0.0.1",
+    "@libp2p-observer/streams-table": "^0.0.1",
     "arraybuffer-loader": "^1.0.8",
-    "connections-table": "^0.0.1",
     "craco-babel-loader": "^0.1.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-markdown": "^4.2.2",
     "react-scripts": "3.2.0",
-    "streams-table": "^0.0.1",
     "webpack": "4.41.0"
   },
   "devDependencies": {

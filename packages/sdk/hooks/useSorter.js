@@ -37,7 +37,10 @@ function makeSorter(sortDirection, getSorter, mapSorter) {
   return (a, b) => sorter(mapSorter(a), mapSorter(b))
 }
 
-const defaultOptions = [['asc', 'ascending'], ['desc', 'descending']]
+const defaultOptions = [
+  ['asc', 'ascending'],
+  ['desc', 'descending'],
+]
 
 function useSorter({
   getSorter,

@@ -1,5 +1,8 @@
 {
-  "name": "proto",
+  "name": "@libp2p-observer/proto",
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
   "version": "0.0.1",
   "description": "Protobuf definition, JavaScript protobuf encoder/decorder, and scripts generating mock libp2p introspection data",
   "author": "AlanSl <alan.slater@nearform.com>",
@@ -7,14 +10,10 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "tap",
-    "mock": "node ./mock/mock.js --",
-    "mock-file": "node ./mock/mock.js --file",
     "protoc": "protoc --js_out=import_style=commonjs,binary:. protobuf/introspection.proto && node protobuf/prepend-disable-lint.js"
   },
   "dependencies": {
-    "google-protobuf": "^3.10.0",
-    "tap": "^14.7.1"
+    "google-protobuf": "^3.10.0"
   },
   "devDependencies": {
     "yargs": "^14.2.0"

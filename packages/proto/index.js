@@ -1,16 +1,10 @@
 'use strict'
 
-const protobuf = require('./protobuf/introspection_pb')
-const samples = require('./samples')
-
-const binary = require('./utils/binary')
-const enums = require('./utils/enums')
-const helpers = require('./utils/helpers')
+const proto = require('./lib/introspection_pb')
+const fnv1a = require('./lib/fnv1a')
 
 module.exports = {
-  protobuf,
-  samples,
-  ...enums,
-  ...binary,
-  ...helpers,
+  deserializeBinary: proto.ProtocolDataPacket.deserializeBinary,
+  fnv1a,
+  proto,
 }

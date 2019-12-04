@@ -1,5 +1,15 @@
-import { getAge, getTraffic, statusNames, transportNames } from 'proto'
-import { getStringSorter, getNumericSorter, getRangeFilter } from 'sdk'
+import {
+  getAge,
+  getTime,
+  getTraffic,
+  statusNames,
+  transportNames,
+} from '@libp2p-observer/data'
+import {
+  getStringSorter,
+  getNumericSorter,
+  getRangeFilter,
+} from '@libp2p-observer/sdk'
 
 import {
   AgeContent,
@@ -58,7 +68,7 @@ const ageCol = {
   name: 'age',
   header: 'Time open',
   getProps: (connection, timepoint) => {
-    const time = timepoint.getInstantTs()
+    const time = getTime(timepoint)
     const openTs = connection.getTimeline().getOpenTs()
     const closeTs = connection.getTimeline().getCloseTs()
     const age = getAge(time, openTs, closeTs)

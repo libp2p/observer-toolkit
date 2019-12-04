@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { Timeline } from 'sdk'
+import { Timeline } from '@libp2p-observer/shell'
 
 import approvedViz from '../definitions/approvedViz'
 import CatalogueItem from './CatalogueItem'

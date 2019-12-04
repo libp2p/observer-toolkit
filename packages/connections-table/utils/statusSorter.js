@@ -1,6 +1,9 @@
 const defaultDirection = 'asc'
 
-const directionOptions = [['asc', 'Open first'], ['desc', 'Closed first']]
+const directionOptions = [
+  ['asc', 'Open first'],
+  ['desc', 'Closed first'],
+]
 
 const openFirstOrder = ['ACTIVE', 'OPENING', 'CLOSING', 'CLOSED', 'ERROR']
 const closedFirstOrder = ['CLOSED', 'CLOSING', 'ERROR', 'ACTIVE', 'OPENING']
