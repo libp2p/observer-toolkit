@@ -46,7 +46,7 @@ async function applySampleData(samplePath, onUploadStart, onDataLoaded) {
 function processUploadedData(arrayBuf, file, onDataLoaded, metadata) {
   const data = parseArrayBuffer(arrayBuf)
 
-  if (metadata) data.metadata = metadata
+  if (metadata && data.states) data.states.metadata = metadata
 
   if (onDataLoaded) onDataLoaded(data, file)
 }
