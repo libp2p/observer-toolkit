@@ -10,7 +10,7 @@ const NumWrapper = styled.span`
     initialWeight + weightAdjust};
   white-space: nowrap;
   color: ${({ theme, weightAdjust }) =>
-    theme.color('dark', 'dark', weightAdjust / 2000 + 0.5)};
+    theme.color('text', 0, weightAdjust / 2000 + 0.5)};
 `
 
 const Unit = styled.span`

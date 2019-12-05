@@ -1,22 +1,21 @@
-import React, { useMemo, useContext } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import { DataContext } from '@libp2p-observer/sdk'
+import { useStackedData, getNumericSorter } from '@libp2p-observer/sdk'
 
-import { stackData, fitDataToPaths } from './utils'
+import { getTrafficChangesByPeer, getTotalTraffic, getPeerIds } from './utils'
 import TimelinePaths from './TimelinePaths'
 import TimeSlider from './TimeSlider'
 
-const HEIGHT_DEFAULT = 128
-
 const Container = styled.div`
-  background: ${({ theme }) => theme.color('dark', 'mid')};
+  background: ${({ theme }) => theme.color('contrast')};
   position: relative;
   padding: ${({ theme }) => theme.spacing()} 0;
-  color: ${({ theme }) => theme.color('light', 'light')};
+  color: ${({ theme }) => theme.color('text', 2)};
   user-select: none;
+  margin-left: ${({ leftGutter }) => leftGutter};
 `
 
 const PathsContainer = styled.div`
@@ -24,91 +23,51 @@ const PathsContainer = styled.div`
   user-select: none;
 `
 
-const Label = styled.div`
-  position: absolute;
-  text-transform: uppercase;
-  font-family: plex-sans;
-  font-weight: 500;
-  font-size: 8pt;
-  color: ${({ theme }) => theme.color('light', 'light')};
-  left: ${({ theme }) => theme.spacing()};
-`
+function Timeline({ width, leftGutter }) {
+  const { stackedData, xScale, yScale: yScaleIn } = useStackedData({
+    keyData: getTrafficChangesByPeer('in'),
+    getKeys: getPeerIds,
+    getSorter: getNumericSorter,
+    mapSorter: getTotalTraffic,
+  })
 
-const DataInLabel = styled(Label)`
-  top: 0;
-  user-select: none;
-`
+  const { stackedData: stackedDataOut, yScale: yScaleOut } = useStackedData({
+    keyData: getTrafficChangesByPeer('out'),
+    getKeys: getPeerIds,
+    getSorter: getNumericSorter,
+    mapSorter: getTotalTraffic,
+  })
 
-const DataOutLabel = styled(Label)`
-  bottom: 0;
-  user-select: none;
-`
+  // Make sure both data in and out use the same scale
+  const yScaleInMax = yScaleIn.domain()[1]
+  const yScaleOutMax = yScaleOut.domain()[1]
+  const yScale = yScaleInMax > yScaleOutMax ? yScaleIn : yScaleOut
 
-// TODO: make width responsive, filling space
-function Timeline({ width = 700, height = HEIGHT_DEFAULT }) {
-  const dataset = useContext(DataContext)
-
-  const svgHeight = Math.min(height / 2 - 16, HEIGHT_DEFAULT)
-
-  const {
-    stackedDataIn,
-    stackedDataOut,
-    xScale,
-    yScaleIn,
-    yScaleOut,
-  } = useMemo(() => stackData(dataset), [dataset])
-
-  const fitDataArgs = [
-    width,
-    svgHeight,
-    stackedDataIn,
-    stackedDataOut,
-    xScale,
-    yScaleIn,
-    yScaleOut,
-  ]
-  const { dataInPathDefs, dataOutPathDefs } = useMemo(
-    () => fitDataToPaths(fitDataArgs),
-    [fitDataArgs]
-  )
-
-  if (!dataset || !dataset.length)
-    return (
-      <Container
-        style={{
-          height: '96px',
-        }}
-      >
-        <p
-          style={{
-            // TODO: improve this
-            color: 'white',
-            textAlign: 'center',
-          }}
-        >
-          <b>No data selected.</b> Use the tabs at the top of the page to load
-          some data.
-        </p>
-      </Container>
-    )
+  // Extend the yScale so that 3 tick labels fit nicely
+  yScale.nice(3)
 
   return (
-    <Container>
+    <Container leftGutter={leftGutter}>
       <PathsContainer>
-        <DataInLabel>Data in</DataInLabel>
         <TimelinePaths
-          pathDefs={dataInPathDefs}
-          svgHeight={svgHeight}
+          dataDirection="in"
+          width={width}
           colorKey="primary"
-          style={{ marginTop: '8px' }}
+          stackedData={stackedData}
+          xScale={xScale}
+          yScale={yScale}
+          leftGutter={leftGutter}
         />
       </PathsContainer>
       <PathsContainer>
-        <DataOutLabel>Data out</DataOutLabel>
         <TimelinePaths
-          pathDefs={dataOutPathDefs}
-          svgHeight={svgHeight}
+          dataDirection="out"
+          width={width}
           colorKey="secondary"
+          stackedData={stackedDataOut}
+          xScale={xScale}
+          yScale={yScale}
+          leftGutter={leftGutter}
         />
       </PathsContainer>
       <TimeSlider width={width} />
@@ -117,8 +76,8 @@ function Timeline({ width = 700, height = HEIGHT_DEFAULT }) {
 }
 
 Timeline.propTypes = {
-  width: T.number,
-  height: T.number,
+  width: T.number.isRequired, // Set by withResizeDetector
+  leftGutter: T.number.isRequired,
 }
 
 export default withResizeDetector(Timeline)

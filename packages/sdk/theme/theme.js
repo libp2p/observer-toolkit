@@ -1,60 +1,55 @@
 const palette = {
-  primary: {
+  background: [
+    // white / pale beige / pale grey
+    '255, 255, 255',
+    '241, 242, 240',
+    '220, 228, 234',
+  ],
+  contrast: [
+    // near-black / dark purple / purple
+    '20, 22, 45',
+    '78, 23, 91',
+    '121, 27, 137',
+  ],
+  text: [
+    // black / grey / white
+    '0, 0, 0',
+    '128, 130, 133',
+    '255, 255, 255',
+  ],
+  primary: [
     // yellow / orange
-    light: '191, 222, 0',
-    mid: '226, 205, 3',
-    dark: '240, 145, 20',
-  },
-  secondary: {
-    // turqouise / teal
-    light: '60, 105, 283',
-    mid: '2, 131, 166',
-    dark: '0, 85, 99',
-  },
-  tertiary: {
-    // purple
-    light: '234, 123, 162',
-    mid: '209, 13, 102',
-    dark: '90, 10, 98',
-  },
-  notice: {
-    // red / magenta
-    light: '232, 32, 142',
-    mid: '252, 3, 97',
-    dark: '166, 2, 69',
-  },
-  light: {
-    // white / cream
-    light: '252, 255, 253',
-    mid: '235, 243, 243',
-    dark: '201, 209, 209',
-  },
-  dark: {
-    // dark navy / violet
-    light: '66, 63, 85',
-    mid: '33, 30, 57',
-    dark: '21, 18, 46',
-  },
-  text: {
-    // black / dark grey
-    light: '78, 78, 78',
-    mid: '33, 33, 33',
-    dark: '0, 0, 0',
-  },
+    '252, 189, 32',
+    '232, 137, 0',
+  ],
+  secondary: [
+    // cyan / blue
+    '112, 208, 224',
+    '32, 155, 198',
+  ],
+  tertiary: [
+    // green
+    '196, 209, 18',
+    '163, 170, 18',
+  ],
+  highlight: [
+    // magenta / crimson
+    '209, 14, 102',
+    '163, 26, 75',
+  ],
 }
 
-const color = (col, lightness, alpha) => {
-  // For example, `theme.color('secondary', 'dark', 0.5)`
-  const rgb = palette[col][lightness]
+const color = (col, val = 0, alpha) => {
+  // For example, `theme.color('secondary', 1, 0.5)` for translucent blue
+  const rgb = palette[col][val]
   return alpha ? `rgba(${rgb}, ${alpha})` : `rgb(${rgb})`
 }
 
 const spacing = (num = 1) => `${num * 8}px`
 
-// TODO: fonts need hosting
 const typography = {
   default: `
-    font-family: nexa, sans-serif;
+    font-family: plex-sans, sans-serif;
     line-height: 1.6em;
   `,
   body: {

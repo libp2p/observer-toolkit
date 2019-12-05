@@ -9,7 +9,7 @@ const CatalogueCard = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.color('light', 'light')};
+  background-color: ${({ theme }) => theme.color('background')};
   width: calc(100% - ${({ theme }) => theme.spacing(4)});
   @media (min-width: 480px) {
     width: calc(50% - ${({ theme }) => theme.spacing(4)});
@@ -22,9 +22,9 @@ const CatalogueCard = styled.div`
   }
   margin: ${({ theme }) => `${theme.spacing(2)}`};
   box-shadow: ${({ theme: { color, spacing } }) =>
-    `0 0 ${spacing(2)} ${color('dark', 'light', 0.5)}`};
+    `0 0 ${spacing(2)} ${color('contrast', 0, 0.2)}`};
   ${({ theme, isSelected }) =>
-    isSelected && `border: 4px solid ${theme.color('primary', 'mid')};`}
+    isSelected && `border: 4px solid ${theme.color('primary')};`}
 `
 
 const CardContent = styled.div`
@@ -37,7 +37,7 @@ const Tag = styled.li`
   padding: ${({ theme }) => `${theme.spacing(0.5)}`};
   list-style: none;
   display: inline-block;
-  ${({ theme }) => theme.text('label', 'medium', theme.color('text', 'light'))}
+  ${({ theme }) => theme.text('label', 'medium', theme.color('text', 0, 0.8))}
   font-weight: 700;
 `
 
@@ -60,8 +60,8 @@ const StyledHeader = styled.h3`
 const StyledHeaderInner = styled.span`
   padding: ${({ theme }) => theme.spacing()};
   display: inline-block;
-  background: ${({ theme }) => theme.color('dark', 'mid', 0.8)};
-  color: ${({ theme }) => theme.color('light', 'light')};
+  background: ${({ theme }) => theme.color('contrast', 1, 0.8)};
+  color: ${({ theme }) => theme.color('text', 2)};
   line-height: 1em;
 `
 

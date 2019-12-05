@@ -5,8 +5,20 @@ function uploadDataFile(file, onUploadStart, onDataLoaded) {
   const reader = new FileReader()
 
   // TODO: On integration with live output, share logic parsing file chunk by chunk
-  reader.onload = e =>
-    processUploadedData(event.currentTarget.result, file, onDataLoaded)
+  reader.onload = e => {
+    const metadata = {
+      type: 'upload',
+      name: file.name,
+    }
+
+    processUploadedData(
+      event.currentTarget.result,
+      file,
+      onDataLoaded,
+      metadata
+    )
+  }
+
   reader.readAsArrayBuffer(file)
   if (onUploadStart) onUploadStart(file)
 }
@@ -22,11 +34,20 @@ async function applySampleData(samplePath, onUploadStart, onDataLoaded) {
   }
 
   const arrbuf = await response.arrayBuffer()
-  processUploadedData(arrbuf, response, onDataLoaded)
+
+  const metadata = {
+    type: 'sample',
+    name: 'Sample data',
+  }
+
+  processUploadedData(arrbuf, response, onDataLoaded, metadata)
 }
 
-function processUploadedData(arrayBuf, file, onDataLoaded) {
+function processUploadedData(arrayBuf, file, onDataLoaded, metadata) {
   const data = parseArrayBuffer(arrayBuf)
+
+  if (metadata && data.states) data.states.metadata = metadata
+
   if (onDataLoaded) onDataLoaded(data, file)
 }
 

@@ -26,7 +26,7 @@ const Container = styled.div`
 `
 
 const StyledHeader = styled.div`
-  border: 1px solid ${({ theme }) => theme.color('tertiary', 'mid')};
+  border: 1px solid ${({ theme }) => theme.color('background', 2)};
   font-weight: 900;
 `
 
@@ -46,7 +46,7 @@ const StyledListItem = styled.li`
 const StyledToggleButton = styled.button`
   cursor: pointer;
   border: none;
-  background: ${({ theme }) => theme.color('light', 'light')};
+  background: ${({ theme }) => theme.color('background', 0)};
   width: 100%;
   text-align: left;
   font-weight: ${({ checked }) => (checked ? 600 : 300)};
@@ -56,7 +56,7 @@ const StyledToggleButton = styled.button`
     outline: none;
   }
   :hover {
-    background: ${({ theme }) => theme.color('light', 'dark')};
+    background: ${({ theme }) => theme.color('background', 2, 0.5)};
   }
 `
 

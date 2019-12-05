@@ -1,204 +1,88 @@
-import { area, scaleLinear, scaleTime, stack } from 'd3'
-
 import {
-  getLatestTimepoint,
+  getAllConnections,
+  getConnections,
   getTime,
   getTraffic,
-  getConnections,
 } from '@libp2p-observer/data'
 import { validateNumbers } from '@libp2p-observer/sdk'
 
-function getMaxAreaPeak(stackedData) {
-  return stackedData.reduce(
-    (maxOverall, timeDatum) =>
-      Math.max(
-        maxOverall,
-        timeDatum.reduce(
-          (maxHere, connDatum) =>
-            // connDatum[1] is the upper point in a stacked area slice
-            Math.max(maxHere, connDatum[1]),
-          0
-        )
-      ),
-    0
-  )
+function getTickOffsets(ticks, scale) {
+  const tickGap = ticks[1] - ticks[0]
+
+  const firstTickGap = ticks[0] - scale.domain()[0]
+  const lastTickGap = scale.domain()[1] - ticks[ticks.length - 1]
+
+  const totalGapValues =
+    firstTickGap + tickGap * (ticks.length - 1) + lastTickGap
+
+  const firstTickOffset = firstTickGap / totalGapValues
+  const tickOffset = tickGap / totalGapValues
+
+  const tickOffsets = Array(ticks.length)
+    .fill()
+    .map((_, i) => firstTickOffset + i * tickOffset)
+
+  return tickOffsets
 }
 
-function getTrafficOverTime(dataset, allPeerIds, direction) {
-  return dataset.reduce(
-    // Get array of objects of bytes added in each timepoint keyed by peerId
-    // Can't calculate bytes added in first timepoint, so skip where index is 0
-    (timepoints, timepoint, timeIndex) =>
-      !timeIndex
-        ? []
-        : [
-            ...timepoints,
-            getTrafficForAllPeers(
-              dataset,
-              timepoint,
-              timeIndex,
-              allPeerIds,
-              direction
-            ),
-          ],
-    []
-  )
-}
-
-function getTrafficForAllPeers(
-  dataset,
-  timepoint,
-  timeIndex,
-  allPeerIds,
-  direction
-) {
-  if (!dataset || !timepoint) return []
-
-  const connectionsById = getConnections(timepoint).reduce(
-    (connectionsById, connection) => {
-      connectionsById[connection.getPeerId()] = connection
-      return connectionsById
-    },
-    {}
-  )
-
-  const trafficByPeer = allPeerIds.reduce(
-    (trafficByPeer, peerId) => {
-      const connection = connectionsById[peerId]
-
-      let bytes = 0
-
-      if (connection) {
-        bytes = getTraffic(connection, direction, 'bytes')
-
-        // Use only those bytes added in this time point
-        // Can't get bytes added first to previous, so skip it
-        const previousTimepoint = dataset[timeIndex - 1]
-        const previousConn = getConnections(previousTimepoint).find(
-          conn => conn.getPeerId() === peerId
+function getTrafficChangesByPeer(direction) {
+  // Can't calculate bytes added in first timepoint, so skip where index is 0
+  const keyData = (dataset, keys) =>
+    dataset.slice(1).map(
+      // Get array of objects of mapped values added in each timepoint keyed by peerId
+      (timepoint, previousTimepointIndex) => {
+        const connectionsById = getConnections(timepoint).reduce(
+          (connectionsById, connection) => {
+            connectionsById[connection.getPeerId()] = connection
+            return connectionsById
+          },
+          {}
         )
-        if (previousConn) {
-          bytes -= getTraffic(previousConn, direction, 'bytes')
-        }
+
+        const trafficByPeer = keys.reduce(
+          (trafficByPeer, peerId) => {
+            const connection = connectionsById[peerId]
+
+            let bytes = 0
+
+            if (connection) {
+              bytes = getTraffic(connection, direction, 'bytes')
+
+              // Use only those bytes added in this time point
+              // Can't get bytes added first to previous, so skip it
+              const previousTimepoint = dataset[previousTimepointIndex]
+              const previousConn = getConnections(previousTimepoint).find(
+                conn => conn.getPeerId() === peerId
+              )
+              if (previousConn) {
+                bytes -= getTraffic(previousConn, direction, 'bytes')
+              }
+            }
+
+            trafficByPeer[peerId] = bytes
+            return trafficByPeer
+          },
+          { time: getTime(timepoint) }
+        )
+        validateNumbers(trafficByPeer)
+        return trafficByPeer
       }
-
-      trafficByPeer[peerId] = bytes
-      return trafficByPeer
-    },
-    { time: getTime(timepoint) }
-  )
-  validateNumbers(trafficByPeer)
-  return trafficByPeer
+    )
+  return keyData
 }
 
-function stackData(dataset) {
-  if (!dataset || !dataset.length) return {}
-
-  const allConnections = dataset.reduce(
-    (allConns, timepoint) => [
-      ...getConnections(timepoint).filter(
-        testConn =>
-          !allConns.some(
-            existingConn => testConn.getPeerId() === existingConn.getPeerId()
-          )
-        // Reverse the array so the sorter sees the last occurence of each connection
-      ),
-      ...allConns,
-    ],
-    []
-  )
-
-  allConnections.sort((a, b) => {
-    const aIn = getTraffic(a, 'in', 'bytes')
-    const bIn = getTraffic(b, 'in', 'bytes')
-    const aOut = getTraffic(a, 'out', 'bytes')
-    const bOut = getTraffic(b, 'out', 'bytes')
-
-    const aTotal = aIn + aOut
-    const bTotal = bIn + bOut
-    return bTotal - aTotal
-  })
-
-  const allPeerIds = allConnections.map(conn => conn.getPeerId())
-  const dataStacker = stack().keys(allPeerIds)
-
-  const dataInOverTime = getTrafficOverTime(dataset, allPeerIds, 'in')
-  const dataOutOverTime = getTrafficOverTime(dataset, allPeerIds, 'out')
-
-  const stackedDataIn = dataStacker(dataInOverTime)
-  const stackedDataOut = dataStacker(dataOutOverTime)
-
-  const maxIn = getMaxAreaPeak(stackedDataIn)
-  const maxOut = getMaxAreaPeak(stackedDataOut)
-
-  const xScale = scaleTime()
-  const yScaleIn = scaleLinear()
-  const yScaleOut = scaleLinear()
-
-  // Scaling from dataset[0] leaves a gap of the width of 1 datapoint
-  const minTimeForScale = getTime(dataset[1])
-  const maxTimeForScale = getTime(getLatestTimepoint(dataset))
-
-  validateNumbers({
-    maxIn,
-    maxOut,
-    minTimeForScale,
-    maxTimeForScale,
-  })
-
-  xScale.domain([minTimeForScale, maxTimeForScale])
-  yScaleIn.domain([0, maxIn])
-  yScaleOut.domain([0, maxOut])
-
-  return {
-    stackedDataIn,
-    stackedDataOut,
-    xScale,
-    yScaleIn,
-    yScaleOut,
-  }
+function getTotalTraffic(connection) {
+  const dataIn = getTraffic(connection, 'in', 'bytes')
+  const dataOut = getTraffic(connection, 'out', 'bytes')
+  validateNumbers(dataIn, dataOut)
+  return dataIn + dataOut
 }
 
-function fitDataToPaths(fitDataArgs) {
-  const [
-    availableWidth,
-    availableHeight,
-    stackedDataIn,
-    stackedDataOut,
-    xScale,
-    yScaleIn,
-    yScaleOut,
-  ] = fitDataArgs
-
-  if (!stackedDataIn) return {}
-
-  xScale.range([0, availableWidth])
-  yScaleIn.range([availableHeight, 0])
-  yScaleOut.range([0, availableHeight])
-
-  const areaMakerIn = area()
-    .x(d => xScale(d.data.time))
-    .y0(d => yScaleIn(d[0]))
-    .y1(d => yScaleIn(d[1]))
-
-  const areaMakerOut = area()
-    .x(d => xScale(d.data.time))
-    .y0(d => yScaleOut(d[0]))
-    .y1(d => yScaleOut(d[1]))
-
-  const dataInPathDefs = stackedDataIn.map(datum => ({
-    pathDef: areaMakerIn(datum),
-    peerId: datum.key,
-  }))
-  const dataOutPathDefs = stackedDataOut.map(datum => ({
-    pathDef: areaMakerOut(datum),
-    peerId: datum.key,
-  }))
-
-  return {
-    dataInPathDefs,
-    dataOutPathDefs,
-  }
+function getPeerIds(dataset, sorter, applyFilters) {
+  const allConnections = getAllConnections(dataset)
+  const filteredConnections = allConnections.filter(applyFilters)
+  filteredConnections.sort(sorter)
+  return filteredConnections.map(conn => conn.getPeerId())
 }
 
-export { getMaxAreaPeak, getTrafficOverTime, stackData, fitDataToPaths }
+export { getTickOffsets, getTrafficChangesByPeer, getTotalTraffic, getPeerIds }

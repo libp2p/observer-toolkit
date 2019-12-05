@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { Timeline } from '@libp2p-observer/shell'
+import { ControlPanel } from '@libp2p-observer/shell'
 
 import approvedViz from '../definitions/approvedViz'
 import CatalogueItem from './CatalogueItem'
@@ -9,12 +9,9 @@ import HeaderTabs from './HeaderTabs'
 import SelectedComponent from './SelectedComponent'
 
 const HEADER_HEIGHT = '64px'
-const FOOTER_HEIGHT = 128
 
 const Main = styled.div`
-  margin-top: ${HEADER_HEIGHT};
-  margin-bottom: ${FOOTER_HEIGHT};
-  background-color: ${({ theme }) => theme.color('light', 'mid')};
+  background-color: ${({ theme }) => theme.color('background')};
   overflow-y: scroll;
 `
 
@@ -23,15 +20,14 @@ const CatalogueBkg = styled.div`
 `
 
 const Header = styled.div`
-  position: fixed;
   z-index: 50;
   top: 0;
   left: 0;
   width: 100%;
   height: ${HEADER_HEIGHT};
-  background: ${({ theme }) => theme.color('dark', 'mid')};
+  background: ${({ theme }) => theme.color('contrast')};
   border-bottom: ${({ theme }) =>
-    `${theme.spacing()} solid ${theme.color('primary', 'mid')}`};
+    `${theme.spacing()} solid ${theme.color('primary')}`};
 `
 
 const Footer = styled.div`
@@ -39,14 +35,6 @@ const Footer = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: ${FOOTER_HEIGHT + 14}px;
-  background: ${({ theme }) => theme.color('dark', 'mid')};
-  color: ${({ theme }) => theme.color('light', 'light')};
-  font-weight: bold;
-  padding: 0;
-  margin: 0;
-  border-top: ${({ theme }) =>
-    `${theme.spacing()} solid ${theme.color('dark', 'dark')}`};
 `
 
 function Page() {
@@ -76,7 +64,7 @@ function Page() {
         </CatalogueBkg>
       </Main>
       <Footer>
-        <Timeline height={FOOTER_HEIGHT} />
+        <ControlPanel />
       </Footer>
     </div>
   )

@@ -35,10 +35,9 @@ const FirstSection = styled.div`
   border-radius: none;
 `
 const Control = styled.div`
-  background-color: ${({ theme }) => theme.color('tertiary', 'light', 0.3)};
-  border-left: 2px solid ${({ theme }) => theme.color('tertiary', 'light', 0.2)};
-  border-right: 2px solid
-    ${({ theme }) => theme.color('tertiary', 'light', 0.2)};
+  background-color: ${({ theme }) => theme.color('highlight', 0, 0.5)};
+  border-left: 2px solid ${({ theme }) => theme.color('highlight', 1, 0.3)};
+  border-right: 2px solid ${({ theme }) => theme.color('highlight', 1, 0.3)};
   border-top: none;
   border-bottom: none;
   border-radius: 0;
@@ -46,7 +45,7 @@ const Control = styled.div`
   margin-top: 0;
 `
 const InactiveSection = styled.div`
-  background-color: ${({ theme }) => theme.color('dark', 'dark', 0.8)};
+  background-color: ${({ theme }) => theme.color('contrast', 0, 0.8)};
 `
 const NumberFieldsWrapper = styled.div`
   display: none;
