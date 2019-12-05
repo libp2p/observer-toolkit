@@ -9,7 +9,7 @@ import {
 } from '@libp2p-observer/sdk'
 import samples from '@libp2p-observer/samples'
 
-import Timeline from '../components/Timeline/Timeline'
+import ControlPanel from '../components/ControlPanel'
 
 const Page = styled.div`
   display: flex;
@@ -34,14 +34,6 @@ const Content = styled.div`
     background-color: rgba(0, 0, 0, 0.3);
   }
 `
-const Controls = styled.div`
-  border-top: 2px solid ${({ theme }) => theme.color('background', 1)};
-  height: 185px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin-left: -${({ theme }) => theme.spacing()};
-  padding-left: ${({ theme }) => theme.spacing()};
-`
 
 // Standalone shell for demoing one component e.g. for staging in Storybook
 function DemoShell({ children }) {
@@ -65,9 +57,7 @@ function DemoShell({ children }) {
       <DataProvider initialData={mockData}>
         <Page>
           <Content>{children}</Content>
-          <Controls>
-            <Timeline />
-          </Controls>
+          <ControlPanel />
         </Page>
       </DataProvider>
     </ThemeSetter>
