@@ -12,6 +12,7 @@ const Container = styled.div`
   padding: ${({ theme }) => theme.spacing()};
   position: fixed;
   bottom: 0;
+  left: 0;
   display: flex;
   width: 100%;
 `
@@ -26,7 +27,6 @@ const DataPanel = styled.div`
 const TimePanel = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
-  margin-left: ${leftGutter}px;
 `
 
 const DataPanelItem = styled.button`

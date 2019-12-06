@@ -288,12 +288,16 @@ function Slider({
       onMouseUp={slideEnd}
       onMouseLeave={slideEnd}
       onMouseMove={handleMouseMove}
-      ref={containerRef}
       width={width}
       controlWidth={controlWidth}
       as={override.Container}
     >
-      <Bar onClick={handleClick} controlWidth={controlWidth} as={override.Bar}>
+      <Bar
+        onClick={handleClick}
+        controlWidth={controlWidth}
+        as={override.Bar}
+        ref={containerRef}
+      >
         <FirstSection
           style={{ width: belowPercent }}
           as={override.FirstSection}
