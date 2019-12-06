@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -12,7 +12,18 @@ const SegmentedPeerId = styled.div`
   font-size: 9pt;
 `
 
+const Positioner = styled.div`
+  top: -${({ theme }) => theme.spacing(2)};
+  transform: none;
+`
+
+const Tick = styled.div`
+  top: ${({ theme }) => theme.spacing(3)};
+`
+
 function PeerIdTooltip({ peerId, children }) {
+  const [isCopied, setIsCopied] = useState(false)
+
   const segmentsCount = 4
   const segmentsLength = Math.round(peerId.length / segmentsCount) // Usually 64 / 4 = 16
   const peerIdSegments = []
@@ -24,14 +35,25 @@ function PeerIdTooltip({ peerId, children }) {
     if (i < segmentsCount) peerIdSegments.push(<wbr key={`break-${i}`} />)
   }
 
-  const copyPeerId = () => copyToClipboard(peerId)
+  const copyPeerId = () => {
+    copyToClipboard(peerId)
+    setIsCopied(true)
+    setTimeout(() => setIsCopied(false), 1750)
+  }
+
+  const copyButtonText = isCopied
+    ? `COPIED "${peerId.slice(0, 4)}…"`
+    : 'COPY PEER ID'
 
   return (
     <Tooltip
       side="right"
+      override={{ Positioner, Tick }}
       content={
         <>
-          <StyledButton onClick={copyPeerId}>COPY PEER ID</StyledButton>
+          <StyledButton isActive={isCopied} onClick={copyPeerId}>
+            {copyButtonText}
+          </StyledButton>
           <SegmentedPeerId>{peerIdSegments}</SegmentedPeerId>
         </>
       }

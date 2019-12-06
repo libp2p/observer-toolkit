@@ -52,6 +52,7 @@ const Target = styled.span`
 `
 
 const Positioner = styled.div`
+  z-index: 15;
   position: absolute;
   ${({ direction, tickSize }) =>
     getPosition(direction, `calc(100% - ${tickSize}px)`, '-50%')}
@@ -100,12 +101,12 @@ function Tooltip({
 
   return (
     <Target
-      as={override.ContentWrapper}
       onMouseEnter={show}
       onMouseLeave={hide}
       onClick={clickToFix && toggleFix}
       clickToFix={clickToFix}
       isFixed={isFixed}
+      as={override.Target}
     >
       {children}
       {(isFixed || isVisible) && (
