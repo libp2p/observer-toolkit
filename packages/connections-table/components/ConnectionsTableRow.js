@@ -6,7 +6,8 @@ function ConnectionsTableRow({ rowContentProps, columnDefs }) {
   const globalPeerId = useContext(PeerContext)
   const { setPeerId } = useContext(SetterContext)
 
-  const peerId = rowContentProps[0].value
+  const peerIdRow = rowContentProps.find(row => row.columnName === 'peerId')
+  const peerId = peerIdRow ? peerIdRow.value : null
 
   function mouseEnterHandler() {
     if (peerId !== globalPeerId) setPeerId(peerId)

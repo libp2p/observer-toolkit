@@ -1,7 +1,15 @@
 import React from 'react'
 import T from 'prop-types'
 
+import StatusChip from './StatusChip'
 import { PeerId, TimeNumber, DataNumber } from '@libp2p-observer/sdk'
+
+function StatusContent({ value }) {
+  return <StatusChip status={value} />
+}
+StatusContent.propTypes = {
+  value: T.string,
+}
 
 function PeerIdContent({ value }) {
   return <PeerId peerId={value} />
@@ -33,4 +41,4 @@ AgeContent.propTypes = {
   value: T.string,
 }
 
-export { AgeContent, BytesContent, PeerIdContent }
+export { AgeContent, BytesContent, PeerIdContent, StatusContent }

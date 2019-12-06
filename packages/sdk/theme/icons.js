@@ -17,6 +17,9 @@ import back from './icons/Back'
 import forward from './icons/Forward'
 import doc from './icons/Doc'
 import cloud from './icons/Cloud'
+import closed from './icons/Closed'
+import closing from './icons/Closing'
+import opening from './icons/Opening'
 
 // Export an object of url paths; importer picks path by key
 export default {
@@ -31,4 +34,7 @@ export default {
   forward,
   doc,
   cloud,
+  closed,
+  closing,
+  opening,
 }

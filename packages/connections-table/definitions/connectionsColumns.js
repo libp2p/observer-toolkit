@@ -15,6 +15,7 @@ import {
   AgeContent,
   BytesContent,
   PeerIdContent,
+  StatusContent,
 } from '../components/cellContent'
 
 import * as statusSorter from '../utils/statusSorter'
@@ -110,6 +111,8 @@ const transportCol = {
 const statusCol = {
   name: 'status',
   getProps: connection => ({ value: statusNames[connection.getStatus()] }),
+  cellProps: { align: 'left' },
+  renderContent: StatusContent,
   sort: statusSorter,
   filter: statusFilter,
 }
@@ -117,13 +120,13 @@ const statusCol = {
 // Define column order
 
 const columns = [
+  statusCol,
   peerIdCol,
   dataInCol,
   dataOutCol,
   ageCol,
   streamsCol,
   transportCol,
-  statusCol,
 ]
 
 export default columns

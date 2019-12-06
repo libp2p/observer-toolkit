@@ -30,7 +30,8 @@ const palette = {
   tertiary: [
     // green
     '196, 209, 18',
-    '163, 170, 18',
+    '159, 176, 0',
+    '0, 99, 109',
   ],
   highlight: [
     // magenta / crimson
