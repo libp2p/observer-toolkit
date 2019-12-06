@@ -100,7 +100,7 @@ TimelinePaths.propTypes = {
   flip: T.bool,
   xScale: T.func.isRequired,
   yScale: T.func.isRequired,
-  stackedData: T.object.isRequired,
+  stackedData: T.array.isRequired,
   leftGutter: T.number.isRequired,
 }
 
