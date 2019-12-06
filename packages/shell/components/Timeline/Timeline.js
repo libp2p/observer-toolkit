@@ -42,7 +42,7 @@ const PathsContainer = styled.div`
   user-select: none;
 `
 
-function Timeline({ width, leftGutter }) {
+function Timeline({ width = 700, leftGutter }) {
   const dataset = useContext(DataContext)
   const { stackedData, xScale, yScale: yScaleIn } = useStackedData({
     keyData: getTrafficChangesByPeer('in'),
@@ -105,7 +105,7 @@ function Timeline({ width, leftGutter }) {
 }
 
 Timeline.propTypes = {
-  width: T.number.isRequired, // Set by withResizeDetector
+  width: T.number, // Set by withResizeDetector
   leftGutter: T.number.isRequired,
 }
 

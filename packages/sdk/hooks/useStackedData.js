@@ -6,7 +6,7 @@ import { DataContext } from '../components/context/DataProvider'
 
 import { scaleLinear, scaleTime, stack } from 'd3'
 
-import { validateNumbers } from '@libp2p-observer/sdk'
+import { validateNumbers } from '../utils/helpers'
 
 function getMaxAreaPeak(stackedData) {
   return stackedData.reduce(
