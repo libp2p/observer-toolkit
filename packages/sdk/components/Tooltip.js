@@ -32,8 +32,23 @@ function getTickPosition(direction, tickSize) {
   return getPosition(direction, `-${tickSize * 2}px`, `-${tickSize}px`)
 }
 
-const Target = styled.div`
+function getBoxShadow(theme, weight) {
+  return `box-shadow: 0 ${theme.spacing(0.5)} ${theme.spacing()} ${theme.color(
+    'contrast',
+    0,
+    weight
+  )};`
+}
+
+const Target = styled.span`
   position: relative;
+  display: inline-block;
+  ${({ clickToFix, isFixed, theme }) =>
+    clickToFix &&
+    `
+    cursor: pointer;
+    ${isFixed && getBoxShadow(theme, 0.2)}
+  `}
 `
 
 const Positioner = styled.div`
@@ -49,12 +64,7 @@ const Positioner = styled.div`
 const Content = styled.div`
   padding: ${({ theme }) => theme.spacing()};
   background: ${({ theme, getColor }) => getColor(theme)};
-  box-shadow: ${({ theme }) =>
-    `0 ${theme.spacing(0.5)} ${theme.spacing()} ${theme.color(
-      'contrast',
-      0,
-      0.4
-    )}`};
+  ${({ theme, isFixed }) => getBoxShadow(theme, isFixed ? 0.5 : 0.3)}
 `
 
 const Tick = styled.div`
@@ -73,13 +83,16 @@ function Tooltip({
   side = 'top',
   tickSize = 8,
   getColor = theme => theme.color('background'),
+  clickToFix = true,
   content,
   children,
   override = {},
 }) {
   const [isVisible, setIsVisible] = useState(false)
+  const [isFixed, setIsFixed] = useState(false)
   const show = () => setIsVisible(true)
   const hide = () => setIsVisible(false)
+  const toggleFix = () => setIsFixed(!isFixed)
 
   const direction = getInvertedDirection(side)
 
@@ -88,9 +101,12 @@ function Tooltip({
       as={override.ContentWrapper}
       onMouseEnter={show}
       onMouseLeave={hide}
+      onClick={clickToFix && toggleFix}
+      clickToFix={clickToFix}
+      isFixed={isFixed}
     >
       {children}
-      {isVisible && (
+      {(isFixed || isVisible) && (
         <Positioner
           direction={direction}
           tickSize={tickSize}
@@ -102,7 +118,11 @@ function Tooltip({
             getColor={getColor}
             as={override.Tick}
           />
-          <Content getColor={getColor} as={override.Container}>
+          <Content
+            getColor={getColor}
+            isFixed={isFixed}
+            as={override.Container}
+          >
             {content}
           </Content>
         </Positioner>
