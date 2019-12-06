@@ -54,15 +54,16 @@ const Target = styled.span`
 const Positioner = styled.div`
   position: absolute;
   ${({ direction, tickSize }) =>
-    getPosition(direction, `calc(100% + ${tickSize / 2}px)`, '-50%')}
+    getPosition(direction, `calc(100% - ${tickSize}px)`, '-50%')}
 
   // Give a little space that tolerates small mouseouts around the tick shape
   ${({ direction, tickSize }) =>
-    `border-${direction}: ${tickSize}px solid transparent`};
+    `border-${direction}: ${tickSize * 2}px solid transparent`};
 `
 
 const Content = styled.div`
-  padding: ${({ theme }) => theme.spacing()};
+  text-align: left;
+  padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
   background: ${({ theme, getColor }) => getColor(theme)};
   ${({ theme, isFixed }) => getBoxShadow(theme, isFixed ? 0.5 : 0.3)}
 `
@@ -93,6 +94,7 @@ function Tooltip({
   const show = () => setIsVisible(true)
   const hide = () => setIsVisible(false)
   const toggleFix = () => setIsFixed(!isFixed)
+  const stopPropagation = e => e.stopPropagation()
 
   const direction = getInvertedDirection(side)
 
@@ -108,6 +110,7 @@ function Tooltip({
       {children}
       {(isFixed || isVisible) && (
         <Positioner
+          onClick={clickToFix && stopPropagation}
           direction={direction}
           tickSize={tickSize}
           as={override.Positioner}

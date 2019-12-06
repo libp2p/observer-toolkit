@@ -17,10 +17,14 @@ function ThemeSetter({ children }) {
     ${fontFaces.join('')}
   `
 
+  // TODO: make line height smarter
   const GlobalDefaults = createGlobalStyle`
     * {
       box-sizing: border-box;
-      ${({ theme }) => theme.text()};
+      line-height: 1.6em;
+    }
+    body {
+      font-family: 'plex-sans, sans-serif';
     }
     p, li, h1, h2, h3, h4, h5, h6 {
       color: ${({ theme }) => theme.color('text', 1)};
