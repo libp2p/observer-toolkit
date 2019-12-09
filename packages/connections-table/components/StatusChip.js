@@ -7,8 +7,8 @@ import { Icon } from '@libp2p-observer/sdk'
 
 const Container = styled.span`
   display: inline-block;
-  padding: ${({ theme }) => theme.spacing(0.5)};
-  background: ${({ theme, getColor }) => getColor(theme, 0.3)};
+  padding: 0 ${({ theme }) => theme.spacing(0.5)};
+  background: ${({ theme, getColor }) => getColor(theme, 0.15)};
   color: ${({ theme, getColor }) => getColor(theme, 1)};
   white-space: nowrap;
   font-size: 8pt;
@@ -17,35 +17,48 @@ const Container = styled.span`
 
 const ChipText = styled.span`
   line-height: 1em;
+  display: inline-block;
+  padding: ${({ theme }) => theme.spacing()}
+    ${({ theme }) => theme.spacing(0.5)};
+  vertical-align: middle;
 `
 
 function StatusChip({ status }) {
   const chipMap = {
     ACTIVE: {
       icon: 'check',
-      getColor: (theme, opacity) => theme.color('tertiary', 2, opacity),
+      colorKey: 'tertiary',
+      colorIndex: 2,
     },
     OPENING: {
       icon: 'opening',
-      getColor: (theme, opacity) => theme.color('tertiary', 1, opacity),
+      colorKey: 'tertiary',
+      colorIndex: 1,
     },
     CLOSING: {
       icon: 'closing',
-      getColor: (theme, opacity) => theme.color('highlight', 0, opacity),
+      colorKey: 'highlight',
+      colorIndex: 0,
     },
     CLOSED: {
       icon: 'closed',
-      getColor: (theme, opacity) => theme.color('highlight', 1, opacity),
+      colorKey: 'highlight',
+      colorIndex: 1,
     },
     ERROR: {
       icon: 'cancel',
-      getColor: (theme, opacity) => theme.color('contrast', 2, opacity),
+      colorKey: 'contrast',
+      colorIndex: 1,
     },
   }
 
-  if (!chipMap[status])
+  if (!chipMap[status]) {
     throw new Error(`Status name "${status}" not recognised`)
-  const { getColor, icon } = chipMap[status]
+  }
+  const { icon, colorKey, colorIndex } = chipMap[status]
+
+  const getColor = (theme, opacity) =>
+    theme.color(colorKey, colorIndex || 0, opacity)
 
   return (
     <Container getColor={getColor}>

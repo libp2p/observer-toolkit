@@ -34,7 +34,7 @@ const DataPanelItem = styled.button`
   font-weight: 600;
   background: none;
   border: none;
-  color: ${({ theme }) => theme.color('text', 2, 0.8)};
+  color: ${({ theme }) => theme.color('text', 3, 0.8)};
   padding: ${({ theme }) => theme.spacing(0.5)};
   text-align: left;
   cursor: pointer;

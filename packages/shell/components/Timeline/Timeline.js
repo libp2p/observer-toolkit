@@ -17,7 +17,7 @@ const Container = styled.div`
   background: ${({ theme }) => theme.color('contrast')};
   position: relative;
   padding: ${({ theme }) => theme.spacing()} 0;
-  color: ${({ theme }) => theme.color('text', 2)};
+  color: ${({ theme }) => theme.color('text', 3)};
   margin-left: ${({ leftGutter }) => leftGutter}px;
   height: 100%;
 `

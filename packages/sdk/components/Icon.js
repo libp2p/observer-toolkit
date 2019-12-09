@@ -16,7 +16,7 @@ const Container = styled.span`
   ${({ theme, disabled }) =>
     disabled &&
     `
-      color: ${theme.color('text', 2)};
+      color: ${theme.color('text', 3)};
   `}
   ${({ theme, offset }) => offset && `margin-right: -${theme.spacing(2)};`}
   ${({ onClick, theme, disabled }) =>

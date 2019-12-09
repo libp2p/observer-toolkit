@@ -7,11 +7,7 @@ import { childrenToString } from '../../utils/helpers'
 
 const NumWrapper = styled.span`
   font-family: 'plex-mono';
-  font-weight: 500;
-  font-size: 10pt;
   white-space: nowrap;
-  color: ${({ theme, weightAdjust }) =>
-    theme.color('text', 0, weightAdjust / 2000 + 0.5)};
 `
 
 const Unit = styled.span`
@@ -20,7 +16,7 @@ const Unit = styled.span`
   padding-left: ${({ theme }) => theme.spacing()};
   font-family: 'plex-sans';
   font-weight: 300;
-  font-size: 9pt;
+  font-size: 90%;
   width: ${({ theme }) => theme.spacing(4)};
   display: inline-block;
   text-align: left;
