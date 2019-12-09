@@ -99,7 +99,7 @@ function Timeline({ width = 700, leftGutter }) {
 
   return (
     <Container leftGutter={leftGutter}>
-      <TimeSlider width={width} override={{ Bar }} />
+      <TimeSlider width={width - leftGutter} override={{ Bar }} />
     </Container>
   )
 }
