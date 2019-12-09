@@ -63,7 +63,7 @@ const TooltipPositioner = styled.div`
   bottom: unset;
 `
 
-function TimeSlider({ width, override }) {
+function TimeSlider({ width, override = {} }) {
   const dataset = useContext(DataContext)
   const timepoint = useContext(TimeContext)
   const { setTimepoint } = useContext(SetterContext)
@@ -121,6 +121,7 @@ function TimeSlider({ width, override }) {
 
 TimeSlider.propTypes = {
   width: T.number,
+  override: T.object,
 }
 
 export default TimeSlider

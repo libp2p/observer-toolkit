@@ -63,4 +63,9 @@ function PeerIdTooltip({ peerId, children }) {
   )
 }
 
+PeerIdTooltip.propTypes = {
+  peerId: T.string.isRequired,
+  children: T.node,
+}
+
 export default PeerIdTooltip

@@ -1,13 +1,9 @@
-import React, { useContext, forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import {
-  useStackedData,
-  getNumericSorter,
-  DataContext,
-} from '@libp2p-observer/sdk'
+import { useStackedData, getNumericSorter } from '@libp2p-observer/sdk'
 
 import { getTrafficChangesByPeer, getTotalTraffic, getPeerIds } from './utils'
 import TimelinePaths from './TimelinePaths'
@@ -43,7 +39,6 @@ const PathsContainer = styled.div`
 `
 
 function Timeline({ width = 700, leftGutter }) {
-  const dataset = useContext(DataContext)
   const { stackedData, xScale, yScale: yScaleIn } = useStackedData({
     keyData: getTrafficChangesByPeer('in'),
     getKeys: getPeerIds,
@@ -96,6 +91,11 @@ function Timeline({ width = 700, leftGutter }) {
       {children}
     </BarWrapper>
   ))
+  Bar.propTypes = {
+    controlWidth: T.number.isRequired,
+    onClick: T.func.isRequired,
+    children: T.node,
+  }
 
   return (
     <Container leftGutter={leftGutter}>

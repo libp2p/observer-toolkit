@@ -21,7 +21,7 @@ function PeerId({ peerId }) {
 }
 
 PeerId.propTypes = {
-  id: T.string,
+  peerId: T.string,
   children: T.node,
   onClick: T.func,
 }

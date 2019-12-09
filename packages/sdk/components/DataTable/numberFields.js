@@ -3,7 +3,6 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import { formatDataSize } from '../../utils/formats'
-import { childrenToString } from '../../utils/helpers'
 
 const NumWrapper = styled.span`
   font-family: 'plex-mono';
