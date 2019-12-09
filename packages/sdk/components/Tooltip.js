@@ -81,37 +81,48 @@ const Tick = styled.div`
   ${({ direction, tickSize }) => getTickPosition(direction, tickSize)}
 `
 
+const sideOptions = ['top', 'right', 'bottom', 'left']
+const fixOnOptions = ['click', 'always', 'never']
+
 function Tooltip({
-  side = 'top',
-  tickSize = 8,
-  getColor = theme => theme.color('background'),
-  clickToFix = true,
-  content,
   children,
+  tickSize = 8,
+  colorKey = 'background',
+  colorIndex = 0,
+  side = sideOptions[0],
+  fixOn = fixOnOptions[0],
+  content,
   override = {},
 }) {
-  const [isVisible, setIsVisible] = useState(false)
-  const [isFixed, setIsFixed] = useState(false)
-  const show = () => setIsVisible(true)
-  const hide = () => setIsVisible(false)
+  const clickToFix = fixOn === 'click'
+  const alwaysFix = fixOn === 'always'
+
+  const [isFixed, setIsFixed] = useState(alwaysFix)
+  const [isShowing, setIsShowing] = useState(false)
+
+  if (!content) return <Target>{children}</Target>
+
+  const show = () => setIsShowing(true)
+  const hide = () => setIsShowing(false)
   const toggleFix = () => setIsFixed(!isFixed)
   const stopPropagation = e => e.stopPropagation()
 
   const direction = getInvertedDirection(side)
+  const getColor = theme => theme.color(colorKey, colorIndex)
 
   return (
     <Target
       onMouseEnter={show}
       onMouseLeave={hide}
-      onClick={clickToFix && toggleFix}
+      onClick={clickToFix ? toggleFix : null}
       clickToFix={clickToFix}
       isFixed={isFixed}
       as={override.Target}
     >
       {children}
-      {(isFixed || isVisible) && (
+      {(isFixed || isShowing) && (
         <Positioner
-          onClick={clickToFix && stopPropagation}
+          onClick={clickToFix ? stopPropagation : null}
           direction={direction}
           tickSize={tickSize}
           as={override.Positioner}
@@ -122,11 +133,7 @@ function Tooltip({
             getColor={getColor}
             as={override.Tick}
           />
-          <Content
-            getColor={getColor}
-            isFixed={isFixed}
-            as={override.Container}
-          >
+          <Content getColor={getColor} isFixed={isFixed} as={override.Content}>
             {content}
           </Content>
         </Positioner>
@@ -136,10 +143,12 @@ function Tooltip({
 }
 
 Tooltip.propTypes = {
-  direction: T.oneOf(['top', 'right', 'bottom', 'left']),
-  tickSize: T.number,
-  content: T.node.isRequired,
   children: T.node.isRequired,
+  tickSize: T.number,
+  getColor: T.func,
+  side: T.oneOf(sideOptions),
+  fixOn: T.oneOf(fixOnOptions),
+  content: T.node,
   override: T.object,
 }
 

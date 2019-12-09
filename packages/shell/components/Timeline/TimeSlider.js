@@ -4,11 +4,14 @@ import styled from 'styled-components'
 import { Formik } from 'formik'
 
 import {
+  formatTime,
   DataContext,
   SetterContext,
   Slider,
   TimeContext,
 } from '@libp2p-observer/sdk'
+
+import { getTime } from '@libp2p-observer/data'
 
 const Container = styled.div`
   display: flex;
@@ -45,6 +48,21 @@ const NumberFieldsWrapper = styled.div`
   display: none;
 `
 
+const TooltipContent = styled.div`
+  font-weight: 600;
+  font-size: 8pt;
+  font-family: 'plex-sans';
+  color: ${({ theme }) => theme.color('text', 3)};
+  padding: ${({ theme }) => theme.spacing(0.5)}
+    ${({ theme }) => theme.spacing(1)};
+  border-radius: ${({ theme }) => theme.spacing()};
+`
+
+const TooltipPositioner = styled.div`
+  top: ${({ theme }) => theme.spacing(-1)};
+  bottom: unset;
+`
+
 function TimeSlider({ width, override }) {
   const dataset = useContext(DataContext)
   const timepoint = useContext(TimeContext)
@@ -68,6 +86,16 @@ function TimeSlider({ width, override }) {
 
   const initialValues = { index: timeIndex }
 
+  const tooltipProps = {
+    fixOn: 'always',
+    colorKey: 'highlight',
+    override: {
+      Content: TooltipContent,
+      Positioner: TooltipPositioner,
+    },
+    content: formatTime(getTime(timepoint)),
+  }
+
   return (
     <Formik
       initialValues={initialValues}
@@ -84,6 +112,7 @@ function TimeSlider({ width, override }) {
           controlWidth={controlWidth}
           override={sliderOverrides}
           width={width}
+          tooltipProps={tooltipProps}
         />
       )}
     </Formik>
