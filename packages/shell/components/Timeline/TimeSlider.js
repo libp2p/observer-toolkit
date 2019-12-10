@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import { Formik } from 'formik'
 
 import {
@@ -12,6 +12,10 @@ import {
 } from '@libp2p-observer/sdk'
 
 import { getTime } from '@libp2p-observer/data'
+
+const FormWrapper = styled.div`
+  height: inherit;
+`
 
 const Container = styled.div`
   display: flex;
@@ -51,11 +55,11 @@ const NumberFieldsWrapper = styled.div`
 const TooltipContent = styled.div`
   font-weight: 600;
   font-size: 8pt;
-  font-family: 'plex-sans';
+  font-family: plex-sans, sans-serif;
   color: ${({ theme }) => theme.color('text', 3)};
+  border-radius: ${({ theme }) => theme.spacing()};
   padding: ${({ theme }) => theme.spacing(0.5)}
     ${({ theme }) => theme.spacing(1)};
-  border-radius: ${({ theme }) => theme.spacing()};
 `
 
 const TooltipPositioner = styled.div`
@@ -63,7 +67,9 @@ const TooltipPositioner = styled.div`
   bottom: unset;
 `
 
-function TimeSlider({ width, override = {} }) {
+function TimeSlider({ width, override = {}, theme }) {
+  const containerRef = useRef()
+
   const dataset = useContext(DataContext)
   const timepoint = useContext(TimeContext)
   const { setTimepoint } = useContext(SetterContext)
@@ -93,35 +99,40 @@ function TimeSlider({ width, override = {} }) {
       Content: TooltipContent,
       Positioner: TooltipPositioner,
     },
+    containerRef,
+    tolerance: parseInt(theme.spacing(2)),
     content: formatTime(getTime(timepoint)),
   }
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={values => {
-        handleChange(values.index)
-      }}
-    >
-      {({ values, setFieldValue, submitForm }) => (
-        <Slider
-          onChange={submitForm}
-          values={values}
-          setFieldValue={setFieldValue}
-          max={dataset.length - 1}
-          controlWidth={controlWidth}
-          override={sliderOverrides}
-          width={width}
-          tooltipProps={tooltipProps}
-        />
-      )}
-    </Formik>
+    <FormWrapper ref={containerRef}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={values => {
+          handleChange(values.index)
+        }}
+      >
+        {({ values, setFieldValue, submitForm }) => (
+          <Slider
+            onChange={submitForm}
+            values={values}
+            setFieldValue={setFieldValue}
+            max={dataset.length - 1}
+            controlWidth={controlWidth}
+            override={sliderOverrides}
+            width={width}
+            tooltipProps={tooltipProps}
+          />
+        )}
+      </Formik>
+    </FormWrapper>
   )
 }
 
 TimeSlider.propTypes = {
   width: T.number,
   override: T.object,
+  theme: T.object.isRequired,
 }
 
-export default TimeSlider
+export default withTheme(TimeSlider)

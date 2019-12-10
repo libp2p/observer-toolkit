@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -17,19 +17,21 @@ function getTickBorderColor(direction, color) {
   return `border-${invertedDirection}-color: ${color};`
 }
 
-function getPosition(direction, mainOffset, centredOffset) {
+function getPosition(direction, mainPosition) {
   const isVertical = ['top', 'bottom'].includes(direction)
   const centredSide = isVertical ? 'left' : 'top'
+
   const centredAxis = isVertical ? 'X' : 'Y'
+
   return `
-    ${direction}: ${mainOffset};
+    ${direction}: ${mainPosition};
     ${centredSide}: 50%;
     transform: translate${centredAxis}(-50%);
   `
 }
 
 function getTickPosition(direction, tickSize) {
-  return getPosition(direction, `-${tickSize * 2}px`, `-${tickSize}px`)
+  return getPosition(direction, `-${tickSize * 2}px`)
 }
 
 function getBoxShadow(theme, weight) {
@@ -38,6 +40,42 @@ function getBoxShadow(theme, weight) {
     0,
     weight
   )};`
+}
+
+function updateOffset(contentRef, containerRef, tolerance) {
+  if (!contentRef.current || tolerance === null) return
+
+  const elemRect = contentRef.current.getBoundingClientRect()
+  const boundsElem = containerRef.current || document.body
+  const boundsRect = boundsElem.getBoundingClientRect()
+
+  const { left, top } = contentRef.current.style
+  const currentLeft = parseFloat(left)
+  const currentTop = parseFloat(top)
+
+  const offsets = {
+    top: Math.min(0, elemRect.top - boundsRect.top - currentTop + tolerance),
+    left: Math.min(
+      0,
+      elemRect.left - boundsRect.left - currentLeft + tolerance
+    ),
+    right: Math.max(
+      0,
+      elemRect.right - boundsRect.right - currentLeft - tolerance
+    ),
+    bottom: Math.max(
+      0,
+      elemRect.bottom - boundsRect.bottom - currentTop - tolerance
+    ),
+  }
+
+  // Don't apply contradictory offsets if a big tooltip spans both edges of a small view
+  if (!(offsets.top && offsets.bottom)) {
+    contentRef.current.style.left = 0 - (offsets.left || offsets.right) + 'px'
+  }
+  if (!(offsets.left && offsets.right)) {
+    contentRef.current.style.top = 0 - (offsets.top || offsets.bottom) + 'px'
+  }
 }
 
 const Target = styled.span`
@@ -54,8 +92,8 @@ const Target = styled.span`
 const Positioner = styled.div`
   z-index: 15;
   position: absolute;
-  ${({ direction, tickSize }) =>
-    getPosition(direction, `calc(100% - ${tickSize}px)`, '-50%')}
+  ${({ direction, tickSize, offsets }) =>
+    getPosition(direction, `calc(100% - ${tickSize}px)`, offsets)}
 
   // Give a little space that tolerates small mouseouts around the tick shape
   ${({ direction, tickSize }) =>
@@ -76,9 +114,15 @@ const Tick = styled.div`
   border-style: solid;
   border-width: ${({ tickSize }) => tickSize}px;
   border-color: transparent;
+  z-index: 3;
   ${({ direction, theme, getColor }) =>
     getTickBorderColor(direction, getColor(theme))}
-  ${({ direction, tickSize }) => getTickPosition(direction, tickSize)}
+  ${({ direction, tickSize, offsets }) =>
+    getTickPosition(direction, tickSize, offsets)}
+`
+
+const ContentOffsetter = styled.div`
+  position: relative;
 `
 
 const sideOptions = ['top', 'right', 'bottom', 'left']
@@ -92,13 +136,17 @@ function Tooltip({
   side = sideOptions[0],
   fixOn = fixOnOptions[0],
   content,
+  tolerance = 0,
+  containerRef = {},
   override = {},
 }) {
   const clickToFix = fixOn === 'click'
   const alwaysFix = fixOn === 'always'
-
   const [isFixed, setIsFixed] = useState(alwaysFix)
   const [isShowing, setIsShowing] = useState(false)
+
+  const contentRef = useRef()
+  useLayoutEffect(() => updateOffset(contentRef, containerRef, tolerance))
 
   if (!content) return <Target>{children}</Target>
 
@@ -133,9 +181,15 @@ function Tooltip({
             getColor={getColor}
             as={override.Tick}
           />
-          <Content getColor={getColor} isFixed={isFixed} as={override.Content}>
-            {content}
-          </Content>
+          <ContentOffsetter style={{ top: 0, left: 0 }} ref={contentRef}>
+            <Content
+              getColor={getColor}
+              isFixed={isFixed}
+              as={override.Content}
+            >
+              {content}
+            </Content>
+          </ContentOffsetter>
         </Positioner>
       )}
     </Target>
@@ -150,7 +204,9 @@ Tooltip.propTypes = {
   side: T.oneOf(sideOptions),
   fixOn: T.oneOf(fixOnOptions),
   content: T.node,
+  tolerance: T.number,
   override: T.object,
+  containerRef: T.object,
 }
 
 export default Tooltip

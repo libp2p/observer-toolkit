@@ -12,8 +12,8 @@ import samples from '@libp2p-observer/samples'
 import ControlPanel from '../components/ControlPanel'
 
 const Page = styled.div`
-  display: flex;
   position: fixed;
+  display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;

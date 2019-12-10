@@ -21,7 +21,7 @@ const Unit = styled.span`
   text-align: left;
 `
 
-function FormatedNumber({ value, unit }) {
+function FormatedNumber({ value, unit = '' }) {
   if (parseInt(value) === 0) {
     return (
       <NumWrapper>
@@ -41,7 +41,7 @@ function FormatedNumber({ value, unit }) {
 
 FormatedNumber.propTypes = {
   value: T.oneOfType([T.number, T.string]).isRequired,
-  unit: T.string.isRequired,
+  unit: T.string,
 }
 
 function TimeNumber({ value }) {
