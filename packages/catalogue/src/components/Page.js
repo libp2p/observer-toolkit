@@ -12,6 +12,7 @@ import SelectedComponent from './SelectedComponent'
 const HEADER_HEIGHT = '67px'
 
 const Container = styled.div`
+  font-family: plex-sans, sans-serif;
   position: fixed;
   display: flex;
   flex-direction: column;
