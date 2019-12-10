@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/libp2p-introspection-ui/static/css/main.34de6062.chunk.css",
-    "main.js": "/libp2p-introspection-ui/static/js/main.c51b1c5a.chunk.js",
-    "main.js.map": "/libp2p-introspection-ui/static/js/main.c51b1c5a.chunk.js.map",
-    "runtime-main.js": "/libp2p-introspection-ui/static/js/runtime-main.8ffb7aad.js",
-    "runtime-main.js.map": "/libp2p-introspection-ui/static/js/runtime-main.8ffb7aad.js.map",
-    "static/js/2.e342e8ff.chunk.js": "/libp2p-introspection-ui/static/js/2.e342e8ff.chunk.js",
-    "static/js/2.e342e8ff.chunk.js.map": "/libp2p-introspection-ui/static/js/2.e342e8ff.chunk.js.map",
+    "main.js": "/libp2p-introspection-ui/static/js/main.a3a6af44.chunk.js",
+    "main.js.map": "/libp2p-introspection-ui/static/js/main.a3a6af44.chunk.js.map",
+    "runtime-main.js": "/libp2p-introspection-ui/static/js/runtime-main.7715ce8e.js",
+    "runtime-main.js.map": "/libp2p-introspection-ui/static/js/runtime-main.7715ce8e.js.map",
+    "static/js/2.4a415845.chunk.js": "/libp2p-introspection-ui/static/js/2.4a415845.chunk.js",
+    "static/js/2.4a415845.chunk.js.map": "/libp2p-introspection-ui/static/js/2.4a415845.chunk.js.map",
     "index.html": "/libp2p-introspection-ui/index.html",
-    "precache-manifest.2ff87bb253f95a8a43fa5b718df8ba42.js": "/libp2p-introspection-ui/precache-manifest.2ff87bb253f95a8a43fa5b718df8ba42.js",
+    "precache-manifest.9f9699329bc4999ee7fe50b0e5fad27a.js": "/libp2p-introspection-ui/precache-manifest.9f9699329bc4999ee7fe50b0e5fad27a.js",
     "service-worker.js": "/libp2p-introspection-ui/service-worker.js",
     "static/css/main.34de6062.chunk.css.map": "/libp2p-introspection-ui/static/css/main.34de6062.chunk.css.map",
     "static/media/IBMPlexMono-Light.otf": "/libp2p-introspection-ui/static/media/IBMPlexMono-Light.f9679767.otf",
@@ -23,16 +23,13 @@
     "static/media/IBMPlexSans-Text.otf": "/libp2p-introspection-ui/static/media/IBMPlexSans-Text.9ac3a2a3.otf",
     "static/media/Nexa-Bold.otf": "/libp2p-introspection-ui/static/media/Nexa-Bold.254370af.otf",
     "static/media/Nexa-Light.otf": "/libp2p-introspection-ui/static/media/Nexa-Light.5c6f5c99.otf",
-    "static/media/asc.svg": "/libp2p-introspection-ui/static/media/asc.5626ee45.svg",
-    "static/media/desc.svg": "/libp2p-introspection-ui/static/media/desc.3a66a245.svg",
-    "static/media/filter.svg": "/libp2p-introspection-ui/static/media/filter.eeaeb44d.svg",
-    "static/media/screenshot.png": "/libp2p-introspection-ui/static/media/screenshot.e1a6ab62.png",
-    "static/media/sort.svg": "/libp2p-introspection-ui/static/media/sort.e8066510.svg"
+    "static/media/sample.mock": "/libp2p-introspection-ui/static/media/sample.10cddc23.mock",
+    "static/media/screenshot.png": "/libp2p-introspection-ui/static/media/screenshot.3a5301f8.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.8ffb7aad.js",
-    "static/js/2.e342e8ff.chunk.js",
+    "static/js/runtime-main.7715ce8e.js",
+    "static/js/2.4a415845.chunk.js",
     "static/css/main.34de6062.chunk.css",
-    "static/js/main.c51b1c5a.chunk.js"
+    "static/js/main.a3a6af44.chunk.js"
   ]
 }

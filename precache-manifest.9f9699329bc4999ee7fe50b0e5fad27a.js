@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "16fc349a4539c12d7d792615ed14dbf7",
+    "revision": "b384451a8fd2941b53bb9bc711b74916",
     "url": "/libp2p-introspection-ui/index.html"
   },
   {
-    "revision": "fb430900c4d39e0f8e17",
+    "revision": "5d9f7adbef807a38b5c4",
     "url": "/libp2p-introspection-ui/static/css/main.34de6062.chunk.css"
   },
   {
-    "revision": "38fb64811a231dc497f9",
-    "url": "/libp2p-introspection-ui/static/js/2.e342e8ff.chunk.js"
+    "revision": "0779ca99996248279285",
+    "url": "/libp2p-introspection-ui/static/js/2.4a415845.chunk.js"
   },
   {
-    "revision": "fb430900c4d39e0f8e17",
-    "url": "/libp2p-introspection-ui/static/js/main.c51b1c5a.chunk.js"
+    "revision": "5d9f7adbef807a38b5c4",
+    "url": "/libp2p-introspection-ui/static/js/main.a3a6af44.chunk.js"
   },
   {
-    "revision": "c477eb44cae6381115aa",
-    "url": "/libp2p-introspection-ui/static/js/runtime-main.8ffb7aad.js"
+    "revision": "ff936227d0a54eee45c2",
+    "url": "/libp2p-introspection-ui/static/js/runtime-main.7715ce8e.js"
   },
   {
     "revision": "f9679767487b4907fff1d91d6f81ebd9",
@@ -68,27 +68,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/libp2p-introspection-ui/static/media/Nexa-Light.5c6f5c99.otf"
   },
   {
-    "revision": "5626ee454547041c7f5d33262b10b7f8",
-    "url": "/libp2p-introspection-ui/static/media/asc.5626ee45.svg"
-  },
-  {
-    "revision": "3a66a245ac201ad16f5aaadae996b2f3",
-    "url": "/libp2p-introspection-ui/static/media/desc.3a66a245.svg"
-  },
-  {
-    "revision": "eeaeb44dbe14d9c1ed9970f74f936d0e",
-    "url": "/libp2p-introspection-ui/static/media/filter.eeaeb44d.svg"
+    "revision": "10cddc234d793517721dab8631078678",
+    "url": "/libp2p-introspection-ui/static/media/sample.10cddc23.mock"
   },
   {
     "revision": "3a5301f87ed750dd69aac1cd8fab13d3",
     "url": "/libp2p-introspection-ui/static/media/screenshot.3a5301f8.png"
-  },
-  {
-    "revision": "e1a6ab626f9ce0eb36be7d3511cfe6b5",
-    "url": "/libp2p-introspection-ui/static/media/screenshot.e1a6ab62.png"
-  },
-  {
-    "revision": "e8066510ab7e79ca125e0839200d0f16",
-    "url": "/libp2p-introspection-ui/static/media/sort.e8066510.svg"
   }
 ]);
