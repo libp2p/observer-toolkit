@@ -1,4 +1,4 @@
-import React, { createContext, useRef, useState } from 'react'
+import React, { createContext, useEffect, useRef, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -16,7 +16,9 @@ function RootNodeProvider({ children }) {
 
   // Re-render listeners when ref is available
   const [refState, setRefState] = useState({})
-  if (rootNodeRef.current && !refState.current) setRefState(rootNodeRef)
+  useEffect(() => {
+    if (rootNodeRef.current && !refState.current) setRefState(rootNodeRef)
+  })
 
   return (
     <Container ref={rootNodeRef}>
