@@ -42,15 +42,16 @@ function getBoxShadow(theme, weight) {
   )};`
 }
 
-function updateOffset(contentRef, containerRef, tolerance) {
-  if (!contentRef.current || !containerRef.current) return
+function updateOffset(positionerRef, tickRef, containerRef, tolerance) {
+  if (!positionerRef.current || !tickRef.current || !containerRef.current)
+    return
 
-  const elemRect = contentRef.current.getBoundingClientRect()
+  const elemRect = positionerRef.current.getBoundingClientRect()
   const boundsRect = containerRef.current.getBoundingClientRect()
 
-  const { left, top } = contentRef.current.style
-  const currentLeft = parseFloat(left)
-  const currentTop = parseFloat(top)
+  const { marginLeft, marginTop } = positionerRef.current.style
+  const currentLeft = parseFloat(marginLeft)
+  const currentTop = parseFloat(marginTop)
 
   const offsets = {
     top: Math.min(0, elemRect.top - boundsRect.top - currentTop + tolerance),
@@ -69,11 +70,20 @@ function updateOffset(contentRef, containerRef, tolerance) {
   }
 
   // Don't apply contradictory offsets if a big tooltip spans both edges of a small view
-  if (!(offsets.top && offsets.bottom)) {
-    contentRef.current.style.left = 0 - (offsets.left || offsets.right) + 'px'
-  }
   if (!(offsets.left && offsets.right)) {
-    contentRef.current.style.top = 0 - (offsets.top || offsets.bottom) + 'px'
+    const offset = offsets.left || offsets.right
+    if (offset) {
+      positionerRef.current.style.marginLeft = 0 - offset + 'px'
+      tickRef.current.style.marginLeft = offset + 'px'
+    }
+  }
+
+  if (!(offsets.top && offsets.bottom)) {
+    const offset = offsets.top || offsets.bottom
+    if (offset) {
+      positionerRef.current.style.marginTop = 0 - offset + 'px'
+      tickRef.current.style.marginTop = offset + 'px'
+    }
   }
 }
 
@@ -120,10 +130,6 @@ const Tick = styled.div`
     getTickPosition(direction, tickSize, offsets)}
 `
 
-const ContentOffsetter = styled.div`
-  position: relative;
-`
-
 const sideOptions = ['top', 'right', 'bottom', 'left']
 const fixOnOptions = ['click', 'always', 'never']
 
@@ -144,8 +150,11 @@ function Tooltip({
   const [isFixed, setIsFixed] = useState(alwaysFix)
   const [isShowing, setIsShowing] = useState(false)
 
-  const contentRef = useRef()
-  useLayoutEffect(() => updateOffset(contentRef, containerRef, tolerance))
+  const positionerRef = useRef()
+  const tickRef = useRef()
+  useLayoutEffect(() =>
+    updateOffset(positionerRef, tickRef, containerRef, tolerance)
+  )
 
   if (!content) return <Target>{children}</Target>
 
@@ -169,26 +178,23 @@ function Tooltip({
       {children}
       {(isFixed || isShowing) && (
         <Positioner
+          style={{ marginLeft: 0, marginTop: 0 }}
           onClick={clickToFix ? stopPropagation : null}
           direction={direction}
           tickSize={tickSize}
+          ref={positionerRef}
           as={override.Positioner}
         >
           <Tick
             direction={direction}
             tickSize={tickSize}
             getColor={getColor}
+            ref={tickRef}
             as={override.Tick}
           />
-          <ContentOffsetter style={{ top: 0, left: 0 }} ref={contentRef}>
-            <Content
-              getColor={getColor}
-              isFixed={isFixed}
-              as={override.Content}
-            >
-              {content}
-            </Content>
-          </ContentOffsetter>
+          <Content getColor={getColor} isFixed={isFixed} as={override.Content}>
+            {content}
+          </Content>
         </Positioner>
       )}
     </Target>
