@@ -43,11 +43,10 @@ function getBoxShadow(theme, weight) {
 }
 
 function updateOffset(contentRef, containerRef, tolerance) {
-  if (!contentRef.current || tolerance === null) return
+  if (!contentRef.current || !containerRef.current) return
 
   const elemRect = contentRef.current.getBoundingClientRect()
-  const boundsElem = containerRef.current || document.body
-  const boundsRect = boundsElem.getBoundingClientRect()
+  const boundsRect = containerRef.current.getBoundingClientRect()
 
   const { left, top } = contentRef.current.style
   const currentLeft = parseFloat(left)
