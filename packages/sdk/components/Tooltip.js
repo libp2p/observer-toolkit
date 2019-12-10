@@ -71,19 +71,15 @@ function updateOffset(positionerRef, tickRef, containerRef, tolerance) {
 
   // Don't apply contradictory offsets if a big tooltip spans both edges of a small view
   if (!(offsets.left && offsets.right)) {
-    const offset = offsets.left || offsets.right
-    if (offset) {
-      positionerRef.current.style.marginLeft = 0 - offset + 'px'
-      tickRef.current.style.marginLeft = offset + 'px'
-    }
+    const offset = offsets.left || offsets.right || 0
+    positionerRef.current.style.marginLeft = 0 - offset + 'px'
+    tickRef.current.style.marginLeft = offset + 'px'
   }
 
   if (!(offsets.top && offsets.bottom)) {
-    const offset = offsets.top || offsets.bottom
-    if (offset) {
-      positionerRef.current.style.marginTop = 0 - offset + 'px'
-      tickRef.current.style.marginTop = offset + 'px'
-    }
+    const offset = offsets.top || offsets.bottom || 0
+    positionerRef.current.style.marginTop = 0 - offset + 'px'
+    tickRef.current.style.marginTop = offset + 'px'
   }
 }
 
