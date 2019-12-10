@@ -10,9 +10,6 @@ const leftGutter = 72
 const Container = styled.div`
   background: ${({ theme }) => theme.color('contrast', 0)};
   padding: ${({ theme }) => theme.spacing()};
-  position: fixed;
-  bottom: 0;
-  left: 0;
   display: flex;
   width: 100%;
 `

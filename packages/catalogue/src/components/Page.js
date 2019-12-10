@@ -8,11 +8,23 @@ import CatalogueItem from './CatalogueItem'
 import HeaderTabs from './HeaderTabs'
 import SelectedComponent from './SelectedComponent'
 
-const HEADER_HEIGHT = '64px'
+const HEADER_HEIGHT = '67px'
+
+const Container = styled.div`
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`
 
 const Main = styled.div`
   background-color: ${({ theme }) => theme.color('background')};
   overflow-y: scroll;
+  flex-grow: 1;
+  flex-shrink: 1;
 `
 
 const CatalogueBkg = styled.div`
@@ -30,18 +42,11 @@ const Header = styled.div`
     `${theme.spacing()} solid ${theme.color('primary')}`};
 `
 
-const Footer = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-`
-
 function Page() {
   const [selected, setSelected] = useState(null)
 
   return (
-    <div>
+    <Container>
       <Header>
         <HeaderTabs />
       </Header>
@@ -63,10 +68,8 @@ function Page() {
           ))}
         </CatalogueBkg>
       </Main>
-      <Footer>
-        <ControlPanel />
-      </Footer>
-    </div>
+      <ControlPanel />
+    </Container>
   )
 }
 

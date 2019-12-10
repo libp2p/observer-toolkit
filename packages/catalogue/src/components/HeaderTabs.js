@@ -10,7 +10,6 @@ import samples from '@libp2p-observer/samples'
 
 const TabsWrapper = styled.div`
   display: flex;
-  height: 100%;
   padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
   font-weight: 700;
 `
