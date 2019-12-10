@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
 import Tooltip from '../Tooltip'
 import StyledButton from '../input/StyledButton'
+import { RootNodeContext } from '../context/RootNodeProvider'
 import { copyToClipboard } from '../../utils/helpers'
 
 const SegmentedPeerId = styled.div`
@@ -23,6 +24,7 @@ const Tick = styled.div`
 
 function PeerIdTooltip({ peerId, children }) {
   const [isCopied, setIsCopied] = useState(false)
+  const rootNodeRef = useContext(RootNodeContext)
 
   const segmentsCount = 4
   const segmentsLength = Math.round(peerId.length / segmentsCount) // Usually 64 / 4 = 16
@@ -48,6 +50,7 @@ function PeerIdTooltip({ peerId, children }) {
   return (
     <Tooltip
       side="right"
+      containerRef={rootNodeRef}
       override={{ Positioner, Tick }}
       content={
         <>
