@@ -27,6 +27,7 @@ const Main = styled.div`
   overflow-y: scroll;
   flex-grow: 1;
   flex-shrink: 1;
+  position: relative;
 `
 
 const CatalogueBkg = styled.div`

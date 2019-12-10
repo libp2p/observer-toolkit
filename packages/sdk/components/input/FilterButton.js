@@ -8,14 +8,13 @@ import Icon from '../Icon'
 
 const Container = styled.span`
   display: inline-block;
-  position: relative;
 `
 
 const AccordionContent = styled.div`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: absolute;
-  top: 100%;
-  right: -${({ theme }) => theme.spacing()};
+  top: ${({ theme }) => theme.spacing(4)};
+  left: 0;
   padding: ${({ theme }) => theme.spacing()};
   background: ${({ theme }) => theme.color('background', 1, 0.8)};
   z-index: 20;
