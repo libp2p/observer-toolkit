@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import { RootNodeProvider } from '@libp2p-observer/sdk'
 import { ControlPanel } from '@libp2p-observer/shell'
 
 import approvedViz from '../definitions/approvedViz'
@@ -51,22 +52,30 @@ function Page() {
         <HeaderTabs />
       </Header>
       <Main>
-        {selected !== null && <SelectedComponent viz={approvedViz[selected]} />}
-        <CatalogueBkg>
-          {approvedViz.map(({ name, description, tags, screenshot }, index) => (
-            <CatalogueItem
-              key={name}
-              name={name}
-              description={description}
-              tags={tags}
-              screenshot={screenshot}
-              handleSelect={() =>
-                setSelected(index === selected ? null : index)
-              }
-              isSelected={selected === index}
-            />
-          ))}
-        </CatalogueBkg>
+        {selected !== null && (
+          <RootNodeProvider>
+            <SelectedComponent viz={approvedViz[selected]} />
+          </RootNodeProvider>
+        )}
+        <RootNodeProvider>
+          <CatalogueBkg>
+            {approvedViz.map(
+              ({ name, description, tags, screenshot }, index) => (
+                <CatalogueItem
+                  key={name}
+                  name={name}
+                  description={description}
+                  tags={tags}
+                  screenshot={screenshot}
+                  handleSelect={() =>
+                    setSelected(index === selected ? null : index)
+                  }
+                  isSelected={selected === index}
+                />
+              )
+            )}
+          </CatalogueBkg>
+        </RootNodeProvider>
       </Main>
       <ControlPanel />
     </Container>

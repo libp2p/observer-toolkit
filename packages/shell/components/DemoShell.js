@@ -6,6 +6,7 @@ import {
   DataProvider,
   ThemeSetter,
   applySampleData,
+  RootNodeProvider,
 } from '@libp2p-observer/sdk'
 import samples from '@libp2p-observer/samples'
 
@@ -58,7 +59,9 @@ function DemoShell({ children }) {
     <ThemeSetter>
       <DataProvider initialData={mockData}>
         <Page>
-          <Content>{children}</Content>
+          <Content>
+            <RootNodeProvider>{children}</RootNodeProvider>
+          </Content>
           <ControlPanel />
         </Page>
       </DataProvider>

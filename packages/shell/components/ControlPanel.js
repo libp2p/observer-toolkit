@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-import { DataContext, Icon } from '@libp2p-observer/sdk'
+import { DataContext, Icon, RootNodeProvider } from '@libp2p-observer/sdk'
 import Timeline from './Timeline/Timeline'
 import DataTypeControl from './DataTypeControl'
 
@@ -53,32 +53,34 @@ function ControlPanel() {
 
   return (
     <Container>
-      <DataPanel>
-        <DataTypeControl metadata={dataset.metadata} />
+      <RootNodeProvider>
+        <DataPanel>
+          <DataTypeControl metadata={dataset.metadata} />
 
-        <DataPanelItem>
-          <IconContainer>
-            <Icon type="filter" />
-          </IconContainer>
-          0 filters applied
-        </DataPanelItem>
-        <DataPanelItem>
-          <IconContainer>
-            <Icon type="doc" />
-          </IconContainer>
-          Export data
-        </DataPanelItem>
-        <DataPanelItem>Peer Id:</DataPanelItem>
-        <DataPanelItem>
-          <IconContainer>
-            <Icon type="forward" />
-          </IconContainer>
-          About this peer
-        </DataPanelItem>
-      </DataPanel>
-      <TimePanel>
-        <Timeline leftGutter={leftGutter} />
-      </TimePanel>
+          <DataPanelItem>
+            <IconContainer>
+              <Icon type="filter" />
+            </IconContainer>
+            0 filters applied
+          </DataPanelItem>
+          <DataPanelItem>
+            <IconContainer>
+              <Icon type="doc" />
+            </IconContainer>
+            Export data
+          </DataPanelItem>
+          <DataPanelItem>Peer Id:</DataPanelItem>
+          <DataPanelItem>
+            <IconContainer>
+              <Icon type="forward" />
+            </IconContainer>
+            About this peer
+          </DataPanelItem>
+        </DataPanel>
+        <TimePanel>
+          <Timeline leftGutter={leftGutter} />
+        </TimePanel>
+      </RootNodeProvider>
     </Container>
   )
 }
