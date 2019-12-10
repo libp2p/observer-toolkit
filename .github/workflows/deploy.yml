@@ -1,9 +1,10 @@
-name: Deploy master to GitHub Pages
+name: Deploy master or staging to GitHub Pages
 
 on:
   push:
     branches:
       - master
+      - staging
 
 jobs:
   build:
@@ -23,4 +24,8 @@ jobs:
         run: yarn install
 
       - name: Run deploy script
-        run: npm run deploy:catalogue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git remote set-url origin "https://fregante:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          npm run deploy:catalogue
