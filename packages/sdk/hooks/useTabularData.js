@@ -84,7 +84,7 @@ function useTabularData({
 
   const rawContentProps = useMemo(() => {
     return getContentProps(data, columnsWithDefaults, timepoint, metadata)
-  }, [data, columnsWithDefaults, timepoint])
+  }, [data, columnsWithDefaults, timepoint, metadata])
 
   const columnDefs = applyCalculations(
     columnsWithDefaults,

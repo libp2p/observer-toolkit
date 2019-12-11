@@ -63,6 +63,7 @@ function AgeContent({ value, maxValue }) {
 }
 AgeContent.propTypes = {
   value: T.string,
+  maxValue: T.num,
 }
 
 export { AgeContent, BytesContent, PeerIdContent, StatusContent }
