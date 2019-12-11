@@ -1,8 +1,19 @@
 import React from 'react'
 import T from 'prop-types'
+import styled from 'styled-components'
 
 import StatusChip from './StatusChip'
-import { PeerId, TimeNumber, DataNumber } from '@libp2p-observer/sdk'
+import {
+  Bubble,
+  DataNumber,
+  PeerId,
+  TimeNumber,
+  Tooltip,
+} from '@libp2p-observer/sdk'
+
+const Nowrap = styled.span`
+  white-space: nowrap;
+`
 
 function StatusContent({ value }) {
   return <StatusChip status={value} />
@@ -18,23 +29,36 @@ PeerIdContent.propTypes = {
   value: T.string,
 }
 
-function BytesContent({ value, label }) {
+function BytesContent({ value, maxValue, colorKey }) {
   return (
-    <DataNumber value={value}>
-      {`${value} ${label} bytes during this connection's lifecycle`}
-    </DataNumber>
+    <Tooltip content={<Nowrap>{value} bytes</Nowrap>}>
+      <Nowrap>
+        <DataNumber value={value} />
+        <Bubble
+          value={value}
+          maxValue={maxValue}
+          inline
+          size={24}
+          colorKey={colorKey}
+        />
+      </Nowrap>
+    </Tooltip>
   )
 }
 BytesContent.propTypes = {
   value: T.num,
-  label: T.string,
+  maxValue: T.num,
+  colorKey: T.string,
 }
 
-function AgeContent({ value }) {
+function AgeContent({ value, maxValue }) {
   return (
-    <TimeNumber value={value}>
-      {`Connection was open for ${value} miliseconds`}
-    </TimeNumber>
+    <Tooltip content={<Nowrap>{value} seconds open</Nowrap>}>
+      <Nowrap>
+        <TimeNumber value={value} />
+        <Bubble value={value} maxValue={maxValue} inline size={24} />
+      </Nowrap>
+    </Tooltip>
   )
 }
 AgeContent.propTypes = {

@@ -45,9 +45,10 @@ const peerIdCol = {
 const dataInCol = {
   name: 'data-in',
   header: 'Data in',
-  getProps: connection => ({
+  getProps: (connection, _, metadata) => ({
     value: getConnectionTraffic(connection, 'in', 'bytes'),
-    label: 'inbound',
+    maxValue: metadata.maxTraffic,
+    colorKey: 'primary',
   }),
   renderContent: BytesContent,
   sort: numericSorter,
@@ -56,9 +57,10 @@ const dataInCol = {
 const dataOutCol = {
   name: 'data-out',
   header: 'Data out',
-  getProps: connection => ({
+  getProps: (connection, _, metadata) => ({
     value: getConnectionTraffic(connection, 'out', 'bytes'),
-    label: 'outbound',
+    maxValue: metadata.maxTraffic,
+    colorKey: 'secondary',
   }),
   renderContent: BytesContent,
   sort: numericSorter,
@@ -67,10 +69,11 @@ const dataOutCol = {
 const ageCol = {
   name: 'age',
   header: 'Time open',
-  getProps: (connection, timepoint) => {
+  getProps: (connection, timepoint, metadata) => {
     const age = getConnectionAge(connection, timepoint)
     return {
       value: age,
+      maxValue: metadata.maxAge,
     }
   },
   renderContent: AgeContent,
