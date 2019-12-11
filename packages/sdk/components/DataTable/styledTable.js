@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
-  color: ${({ theme }) => theme.color('text')};
 `
 
 const TableRow = styled.tr`
@@ -21,7 +20,7 @@ const TableHead = styled.th`
   font-family: plex-sans;
   font-weight: 600;
   border-bottom: 1px solid ${({ theme }) => theme.color('background', 2)};
-  background-color: ${({ theme }) => theme.color('secondary', 1, 0.4)};
+  background-color: ${({ theme }) => theme.color('secondary', 1, 0.2)};
   color: ${({ theme }) => theme.color('text', 0, 0.6)};
   text-transform: uppercase;
   white-space: nowrap;
@@ -29,9 +28,12 @@ const TableHead = styled.th`
 
 const TableCell = styled.td`
   ${({ theme }) => theme.styles.tableCell}
+  font-size: 9pt;
   padding-right: ${({ theme }) => theme.spacing(4)};
   font-weight: 400;
   font-family: plex-sans;
+  color: ${({ theme }) => theme.color('text', 1)};
+  ${({ align }) => align && `text-align: ${align};`}
 `
 
 // Provide unstyled styled-components so users can provide overrides using `as`

@@ -13,7 +13,7 @@ const StyledButton = styled.button`
     return `
       background: ${theme.color(isActive ? 'highlight' : 'background')};
       border: 1px solid ${theme.color('highlight')};
-      color: ${theme.color(isActive ? 'text' : 'highlight', isActive ? 2 : 0)};
+      color: ${theme.color(isActive ? 'text' : 'highlight', isActive ? 3 : 0)};
     `
   }}
 `

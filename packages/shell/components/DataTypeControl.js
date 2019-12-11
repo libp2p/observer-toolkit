@@ -26,7 +26,7 @@ const ButtonText = styled.span`
   flex-grow: 1;
   background: ${({ theme }) => theme.color('contrast', 2)};
   border-radius: ${({ theme }) => theme.spacing()};
-  color: ${({ theme }) => theme.color('text', 2)};
+  color: ${({ theme }) => theme.color('text', 3)};
   padding-top: ${({ theme }) => theme.spacing(0.5)};
   padding-bottom: ${({ theme }) => theme.spacing(0.5)};
   padding-left: ${({ theme }) => theme.spacing(2.5)};

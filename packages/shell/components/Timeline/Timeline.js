@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
@@ -13,17 +13,32 @@ const Container = styled.div`
   background: ${({ theme }) => theme.color('contrast')};
   position: relative;
   padding: ${({ theme }) => theme.spacing()} 0;
-  color: ${({ theme }) => theme.color('text', 2)};
-  user-select: none;
-  margin-left: ${({ leftGutter }) => leftGutter};
+  color: ${({ theme }) => theme.color('text', 3)};
+  margin-left: ${({ leftGutter }) => leftGutter}px;
+  height: 100%;
 `
 
+const TimelineInner = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: ${({ theme }) => theme.spacing()};
+  left: 0;
+`
+
+const BarWrapper = styled.div`
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  ${({ onClick }) => onClick && 'cursor: pointer;'}
+`
 const PathsContainer = styled.div`
   position: relative;
   user-select: none;
 `
 
-function Timeline({ width, leftGutter }) {
+function Timeline({ width = 700, leftGutter }) {
   const { stackedData, xScale, yScale: yScaleIn } = useStackedData({
     keyData: getTrafficChangesByPeer('in'),
     getKeys: getPeerIds,
@@ -46,37 +61,51 @@ function Timeline({ width, leftGutter }) {
   // Extend the yScale so that 3 tick labels fit nicely
   yScale.nice(3)
 
+  // Inject timeline graphic into slider bar so that both can be interacted with
+  const Bar = forwardRef(({ controlWidth, onClick, children }, ref) => (
+    <BarWrapper controlWidth={controlWidth} onClick={onClick} ref={ref}>
+      <TimelineInner>
+        <PathsContainer>
+          <TimelinePaths
+            dataDirection="in"
+            width={width}
+            colorKey="primary"
+            stackedData={stackedData}
+            xScale={xScale}
+            yScale={yScale}
+            leftGutter={leftGutter}
+          />
+        </PathsContainer>
+        <PathsContainer>
+          <TimelinePaths
+            dataDirection="out"
+            width={width}
+            colorKey="secondary"
+            stackedData={stackedDataOut}
+            xScale={xScale}
+            yScale={yScale}
+            leftGutter={leftGutter}
+          />
+        </PathsContainer>
+      </TimelineInner>
+      {children}
+    </BarWrapper>
+  ))
+  Bar.propTypes = {
+    controlWidth: T.number.isRequired,
+    onClick: T.func.isRequired,
+    children: T.node,
+  }
+
   return (
     <Container leftGutter={leftGutter}>
-      <PathsContainer>
-        <TimelinePaths
-          dataDirection="in"
-          width={width}
-          colorKey="primary"
-          stackedData={stackedData}
-          xScale={xScale}
-          yScale={yScale}
-          leftGutter={leftGutter}
-        />
-      </PathsContainer>
-      <PathsContainer>
-        <TimelinePaths
-          dataDirection="out"
-          width={width}
-          colorKey="secondary"
-          stackedData={stackedDataOut}
-          xScale={xScale}
-          yScale={yScale}
-          leftGutter={leftGutter}
-        />
-      </PathsContainer>
-      <TimeSlider width={width} />
+      <TimeSlider width={width - leftGutter} override={{ Bar }} />
     </Container>
   )
 }
 
 Timeline.propTypes = {
-  width: T.number.isRequired, // Set by withResizeDetector
+  width: T.number, // Set by withResizeDetector
   leftGutter: T.number.isRequired,
 }
 

@@ -14,6 +14,7 @@ const palette = {
   text: [
     // black / grey / white
     '0, 0, 0',
+    '93, 94, 96',
     '128, 130, 133',
     '255, 255, 255',
   ],
@@ -30,7 +31,8 @@ const palette = {
   tertiary: [
     // green
     '196, 209, 18',
-    '163, 170, 18',
+    '159, 176, 0',
+    '0, 99, 109',
   ],
   highlight: [
     // magenta / crimson

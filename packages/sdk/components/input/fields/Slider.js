@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Field } from 'formik'
 
 import Icon from '../../Icon'
+import Tooltip from '../../Tooltip'
 
 const CONTROL_WIDTH = 16
 const BAR_HEIGHT = 12
@@ -135,6 +136,7 @@ function Slider({
   controlWidth = CONTROL_WIDTH,
   width = WIDTH,
   override = {},
+  tooltipProps = {},
 }) {
   /**
    *** Props, validation, settings
@@ -288,45 +290,53 @@ function Slider({
       onMouseUp={slideEnd}
       onMouseLeave={slideEnd}
       onMouseMove={handleMouseMove}
-      ref={containerRef}
       width={width}
       controlWidth={controlWidth}
       as={override.Container}
     >
-      <Bar onClick={handleClick} controlWidth={controlWidth} as={override.Bar}>
+      <Bar
+        onClick={handleClick}
+        controlWidth={controlWidth}
+        as={override.Bar}
+        ref={containerRef}
+      >
         <FirstSection
           style={{ width: belowPercent }}
           as={override.FirstSection}
         />
-        <Control
-          style={{ left: controlOffset }}
-          width={controlWidth}
-          onMouseDown={event => slideStart(event, fieldNames[0])}
-          isLower={isRange}
-          as={override.Control}
-        >
-          <Field
-            type="hidden"
-            name={fieldNames[0]}
-            value={values[fieldNames[0]]}
-          />
-        </Control>
+        <Tooltip {...tooltipProps}>
+          <Control
+            style={{ left: controlOffset }}
+            width={controlWidth}
+            onMouseDown={event => slideStart(event, fieldNames[0])}
+            isLower={isRange}
+            as={override.Control}
+          >
+            <Field
+              type="hidden"
+              name={fieldNames[0]}
+              value={values[fieldNames[0]]}
+            />
+          </Control>
+        </Tooltip>
         {isRange && (
           <>
             <ActiveSection as={override.ActiveSection} />
-            <Control
-              style={{ left: upperControlOffset }}
-              width={controlWidth}
-              onMouseDown={event => slideStart(event, fieldNames[1])}
-              isUpper={isRange}
-              as={override.Control}
-            >
-              <Field
-                type="hidden"
-                name={fieldNames[1]}
-                value={values[fieldNames[1]]}
-              />
-            </Control>
+            <Tooltip {...tooltipProps}>
+              <Control
+                style={{ left: upperControlOffset }}
+                width={controlWidth}
+                onMouseDown={event => slideStart(event, fieldNames[1])}
+                isUpper={isRange}
+                as={override.Control}
+              >
+                <Field
+                  type="hidden"
+                  name={fieldNames[1]}
+                  value={values[fieldNames[1]]}
+                />
+              </Control>
+            </Tooltip>
           </>
         )}
         <InactiveSection
@@ -400,6 +410,7 @@ Slider.propTypes = {
   controlWidth: T.number,
   width: T.number,
   override: T.object,
+  tooltipProps: T.object,
 }
 
 export default Slider

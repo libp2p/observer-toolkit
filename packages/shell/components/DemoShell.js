@@ -6,17 +6,20 @@ import {
   DataProvider,
   ThemeSetter,
   applySampleData,
+  RootNodeProvider,
 } from '@libp2p-observer/sdk'
 import samples from '@libp2p-observer/samples'
 
-import Timeline from '../components/Timeline/Timeline'
+import ControlPanel from '../components/ControlPanel'
 
 const Page = styled.div`
-  display: flex;
   position: fixed;
+  display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `
 const Content = styled.div`
   flex-grow: 1;
@@ -33,14 +36,6 @@ const Content = styled.div`
     border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.3);
   }
-`
-const Controls = styled.div`
-  border-top: 2px solid ${({ theme }) => theme.color('background', 1)};
-  height: 185px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin-left: -${({ theme }) => theme.spacing()};
-  padding-left: ${({ theme }) => theme.spacing()};
 `
 
 // Standalone shell for demoing one component e.g. for staging in Storybook
@@ -64,10 +59,10 @@ function DemoShell({ children }) {
     <ThemeSetter>
       <DataProvider initialData={mockData}>
         <Page>
-          <Content>{children}</Content>
-          <Controls>
-            <Timeline />
-          </Controls>
+          <Content>
+            <RootNodeProvider>{children}</RootNodeProvider>
+          </Content>
+          <ControlPanel />
         </Page>
       </DataProvider>
     </ThemeSetter>

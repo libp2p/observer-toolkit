@@ -2,111 +2,63 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { childrenToString } from '../../utils/helpers'
+import { formatDataSize } from '../../utils/formats'
 
 const NumWrapper = styled.span`
   font-family: 'plex-mono';
-  font-weight: ${({ initialWeight, weightAdjust }) =>
-    initialWeight + weightAdjust};
   white-space: nowrap;
-  color: ${({ theme, weightAdjust }) =>
-    theme.color('text', 0, weightAdjust / 2000 + 0.5)};
 `
 
 const Unit = styled.span`
   // Use cell right padding for units, aligning with icons
-  margin-right: -${({ theme }) => theme.spacing(2)};
-  padding-left: ${({ theme }) => theme.spacing(2)};
+  margin-right: -${({ theme }) => theme.spacing()};
+  padding-left: ${({ theme }) => theme.spacing()};
   font-family: 'plex-sans';
+  font-weight: 300;
+  font-size: 90%;
   width: ${({ theme }) => theme.spacing(4)};
   display: inline-block;
   text-align: left;
 `
 
-function FormatedNumber({ value, units, initialWeight = 0, children }) {
-  if (isNaN(value))
-    throw new Error(
-      `Non-numeric value passed to FormatedNumber (${value}, typeof "${typeof value}")`
-    )
-
-  //TODO: ditch "title" attr and use child node if present to render proper tooltip
-  const title = childrenToString(children)
-
-  if (value === 0)
+function FormatedNumber({ value, unit = '' }) {
+  if (parseInt(value) === 0) {
     return (
-      <span title={title}>
+      <NumWrapper>
         {0}
         <Unit />
-      </span>
+      </NumWrapper>
     )
-
-  const unitEntries = Object.entries(units).sort(
-    (a, b) => (a[1] > b[1] && -1) || a[1] < b[1]
-  )
-  const unitIndex = unitEntries.findIndex(([_, divider]) => value >= divider)
-  const [unit, divider] = unitEntries[unitIndex]
-
-  const formattedValue = `${(value / divider).toFixed(2)}`
-
-  const weightAdjust = (unitEntries.length - unitIndex) * 200
+  }
 
   return (
-    <NumWrapper
-      title={title}
-      weightAdjust={weightAdjust}
-      initialWeight={initialWeight}
-    >
-      {formattedValue}
+    <NumWrapper>
+      {value}
       <Unit>{unit}</Unit>
     </NumWrapper>
   )
 }
 
 FormatedNumber.propTypes = {
-  value: T.number.isRequired,
-  units: T.object.isRequired,
-  initialWeight: T.number,
-  children: T.any,
+  value: T.oneOfType([T.number, T.string]).isRequired,
+  unit: T.string,
 }
 
-function TimeNumber({ value, children }) {
-  // Makes miliseconds more readable
-
-  const ms = 1
-  const s = ms * 1000
-  const mins = s * 60
-  const hrs = mins * 60
-  const days = hrs * 24
-
-  return (
-    <FormatedNumber value={value} units={{ ms, s, mins, hrs, days }}>
-      {children}
-    </FormatedNumber>
-  )
+function TimeNumber({ value }) {
+  return <FormatedNumber value={value} unit="s" />
 }
 
 TimeNumber.propTypes = {
   value: T.number.isRequired,
-  children: T.any,
 }
 
-function DataNumber({ value, children }) {
-  const bytes = 1
-  const kb = bytes * 1000
-  const mb = kb * 1000
-  const gb = mb * 1000
-  const tb = gb * 1000
-
-  return (
-    <FormatedNumber value={value} units={{ bytes, kb, mb, gb, tb }}>
-      {children}
-    </FormatedNumber>
-  )
+function DataNumber({ value }) {
+  const [formattedValue, unit] = formatDataSize(value)
+  return <FormatedNumber value={formattedValue} unit={unit} />
 }
 
 DataNumber.propTypes = {
   value: T.number.isRequired,
-  children: T.any,
 }
 
 export { TimeNumber, DataNumber }

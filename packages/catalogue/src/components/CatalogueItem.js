@@ -61,7 +61,7 @@ const StyledHeaderInner = styled.span`
   padding: ${({ theme }) => theme.spacing()};
   display: inline-block;
   background: ${({ theme }) => theme.color('contrast', 1, 0.8)};
-  color: ${({ theme }) => theme.color('text', 2)};
+  color: ${({ theme }) => theme.color('text', 3)};
   line-height: 1em;
 `
 

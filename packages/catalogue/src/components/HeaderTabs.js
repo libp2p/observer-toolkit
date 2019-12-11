@@ -10,7 +10,6 @@ import samples from '@libp2p-observer/samples'
 
 const TabsWrapper = styled.div`
   display: flex;
-  height: 100%;
   padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
   font-weight: 700;
 `
@@ -35,7 +34,7 @@ const UnselectedTab = styled.div`
   margin: ${({ theme }) => `${theme.spacing()} ${theme.spacing()} 0`};
   background: ${({ theme }) => theme.color('secondary', 1)};
   padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
-  color: ${({ theme }) => theme.color('text', 2)};
+  color: ${({ theme }) => theme.color('text', 3)};
   border-radius: 6px 6px 0 0;
 `
 

@@ -6,6 +6,11 @@ function childrenToString(children) {
   if (!children) return ''
 }
 
+function copyToClipboard(text) {
+  // TODO: expand this and include a toast notice on success
+  navigator.clipboard.writeText(text)
+}
+
 // d3 data processors can fail very late if NaN or similar creep in.
 // Use this to fail early in memoised or non-perf-intensive functions.
 function validateNumbers(obj) {
@@ -20,4 +25,4 @@ function validateNumbers(obj) {
   if (errors.length) throw new Error(errors.join('\n\n '))
 }
 
-export { childrenToString, validateNumbers }
+export { childrenToString, copyToClipboard, validateNumbers }
