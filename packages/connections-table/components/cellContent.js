@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import StatusChip from './StatusChip'
 import {
+  formatDuration,
   Bubble,
   DataNumber,
   PeerId,
@@ -52,10 +53,11 @@ BytesContent.propTypes = {
 }
 
 function AgeContent({ value, maxValue }) {
+  const ageSeconds = Math.round(value / 1000)
   return (
-    <Tooltip content={<Nowrap>{value} seconds open</Nowrap>}>
+    <Tooltip content={<Nowrap>{formatDuration(value)}</Nowrap>}>
       <Nowrap>
-        <TimeNumber value={value} />
+        <TimeNumber value={ageSeconds} />
         <Bubble value={value} maxValue={maxValue} inline size={24} />
       </Nowrap>
     </Tooltip>
