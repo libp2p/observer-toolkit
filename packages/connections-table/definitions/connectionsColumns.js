@@ -1,7 +1,6 @@
 import {
-  getAge,
-  getTime,
-  getTraffic,
+  getConnectionAge,
+  getConnectionTraffic,
   statusNames,
   transportNames,
 } from '@libp2p-observer/data'
@@ -47,7 +46,7 @@ const dataInCol = {
   name: 'data-in',
   header: 'Data in',
   getProps: connection => ({
-    value: getTraffic(connection, 'in', 'bytes'),
+    value: getConnectionTraffic(connection, 'in', 'bytes'),
     label: 'inbound',
   }),
   renderContent: BytesContent,
@@ -58,7 +57,7 @@ const dataOutCol = {
   name: 'data-out',
   header: 'Data out',
   getProps: connection => ({
-    value: getTraffic(connection, 'out', 'bytes'),
+    value: getConnectionTraffic(connection, 'out', 'bytes'),
     label: 'outbound',
   }),
   renderContent: BytesContent,
@@ -69,11 +68,10 @@ const ageCol = {
   name: 'age',
   header: 'Time open',
   getProps: (connection, timepoint) => {
-    const time = getTime(timepoint)
-    const openTs = connection.getTimeline().getOpenTs()
-    const closeTs = connection.getTimeline().getCloseTs()
-    const age = getAge(time, openTs, closeTs)
-    return { value: age }
+    const age = getConnectionAge(connection, timepoint)
+    return {
+      value: age,
+    }
   },
   renderContent: AgeContent,
   sort: numericSorter,
