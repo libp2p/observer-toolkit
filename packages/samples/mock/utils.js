@@ -8,7 +8,7 @@ const DEFAULT_STREAMS = 10
 // This may need to become configurable, but that's not currently planned
 const SNAPSHOT_DURATION = 1000 // Miliseconds
 
-const DAY_IN_MS = 8.64e7
+const HOUR_IN_SECONDS = 3600
 const GIGABYTE_IN_BYTES = 1e9
 
 // TODO: Make this relative to a CLI arg
@@ -99,7 +99,7 @@ module.exports = {
   DEFAULT_FILE,
   DEFAULT_STREAMS,
   SNAPSHOT_DURATION,
-  DAY_IN_MS,
+  HOUR_IN_SECONDS,
   GIGABYTE_IN_BYTES,
   HOST_PEER_ID,
   OPEN_CLOSE_PROBABILITY,
