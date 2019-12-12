@@ -46,8 +46,8 @@ const TooltipContent = styled.div`
   white-space: nowrap;
 `
 
-function SelectedComponent({ viz, setSelected }) {
-  const { Component, name, description } = viz
+function SelectedWidget({ widget, setSelected }) {
+  const { Component, name, description } = widget
 
   const handleClose = () => setSelected(null)
 
@@ -76,12 +76,12 @@ function SelectedComponent({ viz, setSelected }) {
   )
 }
 
-SelectedComponent.propTypes = {
-  viz: T.shape({
+SelectedWidget.propTypes = {
+  widget: T.shape({
     Component: T.elementType.isRequired,
     name: T.string.isRequired,
     description: T.string,
   }),
 }
 
-export default SelectedComponent
+export default SelectedWidget

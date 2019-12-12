@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { RootNodeProvider } from '@libp2p-observer/sdk'
 import { ControlPanel } from '@libp2p-observer/shell'
 
-import approvedViz from '../definitions/approvedViz'
+import approvedWidgets from '../definitions/approvedWidgets'
 import CatalogueItem from './CatalogueItem'
 import HeaderTabs from './HeaderTabs'
-import SelectedComponent from './SelectedComponent'
+import SelectedWidget from './SelectedWidget'
 
 const HEADER_HEIGHT = '67px'
 
@@ -57,15 +57,15 @@ function Page() {
       <Main>
         {selected !== null && (
           <RootNodeProvider>
-            <SelectedComponent
-              viz={approvedViz[selected]}
+            <SelectedWidget
+              widget={approvedWidgets[selected]}
               setSelected={setSelected}
             />
           </RootNodeProvider>
         )}
         <RootNodeProvider>
           <CatalogueBkg>
-            {approvedViz.map(
+            {approvedWidgets.map(
               ({ name, description, tags, screenshot }, index) => (
                 <CatalogueItem
                   key={name}
