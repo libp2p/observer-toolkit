@@ -1,7 +1,7 @@
 import React from 'react'
 
 const SvgPeerId = props => (
-  <svg width={32} height={32} {...props}>
+  <svg {...props}>
     <path
       fill="#CC214A"
       d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
