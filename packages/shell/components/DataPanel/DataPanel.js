@@ -40,10 +40,6 @@ const IconContainer = styled.span`
   margin-right: ${({ theme }) => theme.spacing(0.5)};
 `
 
-const TooltipContent = styled.div`
-  color: ${({ theme }) => theme.color('text', 1)};
-`
-
 function DataPanel({ metadata = {} }) {
   const runtime = useContext(RuntimeContext)
   const peerId = runtime.getPeerId()
