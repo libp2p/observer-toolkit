@@ -2,11 +2,13 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
+import PeerAvatar from './PeerAvatar'
 import PeerIdTooltip from './PeerIdTooltip'
 
 const TruncatedPeerId = styled.span`
   font-family: plex-mono;
   display: inline-block;
+  white-space: nowrap;
 `
 
 function PeerId({ peerId }) {
@@ -15,7 +17,10 @@ function PeerId({ peerId }) {
 
   return (
     <PeerIdTooltip peerId={peerId} truncationLength={truncationLength}>
-      <TruncatedPeerId>{'…' + truncatedId}</TruncatedPeerId>
+      <TruncatedPeerId>
+        <PeerAvatar peerId={peerId} />
+        {truncatedId}
+      </TruncatedPeerId>
     </PeerIdTooltip>
   )
 }
