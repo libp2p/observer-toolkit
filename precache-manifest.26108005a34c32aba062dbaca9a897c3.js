@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "609b107ec073bf86f9fd14cdf2512933",
+    "revision": "e1d363e5749a732b91229c70404b1ed8",
     "url": "/libp2p-introspection-ui/index.html"
   },
   {
-    "revision": "0249fee22f7b44e3bb85",
+    "revision": "db6fbbf7835f98824130",
     "url": "/libp2p-introspection-ui/static/css/main.34de6062.chunk.css"
   },
   {
-    "revision": "0779ca99996248279285",
-    "url": "/libp2p-introspection-ui/static/js/2.4a415845.chunk.js"
+    "revision": "60d7e0b62826e102caae",
+    "url": "/libp2p-introspection-ui/static/js/2.c07f3fea.chunk.js"
   },
   {
-    "revision": "0249fee22f7b44e3bb85",
-    "url": "/libp2p-introspection-ui/static/js/main.5a393953.chunk.js"
+    "revision": "db6fbbf7835f98824130",
+    "url": "/libp2p-introspection-ui/static/js/main.673968db.chunk.js"
   },
   {
     "revision": "ff936227d0a54eee45c2",
@@ -68,8 +68,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/libp2p-introspection-ui/static/media/Nexa-Light.5c6f5c99.otf"
   },
   {
-    "revision": "10cddc234d793517721dab8631078678",
-    "url": "/libp2p-introspection-ui/static/media/sample.10cddc23.mock"
+    "revision": "c27147b2b1de9c40af0f28bab376cfb4",
+    "url": "/libp2p-introspection-ui/static/media/sample-1min.c27147b2.mock"
   },
   {
     "revision": "3a5301f87ed750dd69aac1cd8fab13d3",
