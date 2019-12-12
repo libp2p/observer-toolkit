@@ -18,13 +18,13 @@ const SegmentedPeerId = styled.div`
 `
 
 const Positioner = styled.div`
-  top: -${({ theme }) => theme.spacing(2)};
+  top: -${({ theme }) => theme.spacing(2, true)}px;
   transform: none;
   cursor: default;
 `
 
 const Tick = styled.div`
-  top: ${({ theme }) => theme.spacing(3)};
+  top: ${({ theme, tickSize }) => theme.spacing(2.5, true) + tickSize}px;
 `
 
 function PeerIdTooltip({ peerId, children, override = {} }) {

@@ -47,7 +47,16 @@ const color = (col, val = 0, alpha) => {
   return alpha ? `rgba(${rgb}, ${alpha})` : `rgb(${rgb})`
 }
 
-const spacing = (num = 1) => `${num * 8}px`
+const spacingPx = 8
+const spacing = (value = 1, returnNum = false) => {
+  if (Array.isArray(value)) {
+    const values = value.map(num => spacing(num, returnNum))
+    return returnNum ? values : values.join(' ')
+  }
+
+  const size = value * spacingPx
+  return returnNum ? size : `${size}px`
+}
 
 const typography = {
   default: `
