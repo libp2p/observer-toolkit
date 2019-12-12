@@ -6,6 +6,7 @@ const StyledButton = styled.button`
   z-index: 5;
   cursor: pointer;
   font-weight: bold;
+  white-space: nowrap;
   &:focus {
     outline: none;
   }
