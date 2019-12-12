@@ -45,7 +45,8 @@ function Bubble({
   colorIndex = 0,
   override = {},
 }) {
-  const percentOfSize = (value / maxValue) * 100
+  // Make _area_ of circle relative to value
+  const percentOfSize = Math.sqrt(value / maxValue) * 100
   return (
     <Container size={size} inline={inline} as={override.Container}>
       <BubbleShape
