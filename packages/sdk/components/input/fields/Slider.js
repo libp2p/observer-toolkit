@@ -50,8 +50,8 @@ const Control = styled.div`
   border: 2px solid ${({ theme }) => theme.color('background', 2)};
   background: ${({ theme }) => theme.color('primary')};
   text-align: center;
-  box-shadow: 0px 1px 2px ${({ theme }) => theme.color('contrast', 0, 0.5)};
   cursor: col-resize;
+  ${({ theme }) => theme.boxShadow()}
   ${({ isLower }) => isLower && `margin-left: 2px;`}
   ${({ isUpper, width }) => isUpper && `margin-left: ${width - 2}px;`}
 `

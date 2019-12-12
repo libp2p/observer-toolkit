@@ -34,14 +34,6 @@ function getTickPosition(direction, tickSize) {
   return getPosition(direction, `-${tickSize * 2}px`)
 }
 
-function getBoxShadow(theme, weight) {
-  return `box-shadow: 0 ${theme.spacing(0.5)} ${theme.spacing()} ${theme.color(
-    'contrast',
-    0,
-    weight
-  )};`
-}
-
 function updateOffset(positionerRef, tickRef, containerRef, tolerance) {
   if (!positionerRef.current || !tickRef.current || !containerRef.current)
     return
@@ -90,7 +82,7 @@ const Target = styled.span`
     clickToFix &&
     `
     cursor: pointer;
-    ${isFixed && getBoxShadow(theme, 0.2)}
+    ${isFixed && theme.boxShadow()}
   `}
 `
 
@@ -109,7 +101,7 @@ const Content = styled.div`
   text-align: left;
   padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
   background: ${({ theme, getColor }) => getColor(theme)};
-  ${({ theme, isFixed }) => getBoxShadow(theme, isFixed ? 0.5 : 0.3)}
+  ${({ theme, isFixed }) => theme.boxShadow({ opacity: isFixed ? 0.4 : 0.2 })}
 `
 
 const Tick = styled.div`

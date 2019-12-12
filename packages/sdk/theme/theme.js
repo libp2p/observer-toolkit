@@ -107,6 +107,16 @@ const text = (elem, size, rgb) => {
   `
 }
 
+const boxShadow = ({
+  size = 1,
+  colorKey = 'contrast',
+  colorIndex = 0,
+  opacity = 0.2,
+} = {}) => {
+  const shadowColor = color(colorKey, colorIndex, opacity)
+  return `box-shadow: 0 ${spacing(0.5 * size)} ${spacing(size)} ${shadowColor};`
+}
+
 const tableCell = `
   ${text('label', 'medium')}
   padding-top: ${spacing()};
@@ -116,4 +126,4 @@ const tableCell = `
   text-align: right;
 `
 
-export default { color, spacing, text, styles: { tableCell } }
+export default { color, spacing, text, boxShadow, styles: { tableCell } }

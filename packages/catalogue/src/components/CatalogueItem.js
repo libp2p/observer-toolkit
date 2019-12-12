@@ -21,8 +21,7 @@ const CatalogueCard = styled.div`
     width: calc(25% - ${({ theme }) => theme.spacing(4)});
   }
   margin: ${({ theme }) => `${theme.spacing(2)}`};
-  box-shadow: ${({ theme: { color, spacing } }) =>
-    `0 0 ${spacing(2)} ${color('contrast', 0, 0.2)}`};
+  ${({ theme }) => theme.boxShadow()}
   ${({ theme, isSelected }) =>
     isSelected && `border: 4px solid ${theme.color('primary')};`}
 `
