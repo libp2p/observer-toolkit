@@ -23,7 +23,8 @@ const Container = styled.div`
 `
 
 const Main = styled.div`
-  background-color: ${({ theme }) => theme.color('background')};
+  padding: ${({ theme }) => theme.spacing()};
+  background-color: ${({ theme }) => theme.color('background', 1)};
   overflow-y: scroll;
   flex-grow: 1;
   flex-shrink: 1;
@@ -56,7 +57,10 @@ function Page() {
       <Main>
         {selected !== null && (
           <RootNodeProvider>
-            <SelectedComponent viz={approvedViz[selected]} />
+            <SelectedComponent
+              viz={approvedViz[selected]}
+              setSelected={setSelected}
+            />
           </RootNodeProvider>
         )}
         <RootNodeProvider>
