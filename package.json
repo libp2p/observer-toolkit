@@ -9,9 +9,10 @@
   ],
   "scripts": {
     "deploy:catalogue": "lerna exec --scope=\"@libp2p-observer/catalogue\" -- npm run deploy",
-    "local-publish": "npx lerna publish --no-git-tag-version --no-push --registry=\"http://localhost:4873/\"",
-    "local-unpublish": "npx lerna exec -- npm unpublish --registry=\"http://localhost:4873/\" \"\\${LERNA_PACKAGE_NAME}@\\$(npm view \\$LERNA_PACKAGE_NAME version)\"",
-    "local-unpublish-all": "npx lerna exec -- npm unpublish -f --registry=\"http://localhost:4873/\" \"\\${LERNA_PACKAGE_NAME}\"",
+    "generate-icons": "lerna run --scope=\"@libp2p-observer/sdk\" svgr-icons",
+    "local-publish": "lerna publish --no-git-tag-version --no-push --registry=\"http://localhost:4873/\"",
+    "local-unpublish": "lerna exec -- npm unpublish --registry=\"http://localhost:4873/\" \"\\${LERNA_PACKAGE_NAME}@\\$(npm view \\$LERNA_PACKAGE_NAME version)\"",
+    "local-unpublish-all": "lerna exec -- npm unpublish -f --registry=\"http://localhost:4873/\" \"\\${LERNA_PACKAGE_NAME}\"",
     "lint": "eslint . --ext .js",
     "lint-fix": "eslint . --ext .js --fix",
     "mock-file": "lerna exec --scope=\"@libp2p-observer/samples\" -- npm run mock-file --",
