@@ -1,7 +1,6 @@
 import {
-  getAge,
-  getTime,
-  getTraffic,
+  getConnectionAge,
+  getConnectionTraffic,
   statusNames,
   transportNames,
 } from '@libp2p-observer/data'
@@ -46,9 +45,10 @@ const peerIdCol = {
 const dataInCol = {
   name: 'data-in',
   header: 'Data in',
-  getProps: connection => ({
-    value: getTraffic(connection, 'in', 'bytes'),
-    label: 'inbound',
+  getProps: (connection, _, metadata) => ({
+    value: getConnectionTraffic(connection, 'in', 'bytes'),
+    maxValue: metadata.maxTraffic,
+    colorKey: 'primary',
   }),
   renderContent: BytesContent,
   sort: numericSorter,
@@ -57,9 +57,10 @@ const dataInCol = {
 const dataOutCol = {
   name: 'data-out',
   header: 'Data out',
-  getProps: connection => ({
-    value: getTraffic(connection, 'out', 'bytes'),
-    label: 'outbound',
+  getProps: (connection, _, metadata) => ({
+    value: getConnectionTraffic(connection, 'out', 'bytes'),
+    maxValue: metadata.maxTraffic,
+    colorKey: 'secondary',
   }),
   renderContent: BytesContent,
   sort: numericSorter,
@@ -68,12 +69,12 @@ const dataOutCol = {
 const ageCol = {
   name: 'age',
   header: 'Time open',
-  getProps: (connection, timepoint) => {
-    const time = getTime(timepoint)
-    const openTs = connection.getTimeline().getOpenTs()
-    const closeTs = connection.getTimeline().getCloseTs()
-    const age = getAge(time, openTs, closeTs)
-    return { value: age }
+  getProps: (connection, timepoint, metadata) => {
+    const age = getConnectionAge(connection, timepoint)
+    return {
+      value: age,
+      maxValue: metadata.maxAge,
+    }
   },
   renderContent: AgeContent,
   sort: numericSorter,

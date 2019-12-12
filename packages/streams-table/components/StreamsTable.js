@@ -12,7 +12,7 @@ function StreamsTable() {
 
   const {
     columnDefs,
-    tableContentProps,
+    contentProps,
     sortColumn,
     setSortColumn,
     sortDirection,
@@ -25,7 +25,7 @@ function StreamsTable() {
 
   return (
     <DataTable
-      tableContentProps={tableContentProps}
+      contentProps={contentProps}
       columnDefs={columnDefs}
       sortColumn={sortColumn}
       setSortColumn={setSortColumn}

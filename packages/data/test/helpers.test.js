@@ -12,7 +12,7 @@ const samplesPath = require.resolve('@libp2p-observer/samples')
 const sampleFilePath = path.resolve(
   path.dirname(samplesPath),
   'samples',
-  'sample.mock'
+  'sample-1min.mock'
 )
 
 const { parseImport } = require('../lib/binary')
@@ -21,7 +21,7 @@ const {
   getAllConnections,
   getConnections,
   getAllStreamsAtTime,
-  getTraffic,
+  getConnectionTraffic,
   getLatestTimepoint,
   getTime,
   getTimeIndex,
@@ -109,19 +109,19 @@ test('Test stream getters', t => {
 test('Test traffic getters', t => {
   const allConnections = getAllConnections(states)
   for (const connection of allConnections) {
-    const bytesIn = getTraffic(connection, 'in', 'bytes')
+    const bytesIn = getConnectionTraffic(connection, 'in', 'bytes')
     t.type(bytesIn, 'number')
     t.ok(bytesIn >= 0)
 
-    const bytesOut = getTraffic(connection, 'out', 'bytes')
+    const bytesOut = getConnectionTraffic(connection, 'out', 'bytes')
     t.type(bytesOut, 'number')
     t.ok(bytesOut >= 0)
 
-    const packetsIn = getTraffic(connection, 'in', 'packets')
+    const packetsIn = getConnectionTraffic(connection, 'in', 'packets')
     t.type(packetsIn, 'number')
     t.ok(packetsIn >= 0)
 
-    const packetsOut = getTraffic(connection, 'out', 'packets')
+    const packetsOut = getConnectionTraffic(connection, 'out', 'packets')
     t.type(packetsOut, 'number')
     t.ok(packetsOut >= 0)
   }

@@ -26,6 +26,7 @@ const { argv } = require('yargs').options({
 const { createWriteStream } = require('fs')
 
 const {
+  DEFAULT_STREAMS,
   DEFAULT_CONNECTIONS,
   DEFAULT_DURATION,
   DEFAULT_FILE,
@@ -33,11 +34,19 @@ const {
 const generate = require('./generate')
 
 const {
+  streams: streamsCount = DEFAULT_STREAMS,
   connections: connectionsCount = DEFAULT_CONNECTIONS,
   duration: durationSeconds = DEFAULT_DURATION,
   file,
 } = argv
 const filePath = file === '' ? DEFAULT_FILE : null
+
+if (filePath) {
+  console.log(`
+    Writing to ${filePath}.
+    ${durationSeconds} seconds, ${connectionsCount} initial connections of ~${streamsCount} streams.
+  `)
+}
 
 const bufferSegments = generate(connectionsCount, durationSeconds)
 

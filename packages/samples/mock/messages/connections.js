@@ -9,7 +9,7 @@ const {
 
 const {
   HOST_PEER_ID,
-  DAY_IN_MS,
+  HOUR_IN_SECONDS,
   DEFAULT_STREAMS,
   decodeBinToNum,
   encodeNumToBin,
@@ -171,17 +171,17 @@ function updateConnection(connection, now) {
 }
 
 function mockConnectionActivity(connection, now) {
-  const msSinceOpening = Math.round(
+  const msOpen = Math.round(
     randomNormalDistribution({
       min: 1,
-      max: 1.6 * DAY_IN_MS,
-      skew: 12, // Mean around 4 minutes
+      max: 2 * HOUR_IN_SECONDS * 1000,
+      skew: 7, // Mean 4 mins
     })
   )
 
   const status = connection.getStatus()
 
-  const open = now - msSinceOpening
+  const open = now - msOpen
   const close = mockCloseTimeByStatus(status, open, now)
 
   const timeline = connection.getTimeline()
@@ -189,7 +189,7 @@ function mockConnectionActivity(connection, now) {
 
   addStreamsToConnection(connection, {
     status,
-    secondsOpen: msSinceOpening / 1000,
+    secondsOpen: msOpen / 1000,
     now,
   })
 

@@ -10,10 +10,10 @@ function mapSorterToColumn(colName, columnDefs) {
   return row => row[sortColumnIndex].value
 }
 
-function getTableContentProps(data, columnDefs, timepoint) {
+function getContentProps(data, columnDefs, timepoint, metadata) {
   return data.map((datum, rowIndex) =>
     columnDefs.map((columnDef, columnIndex) => ({
-      ...columnDef.getProps(datum, timepoint),
+      ...columnDef.getProps(datum, timepoint, metadata),
       rowIndex,
       columnIndex,
       columnName: columnDef.name,
@@ -35,14 +35,14 @@ function applyColumnDefaults(columns) {
   )
 }
 
-function applyCalculations(columns, rawContentProps) {
+function applyCalculations(columns, rawContentProps, metadata) {
   return columns.map((column, columnIndex) => {
     if (!column.calculate) return column
     const columnProps = rawContentProps.map(row => row[columnIndex])
 
     const calculated = Object.entries(column.calculate).reduce(
       (calculated, [key, doCalc]) => {
-        calculated[key] = doCalc(columnProps)
+        calculated[key] = doCalc(columnProps, metadata)
         return calculated
       },
       {}
@@ -70,17 +70,27 @@ function getInitialSortDef(sortColumn, columnDefs) {
   }
 }
 
-function useTabularData({ columns, data, defaultSort, defaultFilter }) {
+function useTabularData({
+  columns,
+  data,
+  defaultSort,
+  defaultFilter,
+  metadata = {},
+}) {
   const [sortColumn, setSortColumn] = useState(defaultSort)
   const timepoint = useContext(TimeContext)
 
   const columnsWithDefaults = applyColumnDefaults(columns)
 
   const rawContentProps = useMemo(() => {
-    return getTableContentProps(data, columnsWithDefaults, timepoint)
-  }, [data, columnsWithDefaults, timepoint])
+    return getContentProps(data, columnsWithDefaults, timepoint, metadata)
+  }, [data, columnsWithDefaults, timepoint, metadata])
 
-  const columnDefs = applyCalculations(columnsWithDefaults, rawContentProps)
+  const columnDefs = applyCalculations(
+    columnsWithDefaults,
+    rawContentProps,
+    metadata
+  )
 
   const { sorter, sortDirection, setSortDirection } = useSorter(
     getInitialSortDef(sortColumn, columnDefs)
@@ -116,7 +126,7 @@ function useTabularData({ columns, data, defaultSort, defaultFilter }) {
       })
   })
 
-  const tableContentProps = useMemo(() => {
+  const contentProps = useMemo(() => {
     const filteredContentProps = rawContentProps.filter(applyFilters)
     filteredContentProps.sort(sorter)
     return filteredContentProps
@@ -124,7 +134,7 @@ function useTabularData({ columns, data, defaultSort, defaultFilter }) {
 
   return {
     columnDefs,
-    tableContentProps,
+    contentProps,
     sortColumn,
     setSortColumn,
     sortDirection,
@@ -155,6 +165,7 @@ useTabularData.propTypes = {
   data: T.arrayOf(T.object).isRequired,
   defaultSort: T.string,
   defaultFilter: T.obj,
+  metadata: T.obj,
 }
 
 export default useTabularData

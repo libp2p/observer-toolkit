@@ -2,12 +2,6 @@
 
 // Convenience functions for extracting data from decoded protobuf
 
-function getAge(time, openTs, closeTs) {
-  if (!openTs) return 0
-  const endTime = closeTs ? closeTs.getSeconds() : time
-  return endTime - openTs.getSeconds()
-}
-
 // Gets the first (or latest) occurence of each connection that exists in a data set, with optional filter
 function getAllConnections(timepoints, { filter, latest = false } = {}) {
   const test = testConnection => !filter || filter(testConnection)
@@ -89,17 +83,38 @@ function getTimeIndex(timepoints, time) {
   }
 }
 
-function getTraffic(connection, direction, type) {
+function _getAge(timeline, timepoint) {
+  const openTs = timeline.getOpenTs()
+  if (!openTs) return 0
+
+  const closeTs = timeline.getCloseTs()
+  const endTime = closeTs ? closeTs.getSeconds() : getTime(timepoint)
+  return endTime - openTs.getSeconds()
+}
+
+function getConnectionAge(connection, timepoint) {
+  return _getAge(connection.getTimeline(), timepoint)
+}
+
+function getStreamAge(stream, timepoint) {
+  return _getAge(stream.getTimeline(), timepoint)
+}
+
+function _getTraffic(traffic, direction, type) {
   const byDirection = `getTraffic${direction === 'in' ? 'In' : 'Out'}`
   const byType = `getCum${type === 'bytes' ? 'Bytes' : 'Packets'}`
-  return connection
-    .getTraffic()
-    [byDirection]()
-    [byType]()
+  return traffic[byDirection]()[byType]()
+}
+
+function getConnectionTraffic(connection, direction, type) {
+  return _getTraffic(connection.getTraffic(), direction, type)
+}
+
+function getStreamTraffic(stream, direction, type) {
+  return _getTraffic(stream.getTraffic(), direction, type)
 }
 
 module.exports = {
-  getAge,
   getAllConnections,
   getAllStreamsAtTime,
   getConnections,
@@ -107,5 +122,8 @@ module.exports = {
   getLatestTimepoint,
   getTime,
   getTimeIndex,
-  getTraffic,
+  getConnectionAge,
+  getStreamAge,
+  getConnectionTraffic,
+  getStreamTraffic,
 }

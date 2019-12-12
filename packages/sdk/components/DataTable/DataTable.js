@@ -6,7 +6,7 @@ import DefaultDataTableHead from './DataTableHead'
 import { Table, THead, THeadRow, TBody } from './styledTable'
 
 function DataTable({
-  tableContentProps,
+  contentProps,
   columnDefs,
   sortColumn,
   setSortColumn,
@@ -34,7 +34,7 @@ function DataTable({
         </THeadRow>
       </THead>
       <TBody as={override.TBody}>
-        {tableContentProps.map((rowContentProps, rowIndex) => (
+        {contentProps.map((rowContentProps, rowIndex) => (
           <DataTableRow
             key={`row_${rowIndex}`}
             rowContentProps={rowContentProps}
@@ -47,8 +47,9 @@ function DataTable({
 }
 
 DataTable.propTypes = {
-  tableContentProps: T.array.isRequired,
+  contentProps: T.array.isRequired,
   columnDefs: T.array.isRequired,
+  columnMetadata: T.array,
   TableRow: T.any,
   TableHead: T.any,
   sortColumn: T.string,

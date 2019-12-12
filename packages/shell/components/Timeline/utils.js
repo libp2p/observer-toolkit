@@ -2,7 +2,7 @@ import {
   getAllConnections,
   getConnections,
   getTime,
-  getTraffic,
+  getConnectionTraffic,
 } from '@libp2p-observer/data'
 import { validateNumbers } from '@libp2p-observer/sdk'
 
@@ -46,7 +46,7 @@ function getTrafficChangesByPeer(direction) {
             let bytes = 0
 
             if (connection) {
-              bytes = getTraffic(connection, direction, 'bytes')
+              bytes = getConnectionTraffic(connection, direction, 'bytes')
 
               // Use only those bytes added in this time point
               // Can't get bytes added first to previous, so skip it
@@ -55,7 +55,7 @@ function getTrafficChangesByPeer(direction) {
                 conn => conn.getPeerId() === peerId
               )
               if (previousConn) {
-                bytes -= getTraffic(previousConn, direction, 'bytes')
+                bytes -= getConnectionTraffic(previousConn, direction, 'bytes')
               }
             }
 
@@ -72,8 +72,8 @@ function getTrafficChangesByPeer(direction) {
 }
 
 function getTotalTraffic(connection) {
-  const dataIn = getTraffic(connection, 'in', 'bytes')
-  const dataOut = getTraffic(connection, 'out', 'bytes')
+  const dataIn = getConnectionTraffic(connection, 'in', 'bytes')
+  const dataOut = getConnectionTraffic(connection, 'out', 'bytes')
   validateNumbers(dataIn, dataOut)
   return dataIn + dataOut
 }

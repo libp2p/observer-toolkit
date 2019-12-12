@@ -9,7 +9,7 @@ const {
   getConnections,
   getEnumByName,
   getLatestTimepoint,
-  getTraffic,
+  getConnectionTraffic,
   statusNames,
 } = require('@libp2p-observer/data')
 
@@ -46,19 +46,35 @@ test('Open connections increase traffic', t => {
   for (const connectionAtStart of openConnections) {
     const connectionId = connectionAtStart.getId().toString()
 
-    const startBytesIn = getTraffic(connectionAtStart, 'in', 'bytes')
-    const startBytesOut = getTraffic(connectionAtStart, 'out', 'bytes')
-    const startPacketsIn = getTraffic(connectionAtStart, 'in', 'packets')
-    const startPacketsOut = getTraffic(connectionAtStart, 'out', 'packets')
+    const startBytesIn = getConnectionTraffic(connectionAtStart, 'in', 'bytes')
+    const startBytesOut = getConnectionTraffic(
+      connectionAtStart,
+      'out',
+      'bytes'
+    )
+    const startPacketsIn = getConnectionTraffic(
+      connectionAtStart,
+      'in',
+      'packets'
+    )
+    const startPacketsOut = getConnectionTraffic(
+      connectionAtStart,
+      'out',
+      'packets'
+    )
 
     const connectionAtEnd = lastConnectionsList.find(
       connection => connection.getId().toString() === connectionId
     )
 
-    const endBytesIn = getTraffic(connectionAtEnd, 'in', 'bytes')
-    const endBytesOut = getTraffic(connectionAtEnd, 'out', 'bytes')
-    const endPacketsIn = getTraffic(connectionAtEnd, 'in', 'packets')
-    const endPacketsOut = getTraffic(connectionAtEnd, 'out', 'packets')
+    const endBytesIn = getConnectionTraffic(connectionAtEnd, 'in', 'bytes')
+    const endBytesOut = getConnectionTraffic(connectionAtEnd, 'out', 'bytes')
+    const endPacketsIn = getConnectionTraffic(connectionAtEnd, 'in', 'packets')
+    const endPacketsOut = getConnectionTraffic(
+      connectionAtEnd,
+      'out',
+      'packets'
+    )
 
     t.ok(endBytesIn > startBytesIn, `${endBytesIn} > ${startBytesIn}`)
     t.ok(endBytesOut > startBytesOut, `${endBytesOut} > ${startBytesOut}`)
@@ -80,19 +96,35 @@ test('Closed connections have static traffic', t => {
   for (const connectionAtStart of closedConnections) {
     const connectionId = connectionAtStart.getId().toString()
 
-    const startBytesIn = getTraffic(connectionAtStart, 'in', 'bytes')
-    const startBytesOut = getTraffic(connectionAtStart, 'out', 'bytes')
-    const startPacketsIn = getTraffic(connectionAtStart, 'in', 'packets')
-    const startPacketsOut = getTraffic(connectionAtStart, 'out', 'packets')
+    const startBytesIn = getConnectionTraffic(connectionAtStart, 'in', 'bytes')
+    const startBytesOut = getConnectionTraffic(
+      connectionAtStart,
+      'out',
+      'bytes'
+    )
+    const startPacketsIn = getConnectionTraffic(
+      connectionAtStart,
+      'in',
+      'packets'
+    )
+    const startPacketsOut = getConnectionTraffic(
+      connectionAtStart,
+      'out',
+      'packets'
+    )
 
     const connectionAtEnd = lastConnectionsList.find(
       connection => connection.getId().toString() === connectionId
     )
 
-    const endBytesIn = getTraffic(connectionAtEnd, 'in', 'bytes')
-    const endBytesOut = getTraffic(connectionAtEnd, 'out', 'bytes')
-    const endPacketsIn = getTraffic(connectionAtEnd, 'in', 'packets')
-    const endPacketsOut = getTraffic(connectionAtEnd, 'out', 'packets')
+    const endBytesIn = getConnectionTraffic(connectionAtEnd, 'in', 'bytes')
+    const endBytesOut = getConnectionTraffic(connectionAtEnd, 'out', 'bytes')
+    const endPacketsIn = getConnectionTraffic(connectionAtEnd, 'in', 'packets')
+    const endPacketsOut = getConnectionTraffic(
+      connectionAtEnd,
+      'out',
+      'packets'
+    )
 
     t.equals(endBytesIn, startBytesIn, `${endBytesIn} > ${startBytesIn}`)
     t.equals(endBytesOut, startBytesOut, `${endBytesOut} > ${startBytesOut}`)

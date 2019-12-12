@@ -18,7 +18,7 @@ function RootNodeProvider({ children }) {
   const [refState, setRefState] = useState({})
   useEffect(() => {
     if (rootNodeRef.current && !refState.current) setRefState(rootNodeRef)
-  })
+  }, [refState])
 
   return (
     <Container ref={rootNodeRef}>

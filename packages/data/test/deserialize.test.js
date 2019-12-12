@@ -8,7 +8,7 @@ const samplesPath = require.resolve('@libp2p-observer/samples')
 const sampleFilePath = path.resolve(
   path.dirname(samplesPath),
   'samples',
-  'sample.mock'
+  'sample-1min.mock'
 )
 
 const { parseImport } = require('../lib/binary')
