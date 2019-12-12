@@ -1,7 +1,6 @@
 'use strict'
 
 const { argv } = require('yargs')
-const { createHash } = require('crypto')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 const {
   proto: { Connection, EndpointPair, StreamList },
@@ -17,6 +16,7 @@ const {
   randomNormalDistribution,
   randomLatency,
   randomOpenClose,
+  generateHashId,
 } = require('../utils')
 const { createTraffic, sumTraffic } = require('../messages/traffic')
 const {
@@ -174,8 +174,8 @@ function mockConnectionActivity(connection, now) {
   const msOpen = Math.round(
     randomNormalDistribution({
       min: 1,
-      max: 2 * HOUR_IN_SECONDS * 1000,
-      skew: 7, // Mean 4 mins
+      max: HOUR_IN_SECONDS * 1000,
+      skew: 6, // Mean 2 mins
     })
   )
 
@@ -216,13 +216,6 @@ function getTransportFromConnection(connection) {
   // In real LibP2P, transports are stored on the swarm
   // How to preserve refs to transports across restarts is unresolved
   return transportList.getItem(decodeBinToNum(connection.getTransportId()))
-}
-
-function generateHashId() {
-  const randomNumber = Math.pow(0.5 / random(), 5 / random())
-  return createHash('sha256')
-    .update(randomNumber.toString())
-    .digest('hex')
 }
 
 module.exports = {
