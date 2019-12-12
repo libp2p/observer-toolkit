@@ -27,7 +27,7 @@ function getColors(peerId) {
 }
 
 // SVG src in theme/graphics-src
-function PeerAvatar({ peerId, ...props }) {
+function PeerIdAvatar({ peerId, ...props }) {
   const colors = useMemo(() => getColors(peerId), [peerId])
 
   return (
@@ -68,8 +68,8 @@ function PeerAvatar({ peerId, ...props }) {
   )
 }
 
-PeerAvatar.propTypes = {
+PeerIdAvatar.propTypes = {
   peerId: T.string,
 }
 
-export default PeerAvatar
+export default PeerIdAvatar

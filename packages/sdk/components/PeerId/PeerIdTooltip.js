@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import Tooltip from '../Tooltip'
 import StyledButton from '../input/StyledButton'
+import { getTruncatedPeerId } from './utils'
 import { RootNodeContext } from '../context/RootNodeProvider'
 import { copyToClipboard } from '../../utils/helpers'
 
@@ -11,18 +12,22 @@ const SegmentedPeerId = styled.div`
   padding-top: ${({ theme }) => theme.spacing()};
   font-family: plex-mono;
   font-size: 9pt;
+  color: ${({ theme }) => theme.color('text', 1)};
+  cursor: text;
+  user-select: text;
 `
 
 const Positioner = styled.div`
   top: -${({ theme }) => theme.spacing(2)};
   transform: none;
+  cursor: default;
 `
 
 const Tick = styled.div`
   top: ${({ theme }) => theme.spacing(3)};
 `
 
-function PeerIdTooltip({ peerId, children }) {
+function PeerIdTooltip({ peerId, children, override = {} }) {
   const [isCopied, setIsCopied] = useState(false)
   const rootNodeRef = useContext(RootNodeContext)
 
@@ -44,20 +49,26 @@ function PeerIdTooltip({ peerId, children }) {
   }
 
   const copyButtonText = isCopied
-    ? `COPIED "${peerId.slice(0, 4)}…"`
+    ? `Copied "…${getTruncatedPeerId(peerId)}"`
     : 'COPY PEER ID'
 
   return (
     <Tooltip
       side="right"
       containerRef={rootNodeRef}
-      override={{ Positioner, Tick }}
+      override={{ Positioner, Tick, ...override }}
       content={
         <>
-          <StyledButton isActive={isCopied} onClick={copyPeerId}>
+          <StyledButton
+            isActive={isCopied}
+            onClick={copyPeerId}
+            as={override.StyledButton}
+          >
             {copyButtonText}
           </StyledButton>
-          <SegmentedPeerId>{peerIdSegments}</SegmentedPeerId>
+          <SegmentedPeerId as={override.StyledButton}>
+            {peerIdSegments}
+          </SegmentedPeerId>
         </>
       }
     >

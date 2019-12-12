@@ -2,7 +2,13 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import T from 'prop-types'
 
-import { RuntimeContext, Icon, PeerId } from '@libp2p-observer/sdk'
+import {
+  RuntimeContext,
+  Icon,
+  PeerIdAvatar,
+  PeerIdTooltip,
+  PeerIdTruncated,
+} from '@libp2p-observer/sdk'
 import DataTypeControl from './DataTypeControl'
 
 const DataPanelItem = styled.button`
@@ -14,15 +20,28 @@ const DataPanelItem = styled.button`
   padding: ${({ theme }) => theme.spacing(0.5)};
   text-align: left;
   cursor: pointer;
-  ${({ theme }) => theme.text('label', 'small')} :hover {
+  margin: 2px 0;
+  ${({ theme }) => theme.text('label', 'small')} :focus {
+    outline: none;
+  }
+  :hover {
     background: ${({ theme }) => theme.color('contrast', 2)};
   }
-  margin: 2px 0;
+  ${({ theme, isFixed }) =>
+    isFixed &&
+    `
+    background: ${theme.color('contrast', 2, 0.5)};
+    ${theme.boxShadow({ opacity: 0.4 })}
+  `}
 `
 
 const IconContainer = styled.span`
   margin-left: ${({ theme }) => theme.spacing(0.5)};
   margin-right: ${({ theme }) => theme.spacing(0.5)};
+`
+
+const TooltipContent = styled.div`
+  color: ${({ theme }) => theme.color('text', 1)};
 `
 
 function DataPanel({ metadata = {} }) {
@@ -45,9 +64,16 @@ function DataPanel({ metadata = {} }) {
         </IconContainer>
         Export data
       </DataPanelItem>
-      <DataPanelItem>
-        Peer Id: <PeerId peerId={peerId} />
-      </DataPanelItem>
+      <PeerIdTooltip peerId={peerId} override={{ Target: DataPanelItem }}>
+        <IconContainer>
+          <Icon type="marker" />
+        </IconContainer>
+        Peer id —
+        <IconContainer>
+          <PeerIdAvatar peerId={peerId} />
+        </IconContainer>
+        <PeerIdTruncated peerId={peerId} />
+      </PeerIdTooltip>
       <DataPanelItem>
         <IconContainer>
           <Icon type="forward" />
