@@ -12,9 +12,14 @@ const SegmentedPeerId = styled.div`
   padding-top: ${({ theme }) => theme.spacing()};
   font-family: plex-mono;
   font-size: 9pt;
+  font-weight: 300;
   color: ${({ theme }) => theme.color('text', 1)};
   cursor: text;
   user-select: text;
+`
+
+const LastSegment = styled.span`
+  font-weight: 500;
 `
 
 const Positioner = styled.div`
@@ -27,6 +32,29 @@ const Tick = styled.div`
   top: ${({ theme, tickSize }) => theme.spacing(2.5, true) + tickSize}px;
 `
 
+function getPeerSegment(segmentText, i, isLast) {
+  if (!isLast)
+    return (
+      <span key={`segment-${i}`}>
+        {segmentText}
+        <wbr />
+      </span>
+    )
+
+  const truncated = getTruncatedPeerId(segmentText)
+  const mainSegment = segmentText.slice(
+    0,
+    segmentText.length - truncated.length
+  )
+
+  return (
+    <span key={`segment-${i}`}>
+      {mainSegment}
+      <LastSegment>{truncated}</LastSegment>
+    </span>
+  )
+}
+
 function PeerIdTooltip({ peerId, children, override = {} }) {
   const [isCopied, setIsCopied] = useState(false)
   const rootNodeRef = useContext(RootNodeContext)
@@ -36,10 +64,16 @@ function PeerIdTooltip({ peerId, children, override = {} }) {
   const peerIdSegments = []
   let i = 0
   while (i < segmentsCount) {
-    const segment = peerId.slice(segmentsLength * i, segmentsLength * (i + 1))
-    peerIdSegments.push(<span key={`segment-${i}`}>{segment}</span>)
+    const isLast = i + 1 === segmentsCount
+
+    const segmentText = peerId.slice(
+      segmentsLength * i,
+      segmentsLength * (i + 1)
+    )
+    peerIdSegments.push(getPeerSegment(segmentText, i, isLast))
+    if (!isLast) peerIdSegments.push(<wbr key={`break-${i}`} />)
+
     i++
-    if (i < segmentsCount) peerIdSegments.push(<wbr key={`break-${i}`} />)
   }
 
   const copyPeerId = () => {
