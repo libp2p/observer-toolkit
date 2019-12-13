@@ -133,6 +133,12 @@ const boxShadow = ({
   return `box-shadow: 0 ${spacing(0.5 * size)} ${spacing(size)} ${shadowColor};`
 }
 
+const transition = ({
+  target = 'all',
+  duration = 0.4,
+  easing = 'ease-in-out',
+} = {}) => `transition: ${target} ${duration}s ${easing};`
+
 const tableCell = `
   ${text('label', 'medium')}
   padding-top: ${spacing()};
@@ -142,4 +148,11 @@ const tableCell = `
   text-align: right;
 `
 
-export default { color, spacing, text, boxShadow, styles: { tableCell } }
+export default {
+  color,
+  spacing,
+  text,
+  boxShadow,
+  transition,
+  styles: { tableCell },
+}

@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { AccordionControl, Icon, Tooltip } from '@libp2p-observer/sdk'
 import ReactMarkdown from 'react-markdown'
-
-const borderBottom = css`
-  border-bottom: 1px solid ${({ theme }) => theme.color('background', 1)};
-`
+import { SlideDown } from 'react-slidedown'
 
 const Container = styled.article`
   overflow: auto;
@@ -17,7 +14,6 @@ const Container = styled.article`
 `
 
 const Header = styled.header`
-  ${borderBottom}
   padding: ${({ theme }) => theme.spacing([1, 2])};
   display: flex;
   align-items: center;
@@ -47,17 +43,12 @@ const CloseButton = styled.button`
   }
 `
 
-const AboutButton = styled.button`
-  border: none;
-  color: ${({ theme }) => theme.color('text', 2)};
-  margin-left: ${({ theme }) => theme.spacing(2)};
-`
-
 const Description = styled.div`
-  ${borderBottom}
-  padding: ${({ theme }) => theme.spacing()};
+  border-bottom: 1px solid ${({ theme }) => theme.color('background', 1)};
+  overflow: hidden;
+  padding: ${({ theme }) => theme.spacing([0, 4])};
   ${({ theme }) => theme.text('body', 'medium')}
-  ${({ isOpen }) => !isOpen && 'display: none;'}
+  ${({ theme }) => theme.transition()}
 `
 
 const TooltipContent = styled.div`
@@ -97,9 +88,9 @@ function SelectedWidget({ widget, setSelected }) {
           </Tooltip>
         </CloseButton>
       </Header>
-      <Description isOpen={descriptionOpen}>
-        <ReactMarkdown source={description} />
-      </Description>
+      <SlideDown as={Description}>
+        {descriptionOpen && <ReactMarkdown source={description} />}
+      </SlideDown>
       <WidgetContainer>
         <Component />
       </WidgetContainer>
