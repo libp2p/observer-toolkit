@@ -9,7 +9,7 @@ import CatalogueItem from './CatalogueItem'
 import HeaderTabs from './HeaderTabs'
 import SelectedWidget from './SelectedWidget'
 
-const HEADER_HEIGHT = '67px'
+const HEADER_HEIGHT = '62px'
 
 const Container = styled.div`
   font-family: plex-sans, sans-serif;
@@ -23,7 +23,7 @@ const Container = styled.div`
 `
 
 const Main = styled.div`
-  padding: ${({ theme }) => theme.spacing()};
+  padding: ${({ theme }) => theme.spacing([2, 1])};
   background-color: ${({ theme }) => theme.color('background', 1)};
   overflow-y: scroll;
   flex-grow: 1;
@@ -36,11 +36,13 @@ const CatalogueBkg = styled.div`
 `
 
 const Header = styled.div`
+  flex-grow: 0;
+  flex-shrink: 0;
   z-index: 50;
   top: 0;
   left: 0;
   width: 100%;
-  height: ${HEADER_HEIGHT};
+  min-height: ${HEADER_HEIGHT};
   background: ${({ theme }) => theme.color('contrast')};
   border-bottom: ${({ theme }) =>
     `${theme.spacing()} solid ${theme.color('primary')}`};

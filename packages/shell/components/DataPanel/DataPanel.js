@@ -20,7 +20,6 @@ const DataPanelItem = styled.button`
   padding: ${({ theme }) => theme.spacing(0.5)};
   text-align: left;
   cursor: pointer;
-  margin: 2px 0;
   ${({ theme }) => theme.text('label', 'small')} :focus {
     outline: none;
   }

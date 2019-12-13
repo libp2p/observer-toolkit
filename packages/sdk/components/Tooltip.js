@@ -194,7 +194,7 @@ Tooltip.propTypes = {
   children: T.node.isRequired,
   tickSize: T.number,
   colorKey: T.string,
-  colorIndex: T.index,
+  colorIndex: T.number,
   side: T.oneOf(sideOptions),
   fixOn: T.oneOf(fixOnOptions),
   content: T.node,

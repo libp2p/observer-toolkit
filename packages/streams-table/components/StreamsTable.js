@@ -14,7 +14,7 @@ function getMaxValues(timepoints) {
   const maxValues = timepoints.reduce(
     (maxValues, timepoint) =>
       getAllStreamsAtTime(timepoint).reduce((timeMax, { stream }) => {
-        const { maxTraffic, maxAge } = timeMax
+        const { maxTraffic } = timeMax
         const dataIn = getStreamTraffic(stream, 'in', 'bytes')
         const dataOut = getStreamTraffic(stream, 'out', 'bytes')
         return {
