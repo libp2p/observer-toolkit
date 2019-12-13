@@ -20,6 +20,7 @@ import cloud from './icons/Cloud'
 import closed from './icons/Closed'
 import closing from './icons/Closing'
 import opening from './icons/Opening'
+import marker from './icons/Marker'
 
 // Export an object of url paths; importer picks path by key
 export default {
@@ -37,4 +38,5 @@ export default {
   closed,
   closing,
   opening,
+  marker,
 }

@@ -1,5 +1,7 @@
 'use strict'
 
+const { createHash } = require('crypto')
+
 const DEFAULT_CONNECTIONS = 6
 const DEFAULT_DURATION = 10 // Seconds
 const DEFAULT_FILE = `mock-${Date.now()}`
@@ -16,6 +18,13 @@ const GIGABYTE_IN_BYTES = 1e9
 const OPEN_CLOSE_PROBABILITY = 1 / 40
 
 const HOST_PEER_ID = 'peer-id-of-host'
+
+function generateHashId() {
+  const randomNumber = Math.pow(0.5 / random(), 5 / random())
+  return createHash('sha256')
+    .update(randomNumber.toString())
+    .digest('hex')
+}
 
 function getRandomiser() {
   // Use real random numbers in real mocks, consistent ones in tests
@@ -74,7 +83,7 @@ function randomBandwidth() {
     randomNormalDistribution({
       min: 1,
       max: GIGABYTE_IN_BYTES,
-      skew: 7, // Mean of around 15 mbs / second per stream
+      skew: 6, // Mean of around 15 mbs / second per stream
     })
   )
 }
@@ -111,4 +120,5 @@ module.exports = {
   randomLatency,
   randomBandwidth,
   randomOpenClose,
+  generateHashId,
 }

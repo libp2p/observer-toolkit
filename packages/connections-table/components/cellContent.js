@@ -7,7 +7,7 @@ import {
   formatDuration,
   Bubble,
   DataNumber,
-  PeerId,
+  PeerIdChip,
   TimeNumber,
   Tooltip,
 } from '@libp2p-observer/sdk'
@@ -24,7 +24,7 @@ StatusContent.propTypes = {
 }
 
 function PeerIdContent({ value }) {
-  return <PeerId peerId={value} />
+  return <PeerIdChip peerId={value} />
 }
 PeerIdContent.propTypes = {
   value: T.string,

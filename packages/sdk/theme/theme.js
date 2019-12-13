@@ -47,7 +47,16 @@ const color = (col, val = 0, alpha) => {
   return alpha ? `rgba(${rgb}, ${alpha})` : `rgb(${rgb})`
 }
 
-const spacing = (num = 1) => `${num * 8}px`
+const spacingPx = 8
+const spacing = (value = 1, returnNum = false) => {
+  if (Array.isArray(value)) {
+    const values = value.map(num => spacing(num, returnNum))
+    return returnNum ? values : values.join(' ')
+  }
+
+  const size = value * spacingPx
+  return returnNum ? size : `${size}px`
+}
 
 const typography = {
   default: `
@@ -107,6 +116,16 @@ const text = (elem, size, rgb) => {
   `
 }
 
+const boxShadow = ({
+  size = 1,
+  colorKey = 'contrast',
+  colorIndex = 0,
+  opacity = 0.2,
+} = {}) => {
+  const shadowColor = color(colorKey, colorIndex, opacity)
+  return `box-shadow: 0 ${spacing(0.5 * size)} ${spacing(size)} ${shadowColor};`
+}
+
 const tableCell = `
   ${text('label', 'medium')}
   padding-top: ${spacing()};
@@ -116,4 +135,4 @@ const tableCell = `
   text-align: right;
 `
 
-export default { color, spacing, text, styles: { tableCell } }
+export default { color, spacing, text, boxShadow, styles: { tableCell } }
