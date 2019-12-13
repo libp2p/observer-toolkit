@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-import { Icon, Tooltip } from '@libp2p-observer/sdk'
+import { AccordionControl, Icon, Tooltip } from '@libp2p-observer/sdk'
+import ReactMarkdown from 'react-markdown'
+
+const borderBottom = css`
+  border-bottom: 1px solid ${({ theme }) => theme.color('background', 1)};
+`
 
 const Container = styled.article`
   overflow: auto;
@@ -12,8 +17,8 @@ const Container = styled.article`
 `
 
 const Header = styled.header`
+  ${borderBottom}
   padding: ${({ theme }) => theme.spacing([1, 2])};
-  border-bottom: 1px solid ${({ theme }) => theme.color('background', 1)};
   display: flex;
   align-items: center;
 `
@@ -26,6 +31,7 @@ const Title = styled.h1`
   flex-grow: 1;
   color: ${({ theme }) => theme.color('contrast')};
   ${({ theme }) => theme.text('heading', 'medium')}
+  margin-top: ${({ theme }) => theme.spacing()};
 `
 
 const CloseButton = styled.button`
@@ -41,6 +47,19 @@ const CloseButton = styled.button`
   }
 `
 
+const AboutButton = styled.button`
+  border: none;
+  color: ${({ theme }) => theme.color('text', 2)};
+  margin-left: ${({ theme }) => theme.spacing(2)};
+`
+
+const Description = styled.div`
+  ${borderBottom}
+  padding: ${({ theme }) => theme.spacing()};
+  ${({ theme }) => theme.text('body', 'medium')}
+  ${({ isOpen }) => !isOpen && 'display: none;'}
+`
+
 const TooltipContent = styled.div`
   color: ${({ theme }) => theme.color('highlight', 1)};
   white-space: nowrap;
@@ -48,13 +67,22 @@ const TooltipContent = styled.div`
 
 function SelectedWidget({ widget, setSelected }) {
   const { Component, name, description } = widget
+  const [descriptionOpen, setDescriptionOpen] = useState(false)
 
   const handleClose = () => setSelected(null)
 
   return (
     <Container>
       <Header>
-        <Title>{name}</Title>
+        <Title>
+          {name}
+          <AccordionControl
+            isOpen={descriptionOpen}
+            setIsOpen={setDescriptionOpen}
+          >
+            About
+          </AccordionControl>
+        </Title>
         <CloseButton>
           <Tooltip
             side="left"
@@ -69,6 +97,9 @@ function SelectedWidget({ widget, setSelected }) {
           </Tooltip>
         </CloseButton>
       </Header>
+      <Description isOpen={descriptionOpen}>
+        <ReactMarkdown source={description} />
+      </Description>
       <WidgetContainer>
         <Component />
       </WidgetContainer>
@@ -82,6 +113,7 @@ SelectedWidget.propTypes = {
     name: T.string.isRequired,
     description: T.string,
   }),
+  setSelected: T.func.isRequired,
 }
 
 export default SelectedWidget

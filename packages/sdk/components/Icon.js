@@ -30,7 +30,7 @@ const Container = styled.span`
   `}
 `
 
-function Icon({ type, onClick, active, disabled, size = 20 }) {
+function Icon({ type, onClick, active, disabled, size = 20, override = {} }) {
   const IconSvg = icons[type]
   if (!IconSvg) throw new Error(`No icon found named "${type}"`)
 
@@ -40,8 +40,9 @@ function Icon({ type, onClick, active, disabled, size = 20 }) {
       active={active}
       disabled={disabled}
       size={size}
+      as={override.Container}
     >
-      <IconSvg />
+      <IconSvg as={override.IconSvg} />
     </Container>
   )
 }
@@ -53,6 +54,7 @@ Icon.propTypes = {
   disabled: T.bool,
   offset: T.bool,
   size: T.number,
+  override: T.object,
 }
 
 export default Icon
