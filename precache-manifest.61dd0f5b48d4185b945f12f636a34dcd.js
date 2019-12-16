@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0b29326d17acaa237a04c7185361ad5d",
+    "revision": "f85abfdbf5e0424266d8eabb36c638b9",
     "url": "/libp2p-introspection-ui/index.html"
   },
   {
-    "revision": "0e743058886b9a826074",
+    "revision": "467f8599ca67a5af343a",
     "url": "/libp2p-introspection-ui/static/css/main.34de6062.chunk.css"
   },
   {
-    "revision": "66a56aa8d177d095dd16",
-    "url": "/libp2p-introspection-ui/static/js/2.256ba0c9.chunk.js"
+    "revision": "9854e63f233408e1e3df",
+    "url": "/libp2p-introspection-ui/static/js/2.264c8571.chunk.js"
   },
   {
-    "revision": "0e743058886b9a826074",
-    "url": "/libp2p-introspection-ui/static/js/main.756d3acb.chunk.js"
+    "revision": "467f8599ca67a5af343a",
+    "url": "/libp2p-introspection-ui/static/js/main.35aa5cee.chunk.js"
   },
   {
     "revision": "ff936227d0a54eee45c2",
@@ -74,5 +74,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "3a5301f87ed750dd69aac1cd8fab13d3",
     "url": "/libp2p-introspection-ui/static/media/screenshot.3a5301f8.png"
+  },
+  {
+    "revision": "e1a6ab626f9ce0eb36be7d3511cfe6b5",
+    "url": "/libp2p-introspection-ui/static/media/screenshot.e1a6ab62.png"
   }
 ]);
