@@ -48,6 +48,7 @@ function FilterButton({
           <Tooltip
             side={'bottom'}
             containerRef={rootNodeRef}
+            fixOn={'no-hover'}
             content={
               <FilterUi
                 // 'Hard' enableReinitialize: remount when initialValues changes

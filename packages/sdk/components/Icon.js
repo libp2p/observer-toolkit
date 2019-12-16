@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import icons from '../theme/icons'
 
 const Container = styled.span`
+  user-select: none; /* Stops nearby text being selected if icon clicked quickly */
   display: inline-block;
   vertical-align: middle;
   width: ${({ size }) => size}px;
