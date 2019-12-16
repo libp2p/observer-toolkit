@@ -90,11 +90,11 @@ const Positioner = styled.div`
   z-index: 15;
   position: absolute;
   ${({ direction, tickSize, offsets }) =>
-    getPosition(direction, `calc(100% - ${tickSize}px)`, offsets)}
+    getPosition(direction, '100%', offsets)}
 
   // Give a little space that tolerates small mouseouts around the tick shape
   ${({ direction, tickSize }) =>
-    `border-${direction}: ${tickSize * 2}px solid transparent`};
+    `border-${direction}: ${tickSize}px solid transparent`};
 `
 
 const Content = styled.div`
