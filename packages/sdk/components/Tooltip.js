@@ -172,7 +172,7 @@ function Tooltip({
       {(isFixed || isShowing) && (
         <Positioner
           style={{ marginLeft: 0, marginTop: 0 }}
-          onClick={clickToFix ? stopPropagation : null}
+          onClick={isClickable ? stopPropagation : null}
           direction={direction}
           tickSize={tickSize}
           ref={positionerRef}
