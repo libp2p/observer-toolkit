@@ -66,42 +66,49 @@ const typography = {
   body: {
     small: `
       font-size: 9pt;
+      line-height: 1.6em;
     `,
     medium: `
-      font-size: 12pt;
+      font-size: 10pt;
+      line-height: 1.6em;
     `,
     large: `
-      font-size: 16pt;
+      font-size: 12pt;
+      line-height: 1.6em;
     `,
   },
   label: {
     small: `
       font-size: 8pt;
-      line-height: 1em;
+      line-height: 1.2em;
     `,
     medium: `
-      font-size: 10pt;
-      line-height: 1em;
+      font-size: 9pt;
+      line-height: 1.2em;
     `,
     large: `
-      font-size: 12pt;
-      line-height: 1em;
+      font-size: 10pt;
+      line-height: 1.2em;
     `,
   },
   heading: {
     small: `
-      font-size: 12pt;
-      margin: ${spacing()} 0;
-      font-weight: bold;
+      font-size: 10pt;
+      margin: 0;
+      font-weight: 800;
+      line-height: 1.2em;
     `,
     medium: `
-      font-size: 16pt;
-      margin: ${spacing(2)} 0 ${spacing()};
+      font-size: 12pt;
+      margin: ${spacing([0.5, 0])};
+      font-weight: 800;
+      line-height: 1.2em;
     `,
     large: `
-      font-size: 24pt;
-      margin: ${spacing(2)} 0 ${spacing()};
-      font-weight: bold;
+      font-size: 16pt;
+      margin: ${spacing([0.5, 0])};
+      font-weight: 600;
+      line-height: 1.2em;
     `,
   },
 }
@@ -126,6 +133,12 @@ const boxShadow = ({
   return `box-shadow: 0 ${spacing(0.5 * size)} ${spacing(size)} ${shadowColor};`
 }
 
+const transition = ({
+  target = 'all',
+  duration = 0.4,
+  easing = 'ease-in-out',
+} = {}) => `transition: ${target} ${duration}s ${easing};`
+
 const tableCell = `
   ${text('label', 'medium')}
   padding-top: ${spacing()};
@@ -135,4 +148,11 @@ const tableCell = `
   text-align: right;
 `
 
-export default { color, spacing, text, boxShadow, styles: { tableCell } }
+export default {
+  color,
+  spacing,
+  text,
+  boxShadow,
+  transition,
+  styles: { tableCell },
+}

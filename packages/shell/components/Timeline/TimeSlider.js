@@ -47,6 +47,10 @@ const Control = styled.div`
 const InactiveSection = styled.div`
   background-color: ${({ theme }) => theme.color('contrast', 0, 0.8)};
   z-index: 2;
+  // Cover any x-axis labels that overspill with a hanging border
+  border-right: solid transparent ${({ theme }) => theme.spacing(2)};
+  margin-right: -${({ theme }) => theme.spacing(2)};
+  box-sizing: content-box;
 `
 const NumberFieldsWrapper = styled.div`
   display: none;

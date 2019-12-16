@@ -1,5 +1,5 @@
-function validateComponentFields(componentBundle) {
-  const { name, Component, description, tags, screenshot } = componentBundle
+function validateWidgetFields(widget) {
+  const { name, Component, description, tags, screenshot } = widget
 
   if (!name || typeof name !== 'string')
     throw new Error(`Invalid component name "${name}" (${typeof name})`)
@@ -23,4 +23,4 @@ function validateComponentFields(componentBundle) {
   }
 }
 
-export { validateComponentFields }
+export { validateWidgetFields }

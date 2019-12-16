@@ -21,6 +21,7 @@ import closed from './icons/Closed'
 import closing from './icons/Closing'
 import opening from './icons/Opening'
 import marker from './icons/Marker'
+import expand from './icons/Expand'
 
 // Export an object of url paths; importer picks path by key
 export default {
@@ -39,4 +40,5 @@ export default {
   closing,
   opening,
   marker,
+  expand,
 }

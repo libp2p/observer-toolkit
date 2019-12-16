@@ -102,6 +102,7 @@ const Content = styled.div`
   padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
   background: ${({ theme, getColor }) => getColor(theme)};
   ${({ theme, isFixed }) => theme.boxShadow({ opacity: isFixed ? 0.4 : 0.2 })}
+  ${({ theme }) => theme.text('label', 'medium')}
 `
 
 const Tick = styled.div`
@@ -193,7 +194,7 @@ Tooltip.propTypes = {
   children: T.node.isRequired,
   tickSize: T.number,
   colorKey: T.string,
-  colorIndex: T.index,
+  colorIndex: T.number,
   side: T.oneOf(sideOptions),
   fixOn: T.oneOf(fixOnOptions),
   content: T.node,

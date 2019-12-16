@@ -48,9 +48,10 @@ const transportCol = {
 const dataInCol = {
   name: 'data-in',
   header: 'Data in',
-  getProps: ({ stream }) => ({
+  getProps: ({ stream }, _, metadata) => ({
     value: getStreamTraffic(stream, 'in', 'bytes'),
-    label: 'inbound',
+    maxValue: metadata.maxTraffic,
+    colorKey: 'primary',
   }),
   renderContent: BytesContent,
   sort: numericSorter,
@@ -59,9 +60,10 @@ const dataInCol = {
 const dataOutCol = {
   name: 'data-out',
   header: 'Data out',
-  getProps: ({ stream }) => ({
-    value: getStreamTraffic(stream, 'out', 'bytes'),
-    label: 'outbound',
+  getProps: ({ stream }, _, metadata) => ({
+    value: getStreamTraffic(stream, 'in', 'bytes'),
+    maxValue: metadata.maxTraffic,
+    colorKey: 'secondary',
   }),
   renderContent: BytesContent,
   sort: numericSorter,

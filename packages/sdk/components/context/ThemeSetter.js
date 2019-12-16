@@ -21,7 +21,6 @@ function ThemeSetter({ children }) {
   const GlobalDefaults = createGlobalStyle`
     * {
       box-sizing: border-box;
-      line-height: 1.6em;
     }
     body {
       font-family: 'plex-sans, sans-serif';

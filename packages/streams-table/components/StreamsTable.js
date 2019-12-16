@@ -1,14 +1,39 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 
-import { getAllStreamsAtTime } from '@libp2p-observer/data'
-import { DataTable, TimeContext, useTabularData } from '@libp2p-observer/sdk'
+import { getAllStreamsAtTime, getStreamTraffic } from '@libp2p-observer/data'
+import {
+  DataTable,
+  DataContext,
+  TimeContext,
+  useTabularData,
+} from '@libp2p-observer/sdk'
 
 import streamsColumnDefs from '../definitions/streamsColumns'
 
+function getMaxValues(timepoints) {
+  const maxValues = timepoints.reduce(
+    (maxValues, timepoint) =>
+      getAllStreamsAtTime(timepoint).reduce((timeMax, { stream }) => {
+        const { maxTraffic } = timeMax
+        const dataIn = getStreamTraffic(stream, 'in', 'bytes')
+        const dataOut = getStreamTraffic(stream, 'out', 'bytes')
+        return {
+          maxTraffic: Math.max(maxTraffic, dataIn, dataOut),
+        }
+      }, maxValues),
+    {
+      maxTraffic: 0,
+    }
+  )
+  return maxValues
+}
+
 function StreamsTable() {
   const timepoint = useContext(TimeContext)
-
   const streamsData = getAllStreamsAtTime(timepoint)
+
+  const timepoints = useContext(DataContext)
+  const metadata = useMemo(() => getMaxValues(timepoints), [timepoints])
 
   const {
     columnDefs,
@@ -21,6 +46,7 @@ function StreamsTable() {
     columns: streamsColumnDefs,
     data: streamsData,
     defaultSort: 'stream-status',
+    metadata,
   })
 
   return (

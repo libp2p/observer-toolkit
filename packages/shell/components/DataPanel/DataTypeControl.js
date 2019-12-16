@@ -13,12 +13,13 @@ const Container = styled.div`
 
 const IconButton = styled.button`
   background: ${({ theme }) => theme.color('background')};
-  margin-right: ${({ theme }) => theme.spacing(1)};
+  margin: ${({ theme }) => theme.spacing([0, 1, 0, 0.5])};
   color: ${({ theme }) => theme.color('highlight')};
   border-radius: 50%;
   border: none;
   cursor: pointer;
   position: relative;
+  padding: ${({ theme }) => theme.spacing(0.5)};
   z-index: 2;
 `
 
@@ -27,13 +28,8 @@ const ButtonText = styled.span`
   background: ${({ theme }) => theme.color('contrast', 2)};
   border-radius: ${({ theme }) => theme.spacing()};
   color: ${({ theme }) => theme.color('text', 3)};
-  padding-top: ${({ theme }) => theme.spacing(0.5)};
-  padding-bottom: ${({ theme }) => theme.spacing(0.5)};
-  padding-left: ${({ theme }) => theme.spacing(2.5)};
-  padding-right: ${({ theme }) => theme.spacing(1)};
-  margin-left: ${({ theme }) => theme.spacing(-2.5)};
-  margin-top: ${({ theme }) => theme.spacing(0.5)};
-  margin-bottom: ${({ theme }) => theme.spacing(0.5)};
+  padding: ${({ theme }) => theme.spacing([0.5, 1, 0.5, 2.5])};
+  margin: ${({ theme }) => theme.spacing([0.5, 0, 0.5, -2.5])};
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
