@@ -78,8 +78,8 @@ function updateOffset(positionerRef, tickRef, containerRef, tolerance) {
 const Target = styled.span`
   position: relative;
   display: inline-block;
-  ${({ clickToFix, isFixed, theme }) =>
-    clickToFix &&
+  ${({ isClickable, noHover, isFixed, theme }) =>
+    isClickable &&
     `
     cursor: pointer;
     ${isFixed && theme.boxShadow()}
@@ -90,11 +90,11 @@ const Positioner = styled.div`
   z-index: 15;
   position: absolute;
   ${({ direction, tickSize, offsets }) =>
-    getPosition(direction, `calc(100% - ${tickSize}px)`, offsets)}
+    getPosition(direction, '100%', offsets)}
 
   // Give a little space that tolerates small mouseouts around the tick shape
   ${({ direction, tickSize }) =>
-    `border-${direction}: ${tickSize * 2}px solid transparent`};
+    `border-${direction}: ${tickSize}px solid transparent`};
 `
 
 const Content = styled.div`
@@ -120,7 +120,7 @@ const Tick = styled.div`
 `
 
 const sideOptions = ['top', 'right', 'bottom', 'left']
-const fixOnOptions = ['click', 'always', 'never']
+const fixOnOptions = ['click', 'no-hover', 'always', 'never']
 
 function Tooltip({
   children,
@@ -136,6 +136,9 @@ function Tooltip({
 }) {
   const clickToFix = fixOn === 'click'
   const alwaysFix = fixOn === 'always'
+  const noHover = fixOn === 'no-hover'
+  const isClickable = clickToFix || noHover
+
   const [isFixed, setIsFixed] = useState(alwaysFix)
   const [isShowing, setIsShowing] = useState(false)
 
@@ -149,6 +152,7 @@ function Tooltip({
 
   const show = () => setIsShowing(true)
   const hide = () => setIsShowing(false)
+  const toggleShow = () => setIsShowing(!isShowing)
   const toggleFix = () => setIsFixed(!isFixed)
   const stopPropagation = e => e.stopPropagation()
 
@@ -157,10 +161,10 @@ function Tooltip({
 
   return (
     <Target
-      onMouseEnter={show}
-      onMouseLeave={hide}
-      onClick={clickToFix ? toggleFix : null}
-      clickToFix={clickToFix}
+      onMouseEnter={noHover ? null : show}
+      onMouseLeave={noHover ? null : hide}
+      onClick={(clickToFix && toggleFix) || (noHover && toggleShow) || null}
+      isClickable={isClickable}
       isFixed={isFixed}
       as={override.Target}
     >
@@ -168,7 +172,7 @@ function Tooltip({
       {(isFixed || isShowing) && (
         <Positioner
           style={{ marginLeft: 0, marginTop: 0 }}
-          onClick={clickToFix ? stopPropagation : null}
+          onClick={isClickable ? stopPropagation : null}
           direction={direction}
           tickSize={tickSize}
           ref={positionerRef}

@@ -1,23 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { Formik } from 'formik'
 import isEqual from 'lodash.isequal'
 
 import Icon from '../Icon'
+import Tooltip from '../Tooltip'
+import { RootNodeContext } from '../context/RootNodeProvider'
 
 const Container = styled.span`
   display: inline-block;
-`
-
-const AccordionContent = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
-  position: absolute;
-  top: ${({ theme }) => theme.spacing(4)};
-  left: 0;
-  padding: ${({ theme }) => theme.spacing()};
-  background: ${({ theme }) => theme.color('background', 1, 0.8)};
-  z-index: 20;
 `
 
 function FilterButton({
@@ -29,9 +21,7 @@ function FilterButton({
   filterUiProps,
   name,
 }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const toggleOpen = () => setIsOpen(!isOpen)
-
+  const rootNodeRef = useContext(RootNodeContext)
   const initialValues = Object.fromEntries(initialFieldValues)
 
   const handleChange = newValues => {
@@ -55,19 +45,25 @@ function FilterButton({
     >
       {({ values, setFieldValue, submitForm, dirty }) => (
         <Container>
-          <Icon type="filter" onClick={toggleOpen} active={dirty} offset />
-          <AccordionContent isOpen={isOpen}>
-            <FilterUi
-              // 'Hard' enableReinitialize: remount when initialValues changes
-              // key={JSON.stringify(initialValues)}
-              onChange={submitForm}
-              values={values}
-              setFieldValue={setFieldValue}
-              fieldNames={fieldNames}
-              title={name}
-              {...filterUiProps}
-            />
-          </AccordionContent>
+          <Tooltip
+            side={'bottom'}
+            containerRef={rootNodeRef}
+            fixOn={'no-hover'}
+            content={
+              <FilterUi
+                // 'Hard' enableReinitialize: remount when initialValues changes
+                // key={JSON.stringify(initialValues)}
+                onChange={submitForm}
+                values={values}
+                setFieldValue={setFieldValue}
+                fieldNames={fieldNames}
+                title={name}
+                {...filterUiProps}
+              />
+            }
+          >
+            <Icon type="filter" active={dirty} offset />
+          </Tooltip>
         </Container>
       )}
     </Formik>
