@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "eba167f67d77f187f664041bae2e9316",
+    "revision": "faf57ddff1f32defa17d8ee1a748d6df",
     "url": "/libp2p-introspection-ui/index.html"
   },
   {
-    "revision": "fc208a0ae57ba45602a7",
+    "revision": "d1d9e9da006fc2eb45fd",
     "url": "/libp2p-introspection-ui/static/css/main.34de6062.chunk.css"
   },
   {
-    "revision": "9854e63f233408e1e3df",
-    "url": "/libp2p-introspection-ui/static/js/2.264c8571.chunk.js"
+    "revision": "82c97e9e08f9050efb4b",
+    "url": "/libp2p-introspection-ui/static/js/2.65e13d1b.chunk.js"
   },
   {
-    "revision": "fc208a0ae57ba45602a7",
-    "url": "/libp2p-introspection-ui/static/js/main.0007344d.chunk.js"
+    "revision": "d1d9e9da006fc2eb45fd",
+    "url": "/libp2p-introspection-ui/static/js/main.84929373.chunk.js"
   },
   {
-    "revision": "ff936227d0a54eee45c2",
-    "url": "/libp2p-introspection-ui/static/js/runtime-main.7715ce8e.js"
+    "revision": "8fc1d305f49419543e70",
+    "url": "/libp2p-introspection-ui/static/js/runtime-main.8a56ef0d.js"
   },
   {
     "revision": "f9679767487b4907fff1d91d6f81ebd9",
