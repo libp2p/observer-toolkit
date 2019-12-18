@@ -11,6 +11,7 @@ const AccordionButton = styled.button`
     isActive ? theme.color('highlight') : theme.color('text', 2)};
   border: 1px solid currentColor;
   background: none;
+  margin: ${({ theme }) => theme.spacing([0, 4, 0, 1])};
 `
 
 function FiltersButton({ setIsOpen, isOpen = false }) {

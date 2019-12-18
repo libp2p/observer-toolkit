@@ -35,6 +35,10 @@ function getConnections(timepoint) {
   return subsystems ? subsystems.getConnectionsList() : []
 }
 
+function getStreams(connection) {
+  return connection.getStreams().getStreamsList()
+}
+
 function getAllStreamsAtTime(timepoint) {
   if (!timepoint) return []
   const connections = getConnections(timepoint)
@@ -124,6 +128,7 @@ module.exports = {
   getTimeIndex,
   getConnectionAge,
   getStreamAge,
+  getStreams,
   getConnectionTraffic,
   getStreamTraffic,
 }
