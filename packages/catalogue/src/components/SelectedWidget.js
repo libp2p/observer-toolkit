@@ -2,7 +2,15 @@ import React, { useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { AccordionControl, Icon, Tooltip } from '@libp2p-observer/sdk'
+import {
+  AccordionControl,
+  Icon,
+  Tooltip,
+  FilterProvider,
+} from '@libp2p-observer/sdk'
+import FiltersButton from './FiltersButton'
+import FiltersTray from './FiltersTray'
+
 import ReactMarkdown from 'react-markdown'
 import { SlideDown } from 'react-slidedown'
 
@@ -11,9 +19,11 @@ const Container = styled.article`
   background: ${({ theme }) => theme.color('background')};
   border-radius: ${({ theme }) => theme.spacing()};
   ${({ theme }) => theme.boxShadow({ size: 1.5, opacity: 0.3 })};
+  min-height: 320px;
 `
 
 const Header = styled.header`
+  border-bottom: 1px solid ${({ theme }) => theme.color('background', 1)};
   padding: ${({ theme }) => theme.spacing([1, 2])};
   display: flex;
   align-items: center;
@@ -43,12 +53,17 @@ const CloseButton = styled.button`
   }
 `
 
-const Description = styled.div`
-  border-bottom: 1px solid ${({ theme }) => theme.color('background', 1)};
-  overflow: hidden;
-  padding: ${({ theme }) => theme.spacing([0, 4])};
-  ${({ theme }) => theme.text('body', 'medium')}
+const SlideDownSection = styled(SlideDown)`
   ${({ theme }) => theme.transition()}
+  &.transitioning {
+    overflow: hidden;
+  }
+`
+
+const Section = styled.section`
+  ${({ theme }) => theme.text('body', 'medium')}
+  padding: ${({ theme }) => theme.spacing([0, 4])};
+  border-bottom: 1px solid ${({ theme }) => theme.color('background', 1)};
 `
 
 const TooltipContent = styled.div`
@@ -57,44 +72,60 @@ const TooltipContent = styled.div`
 `
 
 function SelectedWidget({ widget, setSelected }) {
-  const { Component, name, description } = widget
+  const { Component, name, description, filterDefs = [] } = widget
+
   const [descriptionOpen, setDescriptionOpen] = useState(false)
+  const [filtersOpen, setFiltersOpen] = useState(false)
 
   const handleClose = () => setSelected(null)
 
   return (
-    <Container>
-      <Header>
-        <Title>
-          {name}
-          <AccordionControl
-            isOpen={descriptionOpen}
-            setIsOpen={setDescriptionOpen}
-          >
-            About
-          </AccordionControl>
-        </Title>
-        <CloseButton>
-          <Tooltip
-            side="left"
-            fixOn="never"
-            content={
-              <TooltipContent>
-                Close and return <br /> to catalogue
-              </TooltipContent>
-            }
-          >
-            <Icon type="cancel" onClick={handleClose} size={32} />
-          </Tooltip>
-        </CloseButton>
-      </Header>
-      <SlideDown as={Description}>
-        {descriptionOpen && <ReactMarkdown source={description} />}
-      </SlideDown>
-      <WidgetContainer>
-        <Component />
-      </WidgetContainer>
-    </Container>
+    <FilterProvider filterDefs={filterDefs}>
+      <Container>
+        <Header>
+          <Title>
+            {name}
+            <AccordionControl
+              isOpen={descriptionOpen}
+              setIsOpen={setDescriptionOpen}
+            >
+              About
+            </AccordionControl>
+          </Title>
+          <FiltersButton isOpen={filtersOpen} setIsOpen={setFiltersOpen} />
+          <CloseButton>
+            <Tooltip
+              side="left"
+              fixOn="never"
+              content={
+                <TooltipContent>
+                  Close and return <br /> to catalogue
+                </TooltipContent>
+              }
+            >
+              <Icon type="cancel" onClick={handleClose} size={'3em'} />
+            </Tooltip>
+          </CloseButton>
+        </Header>
+        <SlideDownSection>
+          {filtersOpen && (
+            <Section>
+              <FiltersTray filterDefs={filterDefs} />
+            </Section>
+          )}
+        </SlideDownSection>
+        <SlideDownSection>
+          {descriptionOpen && (
+            <Section>
+              <ReactMarkdown source={description} />
+            </Section>
+          )}
+        </SlideDownSection>
+        <WidgetContainer>
+          <Component />
+        </WidgetContainer>
+      </Container>
+    </FilterProvider>
   )
 }
 
