@@ -17,7 +17,7 @@
   "scripts": {
     "postpublish": "node ./postpublish.js",
     "prepublishOnly": "node ./prepublish.js",
-    "test": "tap --no-esm | tap-mocha-reporter progress"
+    "test": "tap --no-esm"
   },
   "bugs": {
     "url": "https://github.com/nearform/libp2p-introspection-ui/issues"
@@ -27,10 +27,12 @@
     "lodash.camelcase": "^4.3.0",
     "lodash.kebabcase": "^4.1.1",
     "lodash.upperfirst": "^4.3.1",
-    "readline-promise": "^1.0.4",
-    "rimraf": "^3.0.0"
+    "readline-promise": "^1.0.4"
   },
   "devDependencies": {
+    "bl": "^4.0.0",
+    "rimraf": "^3.0.0",
+    "split2": "^3.1.1",
     "tap": "^14.9.2",
     "tap-mocha-reporter": "^5.0.0"
   }
