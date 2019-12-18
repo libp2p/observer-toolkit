@@ -19,6 +19,10 @@ async function setup() {
     await fs.mkdir(pat)
   }
 }
+async function cleanup() {
+  const pat = path.join(__dirname, './testModuleDir')
+  await new Promise(resolve => rimraf(pat, () => resolve()))
+}
 
 test('that it passes', async t => {
   await setup()
@@ -44,5 +48,7 @@ test('that it passes', async t => {
   await wait(3000)
 
   child.kill(1)
+
+  await cleanup()
   t.end()
 })
