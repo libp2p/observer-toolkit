@@ -14,7 +14,7 @@
     "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
   },
   "scripts": {
-    "test": "tap --no-esm"
+    "test": "tap --no-esm | tap-mocha-reporter progress"
   },
   "bugs": {
     "url": "https://github.com/nearform/libp2p-introspection-ui/issues"
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@libp2p-observer/samples": "^0.0.1",
     "tap": "^14.9.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "tap-mocha-reporter": "^5.0.0"
   }
 }

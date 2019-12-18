@@ -1,4 +1,9 @@
 function validateWidgetFields(widget) {
+  if (!widget || typeof widget !== 'object')
+    throw new Error(
+      'Invalid component type, must be an object with properties `name`, `Component`, `description`, `tags` and optionally `screenshot`'
+    )
+
   const { name, Component, description, tags, screenshot } = widget
 
   if (!name || typeof name !== 'string')
