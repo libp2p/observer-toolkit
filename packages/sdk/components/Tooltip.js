@@ -113,7 +113,8 @@ const Positioner = styled.div`
 
 const Content = styled.div`
   text-align: left;
-  padding: ${({ theme }) => `${theme.spacing()} ${theme.spacing(2)}`};
+  padding: ${({ theme, isClosable }) =>
+    theme.spacing([1, isClosable ? 3 : 2, 1, 2])};
   background: ${({ theme, getColor }) => getColor(theme)};
   ${({ theme, isFixed }) => theme.boxShadow({ opacity: isFixed ? 0.4 : 0.2 })}
   ${({ theme }) => theme.text('label', 'medium')}
@@ -216,7 +217,12 @@ function Tooltip({
             ref={tickRef}
             as={override.Tick}
           />
-          <Content getColor={getColor} isFixed={isFixed} as={override.Content}>
+          <Content
+            getColor={getColor}
+            isFixed={isFixed}
+            isClosable={isClosable}
+            as={override.Content}
+          >
             {isClosable && (
               <CloseIcon>
                 <Icon type="remove" active onClick={close} />

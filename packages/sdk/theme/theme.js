@@ -130,7 +130,9 @@ const boxShadow = ({
   opacity = 0.2,
 } = {}) => {
   const shadowColor = color(colorKey, colorIndex, opacity)
-  return `box-shadow: 0 ${spacing(0.5 * size)} ${spacing(size)} ${shadowColor};`
+  return `box-shadow: 0 ${spacing(0.25 * size)} ${spacing(
+    size
+  )} ${shadowColor};`
 }
 
 const transition = ({

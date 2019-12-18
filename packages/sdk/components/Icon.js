@@ -8,9 +8,8 @@ const Container = styled.span`
   user-select: none; /* Stops nearby text being selected if icon clicked quickly */
   display: inline-block;
   vertical-align: middle;
-  width: ${({ size }) => size}px;
-  height: ${({ size }) => size}px;
-  border-radius: ${({ size }) => size}px;
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
 
   ${({ theme, active }) => active && `color: ${theme.color('highlight')};`}
 
@@ -31,7 +30,14 @@ const Container = styled.span`
   `}
 `
 
-function Icon({ type, onClick, active, disabled, size = 20, override = {} }) {
+function Icon({
+  type,
+  onClick,
+  active,
+  disabled,
+  size = '2em',
+  override = {},
+}) {
   const IconSvg = icons[type]
   if (!IconSvg) throw new Error(`No icon found named "${type}"`)
 
