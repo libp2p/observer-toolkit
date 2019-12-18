@@ -1,11 +1,13 @@
+'use strict'
+
 const { test } = require('tap')
 const path = require('path')
 const fs = require('fs').promises
 const rimraf = require('rimraf')
 const { spawn } = require('child_process')
-const split = require('split2')
 
 const wait = t => new Promise(resolve => setTimeout(() => resolve(), t))
+const noop = () => {}
 
 async function setup() {
   const pat = path.join(__dirname, './testModuleDir')
@@ -14,7 +16,8 @@ async function setup() {
     if (exists) {
       await new Promise(resolve => rimraf(pat, () => resolve()))
     }
-  } catch {
+  } catch (e) {
+    noop(e)
   } finally {
     await fs.mkdir(pat)
   }
