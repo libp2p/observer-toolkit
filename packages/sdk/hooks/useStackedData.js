@@ -1,7 +1,7 @@
 import { useContext, useMemo } from 'react'
 
 import useSorter from '../hooks/useSorter'
-import useFilter from '../hooks/useFilter'
+import { FilterContext } from '../components/context/FilterProvider'
 import { DataContext } from '../components/context/DataProvider'
 
 import { scaleLinear, scaleTime, stack } from 'd3'
@@ -71,14 +71,13 @@ function useStackedData({
   defaultDirection = '',
 }) {
   const dataset = useContext(DataContext)
+  const { applyFilters } = useContext(FilterContext)
 
   const { sorter, setSortDirection } = useSorter({
     getSorter,
     mapSorter: mapSorter,
     defaultDirection: 'desc',
   })
-
-  const { applyFilters, dispatchFilters } = useFilter([])
 
   const { keys, keyedData } = useMemo(
     () => getKeyedData(dataset, sorter, applyFilters, getKeys, keyData),
@@ -97,7 +96,6 @@ function useStackedData({
     xScale,
     yScale,
     setSortDirection,
-    dispatchFilters,
   }
 }
 

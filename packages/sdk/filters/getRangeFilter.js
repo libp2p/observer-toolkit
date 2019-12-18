@@ -19,16 +19,19 @@ function getRangeFilter({
   FilterUi = DefaultUi,
 }) {
   // Use empty strings for null values so form elements don't become uncontrolled
-  const initialFieldValues = new Map([
-    ['min', ''],
-    ['max', ''],
-  ])
+  const initialValues = {
+    min: '',
+    max: '',
+  }
+
+  const valueNames = ['min', 'max']
 
   return {
     name,
     doFilter,
     FilterUi,
-    initialFieldValues,
+    initialValues,
+    valueNames,
     filterUiProps: {
       min,
       max,
