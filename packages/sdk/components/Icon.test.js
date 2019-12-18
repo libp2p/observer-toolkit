@@ -20,4 +20,32 @@ describe('Icon', () => {
     let tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
+
+  it('calls onClick if clicked', () => {
+    const mockFn = jest.fn()
+
+    const elem = renderer.create(
+      <ThemeSetter>
+        <Icon type="asc" disabled={false} onClick={mockFn} />
+      </ThemeSetter>
+    )
+
+    elem.root.find(c => c.type === 'span').props.onClick()
+
+    expect(mockFn).toBeCalled()
+  })
+
+  it("doesn't call onClick if disabled", () => {
+    const mockFn = jest.fn()
+
+    const elem = renderer.create(
+      <ThemeSetter>
+        <Icon type="asc" disabled={true} onClick={mockFn} />
+      </ThemeSetter>
+    )
+
+    expect(elem.root.find(c => c.type === 'span').props.onClick).toEqual(null)
+
+    expect(mockFn).not.toBeCalled()
+  })
 })
