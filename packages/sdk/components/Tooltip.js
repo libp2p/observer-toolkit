@@ -2,6 +2,8 @@ import React, { useLayoutEffect, useRef, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
+import Icon from './Icon'
+
 function getInvertedDirection(direction) {
   const directionInverse = {
     top: 'bottom',
@@ -34,7 +36,13 @@ function getTickPosition(direction, tickSize) {
   return getPosition(direction, `-${tickSize * 2}px`)
 }
 
-function updateOffset(positionerRef, tickRef, containerRef, tolerance) {
+function updateOffset(
+  positionerRef,
+  tickRef,
+  containerRef,
+  toleranceX,
+  toleranceY
+) {
   if (!positionerRef.current || !tickRef.current || !containerRef.current)
     return
 
@@ -45,31 +53,36 @@ function updateOffset(positionerRef, tickRef, containerRef, tolerance) {
   const currentLeft = parseFloat(marginLeft)
   const currentTop = parseFloat(marginTop)
 
-  const offsets = {
-    top: Math.min(0, elemRect.top - boundsRect.top - currentTop + tolerance),
+  const snapX = toleranceX !== null
+  const snapY = toleranceY !== null
+
+  const offsetsX = snapX && {
     left: Math.min(
       0,
-      elemRect.left - boundsRect.left - currentLeft + tolerance
+      elemRect.left - boundsRect.left - currentLeft + toleranceX
     ),
     right: Math.max(
       0,
-      elemRect.right - boundsRect.right - currentLeft - tolerance
+      elemRect.right - boundsRect.right - currentLeft - toleranceX
     ),
+  }
+  const offsetsY = snapY && {
+    top: Math.min(0, elemRect.top - boundsRect.top - currentTop + toleranceY),
     bottom: Math.max(
       0,
-      elemRect.bottom - boundsRect.bottom - currentTop - tolerance
+      elemRect.bottom - boundsRect.bottom - currentTop - toleranceY
     ),
   }
 
   // Don't apply contradictory offsets if a big tooltip spans both edges of a small view
-  if (!(offsets.left && offsets.right)) {
-    const offset = offsets.left || offsets.right || 0
+  if (snapX && !(offsetsX.left && offsetsX.right)) {
+    const offset = offsetsX.left || offsetsX.right || 0
     positionerRef.current.style.marginLeft = 0 - offset + 'px'
     tickRef.current.style.marginLeft = offset + 'px'
   }
 
-  if (!(offsets.top && offsets.bottom)) {
-    const offset = offsets.top || offsets.bottom || 0
+  if (snapY && !(offsetsY.top && offsetsY.bottom)) {
+    const offset = offsetsY.top || offsetsY.bottom || 0
     positionerRef.current.style.marginTop = 0 - offset + 'px'
     tickRef.current.style.marginTop = offset + 'px'
   }
@@ -119,6 +132,16 @@ const Tick = styled.div`
     getTickPosition(direction, tickSize, offsets)}
 `
 
+const CloseIcon = styled.a`
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  &:hover {
+    background: ${({ theme }) => theme.color('background', 1)};
+  }
+`
+
 const sideOptions = ['top', 'right', 'bottom', 'left']
 const fixOnOptions = ['click', 'no-hover', 'always', 'never']
 
@@ -130,7 +153,8 @@ function Tooltip({
   side = sideOptions[0],
   fixOn = fixOnOptions[0],
   content,
-  tolerance = 0,
+  toleranceX = 0,
+  toleranceY = 0,
   containerRef = {},
   override = {},
 }) {
@@ -145,7 +169,7 @@ function Tooltip({
   const positionerRef = useRef()
   const tickRef = useRef()
   useLayoutEffect(() =>
-    updateOffset(positionerRef, tickRef, containerRef, tolerance)
+    updateOffset(positionerRef, tickRef, containerRef, toleranceX, toleranceY)
   )
 
   if (!content) return <Target>{children}</Target>
@@ -155,9 +179,15 @@ function Tooltip({
   const toggleShow = () => setIsShowing(!isShowing)
   const toggleFix = () => setIsFixed(!isFixed)
   const stopPropagation = e => e.stopPropagation()
+  const getColor = theme => theme.color(colorKey, colorIndex)
+
+  const isClosable = (clickToFix && isFixed) || noHover
+  const close = () => {
+    setIsFixed(false)
+    setIsShowing(false)
+  }
 
   const direction = getInvertedDirection(side)
-  const getColor = theme => theme.color(colorKey, colorIndex)
 
   return (
     <Target
@@ -186,6 +216,11 @@ function Tooltip({
             as={override.Tick}
           />
           <Content getColor={getColor} isFixed={isFixed} as={override.Content}>
+            {isClosable && (
+              <CloseIcon>
+                <Icon type="remove" active onClick={close} />
+              </CloseIcon>
+            )}
             {content}
           </Content>
         </Positioner>
@@ -202,7 +237,8 @@ Tooltip.propTypes = {
   side: T.oneOf(sideOptions),
   fixOn: T.oneOf(fixOnOptions),
   content: T.node,
-  tolerance: T.number,
+  toleranceX: T.number,
+  toleranceY: T.number,
   override: T.object,
   containerRef: T.object,
 }
