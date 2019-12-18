@@ -104,7 +104,8 @@ function TimeSlider({ width, override = {}, theme }) {
       Positioner: TooltipPositioner,
     },
     containerRef,
-    tolerance: parseInt(theme.spacing(2)),
+    toleranceX: parseInt(theme.spacing(2)),
+    toleranceY: parseInt(theme.spacing(2)),
     content: formatTime(getTime(timepoint)),
   }
 

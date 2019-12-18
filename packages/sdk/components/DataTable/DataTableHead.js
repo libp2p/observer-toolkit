@@ -3,7 +3,6 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import { TableHead } from './styledTable'
-import FilterButton from '../input/FilterButton'
 import Icon from '../Icon'
 
 const ButtonsTray = styled.span`
@@ -32,7 +31,6 @@ function DataTableHead({
 }) {
   const isSortable = !!columnDef.sort
   const isSorted = isSortable && sortColumn === columnDef.name
-  const isFilterable = !!columnDef.filter
 
   const sortIconType = getSortType(isSortable, isSorted, sortDirection)
 
@@ -52,7 +50,6 @@ function DataTableHead({
       key={columnDef.name}
       sortable={isSortable}
       sortDirection={isSorted ? sortDirection : null}
-      filterable={isFilterable}
       {...props}
     >
       {columnDef.header}
@@ -67,11 +64,6 @@ function DataTableHead({
             />
           </>
         )}
-        {isFilterable && (
-          <>
-            <FilterButton {...columnDef.filter} />
-          </>
-        )}
       </ButtonsTray>
     </TableHead>
   )
@@ -84,7 +76,6 @@ DataTableHead.propTypes = {
   setSortColumn: T.func,
   sortDirection: T.string,
   setSortDirection: T.func,
-  filters: T.array,
 }
 
 export default DataTableHead
