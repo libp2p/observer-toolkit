@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useState } from 'react'
 import T from 'prop-types'
 
 import useSorter from '../hooks/useSorter'
-import useFilter from '../hooks/useFilter'
+import { FilterContext } from '../components/context/FilterProvider'
 import { TimeContext } from '../components/context/DataProvider'
 
 function mapSorterToColumn(colName, columnDefs) {
@@ -35,10 +35,10 @@ function applyColumnDefaults(columns) {
   )
 }
 
-function applyCalculations(columns, rawContentProps, metadata) {
+function applyCalculations(columns, contentProps, metadata) {
   return columns.map((column, columnIndex) => {
     if (!column.calculate) return column
-    const columnProps = rawContentProps.map(row => row[columnIndex])
+    const columnProps = contentProps.map(row => row[columnIndex])
 
     const calculated = Object.entries(column.calculate).reduce(
       (calculated, [key, doCalc]) => {
@@ -79,16 +79,22 @@ function useTabularData({
 }) {
   const [sortColumn, setSortColumn] = useState(defaultSort)
   const timepoint = useContext(TimeContext)
+  const { applyFilters } = useContext(FilterContext)
 
   const columnsWithDefaults = applyColumnDefaults(columns)
 
-  const rawContentProps = useMemo(() => {
-    return getContentProps(data, columnsWithDefaults, timepoint, metadata)
-  }, [data, columnsWithDefaults, timepoint, metadata])
+  const contentProps = useMemo(() => {
+    return getContentProps(
+      data.filter(applyFilters),
+      columnsWithDefaults,
+      timepoint,
+      metadata
+    )
+  }, [data, columnsWithDefaults, timepoint, metadata, applyFilters])
 
   const columnDefs = applyCalculations(
     columnsWithDefaults,
-    rawContentProps,
+    contentProps,
     metadata
   )
 
@@ -96,41 +102,7 @@ function useTabularData({
     getInitialSortDef(sortColumn, columnDefs)
   )
 
-  const { applyFilters, dispatchFilters } = useFilter([])
-
-  // Give each filterable column functions to update its column's filter values
-  columnDefs.forEach(col => {
-    if (!col.filter || !!col.filter.updateValues) return
-
-    col.filter.updateValues = values =>
-      dispatchFilters({
-        action: 'update',
-        name: col.filter.name,
-        values,
-      })
-
-    col.filter.addFilter = values =>
-      dispatchFilters({
-        action: 'add',
-        name: col.filter.name,
-        doFilter: col.filter.doFilter,
-        values,
-        mapFilter: row =>
-          row.find(({ columnName }) => columnName === col.name).value,
-      })
-
-    col.filter.removeFilter = () =>
-      dispatchFilters({
-        action: 'remove',
-        name: col.filter.name,
-      })
-  })
-
-  const contentProps = useMemo(() => {
-    const filteredContentProps = rawContentProps.filter(applyFilters)
-    filteredContentProps.sort(sorter)
-    return filteredContentProps
-  }, [rawContentProps, sorter, applyFilters])
+  contentProps.sort(sorter)
 
   return {
     columnDefs,

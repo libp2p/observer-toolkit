@@ -4,11 +4,7 @@ import {
   statusNames,
   transportNames,
 } from '@libp2p-observer/data'
-import {
-  getStringSorter,
-  getNumericSorter,
-  getRangeFilter,
-} from '@libp2p-observer/sdk'
+import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
 
 import {
   AgeContent,
@@ -18,7 +14,6 @@ import {
 } from '../components/cellContent'
 
 import * as statusSorter from '../utils/statusSorter'
-import statusFilter from '../utils/statusFilter'
 
 function getMaxValue(column) {
   return column.reduce((max, { value }) => Math.max(max, value), 0)
@@ -86,14 +81,6 @@ const streamsCol = {
     value: connection.getStreams().getStreamsList().length,
   }),
   sort: numericSorter,
-  calculate: {
-    filter: column =>
-      getRangeFilter({
-        min: 0,
-        max: getMaxValue(column),
-        name: 'Filter number of streams',
-      }),
-  },
 }
 
 const transportCol = {
@@ -115,7 +102,6 @@ const statusCol = {
   cellProps: { align: 'left' },
   renderContent: StatusContent,
   sort: statusSorter,
-  filter: statusFilter,
 }
 
 // Define column order
