@@ -1,5 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import * as utils from './utils'
 
 describe('validateComponentFields only allows valid component fields in supplied object', () => {
