@@ -14,6 +14,10 @@ const AccordionButton = styled.button`
   margin: ${({ theme }) => theme.spacing([0, 4, 0, 1])};
 `
 
+const ButtonText = styled.span`
+  padding: ${({ theme }) => theme.spacing([0, 0.5])};
+`
+
 function FiltersButton({ setIsOpen, isOpen = false }) {
   const { filters } = useContext(FilterContext)
   const enabledFilterCount = filters.filter(filter => filter.enabled).length
@@ -33,7 +37,7 @@ function FiltersButton({ setIsOpen, isOpen = false }) {
       overrides={{ AccordionButton }}
     >
       <Icon type="filter" />
-      {labelText}
+      <ButtonText>{labelText}</ButtonText>
     </AccordionControl>
   )
 }
