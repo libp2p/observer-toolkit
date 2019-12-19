@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -8,11 +8,11 @@ const Container = styled.div`
   display: flex;
 `
 
-function FiltersTray({ isOpen = false, overrides = {} }) {
+function FiltersTray({ overrides = {} }) {
   const { filters } = useContext(FilterContext)
 
   return (
-    <Container isOpen={isOpen}>
+    <Container>
       {filters.map(filter => (
         <FilterChip filterDef={filter} key={filter.name} />
       ))}
