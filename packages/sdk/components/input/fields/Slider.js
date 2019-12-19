@@ -8,7 +8,7 @@ import Icon from '../../Icon'
 import Tooltip from '../../Tooltip'
 
 const CONTROL_WIDTH = 16
-const BAR_HEIGHT = 12
+const BAR_HEIGHT = 8
 const WIDTH = 340
 
 const Container = styled.div`
@@ -29,13 +29,14 @@ const Bar = styled.div`
 
 const ActiveSection = styled.div`
   flex-grow: 1;
-  background: ${({ theme }) => theme.color('primary', 1)};
+  background: ${({ theme }) => theme.color('background', 1)};
   height: 100%;
   border-radius: ${({ theme }) => theme.spacing()};
   user-select: none;
 `
 const InactiveSection = styled.div`
   height: 100%;
+  background: ${({ theme }) => theme.color('highlight', 0)};
   user-select: none;
 `
 
@@ -43,13 +44,13 @@ const Control = styled.div`
   position: absolute;
   width: ${({ width }) => width}px;
   height: ${({ width }) => width}px;
-  margin-top: -${BAR_HEIGHT / 2}px;
+  margin-top: -${BAR_HEIGHT / 2 + 2}px;
   border-radius: ${({ width, isLower, isUpper }) =>
     `${!isUpper ? `${width}px ` : '0 '} ${
       !isLower ? `${width}px ${width}px ` : '0 0 '
     } ${!isUpper ? `${width}px` : '0'}`};
   border: 2px solid ${({ theme }) => theme.color('background', 2)};
-  background: ${({ theme }) => theme.color('primary')};
+  background: ${({ theme }) => theme.color('background')};
   text-align: center;
   cursor: col-resize;
   ${({ theme }) => theme.boxShadow()}
