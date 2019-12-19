@@ -113,6 +113,17 @@ function getStepIndex(position, steps) {
   return nearestStepIndex
 }
 
+function getLowerStepIndex(value, isRange, min, max) {
+  if (typeof value === 'number') return value
+  return isRange ? min : max
+}
+
+function getUpperStepIndex(value, isRange, max) {
+  if (!isRange) return null // Unused unless isRange
+  if (typeof value === 'number') return value
+  return max
+}
+
 function getNearestFieldName(
   mousePosition,
   position,
@@ -179,14 +190,15 @@ function Slider({
   const [lowerNumberInput, setLowerNumberInput] = useState(null)
   const [upperNumberInput, setUpperNumberInput] = useState(null)
 
-  // If a `value` has no defined number, use the current default based on min/max, so it changes if min/max change
-  const lowerStepIndex =
-    (typeof values[fieldNames[0]] === 'number' && values[fieldNames[0]]) ||
-    (isRange ? min : max)
-
-  const upperStepIndex =
-    isRange &&
-    (typeof values[fieldNames[1]] === 'number' ? values[fieldNames[1]] : max)
+  // If a `value` has no defined number, position based on min/max
+  // so the default display adapts as min/max change
+  const lowerStepIndex = getLowerStepIndex(
+    values[fieldNames[0]],
+    isRange,
+    min,
+    max
+  )
+  const upperStepIndex = getUpperStepIndex(values[fieldNames[1]], isRange, max)
 
   // Position is a decimal number >=0 <=1 representing the % distance along the slider
   const lowerPosition = getStepPosition(lowerStepIndex, min, max, steps)
@@ -221,7 +233,8 @@ function Slider({
   const handleMouseMove = (event, fieldName = fieldIsSliding) => {
     if (!fieldName) return
     const mouseX = getMouseX(event, containerRef)
-    const position = getMousePosition(mouseX, width)
+    const containerWidth = containerRef.current.getBoundingClientRect().width
+    const position = getMousePosition(mouseX, containerWidth)
 
     const stepIndex = getStepIndex(position, steps)
     handleChange(stepIndex, fieldName)
