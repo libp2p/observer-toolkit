@@ -9,7 +9,6 @@ import Icon from '../Icon'
 import Chip from '../Chip'
 import Tooltip from '../Tooltip'
 import { RootNodeContext } from '../context/RootNodeProvider'
-import { FilterContext } from '../context/FilterProvider'
 
 const Container = styled.span`
   display: inline-block;
@@ -31,20 +30,17 @@ const CheckIconButton = styled.a`
 `
 
 function FilterChip({
-  filterDef: {
+  filter: { name, enabled, values: filterValues, getFilterDef },
+}) {
+  const {
     FilterUi,
     initialValues,
-    mapValues,
     filterUiProps,
-    name,
-    enabled,
-    values: filterValues,
     valueNames = Object.keys(initialValues),
-  },
-}) {
+  } = getFilterDef()
+
   const rootNodeRef = useContext(RootNodeContext)
   const dispatchFilters = useContext(FilterSetterContext)
-  const { filters } = useContext(FilterContext)
 
   const dispatch = (actionName, values) =>
     dispatchFilters({
@@ -155,13 +151,11 @@ function FilterChip({
 }
 
 FilterChip.propTypes = {
-  filterDef: T.shape({
+  filter: T.shape({
     name: T.string.isRequired,
-    FilterUi: T.elementType.isRequired,
-    initialValues: T.object,
-    valueNamesOrdered: T.array,
-    mapValues: T.func,
-    filterUiProps: T.object,
+    values: T.object,
+    enabled: T.bool,
+    getFilterDef: T.func.isRequired,
   }).isRequired,
   children: T.node,
 }

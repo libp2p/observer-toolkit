@@ -1,17 +1,15 @@
 function validateWidgetFields(widget) {
   if (!widget || typeof widget !== 'object')
     throw new Error(
-      'Invalid component type, must be an object with properties `name`, `Component`, `description`, `tags` and optionally `screenshot`'
+      'Invalid widget type, must be an object with properties `name`, `Widget`, `description`, `tags` and optionally `screenshot`'
     )
 
-  const { name, Component, description, tags, screenshot, filterDefs } = widget
+  const { name, Widget, description, tags, screenshot } = widget
 
   if (!name || typeof name !== 'string')
     throw new Error(`Invalid widget name "${name}" (${typeof name})`)
-  if (!Component || typeof Component !== 'function')
-    throw new Error(
-      `Invalid Component renderer for ${name} (${typeof Component})`
-    )
+  if (!Widget || typeof Widget !== 'function')
+    throw new Error(`Invalid Widget renderer for ${name} (${typeof Widget})`)
   if (!description || typeof description !== 'string')
     throw new Error(
       `Invalid widget description "${description}" for ${name} (${typeof description})`
@@ -19,18 +17,12 @@ function validateWidgetFields(widget) {
   if (!tags || !Array.isArray(tags))
     throw new Error(`Invalid widget tags for ${name} (${typeof tags})`)
 
-  if (filterDefs && !Array.isArray(filterDefs))
-    throw new Error(
-      `Invalid filter definitions for ${name} (${typeof filterDefs})`
-    )
-
   return {
     name,
-    Component,
+    Widget,
     description,
     tags,
     screenshot,
-    filterDefs,
   }
 }
 

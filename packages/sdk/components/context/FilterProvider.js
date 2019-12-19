@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext } from 'react'
 import T from 'prop-types'
 
 import useFilter from '../../hooks/useFilter'
@@ -12,7 +12,7 @@ function FilterProvider({ filterDefs = [], children }) {
   return (
     // applyFilters and filters change together; dispatchFilters should never change
     <FilterSetterContext.Provider value={dispatchFilters}>
-      <FilterContext.Provider value={{ applyFilters, filters }}>
+      <FilterContext.Provider value={{ applyFilters, filters, filterDefs }}>
         {children}
       </FilterContext.Provider>
     </FilterSetterContext.Provider>

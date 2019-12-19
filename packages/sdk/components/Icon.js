@@ -67,7 +67,7 @@ Icon.propTypes = {
   onClick: T.func,
   active: T.bool,
   disabled: T.bool,
-  size: T.number,
+  size: T.string,
   override: T.object,
 }
 
