@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { Formik } from 'formik'
+import isEqual from 'lodash.isequal'
 
 import { FilterSetterContext } from '../context/FilterProvider'
 import Icon from '../Icon'
@@ -37,6 +38,7 @@ function FilterChip({
     filterUiProps,
     name,
     enabled,
+    values: filterValues,
     valueNames = Object.keys(initialValues),
   },
 }) {
@@ -73,21 +75,23 @@ function FilterChip({
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={filterValues || initialValues}
       onSubmit={(values, { setSubmitting }) => {
         handleChange(values)
         setSubmitting(false)
       }}
       enableReinitialize
     >
-      {({ values, resetForm, setFieldValue, submitForm, dirty }) => {
-        const reset = () => {
-          resetForm()
+      {({ values, resetForm, setFieldValue, submitForm }) => {
+        const reset = e => {
+          e.stopPropagation()
+          resetForm(initialValues)
           submitForm()
         }
         const chipType = enabled ? 'active' : 'inactive'
+        const hasValues = !isEqual(values, initialValues)
 
-        const chipPrefix = dirty ? (
+        const chipPrefix = hasValues ? (
           <Tooltip
             side="top"
             fixOn="never"
@@ -104,7 +108,7 @@ function FilterChip({
           ''
         )
 
-        const chipSuffix = dirty ? (
+        const chipSuffix = hasValues ? (
           <Tooltip side="top" fixOn="never" content="Reset filter">
             <Icon
               onClick={reset}
