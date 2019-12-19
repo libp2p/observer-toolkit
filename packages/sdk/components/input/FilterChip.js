@@ -52,8 +52,14 @@ function FilterChip({
     })
 
   const handleChange = values => dispatch('update', values)
-  const disable = () => dispatch('disable')
-  const enable = () => dispatch('enable')
+  const disable = e => {
+    e.stopPropagation()
+    dispatch('disable')
+  }
+  const enable = e => {
+    e.stopPropagation()
+    dispatch('enable')
+  }
 
   const chipOptions = {
     active: {
