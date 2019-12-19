@@ -12,7 +12,7 @@ const BAR_HEIGHT = 12
 const WIDTH = 340
 
 const Container = styled.div`
-  padding: ${({ theme }) => `${theme.spacing(3)} ${theme.spacing(2)} 0`};
+  padding: ${({ theme }) => theme.spacing([3, 2, 0])};
   user-select: none;
   width: ${({ width }) => width}px;
 `
@@ -180,11 +180,9 @@ function Slider({
 
   // If a `value` has no defined number, use the current default based on min/max, so it changes if min/max change
   const lowerStepIndex =
-    typeof values[fieldNames[0]] === 'number'
-      ? values[fieldNames[0]]
-      : isRange
-      ? min
-      : max
+    (typeof values[fieldNames[0]] === 'number' && values[fieldNames[0]]) ||
+    (isRange ? min : max)
+
   const upperStepIndex =
     isRange &&
     (typeof values[fieldNames[1]] === 'number' ? values[fieldNames[1]] : max)
