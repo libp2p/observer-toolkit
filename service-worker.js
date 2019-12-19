@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/libp2p-introspection-ui/precache-manifest.f4249842fbef6a571552d3f9209b7721.js"
+  "/libp2p-introspection-ui/precache-manifest.0c906a62ab922ac4897427c283f5ba0d.js"
 );
 
 self.addEventListener('message', (event) => {
