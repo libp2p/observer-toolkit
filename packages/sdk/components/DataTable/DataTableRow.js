@@ -9,9 +9,9 @@ function DataTableRow({ rowContentProps, columnDefs, ...rowProps }) {
     () => (
       <>
         {columnDefs.map(
-          ({ renderContent, name, cellProps = {} }, cellIndex) => {
+          ({ renderContent, align, name, cellProps = {} }, cellIndex) => {
             return (
-              <TableCell key={name} {...cellProps}>
+              <TableCell align={align} key={name} {...cellProps}>
                 {renderContent(rowContentProps[cellIndex])}
               </TableCell>
             )

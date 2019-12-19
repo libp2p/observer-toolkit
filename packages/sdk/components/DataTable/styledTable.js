@@ -7,7 +7,7 @@ const Table = styled.table`
 `
 
 const TableRow = styled.tr`
-  border-bottom: 2px solid ${({ theme }) => theme.color('background', 1)};
+  border-bottom: 1px solid ${({ theme }) => theme.color('background', 1, 0.5)};
   ${({ highlighted, theme }) =>
     highlighted
       ? `background-color: ${theme.color('background', 2, 0.5)};`
@@ -19,16 +19,15 @@ const TableHead = styled.th`
   padding-right: 0;
   font-family: plex-sans;
   font-weight: 600;
-  border-bottom: 1px solid ${({ theme }) => theme.color('background', 2)};
   background-color: ${({ theme }) => theme.color('secondary', 1, 0.2)};
-  color: ${({ theme }) => theme.color('text', 0, 0.6)};
+  color: ${({ theme }) => theme.color('text', 1, 0.8)};
   text-transform: uppercase;
   white-space: nowrap;
+  ${({ align }) => (align ? `text-align: ${align};` : '')}
 `
 
 const TableCell = styled.td`
   ${({ theme }) => theme.styles.tableCell}
-  font-size: 9pt;
   padding-right: ${({ theme }) => theme.spacing(4)};
   font-weight: 400;
   font-family: plex-sans;

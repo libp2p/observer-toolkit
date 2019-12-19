@@ -8,13 +8,14 @@ const Container = styled.div`
     height: ${size}px;
     width: ${size}px;
   `}
-  ${({ inline, theme }) =>
+  ${({ inline, theme, size }) =>
     !inline
       ? ''
       : `
     display: inline-block;
     vertical-align: middle;
-    margin: 0 ${theme.spacing()};
+    margin-left: ${theme.spacing()};
+    margin-right: ${theme.spacing(-0.5, true) - size / 2}px;
   `}
 `
 
