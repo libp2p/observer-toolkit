@@ -18,7 +18,6 @@ const Container = styled.span`
     `
       color: ${theme.color('text', 3)};
   `}
-  ${({ theme, offset }) => offset && `margin-right: -${theme.spacing(2)};`}
   ${({ onClick, theme, disabled }) =>
     onClick &&
     !disabled &&
@@ -30,6 +29,10 @@ const Container = styled.span`
   `}
 `
 
+const Empty = styled.span`
+  display: inline-block;
+`
+
 function Icon({
   type,
   onClick,
@@ -37,8 +40,9 @@ function Icon({
   disabled,
   size = '2em',
   override = {},
+  ...props
 }) {
-  const IconSvg = icons[type]
+  const IconSvg = type ? icons[type] : Empty
   if (!IconSvg) throw new Error(`No icon found named "${type}"`)
 
   const isButton = onClick && !disabled
@@ -51,6 +55,7 @@ function Icon({
       disabled={disabled}
       size={size}
       as={override.Container}
+      {...props}
     >
       <IconSvg as={override.IconSvg} />
     </Container>
@@ -58,11 +63,10 @@ function Icon({
 }
 
 Icon.propTypes = {
-  type: T.string.isRequired,
+  type: T.string,
   onClick: T.func,
   active: T.bool,
   disabled: T.bool,
-  offset: T.bool,
   size: T.number,
   override: T.object,
 }

@@ -47,6 +47,7 @@ const dataInCol = {
   }),
   renderContent: BytesContent,
   sort: numericSorter,
+  align: 'right',
 }
 
 const dataOutCol = {
@@ -59,6 +60,7 @@ const dataOutCol = {
   }),
   renderContent: BytesContent,
   sort: numericSorter,
+  align: 'right',
 }
 
 const ageCol = {
@@ -73,6 +75,7 @@ const ageCol = {
   },
   renderContent: AgeContent,
   sort: numericSorter,
+  align: 'right',
 }
 
 const streamsCol = {
@@ -81,6 +84,7 @@ const streamsCol = {
     value: connection.getStreams().getStreamsList().length,
   }),
   sort: numericSorter,
+  align: 'right',
 }
 
 const transportCol = {
@@ -109,11 +113,11 @@ const statusCol = {
 const columns = [
   statusCol,
   peerIdCol,
+  transportCol,
+  ageCol,
   dataInCol,
   dataOutCol,
-  ageCol,
   streamsCol,
-  transportCol,
 ]
 
 export default columns

@@ -1,24 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
 import { TableHead } from './styledTable'
 import Icon from '../Icon'
 
-const ButtonsTray = styled.span`
-  display: inline-flex;
-  justify-content: flex-start;
-  align-items: center;
-  white-space: nowrap;
+const IconContainer = styled.span`
+  height: ${({ size }) => size};
+  width: ${({ size }) => size};
+  display: inline-block;
   vertical-align: middle;
-  margin-left: ${({ theme }) => theme.spacing(2)};
+  margin-left: ${({ theme }) => theme.spacing(0.5)};
+  ${({ theme, hover }) =>
+    hover ? `color: ${theme.color('secondary', 0)};` : ''}
+  ${({ theme, isSorted }) =>
+    isSorted && theme.transition({ property: 'transform' })}
+  transform: rotate(${({ rotation }) => rotation}deg);
+`
+const TableHeadInner = styled.div`
+  ${({ isSortable, theme, hover }) =>
+    isSortable
+      ? `
+    cursor: pointer;
+    ${
+      hover
+        ? `
+      color: ${theme.color('text', 1)};
+    `
+        : ''
+    }
+  `
+      : ''}
 `
 
-function getSortType(isSortable, isSorted, sortDirection) {
-  if (!isSortable) return null
-  if (!isSorted) return 'sort'
-  return sortDirection
+function flip(sortDirection) {
+  return sortDirection === 'asc' ? 'desc' : 'asc'
 }
+
+const iconSize = '2em'
 
 function DataTableHead({
   columnDef,
@@ -29,42 +48,49 @@ function DataTableHead({
   setSortDirection,
   ...props
 }) {
+  const [hover, setHover] = useState(false)
   const isSortable = !!columnDef.sort
   const isSorted = isSortable && sortColumn === columnDef.name
 
-  const sortIconType = getSortType(isSortable, isSorted, sortDirection)
+  const defaultSortDirection = columnDef.sort.defaultDirection
+  const sortDirectionOnClick =
+    isSortable && (isSorted ? flip(sortDirection) : defaultSortDirection)
+  const sortIconType = (isSortable && hover) || isSorted ? 'back' : null
+  const sortIconDirection = hover ? sortDirectionOnClick : sortDirection
+  const sortIconRotation = sortIconDirection === 'asc' ? 90 : 270
 
   const sortIconAction = () => {
-    if (sortIconType === 'sort') {
-      setSortColumn(columnDef.name)
-      const defaultSortDirection = columnDef.sort.defaultDirection
-      if (sortDirection !== defaultSortDirection)
-        setSortDirection(defaultSortDirection)
-      return
-    }
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+    setHover(false)
+    if (!isSorted) setSortColumn(columnDef.name)
+    setSortDirection(sortDirectionOnClick)
   }
+  const hoverIn = () => setHover(true)
+  const hoverOut = () => setHover(false)
 
   return (
     <TableHead
       key={columnDef.name}
-      sortable={isSortable}
       sortDirection={isSorted ? sortDirection : null}
+      onClick={isSortable ? () => sortIconAction() : null}
+      align={columnDef.align}
       {...props}
     >
-      {columnDef.header}
-      <ButtonsTray>
-        {isSortable && (
-          <>
-            <Icon
-              type={sortIconType}
-              active={sortIconType !== 'sort'}
-              onClick={() => sortIconAction()}
-              offset
-            />
-          </>
-        )}
-      </ButtonsTray>
+      <TableHeadInner
+        isSortable={isSortable}
+        hover={hover}
+        onMouseEnter={hoverIn}
+        onMouseLeave={hoverOut}
+      >
+        {columnDef.header}
+        <IconContainer
+          hover={hover}
+          rotation={sortIconRotation}
+          isSorted={isSorted}
+          size={iconSize}
+        >
+          <Icon type={sortIconType} size={iconSize} />
+        </IconContainer>
+      </TableHeadInner>
     </TableHead>
   )
 }
