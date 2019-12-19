@@ -1,4 +1,4 @@
-import { useReducer, useCallback } from 'react'
+import { useCallback, useReducer, useRef } from 'react'
 import T from 'prop-types'
 import isEqual from 'lodash.isequal'
 
@@ -33,15 +33,13 @@ function updateFilters(filters, { action, name, values }) {
 
 function updateValues(filters, targetFilter, values) {
   if (targetFilter.values === values) return filters
+  const { initialValues } = targetFilter.getFilterDef()
 
-  if (
-    !targetFilter.enabled &&
-    isEqual(targetFilter.values, targetFilter.initialValues)
-  ) {
+  if (!targetFilter.enabled && isEqual(targetFilter.values, initialValues)) {
     targetFilter.enabled = true
   }
 
-  if (targetFilter.enabled && isEqual(values, targetFilter.initialValues)) {
+  if (targetFilter.enabled && isEqual(values, initialValues)) {
     targetFilter.enabled = false
   }
 
@@ -64,37 +62,50 @@ function disableFilter(filters, targetFilter) {
 }
 
 function resetFilter(filters, targetFilter) {
+  const { initialValues } = targetFilter.getFilterDef()
+
   if (!targetFilter.enabled && isEqual(targetFilter.values, initialValues))
     return filters
 
-  targetFilter.values = targetFilter.initialValues
+  targetFilter.values = initialValues
   targetFilter.enabled = false
 
   return [...filters]
 }
 
-function initializeFilters(filterDefs) {
-  return filterDefs.map(filterDef => ({
-    values: filterDef.initialValues,
-    ...filterDef,
+function initializeFilters(filterDefsRef) {
+  return filterDefsRef.current.map(({ initialValues, name }) => ({
+    values: { ...initialValues },
+    name,
+    enabled: false,
+    getFilterDef: () => filterDefsRef.current.find(def => def.name === name),
   }))
 }
 
 function useFilter(filterDefs) {
+  const filterDefsRef = useRef()
+  filterDefsRef.current = filterDefs
+
   const [filters, dispatchFilters] = useReducer(
     updateFilters,
-    initializeFilters(filterDefs)
+    initializeFilters(filterDefsRef)
   )
+
+  // Separate filter definitions and state
+  // values and enabled in filters
+  // defs pass straight through
 
   const applyFilters = useCallback(
     datum => {
       if (!filters.length) return true
       return filters
         .filter(filter => filter.enabled)
-        .every(
-          ({ doFilter, values, mapFilter }) =>
+        .every(({ name, values, getFilterDef }) => {
+          const { doFilter, mapFilter } = getFilterDef()
+          return (
             !values || doFilter(mapFilter ? mapFilter(datum) : datum, values)
-        )
+          )
+        })
     },
     [filters]
   )

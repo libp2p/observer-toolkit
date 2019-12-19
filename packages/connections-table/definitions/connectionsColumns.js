@@ -15,10 +15,6 @@ import {
 
 import * as statusSorter from '../utils/statusSorter'
 
-function getMaxValue(column) {
-  return column.reduce((max, { value }) => Math.max(max, value), 0)
-}
-
 const stringSorter = {
   getSorter: getStringSorter,
   defaultDirection: 'asc',

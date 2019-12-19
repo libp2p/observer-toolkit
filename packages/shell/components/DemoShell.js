@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 import {
   DataProvider,
-  FilterProvider,
   ThemeSetter,
   applySampleData,
   RootNodeProvider,
@@ -58,16 +57,14 @@ function DemoShell({ children }) {
     'Loading sample data...'
   ) : (
     <ThemeSetter>
-      <FilterProvider>
-        <DataProvider initialData={mockData}>
-          <Page>
-            <Content>
-              <RootNodeProvider>{children}</RootNodeProvider>
-            </Content>
-            <ControlPanel />
-          </Page>
-        </DataProvider>
-      </FilterProvider>
+      <DataProvider initialData={mockData}>
+        <Page>
+          <Content>
+            <RootNodeProvider>{children}</RootNodeProvider>
+          </Content>
+          <ControlPanel />
+        </Page>
+      </DataProvider>
     </ThemeSetter>
   )
 }

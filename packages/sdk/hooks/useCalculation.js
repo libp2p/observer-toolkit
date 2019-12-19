@@ -21,8 +21,9 @@ function useCalculation(doCalculation, deps) {
   if (deps.includes('dataset')) calcProps = { dataset, ...calcProps }
   if (deps.includes('timepoint')) calcProps = { timepoint, ...calcProps }
   if (deps.includes('runtime')) calcProps = { runtime, ...calcProps }
-  if (deps.includes('filters'))
+  if (deps.includes('filters')) {
     calcProps = { filters, applyFilters, ...calcProps }
+  }
 
   const value = useMemo(() => doCalculation(calcProps), [
     calcProps,
