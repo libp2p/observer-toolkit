@@ -29,6 +29,16 @@ const CheckIconButton = styled.a`
   }
 `
 
+const Positioner = styled.div`
+  left: ${({ theme }) => theme.spacing(-4)};
+  transform: none;
+`
+
+const Tick = styled.div`
+  left: ${({ theme }) => theme.spacing(6)};
+  transform: none;
+`
+
 function FilterChip({
   filter: { name, enabled, values: filterValues, getFilterDef },
 }) {
@@ -123,6 +133,7 @@ function FilterChip({
               containerRef={rootNodeRef}
               fixOn={'no-hover'}
               toleranceY={null}
+              override={{ Positioner, Tick }}
               content={
                 <FilterUi
                   onChange={submitForm}
