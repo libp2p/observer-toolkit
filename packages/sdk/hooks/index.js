@@ -1,4 +1,5 @@
 // Data modifiers
+export { default as useCalculation } from './useCalculation'
 export { default as useFilter } from './useFilter'
 export { default as useSorter } from './useSorter'
 

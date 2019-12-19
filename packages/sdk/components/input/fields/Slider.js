@@ -3,6 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { Field } from 'formik'
 
+import { calculatableProp } from '../../../utils/helpers'
 import Icon from '../../Icon'
 import Tooltip from '../../Tooltip'
 
@@ -141,6 +142,9 @@ function Slider({
   /**
    *** Props, validation, settings
    **/
+
+  min = calculatableProp(min)
+  max = calculatableProp(max)
 
   if (fieldNames.length > 2) {
     throw new Error(
@@ -403,8 +407,8 @@ Slider.propTypes = {
   values: T.object.isRequired,
   setFieldValue: T.func.isRequired,
   fieldNames: T.array,
-  min: T.number,
-  max: T.number,
+  min: T.oneOfType([T.number, T.func]),
+  max: T.oneOfType([T.number, T.func]).isRequired,
   steps: T.number,
   stepInterval: T.number,
   controlWidth: T.number,
