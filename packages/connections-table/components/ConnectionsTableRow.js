@@ -3,11 +3,17 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import {
   DataTableRow,
+  Icon,
   PeerContext,
   SetterContext,
   StyledButton,
   TableCell,
 } from '@libp2p-observer/sdk'
+
+const ExpandIcon = styled.span`
+  transform: rotate(90deg);
+  margin-right: ${({ theme }) => theme.spacing(-1)};
+`
 
 import ConnectionsStreamsRow from './ConnectionsStreamsRow'
 
@@ -50,7 +56,7 @@ function ConnectionsTableRow({ rowContentProps, columnDefs }) {
   }
 
   const streamsButtonAction = streamsCount ? () => setIsExpanded(true) : null
-  const streamsButtonText = streamsCount ? `Show streams` : 'No streams'
+  const streamsButtonText = streamsCount ? `View streams` : 'No streams'
 
   return (
     <DataTableRow
@@ -63,6 +69,9 @@ function ConnectionsTableRow({ rowContentProps, columnDefs }) {
       <ExpandStreamsCell align="left">
         <StyledButton disabled={!streamsCount} onClick={streamsButtonAction}>
           {streamsButtonText}
+          {streamsCount && (
+            <Icon type="expand" override={{ Container: ExpandIcon }} />
+          )}
         </StyledButton>
       </ExpandStreamsCell>
     </DataTableRow>
