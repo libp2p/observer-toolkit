@@ -32,6 +32,7 @@ const peerIdCol = {
   getProps: connection => ({ value: connection.getPeerId() }),
   renderContent: PeerIdContent,
   sort: stringSorter,
+  rowKey: 'value',
 }
 
 const dataInCol = {

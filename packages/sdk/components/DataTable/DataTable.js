@@ -16,6 +16,15 @@ function DataTable({
 }) {
   const DataTableRow = override.DataTableRow || DefaultDataTableRow
   const DataTableHead = override.DataTableHead || DefaultDataTableHead
+
+  // Key rows by a unique identifying property if one is declared in column def
+  const keyColumnIndex = columnDefs.findIndex(colDef => !!colDef.rowKey)
+  const keyColumn = keyColumnIndex >= 0 && columnDefs[keyColumnIndex]
+  const getRowKey = (rowContentProps, rowIndex) =>
+    keyColumn
+      ? rowContentProps[keyColumnIndex][keyColumn.rowKey]
+      : `row_${rowIndex}`
+
   return (
     <Table as={override.TableHead}>
       <THead as={override.THead}>
@@ -34,13 +43,16 @@ function DataTable({
         </THeadRow>
       </THead>
       <TBody as={override.TBody}>
-        {contentProps.map((rowContentProps, rowIndex) => (
-          <DataTableRow
-            key={`row_${rowIndex}`}
-            rowContentProps={rowContentProps}
-            columnDefs={columnDefs}
-          />
-        ))}
+        {contentProps.map((rowContentProps, rowIndex) => {
+          const key = getRowKey(rowContentProps, rowIndex)
+          return (
+            <DataTableRow
+              key={key}
+              rowContentProps={rowContentProps}
+              columnDefs={columnDefs}
+            />
+          )
+        })}
       </TBody>
     </Table>
   )
