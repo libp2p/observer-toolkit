@@ -11,6 +11,7 @@ import {
   BytesContent,
   PeerIdContent,
   StatusContent,
+  StreamsTableHead,
 } from '../components/cellContent'
 
 import * as statusSorter from '../utils/statusSorter'
@@ -81,6 +82,7 @@ const streamsCol = {
   }),
   sort: numericSorter,
   align: 'right',
+  override: { TableHead: StreamsTableHead },
 }
 
 const transportCol = {
