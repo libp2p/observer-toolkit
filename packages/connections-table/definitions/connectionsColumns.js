@@ -101,7 +101,6 @@ const transportCol = {
 const statusCol = {
   name: 'status',
   getProps: connection => ({ value: statusNames[connection.getStatus()] }),
-  cellProps: { align: 'left' },
   renderContent: StatusContent,
   sort: statusSorter,
 }

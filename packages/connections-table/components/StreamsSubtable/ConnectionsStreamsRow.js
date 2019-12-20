@@ -2,7 +2,9 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { Icon, TableCell, TableRow } from '@libp2p-observer/sdk'
+import { Icon, TableCell, TableRow, TimeContext } from '@libp2p-observer/sdk'
+import { getConnections } from '@libp2p-observer/data'
+import StreamsSubtable from './StreamsSubtable'
 
 const PushApart = styled.div`
   white-space: nowrap;
@@ -23,6 +25,7 @@ const ExpandedRow = styled(TableRow)`
 `
 
 const ConnectionCell = styled(TableCell)`
+  vertical-align: top;
   border: inherit;
 `
 
@@ -41,6 +44,7 @@ const Heading = styled.h3`
 const CloseIcon = styled.span``
 
 function ConnectionsStreamsRow({
+  peerId,
   streamsCount,
   rowContentProps,
   columnDefs,
@@ -49,6 +53,10 @@ function ConnectionsStreamsRow({
   onMouseLeave,
   highlighted,
 }) {
+  const timepoint = useContext(TimeContext)
+  const connections = getConnections(timepoint)
+  const connection = connections.find(conn => conn.getPeerId() === peerId)
+
   return (
     <ExpandedRow
       highlighted={highlighted}
@@ -74,14 +82,21 @@ function ConnectionsStreamsRow({
             override={{ Container: CloseIcon }}
           />
         </PushApart>
+        <StreamsSubtable connection={connection} />
       </StreamsCell>
     </ExpandedRow>
   )
 }
 
 ConnectionsStreamsRow.propTypes = {
+  peerId: T.string.isRequired,
+  streamsCount: T.number.isRequired,
   rowContentProps: T.array.isRequired,
   columnDefs: T.array.isRequired,
+  closeRow: T.func.isRequired,
+  onMouseEnter: T.func,
+  onMouseLeave: T.func,
+  highlighted: T.bool,
 }
 
 export default ConnectionsStreamsRow

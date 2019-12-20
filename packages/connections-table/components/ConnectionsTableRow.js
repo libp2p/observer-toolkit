@@ -10,12 +10,12 @@ import {
   TableCell,
 } from '@libp2p-observer/sdk'
 
+import ConnectionsStreamsRow from './StreamsSubtable/ConnectionsStreamsRow'
+
 const ExpandIcon = styled.span`
   transform: rotate(90deg);
   margin-right: ${({ theme }) => theme.spacing(-1)};
 `
-
-import ConnectionsStreamsRow from './ConnectionsStreamsRow'
 
 const ExpandStreamsCell = styled(TableCell)`
   padding-left: 0;
@@ -44,6 +44,7 @@ function ConnectionsTableRow({ rowContentProps, columnDefs }) {
     const closeRow = () => setIsExpanded(false)
     return (
       <ConnectionsStreamsRow
+        peerId={peerId}
         rowContentProps={rowContentProps}
         columnDefs={columnDefs}
         closeRow={closeRow}
