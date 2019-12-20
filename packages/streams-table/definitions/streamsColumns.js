@@ -10,6 +10,7 @@ import {
   AgeContent,
   BytesContent,
   PeerIdContent,
+  StatusContent,
 } from '../components/cellContent'
 
 import * as statusSorter from '../utils/statusSorter'
@@ -55,6 +56,7 @@ const dataInCol = {
   }),
   renderContent: BytesContent,
   sort: numericSorter,
+  align: 'right',
 }
 
 const dataOutCol = {
@@ -67,6 +69,7 @@ const dataOutCol = {
   }),
   renderContent: BytesContent,
   sort: numericSorter,
+  align: 'right',
 }
 
 // TODO: fix this, calculation incorrect for mock streams
@@ -83,6 +86,7 @@ const ageCol = {
   },
   renderContent: AgeContent,
   sort: numericSorter,
+  align: 'right',
 }
 /* eslint-enable no-unused-vars */
 
@@ -96,18 +100,19 @@ const streamStatusCol = {
   name: 'stream-status',
   header: 'status',
   getProps: ({ stream }) => ({ value: statusNames[stream.getStatus()] }),
+  renderContent: StatusContent,
   sort: statusSorter,
 }
 
 // Define column order
 const columns = [
-  peerIdCol,
-  transportCol,
+  streamStatusCol,
+  protocolCol,
   dataInCol,
   dataOutCol,
+  transportCol,
+  peerIdCol,
   // ageCol,
-  protocolCol,
-  streamStatusCol,
 ]
 
 export default columns
