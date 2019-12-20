@@ -20,6 +20,16 @@ function ConnectionsTableRow({ rowContentProps, columnDefs }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const globalPeerId = useContext(PeerContext)
   const { setPeerId } = useContext(SetterContext)
+  const peerIdRow = rowContentProps.find(row => row.columnName === 'peerId')
+  const peerId = peerIdRow ? peerIdRow.value : null
+  const isHighlighted = peerId === globalPeerId
+
+  function mouseEnterHandler() {
+    if (peerId !== globalPeerId) setPeerId(peerId)
+  }
+  function mouseLeaveHandler() {
+    if (globalPeerId) setPeerId(null)
+  }
 
   const streamsRow = rowContentProps.find(row => row.columnName === 'streams')
   const streamsCount = streamsRow ? streamsRow.value : null
@@ -32,21 +42,13 @@ function ConnectionsTableRow({ rowContentProps, columnDefs }) {
         columnDefs={columnDefs}
         closeRow={closeRow}
         streamsCount={streamsCount}
+        onMouseEnter={mouseEnterHandler}
+        onMouseLeave={mouseLeaveHandler}
+        highlighted={isHighlighted}
       />
     )
   }
 
-  const peerIdRow = rowContentProps.find(row => row.columnName === 'peerId')
-  const peerId = peerIdRow ? peerIdRow.value : null
-
-  function mouseEnterHandler() {
-    if (peerId !== globalPeerId) setPeerId(peerId)
-  }
-  function mouseLeaveHandler() {
-    if (globalPeerId) setPeerId(null)
-  }
-
-  const highlighted = peerId === globalPeerId
   const streamsButtonAction = streamsCount ? () => setIsExpanded(true) : null
   const streamsButtonText = streamsCount ? `Show streams` : 'No streams'
 
@@ -56,7 +58,7 @@ function ConnectionsTableRow({ rowContentProps, columnDefs }) {
       columnDefs={columnDefs}
       onMouseEnter={mouseEnterHandler}
       onMouseLeave={mouseLeaveHandler}
-      highlighted={highlighted}
+      highlighted={isHighlighted}
     >
       <ExpandStreamsCell align="left">
         <StyledButton disabled={!streamsCount} onClick={streamsButtonAction}>

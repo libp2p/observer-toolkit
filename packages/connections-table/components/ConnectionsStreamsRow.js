@@ -14,15 +14,20 @@ const PushApart = styled.div`
 `
 
 const ExpandedRow = styled(TableRow)`
-  border-top: 4px solid ${({ theme }) => theme.color('background', 1)};
-  border-bottom: 4px solid ${({ theme }) => theme.color('background', 1)};
+  background: none;
+  border: solid 8px
+    ${({ theme, highlighted }) =>
+      highlighted
+        ? theme.color('background', 2)
+        : theme.color('background', 1)};
 `
 
 const ConnectionCell = styled(TableCell)`
-  border: 4px solid ${({ theme }) => theme.color('primary', 0, 0.1)};
+  border: inherit;
 `
 
 const StreamsCell = styled(TableCell)`
+  border: inherit;
   position: relative;
   vertical-align: top;
   padding: 0;
@@ -40,9 +45,16 @@ function ConnectionsStreamsRow({
   rowContentProps,
   columnDefs,
   closeRow,
+  onMouseEnter,
+  onMouseLeave,
+  highlighted,
 }) {
   return (
-    <ExpandedRow>
+    <ExpandedRow
+      highlighted={highlighted}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <ConnectionCell colSpan={2}>
         {columnDefs.map(({ renderContent, name }, cellIndex) => (
           <PushApart key={name}>
