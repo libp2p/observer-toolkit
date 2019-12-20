@@ -12,6 +12,7 @@ import {
   useTabularData,
 } from '@libp2p-observer/sdk'
 
+import { MetadataProvider } from './context/MetadataProvider'
 import ConnectionsTableRow from './ConnectionsTableRow'
 import connectionsColumnDefs from '../definitions/connectionsColumns'
 
@@ -59,15 +60,17 @@ function ConnectionsTable() {
   })
 
   return (
-    <DataTable
-      contentProps={contentProps}
-      columnDefs={columnDefs}
-      sortColumn={sortColumn}
-      setSortColumn={setSortColumn}
-      sortDirection={sortDirection}
-      setSortDirection={setSortDirection}
-      override={{ DataTableRow: ConnectionsTableRow }}
-    />
+    <MetadataProvider metadata={metadata}>
+      <DataTable
+        contentProps={contentProps}
+        columnDefs={columnDefs}
+        sortColumn={sortColumn}
+        setSortColumn={setSortColumn}
+        sortDirection={sortDirection}
+        setSortDirection={setSortDirection}
+        override={{ DataTableRow: ConnectionsTableRow }}
+      />
+    </MetadataProvider>
   )
 }
 

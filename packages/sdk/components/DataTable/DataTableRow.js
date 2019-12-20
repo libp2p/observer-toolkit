@@ -20,7 +20,7 @@ function DataTableRow({ rowContentProps, columnDefs, children, ...rowProps }) {
         {children}
       </>
     ),
-    [rowContentProps, columnDefs]
+    [columnDefs, children, rowContentProps]
   )
 
   return <TableRow {...rowProps}>{prerenderedCells}</TableRow>
