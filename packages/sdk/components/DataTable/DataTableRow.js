@@ -3,7 +3,7 @@ import T from 'prop-types'
 
 import { TableRow, TableCell } from './styledTable'
 
-function DataTableRow({ rowContentProps, columnDefs, ...rowProps }) {
+function DataTableRow({ rowContentProps, columnDefs, children, ...rowProps }) {
   // Don't re-render all cells (often expensive) when only row props change
   const prerenderedCells = useMemo(
     () => (
@@ -17,6 +17,7 @@ function DataTableRow({ rowContentProps, columnDefs, ...rowProps }) {
             )
           }
         )}
+        {children}
       </>
     ),
     [rowContentProps, columnDefs]
@@ -28,6 +29,7 @@ function DataTableRow({ rowContentProps, columnDefs, ...rowProps }) {
 DataTableRow.propTypes = {
   rowContentProps: T.array.isRequired,
   columnDefs: T.array.isRequired,
+  children: T.node,
 }
 
 export default DataTableRow
