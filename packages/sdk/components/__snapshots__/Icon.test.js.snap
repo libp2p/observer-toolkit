@@ -2,6 +2,10 @@
 
 exports[`Icon renders 'asc' icon as expected 1`] = `
 .c0 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   display: inline-block;
   vertical-align: middle;
   width: 20px;

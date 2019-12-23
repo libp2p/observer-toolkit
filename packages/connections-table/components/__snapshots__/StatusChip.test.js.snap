@@ -2,6 +2,10 @@
 
 exports[`status chip renders ACTIVE status as expected 1`] = `
 .c1 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   display: inline-block;
   vertical-align: middle;
   width: 20px;
