@@ -1,4 +1,5 @@
 export * from './DataPanel'
+export * from './DataTray'
 export * from './Timeline'
 
 export { default as ActiveWidget } from './ActiveWidget'

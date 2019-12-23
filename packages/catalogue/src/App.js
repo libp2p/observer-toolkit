@@ -1,12 +1,12 @@
 import React from 'react'
 
 import ContextWrappers from './components/ContextWrappers'
-import Page from './components/Page'
+import Router from './Router'
 
 function App() {
   return (
     <ContextWrappers>
-      <Page />
+      <Router />
     </ContextWrappers>
   )
 }

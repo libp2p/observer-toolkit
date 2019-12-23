@@ -73,7 +73,7 @@ const typography = {
       line-height: 1.6em;
     `,
     large: `
-      font-size: 12pt;
+      font-size: 11pt;
       line-height: 1.6em;
     `,
   },
@@ -107,6 +107,12 @@ const typography = {
     large: `
       font-size: 16pt;
       margin: ${spacing([0.5, 0])};
+      font-weight: 500;
+      line-height: 1.2em;
+    `,
+    extraLarge: `
+      font-size: 24pt;
+      margin: ${spacing([2, 0, 1])};
       font-weight: 600;
       line-height: 1.2em;
     `,
@@ -135,11 +141,23 @@ const boxShadow = ({
   )} ${shadowColor};`
 }
 
-const transition = ({
+function transition(values = {}) {
+  if (Array.isArray(values)) {
+    return `transition:${values.map(_getTransitionEntry).join(', ')};`
+  }
+  return `transition:${_getTransitionEntry(values)};`
+}
+
+function _getTransitionEntry({
   property = 'all',
   duration = 0.4,
   timingFunction = 'ease-in-out',
-} = {}) => `transition: ${property} ${duration}s ${timingFunction};`
+  delay = '',
+}) {
+  return ` ${property} ${duration}s ${timingFunction}${
+    delay ? ` ${delay}s  ` : ''
+  }`
+}
 
 const tableCell = `
   ${text('label', 'medium')}
