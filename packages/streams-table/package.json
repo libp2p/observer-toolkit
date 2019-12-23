@@ -12,7 +12,8 @@
   "scripts": {
     "storybook": "start-storybook -p 9009",
     "test": "CI=true echo lol",
-    "test:watch": "jest"
+    "test:watch": "jest",
+    "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
     "@libp2p-observer/data": "^0.0.1",

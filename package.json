@@ -23,7 +23,7 @@
     "start:catalogue": "lerna exec --scope=\"@libp2p-observer/catalogue\" -- npm run start",
     "start:verdaccio": "cd verdaccio && docker-compose up",
     "test": "lerna run --no-bail --stream test",
-    "update-snapshots": "lerna run test -- -u"
+    "update-snapshots": "lerna run update-snapshots"
   },
   "author": "NearForm",
   "license": "MIT",

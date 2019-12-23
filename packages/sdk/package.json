@@ -15,7 +15,8 @@
     "svgr-graphic": "npx @svgr/cli -d theme/graphics ",
     "svgr-icons": "npx @svgr/cli -d theme/icons theme/icons-src",
     "test": "CI=true jest --silent",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
     "@libp2p-observer/data": "^0.0.1",

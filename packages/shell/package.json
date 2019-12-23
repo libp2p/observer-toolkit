@@ -17,7 +17,8 @@
   "scripts": {
     "prepare": "webpack",
     "test": "CI=true echo lol",
-    "test:watch": "echo"
+    "test:watch": "echo",
+    "update-snapshots": "npm run test -- -u"
   },
   "bugs": {
     "url": "https://github.com/nearform/libp2p-introspection-ui/issues"
