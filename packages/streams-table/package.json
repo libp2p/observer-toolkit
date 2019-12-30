@@ -11,8 +11,8 @@
   "main": "index.js",
   "scripts": {
     "storybook": "start-storybook -p 9009",
-    "test": "CI=true echo lol",
-    "test:watch": "jest",
+    "test": "CI=true echo \"No tests for placeholder widget 'streams-table'\"",
+    "test:watch": "echo \"Skipping 'streams-table'\"",
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
