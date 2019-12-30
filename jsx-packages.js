@@ -7,4 +7,14 @@ const jsxPackages = [
   'streams-table',
 ]
 
-module.exports = jsxPackages
+// Regex for all other packages
+const nonJsxPackagesRegex = new RegExp(
+  `node_modules[\\\\/](?!@libp2p-observer[\\\\/](${jsxPackages.join(
+    '|'
+  )}))[\\\\/]`
+)
+
+module.exports = {
+  jsxPackages,
+  nonJsxPackagesRegex,
+}

@@ -22,20 +22,17 @@
     "storybook:streams-table": "lerna exec --scope=\"@libp2p-observer/streams-table\" -- npm run storybook",
     "start:catalogue": "lerna exec --scope=\"@libp2p-observer/catalogue\" -- npm run start",
     "start:verdaccio": "cd verdaccio && docker-compose up",
-    "test": "lerna run --no-bail --stream test",
+    "test": "lerna run prepare && lerna run --no-bail --stream test",
     "update-snapshots": "lerna run update-snapshots"
   },
   "author": "NearForm",
   "license": "MIT",
   "dependencies": {
-    "react": "^16.10.2",
-    "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
-    "@storybook/react": "^5.2.4",
     "arraybuffer-loader": "^1.0.8",
     "babel": "^6.23.0",
     "babel-eslint": "^10.0.3",

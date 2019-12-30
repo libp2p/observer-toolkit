@@ -1,6 +1,6 @@
 const path = require('path')
 const PeerDepsExternals = require('peer-deps-externals-webpack-plugin')
-const jsxPackages = require('../../jsx-packages')
+const { jsxPackages } = require('../../jsx-packages')
 
 module.exports = {
   entry: './index.js',
