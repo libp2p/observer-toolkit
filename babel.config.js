@@ -1,3 +1,5 @@
+'use strict'
+
 const { nonJsxPackagesRegex } = require('./jsx-packages')
 
 module.exports = function(api) {
