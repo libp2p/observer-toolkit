@@ -16,8 +16,8 @@
   },
   "scripts": {
     "prepare": "webpack",
-    "test": "CI=true echo lol",
-    "test:watch": "echo",
+    "test": "CI=true jest --silent",
+    "test:watch": "jest --watch",
     "update-snapshots": "npm run test -- -u"
   },
   "bugs": {
