@@ -1,6 +1,5 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
-import { ThemeSetter } from '@libp2p-observer/sdk'
+import { renderWithTheme } from '@libp2p-observer/testing'
 import DataTypeControl from './DataTypeControl'
 
 describe('DataTypeControl', () => {
@@ -9,14 +8,10 @@ describe('DataTypeControl', () => {
       type: 'sample',
       name: 'test sample name',
     }
-    const component = renderer.create(
-      <ThemeSetter>
-        <DataTypeControl metadata={metadata} />
-      </ThemeSetter>
+    const { asFragment } = renderWithTheme(
+      <DataTypeControl metadata={metadata} />
     )
-
-    const tree = component.toJSON()
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it('renders as expected for uploaded file', () => {
@@ -24,14 +19,10 @@ describe('DataTypeControl', () => {
       type: 'upload',
       name: 'test filename',
     }
-    const component = renderer.create(
-      <ThemeSetter>
-        <DataTypeControl metadata={metadata} />
-      </ThemeSetter>
+    const { asFragment } = renderWithTheme(
+      <DataTypeControl metadata={metadata} />
     )
-
-    const tree = component.toJSON()
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it('throws if trying to render an invalid type', () => {
@@ -41,12 +32,8 @@ describe('DataTypeControl', () => {
     }
 
     expect(() =>
-      renderer
-        .create(
-          <ThemeSetter>
-            <DataTypeControl metadata={metadata} />
-          </ThemeSetter>
-        )
+      renderWithTheme
+        .create(<DataTypeControl metadata={metadata} />)
         .toThrow(
           new Error(
             'Unknown type "invalid-type", expected one of "sample", "upload"'

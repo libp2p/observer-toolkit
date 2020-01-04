@@ -1,51 +1,39 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
-import { ThemeSetter } from '@libp2p-observer/sdk'
+import { fireEvent } from '@testing-library/react'
+import { renderWithTheme } from '@libp2p-observer/testing'
 import Icon from './Icon'
 
 describe('Icon', () => {
   it('throws if trying to render an invalid icon', () => {
-    expect(() => renderer.create(<Icon type="" />)).toThrow(
+    expect(() => renderWithTheme(<Icon type="" />)).toThrow(
       new Error('No icon found named ""')
     )
   })
 
   it("renders 'asc' icon as expected", () => {
-    const component = renderer.create(
-      <ThemeSetter>
-        <Icon type="asc" disabled={true} />
-      </ThemeSetter>
-    )
-
-    let tree = component.toJSON()
-    expect(tree).toMatchSnapshot()
+    const { asFragment } = renderWithTheme(<Icon type="asc" disabled={true} />)
+    expect(asFragment()).toMatchSnapshot()
   })
 
-  it('calls onClick if clicked', () => {
+  it('acts as button calling onClick if clicked', () => {
     const mockFn = jest.fn()
 
-    const elem = renderer.create(
-      <ThemeSetter>
-        <Icon type="asc" disabled={false} onClick={mockFn} />
-      </ThemeSetter>
+    const { getByRole } = renderWithTheme(
+      <Icon type="asc" disabled={false} onClick={mockFn} />
     )
-
-    elem.root.find(c => c.type === 'span').props.onClick()
-
+    fireEvent.click(getByRole('button'))
     expect(mockFn).toBeCalled()
   })
 
-  it("doesn't call onClick if disabled", () => {
+  it("doesn't act as button or call onClick if disabled", () => {
     const mockFn = jest.fn()
 
-    const elem = renderer.create(
-      <ThemeSetter>
-        <Icon type="asc" disabled={true} onClick={mockFn} />
-      </ThemeSetter>
+    const { getByRole, queryByRole } = renderWithTheme(
+      <Icon type="asc" disabled={true} onClick={mockFn} />
     )
+    expect(queryByRole('button')).toBeNull()
 
-    expect(elem.root.find(c => c.type === 'span').props.onClick).toEqual(null)
-
+    fireEvent.click(getByRole('img'))
     expect(mockFn).not.toBeCalled()
   })
 })

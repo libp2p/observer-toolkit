@@ -35,11 +35,11 @@
     "react-dom": "^16.11.0",
     "react-markdown": "^4.2.2",
     "react-slidedown": "^2.4.5",
-    "react-test-renderer": "^16.12.0",
     "styled-components": "^4.4.0",
     "webpack": "4.41.0"
   },
   "devDependencies": {
+    "@testing-library/react": "^9.4.0",
     "create-react-app": "3.2.0",
     "gh-pages": "^2.1.1"
   },

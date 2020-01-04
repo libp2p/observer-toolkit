@@ -1,3 +1,5 @@
+'use strict'
+
 // These packages in our repo export JSX and we must tell webpack to use babel loader on them
 const jsxPackages = [
   'catalogue',
@@ -5,6 +7,7 @@ const jsxPackages = [
   'sdk',
   'shell',
   'streams-table',
+  'testing',
 ]
 
 // Regex for all other packages

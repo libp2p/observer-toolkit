@@ -27,12 +27,14 @@
   },
   "author": "NearForm",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
+    "@libp2p-observer/testing": "^0.0.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
     "arraybuffer-loader": "^1.0.8",
     "babel": "^6.23.0",
     "babel-eslint": "^10.0.3",
