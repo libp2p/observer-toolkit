@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 import { RootNodeProvider } from '@libp2p-observer/sdk'
 import { ControlPanel } from '@libp2p-observer/shell'
-import samples from '@libp2p-observer/samples'
 
 import DataTestWrapper from './DataTestWrapper'
 
@@ -40,9 +39,13 @@ function ShellTestWrapper({ children }) {
     <DataTestWrapper>
       <Page>
         <Content>
-          <RootNodeProvider>{children}</RootNodeProvider>
+          <RootNodeProvider>
+            <div data-testid="widget">{children}</div>
+          </RootNodeProvider>
         </Content>
-        <ControlPanel />
+        <div data-testid="shell">
+          <ControlPanel />
+        </div>
       </Page>
     </DataTestWrapper>
   )

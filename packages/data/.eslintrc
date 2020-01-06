@@ -3,7 +3,7 @@
     "commonjs": true
   },
   "parserOptions": {
-    "sourceType": "script"
+    "sourceType": "module"
   },
   "rules": {
     "strict": ["error", "global"]

@@ -1,4 +1,3 @@
-import { test } from 'tap'
 import { loadSample } from '@libp2p-observer/testing'
 
 describe('binary deserialization', () => {

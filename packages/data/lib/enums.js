@@ -1,5 +1,3 @@
-'use strict'
-
 const statusNames = {
   0: 'ACTIVE',
   1: 'CLOSED',

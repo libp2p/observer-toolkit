@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import { ThemeSetter, RootNodeProvider } from '@libp2p-observer/sdk'
 
