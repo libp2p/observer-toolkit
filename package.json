@@ -33,6 +33,8 @@
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "@libp2p-observer/testing": "^0.0.1",
+    "@libp2p-observer/samples": "^0.0.1",
+    "@libp2p-observer/sdk": "^0.0.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "arraybuffer-loader": "^1.0.8",
