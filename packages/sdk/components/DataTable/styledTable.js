@@ -6,7 +6,9 @@ const Table = styled.table`
   width: 100%;
 `
 
-const TableRow = styled.tr`
+const TableRow = styled.tr.attrs(({ highlighted }) => ({
+  'data-highlighted': highlighted ? 'highlighted' : null,
+}))`
   border-bottom: 2px solid ${({ theme }) => theme.color('background', 1)};
   ${({ highlighted, theme }) =>
     highlighted

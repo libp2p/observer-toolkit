@@ -1,14 +1,16 @@
-import { render /*, queries */ } from '@testing-library/react'
+import { render, queries, getQueriesForElement } from '@testing-library/react'
 
 import {
   DataTestWrapper,
   ShellTestWrapper,
   ThemeTestWrapper,
 } from '../components'
+import * as customQueries from './queries'
+
+const allQueries = { ...queries, ...customQueries }
 
 const defaultOptions = {
-  // TODO: Add custom queries here as needed
-  // queries: { ...queries, ...customQueries }
+  queries: allQueries,
 }
 
 function _render(component, options = {}) {
@@ -39,4 +41,9 @@ function renderWithShell(component) {
   })
 }
 
-export { renderWithData, renderWithShell, renderWithTheme }
+// `within` within a custom render doesn't inherit custom queries
+function within(element) {
+  return getQueriesForElement(element, allQueries)
+}
+
+export { renderWithData, renderWithShell, renderWithTheme, within }

@@ -16,13 +16,14 @@ function ConnectionsTableRow({ rowContentProps, columnDefs }) {
     if (globalPeerId) setPeerId(null)
   }
 
+  const highlighted = peerId === globalPeerId
   return (
     <DataTableRow
       rowContentProps={rowContentProps}
       columnDefs={columnDefs}
       onMouseEnter={mouseEnterHandler}
       onMouseLeave={mouseLeaveHandler}
-      highlighted={peerId === globalPeerId}
+      highlighted={highlighted}
     />
   )
 }

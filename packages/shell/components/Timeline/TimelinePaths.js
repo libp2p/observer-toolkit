@@ -20,9 +20,11 @@ const StyledSvg = styled.svg`
   background: ${({ theme }) => theme.color('contrast', 1)};
 `
 
-const StyledPath = styled.path`
-  fill: ${({ theme, colorKey, opacity, isHighlighted }) => {
-    if (isHighlighted) return theme.color('background', 1)
+const StyledPath = styled.path.attrs(({ highlighted }) => ({
+  'data-highlighted': highlighted ? true : null,
+}))`
+  fill: ${({ theme, colorKey, opacity, highlighted }) => {
+    if (highlighted) return theme.color('background', 1)
     return theme.color(colorKey, 0, opacity)
   }};
 `
@@ -61,7 +63,7 @@ function TimelinePaths({
       <StyledSvg height={height}>
         {pathDefs &&
           pathDefs.map(({ pathDef, peerId }, index) => {
-            const isHighlighted = peerId === globalPeerId
+            const highlighted = peerId === globalPeerId
 
             function mouseEnterHandler() {
               if (peerId !== globalPeerId) setPeerId(peerId)
@@ -79,7 +81,7 @@ function TimelinePaths({
                 onMouseEnter={mouseEnterHandler}
                 onMouseLeave={mouseLeaveHandler}
                 colorKey={colorKey}
-                isHighlighted={isHighlighted}
+                highlighted={highlighted}
                 opacity={
                   (index % 2 ? 0.6 : 0.7) +
                   (index / (pathDefs.length + 1)) * 0.3
