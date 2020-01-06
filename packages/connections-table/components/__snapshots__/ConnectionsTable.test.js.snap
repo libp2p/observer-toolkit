@@ -1,0 +1,3885 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
+<DocumentFragment>
+  .c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
+}
+
+.c4 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  color: rgb(209,14,102);
+  cursor: pointer;
+}
+
+.c4:hover {
+  backgroundColor: rgba(241,242,240,0.3);
+}
+
+.c7 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+}
+
+.c8 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.c8:hover {
+  backgroundColor: rgba(241,242,240,0.3);
+}
+
+.c6 {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.c1 {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.c9 {
+  border-bottom: 2px solid rgb(241,242,240);
+}
+
+.c2 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: right;
+  padding-right: 0;
+  font-family: plex-sans;
+  font-weight: 600;
+  border-bottom: 1px solid rgb(220,228,234);
+  background-color: rgba(32,155,198,0.2);
+  color: rgba(0,0,0,0.6);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.c10 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: right;
+  font-size: 9pt;
+  padding-right: 32px;
+  font-weight: 400;
+  font-family: plex-sans;
+  color: rgb(93,94,96);
+  text-align: left;
+}
+
+.c13 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: right;
+  font-size: 9pt;
+  padding-right: 32px;
+  font-weight: 400;
+  font-family: plex-sans;
+  color: rgb(93,94,96);
+}
+
+.c5 {
+  display: inline-block;
+}
+
+.c3 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin-left: 16px;
+}
+
+.c18 {
+  font-family: 'plex-mono';
+  white-space: nowrap;
+}
+
+.c19 {
+  margin-right: -8px;
+  padding-left: 8px;
+  font-family: 'plex-sans';
+  font-weight: 300;
+  font-size: 90%;
+  width: 32px;
+  display: inline-block;
+  text-align: left;
+}
+
+.c15 {
+  width: 2em;
+  height: 2em;
+  vertical-align: middle;
+}
+
+.c16 {
+  font-family: plex-mono;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.c14 {
+  white-space: nowrap;
+}
+
+.c20 {
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 8px;
+}
+
+.c21 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 67.12011651647686%;
+  width: 67.12011651647686%;
+  margin-top: 16.439941741761572%;
+  margin-left: 16.439941741761572%;
+  margin-right: 16.439941741761572%;
+  margin-bottom: 16.439941741761572%;
+}
+
+.c22 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 51.218341669956736%;
+  width: 51.218341669956736%;
+  margin-top: 24.390829165021632%;
+  margin-left: 24.390829165021632%;
+  margin-right: 24.390829165021632%;
+  margin-bottom: 24.390829165021632%;
+}
+
+.c23 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 54.53489471562225%;
+  width: 54.53489471562225%;
+  margin-top: 22.732552642188875%;
+  margin-left: 22.732552642188875%;
+  margin-right: 22.732552642188875%;
+  margin-bottom: 22.732552642188875%;
+}
+
+.c24 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 10.669472978189502%;
+  width: 10.669472978189502%;
+  margin-top: 44.66526351090525%;
+  margin-left: 44.66526351090525%;
+  margin-right: 44.66526351090525%;
+  margin-bottom: 44.66526351090525%;
+}
+
+.c25 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 3.5518084950946167%;
+  width: 3.5518084950946167%;
+  margin-top: 48.22409575245269%;
+  margin-left: 48.22409575245269%;
+  margin-right: 48.22409575245269%;
+  margin-bottom: 48.22409575245269%;
+}
+
+.c26 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 19.579758987643636%;
+  width: 19.579758987643636%;
+  margin-top: 40.210120506178185%;
+  margin-left: 40.210120506178185%;
+  margin-right: 40.210120506178185%;
+  margin-bottom: 40.210120506178185%;
+}
+
+.c27 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 5.982439239228992%;
+  width: 5.982439239228992%;
+  margin-top: 47.0087803803855%;
+  margin-left: 47.0087803803855%;
+  margin-right: 47.0087803803855%;
+  margin-bottom: 47.0087803803855%;
+}
+
+.c28 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 10.257846387086783%;
+  width: 10.257846387086783%;
+  margin-top: 44.87107680645661%;
+  margin-left: 44.87107680645661%;
+  margin-right: 44.87107680645661%;
+  margin-bottom: 44.87107680645661%;
+}
+
+.c29 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 2.858247063957371%;
+  width: 2.858247063957371%;
+  margin-top: 48.57087646802132%;
+  margin-left: 48.57087646802132%;
+  margin-right: 48.57087646802132%;
+  margin-bottom: 48.57087646802132%;
+}
+
+.c31 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 53.70608992819464%;
+  width: 53.70608992819464%;
+  margin-top: 23.14695503590268%;
+  margin-left: 23.14695503590268%;
+  margin-right: 23.14695503590268%;
+  margin-bottom: 23.14695503590268%;
+}
+
+.c32 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 80.24365203181772%;
+  width: 80.24365203181772%;
+  margin-top: 9.878173984091141%;
+  margin-left: 9.878173984091141%;
+  margin-right: 9.878173984091141%;
+  margin-bottom: 9.878173984091141%;
+}
+
+.c33 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 53.41648122731042%;
+  width: 53.41648122731042%;
+  margin-top: 23.29175938634479%;
+  margin-left: 23.29175938634479%;
+  margin-right: 23.29175938634479%;
+  margin-bottom: 23.29175938634479%;
+}
+
+.c34 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 37.39487533783078%;
+  width: 37.39487533783078%;
+  margin-top: 31.30256233108461%;
+  margin-left: 31.30256233108461%;
+  margin-right: 31.30256233108461%;
+  margin-bottom: 31.30256233108461%;
+}
+
+.c35 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 38.247965920167516%;
+  width: 38.247965920167516%;
+  margin-top: 30.876017039916242%;
+  margin-left: 30.876017039916242%;
+  margin-right: 30.876017039916242%;
+  margin-bottom: 30.876017039916242%;
+}
+
+.c36 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 100%;
+  width: 100%;
+  margin-top: 0%;
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-bottom: 0%;
+}
+
+.c37 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 14.900829065672259%;
+  width: 14.900829065672259%;
+  margin-top: 42.54958546716387%;
+  margin-left: 42.54958546716387%;
+  margin-right: 42.54958546716387%;
+  margin-bottom: 42.54958546716387%;
+}
+
+.c38 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 16.83569978510824%;
+  width: 16.83569978510824%;
+  margin-top: 41.582150107445884%;
+  margin-left: 41.582150107445884%;
+  margin-right: 41.582150107445884%;
+  margin-bottom: 41.582150107445884%;
+}
+
+.c39 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 60.22973388562893%;
+  width: 60.22973388562893%;
+  margin-top: 19.885133057185534%;
+  margin-left: 19.885133057185534%;
+  margin-right: 19.885133057185534%;
+  margin-bottom: 19.885133057185534%;
+}
+
+.c40 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 25.20969786360665%;
+  width: 25.20969786360665%;
+  margin-top: 37.395151068196675%;
+  margin-left: 37.395151068196675%;
+  margin-right: 37.395151068196675%;
+  margin-bottom: 37.395151068196675%;
+}
+
+.c41 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 26.001381840756988%;
+  width: 26.001381840756988%;
+  margin-top: 36.999309079621504%;
+  margin-left: 36.999309079621504%;
+  margin-right: 36.999309079621504%;
+  margin-bottom: 36.999309079621504%;
+}
+
+.c42 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 32.81871667012627%;
+  width: 32.81871667012627%;
+  margin-top: 33.59064166493687%;
+  margin-left: 33.59064166493687%;
+  margin-right: 33.59064166493687%;
+  margin-bottom: 33.59064166493687%;
+}
+
+.c43 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 100%;
+  width: 100%;
+  margin-top: 0%;
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-bottom: 0%;
+}
+
+.c44 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 67.58728808753035%;
+  width: 67.58728808753035%;
+  margin-top: 16.206355956234823%;
+  margin-left: 16.206355956234823%;
+  margin-right: 16.206355956234823%;
+  margin-bottom: 16.206355956234823%;
+}
+
+.c45 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 57.02521516389143%;
+  width: 57.02521516389143%;
+  margin-top: 21.487392418054284%;
+  margin-left: 21.487392418054284%;
+  margin-right: 21.487392418054284%;
+  margin-bottom: 21.487392418054284%;
+}
+
+.c46 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 25.32526298122685%;
+  width: 25.32526298122685%;
+  margin-top: 37.33736850938658%;
+  margin-left: 37.33736850938658%;
+  margin-right: 37.33736850938658%;
+  margin-bottom: 37.33736850938658%;
+}
+
+.c47 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 28.749541963083548%;
+  width: 28.749541963083548%;
+  margin-top: 35.62522901845823%;
+  margin-left: 35.62522901845823%;
+  margin-right: 35.62522901845823%;
+  margin-bottom: 35.62522901845823%;
+}
+
+.c48 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 33.934148724972744%;
+  width: 33.934148724972744%;
+  margin-top: 33.03292563751363%;
+  margin-left: 33.03292563751363%;
+  margin-right: 33.03292563751363%;
+  margin-bottom: 33.03292563751363%;
+}
+
+.c49 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 28.769184751176336%;
+  width: 28.769184751176336%;
+  margin-top: 35.61540762441183%;
+  margin-left: 35.61540762441183%;
+  margin-right: 35.61540762441183%;
+  margin-bottom: 35.61540762441183%;
+}
+
+.c50 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 19.84398797346864%;
+  width: 19.84398797346864%;
+  margin-top: 40.07800601326568%;
+  margin-left: 40.07800601326568%;
+  margin-right: 40.07800601326568%;
+  margin-bottom: 40.07800601326568%;
+}
+
+.c51 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 24.339912769513187%;
+  width: 24.339912769513187%;
+  margin-top: 37.830043615243405%;
+  margin-left: 37.830043615243405%;
+  margin-right: 37.830043615243405%;
+  margin-bottom: 37.830043615243405%;
+}
+
+.c52 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 24.04047074836456%;
+  width: 24.04047074836456%;
+  margin-top: 37.97976462581772%;
+  margin-left: 37.97976462581772%;
+  margin-right: 37.97976462581772%;
+  margin-bottom: 37.97976462581772%;
+}
+
+.c53 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 13.847646863493868%;
+  width: 13.847646863493868%;
+  margin-top: 43.07617656825307%;
+  margin-left: 43.07617656825307%;
+  margin-right: 43.07617656825307%;
+  margin-bottom: 43.07617656825307%;
+}
+
+.c54 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 15.759982570373463%;
+  width: 15.759982570373463%;
+  margin-top: 42.12000871481327%;
+  margin-left: 42.12000871481327%;
+  margin-right: 42.12000871481327%;
+  margin-bottom: 42.12000871481327%;
+}
+
+.c55 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 90.45187662485831%;
+  width: 90.45187662485831%;
+  margin-top: 4.774061687570843%;
+  margin-left: 4.774061687570843%;
+  margin-right: 4.774061687570843%;
+  margin-bottom: 4.774061687570843%;
+}
+
+.c56 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 66.90503252165144%;
+  width: 66.90503252165144%;
+  margin-top: 16.547483739174282%;
+  margin-left: 16.547483739174282%;
+  margin-right: 16.547483739174282%;
+  margin-bottom: 16.547483739174282%;
+}
+
+.c57 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 48.809742871792075%;
+  width: 48.809742871792075%;
+  margin-top: 25.595128564103963%;
+  margin-left: 25.595128564103963%;
+  margin-right: 25.595128564103963%;
+  margin-bottom: 25.595128564103963%;
+}
+
+.c58 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 18.489737262209914%;
+  width: 18.489737262209914%;
+  margin-top: 40.75513136889504%;
+  margin-left: 40.75513136889504%;
+  margin-right: 40.75513136889504%;
+  margin-bottom: 40.75513136889504%;
+}
+
+.c59 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 21.607332777945174%;
+  width: 21.607332777945174%;
+  margin-top: 39.19633361102741%;
+  margin-left: 39.19633361102741%;
+  margin-right: 39.19633361102741%;
+  margin-bottom: 39.19633361102741%;
+}
+
+.c60 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 20.141561905924185%;
+  width: 20.141561905924185%;
+  margin-top: 39.929219047037904%;
+  margin-left: 39.929219047037904%;
+  margin-right: 39.929219047037904%;
+  margin-bottom: 39.929219047037904%;
+}
+
+.c61 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 23.9028180795864%;
+  width: 23.9028180795864%;
+  margin-top: 38.0485909602068%;
+  margin-left: 38.0485909602068%;
+  margin-right: 38.0485909602068%;
+  margin-bottom: 38.0485909602068%;
+}
+
+.c62 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 34.40234938495724%;
+  width: 34.40234938495724%;
+  margin-top: 32.79882530752138%;
+  margin-left: 32.79882530752138%;
+  margin-right: 32.79882530752138%;
+  margin-bottom: 32.79882530752138%;
+}
+
+.c63 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 26.6835944312786%;
+  width: 26.6835944312786%;
+  margin-top: 36.6582027843607%;
+  margin-left: 36.6582027843607%;
+  margin-right: 36.6582027843607%;
+  margin-bottom: 36.6582027843607%;
+}
+
+.c65 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 0%;
+  width: 0%;
+  margin-top: 50%;
+  margin-left: 50%;
+  margin-right: 50%;
+  margin-bottom: 50%;
+}
+
+.c66 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 0%;
+  width: 0%;
+  margin-top: 50%;
+  margin-left: 50%;
+  margin-right: 50%;
+  margin-bottom: 50%;
+}
+
+.c67 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 60.995466790839224%;
+  width: 60.995466790839224%;
+  margin-top: 19.502266604580388%;
+  margin-left: 19.502266604580388%;
+  margin-right: 19.502266604580388%;
+  margin-bottom: 19.502266604580388%;
+}
+
+.c11 {
+  display: inline-block;
+  padding: 0 4px;
+  background: rgba(0,99,109,0.15);
+  color: rgba(0,99,109,1);
+  white-space: nowrap;
+  font-size: 8pt;
+  font-weight: 600;
+}
+
+.c30 {
+  display: inline-block;
+  padding: 0 4px;
+  background: rgba(163,26,75,0.15);
+  color: rgba(163,26,75,1);
+  white-space: nowrap;
+  font-size: 8pt;
+  font-weight: 600;
+}
+
+.c64 {
+  display: inline-block;
+  padding: 0 4px;
+  background: rgba(78,23,91,0.15);
+  color: rgba(78,23,91,1);
+  white-space: nowrap;
+  font-size: 8pt;
+  font-weight: 600;
+}
+
+.c12 {
+  line-height: 1em;
+  display: inline-block;
+  padding: 8px 4px;
+  vertical-align: middle;
+}
+
+.c17 {
+  white-space: nowrap;
+}
+
+<div
+    class="c0"
+  >
+    <table
+      class="c1"
+    >
+      <thead
+        class=""
+      >
+        <tr
+          class=""
+        >
+          <th
+            class="c2"
+          >
+            status
+            <span
+              class="c3"
+            >
+              <span
+                class="c4"
+                role="button"
+                size="20"
+              >
+                <svg
+                  fill="currentColor"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="1.414"
+                  viewBox="16 16 70 70"
+                >
+                  <path
+                    d="M51.494 35.157l4.41 4.409a1.5 1.5 0 102.121-2.121l-6.965-6.964a1.5 1.5 0 00-2.12 0l-6.957 6.956a1.5 1.5 0 102.121 2.121l4.39-4.389v33.367a1.503 1.503 0 001.5 1.5 1.503 1.503 0 001.5-1.5V35.157z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c5"
+              >
+                <span
+                  class="c6"
+                >
+                  <span
+                    class="c7"
+                    role="img"
+                    size="20"
+                  >
+                    <svg
+                      viewBox="0 0 32 32"
+                    >
+                      <g
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M13.754 17.688a3.208 3.208 0 00-3.097 2.405H6.979v1.727h3.713c.399 1.321 1.612 2.291 3.061 2.291 1.45 0 2.662-.97 3.061-2.291h8.206v-1.727h-8.17a3.206 3.206 0 00-3.096-2.405zm0 4.642a1.432 1.432 0 01-1.429-1.432c0-.786.641-1.429 1.429-1.429.787 0 1.429.643 1.429 1.429 0 .79-.642 1.432-1.429 1.432zM21.334 10.271a3.207 3.207 0 00-3.089-2.382 3.206 3.206 0 00-3.089 2.382H6.979v1.727h8.198a3.203 3.203 0 003.067 2.313c1.456 0 2.676-.981 3.067-2.313h3.708v-1.727h-3.685zm-3.089 2.259a1.432 1.432 0 010-2.862c.787 0 1.43.643 1.43 1.429 0 .791-.643 1.433-1.43 1.433z"
+                        />
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </th>
+          <th
+            class="c2"
+          >
+            Peer ID
+            <span
+              class="c3"
+            >
+              <span
+                class="c8"
+                role="button"
+                size="20"
+              >
+                <svg
+                  fill="currentColor"
+                  stroke-miterlimit="1.414"
+                  viewBox="14 14 74 74"
+                >
+                  <path
+                    d="M56.491 64.878l-4.409-4.409a1.5 1.5 0 10-2.121 2.121l6.964 6.964a1.5 1.5 0 002.121 0l6.956-6.956a1.5 1.5 0 10-2.121-2.121l-4.39 4.389V41.499a1.503 1.503 0 00-1.5-1.5 1.503 1.503 0 00-1.5 1.5v23.379zm-13.06-29.763l4.409 4.408a1.5 1.5 0 102.121-2.121l-6.963-6.964a1.502 1.502 0 00-2.122 0l-6.956 6.956a1.5 1.5 0 102.122 2.122l4.389-4.39v23.367a1.498 1.498 0 001.5 1.5 1.5 1.5 0 001.5-1.5V35.115z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </th>
+          <th
+            class="c2"
+          >
+            Data in
+            <span
+              class="c3"
+            >
+              <span
+                class="c8"
+                role="button"
+                size="20"
+              >
+                <svg
+                  fill="currentColor"
+                  stroke-miterlimit="1.414"
+                  viewBox="14 14 74 74"
+                >
+                  <path
+                    d="M56.491 64.878l-4.409-4.409a1.5 1.5 0 10-2.121 2.121l6.964 6.964a1.5 1.5 0 002.121 0l6.956-6.956a1.5 1.5 0 10-2.121-2.121l-4.39 4.389V41.499a1.503 1.503 0 00-1.5-1.5 1.503 1.503 0 00-1.5 1.5v23.379zm-13.06-29.763l4.409 4.408a1.5 1.5 0 102.121-2.121l-6.963-6.964a1.502 1.502 0 00-2.122 0l-6.956 6.956a1.5 1.5 0 102.122 2.122l4.389-4.39v23.367a1.498 1.498 0 001.5 1.5 1.5 1.5 0 001.5-1.5V35.115z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </th>
+          <th
+            class="c2"
+          >
+            Data out
+            <span
+              class="c3"
+            >
+              <span
+                class="c8"
+                role="button"
+                size="20"
+              >
+                <svg
+                  fill="currentColor"
+                  stroke-miterlimit="1.414"
+                  viewBox="14 14 74 74"
+                >
+                  <path
+                    d="M56.491 64.878l-4.409-4.409a1.5 1.5 0 10-2.121 2.121l6.964 6.964a1.5 1.5 0 002.121 0l6.956-6.956a1.5 1.5 0 10-2.121-2.121l-4.39 4.389V41.499a1.503 1.503 0 00-1.5-1.5 1.503 1.503 0 00-1.5 1.5v23.379zm-13.06-29.763l4.409 4.408a1.5 1.5 0 102.121-2.121l-6.963-6.964a1.502 1.502 0 00-2.122 0l-6.956 6.956a1.5 1.5 0 102.122 2.122l4.389-4.39v23.367a1.498 1.498 0 001.5 1.5 1.5 1.5 0 001.5-1.5V35.115z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </th>
+          <th
+            class="c2"
+          >
+            Time open
+            <span
+              class="c3"
+            >
+              <span
+                class="c8"
+                role="button"
+                size="20"
+              >
+                <svg
+                  fill="currentColor"
+                  stroke-miterlimit="1.414"
+                  viewBox="14 14 74 74"
+                >
+                  <path
+                    d="M56.491 64.878l-4.409-4.409a1.5 1.5 0 10-2.121 2.121l6.964 6.964a1.5 1.5 0 002.121 0l6.956-6.956a1.5 1.5 0 10-2.121-2.121l-4.39 4.389V41.499a1.503 1.503 0 00-1.5-1.5 1.503 1.503 0 00-1.5 1.5v23.379zm-13.06-29.763l4.409 4.408a1.5 1.5 0 102.121-2.121l-6.963-6.964a1.502 1.502 0 00-2.122 0l-6.956 6.956a1.5 1.5 0 102.122 2.122l4.389-4.39v23.367a1.498 1.498 0 001.5 1.5 1.5 1.5 0 001.5-1.5V35.115z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </th>
+          <th
+            class="c2"
+          >
+            streams
+            <span
+              class="c3"
+            >
+              <span
+                class="c8"
+                role="button"
+                size="20"
+              >
+                <svg
+                  fill="currentColor"
+                  stroke-miterlimit="1.414"
+                  viewBox="14 14 74 74"
+                >
+                  <path
+                    d="M56.491 64.878l-4.409-4.409a1.5 1.5 0 10-2.121 2.121l6.964 6.964a1.5 1.5 0 002.121 0l6.956-6.956a1.5 1.5 0 10-2.121-2.121l-4.39 4.389V41.499a1.503 1.503 0 00-1.5-1.5 1.503 1.503 0 00-1.5 1.5v23.379zm-13.06-29.763l4.409 4.408a1.5 1.5 0 102.121-2.121l-6.963-6.964a1.502 1.502 0 00-2.122 0l-6.956 6.956a1.5 1.5 0 102.122 2.122l4.389-4.39v23.367a1.498 1.498 0 001.5 1.5 1.5 1.5 0 001.5-1.5V35.115z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c5"
+              >
+                <span
+                  class="c6"
+                >
+                  <span
+                    class="c7"
+                    role="img"
+                    size="20"
+                  >
+                    <svg
+                      viewBox="0 0 32 32"
+                    >
+                      <g
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M13.754 17.688a3.208 3.208 0 00-3.097 2.405H6.979v1.727h3.713c.399 1.321 1.612 2.291 3.061 2.291 1.45 0 2.662-.97 3.061-2.291h8.206v-1.727h-8.17a3.206 3.206 0 00-3.096-2.405zm0 4.642a1.432 1.432 0 01-1.429-1.432c0-.786.641-1.429 1.429-1.429.787 0 1.429.643 1.429 1.429 0 .79-.642 1.432-1.429 1.432zM21.334 10.271a3.207 3.207 0 00-3.089-2.382 3.206 3.206 0 00-3.089 2.382H6.979v1.727h8.198a3.203 3.203 0 003.067 2.313c1.456 0 2.676-.981 3.067-2.313h3.708v-1.727h-3.685zm-3.089 2.259a1.432 1.432 0 010-2.862c.787 0 1.43.643 1.43 1.429 0 .791-.643 1.433-1.43 1.433z"
+                        />
+                      </g>
+                    </svg>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </th>
+          <th
+            class="c2"
+          >
+            transport
+            <span
+              class="c3"
+            >
+              <span
+                class="c8"
+                role="button"
+                size="20"
+              >
+                <svg
+                  fill="currentColor"
+                  stroke-miterlimit="1.414"
+                  viewBox="14 14 74 74"
+                >
+                  <path
+                    d="M56.491 64.878l-4.409-4.409a1.5 1.5 0 10-2.121 2.121l6.964 6.964a1.5 1.5 0 002.121 0l6.956-6.956a1.5 1.5 0 10-2.121-2.121l-4.39 4.389V41.499a1.503 1.503 0 00-1.5-1.5 1.503 1.503 0 00-1.5 1.5v23.379zm-13.06-29.763l4.409 4.408a1.5 1.5 0 102.121-2.121l-6.963-6.964a1.502 1.502 0 00-2.122 0l-6.956 6.956a1.5 1.5 0 102.122 2.122l4.389-4.39v23.367a1.498 1.498 0 001.5 1.5 1.5 1.5 0 001.5-1.5V35.115z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        class=""
+      >
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 96 96"
+                >
+                  <g
+                    data-name="Layer 34"
+                  >
+                    <path
+                      d="M48 19a29 29 0 11-29 29 29 29 0 0129-29m0-4a33 33 0 1033 33 33 33 0 00-33-33z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M35.32 46.81l8.73 11.46 16.63-20.54"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-miterlimit="10"
+                      stroke-width="4"
+                    />
+                  </g>
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                ACTIVE
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#e09a6c"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#d22d4b"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#bf8240"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#bcd22d"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#86402d"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#2daed2"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#1f9361"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  f1e09
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  6.22
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c21"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  3.62
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c22"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  54
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c23"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            15
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 96 96"
+                >
+                  <g
+                    data-name="Layer 34"
+                  >
+                    <path
+                      d="M48 19a29 29 0 11-29 29 29 29 0 0129-29m0-4a33 33 0 1033 33 33 33 0 00-33-33z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M35.32 46.81l8.73 11.46 16.63-20.54"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-miterlimit="10"
+                      stroke-width="4"
+                    />
+                  </g>
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                ACTIVE
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#40bfaa"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#de6ce0"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#3a7848"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#62ac53"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#d27987"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#ac9453"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#2d8674"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  e28ae
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  157
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c24"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  17.4
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c25"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  7
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c26"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            3
+          </td>
+          <td
+            class="c13"
+          >
+            QUIC
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 96 96"
+                >
+                  <g
+                    data-name="Layer 34"
+                  >
+                    <path
+                      d="M48 19a29 29 0 11-29 29 29 29 0 0129-29m0-4a33 33 0 1033 33 33 33 0 00-33-33z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M35.32 46.81l8.73 11.46 16.63-20.54"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-miterlimit="10"
+                      stroke-width="4"
+                    />
+                  </g>
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                ACTIVE
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#8440bf"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#3a785e"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#c52dd2"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#1f938d"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#692dd2"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#40b2bf"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#40bf6f"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  63215
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  49.4
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c27"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  145
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c28"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  0
+                  <span
+                    class="c19"
+                  />
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c29"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            8
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#2dd296"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#8cc587"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#ac53a5"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#e06cd2"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#6253ac"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#e06c98"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#3a4778"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  2d71e
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  3.98
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c31"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  8.88
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c32"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  52
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c33"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            7
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#79d2b5"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#938f1f"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#84ac53"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#c96ce0"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#1f9380"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#2d59d2"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#2d93d2"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  ab921
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  1.93
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c34"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  2.02
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c35"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  182
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c36"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            4
+          </td>
+          <td
+            class="c13"
+          >
+            TCP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#72783a"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#3a7842"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#ac7b53"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#ad79d2"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#6c6ce0"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#40bf59"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#8d1f93"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  10cf6
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  306
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c37"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  391
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c38"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  66
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c39"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            3
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#53ac65"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#782d86"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#2d4686"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#2d7a86"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#407dbf"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#2d5886"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#1f5b93"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  05a2f
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  877
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c40"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  933
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c41"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  20
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c42"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            5
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#d2a62d"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#79a3d2"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#783a3c"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#3a784f"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#bec587"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#2da1d2"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#3a785f"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  059f8
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  13.8
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c43"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  6.30
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c44"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  59
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c45"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            6
+          </td>
+          <td
+            class="c13"
+          >
+            TCP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#2d5286"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#d28979"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#53a5ac"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#87acc5"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#404cbf"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#bbc587"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#7987d2"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  cd07b
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  885
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c46"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  1.14
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c47"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  21
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c48"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            11
+          </td>
+          <td
+            class="c13"
+          >
+            TCP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#78413a"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#c58887"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#bfa440"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#3a6778"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#93211f"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#c8d279"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#c5d22d"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  db460
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  1.14
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c49"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  543
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c50"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  11
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c51"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            6
+          </td>
+          <td
+            class="c13"
+          >
+            RDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#862d36"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#79d27b"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#5399ac"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#d279c1"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#773a78"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#6e862d"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#1f6393"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  0f639
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  797
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c52"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  265
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c53"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  5
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c54"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            8
+          </td>
+          <td
+            class="c13"
+          >
+            TCP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#2d864d"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#6d783a"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#79afd2"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#6ce07b"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#79d2cc"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#931f27"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#53ac7d"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  2b890
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  11.3
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c55"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  6.18
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c56"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  43
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c57"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            14
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#2dd285"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#d2c979"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#3a5778"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#78483a"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#53ac9f"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#8bd279"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#3a7865"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  94bcb
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  472
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c58"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  644
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c59"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  7
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c60"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            4
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#d22d8b"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#531f93"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#3e1f93"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#862d73"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#99ac53"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#a7c587"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#2d8680"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  9b563
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  788
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c61"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  1.63
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c62"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  13
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c63"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            5
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+          tabindex="0"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c64"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 96 96"
+                >
+                  <defs>
+                    <style>
+                      .cancel_svg__cls-2{fill:none;stroke:currentColor;stroke-miterlimit:10;stroke-width:4px}
+                    </style>
+                  </defs>
+                  <path
+                    d="M48.31 18.82a29.49 29.49 0 11-29.49 29.49 29.52 29.52 0 0129.49-29.49m0-4a33.49 33.49 0 1033.48 33.49 33.48 33.48 0 00-33.48-33.49z"
+                    fill="currentColor"
+                  />
+                  <path
+                    class="cancel_svg__cls-2"
+                    d="M59.21 37.13l-21.8 21.54M37.41 37.13l21.8 21.54"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                ERROR
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#6cc5e0"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#3a7872"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#aae06c"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#2d3686"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#d279b3"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#2dd29b"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#e06c98"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  192a8
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  0
+                  <span
+                    class="c19"
+                  />
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c65"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  0
+                  <span
+                    class="c19"
+                  />
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c66"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  68
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c67"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            2
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</DocumentFragment>
+`;
