@@ -1010,7 +1010,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
       >
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -1207,7 +1206,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -1404,7 +1402,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -1599,7 +1596,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -1789,7 +1785,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -1979,7 +1974,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -2169,7 +2163,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -2359,7 +2352,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -2549,7 +2541,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -2739,7 +2730,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -2929,7 +2919,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -3119,7 +3108,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -3309,7 +3297,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -3499,7 +3486,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
@@ -3689,7 +3675,6 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
         </tr>
         <tr
           class="c9"
-          tabindex="0"
         >
           <td
             class="c10"
