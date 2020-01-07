@@ -8,6 +8,7 @@ import {
 } from '@libp2p-observer/testing'
 import { getConnections, getLatestTimepoint } from '@libp2p-observer/data'
 import ConnectionsTable from './ConnectionsTable'
+import WidgetContext from './context/WidgetContext'
 
 describe('ConnectionsTable', () => {
   const { states } = loadSample()
@@ -23,7 +24,11 @@ describe('ConnectionsTable', () => {
   })
 
   it('makes row and corresponding shell paths active on hover', async () => {
-    const { getByTestId } = renderWithShell(<ConnectionsTable />)
+    const { getByTestId } = renderWithShell(
+      <WidgetContext>
+        <ConnectionsTable />
+      </WidgetContext>
+    )
 
     const widget = within(getByTestId('widget'))
     const shell = within(getByTestId('shell'))

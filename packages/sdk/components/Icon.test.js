@@ -5,8 +5,8 @@ import Icon from './Icon'
 
 describe('Icon', () => {
   it('throws if trying to render an invalid icon', () => {
-    expect(() => renderWithTheme(<Icon type="" />)).toThrow(
-      new Error('No icon found named ""')
+    expect(() => renderWithTheme(<Icon type="invalid icon type" />)).toThrow(
+      new Error('No icon found named "invalid icon type"')
     )
   })
 

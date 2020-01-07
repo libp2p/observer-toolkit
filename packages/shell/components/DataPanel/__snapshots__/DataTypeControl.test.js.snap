@@ -18,9 +18,8 @@ exports[`DataTypeControl renders as expected for sample data 1`] = `
   user-select: none;
   display: inline-block;
   vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
+  width: 2em;
+  height: 2em;
 }
 
 .c1 {
@@ -76,7 +75,6 @@ exports[`DataTypeControl renders as expected for sample data 1`] = `
         <span
           class="c3"
           role="img"
-          size="20"
         >
           <svg
             viewBox="0 0 96.62 96.62"
@@ -120,9 +118,8 @@ exports[`DataTypeControl renders as expected for uploaded file 1`] = `
   user-select: none;
   display: inline-block;
   vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
+  width: 2em;
+  height: 2em;
 }
 
 .c1 {
@@ -178,7 +175,6 @@ exports[`DataTypeControl renders as expected for uploaded file 1`] = `
         <span
           class="c3"
           role="img"
-          size="20"
         >
           <svg
             viewBox="0 0 96 96"

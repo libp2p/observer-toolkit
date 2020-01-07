@@ -18,9 +18,8 @@ exports[`Icon renders 'asc' icon as expected 1`] = `
   user-select: none;
   display: inline-block;
   vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
+  width: 2em;
+  height: 2em;
   color: rgb(255,255,255);
 }
 
@@ -31,7 +30,6 @@ exports[`Icon renders 'asc' icon as expected 1`] = `
       class="c1"
       disabled=""
       role="img"
-      size="20"
     >
       <svg
         fill="currentColor"

@@ -18,14 +18,13 @@ exports[`status chip renders ACTIVE status as expected 1`] = `
   user-select: none;
   display: inline-block;
   vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
+  width: 2em;
+  height: 2em;
 }
 
 .c1 {
   display: inline-block;
-  padding: 0 4px;
+  padding: 0px 4px;
   background: rgba(0,99,109,0.15);
   color: rgba(0,99,109,1);
   white-space: nowrap;
@@ -34,9 +33,9 @@ exports[`status chip renders ACTIVE status as expected 1`] = `
 }
 
 .c3 {
-  line-height: 1em;
+  line-height: 2em;
   display: inline-block;
-  padding: 8px 4px;
+  padding: 4px;
   vertical-align: middle;
 }
 
@@ -49,7 +48,6 @@ exports[`status chip renders ACTIVE status as expected 1`] = `
       <span
         class="c2"
         role="img"
-        size="20"
       >
         <svg
           viewBox="0 0 96 96"
