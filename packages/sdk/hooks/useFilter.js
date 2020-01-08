@@ -74,7 +74,8 @@ function resetFilter(filters, targetFilter) {
 }
 
 function initializeFilters(filterDefsRef) {
-  return filterDefsRef.current.map(({ initialValues, name }) => ({
+  return filterDefsRef.current.map(({ initialValues, name, ...props }) => ({
+    ...props,
     values: { ...initialValues },
     name,
     enabled: false,

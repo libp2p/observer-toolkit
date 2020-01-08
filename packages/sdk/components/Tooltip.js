@@ -221,6 +221,7 @@ function Tooltip({
             getColor={getColor}
             isFixed={isFixed}
             isClosable={isClosable}
+            role="tooltip"
             as={override.Content}
           >
             {isClosable && (

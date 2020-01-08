@@ -21,7 +21,7 @@ const ChipText = styled.span`
   vertical-align: middle;
 `
 
-function Chip({ type, options, prefix = '', suffix = '', children }) {
+function Chip({ type, options, prefix = '', suffix = '', children, ...props }) {
   if (!options[type]) {
     throw new Error(
       `Chip option "${type}" not in "${Object.keys(options).join('", "')}"`
@@ -33,7 +33,7 @@ function Chip({ type, options, prefix = '', suffix = '', children }) {
     theme.color(colorKey, colorIndex || 0, opacity)
 
   return (
-    <Container getColor={getColor}>
+    <Container getColor={getColor} {...props}>
       {prefix}
       {icon && <Icon type={icon} />}
       <ChipText>{children || type}</ChipText>

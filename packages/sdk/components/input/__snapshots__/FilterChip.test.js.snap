@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterChip renders, matching snapshot 1`] = `
+<DocumentFragment>
+  .c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
+}
+
+.c2 {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.c3 {
+  display: inline-block;
+  padding: 0px 4px;
+  background: rgba(128,130,133,0.15);
+  color: rgba(128,130,133,1);
+  white-space: nowrap;
+  font-size: 8pt;
+  font-weight: 600;
+}
+
+.c4 {
+  line-height: 2em;
+  display: inline-block;
+  padding: 4px;
+  vertical-align: middle;
+}
+
+.c1 {
+  display: inline-block;
+  margin: 8px;
+}
+
+<div
+    class="c0"
+  >
+    <span
+      class="c1"
+    >
+      <span
+        class="c2"
+      >
+        <span
+          class="c3"
+        >
+          <span
+            class="c4"
+          >
+            mock list filter
+          </span>
+        </span>
+      </span>
+    </span>
+    <div
+      data-testid="output"
+    >
+      [{"type":"a","num":2},{"type":"a","num":7},{"type":"b","num":4},{"type":"b","num":5},{"type":"c","num":6},{"type":"c","num":3}]
+    </div>
+  </div>
+</DocumentFragment>
+`;
