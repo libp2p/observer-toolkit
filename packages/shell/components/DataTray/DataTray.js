@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import DataTrayItem from './DataTrayItem'
+import SamplesList from './SamplesList'
 
 const Container = styled.section`
   background: ${({ theme }) => theme.color('contrast', 1)};
@@ -27,7 +28,7 @@ function DataTray() {
       name: 'Sample data',
       iconType: 'cloud',
       description: 'Try this now, using pre-made data samples',
-      DataSelector: () => <div />,
+      DataSelector: SamplesList,
     },
     {
       name: 'Upload a file',
@@ -56,7 +57,6 @@ function DataTray() {
             name={name}
             description={description}
             iconType={iconType}
-            DataSelector={DataSelector}
             key={name}
           >
             {isSelected && <DataSelector />}

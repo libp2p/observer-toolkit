@@ -5,6 +5,11 @@ import styled from 'styled-components'
 import { Icon } from '@libp2p-observer/sdk'
 
 const HEIGHT = 72
+const opacityTransition = {
+  property: 'opacity',
+  duration: 0.2,
+  delay: 0.4,
+}
 
 const Container = styled.div`
   cursor: ${({ isSelected }) => (isSelected ? 'initial' : 'pointer')};
@@ -35,7 +40,6 @@ const Container = styled.div`
 
 const ContainerInner = styled.div`
   position: relative;
-  z-index: 2;
   display: flex;
   flex-direction: row;
 `
@@ -70,11 +74,7 @@ const Details = styled.div`
       {
         property: 'max-width',
       },
-      {
-        property: 'opacity',
-        duration: 0.2,
-        delay: 0.4,
-      },
+      opacityTransition,
     ])}
 `
 
@@ -109,6 +109,21 @@ const SlideAcross = styled.div`
   }
 `
 
+const SlideInner = styled.div`
+  ${({ theme }) => theme.text('heading', 'large')}
+  white-space: nowrap;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  flex-direction: column;
+  color: ${({ theme }) => theme.color('highlight', 0)};
+  ${({ theme }) => theme.transition(opacityTransition)}
+  opacity: ${({ isSelected }) => (isSelected ? 1 : 0)};
+`
+
 const Heading = styled.h4`
   ${({ theme }) => theme.text('heading', 'large')}
   color: ${({ theme }) => theme.color('text', 3)};
@@ -122,6 +137,8 @@ const Description = styled.p`
 `
 
 const CloseIcon = styled(IconContainer)`
+  position: relative;
+  z-index: 5;
   color: ${({ theme }) => theme.color('background')};
   margin-left: 0;
   margin-right: -${HEIGHT / 2}px;
@@ -142,7 +159,7 @@ function DataTrayItem({
     <Container onClick={select} isSelected={isSelected}>
       <ContainerInner>
         <SlideAcross onClick={stopProp} isSelected={isSelected}>
-          {children}
+          <SlideInner isSelected={isSelected}>{children}</SlideInner>
         </SlideAcross>
         <IconContainer>
           <Icon type={iconType} size="3em" active />
