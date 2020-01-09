@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import get from 'lodash.get'
 
-import { DataContext, Icon } from '@libp2p-observer/sdk'
+import { DataContext, Icon, UploadDataButton } from '@libp2p-observer/sdk'
 import DataTrayItem from './DataTrayItem'
 import SamplesList from './SamplesList'
 
@@ -40,7 +40,7 @@ const items = [
     type: 'upload',
     iconType: 'doc',
     description: 'Import lip2p-introspection protobuf data',
-    Component: () => <div />,
+    Component: UploadDataButton,
   },
   {
     name: 'Live connection',

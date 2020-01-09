@@ -10,7 +10,7 @@ function ThemeSetter({ children }) {
   // Ensure we don't add global styles twice
   if (useContext(ThemeProvider)) {
     throw new Error(
-      'ThemeWrapper cannot be nested inside another ThemeProvider or itself'
+      'ThemeSetter cannot be nested inside another ThemeProvider or itself'
     )
   }
 
@@ -34,6 +34,9 @@ function ThemeSetter({ children }) {
       margin : 0;
       border: none;
       background: transparent;
+      line-height: inherit;
+      color: inherit;
+      text-align: inherit;
     }
   `
 

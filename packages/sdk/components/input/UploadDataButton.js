@@ -5,9 +5,8 @@ import styled from 'styled-components'
 import { uploadDataFile } from '../../utils'
 import { SetterContext } from '../context/DataProvider'
 
-import StyledButton from './StyledButton'
-
-const FileButton = styled(StyledButton)`
+const FileButton = styled.button`
+  cursor: pointer;
   position: relative;
   z-index: 5;
 `
@@ -18,7 +17,7 @@ const NativeFileInput = styled.input`
   left: 0;
   pointer-events: none;
 `
-const RelativeSpan = styled.span`
+const Container = styled.span`
   position: relative;
 `
 
@@ -27,15 +26,13 @@ function getButtonText(isLoading, fileName, title) {
   return fileName ? `Replace file '${fileName}'` : title
 }
 
-function UploadDataButton({ title }) {
+const defaultTitle = 'Pick a libp2p protobuf file'
+
+function UploadDataButton({ onLoad, title = defaultTitle, overrides = {} }) {
   const [isLoading, setIsLoading] = useState(false)
   const [fileName, setFileName] = useState('')
   const { dispatchDataset } = useContext(SetterContext)
   const fileInputRef = useRef()
-
-  function handleClick() {
-    fileInputRef.current.click()
-  }
 
   function handleUpload(event) {
     const file = event.target.files[0]
@@ -45,6 +42,10 @@ function UploadDataButton({ title }) {
       handleUploadFinish,
       handleUploadChunk
     )
+  }
+
+  function handleClick() {
+    fileInputRef.current.click()
   }
 
   function handleUploadStart() {
@@ -61,25 +62,31 @@ function UploadDataButton({ title }) {
   function handleUploadFinish(file) {
     setIsLoading(false)
     setFileName(file.name)
+    if (onLoad) onLoad()
   }
 
   const buttonText = getButtonText(isLoading, fileName, title)
 
   return (
-    <RelativeSpan>
-      <FileButton onClick={handleClick}>{buttonText}</FileButton>
+    <Container as={overrides.Container}>
+      <FileButton onClick={handleClick} as={overrides.FileButton}>
+        {buttonText}
+      </FileButton>
       <NativeFileInput
         ref={fileInputRef}
         type="file"
         name="file"
         onChange={handleUpload}
+        as={overrides.NativeFileInput}
       />
-    </RelativeSpan>
+    </Container>
   )
 }
 
 UploadDataButton.propTypes = {
+  onLoad: T.func,
   title: T.string.isRequired,
+  overrides: T.object,
 }
 
 export default UploadDataButton
