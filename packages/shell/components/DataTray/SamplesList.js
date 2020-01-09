@@ -35,8 +35,8 @@ const SampleItem = styled.button`
   justify-content: space-between;
   align-items: center;
   margin: ${({ theme }) => theme.spacing([1, 0])};
-  &:active, :focus {
-    background: ${({ theme }) => theme.color('contrast', 0, 0.5)};
+  &:active, :focus, :hover {
+    background: ${({ theme }) => theme.color('contrast', 0, 0.7)};
   }
 `
 

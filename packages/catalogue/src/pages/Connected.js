@@ -6,9 +6,7 @@ import { ControlPanel } from '@libp2p-observer/shell'
 
 import approvedWidgets from '../definitions/approvedWidgets'
 import CatalogueItem from '../components/CatalogueItem'
-import HeaderTabs from '../components/HeaderTabs'
-
-const HEADER_HEIGHT = '62px'
+import Header from '../components/Header'
 
 const Container = styled.div`
   font-family: plex-sans, sans-serif;
@@ -21,30 +19,20 @@ const Container = styled.div`
   right: 0;
 `
 
-const Main = styled.div`
-  padding: ${({ theme }) => theme.spacing([2, 1])};
-  background-color: ${({ theme }) => theme.color('background', 1)};
+const ScrollArea = styled.div`
   overflow-y: scroll;
   flex-grow: 1;
   flex-shrink: 1;
+`
+
+const Main = styled.div`
+  padding: ${({ theme }) => theme.spacing([2, 1])};
+  background-color: ${({ theme }) => theme.color('background', 1)};
   position: relative;
 `
 
 const CatalogueBkg = styled.div`
   display: flex;
-`
-
-const Header = styled.div`
-  flex-grow: 0;
-  flex-shrink: 0;
-  z-index: 50;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: ${HEADER_HEIGHT};
-  background: ${({ theme }) => theme.color('contrast')};
-  border-bottom: ${({ theme }) =>
-    `${theme.spacing()} solid ${theme.color('primary')}`};
 `
 
 function Connected() {
@@ -54,35 +42,34 @@ function Connected() {
 
   return (
     <Container>
-      <Header>
-        <HeaderTabs />
-      </Header>
-      <Main>
-        {selectedWidget && (
+      <ScrollArea>
+        <Header />
+        <Main>
           <RootNodeProvider>
-            <selectedWidget.Widget closeWidget={closeWidget} />
-          </RootNodeProvider>
-        )}
-        <RootNodeProvider>
-          <CatalogueBkg>
-            {approvedWidgets.map(
-              ({ name, description, tags, screenshot }, index) => (
-                <CatalogueItem
-                  key={name}
-                  name={name}
-                  description={description}
-                  tags={tags}
-                  screenshot={screenshot}
-                  handleSelect={() =>
-                    setSelected(index === selected ? null : index)
-                  }
-                  isSelected={selected === index}
-                />
-              )
+            {selectedWidget ? (
+              <selectedWidget.Widget closeWidget={closeWidget} />
+            ) : (
+              <CatalogueBkg>
+                {approvedWidgets.map(
+                  ({ name, description, tags, screenshot }, index) => (
+                    <CatalogueItem
+                      key={name}
+                      name={name}
+                      description={description}
+                      tags={tags}
+                      screenshot={screenshot}
+                      handleSelect={() =>
+                        setSelected(index === selected ? null : index)
+                      }
+                      isSelected={selected === index}
+                    />
+                  )
+                )}
+              </CatalogueBkg>
             )}
-          </CatalogueBkg>
-        </RootNodeProvider>
-      </Main>
+          </RootNodeProvider>
+        </Main>
+      </ScrollArea>
       <ControlPanel />
     </Container>
   )
