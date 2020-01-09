@@ -85,6 +85,7 @@ function DataTypeControl({ metadata, openDataTray }) {
 
 DataTypeControl.propTypes = {
   metadata: T.object,
+  openDataTray: T.func.isRequired,
 }
 
 export default DataTypeControl

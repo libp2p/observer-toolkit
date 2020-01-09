@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import T from 'prop-types'
 import styled from 'styled-components'
 
 import samples from '@libp2p-observer/samples'
@@ -46,7 +47,7 @@ const SampleImg = styled.img`
   display: block;
 `
 
-function SamplesList() {
+function SamplesList({ onLoad }) {
   const [isLoading, setIsLoading] = useState('')
   const { dispatchDataset } = useContext(SetterContext)
   const dataset = useContext(DataContext)
@@ -70,6 +71,7 @@ function SamplesList() {
       data,
     })
     setIsLoading('')
+    if (onLoad) onLoad()
   }
 
   return (
@@ -92,6 +94,10 @@ function SamplesList() {
       </SamplesTray>
     </>
   )
+}
+
+SamplesList.propTypes = {
+  onLoad: T.func,
 }
 
 export default SamplesList

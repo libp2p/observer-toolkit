@@ -67,6 +67,7 @@ function DataPanel({ metadata = {} }) {
   const peerId = runtime.getPeerId()
 
   const openDataTray = () => setIsDataTrayOpen(true)
+  const closeDataTray = () => setIsDataTrayOpen(false)
 
   return (
     <>
@@ -103,7 +104,7 @@ function DataPanel({ metadata = {} }) {
 
       {isDataTrayOpen && (
         <DataTrayContainer>
-          <DataTray />
+          <DataTray onLoad={closeDataTray} />
           <Icon
             type="remove"
             onClick={() => setIsDataTrayOpen(false)}

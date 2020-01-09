@@ -43,7 +43,7 @@ async function applySampleData(
 
   const metadata = {
     type: 'sample',
-    name: 'Sample data',
+    name: samplePath.match(/[/|\\]?([^/|\\]*)$/)[1],
   }
   const bl = new BufferList()
   const response = await fetch(samplePath)
