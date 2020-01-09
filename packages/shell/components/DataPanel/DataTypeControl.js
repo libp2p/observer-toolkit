@@ -42,7 +42,7 @@ const ButtonText = styled.span`
   `}
 `
 
-function DataTypeControl({ metadata }) {
+function DataTypeControl({ metadata, openDataTray }) {
   const [isHighlighted, setHighlighted] = useState(false)
 
   if (!metadata) return ''
@@ -71,6 +71,7 @@ function DataTypeControl({ metadata }) {
       onMouseEnter={() => setHighlighted(true)}
       onMouseLeave={() => setHighlighted(false)}
       data-highlighted={isHighlighted}
+      onClick={openDataTray}
     >
       <IconButton isHighlighted={isHighlighted}>
         <Icon type={iconType} />
