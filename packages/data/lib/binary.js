@@ -2,6 +2,10 @@
 
 const { deserializeBinary, fnv1a } = require('@libp2p-observer/proto')
 
+function getMessageChecksum(buffer) {
+  return fnv1a(buffer)
+}
+
 function parseBuffer(buf) {
   // Expects a binary file with this structure:
   // - 4-byte version number
@@ -35,7 +39,7 @@ function parseBuffer(buf) {
 
     const messageBin = buf.slice(messageStart, messageEnd)
 
-    const validChecksum = messageChecksum === fnv1a(messageBin)
+    const validChecksum = messageChecksum(messageBin) === messageChecksum // messageChecksum === fnv1a(messageBin)
 
     // TODO: bubble an error message for an invalid checksum
     if (validChecksum) {
@@ -87,4 +91,5 @@ module.exports = {
   parseBase64,
   parseBuffer,
   parseImport,
+  getMessageChecksum,
 }

@@ -1,25 +1,47 @@
-import { parseArrayBuffer } from '@libp2p-observer/data'
+import {
+  parseArrayBuffer,
+  validateMessageChecksum,
+} from '@libp2p-observer/data'
+import { BufferList } from 'bl'
 
-function uploadDataFile(file, onUploadStart, onDataLoaded) {
+function uploadDataFile(file, onUploadStart, onUploadFinished, onUploadChunk) {
   if (!file) return
+
+  const blobSlice = Blob.prototype.slice
+  const versionFieldSize = 4
+  const chunkSize = 10 * 1024
+  const chunks = Math.ceil((file.size - versionFieldSize) / chunkSize)
   const reader = new FileReader()
 
-  // TODO: On integration with live output, share logic parsing file chunk by chunk
+  let currentChunk = 0
+  let version = 0
+  let bl = new BufferList()
+
   reader.onload = e => {
-    const metadata = {
-      type: 'upload',
-      name: file.name,
+    const metadata = { type: 'upload', name: file.name }
+    if (currentChunk <= chunks) {
+      const buf = Buffer.from(event.currentTarget.result)
+      if (currentChunk === 0) {
+        version = buf.readUIntLE(0, 4)
+      } else {
+        bl.append(buf)
+        bl = processUploadBuffer(version, bl, onUploadChunk)
+      }
+      const start = versionFieldSize + currentChunk * chunkSize
+      const end = start + chunkSize >= file.size ? file.size : start + chunkSize
+      reader.readAsArrayBuffer(blobSlice.call(file, start, end))
+      currentChunk++
+    } else {
+      if (onUploadFinished) onUploadFinished(file)
     }
-
-    processUploadedData(
-      event.currentTarget.result,
-      file,
-      onDataLoaded,
-      metadata
-    )
+    // processUploadedData(
+    //   event.currentTarget.result,
+    //   file,
+    //   onDataLoaded,
+    //   metadata
+    // )
   }
-
-  reader.readAsArrayBuffer(file)
+  reader.readAsArrayBuffer(blobSlice.call(file, 0, versionFieldSize))
   if (onUploadStart) onUploadStart(file)
 }
 
@@ -43,12 +65,30 @@ async function applySampleData(samplePath, onUploadStart, onDataLoaded) {
   processUploadedData(arrbuf, response, onDataLoaded, metadata)
 }
 
-function processUploadedData(arrayBuf, file, onDataLoaded, metadata) {
-  const data = parseArrayBuffer(arrayBuf)
+function processUploadBuffer(version, bufferList, onUploadChunk) {
+  const messageChecksumLength = 4
+  const messageSizeLength = 4
 
-  if (metadata && data.states) data.states.metadata = metadata
-
-  if (onDataLoaded) onDataLoaded(data, file)
+  while (bufferList.length > messageChecksumLength + messageSizeLength) {
+    const messageChecksum = bufferList.readUIntLE(0, messageChecksumLength)
+    const messageSize = bufferList.readUIntLE(4, messageSizeLength)
+    const minimalBufferLength =
+      messageChecksumLength + messageSizeLength + messageSize
+    if (bufferList.length <= minimalBufferLength) break
+    const messageBuffer = new Buffer(messageSize) // bufferList.slice(8, messageSize)
+    bufferList.copy(messageBuffer, 0, 8, messageSize)
+    const calcChecksum = getMessageChecksum(messageBuffer)
+    const valie = messageChecksum === calcChecksum
+    bufferList = bufferList.shallowSlice(minimalBufferLength)
+  }
+  return bufferList
 }
 
-export { uploadDataFile, processUploadedData, applySampleData }
+function processUploadedData(arrayBuf, file, onDataLoaded, metadata) {
+  //const data = parseArrayBuffer(arrayBuf)
+  // console.log(data)
+  // if (metadata && data.states) data.states.metadata = metadata
+  // if (onDataLoaded) onDataLoaded(data, file)
+}
+
+export { uploadDataFile, applySampleData }

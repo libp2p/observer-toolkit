@@ -39,18 +39,26 @@ function UploadDataButton({ title }) {
 
   function handleUpload(event) {
     const file = event.target.files[0]
-    uploadDataFile(file, handleUploadStart, handleDataLoaded)
+    uploadDataFile(
+      file,
+      handleUploadStart,
+      handleDataFinished,
+      handleDataLoaded
+    )
   }
 
   function handleUploadStart() {
     setIsLoading(true)
   }
 
-  function handleDataLoaded(data, file) {
+  function handleDataLoaded(data) {
     dispatchDataset({
-      action: 'replace',
+      action: 'append',
       data,
     })
+  }
+
+  function handleDataFinished(data, file) {
     setIsLoading(false)
     setFileName(file.name)
   }
