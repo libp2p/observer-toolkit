@@ -11,16 +11,13 @@ function uploadDataFile(file, onUploadStart, onUploadFinished, onUploadChunk) {
   const reader = new FileReader()
 
   let currentChunk = 0
-  let version = 0
   let bl = new BufferList()
 
   reader.onload = e => {
     const metadata = { type: 'upload', name: file.name }
     if (currentChunk <= chunks) {
       const buf = Buffer.from(event.currentTarget.result)
-      if (currentChunk === 0) {
-        version = buf.readUIntLE(0, 4)
-      } else {
+      if (currentChunk > 0) {
         bl.append(buf)
         processUploadBuffer(bl, onUploadChunk, metadata)
       }
@@ -58,7 +55,6 @@ async function applySampleData(
 
   const arrbuf = await response.arrayBuffer()
   const buf = Buffer.from(arrbuf)
-  const version = buf.readUIntLE(0, 4)
   bl.append(buf.slice(4))
   processUploadBuffer(bl, onUploadChunk, metadata)
   onUploadFinished()
