@@ -46,7 +46,7 @@ const ContainerInner = styled.div`
 
 const IconContainer = styled.div`
   position: relative;
-  z-index: 1;
+  z-index: ${({ isSelected }) => (isSelected ? 2 : 1)};
   flex-shrink: 0;
   border-radius: 50%;
   background: ${({ theme }) => theme.color('background', 0)};
@@ -85,6 +85,7 @@ const SlideAcross = styled.div`
   max-width: ${({ isSelected }) => (isSelected ? '100%' : '0%')};
   background: ${({ theme }) => theme.color('background')};
   position: relative;
+  z-index: ${({ isSelected }) => (isSelected ? 2 : 1)};
   ${({ theme }) => theme.transition()} :before,
   :after {
     content: '';
@@ -161,7 +162,7 @@ function DataTrayItem({
         <SlideAcross onClick={stopProp} isSelected={isSelected}>
           <SlideInner isSelected={isSelected}>{children}</SlideInner>
         </SlideAcross>
-        <IconContainer>
+        <IconContainer isSelected={isSelected}>
           <Icon type={iconType} size="3em" active />
         </IconContainer>
         <Details isSelected={isSelected}>
