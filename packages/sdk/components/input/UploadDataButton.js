@@ -42,8 +42,8 @@ function UploadDataButton({ title }) {
     uploadDataFile(
       file,
       handleUploadStart,
-      handleDataFinished,
-      handleDataLoaded
+      handleUploadFinish,
+      handleUploadChunk
     )
   }
 
@@ -51,14 +51,14 @@ function UploadDataButton({ title }) {
     setIsLoading(true)
   }
 
-  function handleDataLoaded(data) {
+  function handleUploadChunk(data) {
     dispatchDataset({
       action: 'append',
       data,
     })
   }
 
-  function handleDataFinished(data, file) {
+  function handleUploadFinish(file) {
     setIsLoading(false)
     setFileName(file.name)
   }

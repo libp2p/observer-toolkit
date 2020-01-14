@@ -23,11 +23,15 @@ function updateData(oldData, { action, data }) {
 }
 
 function appendToDataSet(newData, oldData) {
-  // TODO: Update protobuf, then check peer Id matches
-  // If not, replace dataset
-  // Else, see if this timestamp already exists
-  // If it does, replace. Else, append
-  return [...oldData, ...newData]
+  // if no old data, or no peer-id match, then replace
+  if (!oldData || oldData.runtime.getPeerId() !== newData.runtime.getPeerId())
+    return newData
+  // merge data
+  return Object.assign(
+    {},
+    { runtime: oldData.runtime },
+    { states: oldData.states.concat(newData.states) }
+  )
 }
 
 function replaceDataSet(data) {

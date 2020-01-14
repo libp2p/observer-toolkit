@@ -19,20 +19,27 @@ function SampleDataButton({ title, samplePath }) {
       return
     }
 
-    applySampleData(samplePath, handleUploadStart, handleDataLoaded)
+    applySampleData(
+      samplePath,
+      handleUploadStart,
+      handleUploadFinished,
+      handleUploadChunk
+    )
   }
 
   function handleUploadStart() {
     setIsLoading(true)
   }
 
-  function handleDataLoaded(data) {
+  function handleUploadChunk(data) {
     data.isSample = true
-
     dispatchDataset({
       action: 'replace',
       data,
     })
+  }
+
+  function handleUploadFinished() {
     setIsLoading(false)
   }
 

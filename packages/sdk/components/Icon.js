@@ -44,7 +44,7 @@ function Icon({
   ...props
 }) {
   const IconSvg = type ? icons[type] : Empty
-  if (!IconSvg) throw new Error(`No icon found named "${type}"`)
+  // if (!IconSvg) throw new Error(`No icon found named "${type}"`)  // TODO: throws when streaming the data, need to check that out
 
   const isButton = onClick && !disabled
 
