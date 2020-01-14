@@ -9,8 +9,6 @@ import { Connected, Home } from './pages'
 function Router() {
   const dataset = useContext(DataContext)
 
-  console.log('dataset', dataset)
-
   useEffect(() => {
     document.title = 'LibP2P Observation Deck'
   }, [])
