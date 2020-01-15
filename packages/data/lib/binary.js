@@ -1,3 +1,5 @@
+'use strict'
+
 const { deserializeBinary, fnv1a } = require('@libp2p-observer/proto')
 
 function parseBuffer(buf) {

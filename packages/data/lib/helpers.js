@@ -1,3 +1,4 @@
+'use strict'
 // Convenience functions for extracting data from decoded protobuf
 
 // Gets the first (or latest) occurence of each connection that exists in a data set, with optional filter

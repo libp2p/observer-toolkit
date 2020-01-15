@@ -3,9 +3,17 @@
     "commonjs": true
   },
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "script"
   },
   "rules": {
     "strict": ["error", "global"]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js"],
+      "parserOptions": {
+        "sourceType": "module"
+      }
+    }
+  ]
 }
