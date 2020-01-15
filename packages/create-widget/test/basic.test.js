@@ -7,6 +7,11 @@ const fs = require('fs')
 const { exec } = require('child_process')
 const rimraf = require('rimraf')
 const { promisify } = require('util')
+const {
+  createTestWidget,
+  cleanupWidget,
+  testDirPath,
+} = require('./fixtures/createTestWidget')
 
 const rimrafPromise = promisify(rimraf)
 const execPromise = promisify(exec)
@@ -29,7 +34,21 @@ test('Prepare script', async t => {
   t.end()
 })
 
-// TODO: test generate script contents
+// Must be run after prepublishOnly, before postpublish
+test('Create widget', async t => {
+  t.notOk(fs.existsSync(testDirPath))
+
+  try {
+    await createTestWidget()
+  } catch (error) {
+    await cleanupWidget()
+    throw error
+  }
+
+  t.ok(fs.existsSync(testDirPath))
+  await cleanupWidget()
+  t.end()
+})
 
 test('Postpublish script', async t => {
   t.ok(fs.existsSync('./root-repo'))

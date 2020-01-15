@@ -15,17 +15,13 @@ const rimrafPromise = promisify(rimraf)
 const wait = promisify(setTimeout)
 const noop = () => {}
 
-process.on('unhandledRejection', err => {
-  throw err
-})
-
 const testDirPath = path.join(__dirname, './testModuleDir')
 
 async function setup() {
   try {
     const exists = await fs.stat(testDirPath)
     if (exists) {
-      await rimrafPromise(testDirPath)
+      await cleanupWidget()
     }
   } catch (e) {
     noop(e)
@@ -33,30 +29,27 @@ async function setup() {
     await fs.mkdir(testDirPath)
   }
 }
-async function cleanup() {
-  const testDirPath = path.join(__dirname, './testModuleDir')
+
+async function cleanupWidget() {
   await rimrafPromise(testDirPath)
 }
 
-test('that it passes', async t => {
+// Runs the create-widget script and gives example answers to CLI questions
+async function createTestWidget() {
   await setup()
 
   const childOptions = {
+    cwd: testDirPath,
     silent: true,
     stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
   }
-  const child = fork(path.join(__dirname, '..'), [], childOptions)
-
-  child.stderr.on('data', data => console.log('stderr: ', data.toString()))
-  child.stdin.on('data', data => console.log('in: ', data.toString()))
-  child.stdout.on('data', data => console.log('out: ', data.toString()))
-
-  const widgetName = 'Test Widget'
+  const child = fork(path.join(__dirname, '../..'), [], childOptions)
+  child.stderr.on('data', data => console.error('stderr: ', data.toString()))
 
   const nameMatcher = /name/i
   const descMatcher = /description/i
   const authorMatcher = /author/i
-  const successMatcher = new Regexp(`Widget "${widgetName}" created!`, 'i')
+  const successMatcher = /Widget "test-widget" created!/i
 
   const cliMatchers = [nameMatcher, descMatcher, authorMatcher, successMatcher]
 
@@ -64,7 +57,9 @@ test('that it passes', async t => {
     const responder = function(data) {
       const logMessage = data.toString()
       if (logMessage.match(matcher)) {
-        child.stdin.write(`${response}\n`)
+        if (response) {
+          child.stdin.write(`${response}\n`)
+        }
 
         child.stdout.removeListener('data', this)
         callback()
@@ -86,9 +81,14 @@ test('that it passes', async t => {
     makeResponder(nameMatcher, 'Test Widget'),
     makeResponder(descMatcher, 'Test description'),
     makeResponder(authorMatcher, 'Test Name <email@example.com>'),
+    makeResponder(successMatcher, null),
   ])
 
   child.kill(1)
-  await cleanup()
-  t.end()
-})
+}
+
+module.exports = {
+  createTestWidget,
+  cleanupWidget,
+  testDirPath,
+}
