@@ -46,10 +46,10 @@ async function createTestWidget() {
   const child = fork(path.join(__dirname, '../..'), [], childOptions)
   child.stderr.on('data', data => console.error('stderr: ', data.toString()))
 
-  const nameMatcher = /name/i
+  const nameMatcher = /name of widget/i
   const descMatcher = /description/i
   const authorMatcher = /author/i
-  const successMatcher = /Widget "test-widget" created!/i
+  const successMatcher = /widget "test.widget" created/i
 
   const cliMatchers = [nameMatcher, descMatcher, authorMatcher, successMatcher]
 

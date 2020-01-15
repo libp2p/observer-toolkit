@@ -46,6 +46,13 @@ test('Create widget', async t => {
   }
 
   t.ok(fs.existsSync(testDirPath))
+  t.ok(fs.existsSync(path.resolve(testDirPath, 'components', 'TestWidget.js')))
+
+  const packageJson = require(path.resolve(testDirPath, 'package.json'))
+  t.equals(packageJson.name, 'test-widget')
+  t.equals(packageJson.description, 'Test description')
+  t.equals(packageJson.author, 'Test Name <email@example.com>')
+
   await cleanupWidget()
   t.end()
 })
