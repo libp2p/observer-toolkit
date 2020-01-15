@@ -1,57 +1,94 @@
 'use strict'
 
 const { test } = require('tap')
+
+const { fork } = require('child_process')
+const { promisify } = require('util')
 const path = require('path')
 const fs = require('fs').promises
-const rimraf = require('rimraf')
-const { spawn } = require('child_process')
 
-const wait = t => new Promise(resolve => setTimeout(() => resolve(), t))
+const { createInterface } = require('readline')
+
+const rimraf = require('rimraf')
+const rimrafPromise = promisify(rimraf)
+
+const wait = promisify(setTimeout)
 const noop = () => {}
 
+process.on('unhandledRejection', err => {
+  throw err
+})
+
+const testDirPath = path.join(__dirname, './testModuleDir')
+
 async function setup() {
-  const pat = path.join(__dirname, './testModuleDir')
   try {
-    const exists = await fs.stat(pat)
+    const exists = await fs.stat(testDirPath)
     if (exists) {
-      await new Promise(resolve => rimraf(pat, () => resolve()))
+      await rimrafPromise(testDirPath)
     }
   } catch (e) {
     noop(e)
   } finally {
-    await fs.mkdir(pat)
+    await fs.mkdir(testDirPath)
   }
 }
 async function cleanup() {
-  const pat = path.join(__dirname, './testModuleDir')
-  await new Promise(resolve => rimraf(pat, () => resolve()))
+  const testDirPath = path.join(__dirname, './testModuleDir')
+  await rimrafPromise(testDirPath)
 }
 
 test('that it passes', async t => {
   await setup()
 
-  const child = spawn(process.execPath, [path.join(__dirname, '..')], {
-    cwd: path.join(__dirname, './testModuleDir'),
-    env: process.env,
-    stdio: ['pipe', 'pipe', 'pipe'],
-    detached: false,
+  const childOptions = {
+    silent: true,
+    stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+  }
+  const child = fork(path.join(__dirname, '..'), [], childOptions)
+
+  child.stderr.on('data', data => console.log('stderr: ', data.toString()))
+  child.stdin.on('data', data => console.log('in: ', data.toString()))
+  child.stdout.on('data', data => console.log('out: ', data.toString()))
+
+  const widgetName = 'Test Widget'
+
+  const nameMatcher = /name/i
+  const descMatcher = /description/i
+  const authorMatcher = /author/i
+  const successMatcher = new Regexp(`Widget "${widgetName}" created!`, 'i')
+
+  const cliMatchers = [nameMatcher, descMatcher, authorMatcher, successMatcher]
+
+  const makeResponder = promisify((matcher, response, callback) => {
+    const responder = function(data) {
+      const logMessage = data.toString()
+      if (logMessage.match(matcher)) {
+        child.stdin.write(`${response}\n`)
+
+        child.stdout.removeListener('data', this)
+        callback()
+      } else if (!cliMatchers.some(rx => logMessage.match(rx))) {
+        // Fail meaningfully (not by tap timeout) if a message matches nothing
+        const rxList = cliMatchers.map(rx => rx.toString()).join(', ')
+        callback(
+          new Error(
+            `CLI message "${logMessage}" does not match any of ${rxList}`
+          )
+        )
+      }
+    }
+
+    child.stdout.on('data', data => responder.call(responder, data))
   })
 
-  child.stdin.setEncoding('utf-8')
-
-  child.stdout.pipe(process.stdout)
-  child.stderr.pipe(process.stderr)
-
-  await wait(1000)
-  child.stdin.write('a name\n')
-  await wait(3000)
-  child.stdin.write('a desc\n')
-  await wait(3000)
-  child.stdin.write('author <email@example.com>\n')
-  await wait(3000)
+  await Promise.all([
+    makeResponder(nameMatcher, 'Test Widget'),
+    makeResponder(descMatcher, 'Test description'),
+    makeResponder(authorMatcher, 'Test Name <email@example.com>'),
+  ])
 
   child.kill(1)
-
   await cleanup()
   t.end()
 })
