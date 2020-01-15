@@ -3,13 +3,19 @@ import { loadSample } from '@libp2p-observer/testing'
 
 import {
   getAllConnections,
-  getConnections,
   getAllStreamsAtTime,
+  getConnections,
   getConnectionTraffic,
+  getConnectionAge,
+  getEnumByName,
+  getStreamAge,
+  getStreamTraffic,
   getLatestTimepoint,
   getTime,
   getTimeIndex,
-} from '../index.js'
+} from './helpers'
+
+import { statusNames, roleNames, transportNames } from './enums'
 
 const { Connection } = proto
 const { states } = loadSample()
@@ -93,24 +99,58 @@ describe('data helpers', () => {
     }
   })
 
-  it('gets traffic data from connections', () => {
-    const allConnections = getAllConnections(states)
-    for (const connection of allConnections) {
-      const bytesIn = getConnectionTraffic(connection, 'in', 'bytes')
+  it('gets traffic and age data from streams and connections', () => {
+    const connections = new Set()
+
+    const timepoint = getLatestTimepoint(states)
+    const allStreamsWithConnection = getAllStreamsAtTime(timepoint)
+    for (const { connection, stream } of allStreamsWithConnection) {
+      // Traffic - streams
+      const bytesIn = getStreamTraffic(stream, 'in', 'bytes')
       expect(typeof bytesIn).toBe('number')
       expect(bytesIn >= 0).toBeTruthy()
 
-      const bytesOut = getConnectionTraffic(connection, 'out', 'bytes')
+      const bytesOut = getStreamTraffic(stream, 'out', 'bytes')
       expect(typeof bytesOut).toBe('number')
       expect(bytesOut >= 0).toBeTruthy()
 
-      const packetsIn = getConnectionTraffic(connection, 'in', 'packets')
+      const packetsIn = getStreamTraffic(stream, 'in', 'packets')
       expect(typeof packetsIn).toBe('number')
       expect(packetsIn >= 0).toBeTruthy()
 
-      const packetsOut = getConnectionTraffic(connection, 'out', 'packets')
+      const packetsOut = getStreamTraffic(stream, 'out', 'packets')
       expect(typeof packetsOut).toBe('number')
       expect(packetsOut >= 0).toBeTruthy()
+
+      // Traffic - connections
+      if (!connections.has(connection)) {
+        connections.add(connection)
+
+        const bytesIn = getConnectionTraffic(connection, 'in', 'bytes')
+        expect(typeof bytesIn).toBe('number')
+        expect(bytesIn >= 0).toBeTruthy()
+
+        const bytesOut = getConnectionTraffic(connection, 'out', 'bytes')
+        expect(typeof bytesOut).toBe('number')
+        expect(bytesOut >= 0).toBeTruthy()
+
+        const packetsIn = getConnectionTraffic(connection, 'in', 'packets')
+        expect(typeof packetsIn).toBe('number')
+        expect(packetsIn >= 0).toBeTruthy()
+
+        const packetsOut = getConnectionTraffic(connection, 'out', 'packets')
+        expect(typeof packetsOut).toBe('number')
+        expect(packetsOut >= 0).toBeTruthy()
+      }
+
+      // Age
+      const connectionAge = getConnectionAge(connection, timepoint)
+      expect(typeof connectionAge).toBe('number')
+      expect(connectionAge >= 0).toBeTruthy()
+
+      const streamAge = getStreamAge(stream, timepoint)
+      expect(typeof streamAge).toBe('number')
+      expect(streamAge >= 0).toBeTruthy()
     }
   })
 
@@ -130,4 +170,11 @@ describe('data helpers', () => {
     }
     expect(states[index - 1]).toEqual(getLatestTimepoint(states))
   }, 20000)
+
+  it('gets valid enums only', () => {
+    expect(typeof getEnumByName('ERROR', statusNames)).toBe('number')
+    expect(typeof getEnumByName('RESPONDER', roleNames)).toBe('number')
+    expect(typeof getEnumByName('RDP', transportNames)).toBe('number')
+    expect(() => getEnumByName('missing enum name', statusNames)).toThrow()
+  })
 })
