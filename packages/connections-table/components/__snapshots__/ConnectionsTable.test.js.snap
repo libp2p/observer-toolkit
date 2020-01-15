@@ -195,36 +195,36 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
-  height: 67.12011651647686%;
-  width: 67.12011651647686%;
-  margin-top: 16.439941741761572%;
-  margin-left: 16.439941741761572%;
-  margin-right: 16.439941741761572%;
-  margin-bottom: 16.439941741761572%;
+  height: 5.982439239228992%;
+  width: 5.982439239228992%;
+  margin-top: 47.0087803803855%;
+  margin-left: 47.0087803803855%;
+  margin-right: 47.0087803803855%;
+  margin-bottom: 47.0087803803855%;
 }
 
 .c22 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
-  height: 51.218341669956736%;
-  width: 51.218341669956736%;
-  margin-top: 24.390829165021632%;
-  margin-left: 24.390829165021632%;
-  margin-right: 24.390829165021632%;
-  margin-bottom: 24.390829165021632%;
+  height: 10.257846387086783%;
+  width: 10.257846387086783%;
+  margin-top: 44.87107680645661%;
+  margin-left: 44.87107680645661%;
+  margin-right: 44.87107680645661%;
+  margin-bottom: 44.87107680645661%;
 }
 
 .c23 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
-  height: 54.53489471562225%;
-  width: 54.53489471562225%;
-  margin-top: 22.732552642188875%;
-  margin-left: 22.732552642188875%;
-  margin-right: 22.732552642188875%;
-  margin-bottom: 22.732552642188875%;
+  height: 2.858247063957371%;
+  width: 2.858247063957371%;
+  margin-top: 48.57087646802132%;
+  margin-left: 48.57087646802132%;
+  margin-right: 48.57087646802132%;
+  margin-bottom: 48.57087646802132%;
 }
 
 .c24 {
@@ -267,147 +267,39 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
-  height: 5.982439239228992%;
-  width: 5.982439239228992%;
-  margin-top: 47.0087803803855%;
-  margin-left: 47.0087803803855%;
-  margin-right: 47.0087803803855%;
-  margin-bottom: 47.0087803803855%;
+  height: 67.12011651647686%;
+  width: 67.12011651647686%;
+  margin-top: 16.439941741761572%;
+  margin-left: 16.439941741761572%;
+  margin-right: 16.439941741761572%;
+  margin-bottom: 16.439941741761572%;
 }
 
 .c28 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
-  height: 10.257846387086783%;
-  width: 10.257846387086783%;
-  margin-top: 44.87107680645661%;
-  margin-left: 44.87107680645661%;
-  margin-right: 44.87107680645661%;
-  margin-bottom: 44.87107680645661%;
+  height: 51.218341669956736%;
+  width: 51.218341669956736%;
+  margin-top: 24.390829165021632%;
+  margin-left: 24.390829165021632%;
+  margin-right: 24.390829165021632%;
+  margin-bottom: 24.390829165021632%;
 }
 
 .c29 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
-  height: 2.858247063957371%;
-  width: 2.858247063957371%;
-  margin-top: 48.57087646802132%;
-  margin-left: 48.57087646802132%;
-  margin-right: 48.57087646802132%;
-  margin-bottom: 48.57087646802132%;
+  height: 54.53489471562225%;
+  width: 54.53489471562225%;
+  margin-top: 22.732552642188875%;
+  margin-left: 22.732552642188875%;
+  margin-right: 22.732552642188875%;
+  margin-bottom: 22.732552642188875%;
 }
 
 .c31 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: rgb(252,189,32);
-  height: 53.70608992819464%;
-  width: 53.70608992819464%;
-  margin-top: 23.14695503590268%;
-  margin-left: 23.14695503590268%;
-  margin-right: 23.14695503590268%;
-  margin-bottom: 23.14695503590268%;
-}
-
-.c32 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: rgb(112,208,224);
-  height: 80.24365203181772%;
-  width: 80.24365203181772%;
-  margin-top: 9.878173984091141%;
-  margin-left: 9.878173984091141%;
-  margin-right: 9.878173984091141%;
-  margin-bottom: 9.878173984091141%;
-}
-
-.c33 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: currentColor;
-  height: 53.41648122731042%;
-  width: 53.41648122731042%;
-  margin-top: 23.29175938634479%;
-  margin-left: 23.29175938634479%;
-  margin-right: 23.29175938634479%;
-  margin-bottom: 23.29175938634479%;
-}
-
-.c34 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: rgb(252,189,32);
-  height: 37.39487533783078%;
-  width: 37.39487533783078%;
-  margin-top: 31.30256233108461%;
-  margin-left: 31.30256233108461%;
-  margin-right: 31.30256233108461%;
-  margin-bottom: 31.30256233108461%;
-}
-
-.c35 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: rgb(112,208,224);
-  height: 38.247965920167516%;
-  width: 38.247965920167516%;
-  margin-top: 30.876017039916242%;
-  margin-left: 30.876017039916242%;
-  margin-right: 30.876017039916242%;
-  margin-bottom: 30.876017039916242%;
-}
-
-.c36 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: currentColor;
-  height: 100%;
-  width: 100%;
-  margin-top: 0%;
-  margin-left: 0%;
-  margin-right: 0%;
-  margin-bottom: 0%;
-}
-
-.c37 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: rgb(252,189,32);
-  height: 14.900829065672259%;
-  width: 14.900829065672259%;
-  margin-top: 42.54958546716387%;
-  margin-left: 42.54958546716387%;
-  margin-right: 42.54958546716387%;
-  margin-bottom: 42.54958546716387%;
-}
-
-.c38 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: rgb(112,208,224);
-  height: 16.83569978510824%;
-  width: 16.83569978510824%;
-  margin-top: 41.582150107445884%;
-  margin-left: 41.582150107445884%;
-  margin-right: 41.582150107445884%;
-  margin-bottom: 41.582150107445884%;
-}
-
-.c39 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: currentColor;
-  height: 60.22973388562893%;
-  width: 60.22973388562893%;
-  margin-top: 19.885133057185534%;
-  margin-left: 19.885133057185534%;
-  margin-right: 19.885133057185534%;
-  margin-bottom: 19.885133057185534%;
-}
-
-.c40 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
@@ -419,7 +311,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 37.395151068196675%;
 }
 
-.c41 {
+.c32 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
@@ -431,7 +323,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 36.999309079621504%;
 }
 
-.c42 {
+.c33 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
@@ -443,7 +335,43 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 33.59064166493687%;
 }
 
-.c43 {
+.c34 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 53.70608992819464%;
+  width: 53.70608992819464%;
+  margin-top: 23.14695503590268%;
+  margin-left: 23.14695503590268%;
+  margin-right: 23.14695503590268%;
+  margin-bottom: 23.14695503590268%;
+}
+
+.c35 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 80.24365203181772%;
+  width: 80.24365203181772%;
+  margin-top: 9.878173984091141%;
+  margin-left: 9.878173984091141%;
+  margin-right: 9.878173984091141%;
+  margin-bottom: 9.878173984091141%;
+}
+
+.c36 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 53.41648122731042%;
+  width: 53.41648122731042%;
+  margin-top: 23.29175938634479%;
+  margin-left: 23.29175938634479%;
+  margin-right: 23.29175938634479%;
+  margin-bottom: 23.29175938634479%;
+}
+
+.c37 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
@@ -455,7 +383,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 0%;
 }
 
-.c44 {
+.c38 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
@@ -467,7 +395,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 16.206355956234823%;
 }
 
-.c45 {
+.c39 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
@@ -479,43 +407,79 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 21.487392418054284%;
 }
 
-.c46 {
+.c40 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
-  height: 25.32526298122685%;
-  width: 25.32526298122685%;
-  margin-top: 37.33736850938658%;
-  margin-left: 37.33736850938658%;
-  margin-right: 37.33736850938658%;
-  margin-bottom: 37.33736850938658%;
+  height: 14.900829065672259%;
+  width: 14.900829065672259%;
+  margin-top: 42.54958546716387%;
+  margin-left: 42.54958546716387%;
+  margin-right: 42.54958546716387%;
+  margin-bottom: 42.54958546716387%;
 }
 
-.c47 {
+.c41 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
-  height: 28.749541963083548%;
-  width: 28.749541963083548%;
-  margin-top: 35.62522901845823%;
-  margin-left: 35.62522901845823%;
-  margin-right: 35.62522901845823%;
-  margin-bottom: 35.62522901845823%;
+  height: 16.83569978510824%;
+  width: 16.83569978510824%;
+  margin-top: 41.582150107445884%;
+  margin-left: 41.582150107445884%;
+  margin-right: 41.582150107445884%;
+  margin-bottom: 41.582150107445884%;
 }
 
-.c48 {
+.c42 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
-  height: 33.934148724972744%;
-  width: 33.934148724972744%;
-  margin-top: 33.03292563751363%;
-  margin-left: 33.03292563751363%;
-  margin-right: 33.03292563751363%;
-  margin-bottom: 33.03292563751363%;
+  height: 60.22973388562893%;
+  width: 60.22973388562893%;
+  margin-top: 19.885133057185534%;
+  margin-left: 19.885133057185534%;
+  margin-right: 19.885133057185534%;
+  margin-bottom: 19.885133057185534%;
 }
 
-.c49 {
+.c43 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 37.39487533783078%;
+  width: 37.39487533783078%;
+  margin-top: 31.30256233108461%;
+  margin-left: 31.30256233108461%;
+  margin-right: 31.30256233108461%;
+  margin-bottom: 31.30256233108461%;
+}
+
+.c44 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 38.247965920167516%;
+  width: 38.247965920167516%;
+  margin-top: 30.876017039916242%;
+  margin-left: 30.876017039916242%;
+  margin-right: 30.876017039916242%;
+  margin-bottom: 30.876017039916242%;
+}
+
+.c45 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 100%;
+  width: 100%;
+  margin-top: 0%;
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-bottom: 0%;
+}
+
+.c46 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
@@ -527,7 +491,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 35.61540762441183%;
 }
 
-.c50 {
+.c47 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
@@ -539,7 +503,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 40.07800601326568%;
 }
 
-.c51 {
+.c48 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
@@ -551,7 +515,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 37.830043615243405%;
 }
 
-.c52 {
+.c49 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
@@ -563,7 +527,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 37.97976462581772%;
 }
 
-.c53 {
+.c50 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
@@ -575,7 +539,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 43.07617656825307%;
 }
 
-.c54 {
+.c51 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
@@ -587,7 +551,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 42.12000871481327%;
 }
 
-.c55 {
+.c52 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
@@ -599,7 +563,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 4.774061687570843%;
 }
 
-.c56 {
+.c53 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
@@ -611,7 +575,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 16.547483739174282%;
 }
 
-.c57 {
+.c54 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
@@ -623,7 +587,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 25.595128564103963%;
 }
 
-.c58 {
+.c55 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
@@ -635,7 +599,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 40.75513136889504%;
 }
 
-.c59 {
+.c56 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
@@ -647,7 +611,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 39.19633361102741%;
 }
 
-.c60 {
+.c57 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
@@ -659,7 +623,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 39.929219047037904%;
 }
 
-.c61 {
+.c58 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
@@ -671,7 +635,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 38.0485909602068%;
 }
 
-.c62 {
+.c59 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
@@ -683,7 +647,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-bottom: 32.79882530752138%;
 }
 
-.c63 {
+.c60 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: currentColor;
@@ -693,6 +657,42 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
   margin-left: 36.6582027843607%;
   margin-right: 36.6582027843607%;
   margin-bottom: 36.6582027843607%;
+}
+
+.c61 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+  height: 25.32526298122685%;
+  width: 25.32526298122685%;
+  margin-top: 37.33736850938658%;
+  margin-left: 37.33736850938658%;
+  margin-right: 37.33736850938658%;
+  margin-bottom: 37.33736850938658%;
+}
+
+.c62 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+  height: 28.749541963083548%;
+  width: 28.749541963083548%;
+  margin-top: 35.62522901845823%;
+  margin-left: 35.62522901845823%;
+  margin-right: 35.62522901845823%;
+  margin-bottom: 35.62522901845823%;
+}
+
+.c63 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: currentColor;
+  height: 33.934148724972744%;
+  width: 33.934148724972744%;
+  margin-top: 33.03292563751363%;
+  margin-left: 33.03292563751363%;
+  margin-right: 33.03292563751363%;
+  margin-bottom: 33.03292563751363%;
 }
 
 .c65 {
@@ -1064,31 +1064,31 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 >
                   <path
                     d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
-                    fill="#e09a6c"
+                    fill="#8440bf"
                   />
                   <path
                     d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
-                    fill="#d22d4b"
+                    fill="#3a785e"
                   />
                   <path
                     d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
-                    fill="#bf8240"
+                    fill="#c52dd2"
                   />
                   <path
                     d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
-                    fill="#bcd22d"
+                    fill="#1f938d"
                   />
                   <path
                     d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
-                    fill="#86402d"
+                    fill="#692dd2"
                   />
                   <path
                     d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
-                    fill="#2daed2"
+                    fill="#40b2bf"
                   />
                   <path
                     d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
-                    fill="#1f9361"
+                    fill="#40bf6f"
                   />
                   <path
                     d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
@@ -1098,7 +1098,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c16"
                 >
-                  f1e09
+                  63215
                 </span>
               </span>
             </span>
@@ -1115,11 +1115,11 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c18"
                 >
-                  6.22
+                  49.4
                   <span
                     class="c19"
                   >
-                    gb
+                    mb
                   </span>
                 </span>
                 <div
@@ -1145,11 +1145,11 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c18"
                 >
-                  3.62
+                  145
                   <span
                     class="c19"
                   >
-                    gb
+                    mb
                   </span>
                 </span>
                 <div
@@ -1175,12 +1175,10 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c18"
                 >
-                  54
+                  0
                   <span
                     class="c19"
-                  >
-                    s
-                  </span>
+                  />
                 </span>
                 <div
                   class="c20"
@@ -1196,7 +1194,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
           <td
             class="c13"
           >
-            15
+            8
           </td>
           <td
             class="c13"
@@ -1456,31 +1454,31 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 >
                   <path
                     d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
-                    fill="#8440bf"
+                    fill="#e09a6c"
                   />
                   <path
                     d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
-                    fill="#3a785e"
+                    fill="#d22d4b"
                   />
                   <path
                     d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
-                    fill="#c52dd2"
+                    fill="#bf8240"
                   />
                   <path
                     d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
-                    fill="#1f938d"
+                    fill="#bcd22d"
                   />
                   <path
                     d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
-                    fill="#692dd2"
+                    fill="#86402d"
                   />
                   <path
                     d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
-                    fill="#40b2bf"
+                    fill="#2daed2"
                   />
                   <path
                     d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
-                    fill="#40bf6f"
+                    fill="#1f9361"
                   />
                   <path
                     d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
@@ -1490,7 +1488,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c16"
                 >
-                  63215
+                  f1e09
                 </span>
               </span>
             </span>
@@ -1507,11 +1505,11 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c18"
                 >
-                  49.4
+                  6.22
                   <span
                     class="c19"
                   >
-                    mb
+                    gb
                   </span>
                 </span>
                 <div
@@ -1537,11 +1535,11 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c18"
                 >
-                  145
+                  3.62
                   <span
                     class="c19"
                   >
-                    mb
+                    gb
                   </span>
                 </span>
                 <div
@@ -1567,10 +1565,12 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c18"
                 >
-                  0
+                  54
                   <span
                     class="c19"
-                  />
+                  >
+                    s
+                  </span>
                 </span>
                 <div
                   class="c20"
@@ -1586,574 +1586,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
           <td
             class="c13"
           >
-            8
-          </td>
-          <td
-            class="c13"
-          >
-            UDP
-          </td>
-        </tr>
-        <tr
-          class="c9"
-        >
-          <td
-            class="c10"
-          >
-            <span
-              class="c30"
-            >
-              <span
-                class="c7"
-                role="img"
-                size="20"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
-                class="c12"
-              >
-                CLOSED
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c14"
-              >
-                <svg
-                  class="c15"
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
-                    fill="#2dd296"
-                  />
-                  <path
-                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
-                    fill="#8cc587"
-                  />
-                  <path
-                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
-                    fill="#ac53a5"
-                  />
-                  <path
-                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
-                    fill="#e06cd2"
-                  />
-                  <path
-                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
-                    fill="#6253ac"
-                  />
-                  <path
-                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
-                    fill="#e06c98"
-                  />
-                  <path
-                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
-                    fill="#3a4778"
-                  />
-                  <path
-                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
-                    fill="#FFF"
-                  />
-                </svg>
-                <span
-                  class="c16"
-                >
-                  2d71e
-                </span>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c17"
-              >
-                <span
-                  class="c18"
-                >
-                  3.98
-                  <span
-                    class="c19"
-                  >
-                    gb
-                  </span>
-                </span>
-                <div
-                  class="c20"
-                  size="24"
-                >
-                  <div
-                    class="c31"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c17"
-              >
-                <span
-                  class="c18"
-                >
-                  8.88
-                  <span
-                    class="c19"
-                  >
-                    gb
-                  </span>
-                </span>
-                <div
-                  class="c20"
-                  size="24"
-                >
-                  <div
-                    class="c32"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c17"
-              >
-                <span
-                  class="c18"
-                >
-                  52
-                  <span
-                    class="c19"
-                  >
-                    s
-                  </span>
-                </span>
-                <div
-                  class="c20"
-                  size="24"
-                >
-                  <div
-                    class="c33"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            7
-          </td>
-          <td
-            class="c13"
-          >
-            UDP
-          </td>
-        </tr>
-        <tr
-          class="c9"
-        >
-          <td
-            class="c10"
-          >
-            <span
-              class="c30"
-            >
-              <span
-                class="c7"
-                role="img"
-                size="20"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
-                class="c12"
-              >
-                CLOSED
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c14"
-              >
-                <svg
-                  class="c15"
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
-                    fill="#79d2b5"
-                  />
-                  <path
-                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
-                    fill="#938f1f"
-                  />
-                  <path
-                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
-                    fill="#84ac53"
-                  />
-                  <path
-                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
-                    fill="#c96ce0"
-                  />
-                  <path
-                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
-                    fill="#1f9380"
-                  />
-                  <path
-                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
-                    fill="#2d59d2"
-                  />
-                  <path
-                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
-                    fill="#2d93d2"
-                  />
-                  <path
-                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
-                    fill="#FFF"
-                  />
-                </svg>
-                <span
-                  class="c16"
-                >
-                  ab921
-                </span>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c17"
-              >
-                <span
-                  class="c18"
-                >
-                  1.93
-                  <span
-                    class="c19"
-                  >
-                    gb
-                  </span>
-                </span>
-                <div
-                  class="c20"
-                  size="24"
-                >
-                  <div
-                    class="c34"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c17"
-              >
-                <span
-                  class="c18"
-                >
-                  2.02
-                  <span
-                    class="c19"
-                  >
-                    gb
-                  </span>
-                </span>
-                <div
-                  class="c20"
-                  size="24"
-                >
-                  <div
-                    class="c35"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c17"
-              >
-                <span
-                  class="c18"
-                >
-                  182
-                  <span
-                    class="c19"
-                  >
-                    s
-                  </span>
-                </span>
-                <div
-                  class="c20"
-                  size="24"
-                >
-                  <div
-                    class="c36"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            4
-          </td>
-          <td
-            class="c13"
-          >
-            TCP
-          </td>
-        </tr>
-        <tr
-          class="c9"
-        >
-          <td
-            class="c10"
-          >
-            <span
-              class="c30"
-            >
-              <span
-                class="c7"
-                role="img"
-                size="20"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
-                class="c12"
-              >
-                CLOSED
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c14"
-              >
-                <svg
-                  class="c15"
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
-                    fill="#72783a"
-                  />
-                  <path
-                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
-                    fill="#3a7842"
-                  />
-                  <path
-                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
-                    fill="#ac7b53"
-                  />
-                  <path
-                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
-                    fill="#ad79d2"
-                  />
-                  <path
-                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
-                    fill="#6c6ce0"
-                  />
-                  <path
-                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
-                    fill="#40bf59"
-                  />
-                  <path
-                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
-                    fill="#8d1f93"
-                  />
-                  <path
-                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
-                    fill="#FFF"
-                  />
-                </svg>
-                <span
-                  class="c16"
-                >
-                  10cf6
-                </span>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c17"
-              >
-                <span
-                  class="c18"
-                >
-                  306
-                  <span
-                    class="c19"
-                  >
-                    mb
-                  </span>
-                </span>
-                <div
-                  class="c20"
-                  size="24"
-                >
-                  <div
-                    class="c37"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c17"
-              >
-                <span
-                  class="c18"
-                >
-                  391
-                  <span
-                    class="c19"
-                  >
-                    mb
-                  </span>
-                </span>
-                <div
-                  class="c20"
-                  size="24"
-                >
-                  <div
-                    class="c38"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c6"
-            >
-              <span
-                class="c17"
-              >
-                <span
-                  class="c18"
-                >
-                  66
-                  <span
-                    class="c19"
-                  >
-                    s
-                  </span>
-                </span>
-                <div
-                  class="c20"
-                  size="24"
-                >
-                  <div
-                    class="c39"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            3
+            15
           </td>
           <td
             class="c13"
@@ -2273,7 +1706,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c40"
+                    class="c31"
                   />
                 </div>
               </span>
@@ -2303,7 +1736,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c41"
+                    class="c32"
                   />
                 </div>
               </span>
@@ -2333,7 +1766,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c42"
+                    class="c33"
                   />
                 </div>
               </span>
@@ -2343,6 +1776,195 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
             class="c13"
           >
             5
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#2dd296"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#8cc587"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#ac53a5"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#e06cd2"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#6253ac"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#e06c98"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#3a4778"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  2d71e
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  3.98
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c34"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  8.88
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c35"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  52
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c36"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            7
           </td>
           <td
             class="c13"
@@ -2462,7 +2084,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c43"
+                    class="c37"
                   />
                 </div>
               </span>
@@ -2492,7 +2114,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c44"
+                    class="c38"
                   />
                 </div>
               </span>
@@ -2522,7 +2144,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c45"
+                    class="c39"
                   />
                 </div>
               </span>
@@ -2588,31 +2210,31 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 >
                   <path
                     d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
-                    fill="#2d5286"
+                    fill="#72783a"
                   />
                   <path
                     d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
-                    fill="#d28979"
+                    fill="#3a7842"
                   />
                   <path
                     d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
-                    fill="#53a5ac"
+                    fill="#ac7b53"
                   />
                   <path
                     d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
-                    fill="#87acc5"
+                    fill="#ad79d2"
                   />
                   <path
                     d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
-                    fill="#404cbf"
+                    fill="#6c6ce0"
                   />
                   <path
                     d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
-                    fill="#bbc587"
+                    fill="#40bf59"
                   />
                   <path
                     d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
-                    fill="#7987d2"
+                    fill="#8d1f93"
                   />
                   <path
                     d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
@@ -2622,7 +2244,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c16"
                 >
-                  cd07b
+                  10cf6
                 </span>
               </span>
             </span>
@@ -2639,7 +2261,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c18"
                 >
-                  885
+                  306
                   <span
                     class="c19"
                   >
@@ -2651,7 +2273,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c46"
+                    class="c40"
                   />
                 </div>
               </span>
@@ -2669,11 +2291,11 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c18"
                 >
-                  1.14
+                  391
                   <span
                     class="c19"
                   >
-                    gb
+                    mb
                   </span>
                 </span>
                 <div
@@ -2681,7 +2303,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c47"
+                    class="c41"
                   />
                 </div>
               </span>
@@ -2699,7 +2321,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                 <span
                   class="c18"
                 >
-                  21
+                  66
                   <span
                     class="c19"
                   >
@@ -2711,7 +2333,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c48"
+                    class="c42"
                   />
                 </div>
               </span>
@@ -2720,7 +2342,196 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
           <td
             class="c13"
           >
-            11
+            3
+          </td>
+          <td
+            class="c13"
+          >
+            UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#79d2b5"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#938f1f"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#84ac53"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#c96ce0"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#1f9380"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#2d59d2"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#2d93d2"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  ab921
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  1.93
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c43"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  2.02
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c44"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  182
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c45"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            4
           </td>
           <td
             class="c13"
@@ -2840,7 +2651,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c49"
+                    class="c46"
                   />
                 </div>
               </span>
@@ -2870,7 +2681,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c50"
+                    class="c47"
                   />
                 </div>
               </span>
@@ -2900,7 +2711,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c51"
+                    class="c48"
                   />
                 </div>
               </span>
@@ -3029,7 +2840,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c52"
+                    class="c49"
                   />
                 </div>
               </span>
@@ -3059,7 +2870,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c53"
+                    class="c50"
                   />
                 </div>
               </span>
@@ -3089,7 +2900,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c54"
+                    class="c51"
                   />
                 </div>
               </span>
@@ -3218,7 +3029,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c55"
+                    class="c52"
                   />
                 </div>
               </span>
@@ -3248,7 +3059,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c56"
+                    class="c53"
                   />
                 </div>
               </span>
@@ -3278,7 +3089,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c57"
+                    class="c54"
                   />
                 </div>
               </span>
@@ -3407,7 +3218,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c58"
+                    class="c55"
                   />
                 </div>
               </span>
@@ -3437,7 +3248,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c59"
+                    class="c56"
                   />
                 </div>
               </span>
@@ -3467,7 +3278,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c60"
+                    class="c57"
                   />
                 </div>
               </span>
@@ -3596,7 +3407,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c61"
+                    class="c58"
                   />
                 </div>
               </span>
@@ -3626,7 +3437,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c62"
+                    class="c59"
                   />
                 </div>
               </span>
@@ -3656,7 +3467,7 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
                   size="24"
                 >
                   <div
-                    class="c63"
+                    class="c60"
                   />
                 </div>
               </span>
@@ -3671,6 +3482,195 @@ exports[`ConnectionsTable renders from data, matching snapshot 1`] = `
             class="c13"
           >
             UDP
+          </td>
+        </tr>
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c30"
+            >
+              <span
+                class="c7"
+                role="img"
+                size="20"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c14"
+              >
+                <svg
+                  class="c15"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M26.861 9.752l-.364.201-10.356 5.783v.197l-.055.033 10.518 6.165.257-.153V9.752"
+                    fill="#2d5286"
+                  />
+                  <path
+                    d="M15.998 16.104L5.482 22.272l10.516 6.163V16.104M5.093 9.815v12.226l.14.083V9.893l-.14-.078"
+                    fill="#d28979"
+                  />
+                  <path
+                    d="M16.086 16.055l-.088.049v12.332l10.606-6.216-10.518-6.165m10.824-6.24l-.049.026v12.226l.049-.026V9.815"
+                    fill="#53a5ac"
+                  />
+                  <path
+                    d="M5.232 9.893v12.231l.25.148 10.516-6.168v-.101l-.042-.028v-.097L5.414 9.994l-.182-.101"
+                    fill="#87acc5"
+                  />
+                  <path
+                    d="M16.141 3.854v11.902l10.356-5.713.364-.201-1.808-1.07-8.912-4.918m-.185-.103v.148l.133-.075-.133-.073"
+                    fill="#404cbf"
+                  />
+                  <path
+                    d="M15.956 3.899L5.232 9.815v.078l.182.101 10.542 5.814V3.899m.185-.103l-.052.028.052.029v-.057"
+                    fill="#bbc587"
+                  />
+                  <path
+                    d="M11.664 18.348v-4.816l4.338-2.563 3.866 2.285.468.26v4.836l-4.334 2.541z"
+                    fill="#7987d2"
+                  />
+                  <path
+                    d="M27.689 9.753c0-.001-.002-.003-.002-.007-.001-.062-.032-.115-.047-.175-.009-.021-.01-.044-.018-.065-.067-.19-.178-.364-.36-.465l-1.756-.969-.028-.018-.012-.005-9.046-5.346c-.032-.019-.066-.021-.101-.036-.054-.022-.107-.045-.166-.057-.052-.01-.103-.01-.156-.01s-.104 0-.157.01a.787.787 0 00-.159.055c-.037.015-.074.018-.107.037l-10.86 6.42a.831.831 0 00-.408.73.791.791 0 00.095.33v12.235c0 .298.16.574.418.72.029.017.063.014.094.027l10.471 6.138c.199.118.434.114.651.053a.815.815 0 00.558-.078l10.45-6.126c.08-.017.163-.02.234-.063a.828.828 0 00.418-.72V9.77c-.001-.007-.006-.01-.006-.017zm-10.715-4.49l7.661 4.229.551.325-4.913 2.71-3.299-1.949V5.263zm-1.85.046v5.214l-3.394 2.004-4.846-2.673 8.24-4.545zm-9.06 6.002l4.768 2.661v4.197l-4.768 2.796v-9.654zm8.907 15.822L6.933 22.42l5.016-2.94 3.022 1.772v5.881zm1.031-7.207l-3.506-2.057V14.006l.926-.546.318-.187 2.262-1.336 3.502 2.066V17.872L17.753 18.9l-.75.439-1.001.587zm1.001 7.18V21.27l3.146-1.846 4.981 2.919-8.127 4.763zm9.026-6.188l-4.861-2.85v-4.096l4.861-2.715v9.661z"
+                    fill="#FFF"
+                  />
+                </svg>
+                <span
+                  class="c16"
+                >
+                  cd07b
+                </span>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  885
+                  <span
+                    class="c19"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c61"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  1.14
+                  <span
+                    class="c19"
+                  >
+                    gb
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c62"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c6"
+            >
+              <span
+                class="c17"
+              >
+                <span
+                  class="c18"
+                >
+                  21
+                  <span
+                    class="c19"
+                  >
+                    s
+                  </span>
+                </span>
+                <div
+                  class="c20"
+                  size="24"
+                >
+                  <div
+                    class="c63"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            11
+          </td>
+          <td
+            class="c13"
+          >
+            TCP
           </td>
         </tr>
         <tr
