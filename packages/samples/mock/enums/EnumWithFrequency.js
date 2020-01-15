@@ -14,8 +14,11 @@ class EnumWithFrequency {
     }, {})
   }
   getItem(num) {
-    if (!Object.prototype.hasOwnProperty.call(this.byNum, num))
+    /* istanbul ignore if */
+    if (!Object.prototype.hasOwnProperty.call(this.byNum, num)) {
       throw this.targetNotValid(num, 0)
+    }
+
     return this.byNum[num]
   }
   getNum(target) {
@@ -24,6 +27,8 @@ class EnumWithFrequency {
     for (const [num, item] of this.items) {
       if (target === item) return num
     }
+
+    /* istanbul ignore next */
     throw this.targetNotValid(target)
   }
   getRandom(index = 0, filterTo) {
@@ -44,10 +49,12 @@ class EnumWithFrequency {
       if (rand <= culmFreq / totalFreq) return item[index]
     }
 
+    /* istanbul ignore next */
     throw new Error(
       `This should be unreachable - culmFreq=${culmFreq}, rand=${rand}`
     )
   }
+  /* istanbul ignore next */
   targetNotValid(target, validKey = 1) {
     // Throw an informative error if a script tries to choose an item that doesn't exist
     const validItems = this.items.map(item => item[validKey])

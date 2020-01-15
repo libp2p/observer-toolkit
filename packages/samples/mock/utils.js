@@ -53,6 +53,7 @@ function randomNormalDistribution({ min, max, skew }) {
   let num = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v)
   num = num / 10 + 0.5
 
+  /* istanbul ignore if : prevent unlikely cases that break the maths */
   if (num > 1 || num < 0) return randomNormalDistribution(min, max, skew)
 
   num = Math.pow(num, skew) // higher skew => lower values
