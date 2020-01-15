@@ -1,18 +1,13 @@
 'use strict'
 
-const { test } = require('tap')
-
 const { fork } = require('child_process')
 const { promisify } = require('util')
 const path = require('path')
 const fs = require('fs').promises
 
-const { createInterface } = require('readline')
-
 const rimraf = require('rimraf')
 const rimrafPromise = promisify(rimraf)
 
-const wait = promisify(setTimeout)
 const noop = () => {}
 
 const testDirPath = path.join(__dirname, './testModuleDir')
