@@ -40,7 +40,7 @@ function parseBuffer(buf) {
 
     const messageBin = buf.slice(messageStart, messageEnd)
 
-    const validChecksum = messageChecksum(messageBin) === messageChecksum // messageChecksum === fnv1a(messageBin)
+    const validChecksum = getMessageChecksum(messageBin) === messageChecksum
 
     // TODO: bubble an error message for an invalid checksum
     if (validChecksum) {
