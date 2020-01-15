@@ -23,6 +23,7 @@
     "start:catalogue": "lerna exec --scope=\"@libp2p-observer/catalogue\" -- npm run start",
     "start:verdaccio": "cd verdaccio && docker-compose up",
     "test": "lerna run prepare && lerna run --no-bail --stream test",
+    "test:cov": "npm run test -- -- --coverage",
     "update-snapshots": "lerna run prepare && lerna run update-snapshots"
   },
   "author": "NearForm",
