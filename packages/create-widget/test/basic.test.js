@@ -35,6 +35,7 @@ test('Prepare script', async t => {
 })
 
 // Must be run after prepublishOnly, before postpublish
+// i.e. on the package as it is when published to registry
 test('Create widget', async t => {
   t.notOk(fs.existsSync(testDirPath))
 
