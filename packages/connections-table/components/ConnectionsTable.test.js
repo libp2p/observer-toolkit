@@ -14,11 +14,6 @@ describe('ConnectionsTable', () => {
   const timepoint = getLatestTimepoint(states)
   const connections = getConnections(timepoint)
 
-  it('renders from data, matching snapshot', () => {
-    const { asFragment } = renderWithData(<ConnectionsTable />)
-    expect(asFragment()).toMatchSnapshot()
-  })
-
   it("has rows for each connection in sample's last timepoint, plus row of column headers", () => {
     const { getAllByRole } = renderWithData(<ConnectionsTable />)
 
