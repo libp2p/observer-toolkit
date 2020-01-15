@@ -26,12 +26,15 @@ function appendToDataSet(newData, oldData) {
   // if no old data, or no peer-id match, then replace
   if (!oldData || oldData.runtime.getPeerId() !== newData.runtime.getPeerId())
     return newData
+
   // merge data
-  return Object.assign(
+  const states = oldData.states.concat(newData.states)
+  states.metadata = Object.assign(
     {},
-    { runtime: oldData.runtime },
-    { states: oldData.states.concat(newData.states) }
+    oldData.states.metadata,
+    newData.states.metadata
   )
+  return Object.assign({}, { runtime: oldData.runtime }, { states })
 }
 
 function replaceDataSet(data) {
