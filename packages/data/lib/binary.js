@@ -101,7 +101,7 @@ function parseBufferList(bufferList) {
       messageChecksumLength + messageSizeLength + messageSize
     if (bufferList.length <= minimalBufferLength) break
     // extract and verify message
-    const messageBuffer = new Buffer(minimalBufferLength + 4)
+    const messageBuffer = Buffer.alloc(minimalBufferLength + 4)
     bufferList.copy(messageBuffer, 4, 0, minimalBufferLength)
     const checksumBuffer = messageBuffer.slice(12)
     const calcChecksum = getMessageChecksum(checksumBuffer)
@@ -115,11 +115,11 @@ function parseBufferList(bufferList) {
       }
       addMessage(message, messages)
     }
-    bufferList = bufferList.shallowSlice(minimalBufferLength)
+    bufferList.consume(minimalBufferLength)
   }
 
   // combine runtime info and remainder
-  const remainingBuffer = new Buffer(bufferList.length)
+  const remainingBuffer = Buffer.alloc(bufferList.length)
   bufferList.copy(remainingBuffer)
   bufferList.consume(bufferList.length)
   bufferList.append(runtimeInfoBufferList).append(remainingBuffer)
