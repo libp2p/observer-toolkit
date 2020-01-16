@@ -101,14 +101,14 @@ function parseBufferList(bufferList) {
       messageChecksumLength + messageSizeLength + messageSize
     if (bufferList.length <= minimalBufferLength) break
     // extract and verify message
-    const messageBuffer = Buffer.alloc(minimalBufferLength + 4)
-    bufferList.copy(messageBuffer, 4, 0, minimalBufferLength)
-    const checksumBuffer = messageBuffer.slice(12)
-    const calcChecksum = getMessageChecksum(checksumBuffer)
+    const messageBuffer = bufferList
+      .shallowSlice(0, minimalBufferLength)
+      .slice(8)
+    const calcChecksum = getMessageChecksum(messageBuffer)
     const valid = messageChecksum === calcChecksum
     // deserialize and add message (keep runtime info)
     if (valid) {
-      const message = deserializeBinary(checksumBuffer)
+      const message = deserializeBinary(messageBuffer)
       const isRuntimeInfo = Boolean(message.getRuntime())
       if (isRuntimeInfo) {
         runtimeInfoBufferList.append(bufferList.slice(0, minimalBufferLength))
