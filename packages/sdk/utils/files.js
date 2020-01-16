@@ -9,9 +9,9 @@ function uploadDataFile(file, onUploadStart, onUploadFinished, onUploadChunk) {
   const chunkSize = 1000 * 1024
   const chunks = Math.ceil((file.size - versionFieldSize) / chunkSize)
   const reader = new FileReader()
+  const bl = new BufferList()
 
   let currentChunk = 0
-  let bl = new BufferList()
 
   reader.onload = e => {
     const metadata = { type: 'upload', name: file.name }
