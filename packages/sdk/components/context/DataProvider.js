@@ -34,7 +34,7 @@ function appendToDataSet(newData, oldData) {
     oldData.states.metadata,
     newData.states.metadata
   )
-  return Object.assign({}, { runtime: oldData.runtime }, { states })
+  return { runtime: oldData.runtime, states }
 }
 
 function replaceDataSet(data) {
