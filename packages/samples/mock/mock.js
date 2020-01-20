@@ -38,6 +38,7 @@ const {
   connections: connectionsCount = DEFAULT_CONNECTIONS,
   duration: durationSeconds = DEFAULT_DURATION,
   file,
+  socksrv,
 } = argv
 const filePath = file === '' ? DEFAULT_FILE : null
 
@@ -46,6 +47,30 @@ if (filePath) {
     Writing to ${filePath}.
     ${durationSeconds} seconds, ${connectionsCount} initial connections of ~${streamsCount} streams.
   `)
+}
+
+if (socksrv) {
+  const WebSocket = require('ws')
+  const wss = new WebSocket.Server({ port: 8080 })
+
+  wss.on('connection', ws => {
+    let sec = 1
+    const tmr = setInterval(() => {
+      const bufferSegments = generate(connectionsCount, 1)
+      ws.send('send')
+      ws.send(bufferSegments.toString('binary')) // client: var b2 = new Buffer(s, 'binary')
+
+      if (sec >= durationSeconds) {
+        clearInterval(tmr)
+        ws.send('end...')
+      }
+      sec++
+    }, 1000)
+    // ws.on('message', message => {
+    //   console.log('received: %s', message)
+    // })
+    ws.send('start...')
+  })
 }
 
 const bufferSegments = generate(connectionsCount, durationSeconds)

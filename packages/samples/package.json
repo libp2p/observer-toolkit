@@ -17,6 +17,7 @@
     "test": "tap | tap-mocha-reporter progress",
     "mock": "node ./mock/mock.js --",
     "mock-file": "node ./mock/mock.js --file",
+    "mock-sock": "node ./mock/mock.js --socksrv",
     "prepare": "webpack"
   },
   "bugs": {
@@ -27,5 +28,8 @@
     "@libp2p-observer/proto": "^0.0.1",
     "tap": "^14.9.2",
     "tap-mocha-reporter": "^5.0.0"
+  },
+  "dependencies": {
+    "ws": "^7.2.1"
   }
 }
