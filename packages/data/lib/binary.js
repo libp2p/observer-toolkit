@@ -1,6 +1,5 @@
 'use strict'
 
-const { BufferList } = require('bl')
 const { deserializeBinary, fnv1a } = require('@libp2p-observer/proto')
 
 function getMessageChecksum(buffer) {
