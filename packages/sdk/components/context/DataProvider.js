@@ -23,17 +23,13 @@ function updateData(oldData, { action, data }) {
 }
 
 function appendToDataSet(newData, oldData) {
-  // if no old data, or no peer-id match, then replace
-  if (!oldData || oldData.runtime.getPeerId() !== newData.runtime.getPeerId())
-    return newData
+  // if no old data, or new runtime info, replace
+  if (!oldData || newData.runtime) return newData
 
   // merge data
   const states = oldData.states.concat(newData.states)
-  states.metadata = Object.assign(
-    {},
-    oldData.states.metadata,
-    newData.states.metadata
-  )
+  states.metadata = { ...oldData.states.metadata, ...newData.states.metadata }
+
   return { runtime: oldData.runtime, states }
 }
 

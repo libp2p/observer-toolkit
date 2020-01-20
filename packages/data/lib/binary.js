@@ -91,7 +91,6 @@ function parseBufferList(bufferList) {
     states: [],
     runtime: null,
   }
-  let runtimeInfoBufferList = new BufferList()
 
   while (bufferList.length > messageChecksumLength + messageSizeLength) {
     // check for complete message in the buffer
@@ -101,28 +100,19 @@ function parseBufferList(bufferList) {
       messageChecksumLength + messageSizeLength + messageSize
     if (bufferList.length <= minimalBufferLength) break
     // extract and verify message
-    const messageBuffer = bufferList
-      .shallowSlice(0, minimalBufferLength)
-      .slice(8)
-    const calcChecksum = getMessageChecksum(messageBuffer)
+    const messageBin = bufferList.slice(
+      messageChecksumLength + messageSizeLength,
+      minimalBufferLength
+    )
+    const calcChecksum = getMessageChecksum(messageBin)
     const valid = messageChecksum === calcChecksum
-    // deserialize and add message (keep runtime info)
+    // deserialize and add message
     if (valid) {
-      const message = deserializeBinary(messageBuffer)
-      const isRuntimeInfo = Boolean(message.getRuntime())
-      if (isRuntimeInfo) {
-        runtimeInfoBufferList.append(bufferList.slice(0, minimalBufferLength))
-      }
+      const message = deserializeBinary(messageBin)
       addMessage(message, messages)
     }
     bufferList.consume(minimalBufferLength)
   }
-
-  // combine runtime info and remainder
-  const remainingBuffer = Buffer.alloc(bufferList.length)
-  bufferList.copy(remainingBuffer)
-  bufferList.consume(bufferList.length)
-  bufferList.append(runtimeInfoBufferList).append(remainingBuffer)
 
   return messages
 }
