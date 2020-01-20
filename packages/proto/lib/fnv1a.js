@@ -41,7 +41,7 @@ function fnv1aBuffer(buf) {
   let hash = OFFSET_BASIS_32
 
   for (let i = 0; i < buf.length; i++) {
-    hash ^= buf[i]
+    hash ^= buf.readUIntLE(i, 1)
 
     // 32-bit FNV prime: 2**24 + 2**8 + 0x93 = 16777619
     // Using bitshift for accuracy and performance. Numbers in JS suck.
