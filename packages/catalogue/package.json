@@ -34,7 +34,6 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-markdown": "^4.2.2",
-    "react-slidedown": "^2.4.5",
     "styled-components": "^4.4.0",
     "webpack": "4.41.0"
   },
