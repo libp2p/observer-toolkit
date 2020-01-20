@@ -38,6 +38,7 @@ function Icon({
   onClick,
   active,
   disabled,
+  altText,
   size = '2em',
   override = {},
   ...props
@@ -57,7 +58,7 @@ function Icon({
       as={override.Container}
       {...props}
     >
-      <IconSvg as={override.IconSvg} />
+      <IconSvg alt={altText} as={override.IconSvg} />
     </Container>
   )
 }
@@ -65,6 +66,7 @@ function Icon({
 Icon.propTypes = {
   type: T.string,
   onClick: T.func,
+  altText: T.string,
   active: T.bool,
   disabled: T.bool,
   size: T.string,

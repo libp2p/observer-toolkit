@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { AccordionControl, Icon, Tooltip } from '@libp2p-observer/sdk'
+import {
+  AccordionControl,
+  Icon,
+  SlideDown,
+  Tooltip,
+} from '@libp2p-observer/sdk'
 import FiltersButton from './FiltersButton'
 import FiltersTray from './FiltersTray'
 
 import ReactMarkdown from 'react-markdown'
-import { SlideDown } from 'react-slidedown'
 
 const Title = styled.h1`
   flex-grow: 1;
@@ -34,13 +38,6 @@ const Header = styled.header`
   padding: ${({ theme }) => theme.spacing([1, 2])};
   display: flex;
   align-items: center;
-`
-
-const SlideDownSection = styled(SlideDown)`
-  ${({ theme }) => theme.transition()}
-  &.transitioning {
-    overflow: hidden;
-  }
 `
 
 const Section = styled.section`
@@ -82,25 +79,30 @@ function WidgetHeader({ name, description, closeWidget }) {
                 </TooltipContent>
               }
             >
-              <Icon type="cancel" onClick={closeWidget} size={'3em'} />
+              <Icon
+                aria-label="Close"
+                type="cancel"
+                onClick={closeWidget}
+                size={'3em'}
+              />
             </Tooltip>
           </CloseButton>
         )}
       </Header>
-      <SlideDownSection>
+      <SlideDown isOpen={filtersOpen}>
         {filtersOpen && (
           <Section>
             <FiltersTray />
           </Section>
         )}
-      </SlideDownSection>
-      <SlideDownSection>
+      </SlideDown>
+      <SlideDown isOpen={descriptionOpen}>
         {descriptionOpen && (
           <Section>
             <ReactMarkdown source={description} />
           </Section>
         )}
-      </SlideDownSection>
+      </SlideDown>
     </>
   )
 }

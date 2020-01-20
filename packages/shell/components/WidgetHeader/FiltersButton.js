@@ -34,6 +34,7 @@ function FiltersButton({ setIsOpen, isOpen = false }) {
       setIsOpen={setIsOpen}
       isOpen={isOpen}
       isActive={isActive}
+      data-highlighted={isActive}
       overrides={{ AccordionButton }}
     >
       <Icon type="filter" />
