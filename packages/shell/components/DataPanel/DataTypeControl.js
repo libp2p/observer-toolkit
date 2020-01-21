@@ -53,12 +53,13 @@ function DataTypeControl({ metadata }) {
     sample: 'cloud',
     upload: 'doc',
   }
-  if (!iconNames[type])
+  if (!iconNames[type]) {
     throw new Error(
       `Unknown type "${type}", expected one of "${Object.keys(iconNames).join(
         '", "'
       )}"`
     )
+  }
 
   const iconType = isHighlighted ? 'back' : iconNames[type]
 
@@ -69,6 +70,7 @@ function DataTypeControl({ metadata }) {
     <Container
       onMouseEnter={() => setHighlighted(true)}
       onMouseLeave={() => setHighlighted(false)}
+      data-highlighted={isHighlighted}
     >
       <IconButton isHighlighted={isHighlighted}>
         <Icon type={iconType} />

@@ -121,7 +121,7 @@ describe('WidgetHeader', () => {
     expect(queryAllByText('1 active filter')).toHaveLength(0)
   })
 
-  it('fires closeWidget fn on clicking close button', async () => {
+  it('fires closeWidget fn on clicking close button, with tooltip', async () => {
     const mockCloseFn = jest.fn()
 
     const { getByAriaLabel, queryAllByText } = renderWithTheme(
@@ -130,6 +130,13 @@ describe('WidgetHeader', () => {
 
     const closeButton = getByAriaLabel('Close')
     expect(closeButton).toBeInTheDocument()
+    expect(queryAllByText(/Close and return/)).toHaveLength(0)
+
+    await fireEvent.mouseEnter(closeButton)
+    expect(queryAllByText(/Close and return/)).toHaveLength(1)
+
+    await fireEvent.mouseLeave(closeButton)
+    expect(queryAllByText(/Close and return/)).toHaveLength(0)
 
     await fireEvent.click(closeButton)
     expect(mockCloseFn).toHaveBeenCalled()

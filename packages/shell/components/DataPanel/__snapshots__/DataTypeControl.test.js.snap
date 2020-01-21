@@ -68,6 +68,7 @@ exports[`DataTypeControl renders as expected for sample data 1`] = `
   >
     <div
       class="c1"
+      data-highlighted="false"
     >
       <button
         class="c2"
@@ -168,6 +169,7 @@ exports[`DataTypeControl renders as expected for uploaded file 1`] = `
   >
     <div
       class="c1"
+      data-highlighted="false"
     >
       <button
         class="c2"
