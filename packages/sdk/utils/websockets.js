@@ -1,27 +1,24 @@
 import { parseBufferList } from '@libp2p-observer/data'
-// import { BufferList } from 'bl'
+import { BufferList } from 'bl'
 
-function uploadWebSocket(file, onUploadStart, onUploadFinished) {
-  // if (!file) return
-  // const reader = new FileReader()
-  // // TODO: On integration with live output, share logic parsing file chunk by chunk
-  // reader.onload = e => {
-  //   const metadata = {
-  //     type: 'upload',
-  //     name: file.name,
-  //   }
-  //   processUploadedData(
-  //     event.currentTarget.result,
-  //     file,
-  //     onDataLoaded,
-  //     metadata
-  //   )
-  // }
-  // reader.readAsArrayBuffer(file)
-  // if (onUploadStart) onUploadStart(file)
+function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
+  const bl = new BufferList()
+
+  if (!url) return
+
+  const ws = new WebSocket('ws://localhost:8080')
+  ws.addEventListener('message', function(msg) {
+    const metadata = { type: 'upload', name: 'websocket' }
+    const buf = new Buffer(msg.data, 'binary')
+    bl.append(buf.slice(4))
+    processUploadBuffer(bl, onUploadChunk, metadata)
+  })
+
+  //  if (onUploadFinished) onUploadFinished(file)
+  //  if (onUploadStart) onUploadStart(file)
 }
 
-function processUploadedBuffer(bufferList, onUploadChunk, metadata) {
+function processUploadBuffer(bufferList, onUploadChunk, metadata) {
   const data = parseBufferList(bufferList)
   if (metadata && data.states) data.states.metadata = metadata
   onUploadChunk(data)

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import {
   UploadDataButton,
+  WebSocketDataButton,
   SampleDataButton,
   SetterContext,
 } from '@libp2p-observer/sdk'
@@ -88,7 +89,7 @@ function HeaderTabs() {
       <SelectedTab>
         <label>Connect websocket:</label>
         <ButtonWrapper>
-          <UploadDataButton title="Enter websocket URL" />
+          <WebSocketDataButton title="Enter websocket URL" />
         </ButtonWrapper>
       </SelectedTab>
     ) : (

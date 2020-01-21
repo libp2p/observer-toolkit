@@ -55,21 +55,15 @@ if (socksrv) {
 
   wss.on('connection', ws => {
     let sec = 1
-    const tmr = setInterval(() => {
-      const bufferSegments = generate(connectionsCount, 1)
-      ws.send('send')
-      ws.send(bufferSegments.toString('binary')) // client: var b2 = new Buffer(s, 'binary')
 
+    const tmr = setInterval(() => {
+      const bufferSegments = generate(connectionsCount, durationSeconds)
+      ws.send(bufferSegments.toString('binary'))
       if (sec >= durationSeconds) {
         clearInterval(tmr)
-        ws.send('end...')
       }
       sec++
     }, 1000)
-    // ws.on('message', message => {
-    //   console.log('received: %s', message)
-    // })
-    ws.send('start...')
   })
 }
 

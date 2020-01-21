@@ -7,11 +7,11 @@ import { SetterContext } from '../context/DataProvider'
 
 import StyledButton from './StyledButton'
 
-const FileButton = styled(StyledButton)`
+const WebSocketButton = styled(StyledButton)`
   position: relative;
   z-index: 5;
 `
-const NativeFileInput = styled.input`
+const NativeSocketInput = styled.input`
   opacity: 0;
   position: absolute;
   top: 0;
@@ -22,19 +22,19 @@ const RelativeSpan = styled.span`
   position: relative;
 `
 
-function getButtonText(isLoading, fileName, title) {
+function getButtonText(isLoading, socketUrl, title) {
   if (isLoading) return 'Loading...'
-  return fileName ? `Replace file '${fileName}'` : title
+  return socketUrl ? `Replace websocket url '${socketUrl}'` : title
 }
 
 function WebSocketDataButton({ title }) {
   const [isLoading, setIsLoading] = useState(false)
-  const [fileName, setFileName] = useState('')
+  const [socketUrl, setSocketUrl] = useState('')
   const { dispatchDataset } = useContext(SetterContext)
-  const fileInputRef = useRef()
+  const urlInputRef = useRef()
 
   function handleClick() {
-    fileInputRef.current.click()
+    urlInputRef.current.click()
   }
 
   function handleUpload(event) {
@@ -60,18 +60,18 @@ function WebSocketDataButton({ title }) {
 
   function handleUploadFinish(file) {
     setIsLoading(false)
-    setFileName(file.name)
+    setSocketUrl(file.name)
   }
 
-  const buttonText = getButtonText(isLoading, fileName, title)
+  const buttonText = getButtonText(isLoading, socketUrl, title)
 
   return (
     <RelativeSpan>
-      <FileButton onClick={handleClick}>{buttonText}</FileButton>
-      <NativeFileInput
-        ref={fileInputRef}
+      <WebSocketButton onClick={handleClick}>{buttonText}</WebSocketButton>
+      <NativeSocketInput
+        ref={urlInputRef}
         type="file"
-        name="file"
+        name="websocket"
         onChange={handleUpload}
       />
     </RelativeSpan>
