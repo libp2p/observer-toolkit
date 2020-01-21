@@ -50,7 +50,6 @@ if (filePath) {
 
 const bufferSegments = generate(connectionsCount, durationSeconds)
 
-// TODO: write to file works, but process.stdout > file writes broken binary
 const writer = filePath ? createWriteStream(filePath) : process.stdout
 
 writer.write(bufferSegments)
