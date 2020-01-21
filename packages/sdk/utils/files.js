@@ -1,31 +1,51 @@
-import { parseArrayBuffer } from '@libp2p-observer/data'
+import { parseBufferList } from '@libp2p-observer/data'
+import { BufferList } from 'bl'
 
-function uploadDataFile(file, onUploadStart, onDataLoaded) {
+function uploadDataFile(file, onUploadStart, onUploadFinished, onUploadChunk) {
   if (!file) return
+
+  const blobSlice = Blob.prototype.slice
+  const versionFieldSize = 4
+  const chunkSize = 1000 * 1024
+  const chunks = Math.ceil((file.size - versionFieldSize) / chunkSize)
   const reader = new FileReader()
+  const bl = new BufferList()
 
-  // TODO: On integration with live output, share logic parsing file chunk by chunk
+  let currentChunk = 0
+
   reader.onload = e => {
-    const metadata = {
-      type: 'upload',
-      name: file.name,
+    const metadata = { type: 'upload', name: file.name }
+    if (currentChunk <= chunks) {
+      const buf = Buffer.from(event.currentTarget.result)
+      if (currentChunk > 0) {
+        bl.append(buf)
+        processUploadBuffer(bl, onUploadChunk, metadata)
+      }
+      const start = versionFieldSize + currentChunk * chunkSize
+      const end = start + chunkSize >= file.size ? file.size : start + chunkSize
+      reader.readAsArrayBuffer(blobSlice.call(file, start, end))
+      currentChunk++
+    } else {
+      if (onUploadFinished) onUploadFinished(file)
     }
-
-    processUploadedData(
-      event.currentTarget.result,
-      file,
-      onDataLoaded,
-      metadata
-    )
   }
-
-  reader.readAsArrayBuffer(file)
+  reader.readAsArrayBuffer(blobSlice.call(file, 0, versionFieldSize))
   if (onUploadStart) onUploadStart(file)
 }
 
-async function applySampleData(samplePath, onUploadStart, onDataLoaded) {
+async function applySampleData(
+  samplePath,
+  onUploadStart,
+  onUploadFinished,
+  onUploadChunk
+) {
   if (onUploadStart) onUploadStart()
 
+  const metadata = {
+    type: 'sample',
+    name: 'Sample data',
+  }
+  const bl = new BufferList()
   const response = await fetch(samplePath)
 
   if (!response.ok) {
@@ -34,21 +54,16 @@ async function applySampleData(samplePath, onUploadStart, onDataLoaded) {
   }
 
   const arrbuf = await response.arrayBuffer()
-
-  const metadata = {
-    type: 'sample',
-    name: 'Sample data',
-  }
-
-  processUploadedData(arrbuf, response, onDataLoaded, metadata)
+  const buf = Buffer.from(arrbuf)
+  bl.append(buf.slice(4))
+  processUploadBuffer(bl, onUploadChunk, metadata)
+  onUploadFinished()
 }
 
-function processUploadedData(arrayBuf, file, onDataLoaded, metadata) {
-  const data = parseArrayBuffer(arrayBuf)
-
+function processUploadBuffer(bufferList, onUploadChunk, metadata) {
+  const data = parseBufferList(bufferList)
   if (metadata && data.states) data.states.metadata = metadata
-
-  if (onDataLoaded) onDataLoaded(data, file)
+  onUploadChunk(data)
 }
 
-export { uploadDataFile, processUploadedData, applySampleData }
+export { uploadDataFile, applySampleData }

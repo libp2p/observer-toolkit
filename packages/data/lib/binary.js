@@ -2,6 +2,10 @@
 
 const { deserializeBinary, fnv1a } = require('@libp2p-observer/proto')
 
+function getMessageChecksum(buffer) {
+  return fnv1a(buffer)
+}
+
 function parseBuffer(buf) {
   // Expects a binary file with this structure:
   // - 4-byte version number
@@ -35,7 +39,7 @@ function parseBuffer(buf) {
 
     const messageBin = buf.slice(messageStart, messageEnd)
 
-    const validChecksum = messageChecksum === fnv1a(messageBin)
+    const validChecksum = getMessageChecksum(messageBin) === messageChecksum
 
     // TODO: bubble an error message for an invalid checksum
     if (validChecksum) {
@@ -52,9 +56,7 @@ function parseBuffer(buf) {
   return messages
 }
 
-function addMessageContent(messageBin, messages) {
-  const message = deserializeBinary(messageBin)
-
+function addMessage(message, messages) {
   const runtimeContent = message.getRuntime()
   const stateContent = message.getState()
 
@@ -68,12 +70,50 @@ function addMessageContent(messageBin, messages) {
   }
 }
 
+function addMessageContent(messageBin, messages) {
+  const message = deserializeBinary(messageBin)
+  addMessage(message, messages)
+}
+
 function parseArrayBuffer(arrayBuf) {
   return parseBuffer(Buffer.from(arrayBuf))
 }
 
 function parseBase64(dataString) {
   return parseBuffer(Buffer.from(dataString, 'base64'))
+}
+
+function parseBufferList(bufferList) {
+  const messageChecksumLength = 4
+  const messageSizeLength = 4
+  const messages = {
+    states: [],
+    runtime: null,
+  }
+
+  while (bufferList.length > messageChecksumLength + messageSizeLength) {
+    // check for complete message in the buffer
+    const messageChecksum = bufferList.readUIntLE(0, messageChecksumLength)
+    const messageSize = bufferList.readUIntLE(4, messageSizeLength)
+    const minimalBufferLength =
+      messageChecksumLength + messageSizeLength + messageSize
+    if (bufferList.length <= minimalBufferLength) break
+    // extract and verify message
+    const messageBin = bufferList.slice(
+      messageChecksumLength + messageSizeLength,
+      minimalBufferLength
+    )
+    const calcChecksum = getMessageChecksum(messageBin)
+    const valid = messageChecksum === calcChecksum
+    // deserialize and add message
+    if (valid) {
+      const message = deserializeBinary(messageBin)
+      addMessage(message, messages)
+    }
+    bufferList.consume(minimalBufferLength)
+  }
+
+  return messages
 }
 
 function parseImport(rawData) {
@@ -86,5 +126,6 @@ module.exports = {
   parseArrayBuffer,
   parseBase64,
   parseBuffer,
+  parseBufferList,
   parseImport,
 }
