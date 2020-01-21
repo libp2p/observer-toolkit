@@ -1,5 +1,14 @@
 import * as utils from './utils'
 
+const consoleError = console.error
+beforeEach(() => {
+  console.error = () => {}
+})
+
+afterEach(() => {
+  console.error = consoleError
+})
+
 describe('validateWidgetFields only allows valid component fields in supplied object', () => {
   const valid = {
     name: 'validName',

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { fireEvent } from '@testing-library/react'
 
-import { renderWithTheme } from '@libp2p-observer/testing'
+import { catchErrorSilently, renderWithTheme } from '@libp2p-observer/testing'
 import DataTypeControl from './DataTypeControl'
 
 describe('DataTypeControl', () => {
@@ -33,18 +33,11 @@ describe('DataTypeControl', () => {
       type: 'invalid-type',
       name: 'test invalid type',
     }
-
-    const consoleError = console.error
-    let caughtError
-    try {
-      console.error = () => {}
-      renderWithTheme(<DataTypeControl metadata={metadata} />)
-    } catch (e) {
-      caughtError = e
-    } finally {
-      expect(caughtError).toBeInstanceOf(Error)
-      console.error = consoleError
-    }
+    expect(
+      catchErrorSilently(() =>
+        renderWithTheme(<DataTypeControl metadata={metadata} />)
+      )
+    ).toBeInstanceOf(Error)
   })
 
   it('is highlighted and text changes on mouseover', async () => {

@@ -14,7 +14,7 @@
     "prepare": "webpack",
     "svgr-graphic": "npx @svgr/cli -d theme/graphics ",
     "svgr-icons": "npx @svgr/cli -d theme/icons theme/icons-src",
-    "test": "CI=true jest --silent",
+    "test": "CI=true jest",
     "test:watch": "jest --watch",
     "update-snapshots": "npm run test -- -u"
   },
