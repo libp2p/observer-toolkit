@@ -6,26 +6,30 @@ const defaultFilter = (targetValue, values) => {
 const DefaultUi = CheckboxList
 
 function getListFilter({
-  options,
+  valueNames,
   defaultValue = true,
   name = 'Filter from list',
   doFilter = defaultFilter,
   FilterUi = DefaultUi,
+  mapFilter,
 }) {
-  if (!options || !Array.isArray(options))
+  if (!valueNames || !Array.isArray(valueNames))
     throw new Error(
-      `listFilter requires an array of options, got ${typeof options}`
+      `listFilter requires an array of value names, got ${typeof valueNames}`
     )
 
-  const initialFieldValues = new Map(
-    options.map(option => [option, defaultValue])
-  )
+  const initialValues = valueNames.reduce((values, name) => {
+    values[name] = defaultValue
+    return values
+  }, {})
 
   return {
     name,
     doFilter,
     FilterUi,
-    initialFieldValues,
+    initialValues,
+    valueNames,
+    mapFilter,
   }
 }
 

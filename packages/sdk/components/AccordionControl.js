@@ -28,13 +28,20 @@ const AccordionIcon = styled.span`
     `}
 `
 
-function AccordionControl({ isOpen, setIsOpen, children, overrides = {} }) {
+function AccordionControl({
+  isOpen,
+  setIsOpen,
+  children,
+  overrides = {},
+  ...props
+}) {
   const toggleOpen = () => setIsOpen(!isOpen)
   return (
     <AccordionButton
       onClick={toggleOpen}
-      as={overrides.AccordionButton}
       active={isOpen}
+      as={overrides.AccordionButton}
+      {...props}
     >
       {children}
       <Icon

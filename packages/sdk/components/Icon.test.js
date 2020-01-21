@@ -1,13 +1,15 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
-import { renderWithTheme } from '@libp2p-observer/testing'
+import { catchErrorSilently, renderWithTheme } from '@libp2p-observer/testing'
 import Icon from './Icon'
 
 describe('Icon', () => {
   it('throws if trying to render an invalid icon', () => {
-    expect(() => renderWithTheme(<Icon type="" />)).toThrow(
-      new Error('No icon found named ""')
-    )
+    expect(
+      catchErrorSilently(() =>
+        renderWithTheme(<Icon type="invalid icon type" />)
+      )
+    ).toBeInstanceOf(Error)
   })
 
   it("renders 'asc' icon as expected", () => {

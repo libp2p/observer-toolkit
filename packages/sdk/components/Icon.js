@@ -8,9 +8,8 @@ const Container = styled.span`
   user-select: none; /* Stops nearby text being selected if icon clicked quickly */
   display: inline-block;
   vertical-align: middle;
-  width: ${({ size }) => size}px;
-  height: ${({ size }) => size}px;
-  border-radius: ${({ size }) => size}px;
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
 
   ${({ theme, active }) => active && `color: ${theme.color('highlight')};`}
 
@@ -19,7 +18,6 @@ const Container = styled.span`
     `
       color: ${theme.color('text', 3)};
   `}
-  ${({ theme, offset }) => offset && `margin-right: -${theme.spacing(2)};`}
   ${({ onClick, theme, disabled }) =>
     onClick &&
     !disabled &&
@@ -31,8 +29,21 @@ const Container = styled.span`
   `}
 `
 
-function Icon({ type, onClick, active, disabled, size = 20, override = {} }) {
-  const IconSvg = icons[type]
+const Empty = styled.span`
+  display: inline-block;
+`
+
+function Icon({
+  type,
+  onClick,
+  active,
+  disabled,
+  altText,
+  size = '2em',
+  override = {},
+  ...props
+}) {
+  const IconSvg = type ? icons[type] : Empty
   if (!IconSvg) throw new Error(`No icon found named "${type}"`)
 
   const isButton = onClick && !disabled
@@ -45,19 +56,20 @@ function Icon({ type, onClick, active, disabled, size = 20, override = {} }) {
       disabled={disabled}
       size={size}
       as={override.Container}
+      {...props}
     >
-      <IconSvg as={override.IconSvg} />
+      <IconSvg alt={altText} as={override.IconSvg} />
     </Container>
   )
 }
 
 Icon.propTypes = {
-  type: T.string.isRequired,
+  type: T.string,
   onClick: T.func,
+  altText: T.string,
   active: T.bool,
   disabled: T.bool,
-  offset: T.bool,
-  size: T.number,
+  size: T.string,
   override: T.object,
 }
 

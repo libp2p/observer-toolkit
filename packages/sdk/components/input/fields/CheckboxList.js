@@ -9,6 +9,10 @@ function areAllChecked(values) {
   return Object.values(values).every(value => value)
 }
 
+function areAnyChecked(values) {
+  return Object.values(values).some(value => value)
+}
+
 async function toggleAll(values, fieldNames, setFieldValue, onChange) {
   // tick everything, unless everything is already ticked, then tick nothing
   const newValue = !areAllChecked(values)
@@ -23,6 +27,7 @@ async function toggleField(values, name, setFieldValue, onChange) {
 
 const Container = styled.div`
   display: flex;
+  flex-direction: ${({ orientation }) => orientation};
 `
 
 const StyledHeader = styled.div`
@@ -44,6 +49,7 @@ const StyledListItem = styled.li`
 `
 
 const StyledToggleButton = styled.button`
+  white-space: nowrap;
   cursor: pointer;
   border: none;
   background: ${({ theme }) => theme.color('background', 0)};
@@ -51,7 +57,7 @@ const StyledToggleButton = styled.button`
   text-align: left;
   font-weight: ${({ checked }) => (checked ? 600 : 300)};
   color: ${({ theme, checked }) =>
-    theme.color(checked ? 'tertiary' : 'text', 'mid')};
+    theme.color(checked ? 'text' : 'highlight', 1)};
   :focus {
     outline: none;
   }
@@ -64,20 +70,35 @@ function CheckboxList({
   title,
   fieldNames,
   setFieldValue,
+  orientation = 'row',
   onChange,
   values,
   override = {},
 }) {
+  const allAreChecked = areAllChecked(values)
+  const anyAreChecked = allAreChecked || areAnyChecked(values)
+
+  const checkAllChecked =
+    (allAreChecked && 'true') || (anyAreChecked ? 'mixed' : 'false')
+
+  const iconsMapping = {
+    true: 'check',
+    mixed: 'closed',
+    false: 'uncheck',
+  }
+
   return (
-    <Container as={override.Container}>
+    <Container orientation={orientation} as={override.Container}>
       <StyledHeader as={override.StyledHeader}>
         <StyledToggleButton
           onClick={() => toggleAll(values, fieldNames, setFieldValue, onChange)}
+          role="checkbox"
+          aria-checked={checkAllChecked}
           as={override.StyledToggleButton}
         >
-          <Field type="hidden" name="set-all" value={areAllChecked(values)} />
-          <Icon type={areAllChecked(values) ? 'check' : 'uncheck'} />
-          {title}
+          <Field type="hidden" name="set-all" value={allAreChecked} />
+          <Icon type={iconsMapping[checkAllChecked]} />
+          <label>{`${allAreChecked ? 'Uncheck' : 'Check'} all`}</label>
         </StyledToggleButton>
       </StyledHeader>
       <StyledList as={override.StyledList}>
@@ -85,12 +106,14 @@ function CheckboxList({
           <StyledListItem key={name} as={override.StyledListItem}>
             <StyledToggleButton
               onClick={() => toggleField(values, name, setFieldValue, onChange)}
+              role="checkbox"
               checked={values[name]}
+              aria-checked={!!values[name]}
               as={override.StyledToggleButton}
             >
               <Field type="hidden" name={name} value={values[name]} />
-              <Icon type={values[name] ? 'check' : 'uncheck'} />
-              {name}
+              <Icon type={iconsMapping[`${!!values[name]}`]} />
+              <label>{name}</label>
             </StyledToggleButton>
           </StyledListItem>
         ))}
@@ -105,6 +128,7 @@ CheckboxList.propTypes = {
   setFieldValue: T.func.isRequired,
   onChange: T.func.isRequired,
   values: T.object.isRequired,
+  orientation: T.oneOf(['row', 'column']),
   override: T.object,
 }
 

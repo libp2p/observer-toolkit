@@ -7,7 +7,6 @@ import { ControlPanel } from '@libp2p-observer/shell'
 import approvedWidgets from '../definitions/approvedWidgets'
 import CatalogueItem from './CatalogueItem'
 import HeaderTabs from './HeaderTabs'
-import SelectedWidget from './SelectedWidget'
 
 const HEADER_HEIGHT = '62px'
 
@@ -50,6 +49,8 @@ const Header = styled.div`
 
 function Page() {
   const [selected, setSelected] = useState(null)
+  const selectedWidget = approvedWidgets[selected]
+  const closeWidget = () => setSelected(null)
 
   return (
     <Container>
@@ -57,12 +58,9 @@ function Page() {
         <HeaderTabs />
       </Header>
       <Main>
-        {selected !== null && (
+        {selectedWidget && (
           <RootNodeProvider>
-            <SelectedWidget
-              widget={approvedWidgets[selected]}
-              setSelected={setSelected}
-            />
+            <selectedWidget.Widget closeWidget={closeWidget} />
           </RootNodeProvider>
         )}
         <RootNodeProvider>

@@ -130,14 +130,16 @@ const boxShadow = ({
   opacity = 0.2,
 } = {}) => {
   const shadowColor = color(colorKey, colorIndex, opacity)
-  return `box-shadow: 0 ${spacing(0.5 * size)} ${spacing(size)} ${shadowColor};`
+  return `box-shadow: 0 ${spacing(0.25 * size)} ${spacing(
+    size
+  )} ${shadowColor};`
 }
 
 const transition = ({
-  target = 'all',
+  property = 'all',
   duration = 0.4,
-  easing = 'ease-in-out',
-} = {}) => `transition: ${target} ${duration}s ${easing};`
+  timingFunction = 'ease-in-out',
+} = {}) => `transition: ${property} ${duration}s ${timingFunction};`
 
 const tableCell = `
   ${text('label', 'medium')}
@@ -145,7 +147,7 @@ const tableCell = `
   padding-bottom: ${spacing()};
   padding-left: ${spacing(3)};
   padding-right: ${spacing(2)};
-  text-align: right;
+  text-align: left;
 `
 
 export default {

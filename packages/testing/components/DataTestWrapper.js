@@ -3,6 +3,7 @@ import T from 'prop-types'
 
 import {
   DataProvider,
+  FilterProvider,
   RootNodeProvider,
   ThemeSetter,
 } from '@libp2p-observer/sdk'
@@ -15,7 +16,9 @@ function DataTestWrapper({ children }) {
   return (
     <ThemeSetter>
       <RootNodeProvider>
-        <DataProvider initialData={mockData}>{children}</DataProvider>
+        <FilterProvider>
+          <DataProvider initialData={mockData}>{children}</DataProvider>
+        </FilterProvider>
       </RootNodeProvider>
     </ThemeSetter>
   )
