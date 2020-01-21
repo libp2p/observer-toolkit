@@ -1,10 +1,10 @@
 import React, { useContext, useRef } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
-import { Formik } from 'formik'
 
 import {
   formatTime,
+  Formik,
   DataContext,
   SetterContext,
   Slider,

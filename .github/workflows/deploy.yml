@@ -3,7 +3,8 @@ name: Deploy master or staging to GitHub Pages
 on:
   push:
     branches:
-      - master
+      # un-comment this line when PR backlog is cleared
+      #- master
       - staging
 
 jobs:

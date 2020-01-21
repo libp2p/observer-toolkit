@@ -1,9 +1,24 @@
-const jsxPackages = require('./jsx-packages')
+'use strict'
+
+const { nonJsxPackagesRegex } = require('./jsx-packages')
 
 module.exports = function(api) {
+  const isTest = api.env('test')
   api.cache(true)
 
-  const presets = ['@babel/env', '@babel/preset-react']
+  const presets = [
+    [
+      '@babel/env',
+      isTest
+        ? {
+            targets: {
+              node: 'current',
+            },
+          }
+        : {},
+    ],
+    '@babel/preset-react',
+  ]
 
   const plugins = [
     '@babel/plugin-proposal-class-properties',
@@ -14,14 +29,7 @@ module.exports = function(api) {
     // 'transform-es2015-modules-commonjs',
   ]
 
-  // Ignore dependencies except for our specified lerna packages containing JSX etc
-  const ignoreRegex = new RegExp(
-    `node_modules[\\\\/](?!@libp2p-observer[\\\\/](${jsxPackages.join(
-      '|'
-    )}))[\\\\/]`
-  )
-
-  const ignore = [ignoreRegex, /samples/]
+  const ignore = [nonJsxPackagesRegex]
   const babelrcRoots = ['.', 'packages/*', '.storybook']
 
   const sourceType = 'unambiguous'

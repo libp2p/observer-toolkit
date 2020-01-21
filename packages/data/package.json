@@ -14,7 +14,7 @@
     "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
   },
   "scripts": {
-    "test": "tap --no-esm"
+    "test": "CI=true jest --silent"
   },
   "bugs": {
     "url": "https://github.com/nearform/libp2p-introspection-ui/issues"
@@ -24,7 +24,18 @@
   },
   "devDependencies": {
     "@libp2p-observer/samples": "^0.0.1",
-    "tap": "^14.9.2",
+    "jest": "^24.9.0",
+    "jest-expect-message": "^1.0.2",
     "webpack-cli": "^3.3.10"
+  },
+  "jest": {
+    "setupFilesAfterEnv": ["jest-expect-message", "<rootDir>/../../__jest__/setupTest.js"],
+    "moduleNameMapper": {
+      "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/../../__jest__/styleMock.js"
+    },
+    "transform": {
+      "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
+    }
   }
 }

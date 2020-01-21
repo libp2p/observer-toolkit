@@ -12,7 +12,10 @@
   "module": "./index.js",
   "scripts": {
     "prepare": "webpack",
-    "storybook": "start-storybook -p 9009"
+    "storybook": "start-storybook -p 9009",
+    "test": "CI=true jest --silent",
+    "test:watch": "jest --watch",
+    "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
     "@libp2p-observer/data": "^0.0.1",
@@ -21,10 +24,26 @@
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.7.6",
+    "@babel/preset-react": "^7.7.4",
     "@libp2p-observer/shell": "^0.0.1",
     "@storybook/react": "^5.2.4",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "jest-styled-components": "^6.3.4",
     "peer-deps-externals-webpack-plugin": "^1.0.4",
     "raw-loader": "^3.1.0",
+    "react-test-renderer": "^16.12.0",
     "storybook": "^5.1.11"
+  },
+  "jest": {
+    "setupFilesAfterEnv": ["<rootDir>/../../__jest__/setupTest.js"],
+    "moduleNameMapper": {
+      "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/../../__jest__/styleMock.js"
+    },
+    "transform": {
+      "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
+    }
   }
 }

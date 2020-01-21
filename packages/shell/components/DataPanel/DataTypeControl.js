@@ -53,6 +53,12 @@ function DataTypeControl({ metadata }) {
     sample: 'cloud',
     upload: 'doc',
   }
+  if (!iconNames[type])
+    throw new Error(
+      `Unknown type "${type}", expected one of "${Object.keys(iconNames).join(
+        '", "'
+      )}"`
+    )
 
   const iconType = isHighlighted ? 'back' : iconNames[type]
 

@@ -1,3 +1,5 @@
+'use strict'
+
 // These packages in our repo export JSX and we must tell webpack to use babel loader on them
 const jsxPackages = [
   'catalogue',
@@ -5,6 +7,17 @@ const jsxPackages = [
   'sdk',
   'shell',
   'streams-table',
+  'testing',
 ]
 
-module.exports = jsxPackages
+// Regex for all other packages
+const nonJsxPackagesRegex = new RegExp(
+  `node_modules[\\\\/](?!@libp2p-observer[\\\\/](${jsxPackages.join(
+    '|'
+  )}))[\\\\/]`
+)
+
+module.exports = {
+  jsxPackages,
+  nonJsxPackagesRegex,
+}

@@ -25,17 +25,20 @@ async function initWidget() {
     ? JSON.parse(await readFile(packageJsonPath))
     : {}
 
-  const widgetName = await askQuestion(
-    existingPackageJson,
-    'name',
-    'Name of widget',
-    path.basename(path.resolve('.'))
-  )
-  if (widgetName === false) {
-    console.error(chalk.red('Name of widget is required'))
-    initWidget()
-    return
+  let widgetName
+
+  while (!widgetName) {
+    widgetName = await askQuestion(
+      existingPackageJson,
+      'name',
+      'Name of widget',
+      path.basename(process.cwd())
+    )
+    if (widgetName === false) {
+      console.error(chalk.red('Name of widget is required'))
+    }
   }
+
   const widgetDesc = await askQuestion(
     existingPackageJson,
     'description',

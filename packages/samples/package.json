@@ -14,7 +14,7 @@
     "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
   },
   "scripts": {
-    "test": "tap",
+    "test": "tap | tap-mocha-reporter progress",
     "mock": "node ./mock/mock.js --",
     "mock-file": "node ./mock/mock.js --file",
     "prepare": "webpack"
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@libp2p-observer/data": "^0.0.1",
     "@libp2p-observer/proto": "^0.0.1",
-    "tap": "^14.9.2"
+    "tap": "^14.9.2",
+    "tap-mocha-reporter": "^5.0.0"
   }
 }

@@ -1,7 +1,10 @@
 module.exports = async ({ config }) => {
   config.module.rules.push({
     test: /\.mock$/,
-    use: 'arraybuffer-loader',
+    loader: 'file-loader',
+    options: {
+      name: '[path][name].[ext]',
+    },
   })
 
   config.module.rules.push({

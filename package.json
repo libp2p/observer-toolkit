@@ -22,19 +22,22 @@
     "storybook:streams-table": "lerna exec --scope=\"@libp2p-observer/streams-table\" -- npm run storybook",
     "start:catalogue": "lerna exec --scope=\"@libp2p-observer/catalogue\" -- npm run start",
     "start:verdaccio": "cd verdaccio && docker-compose up",
-    "test": "test"
+    "test": "lerna run prepare && lerna run --no-bail --stream test",
+    "test:cov": "npm run test -- -- --coverage",
+    "update-snapshots": "lerna run prepare && lerna run update-snapshots"
   },
   "author": "NearForm",
   "license": "MIT",
-  "dependencies": {
-    "react": "^16.10.2",
-    "styled-components": "^4.4.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
-    "@storybook/react": "^5.2.4",
+    "@libp2p-observer/testing": "^0.0.1",
+    "@libp2p-observer/samples": "^0.0.1",
+    "@libp2p-observer/sdk": "^0.0.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
     "arraybuffer-loader": "^1.0.8",
     "babel": "^6.23.0",
     "babel-eslint": "^10.0.3",
@@ -46,6 +49,7 @@
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.1.2",
     "husky": "^3.0.9",
+    "jest-styled-components": "^6.3.4",
     "lerna": "^3.17.0",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",

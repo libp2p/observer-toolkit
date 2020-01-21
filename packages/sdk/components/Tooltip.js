@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 function getInvertedDirection(direction) {
   const directionInverse = {
@@ -79,11 +79,12 @@ const Target = styled.span`
   position: relative;
   display: inline-block;
   ${({ isClickable, noHover, isFixed, theme }) =>
-    isClickable &&
-    `
-    cursor: pointer;
-    ${isFixed && theme.boxShadow()}
-  `}
+    isClickable
+      ? css`
+          cursor: pointer;
+          ${isFixed ? theme.boxShadow() : ''}
+        `
+      : ''}
 `
 
 const Positioner = styled.div`

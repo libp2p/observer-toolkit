@@ -35,9 +35,12 @@ function Icon({ type, onClick, active, disabled, size = 20, override = {} }) {
   const IconSvg = icons[type]
   if (!IconSvg) throw new Error(`No icon found named "${type}"`)
 
+  const isButton = onClick && !disabled
+
   return (
     <Container
-      onClick={disabled ? null : onClick}
+      role={isButton ? 'button' : 'img'}
+      onClick={isButton ? onClick : null}
       active={active}
       disabled={disabled}
       size={size}
