@@ -58,9 +58,9 @@ function WebSocketDataButton({ title }) {
     })
   }
 
-  function handleUploadFinish(file) {
+  function handleUploadFinish(url) {
     setIsLoading(false)
-    setSocketUrl(file.name)
+    setSocketUrl(url)
   }
 
   const buttonText = getButtonText(isLoading, socketUrl, title)

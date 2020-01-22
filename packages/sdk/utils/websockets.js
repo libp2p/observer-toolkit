@@ -9,13 +9,21 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   const ws = new WebSocket('ws://localhost:8080')
   ws.addEventListener('message', function(msg) {
     const metadata = { type: 'upload', name: 'websocket' }
-    const buf = new Buffer(msg.data, 'binary')
-    bl.append(buf.slice(4))
-    processUploadBuffer(bl, onUploadChunk, metadata)
+    if (msg.data) {
+      const buf = new Buffer(msg.data, 'binary')
+      bl.append(buf.slice(4))
+      processUploadBuffer(bl, onUploadChunk, metadata)
+    }
+    setTimeout(() => {
+      ws.send('ready')
+    }, 1000)
   })
-
-  //  if (onUploadFinished) onUploadFinished(file)
-  //  if (onUploadStart) onUploadStart(file)
+  ws.addEventListener('close', function() {
+    if (onUploadFinished) onUploadFinished(url)
+  })
+  ws.addEventListener('open', function() {
+    if (onUploadStart) onUploadStart(url)
+  })
 }
 
 function processUploadBuffer(bufferList, onUploadChunk, metadata) {
