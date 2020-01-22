@@ -60,7 +60,6 @@ if (socksrv) {
   const wss = new WebSocket.Server({ port: 8080 })
   wss.on('connection', ws => {
     // prep and keep peer connections, version, runtime
-    let firstState = true
     let utcTo = Date.now()
     let utcFrom = utcTo - durationSeconds * 1000
     const connections = generateConnections(connectionsCount, utcFrom)
