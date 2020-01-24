@@ -15,7 +15,7 @@ const { createProtocolDataPacket } = require('./messages/protocol-data-packet')
 const { statusList } = require('./enums/statusList')
 
 function generateConnections(total, now) {
-  return Array.apply(null, Array(total - 1)).map(function() {
+  return Array.apply(null, Array(total)).map(function() {
     const connection = createConnection()
     mockConnectionActivity(connection, now)
     return connection
@@ -31,7 +31,7 @@ function generateRuntime() {
 function updateConnections(connections, total, now) {
   connections.forEach(connection => updateConnection(connection, now))
   // ensure initial connections === connectionsCount at first iteration
-  if (total && randomOpenClose(total)) {
+  if (total !== null && randomOpenClose(total)) {
     // open a new connection
     const connection = createConnection({
       status: statusList.getNum('OPENING'),
@@ -52,7 +52,7 @@ function generateStates(connections, connectionsCount, utcFrom, utcTo) {
   const states = Math.floor((utcTo - utcFrom) / 1000)
   for (let state = 1; state <= states; state++) {
     const now = utcFrom + state * 1000
-    const connCount = state === 1 ? connectionsCount : 0
+    const connCount = state !== 1 ? connectionsCount : null
     updateConnections(connections, connCount, now)
     stateBuffers.push(generateState(connections, now))
   }
