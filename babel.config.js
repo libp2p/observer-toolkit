@@ -23,6 +23,7 @@ module.exports = function(api) {
   const plugins = [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
+    'babel-plugin-styled-components',
 
     // TODO: confirm what change, most likely an dep, changed this from being
     // essential to breaking the build with 'exports is undefined' errors:
