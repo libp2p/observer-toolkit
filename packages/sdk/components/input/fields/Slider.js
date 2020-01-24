@@ -137,6 +137,19 @@ function getNearestFieldName(
   return fieldNames[fieldIndex]
 }
 
+function getNudgeNumber(e) {
+  switch (e.key || e.keyCode) {
+    case 'ArrowLeft':
+    case 'Left':
+    case 37:
+      return -1
+    case 'ArrowRight':
+    case 'Right':
+    case 39:
+      return 1
+  }
+}
+
 function Slider({
   min = 0,
   max,
@@ -181,6 +194,8 @@ function Slider({
   const containerRef = useRef()
   const lowerInputRef = useRef()
   const upperInputRef = useRef()
+  const lowerControlRef = useRef()
+  const upperControlRef = useRef()
 
   const [fieldIsSliding, setFieldSliding] = useState('')
 
@@ -252,6 +267,9 @@ function Slider({
       )
     }
     handleMouseMove(event, fieldName)
+    const focusRef =
+      fieldName === fieldNames[0] ? lowerControlRef : upperControlRef
+    focusRef.current.focus()
   }
   const handleNumberInput = (event, fieldName) => {
     const stepIndex = parseInt(event.target.value)
@@ -270,7 +288,12 @@ function Slider({
     updateNumberInput(fieldName, numberInputValue)
   }
   const updateFieldValue = async (fieldName, stepIndex) => {
-    if (stepIndex !== values[fieldName]) {
+    if (
+      !isNaN(stepIndex) &&
+      stepIndex !== values[fieldName] &&
+      stepIndex >= min &&
+      stepIndex <= max
+    ) {
       await setFieldValue(fieldName, stepIndex)
       onChange()
     }
@@ -285,6 +308,11 @@ function Slider({
     // Only set number input state while input is in focus
     setNumberInput(isInFocus ? stepIndex : null)
   }
+
+  const nudgeLower = e =>
+    handleChange(lowerStepIndex + getNudgeNumber(e), fieldNames[0])
+  const nudgeUpper = e =>
+    handleChange(upperStepIndex + getNudgeNumber(e), fieldNames[1])
 
   /**
    *** Styling and inline style calculation
@@ -326,6 +354,9 @@ function Slider({
             width={controlWidth}
             onMouseDown={event => slideStart(event, fieldNames[0])}
             isLower={isRange}
+            tabIndex={0}
+            onKeyDown={nudgeLower}
+            ref={lowerControlRef}
             as={override.Control}
           >
             <Field
@@ -344,6 +375,9 @@ function Slider({
                 width={controlWidth}
                 onMouseDown={event => slideStart(event, fieldNames[1])}
                 isUpper={isRange}
+                tabIndex={0}
+                onKeyDown={nudgeUpper}
+                ref={upperControlRef}
                 as={override.Control}
               >
                 <Field

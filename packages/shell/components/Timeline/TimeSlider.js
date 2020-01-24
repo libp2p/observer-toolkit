@@ -43,6 +43,9 @@ const Control = styled.div`
   z-index: 3;
   // Position between data points
   margin-left: ${({ width }) => width / 2}px;
+  :focus {
+    box-shadow: ${({ theme }) => theme.color('background', 0, 0.2)} 0 0 4px 2px;
+  }
 `
 const InactiveSection = styled.div`
   background-color: ${({ theme }) => theme.color('contrast', 0, 0.8)};
