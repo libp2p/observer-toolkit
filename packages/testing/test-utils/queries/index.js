@@ -1,3 +1,4 @@
 export * from './byHighlighted'
 export * from './byAriaLabel'
-export * from './byTableCell'
+export * from './byTableColumn'
+export * from './byTableRow'
