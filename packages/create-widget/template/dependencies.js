@@ -5,13 +5,15 @@ const devDependenciesList = [
   '@babel/core',
   '@babel/preset-env',
   '@babel/preset-react',
-  '@libp2p-observer/samples', // For populating demos in Storybook
-  '@libp2p-observer/shell', // For testing this widget in Storybook
+  '@libp2p-observer/samples',
+  '@libp2p-observer/shell',
+  '@libp2p-observer/testing',
   '@storybook/react',
   'arraybuffer-loader',
   'babel',
   'babel-eslint',
   'babel-loader',
+  'babel-plugin-styled-components',
   'babel-plugin-transform-es2015-modules-commonjs',
   'eslint',
   'eslint-config-prettier',
@@ -28,7 +30,6 @@ const devDependenciesList = [
   'yarn',
 ]
 const peerDependenciesList = [
-  // These should be applied via shell package by whatever publishes the widget
   '@libp2p-observer/data',
   '@libp2p-observer/sdk',
   'react',

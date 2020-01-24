@@ -1,10 +1,9 @@
 import { render, queries, getQueriesForElement } from '@testing-library/react'
 
-import {
-  DataTestWrapper,
-  ShellTestWrapper,
-  ThemeTestWrapper,
-} from '../components'
+import DataTestWrapper from '../components/DataTestWrapper'
+import ShellTestWrapper from '../components/ShellTestWrapper'
+import ThemeTestWrapper from '../components/ThemeTestWrapper'
+
 import * as customQueries from './queries'
 
 const allQueries = { ...queries, ...customQueries }

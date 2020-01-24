@@ -8,9 +8,9 @@
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://github.com/nearform/libp2p-introspection-ui#readme",
   "license": "MIT",
-  "main": "index.mjs",
+  "main": "index.test.js",
+  "browser": "index.browser.js",
   "scripts": {
-    "prepare": "webpack"
   },
   "repository": {
     "type": "git",
@@ -27,13 +27,23 @@
     "@testing-library/react": "^9.4.0"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/../../__jest__/setupTest.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/../../__jest__/setupTest.js"
+    ],
     "moduleNameMapper": {
       "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/../../__jest__/styleMock.js"
     },
     "transform": {
-      "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
+      "\\.js$": [
+        "babel-jest",
+        {
+          "rootMode": "upward"
+        }
+      ]
     }
+  },
+  "dependencies": {
+    "lodash.flatten": "^4.4.0"
   }
 }

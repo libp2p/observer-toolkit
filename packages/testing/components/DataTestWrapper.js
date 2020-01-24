@@ -1,26 +1,19 @@
 import React from 'react'
 import T from 'prop-types'
 
-import {
-  DataProvider,
-  FilterProvider,
-  RootNodeProvider,
-  ThemeSetter,
-} from '@libp2p-observer/sdk'
+import { DataProvider } from '@libp2p-observer/sdk'
 
-import { loadSample } from '../utils'
+import DataOuterWrapper from './DataOuterWrapper'
+import loadSample from '../loaders/loadSample'
 
+// Load data synchronously using Node FS so tests don't need to re-render
 const mockData = loadSample()
 
 function DataTestWrapper({ children }) {
   return (
-    <ThemeSetter>
-      <RootNodeProvider>
-        <FilterProvider>
-          <DataProvider initialData={mockData}>{children}</DataProvider>
-        </FilterProvider>
-      </RootNodeProvider>
-    </ThemeSetter>
+    <DataOuterWrapper>
+      <DataProvider initialData={mockData}>{children}</DataProvider>
+    </DataOuterWrapper>
   )
 }
 
