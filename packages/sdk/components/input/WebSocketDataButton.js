@@ -11,13 +11,7 @@ const WebSocketButton = styled(StyledButton)`
   position: relative;
   z-index: 5;
 `
-const NativeSocketInput = styled.input`
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-`
+
 const RelativeSpan = styled.span`
   position: relative;
 `
@@ -31,10 +25,9 @@ function WebSocketDataButton({ title }) {
   const [isLoading, setIsLoading] = useState(false)
   const [socketUrl, setSocketUrl] = useState('')
   const { dispatchDataset } = useContext(SetterContext)
-  const urlInputRef = useRef()
 
   function handleClick() {
-    urlInputRef.current.click()
+    handleUpload()
   }
 
   function handleUpload(event) {
@@ -68,12 +61,6 @@ function WebSocketDataButton({ title }) {
   return (
     <RelativeSpan>
       <WebSocketButton onClick={handleClick}>{buttonText}</WebSocketButton>
-      <NativeSocketInput
-        ref={urlInputRef}
-        type="file"
-        name="websocket"
-        onChange={handleUpload}
-      />
     </RelativeSpan>
   )
 }
