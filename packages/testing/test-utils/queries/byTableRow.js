@@ -9,7 +9,7 @@ import { getColumnIndexes, getTable, getTableParts } from './helpers'
 
 const queryAllByTableRow = (
   container,
-  conditions,
+  conditions = [],
   table = getTable(container)
 ) => {
   const { thead, tbody, columnHeaders, rows } = getTableParts(table)
