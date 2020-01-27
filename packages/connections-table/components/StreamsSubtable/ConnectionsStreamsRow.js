@@ -64,17 +64,24 @@ function ConnectionsStreamsRow({
       onMouseLeave={onMouseLeave}
     >
       <ConnectionCell colSpan={2}>
-        {columnDefs.map(({ renderContent, name }, cellIndex) => (
-          <PushApart key={name}>
-            <label>{name}:</label>
-            {renderContent(rowContentProps[cellIndex])}
-          </PushApart>
-        ))}
+        {columnDefs.map(({ renderContent, name, header }, cellIndex) => {
+          const capitalisedInitial = header[0].toUpperCase() + header.slice(1)
+          const labelId = `${name}_${cellIndex}_${peerId}`
+          return (
+            <PushApart key={name}>
+              <label htmlFor={labelId}>{capitalisedInitial}:</label>
+              <span id={labelId}>
+                {renderContent(rowContentProps[cellIndex])}
+              </span>
+            </PushApart>
+          )
+        })}
       </ConnectionCell>
       <StreamsCell colSpan={columnDefs.length - 1}>
         <PushApart>
           <Heading>Connection has {streamsCount} streams:</Heading>
           <Icon
+            aria-label="Close"
             type="cancel"
             active
             size="2.5em"
