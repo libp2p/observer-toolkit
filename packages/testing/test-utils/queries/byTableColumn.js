@@ -12,7 +12,7 @@ const queryAllByTableColumn = (
   column,
   table = getTable(container)
 ) => {
-  const { thead, tbody, columnHeaders, rows } = getTableParts(table)
+  const { thead, tbody, columnHeaders } = getTableParts(table)
 
   const [columnIndex] = getColumnIndexes(thead, column, columnHeaders)
 

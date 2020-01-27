@@ -1,9 +1,4 @@
-import {
-  getAllByRole,
-  queryAllByRole,
-  queryAllByText,
-  within,
-} from '@testing-library/react'
+import { getAllByRole, queryAllByRole, within } from '@testing-library/react'
 import flatten from 'lodash.flatten'
 
 function getTable(container) {
@@ -69,14 +64,13 @@ function getMatchingCells(rowContainer, matcher, filteredCells) {
 
   const matchType = matcher instanceof RegExp ? 'RegExp' : typeof matcher
   switch (matchType) {
-    case 'number':
+    case 'number': {
       const rows = queryAllByRole(rowContainer, 'row')
       const cells = rows.length
         ? rows.map(row => getCellByIndex(row, matcher))
         : [getCellByIndex(rowContainer, matcher)]
-
       return cells.filter(ifNotExcluded)
-
+    }
     case 'function':
       return matcher(rowContainer, filteredCells).filter(ifNotExcluded)
 

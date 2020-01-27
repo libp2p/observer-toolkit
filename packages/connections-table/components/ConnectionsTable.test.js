@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  act,
-  fireEvent,
-  debug,
-  prettyDOM,
-  waitForElementToBeRemoved,
-} from '@testing-library/react'
+import { act, fireEvent } from '@testing-library/react'
 import {
   loadSample,
   renderWithData,
@@ -83,7 +77,6 @@ describe('ConnectionsTable', () => {
   it('shows streams for a particular connection in streams subtable', async () => {
     const {
       findByText,
-      getAllByText,
       queryAllByTableRow,
       getByTestId,
       queryByText,
@@ -111,7 +104,6 @@ describe('ConnectionsTable', () => {
     const age = parseFloat(ageCell.textContent)
 
     const streamsCell = within(row).getByTableColumn(/^streams/i)
-    const streamsButtonCell = within(row).getByTableColumn(-1)
     const streamsCount = parseInt(streamsCell.textContent)
     const showStreamsButton = within(row).getByText('View streams')
 
@@ -136,7 +128,7 @@ describe('ConnectionsTable', () => {
 
     // Check the same connection is open with correct data showing
     const expandedHeading_2 = await findByText(/^Connection has \d+ streams/)
-    const expandedRow_2 = expandedHeading.closest('tr')
+    const expandedRow_2 = expandedHeading_2.closest('tr')
 
     const subTablePeerIdChip_2 = within(expandedRow_2).getByLabelText(
       /^peer id/i

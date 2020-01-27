@@ -22,7 +22,7 @@ function DataDemoWrapper({ children }) {
       setIsLoading(false)
     }
     applyMockData()
-  }, [isLoading, mockData, fetchSample, setMockData, setIsLoading])
+  }, [isLoading, mockData, setMockData, setIsLoading])
 
   return !mockData ? (
     'Preparing sample data...'

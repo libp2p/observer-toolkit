@@ -1,6 +1,5 @@
 import {
   buildQueries,
-  queryHelpers,
   queryAllByRole,
   queryByText,
 } from '@testing-library/react'
@@ -12,7 +11,7 @@ const queryAllByTableRow = (
   conditions = [],
   table = getTable(container)
 ) => {
-  const { thead, tbody, columnHeaders, rows } = getTableParts(table)
+  const { thead, columnHeaders, rows } = getTableParts(table)
 
   let filteredRows = rows
   for (const { column, numericContent, textContent } of conditions) {

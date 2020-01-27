@@ -7,7 +7,7 @@ import {
   ThemeSetter,
 } from '@libp2p-observer/sdk'
 
-function DataOuterWrapper({ mockData, children }) {
+function DataOuterWrapper({ children }) {
   return (
     <ThemeSetter>
       <RootNodeProvider>

@@ -9,7 +9,7 @@ async function fetchSample(filename = defaultFilename) {
 
   const { default: samples } = await import('@libp2p-observer/samples')
   const samplePath = samples.find(path => path.includes(filename))
-  const response = await fetch('_/samples/samples/sample-1min.mock')
+  const response = await fetch(samplePath)
   const fileData = await response.arrayBuffer()
 
   const sampleData = parseImport(fileData)

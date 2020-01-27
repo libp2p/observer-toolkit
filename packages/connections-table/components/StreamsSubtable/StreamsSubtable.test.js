@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  getTableParts,
-  loadSample,
-  renderWithData,
-} from '@libp2p-observer/testing'
+import { loadSample, renderWithData } from '@libp2p-observer/testing'
 import {
   getConnections,
   getStreams,
