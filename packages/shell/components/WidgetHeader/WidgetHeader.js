@@ -14,9 +14,14 @@ import FiltersTray from './FiltersTray'
 import ReactMarkdown from 'react-markdown'
 
 const Title = styled.h1`
-  flex-grow: 1;
   color: ${({ theme }) => theme.color('contrast')};
   ${({ theme }) => theme.text('heading', 'medium')}
+  display: inline-block;
+  margin-right: ${({ theme }) => theme.spacing(2)};
+`
+
+const TitleSection = styled.div`
+  flex-grow: 1;
   margin-top: ${({ theme }) => theme.spacing()};
 `
 
@@ -34,6 +39,7 @@ const CloseButton = styled.button`
 `
 
 const Header = styled.header`
+  ${({ theme }) => theme.text('body', 'medium')}
   border-bottom: 1px solid ${({ theme }) => theme.color('background', 1)};
   padding: ${({ theme }) => theme.spacing([1, 2])};
   display: flex;
@@ -58,15 +64,15 @@ function WidgetHeader({ name, description, closeWidget }) {
   return (
     <>
       <Header>
-        <Title>
-          {name}
+        <TitleSection>
+          <Title>{name}</Title>
           <AccordionControl
             isOpen={descriptionOpen}
             setIsOpen={setDescriptionOpen}
           >
             About
           </AccordionControl>
-        </Title>
+        </TitleSection>
         <FiltersButton isOpen={filtersOpen} setIsOpen={setFiltersOpen} />
         {closeWidget && (
           <CloseButton>

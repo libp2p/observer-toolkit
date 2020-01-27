@@ -12,7 +12,7 @@ describe('DataTypeControl', () => {
       name: 'test sample name',
     }
     const { asFragment } = renderWithTheme(
-      <DataTypeControl metadata={metadata} />
+      <DataTypeControl metadata={metadata} openDataTray={() => {}} />
     )
     expect(asFragment()).toMatchSnapshot()
   })
@@ -23,7 +23,7 @@ describe('DataTypeControl', () => {
       name: 'test filename',
     }
     const { asFragment } = renderWithTheme(
-      <DataTypeControl metadata={metadata} />
+      <DataTypeControl metadata={metadata} openDataTray={() => {}} />
     )
     expect(asFragment()).toMatchSnapshot()
   })
@@ -35,7 +35,9 @@ describe('DataTypeControl', () => {
     }
     expect(
       catchErrorSilently(() =>
-        renderWithTheme(<DataTypeControl metadata={metadata} />)
+        renderWithTheme(
+          <DataTypeControl metadata={metadata} openDataTray={() => {}} />
+        )
       )
     ).toBeInstanceOf(Error)
   })
@@ -52,7 +54,9 @@ describe('DataTypeControl', () => {
       getByText,
       queryAllByText,
       queryAllByHighlighted,
-    } = renderWithTheme(<DataTypeControl metadata={metadata} />)
+    } = renderWithTheme(
+      <DataTypeControl metadata={metadata} openDataTray={() => {}} />
+    )
     expect(queryAllByHighlighted()).toHaveLength(0)
     expect(queryAllByText(highlightedText)).toHaveLength(0)
 

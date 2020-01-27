@@ -14,7 +14,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.mock$/,
+        test: /\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$/,
         include: path.resolve(__dirname),
         exclude: /node_modules/,
         loader: 'file-loader',

@@ -39,18 +39,20 @@ function UploadDataButton({ onLoad, title = defaultTitle, overrides = {} }) {
   const handleUpload = useCallback(
     files => {
       const onUploadStart = () => setIsLoading(true)
-      const onUploadFinished = file => {
+      const onUploadFinish = file => {
         setIsLoading(false)
         setFileName(file.name)
         if (onLoad) onLoad()
       }
       const onUploadChunk = data => {
         dispatchDataset({
-          action: 'replace',
+          action: 'append',
           data,
         })
       }
-      files.forEach(file => uploadDataFile(file, onUploadStart, onUploadFinished, onUploadChunk))
+      files.forEach(file =>
+        uploadDataFile(file, onUploadStart, onUploadFinish, onUploadChunk)
+      )
     },
     [dispatchDataset, setIsLoading, setFileName, onLoad]
   )
@@ -73,7 +75,7 @@ function UploadDataButton({ onLoad, title = defaultTitle, overrides = {} }) {
 
 UploadDataButton.propTypes = {
   onLoad: T.func,
-  title: T.string.isRequired,
+  title: T.string,
   overrides: T.object,
 }
 

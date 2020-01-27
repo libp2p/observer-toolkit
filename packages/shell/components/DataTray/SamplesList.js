@@ -60,17 +60,24 @@ function SamplesList({ onLoad }) {
       return
     }
     const handleUploadStart = () => setIsLoading(samplePath)
-    applySampleData(samplePath, handleUploadStart, handleDataLoaded)
+    applySampleData(
+      samplePath,
+      handleUploadStart,
+      handleUploadFinished,
+      handleUploadChunk
+    )
   }
 
-  function handleDataLoaded(data) {
+  function handleUploadChunk(data) {
     data.isSample = true
-
     dispatchDataset({
       action: 'replace',
       data,
     })
-    setIsLoading('')
+  }
+
+  function handleUploadFinished() {
+    if (isLoading) setIsLoading(false)
     if (onLoad) onLoad()
   }
 

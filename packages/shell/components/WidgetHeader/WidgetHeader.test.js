@@ -71,7 +71,7 @@ describe('WidgetHeader', () => {
     const {
       getAllByRole,
       getByText,
-      getByRole,
+      findByRole,
       findByText,
       queryAllByText,
     } = renderWithTheme(<MockWidgetStack filterDef={mockListFilter} />)
@@ -97,7 +97,8 @@ describe('WidgetHeader', () => {
     const filterButton = getByText(mockFilterName)
 
     await fireEvent.click(filterButton)
-    const checkboxes = within(getByRole('tooltip')).getAllByRole('checkbox')
+    const filterControls = await findByRole('tooltip')
+    const checkboxes = within(filterControls).getAllByRole('checkbox')
 
     await fireEvent.click(checkboxes[0])
     await findByText('1 active filter')

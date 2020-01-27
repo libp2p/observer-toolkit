@@ -37,14 +37,10 @@ async function applySampleData(
   samplePath,
   onUploadStart,
   onUploadFinished,
-  onUploadChunk
+  onUploadChunk = () => {}
 ) {
   if (onUploadStart) onUploadStart()
 
-  const metadata = {
-    type: 'sample',
-    name: samplePath.match(/[/|\\]?([^/|\\]*)$/)[1],
-  }
   const bl = new BufferList()
   const response = await fetch(samplePath)
 
@@ -54,6 +50,12 @@ async function applySampleData(
   }
 
   const arrbuf = await response.arrayBuffer()
+
+  const metadata = {
+    type: 'sample',
+    name: samplePath.match(/[/|\\]?([^/|\\]*)$/)[1],
+  }
+
   const buf = Buffer.from(arrbuf)
   bl.append(buf.slice(4))
   processUploadBuffer(bl, onUploadChunk, metadata)
