@@ -370,6 +370,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c19"
+                    style="height: 24.60081086345628%; width: 24.60081086345628%; margin: 37.69959456827186% 37.69959456827186% 37.69959456827186% 37.69959456827186%;"
                   />
                 </div>
               </span>
@@ -400,6 +401,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
+                    style="height: 24.60081086345628%; width: 24.60081086345628%; margin: 37.69959456827186% 37.69959456827186% 37.69959456827186% 37.69959456827186%;"
                   />
                 </div>
               </span>
@@ -469,6 +471,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c19"
+                    style="height: 25.856124012629213%; width: 25.856124012629213%; margin: 37.071937993685395% 37.071937993685395% 37.071937993685395% 37.071937993685395%;"
                   />
                 </div>
               </span>
@@ -499,6 +502,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
+                    style="height: 25.856124012629213%; width: 25.856124012629213%; margin: 37.071937993685395% 37.071937993685395% 37.071937993685395% 37.071937993685395%;"
                   />
                 </div>
               </span>
@@ -568,6 +572,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c19"
+                    style="height: 23.289355980401446%; width: 23.289355980401446%; margin: 38.35532200979928% 38.35532200979928% 38.35532200979928% 38.35532200979928%;"
                   />
                 </div>
               </span>
@@ -598,6 +603,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
+                    style="height: 23.289355980401446%; width: 23.289355980401446%; margin: 38.35532200979928% 38.35532200979928% 38.35532200979928% 38.35532200979928%;"
                   />
                 </div>
               </span>
@@ -667,6 +673,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c19"
+                    style="height: 25.972745403934468%; width: 25.972745403934468%; margin: 37.013627298032766% 37.013627298032766% 37.013627298032766% 37.013627298032766%;"
                   />
                 </div>
               </span>
@@ -697,6 +704,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
+                    style="height: 25.972745403934468%; width: 25.972745403934468%; margin: 37.013627298032766% 37.013627298032766% 37.013627298032766% 37.013627298032766%;"
                   />
                 </div>
               </span>
@@ -766,6 +774,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c19"
+                    style="height: 6.766897594222001%; width: 6.766897594222001%; margin: 46.616551202889% 46.616551202889% 46.616551202889% 46.616551202889%;"
                   />
                 </div>
               </span>
@@ -796,6 +805,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
+                    style="height: 6.766897594222001%; width: 6.766897594222001%; margin: 46.616551202889% 46.616551202889% 46.616551202889% 46.616551202889%;"
                   />
                 </div>
               </span>
@@ -865,6 +875,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c19"
+                    style="height: 19.044533962091876%; width: 19.044533962091876%; margin: 40.47773301895406% 40.47773301895406% 40.47773301895406% 40.47773301895406%;"
                   />
                 </div>
               </span>
@@ -895,6 +906,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
+                    style="height: 19.044533962091876%; width: 19.044533962091876%; margin: 40.47773301895406% 40.47773301895406% 40.47773301895406% 40.47773301895406%;"
                   />
                 </div>
               </span>
@@ -964,6 +976,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c19"
+                    style="height: 5.9722693918817%; width: 5.9722693918817%; margin: 47.01386530405915% 47.01386530405915% 47.01386530405915% 47.01386530405915%;"
                   />
                 </div>
               </span>
@@ -994,6 +1007,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
+                    style="height: 5.9722693918817%; width: 5.9722693918817%; margin: 47.01386530405915% 47.01386530405915% 47.01386530405915% 47.01386530405915%;"
                   />
                 </div>
               </span>

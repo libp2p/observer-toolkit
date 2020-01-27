@@ -47,6 +47,8 @@ function Bubble({
   colorIndex = 0,
   override = {},
 }) {
+  if (!maxValue) return ''
+
   // Make _area_ of circle relative to value
   const percentOfSize = Math.sqrt(value / maxValue) * 100
   return (
@@ -63,7 +65,7 @@ function Bubble({
 
 Bubble.propTypes = {
   value: T.number.isRequired,
-  maxValue: T.number.isRequired,
+  maxValue: T.number,
   size: T.number,
   inline: T.bool,
   colorKey: T.string,
