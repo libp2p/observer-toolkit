@@ -197,12 +197,6 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   background: rgb(112,208,224);
 }
 
-.c21 {
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  background: currentColor;
-}
-
 .c15 {
   white-space: nowrap;
 }
@@ -294,27 +288,6 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
               class="c3"
             >
               Data out
-              <span
-                class="c6"
-              >
-                <span
-                  class="c5"
-                  role="img"
-                >
-                  <span
-                    class="c7"
-                  />
-                </span>
-              </span>
-            </div>
-          </th>
-          <th
-            class="c2"
-          >
-            <div
-              class="c3"
-            >
-              Time open
               <span
                 class="c6"
               >
@@ -432,36 +405,6 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
               </span>
             </span>
           </td>
-          <td
-            class="c10"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  1576150655
-                  <span
-                    class="c17"
-                  >
-                    s
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c21"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
         </tr>
         <tr
           class="c9"
@@ -556,36 +499,6 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  1576150655
-                  <span
-                    class="c17"
-                  >
-                    s
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c21"
                   />
                 </div>
               </span>
@@ -690,36 +603,6 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
               </span>
             </span>
           </td>
-          <td
-            class="c10"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  1576150656
-                  <span
-                    class="c17"
-                  >
-                    s
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c21"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
         </tr>
         <tr
           class="c9"
@@ -814,36 +697,6 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  1576150655
-                  <span
-                    class="c17"
-                  >
-                    s
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c21"
                   />
                 </div>
               </span>
@@ -948,36 +801,6 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
               </span>
             </span>
           </td>
-          <td
-            class="c10"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  1576150655
-                  <span
-                    class="c17"
-                  >
-                    s
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c21"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
         </tr>
         <tr
           class="c9"
@@ -1077,36 +900,6 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
               </span>
             </span>
           </td>
-          <td
-            class="c10"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  1576150655
-                  <span
-                    class="c17"
-                  >
-                    s
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c21"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
         </tr>
         <tr
           class="c9"
@@ -1201,34 +994,6 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 >
                   <div
                     class="c20"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  0
-                  <span
-                    class="c17"
-                  />
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c21"
                   />
                 </div>
               </span>
