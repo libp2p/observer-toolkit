@@ -2,6 +2,7 @@ import {
   buildQueries,
   queryHelpers,
   queryAllByRole,
+  queryByText,
 } from '@testing-library/react'
 
 import { getColumnIndexes, getTable, getTableParts } from './helpers'
@@ -18,12 +19,14 @@ const queryAllByTableRow = (
     const columnIndexes = getColumnIndexes(thead, column, columnHeaders)
 
     if (textContent) {
-      filterRows(filteredRows, columnIndexes, cell =>
-        textContent(cell.textContent)
+      filteredRows = filterRows(
+        filteredRows,
+        columnIndexes,
+        cell => !!queryByText(cell, textContent)
       )
     }
     if (numericContent) {
-      filterRows(filteredRows, columnIndexes, cell =>
+      filteredRows = filterRows(filteredRows, columnIndexes, cell =>
         numericContent(parseFloat(cell.textContent))
       )
     }
@@ -33,7 +36,7 @@ const queryAllByTableRow = (
 }
 
 function filterRows(rows, columnIndexes, testCell) {
-  rows = rows.filter(row => testRow(row, columnIndexes, testCell))
+  return rows.filter(row => testRow(row, columnIndexes, testCell))
 }
 
 function testRow(row, columnIndexes, testCell) {
