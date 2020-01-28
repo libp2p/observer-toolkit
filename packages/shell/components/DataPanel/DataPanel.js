@@ -12,7 +12,7 @@ import {
 import DataTypeControl from './DataTypeControl'
 import { DataTray } from '../DataTray'
 
-const DataPanelItem = styled.button`
+const DataPanelItem = styled.a`
   display: block;
   font-weight: 600;
   background: none;
