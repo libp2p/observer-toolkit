@@ -86,10 +86,7 @@ function SamplesList({ onLoad }) {
       <div>Choose a sample:</div>
       <SamplesTray>
         {samples.map(({ name, img, file }) => {
-          const text =
-            (isLoading === file && 'Loading...') ||
-            // (dataset.isSample && 'Remove sample') ||
-            name
+          const text = (isLoading === file && 'Loading...') || name
 
           return (
             <SampleItem key={name} onClick={() => handleClick(file)}>

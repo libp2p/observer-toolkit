@@ -31,10 +31,10 @@
   "jest": {
     "setupFilesAfterEnv": ["jest-expect-message", "<rootDir>/../../__jest__/setupTest.js"],
     "moduleNameMapper": {
-      "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/../../__jest__/styleMock.js"
     },
     "transform": {
+      "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/filePaths.js",
       "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
     }
   }

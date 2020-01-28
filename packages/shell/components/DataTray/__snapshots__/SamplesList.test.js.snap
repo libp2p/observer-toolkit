@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SamplesList renders as expected 1`] = `
+<DocumentFragment>
+  .c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
+}
+
+.c1 {
+  position: absolute;
+  top: 100%;
+  background: rgb(121,27,137);
+  margin: 0;
+  padding: 0px 16px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: rgb(78,23,91);
+  border-top-width: 0;
+  left: -20px;
+  right: -20px;
+  border-radius: 0px 0px 16px 16px;
+  max-width: 540px;
+}
+
+.c2 {
+  border: none;
+  cursor: pointer;
+  padding: 4px 4px 4px 8px;
+  background: rgb(20,22,45);
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  color: rgba(255,255,255,0.7);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 8px 0px;
+}
+
+.c2:active,
+.c2:focus,
+.c2:hover {
+  background: rgba(20,22,45,0.7);
+}
+
+.c3 {
+  -webkit-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  max-width: 75%;
+  display: block;
+}
+
+<div
+    class="c0"
+  >
+    <div>
+      Choose a sample:
+    </div>
+    <div
+      class="c1"
+    >
+      <button
+        class="c2"
+      >
+        1 minute
+        <img
+          class="c3"
+          src="../../packages/samples/samples/sample-1min.png"
+        />
+      </button>
+      <button
+        class="c2"
+      >
+        2 minutes
+        <img
+          class="c3"
+          src="../../packages/samples/samples/sample-2min.png"
+        />
+      </button>
+      <button
+        class="c2"
+      >
+        3 minutes
+        <img
+          class="c3"
+          src="../../packages/samples/samples/sample-3min.png"
+        />
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
