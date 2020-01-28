@@ -63,8 +63,12 @@ function DataTray({ onLoad }) {
     if (!activeType || isUnset) return
     const index = items.findIndex(({ type }) => type === activeType)
     if (index !== selectedIndex) {
-      setIsUnset(false)
-      setSelectedIndex(index)
+      if (typeof selectedIndex === 'number') {
+        setIsUnset(true)
+      } else {
+        setIsUnset(false)
+        setSelectedIndex(index)
+      }
     }
   }, [activeType, isUnset, selectedIndex])
 
