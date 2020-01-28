@@ -56,6 +56,7 @@ if (filePath) {
 }
 
 if (socksrv) {
+  console.log('Starting websocket server on ws://localhost:8080')
   const WebSocket = require('ws')
   const wss = new WebSocket.Server({ port: 8080 })
   wss.on('connection', ws => {
