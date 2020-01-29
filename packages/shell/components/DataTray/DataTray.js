@@ -3,7 +3,12 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import get from 'lodash.get'
 
-import { DataContext, Icon, UploadDataButton } from '@libp2p-observer/sdk'
+import {
+  DataContext,
+  Icon,
+  UploadDataButton,
+  WebSocketInput,
+} from '@libp2p-observer/sdk'
 import DataTrayItem from './DataTrayItem'
 import SamplesList from './SamplesList'
 
@@ -47,7 +52,7 @@ const items = [
     type: 'live',
     iconType: 'play',
     description: 'Connect to LibP2P via a local websocket',
-    Component: () => <div />,
+    Component: WebSocketInput,
   },
 ]
 

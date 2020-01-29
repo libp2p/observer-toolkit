@@ -52,6 +52,7 @@ function DataTypeControl({ metadata, openDataTray }) {
   const iconNames = {
     sample: 'cloud',
     upload: 'doc',
+    live: 'play',
   }
   if (!iconNames[type]) {
     throw new Error(

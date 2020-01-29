@@ -6,9 +6,9 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
 
   if (!url) return
 
-  const ws = new WebSocket('ws://localhost:8080')
+  const ws = new WebSocket(url)
   ws.addEventListener('message', function(msg) {
-    const metadata = { type: 'upload', name: 'websocket' }
+    const metadata = { type: 'live', name: url }
     if (msg.data) {
       const buf = new Buffer(msg.data, 'binary')
       bl.append(buf.slice(4))
