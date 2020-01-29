@@ -67,12 +67,15 @@ function DataTableHead({
   const hoverIn = () => setHover(true)
   const hoverOut = () => setHover(false)
 
+  const override = columnDef.override || {}
+
   return (
     <TableHead
       key={columnDef.name}
       sortDirection={isSorted ? sortDirection : null}
       onClick={isSortable ? () => sortIconAction() : null}
       align={columnDef.align}
+      as={override.TableHead}
       {...props}
     >
       <TableHeadInner
@@ -80,6 +83,7 @@ function DataTableHead({
         hover={hover}
         onMouseEnter={hoverIn}
         onMouseLeave={hoverOut}
+        as={override.TableHeadInner}
       >
         {columnDef.header}
         <IconContainer
@@ -87,6 +91,7 @@ function DataTableHead({
           rotation={sortIconRotation}
           isSorted={isSorted}
           size={iconSize}
+          as={override.IconContainer}
         >
           <Icon type={sortIconType} size={iconSize} />
         </IconContainer>

@@ -1,15 +1,13 @@
 import {
-  getStreamAge,
+  // getStreamAge,
   getStreamTraffic,
   statusNames,
-  transportNames,
 } from '@libp2p-observer/data'
 import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
 
 import {
-  AgeContent,
+  // AgeContent,
   BytesContent,
-  PeerIdContent,
   StatusContent,
 } from '../components/cellContent'
 
@@ -25,31 +23,10 @@ const numericSorter = {
   defaultDirection: 'desc',
 }
 
-const peerIdCol = {
-  name: 'peerId',
-  header: 'Peer ID',
-  getProps: ({ connection }) => ({ value: connection.getPeerId() }),
-  renderContent: PeerIdContent,
-  sort: stringSorter,
-}
-
-const transportCol = {
-  name: 'transport',
-  getProps: ({ connection }) => {
-    const transportIdBin = connection.getTransportId()
-    const transportIdInt = Buffer.from(transportIdBin).readUIntLE(
-      0,
-      transportIdBin.length
-    )
-    return { value: transportNames[transportIdInt] }
-  },
-  sort: stringSorter,
-}
-
 const dataInCol = {
   name: 'data-in',
   header: 'Data in',
-  getProps: ({ stream }, _, metadata) => ({
+  getProps: (stream, _, metadata) => ({
     value: getStreamTraffic(stream, 'in', 'bytes'),
     maxValue: metadata.maxTraffic,
     colorKey: 'primary',
@@ -62,7 +39,7 @@ const dataInCol = {
 const dataOutCol = {
   name: 'data-out',
   header: 'Data out',
-  getProps: ({ stream }, _, metadata) => ({
+  getProps: (stream, _, metadata) => ({
     value: getStreamTraffic(stream, 'in', 'bytes'),
     maxValue: metadata.maxTraffic,
     colorKey: 'secondary',
@@ -72,34 +49,33 @@ const dataOutCol = {
   align: 'right',
 }
 
-// TODO: fix this, calculation incorrect for mock streams
-/* eslint-disable no-unused-vars */
+/* TODO: fix stream age in mock data
 const ageCol = {
   name: 'age',
   header: 'Time open',
-  getProps: ({ stream }, timepoint) => {
-    const time = timepoint.getInstantTs()
-    const openTs = stream.getTimeline().getOpenTs()
-    const closeTs = stream.getTimeline().getCloseTs()
+  getProps: (stream, timepoint, metadata) => {
     const age = getStreamAge(stream, timepoint)
-    return { value: age }
+    console.log(age, metadata.maxAge)
+    return {
+      value: age,
+      maxValue: metadata.maxAge,
+    }
   },
   renderContent: AgeContent,
   sort: numericSorter,
-  align: 'right',
 }
-/* eslint-enable no-unused-vars */
+*/
 
 const protocolCol = {
   name: 'protocol',
-  getProps: ({ stream }) => ({ value: stream.getProtocol() }),
+  getProps: stream => ({ value: stream.getProtocol() }),
   sort: stringSorter,
 }
 
 const streamStatusCol = {
   name: 'stream-status',
   header: 'status',
-  getProps: ({ stream }) => ({ value: statusNames[stream.getStatus()] }),
+  getProps: stream => ({ value: statusNames[stream.getStatus()] }),
   renderContent: StatusContent,
   sort: statusSorter,
 }
@@ -110,9 +86,7 @@ const columns = [
   protocolCol,
   dataInCol,
   dataOutCol,
-  transportCol,
-  peerIdCol,
-  // ageCol,
+  //  ageCol,
 ]
 
 export default columns

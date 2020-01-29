@@ -1,19 +1,19 @@
 import React from 'react'
 import T from 'prop-types'
 
-import DataTestWrapper from './DataTestWrapper'
+import DataDemoWrapper from './DataDemoWrapper'
 import ShellInnerWrapper from './ShellInnerWrapper'
 
-function ShellTestWrapper({ children }) {
+function ShellDemoWrapper({ children }) {
   return (
-    <DataTestWrapper>
+    <DataDemoWrapper>
       <ShellInnerWrapper>{children}</ShellInnerWrapper>
-    </DataTestWrapper>
+    </DataDemoWrapper>
   )
 }
 
-ShellTestWrapper.propTypes = {
+ShellDemoWrapper.propTypes = {
   children: T.node.isRequired,
 }
 
-export default ShellTestWrapper
+export default ShellDemoWrapper

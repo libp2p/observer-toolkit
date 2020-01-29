@@ -7,6 +7,7 @@ import {
   Bubble,
   DataNumber,
   PeerIdChip,
+  StatusChip,
   TimeNumber,
   Tooltip,
 } from '@libp2p-observer/sdk'
@@ -14,6 +15,13 @@ import {
 const Nowrap = styled.span`
   white-space: nowrap;
 `
+
+function StatusContent({ value }) {
+  return <StatusChip status={value} />
+}
+StatusContent.propTypes = {
+  value: T.string,
+}
 
 function PeerIdContent({ value }) {
   return <PeerIdChip peerId={value} />
@@ -60,4 +68,4 @@ AgeContent.propTypes = {
   maxValue: T.num,
 }
 
-export { AgeContent, BytesContent, PeerIdContent }
+export { AgeContent, BytesContent, PeerIdContent, StatusContent }

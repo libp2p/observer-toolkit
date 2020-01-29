@@ -93,15 +93,15 @@ const typography = {
   },
   heading: {
     small: `
-      font-size: 10pt;
+      font-size: 9pt;
       margin: 0;
-      font-weight: 800;
+      font-weight: 700;
       line-height: 1.2em;
     `,
     medium: `
       font-size: 12pt;
       margin: ${spacing([0.5, 0])};
-      font-weight: 800;
+      font-weight: 600;
       line-height: 1.2em;
     `,
     large: `

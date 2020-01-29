@@ -16,6 +16,7 @@ const includes = jsxPackages.map(packageDir =>
 )
 
 module.exports = {
+  babel: { plugins: ['babel-plugin-styled-components'] },
   plugins: [
     {
       plugin: {

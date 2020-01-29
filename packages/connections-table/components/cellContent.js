@@ -2,18 +2,25 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import StatusChip from './StatusChip'
 import {
   formatDuration,
   Bubble,
   DataNumber,
   PeerIdChip,
+  StatusChip,
+  TableHead,
   TimeNumber,
   Tooltip,
 } from '@libp2p-observer/sdk'
 
 const Nowrap = styled.span`
   white-space: nowrap;
+`
+
+const StreamsTableHead = styled(TableHead).attrs(() => ({
+  colSpan: '2',
+}))`
+  text-align: center;
 `
 
 function StatusContent({ value }) {
@@ -68,4 +75,10 @@ AgeContent.propTypes = {
   maxValue: T.num,
 }
 
-export { AgeContent, BytesContent, PeerIdContent, StatusContent }
+export {
+  AgeContent,
+  BytesContent,
+  PeerIdContent,
+  StatusContent,
+  StreamsTableHead,
+}

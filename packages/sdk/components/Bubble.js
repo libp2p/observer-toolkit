@@ -19,22 +19,23 @@ const Container = styled.div`
   `}
 `
 
-const BubbleShape = styled.div`
+const BubbleShape = styled.div.attrs(({ percentOfSize }) => {
+  const offset = (100 - percentOfSize) / 2
+  return {
+    style: {
+      height: `${percentOfSize}%`,
+      width: `${percentOfSize}%`,
+      marginTop: `${offset}%`,
+      marginLeft: `${offset}%`,
+      marginRight: `${offset}%`,
+      marginBottom: `${offset}%`,
+    },
+  }
+})`
   border-radius: 50%;
   border: 2px solid ${({ theme }) => theme.color('background', 0, 0.8)};
   background: ${({ theme, colorKey, colorIndex = 0 }) =>
     colorKey ? theme.color(colorKey, colorIndex) : 'currentColor'};
-  ${({ percentOfSize }) => {
-    const offset = (100 - percentOfSize) / 2
-    return `
-      height: ${percentOfSize}%;
-      width: ${percentOfSize}%;
-      margin-top: ${offset}%;
-      margin-left: ${offset}%;
-      margin-right: ${offset}%;
-      margin-bottom: ${offset}%;
-    `
-  }}
 `
 
 function Bubble({

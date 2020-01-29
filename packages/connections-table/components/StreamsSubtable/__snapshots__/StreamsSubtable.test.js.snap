@@ -1,0 +1,1007 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StreamsSubtable renders connection's streams as expected 1`] = `
+<DocumentFragment>
+  .c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
+}
+
+.c5 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+  vertical-align: middle;
+  width: 2em;
+  height: 2em;
+}
+
+.c7 {
+  display: inline-block;
+}
+
+.c14 {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.c11 {
+  display: inline-block;
+  padding: 0px 4px;
+  background: rgba(163,26,75,0.15);
+  color: rgba(163,26,75,1);
+  white-space: nowrap;
+  font-size: 8pt;
+  font-weight: 600;
+}
+
+.c12 {
+  line-height: 2em;
+  display: inline-block;
+  padding: 4px;
+  vertical-align: middle;
+}
+
+.c1 {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.c9 {
+  border-bottom: 1px solid rgba(241,242,240,0.5);
+}
+
+.c2 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding-right: 0;
+  font-family: plex-sans;
+  font-weight: 600;
+  background-color: rgba(32,155,198,0.2);
+  color: rgba(93,94,96,0.8);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.c8 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding-right: 0;
+  font-family: plex-sans;
+  font-weight: 600;
+  background-color: rgba(32,155,198,0.2);
+  color: rgba(93,94,96,0.8);
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.c10 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding-right: 32px;
+  font-weight: 400;
+  font-family: plex-sans;
+  color: rgb(93,94,96);
+}
+
+.c13 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding-right: 32px;
+  font-weight: 400;
+  font-family: plex-sans;
+  color: rgb(93,94,96);
+  text-align: right;
+}
+
+.c4 {
+  height: 2em;
+  width: 2em;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  -webkit-transition: -webkit-transform 0.4s ease-in-out;
+  -webkit-transition: transform 0.4s ease-in-out;
+  transition: transform 0.4s ease-in-out;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.c6 {
+  height: 2em;
+  width: 2em;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.c3 {
+  cursor: pointer;
+}
+
+.c16 {
+  font-family: 'plex-mono';
+  white-space: nowrap;
+}
+
+.c17 {
+  margin-right: -8px;
+  padding-left: 8px;
+  font-family: 'plex-sans';
+  font-weight: 300;
+  font-size: 90%;
+  width: 32px;
+  display: inline-block;
+  text-align: left;
+}
+
+.c18 {
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+  margin-right: -16px;
+}
+
+.c19 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(252,189,32);
+}
+
+.c20 {
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  background: rgb(112,208,224);
+}
+
+.c15 {
+  white-space: nowrap;
+}
+
+<div
+    class="c0"
+  >
+    <table
+      class="c1"
+    >
+      <thead
+        class=""
+      >
+        <tr
+          class=""
+        >
+          <th
+            class="c2"
+          >
+            <div
+              class="c3"
+            >
+              status
+              <span
+                class="c4"
+              >
+                <span
+                  class="c5"
+                  role="img"
+                >
+                  <svg
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M18.933 24.716a.85.85 0 00.601-1.451l-7.264-7.263 7.264-7.267a.85.85 0 00-1.201-1.202l-7.866 7.868a.852.852 0 00.001 1.203l7.865 7.864a.846.846 0 00.6.248z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </div>
+          </th>
+          <th
+            class="c2"
+          >
+            <div
+              class="c3"
+            >
+              protocol
+              <span
+                class="c6"
+              >
+                <span
+                  class="c5"
+                  role="img"
+                >
+                  <span
+                    class="c7"
+                  />
+                </span>
+              </span>
+            </div>
+          </th>
+          <th
+            class="c8"
+          >
+            <div
+              class="c3"
+            >
+              Data in
+              <span
+                class="c6"
+              >
+                <span
+                  class="c5"
+                  role="img"
+                >
+                  <span
+                    class="c7"
+                  />
+                </span>
+              </span>
+            </div>
+          </th>
+          <th
+            class="c8"
+          >
+            <div
+              class="c3"
+            >
+              Data out
+              <span
+                class="c6"
+              >
+                <span
+                  class="c5"
+                  role="img"
+                >
+                  <span
+                    class="c7"
+                  />
+                </span>
+              </span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        class=""
+      >
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c5"
+                role="img"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c10"
+          >
+            other-protocol
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  835
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c19"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  835
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c20"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+        </tr>
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c5"
+                role="img"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c10"
+          >
+            other-protocol
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  922
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c19"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  922
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c20"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+        </tr>
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c5"
+                role="img"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c10"
+          >
+            other-protocol
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  748
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c19"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  748
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c20"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+        </tr>
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c5"
+                role="img"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c10"
+          >
+            some-protocol
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  931
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c19"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  931
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c20"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+        </tr>
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c5"
+                role="img"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c10"
+          >
+            other-protocol
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  63.2
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c19"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  63.2
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c20"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+        </tr>
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c5"
+                role="img"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c10"
+          >
+            some-protocol
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  500
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c19"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  500
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c20"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+        </tr>
+        <tr
+          class="c9"
+        >
+          <td
+            class="c10"
+          >
+            <span
+              class="c11"
+            >
+              <span
+                class="c5"
+                role="img"
+              >
+                <svg
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M10.654 15.287H21.27v1.425H10.654z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c12"
+              >
+                CLOSED
+              </span>
+            </span>
+          </td>
+          <td
+            class="c10"
+          >
+            other-protocol
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  49.2
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c19"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+          <td
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  49.2
+                  <span
+                    class="c17"
+                  >
+                    mb
+                  </span>
+                </span>
+                <div
+                  class="c18"
+                  size="24"
+                >
+                  <div
+                    class="c20"
+                  />
+                </div>
+              </span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</DocumentFragment>
+`;
