@@ -14,53 +14,73 @@ const { createRuntime } = require('./messages/runtime')
 const { createProtocolDataPacket } = require('./messages/protocol-data-packet')
 const { statusList } = require('./enums/statusList')
 
-function generate(connectionsCount, durationSeconds) {
-  let now = Date.now() - durationSeconds * 1000
-  const connections = []
-
-  while (connections.length < connectionsCount) {
+function generateConnections(total, now) {
+  return Array.apply(null, Array(total)).map(function() {
     const connection = createConnection()
     mockConnectionActivity(connection, now)
-    connections.push(connection)
-  }
-
-  const bufferSegments = []
-
-  // add version number to start of file
-  const versionBuf = Buffer.alloc(4)
-  versionBuf.writeUInt32LE(1, 0)
-  bufferSegments.push(versionBuf)
-
-  const runtime = createRuntime()
-  const runtimePacket = createProtocolDataPacket(runtime, true)
-  bufferSegments.push(createBufferSegment(runtimePacket))
-
-  const numExpectedStatePackets = durationSeconds + bufferSegments.length
-  let isFirstIteration = true
-
-  while (bufferSegments.length < numExpectedStatePackets) {
-    now += 1000
-    connections.forEach(connection => updateConnection(connection, now))
-
-    // Ensure initial connections === connectionsCount at first iteration
-    if (!isFirstIteration && randomOpenClose(connectionsCount)) {
-      // Open a new connection
-      const connection = createConnection({
-        status: statusList.getNum('OPENING'),
-      })
-      addStreamsToConnection(connection, { now, secondsOpen: random() })
-
-      connections.push(connection)
-    }
-
-    const state = createState(connections, now)
-    const statePacket = createProtocolDataPacket(state)
-    const bufferSegment = createBufferSegment(statePacket)
-    bufferSegments.push(bufferSegment)
-    isFirstIteration = false
-  }
-
-  return Buffer.concat(bufferSegments)
+    return connection
+  })
 }
 
-module.exports = generate
+function generateRuntime() {
+  const runtime = createRuntime()
+  const runtimePacket = createProtocolDataPacket(runtime, true)
+  return createBufferSegment(runtimePacket)
+}
+
+function updateConnections(connections, total, now) {
+  connections.forEach(connection => updateConnection(connection, now))
+  // ensure initial connections === connectionsCount at first iteration
+  if (total !== null && randomOpenClose(total)) {
+    // open a new connection
+    const connection = createConnection({
+      status: statusList.getNum('OPENING'),
+    })
+    addStreamsToConnection(connection, { now, secondsOpen: random() })
+    connections.push(connection)
+  }
+}
+
+function generateState(connections, now) {
+  const state = createState(connections, now)
+  const statePacket = createProtocolDataPacket(state)
+  return createBufferSegment(statePacket)
+}
+
+function generateStates(connections, connectionsCount, utcFrom, utcTo) {
+  const stateBuffers = []
+  const states = Math.floor((utcTo - utcFrom) / 1000)
+  for (let state = 1; state <= states; state++) {
+    const now = utcFrom + state * 1000
+    const connCount = state !== 1 ? connectionsCount : null
+    updateConnections(connections, connCount, now)
+    stateBuffers.push(generateState(connections, now))
+  }
+  return stateBuffers
+}
+
+function generateVersion() {
+  const versionBuf = Buffer.alloc(4)
+  versionBuf.writeUInt32LE(1, 0)
+  return versionBuf
+}
+
+function generateComplete(connectionsCount, durationSeconds) {
+  const utcTo = Date.now()
+  const utcFrom = utcTo - durationSeconds * 1000
+
+  const version = generateVersion()
+  const runtime = generateRuntime()
+  const connections = generateConnections(connectionsCount, utcFrom)
+  const states = generateStates(connections, connectionsCount, utcFrom, utcTo)
+  return Buffer.concat([version, runtime, ...states])
+}
+
+module.exports = {
+  generateComplete,
+  generateConnections,
+  generateRuntime,
+  generateState,
+  generateStates,
+  generateVersion,
+}

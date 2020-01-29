@@ -31,13 +31,20 @@ const {
   DEFAULT_DURATION,
   DEFAULT_FILE,
 } = require('./utils')
-const generate = require('./generate')
+const {
+  generateComplete,
+  generateConnections,
+  generateRuntime,
+  generateStates,
+  generateVersion,
+} = require('./generate')
 
 const {
   streams: streamsCount = DEFAULT_STREAMS,
   connections: connectionsCount = DEFAULT_CONNECTIONS,
   duration: durationSeconds = DEFAULT_DURATION,
   file,
+  socksrv,
 } = argv
 const filePath = file === '' ? DEFAULT_FILE : null
 
@@ -48,8 +55,43 @@ if (filePath) {
   `)
 }
 
-const bufferSegments = generate(connectionsCount, durationSeconds)
-
-const writer = filePath ? createWriteStream(filePath) : process.stdout
-
-writer.write(bufferSegments)
+if (socksrv) {
+  console.log('Starting websocket server on ws://localhost:8080')
+  const WebSocket = require('ws')
+  const wss = new WebSocket.Server({ port: 8080 })
+  wss.on('connection', ws => {
+    // prep and keep peer connections, version, runtime
+    let utcTo = Date.now()
+    let utcFrom = utcTo - durationSeconds * 1000
+    const connections = generateConnections(connectionsCount, utcFrom)
+    const version = generateVersion()
+    const runtime = generateRuntime()
+    // ready signal handler
+    ws.on('message', msg => {
+      // send states
+      const _utcFrom = utcTo - 1000
+      const _utcTo = Date.now()
+      const states = generateStates(
+        connections,
+        connectionsCount,
+        utcFrom,
+        utcTo
+      )
+      const data = states.length
+        ? Buffer.concat([version, runtime, ...states]).toString('binary')
+        : ''
+      if (data) {
+        utcFrom = _utcFrom
+        utcTo = _utcTo
+      }
+      ws.send(data)
+    })
+    // on connection, send initial packet
+    const states = generateStates(connections, connectionsCount, utcFrom, utcTo)
+    ws.send(Buffer.concat([version, runtime, ...states]).toString('binary'))
+  })
+} else {
+  const bufferSegments = generateComplete(connectionsCount, durationSeconds)
+  const writer = filePath ? createWriteStream(filePath) : process.stdout
+  writer.write(bufferSegments)
+}

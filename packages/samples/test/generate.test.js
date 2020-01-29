@@ -2,7 +2,7 @@
 
 const { test } = require('tap')
 
-const generate = require('../mock/generate')
+const { generateComplete } = require('../mock/generate')
 const {
   parseBuffer,
   getAllConnections,
@@ -16,7 +16,7 @@ const {
 const initialConnCount = 6
 const durationSeconds = 60
 
-const bin = generate(initialConnCount, durationSeconds)
+const bin = generateComplete(initialConnCount, durationSeconds)
 const { states } = parseBuffer(bin)
 
 const timepointsExceptLatest = states.slice(0, -1)
