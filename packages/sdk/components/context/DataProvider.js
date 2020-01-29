@@ -52,7 +52,7 @@ function DataProvider({ initialData = null, initialTime, children }) {
   const [peerId, setPeerId] = useState(null)
 
   if (dataset && !initialTime) initialTime = getLatestTimepoint(dataset.states)
-  const [timepoint, setTimepoint] = useState(initialTime)
+  const [timepoint, setTimepoint] = useState(null)
 
   // Bundle setters and make bundle persist, as defining this in normal function flow
   // causes context `value` to see a new object each run, causing re-renders every time
@@ -65,24 +65,18 @@ function DataProvider({ initialData = null, initialTime, children }) {
   const states = dataset ? dataset.states : []
   const runtime = dataset ? dataset.runtime : {}
 
-  // Select a timepoint after a new dataset is added
-  if (states.length && (!timepoint || !states.includes(timepoint))) {
-    const latestTimepoint = getLatestTimepoint(states)
-
-    if (states.includes(latestTimepoint)) {
-      setTimepoint(latestTimepoint)
-    } else {
-      // Should be unreachable but if a bug is introduced, could cause an infinite rerender if allowed
-      throw new Error('Selected a timepoint not in the current dataset')
-    }
+  if (timepoint && !states.includes(timepoint)) {
+    setTimepoint(null)
   }
+
+  const displayedTimepoint = timepoint || initialTime || null
 
   // Separate getters and setters so that components can set a context value without
   // then rerendering themselves because their useContext hook consumes that value
   return (
     <DataContext.Provider value={states}>
       <RuntimeContext.Provider value={runtime}>
-        <TimeContext.Provider value={timepoint}>
+        <TimeContext.Provider value={displayedTimepoint}>
           <PeerContext.Provider value={peerId}>
             <SetterContext.Provider value={dataSetters.current}>
               {children}
