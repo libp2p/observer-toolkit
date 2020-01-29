@@ -124,6 +124,7 @@ const Tick = styled.div`
   position: absolute;
   height: 0;
   width: 0;
+  pointer-events: none;
   border-style: solid;
   border-width: ${({ tickSize }) => tickSize}px;
   border-color: transparent;
