@@ -43,7 +43,12 @@ function updateOffset(
   toleranceX,
   toleranceY
 ) {
-  if (!positionerRef.current || !tickRef.current || !containerRef.current)
+  if (
+    !containerRef ||
+    !containerRef.current ||
+    !positionerRef.current ||
+    !tickRef.current
+  )
     return
 
   const elemRect = positionerRef.current.getBoundingClientRect()
@@ -158,7 +163,7 @@ function Tooltip({
   content,
   toleranceX = 0,
   toleranceY = 0,
-  containerRef = {},
+  containerRef = { current: document.body },
   override = {},
 }) {
   const clickToFix = fixOn === 'click'

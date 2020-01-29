@@ -83,8 +83,8 @@ const TimeLabel = styled.label`
 `
 
 const ResetTimeIcon = styled.button`
-  font-size: 0.75em;
-  margin: ${({ theme }) => theme.spacing([-0.5, -0.5, -0.5, 0])};
+  margin: ${({ theme }) => theme.spacing([-0.5, 0])};
+  padding: ${({ theme }) => theme.spacing(0.25)};
   display: inline-block;
   border-radius: 50%;
   :hover,
@@ -95,6 +95,10 @@ const ResetTimeIcon = styled.button`
 
 const ResetTimeTooltip = styled.div`
   color: ${({ theme }) => theme.color('text', 1)};
+`
+
+const ResetTimeTooltipTarget = styled.span`
+  margin-right: ${({ theme }) => theme.spacing(-1)};
 `
 
 function TimeSlider({ width, override = {}, theme }) {
@@ -110,7 +114,10 @@ function TimeSlider({ width, override = {}, theme }) {
   const controlWidth = width / dataset.length
 
   const isLatestTimepoint = timeIndex === dataset.length - 1
-  const unsetTimepoint = () => setTimepoint(null)
+  const unsetTimepoint = e => {
+    e.stopPropagation()
+    setTimepoint(null)
+  }
 
   const handleChange = stepIndex => setTimepoint(dataset[stepIndex])
 
@@ -142,8 +149,8 @@ function TimeSlider({ width, override = {}, theme }) {
         <TimeLabel>{readableTime}</TimeLabel>
         {!isLatestTimepoint && (
           <Tooltip
-            fixOn="always"
-            content={<ResetTimeTooltip>Show latest time</ResetTimeTooltip>}
+            content={<ResetTimeTooltip>Reset to latest time</ResetTimeTooltip>}
+            override={{ Target: ResetTimeTooltipTarget }}
           >
             <Icon
               type="remove"
