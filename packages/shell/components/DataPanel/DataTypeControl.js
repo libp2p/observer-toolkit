@@ -42,7 +42,7 @@ const ButtonText = styled.span`
   `}
 `
 
-function DataTypeControl({ metadata }) {
+function DataTypeControl({ metadata, openDataTray }) {
   const [isHighlighted, setHighlighted] = useState(false)
 
   if (!metadata) return ''
@@ -52,6 +52,7 @@ function DataTypeControl({ metadata }) {
   const iconNames = {
     sample: 'cloud',
     upload: 'doc',
+    live: 'play',
   }
   if (!iconNames[type]) {
     throw new Error(
@@ -71,6 +72,7 @@ function DataTypeControl({ metadata }) {
       onMouseEnter={() => setHighlighted(true)}
       onMouseLeave={() => setHighlighted(false)}
       data-highlighted={isHighlighted}
+      onClick={openDataTray}
     >
       <IconButton isHighlighted={isHighlighted}>
         <Icon type={iconType} />
@@ -84,6 +86,7 @@ function DataTypeControl({ metadata }) {
 
 DataTypeControl.propTypes = {
   metadata: T.object,
+  openDataTray: T.func.isRequired,
 }
 
 export default DataTypeControl

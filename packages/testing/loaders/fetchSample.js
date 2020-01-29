@@ -8,8 +8,14 @@ async function fetchSample(filename = defaultFilename) {
     throw new Error('fetchSample() requires the browser fetch() API')
 
   const { default: samples } = await import('@libp2p-observer/samples')
-  const samplePath = samples.find(path => path.includes(filename))
-  const response = await fetch(samplePath)
+  const sample = samples.find(({ file }) => file.includes(filename))
+  const response = await fetch(sample.file)
+
+  if (!response.ok) {
+    const { status, statusText, url } = response
+    throw new Error(`${status} "${statusText}" fetching data from ${url}`)
+  }
+
   const fileData = await response.arrayBuffer()
 
   const sampleData = parseImport(fileData)

@@ -103,11 +103,16 @@ function parseBufferList(bufferList) {
       messageChecksumLength + messageSizeLength,
       minimalBufferLength
     )
-    const calcChecksum = getMessageChecksum(messageBin)
+
+    // Smooth over environment consistencies between browser and node/tests
+    const messageBuf =
+      messageBin instanceof Buffer ? messageBin : Buffer.from(messageBin)
+
+    const calcChecksum = getMessageChecksum(messageBuf)
     const valid = messageChecksum === calcChecksum
     // deserialize and add message
     if (valid) {
-      const message = deserializeBinary(messageBin)
+      const message = deserializeBinary(messageBuf)
       addMessage(message, messages)
     }
     bufferList.consume(minimalBufferLength)

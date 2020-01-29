@@ -22,8 +22,9 @@ const CatalogueCard = styled.div`
   }
   margin: ${({ theme }) => `${theme.spacing(2)}`};
   ${({ theme }) => theme.boxShadow()}
-  ${({ theme, isSelected }) =>
-    isSelected && `border: 4px solid ${theme.color('primary')};`}
+  :focus {
+    outline: 4px solid ${({ theme }) => theme.color('highlight')};
+  }
 `
 
 const CardContent = styled.div`
@@ -64,16 +65,16 @@ const StyledHeaderInner = styled.span`
   line-height: 1em;
 `
 
-function CatalogueItem({
-  isSelected,
-  name,
-  description,
-  tags,
-  handleSelect,
-  screenshot,
-}) {
+function CatalogueItem({ name, description, tags, handleSelect, screenshot }) {
+  const handleKeyPress = e => {
+    if (e.key === 'Enter' || e.keyCode === 13) handleSelect()
+  }
   return (
-    <CatalogueCard onClick={handleSelect} isSelected={isSelected}>
+    <CatalogueCard
+      onClick={handleSelect}
+      onKeyPress={handleKeyPress}
+      tabIndex={0}
+    >
       <StyledImg src={screenshot} />
       <StyledHeader>
         <StyledHeaderInner>{name}</StyledHeaderInner>

@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CatalogueItem renders as expected 1`] = `
+<DocumentFragment>
+  .c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
+}
+
+.c1 {
+  cursor: pointer;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: rgb(255,255,255);
+  width: calc(100% - 32px);
+  margin: 16px;
+  box-shadow: 0 2px 8px rgba(20,22,45,0.2);
+}
+
+.c1:focus {
+  outline: 4px solid rgb(209,14,102);
+}
+
+.c5 {
+  padding: 0 16px 16px;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c7 {
+  margin: 4px;
+  padding: 4px;
+  list-style: none;
+  display: inline-block;
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  color: rgba(0,0,0,0.8);
+  font-weight: 700;
+}
+
+.c6 {
+  padding: 0 16px 16px;
+  margin: 8px;
+  padding: 0;
+}
+
+.c2 {
+  width: 100%;
+}
+
+.c3 {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.c4 {
+  padding: 8px;
+  display: inline-block;
+  background: rgba(78,23,91,0.8);
+  color: rgb(255,255,255);
+  line-height: 1em;
+}
+
+@media (min-width:480px) {
+  .c1 {
+    width: calc(50% - 32px);
+  }
+}
+
+@media (min-width:960px) {
+  .c1 {
+    width: calc(33% - 32px);
+  }
+}
+
+@media (min-width:1480px) {
+  .c1 {
+    width: calc(25% - 32px);
+  }
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+      tabindex="0"
+    >
+      <img
+        class="c2"
+        src="mock.png"
+      />
+      <h3
+        class="c3"
+      >
+        <span
+          class="c4"
+        >
+          Mock widget
+        </span>
+      </h3>
+      <div
+        class="c5"
+      >
+        <p>
+          Mock widget description
+        </p>
+      </div>
+      <ul
+        class="c6"
+      >
+        <li
+          class="c7"
+        >
+          Tag
+        </li>
+        <li
+          class="c7"
+        >
+          Another tag
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;
