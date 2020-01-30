@@ -22,7 +22,7 @@ const ExpandStreamsCell = styled(TableCell)`
   padding-right: 0;
 `
 
-function ConnectionsTableRow({ rowContentProps, columnDefs }) {
+function ConnectionsTableRow({ rowContentProps, columnDefs, ...rowProps }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const globalPeerId = useContext(PeerContext)
   const { setPeerId } = useContext(SetterContext)
@@ -66,6 +66,7 @@ function ConnectionsTableRow({ rowContentProps, columnDefs }) {
       onMouseEnter={mouseEnterHandler}
       onMouseLeave={mouseLeaveHandler}
       highlighted={isHighlighted}
+      {...rowProps}
     >
       <ExpandStreamsCell align="left">
         <StyledButton disabled={!streamsCount} onClick={streamsButtonAction}>
