@@ -13,6 +13,7 @@ function DataTableRow({
   tbodyRef,
   rowContentProps,
   columnDefs,
+  slideDuration,
   children,
   ...rowProps
 }) {
@@ -69,7 +70,7 @@ function DataTableRow({
       setTimeout(() => {
         if (fromRow) fromRow.style.visibility = 'visible'
         if (toRow) toRow.style.visibility = 'visible'
-      }, 400)
+      }, slideDuration)
     }
   })
 

@@ -4,19 +4,29 @@ import styled from 'styled-components'
 
 import { Table, TBody } from './styledTable'
 
-const Container = styled.div.attrs(({ from, to, rowWidth, stepsMoved }) => ({
-  style: {
-    top: `${from}px`,
-    width: `${rowWidth}px`,
-    zIndex: stepsMoved,
-  },
-}))`
+const Container = styled.div.attrs(
+  ({ theme, from, to, rowWidth, stepsMoved }) => {
+    const shadowCol = theme.color('contrast', 0, Math.min(0.6, stepsMoved / 40))
+    const shadowYOffset = Math.round(2 + Math.sqrt(stepsMoved))
+    const shadowSpread = shadowYOffset * 3
+    const boxShadow = `${shadowCol} 0 ${shadowYOffset}px ${shadowSpread}px`
+
+    return {
+      style: {
+        top: `${from}px`,
+        width: `${rowWidth}px`,
+        zIndex: stepsMoved + 1,
+        boxShadow,
+      },
+    }
+  }
+)`
   background: ${({ theme }) => theme.color('background', 0, 0.9)};
   position: absolute;
   width: 100%;
   ${({ theme }) => theme.boxShadow()}
-  ${({ theme, transitionDuration }) =>
-    theme.transition({ duration: transitionDuration, property: 'top' })}
+  ${({ theme, slideDuration }) =>
+    theme.transition({ duration: slideDuration / 1000, property: 'top' })}
 `
 
 function SlidingRow({
@@ -24,7 +34,7 @@ function SlidingRow({
   tbodyRef,
   previousRowIndex,
   rowIndex,
-  transitionDuration,
+  slideDuration,
   Row,
   override = {},
 }) {
@@ -36,14 +46,14 @@ function SlidingRow({
 
   let to, from, rowWidth, rowHeight
   if (toRow) {
-    const { top, width, height } = toRow.getBoundingClientRect()
-    to = top
+    const { width, height } = toRow.getBoundingClientRect()
+    to = toRow.offsetTop
     rowWidth = width
     rowHeight = height
   }
   if (fromRow) {
-    const { top, width, height } = fromRow.getBoundingClientRect()
-    from = top
+    const { width, height } = fromRow.getBoundingClientRect()
+    from = fromRow.offsetTop
     rowWidth = width
     rowHeight = height
   }
@@ -65,7 +75,7 @@ function SlidingRow({
       to={to}
       stepsMoved={stepsMoved}
       rowWidth={rowWidth}
-      transitionDuration={transitionDuration}
+      slideDuration={slideDuration}
       role="presentation"
     >
       <Table as={override.TableHead}>

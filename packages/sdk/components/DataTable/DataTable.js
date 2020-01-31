@@ -15,6 +15,8 @@ const Container = styled.div`
   position: relative;
 `
 
+const slideDuration = 600
+
 function DataTable({
   contentProps,
   columnDefs,
@@ -40,7 +42,11 @@ function DataTable({
   return (
     <SlidingRowProvider>
       <Container>
-        <SlidingRowsContainer tbodyRef={tbodyRef} override={override} />
+        <SlidingRowsContainer
+          tbodyRef={tbodyRef}
+          slideDuration={slideDuration}
+          override={override}
+        />
         <Table as={override.TableHead}>
           <THead as={override.THead}>
             <THeadRow as={override.THeadRow}>
@@ -67,6 +73,7 @@ function DataTable({
                   columnDefs={columnDefs}
                   rowIndex={rowIndex}
                   tbodyRef={tbodyRef}
+                  slideDuration={slideDuration}
                 />
               )
             })}

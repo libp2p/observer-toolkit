@@ -8,15 +8,13 @@ import {
 } from './context/SlidingRowProvider'
 import SlidingRow from './SlidingRow'
 
-const transitionDuration = 0.4 // s
-
 const Container = styled.div`
   position: absolute;
   width: 100%;
   pointer-events: none;
 `
 
-function SlidingRowsContainer({ tbodyRef, override = {} }) {
+function SlidingRowsContainer({ tbodyRef, slideDuration, override = {} }) {
   const slidingRowDefs = useContext(SlidingRowContext)
   const dispatchSlidingRows = useContext(SlidingRowSetterContext)
 
@@ -24,7 +22,7 @@ function SlidingRowsContainer({ tbodyRef, override = {} }) {
     // Clear sliders once transition is complete
     setTimeout(() => {
       if (slidingRowDefs.length) dispatchSlidingRows({ action: 'clear' })
-    }, transitionDuration * 1000)
+    }, slideDuration)
   })
 
   if (!tbodyRef.current) return ''
@@ -38,7 +36,7 @@ function SlidingRowsContainer({ tbodyRef, override = {} }) {
           previousRowIndex={previousRowIndex}
           rowIndex={rowIndex}
           Row={Row}
-          transitionDuration={transitionDuration}
+          slideDuration={slideDuration}
           override={override}
         />
       ))}
