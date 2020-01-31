@@ -7,7 +7,10 @@ import { TimeContext } from '../components/context/DataProvider'
 
 function mapSorterToColumn(colName, columnDefs) {
   const sortColumnIndex = columnDefs.findIndex(col => col.name === colName)
-  return row => row[sortColumnIndex].value
+  return row => {
+    const cell = row[sortColumnIndex]
+    return cell.sortValue !== undefined ? cell.sortValue : cell.value
+  }
 }
 
 function getContentProps(data, columnDefs, timepoint, metadata) {

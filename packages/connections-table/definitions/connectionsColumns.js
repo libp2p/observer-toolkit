@@ -1,5 +1,6 @@
 import {
   getConnectionAge,
+  getConnectionTimeClosed,
   getConnectionTraffic,
   statusNames,
   transportNames,
@@ -76,6 +77,21 @@ const ageCol = {
   align: 'right',
 }
 
+const closedCol = {
+  name: 'closed',
+  header: 'Time closed',
+  getProps: (connection, timepoint, metadata) => {
+    const age = getConnectionTimeClosed(connection, timepoint)
+    return {
+      value: age,
+      maxValue: metadata.maxAge,
+    }
+  },
+  renderContent: AgeContent,
+  sort: numericSorter,
+  align: 'right',
+}
+
 const streamsCol = {
   name: 'streams',
   getProps: connection => ({
@@ -101,7 +117,15 @@ const transportCol = {
 
 const statusCol = {
   name: 'status',
-  getProps: connection => ({ value: statusNames[connection.getStatus()] }),
+  getProps: (connection, timepoint) => {
+    const status = statusNames[connection.getStatus()]
+    const timeOpen = getConnectionAge(connection, timepoint)
+    const timeClosed = getConnectionTimeClosed(connection, timepoint)
+    return {
+      value: status,
+      sortValue: [status, timeOpen, timeClosed],
+    }
+  },
   renderContent: StatusContent,
   sort: statusSorter,
 }
@@ -113,6 +137,7 @@ const columns = [
   peerIdCol,
   transportCol,
   ageCol,
+  closedCol,
   dataInCol,
   dataOutCol,
   streamsCol,
