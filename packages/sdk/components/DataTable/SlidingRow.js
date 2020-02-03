@@ -13,7 +13,7 @@ const Container = styled.div.attrs(
 
     return {
       style: {
-        top: `${from}px`,
+        transform: `translateY(${from}px)`,
         width: `${rowWidth}px`,
         zIndex: stepsMoved + 1,
         boxShadow,
@@ -26,7 +26,7 @@ const Container = styled.div.attrs(
   width: 100%;
   ${({ theme }) => theme.boxShadow()}
   ${({ theme, slideDuration }) =>
-    theme.transition({ duration: slideDuration / 1000, property: 'top' })}
+    theme.transition({ duration: slideDuration / 1000, property: 'transform' })}
 `
 
 function SlidingRow({
@@ -64,7 +64,7 @@ function SlidingRow({
 
   useEffect(() => {
     if (slideRef.current) {
-      slideRef.current.style.top = `${to}px`
+      slideRef.current.style.transform = `translateY(${to}px)`
     }
   })
 
