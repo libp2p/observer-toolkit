@@ -4,10 +4,6 @@ import T from 'prop-types'
 import { TableRow, TableCell } from './styledTable'
 import { SlidingRowSetterContext } from './context/SlidingRowProvider'
 
-function getTopOffset(rowRef) {
-  return rowRef.current ? rowRef.current.getBoundingClientRect().top : 0
-}
-
 function DataTableRow({
   rowIndex,
   tbodyRef,
@@ -72,7 +68,15 @@ function DataTableRow({
         if (toRow) toRow.style.visibility = 'visible'
       }, slideDuration)
     }
-  })
+  }, [
+    rowIndex,
+    previousRowIndex,
+    dispatchSlidingRows,
+    tbodyRef,
+    rowProps,
+    prerenderedCells,
+    slideDuration,
+  ])
 
   return (
     <TableRow ref={rowRef} {...rowProps}>
@@ -82,8 +86,11 @@ function DataTableRow({
 }
 
 DataTableRow.propTypes = {
+  rowIndex: T.number.isRequired,
+  tbodyRef: T.object.isRequired,
   rowContentProps: T.array.isRequired,
   columnDefs: T.array.isRequired,
+  slideDuration: T.number.isRequired,
   children: T.node,
 }
 

@@ -45,6 +45,8 @@ function SlidingRowsContainer({ tbodyRef, slideDuration, override = {} }) {
 }
 
 SlidingRowsContainer.propTypes = {
+  tbodyRef: T.object.isRequired,
+  slideDuration: T.number.isRequired,
   override: T.object,
 }
 

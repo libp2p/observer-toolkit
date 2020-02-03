@@ -6,10 +6,7 @@ import SlidingRowsContainer from './SlidingRowsContainer'
 import DefaultDataTableRow from './DataTableRow'
 import DefaultDataTableHead from './DataTableHead'
 import { Table, THead, THeadRow, TBody } from './styledTable'
-import {
-  SlidingRowProvider,
-  SlidingRowContext,
-} from './context/SlidingRowProvider'
+import { SlidingRowProvider } from './context/SlidingRowProvider'
 
 const Container = styled.div`
   position: relative;

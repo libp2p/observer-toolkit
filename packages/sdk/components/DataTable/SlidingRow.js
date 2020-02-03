@@ -32,8 +32,8 @@ const Container = styled.div.attrs(
 function SlidingRow({
   rowRef,
   tbodyRef,
-  previousRowIndex,
   rowIndex,
+  previousRowIndex,
   slideDuration,
   Row,
   override = {},
@@ -89,9 +89,12 @@ function SlidingRow({
 
 SlidingRow.propTypes = {
   rowRef: T.object.isRequired,
-  previousRowIndex: T.number.isRequired,
+  tbodyRef: T.object.isRequired,
   rowIndex: T.number.isRequired,
+  previousRowIndex: T.number.isRequired,
+  slideDuration: T.number.isRequired,
   Row: T.any.isRequired,
+  override: T.object,
 }
 
 export default SlidingRow
