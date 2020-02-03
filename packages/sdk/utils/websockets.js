@@ -2,10 +2,14 @@ import { parseBufferList } from '@libp2p-observer/data'
 import { proto } from '@libp2p-observer/proto'
 import { BufferList } from 'bl'
 
-function createClientSignalMessage(signal) {
+function createClientSignalMessage(
+  signal,
+  datasource = proto.ClientSignal.DataSource.STATE
+) {
   const clientSignal = new proto.ClientSignal()
   clientSignal.setVersion(new proto.Version(1))
   clientSignal.setSignal(signal)
+  clientSignal.setDataSource(datasource)
   return clientSignal.serializeBinary()
 }
 
