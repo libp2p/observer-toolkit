@@ -1,0 +1,414 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataTable Renders as expected, matching snapshot 1`] = `
+<DocumentFragment>
+  .c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
+}
+
+.c7 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+  vertical-align: middle;
+  width: 2em;
+  height: 2em;
+}
+
+.c10 {
+  display: inline-block;
+}
+
+.c1 {
+  padding: 4px 8px;
+  position: relative;
+  z-index: 5;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  background: rgb(255,255,255);
+  border: 1px solid rgb(209,14,102);
+  color: rgb(209,14,102);
+}
+
+.c1:focus {
+  outline: none;
+}
+
+.c3 {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.c11 {
+  border-bottom: 1px solid rgba(241,242,240,0.5);
+}
+
+.c4 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding-right: 0;
+  font-family: plex-sans;
+  font-weight: 600;
+  background-color: rgba(32,155,198,0.2);
+  color: rgba(93,94,96,0.8);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.c8 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding-right: 0;
+  font-family: plex-sans;
+  font-weight: 600;
+  background-color: rgba(32,155,198,0.2);
+  color: rgba(93,94,96,0.8);
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.c12 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding-right: 32px;
+  font-weight: 400;
+  font-family: plex-sans;
+  color: rgb(93,94,96);
+}
+
+.c13 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding-right: 32px;
+  font-weight: 400;
+  font-family: plex-sans;
+  color: rgb(93,94,96);
+  text-align: right;
+}
+
+.c2 {
+  position: relative;
+}
+
+.c6 {
+  height: 2em;
+  width: 2em;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  -webkit-transition: -webkit-transform 0.4s ease-in-out;
+  -webkit-transition: transform 0.4s ease-in-out;
+  transition: transform 0.4s ease-in-out;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.c9 {
+  height: 2em;
+  width: 2em;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.c5 {
+  cursor: pointer;
+}
+
+<div
+    class="c0"
+  >
+    <div>
+      <div
+        data-testid="data-switchers"
+      >
+        <button
+          class="c1"
+        >
+          Select [0]
+        </button>
+        <button
+          class="c1"
+        >
+          Select [1]
+        </button>
+      </div>
+      <div
+        class="c2"
+      >
+        <table
+          class="c3"
+        >
+          <thead
+            class=""
+          >
+            <tr
+              class=""
+            >
+              <th
+                class="c4"
+              >
+                <div
+                  class="c5"
+                >
+                  <strong>
+                    Name of item
+                  </strong>
+                  <span
+                    class="c6"
+                  >
+                    <span
+                      class="c7"
+                      role="img"
+                    >
+                      <svg
+                        viewBox="0 0 32 32"
+                      >
+                        <path
+                          d="M18.933 24.716a.85.85 0 00.601-1.451l-7.264-7.263 7.264-7.267a.85.85 0 00-1.201-1.202l-7.866 7.868a.852.852 0 00.001 1.203l7.865 7.864a.846.846 0 00.6.248z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+              </th>
+              <th
+                class="c8"
+              >
+                <div
+                  class="c5"
+                >
+                  Numeric cells
+                  <span
+                    class="c9"
+                  >
+                    <span
+                      class="c7"
+                      role="img"
+                    >
+                      <span
+                        class="c10"
+                      />
+                    </span>
+                  </span>
+                </div>
+              </th>
+              <th
+                class="c4"
+              >
+                <div
+                  class=""
+                >
+                  mockBool
+                </div>
+              </th>
+              <th
+                class="c4"
+              >
+                <div
+                  class="c5"
+                >
+                  mockPercentCalc
+                  <span
+                    class="c9"
+                  >
+                    <span
+                      class="c7"
+                      role="img"
+                    >
+                      <span
+                        class="c10"
+                      />
+                    </span>
+                  </span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class=""
+          >
+            <tr
+              class="c11"
+            >
+              <td
+                class="c12"
+              >
+                a
+              </td>
+              <td
+                class="c13"
+              >
+                3
+              </td>
+              <td
+                class="c12"
+              >
+                <em>
+                  okay
+                </em>
+              </td>
+              <td
+                class="c12"
+              >
+                10%
+              </td>
+            </tr>
+            <tr
+              class="c11"
+            >
+              <td
+                class="c12"
+              >
+                b
+              </td>
+              <td
+                class="c13"
+              >
+                4
+              </td>
+              <td
+                class="c12"
+              >
+                <strong
+                  role="alert"
+                >
+                  ALERT!
+                </strong>
+              </td>
+              <td
+                class="c12"
+              >
+                40%
+              </td>
+            </tr>
+            <tr
+              class="c11"
+            >
+              <td
+                class="c12"
+              >
+                c
+              </td>
+              <td
+                class="c13"
+              >
+                2
+              </td>
+              <td
+                class="c12"
+              >
+                <em>
+                  okay
+                </em>
+              </td>
+              <td
+                class="c12"
+              >
+                20%
+              </td>
+            </tr>
+            <tr
+              class="c11"
+            >
+              <td
+                class="c12"
+              >
+                d
+              </td>
+              <td
+                class="c13"
+              >
+                5
+              </td>
+              <td
+                class="c12"
+              >
+                <em>
+                  okay
+                </em>
+              </td>
+              <td
+                class="c12"
+              >
+                2%
+              </td>
+            </tr>
+            <tr
+              class="c11"
+            >
+              <td
+                class="c12"
+              >
+                e
+              </td>
+              <td
+                class="c13"
+              >
+                1
+              </td>
+              <td
+                class="c12"
+              >
+                <strong
+                  role="alert"
+                >
+                  ALERT!
+                </strong>
+              </td>
+              <td
+                class="c12"
+              >
+                28%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
