@@ -3,7 +3,7 @@ import T from 'prop-types'
 
 import { DataProvider } from '@libp2p-observer/sdk'
 
-import DataOuterWrapper from './DataOuterWrapper'
+import ThemeWrapper from './ThemeWrapper'
 import fetchSample from '../loaders/fetchSample'
 
 function DataDemoWrapper({ children }) {
@@ -27,9 +27,9 @@ function DataDemoWrapper({ children }) {
   return !mockData ? (
     'Preparing sample data...'
   ) : (
-    <DataOuterWrapper>
+    <ThemeWrapper>
       <DataProvider initialData={mockData}>{children}</DataProvider>
-    </DataOuterWrapper>
+    </ThemeWrapper>
   )
 }
 

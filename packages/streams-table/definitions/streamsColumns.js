@@ -49,7 +49,7 @@ const transportCol = {
 const dataInCol = {
   name: 'data-in',
   header: 'Data in',
-  getProps: ({ stream }, _, metadata) => ({
+  getProps: ({ stream }, metadata) => ({
     value: getStreamTraffic(stream, 'in', 'bytes'),
     maxValue: metadata.maxTraffic,
     colorKey: 'primary',
@@ -62,7 +62,7 @@ const dataInCol = {
 const dataOutCol = {
   name: 'data-out',
   header: 'Data out',
-  getProps: ({ stream }, _, metadata) => ({
+  getProps: ({ stream }, metadata) => ({
     value: getStreamTraffic(stream, 'in', 'bytes'),
     maxValue: metadata.maxTraffic,
     colorKey: 'secondary',
@@ -77,7 +77,7 @@ const dataOutCol = {
 const ageCol = {
   name: 'age',
   header: 'Time open',
-  getProps: ({ stream }, timepoint) => {
+  getProps: ({ stream }, { timepoint }) => {
     const time = timepoint.getInstantTs()
     const openTs = stream.getTimeline().getOpenTs()
     const closeTs = stream.getTimeline().getCloseTs()

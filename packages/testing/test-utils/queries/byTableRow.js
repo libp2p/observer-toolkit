@@ -25,9 +25,12 @@ const queryAllByTableRow = (
       )
     }
     if (numericContent) {
-      filteredRows = filterRows(filteredRows, columnIndexes, cell =>
-        numericContent(parseFloat(cell.textContent))
-      )
+      filteredRows = filterRows(filteredRows, columnIndexes, cell => {
+        const numberInCell = parseFloat(cell.textContent)
+        if (typeof numericContent === 'number')
+          return numberInCell === numericContent
+        return numericContent(numberInCell)
+      })
     }
   }
 

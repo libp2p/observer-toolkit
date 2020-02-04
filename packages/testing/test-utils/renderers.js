@@ -2,7 +2,7 @@ import { render, queries, getQueriesForElement } from '@testing-library/react'
 
 import DataTestWrapper from '../components/DataTestWrapper'
 import ShellTestWrapper from '../components/ShellTestWrapper'
-import ThemeTestWrapper from '../components/ThemeTestWrapper'
+import ThemeWrapper from '../components/ThemeWrapper'
 
 import * as customQueries from './queries'
 
@@ -22,7 +22,7 @@ function _render(component, options = {}) {
 // Least overhead - minimum to render against a styled snapshot
 function renderWithTheme(component) {
   return _render(component, {
-    wrapper: ThemeTestWrapper,
+    wrapper: ThemeWrapper,
   })
 }
 
@@ -40,9 +40,22 @@ function renderWithShell(component) {
   })
 }
 
+// SDK tests get contexts from relative paths, but the above wrappers will
+// get them from the SDK build. Use this, import the wrapper, and pass contexts
+// to the wrapper from sdk/test-fixtures/contexts.js
+function renderForSDK(component) {
+  return _render(component)
+}
+
 // `within` within a custom render doesn't inherit custom queries
 function within(element) {
   return getQueriesForElement(element, allQueries)
 }
 
-export { renderWithData, renderWithShell, renderWithTheme, within }
+export {
+  renderWithData,
+  renderWithShell,
+  renderWithTheme,
+  renderForSDK,
+  within,
+}

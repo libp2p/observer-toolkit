@@ -3,6 +3,7 @@ import styled from 'styled-components'
 // TODO: develop these placeholders further
 const Table = styled.table`
   border-collapse: collapse;
+  table-layout: fixed;
   width: 100%;
 `
 

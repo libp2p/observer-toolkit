@@ -103,6 +103,22 @@ function getStreamAge(stream, timepoint) {
   return _getAge(stream.getTimeline(), timepoint)
 }
 
+function _getTimeClosed(timeline, timepoint) {
+  const closeTs = timeline.getCloseTs()
+  if (!closeTs) return 0
+
+  const endTime = getTime(timepoint)
+  return endTime - closeTs.getSeconds()
+}
+
+function getConnectionTimeClosed(connection, timepoint) {
+  return _getTimeClosed(connection.getTimeline(), timepoint)
+}
+
+function getStreamTimeClosed(stream, timepoint) {
+  return _getTimeClosed(stream.getTimeline(), timepoint)
+}
+
 function _getTraffic(traffic, direction, type) {
   const byDirection = `getTraffic${direction === 'in' ? 'In' : 'Out'}`
   const byType = `getCum${type === 'bytes' ? 'Bytes' : 'Packets'}`
@@ -127,6 +143,8 @@ module.exports = {
   getTimeIndex,
   getConnectionAge,
   getStreamAge,
+  getConnectionTimeClosed,
+  getStreamTimeClosed,
   getStreams,
   getConnectionTraffic,
   getStreamTraffic,

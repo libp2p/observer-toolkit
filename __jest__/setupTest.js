@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect'
 import fs from 'fs'
 import path from 'path'
 
-jest.setTimeout(10000)
+jest.setTimeout(15000)
 
 global.fetch = async filepath => {
   if (path.extname(filepath) === '.mock') {

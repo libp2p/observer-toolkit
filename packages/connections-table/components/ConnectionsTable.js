@@ -22,7 +22,10 @@ function ConnectionsTable() {
     columns: connectionsColumnDefs,
     data: getConnections(timepoint),
     defaultSort: 'status',
-    metadata,
+    metadata: {
+      timepoint,
+      ...metadata,
+    },
   })
 
   return (

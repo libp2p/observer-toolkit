@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import WidgetHeader from './WidgetHeader/WidgetHeader'
 
 const Container = styled.article`
-  overflow: auto;
   background: ${({ theme }) => theme.color('background')};
   border-radius: ${({ theme }) => theme.spacing()};
   ${({ theme }) => theme.boxShadow({ size: 1.5, opacity: 0.3 })};

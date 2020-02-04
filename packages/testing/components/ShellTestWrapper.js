@@ -4,15 +4,16 @@ import T from 'prop-types'
 import DataTestWrapper from './DataTestWrapper'
 import ShellInnerWrapper from './ShellInnerWrapper'
 
-function ShellTestWrapper({ children }) {
+function ShellTestWrapper({ providers, children }) {
   return (
-    <DataTestWrapper>
-      <ShellInnerWrapper>{children}</ShellInnerWrapper>
+    <DataTestWrapper contexts={providers}>
+      <ShellInnerWrapper contexts={providers}>{children}</ShellInnerWrapper>
     </DataTestWrapper>
   )
 }
 
 ShellTestWrapper.propTypes = {
+  providers: T.object,
   children: T.node.isRequired,
 }
 
