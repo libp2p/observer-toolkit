@@ -39,7 +39,7 @@ const peerIdCol = {
 const dataInCol = {
   name: 'data-in',
   header: 'Data in',
-  getProps: (connection, _, metadata) => ({
+  getProps: (connection, metadata) => ({
     value: getConnectionTraffic(connection, 'in', 'bytes'),
     maxValue: metadata.maxTraffic,
     colorKey: 'primary',
@@ -52,7 +52,7 @@ const dataInCol = {
 const dataOutCol = {
   name: 'data-out',
   header: 'Data out',
-  getProps: (connection, _, metadata) => ({
+  getProps: (connection, metadata) => ({
     value: getConnectionTraffic(connection, 'out', 'bytes'),
     maxValue: metadata.maxTraffic,
     colorKey: 'secondary',
@@ -65,11 +65,11 @@ const dataOutCol = {
 const ageCol = {
   name: 'age',
   header: 'Time open',
-  getProps: (connection, timepoint, metadata) => {
+  getProps: (connection, { timepoint, maxAge }) => {
     const age = getConnectionAge(connection, timepoint)
     return {
       value: age,
-      maxValue: metadata.maxAge,
+      maxValue: maxAge,
     }
   },
   renderContent: AgeContent,
@@ -80,11 +80,11 @@ const ageCol = {
 const closedCol = {
   name: 'closed',
   header: 'Time closed',
-  getProps: (connection, timepoint, metadata) => {
+  getProps: (connection, { timepoint, maxAge }) => {
     const age = getConnectionTimeClosed(connection, timepoint)
     return {
       value: age,
-      maxValue: metadata.maxAge,
+      maxValue: maxAge,
     }
   },
   renderContent: AgeContent,
@@ -112,12 +112,12 @@ const transportCol = {
     )
     return { value: transportNames[transportIdInt] }
   },
-  sort: stringSorter,
+  //  sort: stringSorter,
 }
 
 const statusCol = {
   name: 'status',
-  getProps: (connection, timepoint) => {
+  getProps: (connection, { timepoint }) => {
     const status = statusNames[connection.getStatus()]
     const timeOpen = getConnectionAge(connection, timepoint)
     const timeClosed = getConnectionTimeClosed(connection, timepoint)

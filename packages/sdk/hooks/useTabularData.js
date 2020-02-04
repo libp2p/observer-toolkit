@@ -3,7 +3,6 @@ import T from 'prop-types'
 
 import useSorter from '../hooks/useSorter'
 import { FilterContext } from '../components/context/FilterProvider'
-import { TimeContext } from '../components/context/DataProvider'
 
 function mapSorterToColumn(colName, columnDefs) {
   const sortColumnIndex = columnDefs.findIndex(col => col.name === colName)
@@ -13,10 +12,10 @@ function mapSorterToColumn(colName, columnDefs) {
   }
 }
 
-function getContentProps(data, columnDefs, timepoint, metadata) {
+function getContentProps(data, columnDefs, metadata) {
   return data.map((datum, rowIndex) =>
     columnDefs.map((columnDef, columnIndex) => ({
-      ...columnDef.getProps(datum, timepoint, metadata),
+      ...columnDef.getProps(datum, metadata),
       rowIndex,
       columnIndex,
       columnName: columnDef.name,
@@ -81,7 +80,6 @@ function useTabularData({
   metadata = {},
 }) {
   const [sortColumn, setSortColumn] = useState(defaultSort)
-  const timepoint = useContext(TimeContext)
   const { applyFilters } = useContext(FilterContext)
 
   const columnsWithDefaults = applyColumnDefaults(columns)
@@ -90,10 +88,9 @@ function useTabularData({
     return getContentProps(
       data.filter(applyFilters),
       columnsWithDefaults,
-      timepoint,
       metadata
     )
-  }, [data, columnsWithDefaults, timepoint, metadata, applyFilters])
+  }, [data, columnsWithDefaults, metadata, applyFilters])
 
   const columnDefs = applyCalculations(
     columnsWithDefaults,
