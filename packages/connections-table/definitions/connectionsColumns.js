@@ -112,7 +112,7 @@ const transportCol = {
     )
     return { value: transportNames[transportIdInt] }
   },
-  //  sort: stringSorter,
+  sort: stringSorter,
 }
 
 const statusCol = {
