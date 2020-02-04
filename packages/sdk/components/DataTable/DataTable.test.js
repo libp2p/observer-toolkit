@@ -1,8 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import { act, fireEvent, wait } from '@testing-library/react'
-import { renderForSDK, ThemeWrapper, within } from '@libp2p-observer/testing'
-
-import { FilterContext } from '../context'
+import { renderForSDK, within } from '@libp2p-observer/testing'
 
 import { ThemedMockDataTable } from '../../test-fixtures/DataTable'
 

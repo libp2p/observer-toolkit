@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 
 import { ThemeWrapper } from '@libp2p-observer/testing'
 
