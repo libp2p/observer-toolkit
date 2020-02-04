@@ -11,7 +11,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   flex-direction: inherit;
 }
 
-.c5 {
+.c6 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -22,17 +22,17 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   height: 2em;
 }
 
-.c7 {
+.c8 {
   display: inline-block;
 }
 
-.c14 {
+.c15 {
   position: relative;
   display: inline-block;
   cursor: pointer;
 }
 
-.c11 {
+.c12 {
   display: inline-block;
   padding: 0px 4px;
   background: rgba(163,26,75,0.15);
@@ -42,23 +42,24 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   font-weight: 600;
 }
 
-.c12 {
+.c13 {
   line-height: 2em;
   display: inline-block;
   padding: 4px;
   vertical-align: middle;
 }
 
-.c1 {
+.c2 {
   border-collapse: collapse;
+  table-layout: fixed;
   width: 100%;
 }
 
-.c9 {
+.c10 {
   border-bottom: 1px solid rgba(241,242,240,0.5);
 }
 
-.c2 {
+.c3 {
   font-family: plex-sans,sans-serif;
   line-height: 1.6em;
   font-size: 9pt;
@@ -77,7 +78,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   white-space: nowrap;
 }
 
-.c8 {
+.c9 {
   font-family: plex-sans,sans-serif;
   line-height: 1.6em;
   font-size: 9pt;
@@ -97,7 +98,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   text-align: right;
 }
 
-.c10 {
+.c11 {
   font-family: plex-sans,sans-serif;
   line-height: 1.6em;
   font-size: 9pt;
@@ -113,7 +114,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   color: rgb(93,94,96);
 }
 
-.c13 {
+.c14 {
   font-family: plex-sans,sans-serif;
   line-height: 1.6em;
   font-size: 9pt;
@@ -130,7 +131,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   text-align: right;
 }
 
-.c4 {
+.c5 {
   height: 2em;
   width: 2em;
   display: inline-block;
@@ -144,7 +145,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   transform: rotate(90deg);
 }
 
-.c6 {
+.c7 {
   height: 2em;
   width: 2em;
   display: inline-block;
@@ -155,16 +156,20 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   transform: rotate(90deg);
 }
 
-.c3 {
+.c4 {
   cursor: pointer;
 }
 
-.c16 {
+.c1 {
+  position: relative;
+}
+
+.c17 {
   font-family: 'plex-mono';
   white-space: nowrap;
 }
 
-.c17 {
+.c18 {
   margin-right: -8px;
   padding-left: 8px;
   font-family: 'plex-sans';
@@ -175,7 +180,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   text-align: left;
 }
 
-.c18 {
+.c19 {
   border-radius: 50%;
   height: 24px;
   width: 24px;
@@ -185,170 +190,574 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   margin-right: -16px;
 }
 
-.c19 {
+.c20 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(252,189,32);
 }
 
-.c20 {
+.c21 {
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.8);
   background: rgb(112,208,224);
 }
 
-.c15 {
+.c16 {
   white-space: nowrap;
 }
 
 <div
     class="c0"
   >
-    <table
+    <div
       class="c1"
     >
-      <thead
-        class=""
+      <table
+        class="c2"
       >
-        <tr
+        <thead
           class=""
         >
-          <th
-            class="c2"
+          <tr
+            class=""
           >
-            <div
+            <th
               class="c3"
             >
-              status
-              <span
+              <div
                 class="c4"
               >
+                status
                 <span
                   class="c5"
+                >
+                  <span
+                    class="c6"
+                    role="img"
+                  >
+                    <svg
+                      viewBox="0 0 32 32"
+                    >
+                      <path
+                        d="M18.933 24.716a.85.85 0 00.601-1.451l-7.264-7.263 7.264-7.267a.85.85 0 00-1.201-1.202l-7.866 7.868a.852.852 0 00.001 1.203l7.865 7.864a.846.846 0 00.6.248z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </div>
+            </th>
+            <th
+              class="c3"
+            >
+              <div
+                class="c4"
+              >
+                protocol
+                <span
+                  class="c7"
+                >
+                  <span
+                    class="c6"
+                    role="img"
+                  >
+                    <span
+                      class="c8"
+                    />
+                  </span>
+                </span>
+              </div>
+            </th>
+            <th
+              class="c9"
+            >
+              <div
+                class="c4"
+              >
+                Data in
+                <span
+                  class="c7"
+                >
+                  <span
+                    class="c6"
+                    role="img"
+                  >
+                    <span
+                      class="c8"
+                    />
+                  </span>
+                </span>
+              </div>
+            </th>
+            <th
+              class="c9"
+            >
+              <div
+                class="c4"
+              >
+                Data out
+                <span
+                  class="c7"
+                >
+                  <span
+                    class="c6"
+                    role="img"
+                  >
+                    <span
+                      class="c8"
+                    />
+                  </span>
+                </span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class=""
+        >
+          <tr
+            class="c10"
+          >
+            <td
+              class="c11"
+            >
+              <span
+                class="c12"
+              >
+                <span
+                  class="c6"
                   role="img"
                 >
                   <svg
                     viewBox="0 0 32 32"
                   >
                     <path
-                      d="M18.933 24.716a.85.85 0 00.601-1.451l-7.264-7.263 7.264-7.267a.85.85 0 00-1.201-1.202l-7.866 7.868a.852.852 0 00.001 1.203l7.865 7.864a.846.846 0 00.6.248z"
+                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M10.654 15.287H21.27v1.425H10.654z"
                       fill="currentColor"
                     />
                   </svg>
                 </span>
+                <span
+                  class="c13"
+                >
+                  CLOSED
+                </span>
               </span>
-            </div>
-          </th>
-          <th
-            class="c2"
-          >
-            <div
-              class="c3"
+            </td>
+            <td
+              class="c11"
             >
-              protocol
+              other-protocol
+            </td>
+            <td
+              class="c14"
+            >
               <span
-                class="c6"
+                class="c15"
               >
                 <span
-                  class="c5"
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    835
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c20"
+                      style="height: 24.60081086345628%; width: 24.60081086345628%; margin: 37.69959456827186% 37.69959456827186% 37.69959456827186% 37.69959456827186%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+            <td
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    835
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c21"
+                      style="height: 24.60081086345628%; width: 24.60081086345628%; margin: 37.69959456827186% 37.69959456827186% 37.69959456827186% 37.69959456827186%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+          </tr>
+          <tr
+            class="c10"
+          >
+            <td
+              class="c11"
+            >
+              <span
+                class="c12"
+              >
+                <span
+                  class="c6"
                   role="img"
                 >
-                  <span
-                    class="c7"
-                  />
+                  <svg
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M10.654 15.287H21.27v1.425H10.654z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="c13"
+                >
+                  CLOSED
                 </span>
               </span>
-            </div>
-          </th>
-          <th
-            class="c8"
-          >
-            <div
-              class="c3"
+            </td>
+            <td
+              class="c11"
             >
-              Data in
+              other-protocol
+            </td>
+            <td
+              class="c14"
+            >
               <span
-                class="c6"
+                class="c15"
               >
                 <span
-                  class="c5"
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    922
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c20"
+                      style="height: 25.856124012629213%; width: 25.856124012629213%; margin: 37.071937993685395% 37.071937993685395% 37.071937993685395% 37.071937993685395%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+            <td
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    922
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c21"
+                      style="height: 25.856124012629213%; width: 25.856124012629213%; margin: 37.071937993685395% 37.071937993685395% 37.071937993685395% 37.071937993685395%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+          </tr>
+          <tr
+            class="c10"
+          >
+            <td
+              class="c11"
+            >
+              <span
+                class="c12"
+              >
+                <span
+                  class="c6"
                   role="img"
                 >
-                  <span
-                    class="c7"
-                  />
+                  <svg
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M10.654 15.287H21.27v1.425H10.654z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="c13"
+                >
+                  CLOSED
                 </span>
               </span>
-            </div>
-          </th>
-          <th
-            class="c8"
-          >
-            <div
-              class="c3"
+            </td>
+            <td
+              class="c11"
             >
-              Data out
+              other-protocol
+            </td>
+            <td
+              class="c14"
+            >
               <span
-                class="c6"
+                class="c15"
               >
                 <span
-                  class="c5"
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    748
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c20"
+                      style="height: 23.289355980401446%; width: 23.289355980401446%; margin: 38.35532200979928% 38.35532200979928% 38.35532200979928% 38.35532200979928%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+            <td
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    748
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c21"
+                      style="height: 23.289355980401446%; width: 23.289355980401446%; margin: 38.35532200979928% 38.35532200979928% 38.35532200979928% 38.35532200979928%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+          </tr>
+          <tr
+            class="c10"
+          >
+            <td
+              class="c11"
+            >
+              <span
+                class="c12"
+              >
+                <span
+                  class="c6"
                   role="img"
                 >
-                  <span
-                    class="c7"
-                  />
+                  <svg
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M10.654 15.287H21.27v1.425H10.654z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="c13"
+                >
+                  CLOSED
                 </span>
               </span>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody
-        class=""
-      >
-        <tr
-          class="c9"
-        >
-          <td
+            </td>
+            <td
+              class="c11"
+            >
+              some-protocol
+            </td>
+            <td
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    931
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c20"
+                      style="height: 25.972745403934468%; width: 25.972745403934468%; margin: 37.013627298032766% 37.013627298032766% 37.013627298032766% 37.013627298032766%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+            <td
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    931
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c21"
+                      style="height: 25.972745403934468%; width: 25.972745403934468%; margin: 37.013627298032766% 37.013627298032766% 37.013627298032766% 37.013627298032766%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+          </tr>
+          <tr
             class="c10"
           >
-            <span
+            <td
               class="c11"
             >
               <span
-                class="c5"
-                role="img"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
                 class="c12"
               >
-                CLOSED
+                <span
+                  class="c6"
+                  role="img"
+                >
+                  <svg
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M10.654 15.287H21.27v1.425H10.654z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="c13"
+                >
+                  CLOSED
+                </span>
               </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            other-protocol
-          </td>
-          <td
-            class="c13"
-          >
-            <span
+            </td>
+            <td
+              class="c11"
+            >
+              other-protocol
+            </td>
+            <td
               class="c14"
             >
               <span
@@ -357,29 +766,29 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 <span
                   class="c16"
                 >
-                  835
                   <span
                     class="c17"
                   >
-                    mb
+                    63.2
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
                   </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
                   <div
                     class="c19"
-                    style="height: 24.60081086345628%; width: 24.60081086345628%; margin: 37.69959456827186% 37.69959456827186% 37.69959456827186% 37.69959456827186%;"
-                  />
-                </div>
+                    size="24"
+                  >
+                    <div
+                      class="c20"
+                      style="height: 6.766897594222001%; width: 6.766897594222001%; margin: 46.616551202889% 46.616551202889% 46.616551202889% 46.616551202889%;"
+                    />
+                  </div>
+                </span>
               </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
+            </td>
+            <td
               class="c14"
             >
               <span
@@ -388,68 +797,68 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 <span
                   class="c16"
                 >
-                  835
                   <span
                     class="c17"
                   >
-                    mb
+                    63.2
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
                   </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
                   <div
-                    class="c20"
-                    style="height: 24.60081086345628%; width: 24.60081086345628%; margin: 37.69959456827186% 37.69959456827186% 37.69959456827186% 37.69959456827186%;"
-                  />
-                </div>
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c21"
+                      style="height: 6.766897594222001%; width: 6.766897594222001%; margin: 46.616551202889% 46.616551202889% 46.616551202889% 46.616551202889%;"
+                    />
+                  </div>
+                </span>
               </span>
-            </span>
-          </td>
-        </tr>
-        <tr
-          class="c9"
-        >
-          <td
+            </td>
+          </tr>
+          <tr
             class="c10"
           >
-            <span
+            <td
               class="c11"
             >
               <span
-                class="c5"
-                role="img"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
                 class="c12"
               >
-                CLOSED
+                <span
+                  class="c6"
+                  role="img"
+                >
+                  <svg
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M10.654 15.287H21.27v1.425H10.654z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="c13"
+                >
+                  CLOSED
+                </span>
               </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            other-protocol
-          </td>
-          <td
-            class="c13"
-          >
-            <span
+            </td>
+            <td
+              class="c11"
+            >
+              some-protocol
+            </td>
+            <td
               class="c14"
             >
               <span
@@ -458,29 +867,29 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 <span
                   class="c16"
                 >
-                  922
                   <span
                     class="c17"
                   >
-                    mb
+                    500
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
                   </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
                   <div
                     class="c19"
-                    style="height: 25.856124012629213%; width: 25.856124012629213%; margin: 37.071937993685395% 37.071937993685395% 37.071937993685395% 37.071937993685395%;"
-                  />
-                </div>
+                    size="24"
+                  >
+                    <div
+                      class="c20"
+                      style="height: 19.044533962091876%; width: 19.044533962091876%; margin: 40.47773301895406% 40.47773301895406% 40.47773301895406% 40.47773301895406%;"
+                    />
+                  </div>
+                </span>
               </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
+            </td>
+            <td
               class="c14"
             >
               <span
@@ -489,169 +898,68 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 <span
                   class="c16"
                 >
-                  922
                   <span
                     class="c17"
                   >
-                    mb
+                    500
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
                   </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
                   <div
-                    class="c20"
-                    style="height: 25.856124012629213%; width: 25.856124012629213%; margin: 37.071937993685395% 37.071937993685395% 37.071937993685395% 37.071937993685395%;"
-                  />
-                </div>
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c21"
+                      style="height: 19.044533962091876%; width: 19.044533962091876%; margin: 40.47773301895406% 40.47773301895406% 40.47773301895406% 40.47773301895406%;"
+                    />
+                  </div>
+                </span>
               </span>
-            </span>
-          </td>
-        </tr>
-        <tr
-          class="c9"
-        >
-          <td
+            </td>
+          </tr>
+          <tr
             class="c10"
           >
-            <span
+            <td
               class="c11"
             >
               <span
-                class="c5"
-                role="img"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
                 class="c12"
               >
-                CLOSED
-              </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            other-protocol
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
                 <span
-                  class="c16"
+                  class="c6"
+                  role="img"
                 >
-                  748
-                  <span
-                    class="c17"
+                  <svg
+                    viewBox="0 0 32 32"
                   >
-                    mb
-                  </span>
+                    <path
+                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M10.654 15.287H21.27v1.425H10.654z"
+                      fill="currentColor"
+                    />
+                  </svg>
                 </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c19"
-                    style="height: 23.289355980401446%; width: 23.289355980401446%; margin: 38.35532200979928% 38.35532200979928% 38.35532200979928% 38.35532200979928%;"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
                 <span
-                  class="c16"
+                  class="c13"
                 >
-                  748
-                  <span
-                    class="c17"
-                  >
-                    mb
-                  </span>
+                  CLOSED
                 </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c20"
-                    style="height: 23.289355980401446%; width: 23.289355980401446%; margin: 38.35532200979928% 38.35532200979928% 38.35532200979928% 38.35532200979928%;"
-                  />
-                </div>
               </span>
-            </span>
-          </td>
-        </tr>
-        <tr
-          class="c9"
-        >
-          <td
-            class="c10"
-          >
-            <span
+            </td>
+            <td
               class="c11"
             >
-              <span
-                class="c5"
-                role="img"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
-                class="c12"
-              >
-                CLOSED
-              </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            some-protocol
-          </td>
-          <td
-            class="c13"
-          >
-            <span
+              other-protocol
+            </td>
+            <td
               class="c14"
             >
               <span
@@ -660,29 +968,29 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 <span
                   class="c16"
                 >
-                  931
                   <span
                     class="c17"
                   >
-                    mb
+                    49.2
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
                   </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
                   <div
                     class="c19"
-                    style="height: 25.972745403934468%; width: 25.972745403934468%; margin: 37.013627298032766% 37.013627298032766% 37.013627298032766% 37.013627298032766%;"
-                  />
-                </div>
+                    size="24"
+                  >
+                    <div
+                      class="c20"
+                      style="height: 5.9722693918817%; width: 5.9722693918817%; margin: 47.01386530405915% 47.01386530405915% 47.01386530405915% 47.01386530405915%;"
+                    />
+                  </div>
+                </span>
               </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
+            </td>
+            <td
               class="c14"
             >
               <span
@@ -691,331 +999,32 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                 <span
                   class="c16"
                 >
-                  931
                   <span
                     class="c17"
                   >
-                    mb
+                    49.2
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
                   </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c20"
-                    style="height: 25.972745403934468%; width: 25.972745403934468%; margin: 37.013627298032766% 37.013627298032766% 37.013627298032766% 37.013627298032766%;"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-        </tr>
-        <tr
-          class="c9"
-        >
-          <td
-            class="c10"
-          >
-            <span
-              class="c11"
-            >
-              <span
-                class="c5"
-                role="img"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
-                class="c12"
-              >
-                CLOSED
-              </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            other-protocol
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  63.2
-                  <span
-                    class="c17"
-                  >
-                    mb
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
                   <div
                     class="c19"
-                    style="height: 6.766897594222001%; width: 6.766897594222001%; margin: 46.616551202889% 46.616551202889% 46.616551202889% 46.616551202889%;"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  63.2
-                  <span
-                    class="c17"
+                    size="24"
                   >
-                    mb
-                  </span>
+                    <div
+                      class="c21"
+                      style="height: 5.9722693918817%; width: 5.9722693918817%; margin: 47.01386530405915% 47.01386530405915% 47.01386530405915% 47.01386530405915%;"
+                    />
+                  </div>
                 </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c20"
-                    style="height: 6.766897594222001%; width: 6.766897594222001%; margin: 46.616551202889% 46.616551202889% 46.616551202889% 46.616551202889%;"
-                  />
-                </div>
               </span>
-            </span>
-          </td>
-        </tr>
-        <tr
-          class="c9"
-        >
-          <td
-            class="c10"
-          >
-            <span
-              class="c11"
-            >
-              <span
-                class="c5"
-                role="img"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
-                class="c12"
-              >
-                CLOSED
-              </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            some-protocol
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  500
-                  <span
-                    class="c17"
-                  >
-                    mb
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c19"
-                    style="height: 19.044533962091876%; width: 19.044533962091876%; margin: 40.47773301895406% 40.47773301895406% 40.47773301895406% 40.47773301895406%;"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  500
-                  <span
-                    class="c17"
-                  >
-                    mb
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c20"
-                    style="height: 19.044533962091876%; width: 19.044533962091876%; margin: 40.47773301895406% 40.47773301895406% 40.47773301895406% 40.47773301895406%;"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-        </tr>
-        <tr
-          class="c9"
-        >
-          <td
-            class="c10"
-          >
-            <span
-              class="c11"
-            >
-              <span
-                class="c5"
-                role="img"
-              >
-                <svg
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.654 15.287H21.27v1.425H10.654z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
-                class="c12"
-              >
-                CLOSED
-              </span>
-            </span>
-          </td>
-          <td
-            class="c10"
-          >
-            other-protocol
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  49.2
-                  <span
-                    class="c17"
-                  >
-                    mb
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c19"
-                    style="height: 5.9722693918817%; width: 5.9722693918817%; margin: 47.01386530405915% 47.01386530405915% 47.01386530405915% 47.01386530405915%;"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-          <td
-            class="c13"
-          >
-            <span
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  49.2
-                  <span
-                    class="c17"
-                  >
-                    mb
-                  </span>
-                </span>
-                <div
-                  class="c18"
-                  size="24"
-                >
-                  <div
-                    class="c20"
-                    style="height: 5.9722693918817%; width: 5.9722693918817%; margin: 47.01386530405915% 47.01386530405915% 47.01386530405915% 47.01386530405915%;"
-                  />
-                </div>
-              </span>
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </DocumentFragment>
 `;

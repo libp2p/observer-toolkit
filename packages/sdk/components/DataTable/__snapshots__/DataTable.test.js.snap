@@ -124,10 +124,6 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   text-align: right;
 }
 
-.c2 {
-  position: relative;
-}
-
 .c6 {
   height: 2em;
   width: 2em;
@@ -155,6 +151,10 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
 
 .c5 {
   cursor: pointer;
+}
+
+.c2 {
+  position: relative;
 }
 
 <div
