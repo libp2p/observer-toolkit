@@ -2,7 +2,7 @@ import React from 'react'
 import { act, fireEvent, wait } from '@testing-library/react'
 import { renderForSDK, within } from '@libp2p-observer/testing'
 
-import { ThemedMockDataTable } from '../../test-fixtures/DataTable'
+import { ThemedMockDataTable } from '../../test-fixtures/MockDataTable'
 
 function getSlidingRows(nodes) {
   const slidingRows = nodes.reduce((rows, node) => {
