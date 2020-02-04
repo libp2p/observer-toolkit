@@ -20,9 +20,11 @@ function SlidingRowsContainer({ tbodyRef, slideDuration, override = {} }) {
 
   useEffect(() => {
     // Clear sliders once transition is complete
-    setTimeout(() => {
+    const resetTimer = setTimeout(() => {
       if (slidingRowDefs.length) dispatchSlidingRows({ action: 'clear' })
     }, slideDuration)
+
+    return () => clearTimeout(resetTimer)
   })
 
   if (!tbodyRef.current) return ''
