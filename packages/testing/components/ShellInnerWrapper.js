@@ -32,13 +32,14 @@ const Content = styled.div`
 `
 
 // Standalone shell for demoing one component e.g. for staging in Storybook
-function ShellInnerWrapper({ children }) {
+function ShellInnerWrapper({ providers = {}, children }) {
+  const _RootNodeProvider = providers.RootNodeProvider || RootNodeProvider
   return (
     <Page>
       <Content>
-        <RootNodeProvider>
+        <_RootNodeProvider>
           <div data-testid="widget">{children}</div>
-        </RootNodeProvider>
+        </_RootNodeProvider>
       </Content>
       <div data-testid="shell">
         <ControlPanel />
@@ -48,6 +49,7 @@ function ShellInnerWrapper({ children }) {
 }
 
 ShellInnerWrapper.propTypes = {
+  providers: T.object,
   children: T.node,
 }
 

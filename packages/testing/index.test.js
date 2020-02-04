@@ -2,7 +2,7 @@
 
 export { default as DataTestWrapper } from './components/DataTestWrapper'
 export { default as ShellTestWrapper } from './components/ShellTestWrapper'
-export { default as ThemeTestWrapper } from './components/ThemeTestWrapper'
+export { default as ThemeWrapper } from './components/ThemeWrapper'
 
 export * from './test-utils'
 
