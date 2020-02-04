@@ -19,6 +19,7 @@
     "prettier": "prettier --check './**/*.js'",
     "prettier-fix": "prettier --write './**/*.js'",
     "storybook:connections-table": "lerna exec --scope=\"@libp2p-observer/connections-table\" -- npm run storybook",
+    "storybook:sdk": "lerna exec --scope=\"@libp2p-observer/sdk\" -- npm run storybook",
     "storybook:streams-table": "lerna exec --scope=\"@libp2p-observer/streams-table\" -- npm run storybook",
     "start:catalogue": "lerna exec --scope=\"@libp2p-observer/catalogue\" -- npm run start",
     "start:verdaccio": "cd verdaccio && docker-compose up",
