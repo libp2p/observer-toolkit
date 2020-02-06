@@ -2,6 +2,8 @@ import { parseBufferList } from '@libp2p-observer/data'
 import { proto } from '@libp2p-observer/proto'
 import { BufferList } from 'bl'
 
+let ws = null
+
 function createClientSignalMessage(
   signal,
   datasource = proto.ClientSignal.DataSource.STATE
@@ -13,17 +15,19 @@ function createClientSignalMessage(
   return clientSignal.serializeBinary()
 }
 
+function sendSignal(type) {
+  const data = createClientSignalMessage(type)
+  if (ws) {
+    ws.send(data)
+  }
+}
+
 function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   const bl = new BufferList()
   const usePushEmitter = true
 
   if (!url) return
-  const ws = new WebSocket(url)
-
-  function sendSignal(type) {
-    const data = createClientSignalMessage(type)
-    ws.send(data)
-  }
+  ws = new WebSocket(url)
 
   ws.addEventListener('message', function(msg) {
     // process incoming message
@@ -60,4 +64,4 @@ function processUploadBuffer(bufferList, onUploadChunk, metadata) {
   onUploadChunk(data)
 }
 
-export { uploadWebSocket }
+export { sendSignal, uploadWebSocket }
