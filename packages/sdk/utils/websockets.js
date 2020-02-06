@@ -8,6 +8,7 @@ function createClientSignalMessage(
   signal,
   datasource = proto.ClientSignal.DataSource.STATE
 ) {
+  if (!signal) return
   const clientSignal = new proto.ClientSignal()
   clientSignal.setVersion(new proto.Version(1))
   clientSignal.setSignal(signal)
@@ -15,9 +16,18 @@ function createClientSignalMessage(
   return clientSignal.serializeBinary()
 }
 
-function sendSignal(type) {
-  const data = createClientSignalMessage(type)
-  if (ws) {
+function getSignal(cmd) {
+  if (cmd === 'data') return proto.ClientSignal.Signal.SEND_DATA
+  if (cmd === 'start') return proto.ClientSignal.Signal.START_PUSH_EMITTER
+  if (cmd === 'stop') return proto.ClientSignal.Signal.STOP_PUSH_EMITTER
+  if (cmd === 'pause') return proto.ClientSignal.Signal.PAUSE_PUSH_EMITTER
+  if (cmd === 'unpause') return proto.ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
+}
+
+function sendSignal(cmd) {
+  const signal = getSignal(cmd)
+  const data = createClientSignalMessage(signal)
+  if (ws && data) {
     ws.send(data)
   }
 }
@@ -41,7 +51,7 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
     if (!usePushEmitter) {
       // request data manually
       setTimeout(() => {
-        sendSignal(proto.ClientSignal.Signal.SEND_DATA)
+        sendSignal('data')
       }, 1000)
     }
   })
@@ -51,9 +61,9 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   ws.addEventListener('open', function() {
     if (onUploadStart) onUploadStart(url)
     if (usePushEmitter) {
-      sendSignal(proto.ClientSignal.Signal.START_PUSH_EMITTER)
+      sendSignal('start')
     } else {
-      sendSignal(proto.ClientSignal.Signal.SEND_DATA)
+      sendSignal('data')
     }
   })
 }
