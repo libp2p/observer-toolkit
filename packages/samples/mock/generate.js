@@ -9,6 +9,7 @@ const {
   updateConnection,
   addStreamsToConnection,
 } = require('./messages/connections')
+const { createDHT, updateDHT } = require('./messages/dht')
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
 const { createProtocolDataPacket } = require('./messages/protocol-data-packet')
@@ -20,6 +21,10 @@ function generateConnections(total, now) {
     mockConnectionActivity(connection, now)
     return connection
   })
+}
+
+function generateDHT() {
+  return createDHT()
 }
 
 function generateRuntime() {
@@ -41,20 +46,21 @@ function updateConnections(connections, total, now) {
   }
 }
 
-function generateState(connections, now) {
+function generateState(connections, now, dht) {
   const state = createState(connections, now)
   const statePacket = createProtocolDataPacket(state)
   return createBufferSegment(statePacket)
 }
 
-function generateStates(connections, connectionsCount, utcFrom, utcTo) {
+function generateStates(connections, connectionsCount, utcFrom, utcTo, dht) {
   const stateBuffers = []
   const states = Math.floor((utcTo - utcFrom) / 1000)
   for (let state = 1; state <= states; state++) {
     const now = utcFrom + state * 1000
     const connCount = state !== 1 ? connectionsCount : null
     updateConnections(connections, connCount, now)
-    stateBuffers.push(generateState(connections, now))
+    updateDHT(dht)
+    stateBuffers.push(generateState(connections, now, dht))
   }
   return stateBuffers
 }
@@ -72,13 +78,21 @@ function generateComplete(connectionsCount, durationSeconds) {
   const version = generateVersion()
   const runtime = generateRuntime()
   const connections = generateConnections(connectionsCount, utcFrom)
-  const states = generateStates(connections, connectionsCount, utcFrom, utcTo)
+  const dht = generateDHT()
+  const states = generateStates(
+    connections,
+    connectionsCount,
+    utcFrom,
+    utcTo,
+    dht
+  )
   return Buffer.concat([version, runtime, ...states])
 }
 
 module.exports = {
   generateComplete,
   generateConnections,
+  generateDHT,
   generateRuntime,
   generateState,
   generateStates,

@@ -20,8 +20,9 @@ function createState(connectionsList, now) {
   sumTraffic(stateTraffic, connectionsList)
 
   const subsystems = new Subsystems()
-
   subsystems.setConnectionsList(connectionsList)
+  // subsystems.setDht(dht)
+
   state.setSubsystems(subsystems)
 
   return state
