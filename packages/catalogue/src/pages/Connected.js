@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { RootNodeProvider } from '@libp2p-observer/sdk'
+import { sendSignal, RootNodeProvider } from '@libp2p-observer/sdk'
 import { ControlPanel } from '@libp2p-observer/shell'
 
 import approvedWidgets from '../definitions/approvedWidgets'
@@ -37,8 +37,23 @@ const CatalogueBkg = styled.div`
 
 function Connected() {
   const [selected, setSelected] = useState(null)
+  const [isPaused, setIsPaused] = useState(false)
   const selectedWidget = approvedWidgets[selected]
   const closeWidget = () => setSelected(null)
+
+  useEffect(() => {
+    const togglePauseOnSpace = e => {
+      if (e.key === ' ' || e.keyCode === 32) {
+        const signal = isPaused ? 'unpause' : 'pause'
+        console.log(isPaused, signal)
+        sendSignal(signal)
+        setIsPaused(!isPaused)
+      }
+    }
+
+    document.addEventListener('keydown', togglePauseOnSpace)
+    return () => document.removeEventListener('keydown', togglePauseOnSpace)
+  })
 
   return (
     <Container>
