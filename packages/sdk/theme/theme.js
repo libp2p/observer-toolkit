@@ -44,7 +44,7 @@ const palette = {
 const color = (col, val = 0, alpha) => {
   // For example, `theme.color('secondary', 1, 0.5)` for translucent blue
   const rgb = palette[col][val]
-  return alpha ? `rgba(${rgb}, ${alpha})` : `rgb(${rgb})`
+  return typeof alpha === 'number' ? `rgba(${rgb}, ${alpha})` : `rgb(${rgb})`
 }
 
 const spacingPx = 8

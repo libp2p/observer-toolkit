@@ -5,6 +5,7 @@ export * from './PeerId'
 
 export { default as AccordionControl } from './AccordionControl'
 export { default as Bubble } from './Bubble'
+export { default as CanvasCover } from './CanvasCover'
 export { default as Chip } from './Chip'
 export { default as Icon } from './Icon'
 export { default as SlideDown } from './SlideDown'
