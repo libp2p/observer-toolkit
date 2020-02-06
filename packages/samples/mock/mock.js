@@ -34,6 +34,7 @@ const {
 const {
   generateComplete,
   generateConnections,
+  generateDHT,
   generateRuntime,
   generateStates,
   generateVersion,
@@ -64,6 +65,7 @@ if (socksrv) {
     let utcTo = Date.now()
     let utcFrom = utcTo - durationSeconds * 1000
     const connections = generateConnections(connectionsCount, utcFrom)
+    const dht = generateDHT()
     const version = generateVersion()
     const runtime = generateRuntime()
     // ready signal handler
@@ -75,7 +77,8 @@ if (socksrv) {
         connections,
         connectionsCount,
         utcFrom,
-        utcTo
+        utcTo,
+        dht
       )
       const data = states.length
         ? Buffer.concat([version, runtime, ...states]).toString('binary')
@@ -87,7 +90,13 @@ if (socksrv) {
       ws.send(data)
     })
     // on connection, send initial packet
-    const states = generateStates(connections, connectionsCount, utcFrom, utcTo)
+    const states = generateStates(
+      connections,
+      connectionsCount,
+      utcFrom,
+      utcTo,
+      dht
+    )
     ws.send(Buffer.concat([version, runtime, ...states]).toString('binary'))
   })
 } else {
