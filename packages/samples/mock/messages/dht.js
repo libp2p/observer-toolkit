@@ -86,13 +86,8 @@ function createDHT({ k = 20, queryCount = 10 } = {}) {
 }
 
 function updatePeerIds(peerIds) {
-  peerIds.forEach(peerId => {
-    if (randomPeerAddRemove()) {
-      peerId = null
-    }
-  })
-  peerIds.shift()
-  peerIds.push(generateHashId())
+  peerIds.forEach((undefined, idx, arr) => { arr.splice(idx, Number(randomPeerAddRemove())) })
+  if (randomPeerAddRemove()) { peerIds.push(generateHashId()) }
 }
 
 function updateQuery(query) {
