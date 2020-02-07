@@ -104,11 +104,9 @@ if (socksrv) {
           signal === ClientSignal.Signal.START_PUSH_EMITTER ||
           signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
         ) {
-          if (!tmrEmitter) {
-            tmrEmitter = setInterval(function() {
-              sendState()
-            }, 1000)
-          }
+          tmrEmitter = setInterval(function() {
+            sendState()
+          }, 1000)
         } else if (
           signal === ClientSignal.Signal.STOP_PUSH_EMITTER ||
           signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER
