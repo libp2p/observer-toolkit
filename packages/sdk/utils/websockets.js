@@ -22,6 +22,7 @@ function getSignal(cmd) {
   if (cmd === 'stop') return proto.ClientSignal.Signal.STOP_PUSH_EMITTER
   if (cmd === 'pause') return proto.ClientSignal.Signal.PAUSE_PUSH_EMITTER
   if (cmd === 'unpause') return proto.ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
+  throw new Error(`Unrecognised signal type "${cmd}"`)
 }
 
 function sendSignal(cmd) {
