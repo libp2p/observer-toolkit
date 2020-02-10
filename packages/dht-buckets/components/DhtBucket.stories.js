@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import T from 'prop-types'
-import styled, { withTheme } from 'styled-components'
 import { storiesOf } from '@storybook/react'
 
 import { ThemeWrapper } from '@libp2p-observer/testing'
@@ -93,8 +91,6 @@ const peers = [
     outboundQueries: [12000, 12500, 15000],
   },
 ]
-
-const initialAge = 7000
 
 function DhtBucketFixture() {
   const [timestamp, setTimestamp] = useState(0)

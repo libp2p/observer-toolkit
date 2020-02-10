@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -113,6 +113,10 @@ function DhtBucket({
 }
 
 DhtBucket.propTypes = {
+  peers: T.array,
+  index: T.number,
+  timestamp: T.number.isRequired,
+  title: T.string,
   children: T.node,
 }
 

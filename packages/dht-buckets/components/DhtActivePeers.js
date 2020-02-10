@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -12,9 +12,6 @@ const Container = styled.div`
   justify-content: start;
   padding: ${({ theme }) => theme.spacing([1, 0.5])};
 `
-
-const sortByAge = (a, b) => b.age - a.age
-const sortByDistance = (a, b) => b.distance - a.distance
 
 function DhtActivePeers({
   catchAllBucketPeers,
@@ -43,7 +40,9 @@ function DhtActivePeers({
 }
 
 DhtActivePeers.propTypes = {
-  children: T.node,
+  catchAllBucketPeers: T.array.isRequired,
+  numberedBucketPeers: T.array.isRequired,
+  timestamp: T.number,
 }
 
 export default DhtActivePeers

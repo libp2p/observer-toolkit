@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
@@ -14,7 +14,6 @@ const outerSize = 24
 const innerSize = 18
 const gutterSize = (outerSize - innerSize) / 2
 const maxGlowSize = 12
-const maxBorderWidth = 5
 
 const Container = styled.div.attrs(({ distance, age }) => ({
   style: {
@@ -31,7 +30,6 @@ const Canvas = styled.canvas`
   height: inherit;
   width: inherit;
   z-index: 5;
-  /* mix-blend-mode: hard-light; */
 `
 
 const InnerChip = styled.div.attrs(({ distance, age }) => ({
@@ -65,7 +63,6 @@ function paintActiveGlow(timeSinceQuery, canvasContext, direction, theme) {
   const coordPlacement = direction === 'in' ? 0.3 : 0.7
   const coord = outerSize * coordPlacement
   const innerCoord = coord + outerSize * (completion - 0.5)
-  const fade = midwayDec
 
   const colorKey = direction === 'in' ? 'primary' : 'secondary'
   const cols = [
@@ -218,10 +215,10 @@ function DhtPeer({
         return anyInboundGlow || anyOutboundGlow
       }
     },
-    [theme, timestamp, timeResolution]
+    [timestamp, theme, inboundQueries, outboundQueries]
   )
 
-  const { canvasRef, animationRef } = useCanvas({
+  const { canvasRef } = useCanvas({
     width: outerSize,
     height: outerSize,
     animateCanvas,
@@ -239,6 +236,7 @@ DhtPeer.propTypes = {
   inboundQueries: T.array.isRequired,
   outboundQueries: T.array.isRequired,
   distance: T.number.isRequired,
+  age: T.number.isRequired,
   timestamp: T.number.isRequired,
   theme: T.object.isRequired,
 }
