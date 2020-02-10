@@ -49,7 +49,7 @@ function updateConnections(connections, total, now) {
 }
 
 function generateState(connections, now, dht) {
-  const state = createState(connections, now)
+  const state = createState(connections, now, dht)
   const statePacket = createProtocolDataPacket(state)
   return createBufferSegment(statePacket)
 }
