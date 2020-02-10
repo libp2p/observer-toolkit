@@ -37,13 +37,13 @@ test('Expected connections exist', t => {
 
 test('Open connections increase traffic', t => {
   const activeStatus = getEnumByName('ACTIVE', statusNames)
-  const openConnections = getAllConnections(timepointsExceptLatest, {
+  const everOpenConnections = getAllConnections(timepointsExceptLatest, {
     filter: connection => connection.getStatus() === activeStatus,
   })
 
-  t.ok(openConnections.length >= initialConnCount)
+  t.ok(everOpenConnections.length >= initialConnCount)
 
-  for (const connectionAtStart of openConnections) {
+  for (const connectionAtStart of everOpenConnections) {
     const connectionId = connectionAtStart.getId().toString()
 
     const startBytesIn = getConnectionTraffic(connectionAtStart, 'in', 'bytes')

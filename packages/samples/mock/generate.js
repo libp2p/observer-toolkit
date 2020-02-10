@@ -17,7 +17,9 @@ const { statusList } = require('./enums/statusList')
 
 function generateConnections(total, now) {
   return Array.apply(null, Array(total)).map(function() {
-    const connection = createConnection()
+    const connection = createConnection({
+      status: statusList.getNum('ACTIVE'),
+    })
     mockConnectionActivity(connection, now)
     return connection
   })
