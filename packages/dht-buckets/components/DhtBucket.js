@@ -14,7 +14,7 @@ const peersPerRow = 4
 
 const Container = styled.div`
   background: ${({ theme, bkgColorIndex }) =>
-    theme.color('contrast', bkgColorIndex)};
+    theme.color('tertiary', bkgColorIndex)};
   width: ${({ theme }) =>
     theme.spacing(1, true) * (peersPerRow + 1) + peersPerRow * slotSize}px;
   padding: ${({ theme }) => theme.spacing([1, 0.5])};
@@ -32,7 +32,9 @@ const Slot = styled.div`
   position: relative;
   margin: 4px;
   background: ${({ theme, isEmpty, bkgColorIndex }) =>
-    theme.color('contrast', isEmpty ? bkgColorIndex : 0)};
+    isEmpty
+      ? theme.color('tertiary', bkgColorIndex)
+      : theme.color('contrast', 0)};
   border-width: ${borderWidth}px;
   border-style: solid;
   border-color: ${({ theme, isEmpty }) =>
@@ -82,7 +84,7 @@ function DhtBucket({
     isBucket0 ? sortByDistance : sortByAge
   )
 
-  const bkgColorIndex = isBucket0 ? 2 : 1
+  const bkgColorIndex = isBucket0 ? 2 : 3
 
   return (
     <Container bkgColorIndex={bkgColorIndex}>
