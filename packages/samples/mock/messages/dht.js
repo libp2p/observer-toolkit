@@ -14,17 +14,40 @@ function mapArray(size, map) {
   return Array.apply(null, Array(size)).map(map)
 }
 
+function randomQueryResult() {
+  const results = [
+    DHT.Query.Result.SUCCESS,
+    DHT.Query.Result.ERROR,
+    DHT.Query.Result.TIMEOUT,
+    DHT.Query.Result.PENDING,
+  ]
+  const idx = Math.round(
+    randomNormalDistribution({
+      min: 0,
+      max: 3,
+      skew: 1.5,
+    })
+  )
+  return results[idx]
+}
+
+function randomQueryTrigger() {
+  const results = [DHT.Query.Trigger.API, DHT.Query.Trigger.DISCOVERY]
+  const i = Math.floor(Math.random() * results.length)
+  return results[i]
+}
+
 function randomQueryTime() {
   return Math.round(
     randomNormalDistribution({
-      min: 1,
-      max: 1e9,
-      skew: 10,
+      min: 5,
+      max: 100,
+      skew: 1.5,
     })
   )
 }
 
-function randomTotalSteps() {
+function randomQueryTotalSteps() {
   return Math.round(
     randomNormalDistribution({
       min: 1,
@@ -32,6 +55,16 @@ function randomTotalSteps() {
       skew: 1.5,
     })
   )
+}
+
+function randomQueryType() {
+  const results = [
+    DHT.Query.Type.CONTENT,
+    DHT.Query.Type.PROVIDER,
+    DHT.Query.Type.VALUE,
+  ]
+  const i = Math.floor(Math.random() * results.length)
+  return results[i]
 }
 
 function randomPeerAddRemove(multiplier = 1) {
@@ -46,7 +79,10 @@ function createQuery({
   queryId = generateHashId(),
   targetPeerId = generateHashId(),
   totalTimeMs = randomQueryTime(),
-  totalSteps = randomTotalSteps(),
+  totalSteps = randomQueryTotalSteps(),
+  trigger = randomQueryTrigger(),
+  type = randomQueryType(),
+  result = randomQueryResult(),
 } = {}) {
   const query = new DHT.Query()
   query.setId(queryId)
@@ -57,9 +93,9 @@ function createQuery({
   const peerIds = createPeerIds()
   query.setPeerIdsList(peerIds)
 
-  query.setTrigger(DHT.Query.Trigger.API)
-  query.setType(DHT.Query.Type.CONTENT)
-  query.setResult(DHT.Query.Result.SUCCESS)
+  query.setTrigger(trigger)
+  query.setType(type)
+  query.setResult(result)
   query.setSentTs(new Timestamp(Date.now()))
   return query
 }
@@ -68,7 +104,7 @@ function createQueries({ queryCount = 10 } = {}) {
   return mapArray(queryCount, createQuery)
 }
 
-function createDHT({ k = 20, queryCount = 10 } = {}) {
+function createDHT({ k = 20 } = {}) {
   const dht = new DHT()
   // dht.setProtocol(string)
   // dht.setEnabled(bool)
@@ -86,8 +122,12 @@ function createDHT({ k = 20, queryCount = 10 } = {}) {
 }
 
 function updatePeerIds(peerIds) {
-  peerIds.forEach((undefined, idx, arr) => { arr.splice(idx, Number(randomPeerAddRemove())) })
-  if (randomPeerAddRemove()) { peerIds.push(generateHashId()) }
+  peerIds.forEach((item, idx, arr) => {
+    arr.splice(idx, Number(randomPeerAddRemove()))
+  })
+  if (randomPeerAddRemove()) {
+    peerIds.push(generateHashId())
+  }
 }
 
 function updateQuery(query) {
