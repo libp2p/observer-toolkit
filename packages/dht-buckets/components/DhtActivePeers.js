@@ -25,11 +25,18 @@ function DhtActivePeers({
     <Container>
       <DhtBucket
         peers={catchAllBucketPeers}
-        isBucket0={true}
         timestamp={timestamp}
+        index={0}
+        key={`bucket_0`}
+        title="0: Catch-all"
       />
-      {numberedBucketPeers.map(peers => (
-        <DhtBucket peers={peers} timestamp={timestamp} />
+      {numberedBucketPeers.map((peers, index) => (
+        <DhtBucket
+          peers={peers}
+          timestamp={timestamp}
+          index={index + 1}
+          key={`bucket_${index + 1}`}
+        />
       ))}
     </Container>
   )
