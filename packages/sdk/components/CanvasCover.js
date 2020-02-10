@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import useCanvas from '../hooks'
+import { useCanvas } from '../hooks'
 
 const Canvas = styled.canvas`
   width: 100%;
@@ -23,6 +23,8 @@ function CanvasCover({ width, height, animationGetter, children }) {
 CanvasCover.propTypes = {
   width: T.number,
   height: T.number,
+  animationGetter: T.func,
+  children: T.node,
 }
 
 export default withResizeDetector(CanvasCover)

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import T from 'prop-types'
-import styled, { withTheme } from 'styled-components'
 import { storiesOf } from '@storybook/react'
 
 import { ThemeWrapper } from '@libp2p-observer/testing'
