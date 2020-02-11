@@ -2,6 +2,7 @@
 
 // const { argv } = require('yargs')
 const { random, randomNormalDistribution, generateHashId } = require('../utils')
+const { protocolList } = require('../enums/protocolList')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 const {
   proto: { DHT },
@@ -104,16 +105,23 @@ function createQueries({ queryCount = 10 } = {}) {
   return mapArray(queryCount, createQuery)
 }
 
-function createDHT({ k = 20 } = {}) {
+function createDHT({
+  k = 20,
+  proto = protocolList.getRandom(),
+  enabled = true,
+  startTs = Date.now(),
+  alpha = 3,
+  disjointPaths = 10,
+} = {}) {
   const dht = new DHT()
-  // dht.setProtocol(string)
-  // dht.setEnabled(bool)
-  // dht.setStartTs(ts)
+  dht.setProtocol(proto)
+  dht.setEnabled(enabled)
+  dht.setStartTs(new Timestamp(startTs))
 
   const params = new DHT.Params()
   params.setK(k)
-  // params.setAlpha
-  // params.setDisjointPaths
+  params.setAlpha(alpha)
+  params.setDisjointPaths(disjointPaths)
   dht.setParams(params)
   const queries = createQueries()
   dht.setQueryList(queries)

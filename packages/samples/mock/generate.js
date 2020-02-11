@@ -25,8 +25,8 @@ function generateConnections(total, now) {
   })
 }
 
-function generateDHT() {
-  return createDHT()
+function generateDHT(opt = {}) {
+  return createDHT(opt)
 }
 
 function generateRuntime() {
@@ -80,7 +80,8 @@ function generateComplete(connectionsCount, durationSeconds) {
   const version = generateVersion()
   const runtime = generateRuntime()
   const connections = generateConnections(connectionsCount, utcFrom)
-  const dht = generateDHT()
+  const startTs = utcFrom - Math.floor(random() * 1000)
+  const dht = generateDHT({ startTs })
   const states = generateStates(
     connections,
     connectionsCount,
