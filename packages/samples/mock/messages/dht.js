@@ -106,6 +106,9 @@ function createQueries({ queryCount = 10 } = {}) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> add additional props
 function createDHT({
   k = 20,
   proto = protocolList.getRandom(),
@@ -114,9 +117,12 @@ function createDHT({
   alpha = 3,
   disjointPaths = 10,
 } = {}) {
+<<<<<<< HEAD
 =======
 function createDHT({ k = 20 } = {}) {
 >>>>>>> add dht query randomness
+=======
+>>>>>>> add additional props
   const dht = new DHT()
   dht.setProtocol(proto)
   dht.setEnabled(enabled)
