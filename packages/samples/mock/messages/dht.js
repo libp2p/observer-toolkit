@@ -101,8 +101,11 @@ function createQuery({
   return query
 }
 
-function createQueries({ queryCount = 10 } = {}) {
-  return mapArray(queryCount, createQuery)
+function createQueries({ peerIds = [], queryCount = 10 } = {}) {
+  const targets = peerIds.length
+    ? peerIds
+    : mapArray(queryCount, generateHashId)
+  return targets.map(targetPeerId => createQuery({ targetPeerId }))
 }
 
 <<<<<<< HEAD
@@ -116,6 +119,7 @@ function createDHT({
   startTs = Date.now(),
   alpha = 3,
   disjointPaths = 10,
+  peerIds = [],
 } = {}) {
 <<<<<<< HEAD
 =======
@@ -133,7 +137,7 @@ function createDHT({ k = 20 } = {}) {
   params.setAlpha(alpha)
   params.setDisjointPaths(disjointPaths)
   dht.setParams(params)
-  const queries = createQueries()
+  const queries = createQueries({ peerIds })
   dht.setQueryList(queries)
 
   return dht
