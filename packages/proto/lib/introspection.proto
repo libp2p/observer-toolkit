@@ -54,13 +54,17 @@ message DataGauge {
 // Runtime encapsulates runtime info about a node.
 message Runtime {
     // e.g. go-libp2p, js-libp2p, rust-libp2p, etc.
-    string implementation   = 1;
+    string implementation           = 1;
     // e.g. 1.2.3.
-    string version          = 2;
+    string version                  = 2;
     // e.g. Windows, Unix, macOS, Chrome, Mozilla, etc.
-    string platform         = 3;
+    string platform                 = 3;
     // our peer id - the peer id of the host system
-    string peer_id          = 4;
+    string peer_id                  = 4;
+    // length of time to keep stale data
+    uint32 keep_stale_data_ms       = 5;
+    // frequency to send new states
+    uint32 send_state_interval_ms   = 6;
 }
 
 // EndpointPair is a pair of multiaddrs.
@@ -228,6 +232,12 @@ message DHT {
         VALUE                   = 2;
     }
 
+    // Direction of the query
+    enum Direction {
+        INBOUND                 = 0;
+        OUTBOUND                = 1;
+    }
+
     // Status indicating the result of the query
     enum Result {
         SUCCESS                 = 0;
@@ -255,6 +265,8 @@ message DHT {
     Result result                     = 8;
     // time query was dispatched
     google.protobuf.Timestamp sent_ts = 9;
+    // direction indicating an inbound or outbound query
+    Direction direction               = 10;
   }
 
   // DHT protocol name
@@ -269,12 +281,35 @@ message DHT {
   repeated Query query                = 5;
 }
 
+// Peer Type
+message PeerType {
+
+    // The status of a peer
+    enum Status {
+        ACTIVE  = 0;
+        MISSING  = 1;
+        DISCONNECTED = 2;
+        EJECTED = 3;
+    }
+
+    // the peer id of the host system
+    string peer_id          = 1;
+    // bucket
+    uint32 bucket           = 2;
+    // age in bucket (ms)
+    uint32 age_in_bucket    = 3;
+    // status of the peer
+    Status status           = 4;
+}
+
 // Subsystems encapsulates all instrumented subsystems for a libp2p host.
 message Subsystems {
   // connections data, source agnostic but currently only supports the Swarm subsystem
   repeated Connection connections = 1;
   // the DHT subsystem.
   DHT dht = 2;
+  // Peer Type
+  PeerType peer_type = 3; 
 }
 
 // Connections and streams output for a time interval is one of these.
