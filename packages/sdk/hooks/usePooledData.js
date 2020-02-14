@@ -58,7 +58,42 @@ function getPools(data, { mapData, poolsCount, poolType = 'linear' }) {
 
   scaler.domain([min, max])
   scaler.nice(poolsCount)
-  const pools = scaler.ticks(poolsCount)
+  let pools = scaler.ticks(poolsCount)
+
+  let redoPools = false
+  let [domainLower, domainUpper] = scaler.domain()
+
+  // "niced" d3 ticks *should* always enclose domain, but don't always, especially
+  // with log scales: e.g. [ 0.01, 1, 100 ], max = 999, upper domain niced to 1000
+  if (pools[0] > min) {
+    redoPools = true
+    switch (poolType) {
+      case 'linear':
+        domainLower = pools[0] - (pools[1] - pools[0])
+        break
+      case 'log':
+        domainLower = pools[0] * (pools[0] / pools[1])
+        break
+    }
+  }
+  const lastIndex = pools.length - 1
+  if (pools[lastIndex] < max) {
+    redoPools = true
+    switch (poolType) {
+      case 'linear':
+        domainUpper = pools[lastIndex] + (pools[1] - pools[0])
+        break
+      case 'log':
+        domainUpper = pools[lastIndex] * (pools[0] / pools[1])
+        break
+    }
+  }
+
+  if (redoPools) {
+    scaler.domain([domainLower, domainUpper])
+    scaler.nice(poolsCount)
+    pools = scaler.ticks(poolsCount)
+  }
 
   return pools
 }

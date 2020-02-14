@@ -195,6 +195,38 @@ describe('usePooledData hook', () => {
     renderWithTheme(<TestInComponent />)
   })
 
+  it('can pool logarithmically', () => {
+    const testData = [...data]
+    testData.sort((a, b) => a.d - b.d)
+
+    const TestInComponent = () => {
+      const map_d = datum => datum.d
+      const { pooledData, poolSets } = usePooledData({
+        data: testData,
+        poolings: {
+          mapData: map_d,
+          poolsCount: 3,
+          poolType: 'log',
+        },
+      })
+
+      const expectedPools = [[1e-10, 0.00001, 1, 100000, 10000000000]]
+      expect(poolSets).toEqual(expectedPools)
+
+      const expectedPooledLengths = [1, 3, 19, 7]
+      expect(entriesToLengths(pooledData)).toEqual(expectedPooledLengths)
+
+      const expectedPooledData = lengthsToEntries(
+        expectedPooledLengths,
+        testData
+      )
+      expect(pooledData).toEqual(expectedPooledData)
+
+      return ''
+    }
+    renderWithTheme(<TestInComponent />)
+  })
+
   it('can update from outside the hook, causing re-render with new pools', async () => {
     const TestUsingComponent = () => {
       const map_a = datum => datum.a
