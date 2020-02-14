@@ -148,4 +148,15 @@ function usePooledData({ data, poolings = {} }) {
   }
 }
 
+const poolingShape = T.shape({
+  mapData: T.func,
+  poolCount: T.number,
+  poolType: T.string,
+})
+
+usePooledData.propTypes = {
+  data: T.array.isRequired,
+  poolings: T.oneOfType([T.arrayOf(poolingShape), poolingShape]),
+}
+
 export default usePooledData
