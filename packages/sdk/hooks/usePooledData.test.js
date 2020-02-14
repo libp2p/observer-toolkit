@@ -1,5 +1,6 @@
 import React from 'react'
 import flatten from 'lodash.flatten'
+import { act, fireEvent } from '@testing-library/react'
 
 import { renderWithTheme } from '@libp2p-observer/testing'
 import usePooledData from './usePooledData'
@@ -192,5 +193,95 @@ describe('usePooledData hook', () => {
       return ''
     }
     renderWithTheme(<TestInComponent />)
+  })
+
+  it('can update from outside the hook, causing re-render with new pools', async () => {
+    const TestUsingComponent = () => {
+      const map_a = datum => datum.a
+      const map_b = datum => datum.b
+      const map_c = datum => Math.round(datum.c)
+
+      const { dispatchPoolings, pooledData } = usePooledData({
+        data,
+        poolings: {
+          mapData: map_a,
+          poolsCount: 4,
+        },
+      })
+
+      return (
+        <div>
+          <button
+            data-testid="edit"
+            onClick={() =>
+              dispatchPoolings({
+                action: 'edit',
+                poolings: {
+                  mapData: map_b,
+                  poolsCount: 2,
+                },
+              })
+            }
+          />
+
+          <button
+            data-testid="add"
+            onClick={() =>
+              dispatchPoolings({
+                action: 'add',
+                poolings: {
+                  mapData: map_c,
+                },
+              })
+            }
+          />
+
+          <button
+            data-testid="remove"
+            onClick={() =>
+              dispatchPoolings({
+                action: 'remove',
+                index: 0,
+              })
+            }
+          />
+
+          <div data-testid="stringifiedPooledLengths">
+            {JSON.stringify(entriesToLengths(pooledData))}
+          </div>
+        </div>
+      )
+    }
+    const { getByTestId } = renderWithTheme(<TestUsingComponent />)
+
+    const getOutput = () => getByTestId('stringifiedPooledLengths').textContent
+
+    expect(getOutput()).toEqual(JSON.stringify([1, 3, 18, 8]))
+
+    const editButton = getByTestId('edit')
+    await act(async () => {
+      fireEvent.click(editButton)
+    })
+
+    expect(getOutput()).toEqual(JSON.stringify([15, 15]))
+
+    const addButton = getByTestId('add')
+    await act(async () => {
+      fireEvent.click(addButton)
+    })
+
+    expect(getOutput()).toEqual(
+      JSON.stringify([
+        [0, 0, 0, 2, 8, 3, 0, 2, 0, 0],
+        [1, 0, 0, 1, 1, 2, 4, 3, 2, 1],
+      ])
+    )
+
+    const removeButton = getByTestId('remove')
+    await act(async () => {
+      fireEvent.click(removeButton)
+    })
+
+    expect(getOutput()).toEqual(JSON.stringify([1, 0, 0, 3, 9, 5, 4, 5, 2, 1]))
   })
 })

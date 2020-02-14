@@ -1,6 +1,36 @@
-import { useMemo } from 'react'
+import { useMemo, useReducer } from 'react'
 import T from 'prop-types'
 import { scaleLinear, scaleTime, scaleLog } from 'd3'
+
+function updatePoolings(oldPoolings, { action, poolings, index }) {
+  const poolingsArray = Array.isArray(poolings) ? poolings : [poolings]
+  switch (action) {
+    case 'set':
+      return poolingsArray
+    case 'remove':
+      return removePooling(oldPoolings, index)
+    case 'add':
+      return [...oldPoolings, ...poolingsArray]
+    case 'edit':
+      return editPooling(oldPoolings, poolingsArray)
+  }
+}
+
+function removePooling(oldPoolings, index) {
+  const newPoolings = [...oldPoolings]
+  newPoolings.splice(index, 1)
+  return newPoolings
+}
+
+function editPooling(oldPoolings, poolingsArray) {
+  const newPoolings = [...oldPoolings]
+  poolingsArray.forEach((pooling, orderedIndex) => {
+    const index =
+      typeof pooling.index === 'number' ? pooling.index : orderedIndex
+    Object.assign(newPoolings[index], pooling)
+  })
+  return newPoolings
+}
 
 function getScaleType(type) {
   switch (type) {
@@ -58,9 +88,13 @@ function poolData(data, poolSets, poolings, setIndex) {
 }
 
 function usePooledData({ data, poolings = {} }) {
-  const { pooledData, poolSets } = useMemo(() => {
-    const poolingsArray = Array.isArray(poolings) ? poolings : [poolings]
+  const [poolingsArray, dispatchPoolings] = useReducer(
+    updatePoolings,
+    poolings,
+    initial => updatePoolings([], { action: 'set', poolings: initial })
+  )
 
+  const { pooledData, poolSets } = useMemo(() => {
     const poolSets = poolingsArray.map((pooling, index) =>
       getPools(data, pooling)
     )
@@ -70,9 +104,10 @@ function usePooledData({ data, poolings = {} }) {
       pooledData,
       poolSets,
     }
-  }, [data, poolings])
+  }, [data, poolingsArray])
 
   return {
+    dispatchPoolings,
     pooledData,
     poolSets,
   }
