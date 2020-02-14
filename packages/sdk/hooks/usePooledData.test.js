@@ -1,5 +1,7 @@
-import {} from 'react'
+import React from 'react'
+import flatten from 'lodash.flatten'
 
+import { renderWithTheme } from '@libp2p-observer/testing'
 import usePooledData from './usePooledData'
 
 const data = [
@@ -35,89 +37,160 @@ const data = [
   { a: 10.0, b: 7 },
 ].map(({ a, b }) => ({ a, b, c: a * b, d: Math.pow(b, a) }))
 
+function lengthsToEntries(
+  lengths,
+  dataSource = data,
+  sorters = [],
+  recursionDepth = 0
+) {
+  const sorter = sorters[recursionDepth]
+  const testData = [...dataSource]
+  if (sorter) testData.sort(sorter)
+
+  const { slices } = lengths.reduce(
+    ({ cumulative, slices }, item) => {
+      const start = cumulative
+
+      if (Array.isArray(item)) {
+        const sum = flatten(item).reduce((sum, num) => sum + num)
+        const end = cumulative + sum
+        const dataSubset = testData.slice(start, end)
+        const nestedSlices = lengthsToEntries(
+          item,
+          dataSubset,
+          sorters,
+          recursionDepth + 1
+        )
+        return {
+          slices: [...slices, nestedSlices],
+          cumulative: end,
+        }
+      }
+
+      const end = cumulative + item
+
+      return {
+        slices: [...slices, testData.slice(start, end)],
+        cumulative: end,
+      }
+    },
+    { cumulative: 0, slices: [] }
+  )
+
+  return slices
+}
+
+function entriesToLengths(entry) {
+  return Array.isArray(entry[0]) ? entry.map(entriesToLengths) : entry.length
+}
+
 describe('usePooledData hook', () => {
-  it('Gives reasonable buckets when given just a simple array', () => {
-    const { pooledData, pools } = usePooledData({
-      data: data.map(datum => datum.a),
-    })
-    expect(pooledData).toHaveLength(pools.length)
+  it('Gives reasonable buckets for just a simple numeric array', () => {
+    const TestInComponent = () => {
+      const testData = data.map(datum => datum.a)
 
-    const expectedPools = [
-      { min: -6, max: -4 },
-      { min: -4, max: -2 },
-      { min: -2, max: 0 },
-      { min: 0, max: 2 },
-      { min: 2, max: 4 },
-      { min: 4, max: 6 },
-      { min: 6, max: 8 },
-      { min: 8, max: 10 },
-    ]
-    expect(pools).toEqual(expectedPools)
+      const { pooledData, poolSets } = usePooledData({
+        data: testData,
+      })
 
-    const expectedPooledData = [1, 0, 3, 5, 5, 13, 2, 2]
-    expect(pooledData).toEqual(expectedPooledData)
+      expect(poolSets).toHaveLength(1)
+      const pools = poolSets[0]
+      expect(pooledData).toHaveLength(pools.length - 1)
+
+      const expectedPools = [-6, -4, -2, 0, 2, 4, 6, 8, 10]
+      expect(pools).toEqual(expectedPools)
+
+      const expectedPooledLengths = [1, 0, 3, 4, 5, 13, 2, 2]
+      expect(entriesToLengths(pooledData)).toEqual(expectedPooledLengths)
+
+      const expectedPooledData = lengthsToEntries(
+        expectedPooledLengths,
+        testData
+      )
+      expect(pooledData).toEqual(expectedPooledData)
+
+      return ''
+    }
+    renderWithTheme(<TestInComponent />)
   })
 
-  it('applies fixed linear pools within pools correctly', () => {
-    const map_a = datum => datum.a
-    const map_b = datum => datum.b
-
-    const { pooledData, pools } = usePooledData({
-      data,
-      pooling: [
-        {
+  it('gets data refs using a data mapping function', () => {
+    const TestInComponent = () => {
+      const map_a = datum => datum.a
+      const { pooledData, poolSets } = usePooledData({
+        data,
+        poolings: {
           mapData: map_a,
-          pools: 4,
+          poolsCount: 4,
         },
-        {
-          mapData: map_b,
-          pools: 2,
+      })
+
+      const expectedPools = [[-10, -5, 0, 5, 10]]
+      expect(poolSets).toEqual(expectedPools)
+
+      const expectedPooledLengths = [1, 3, 18, 8]
+      expect(entriesToLengths(pooledData)).toEqual(expectedPooledLengths)
+
+      const expectedPooledData = lengthsToEntries(expectedPooledLengths)
+      expect(pooledData).toEqual(expectedPooledData)
+
+      return ''
+    }
+    renderWithTheme(<TestInComponent />)
+  })
+
+  it('correctly nests pools within pools', () => {
+    const TestInComponent = () => {
+      const map_a = datum => datum.a
+      const map_b = datum => datum.b
+
+      const { pooledData, poolSets } = usePooledData({
+        data,
+        poolings: [
+          {
+            mapData: map_a,
+            poolsCount: 4,
+          },
+          {
+            mapData: map_b,
+            poolsCount: 2,
+          },
+        ],
+      })
+
+      const expectedPools = [
+        [-10, -5, 0, 5, 10],
+        [0, 10, 20],
+      ]
+      expect(poolSets).toEqual(expectedPools)
+
+      const expectedPooledLengths = [
+        [0, 1],
+        [2, 1],
+        [9, 9],
+        [4, 4],
+      ]
+      expect(entriesToLengths(pooledData)).toEqual(expectedPooledLengths)
+
+      const sorters = [
+        null,
+        (a, b) => {
+          const aIsOver = a.b >= 10
+          const bIsOver = b.b >= 10
+          if (aIsOver === bIsOver) return a.a - b.a
+          return aIsOver ? 1 : -1
         },
-      ],
-    })
+      ]
+      const expectedPooledData = lengthsToEntries(
+        expectedPooledLengths,
+        data,
+        sorters
+      )
 
-    const expectedPools = [
-      {
-        min: -6,
-        max: -2,
-        pools: [
-          { min: 0, max: 10 },
-          { min: 10, max: 20 },
-        ],
-      },
-      {
-        min: -2,
-        max: 2,
-        pools: [
-          { min: 0, max: 10 },
-          { min: 10, max: 20 },
-        ],
-      },
-      {
-        min: 2,
-        max: 6,
-        pools: [
-          { min: 0, max: 10 },
-          { min: 10, max: 20 },
-        ],
-      },
-      {
-        min: 6,
-        max: 10,
-        pools: [
-          { min: 0, max: 10 },
-          { min: 10, max: 20 },
-        ],
-      },
-    ]
-    expect(pools).toEqual(expectedPools)
+      expect(pooledData).toEqual(expectedPooledData)
 
-    const expectedPooledData = [
-      [0, 1],
-      [4, 3],
-      [9, 9],
-      [2, 2],
-    ]
-    expect(pooledData).toEqual(expectedPooledData)
+      return ''
+    }
+    renderWithTheme(<TestInComponent />)
   })
 })
