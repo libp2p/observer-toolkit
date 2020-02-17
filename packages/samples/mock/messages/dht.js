@@ -133,10 +133,6 @@ function createQueries({ peerIds = [], queryCount = 10 } = {}) {
   return targets.map(targetPeerId => createQuery({ targetPeerId }))
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> add additional props
 function createDHT({
   k = 20,
   proto = protocolList.getRandom(),
@@ -146,12 +142,6 @@ function createDHT({
   disjointPaths = 10,
   peerIds = [],
 } = {}) {
-<<<<<<< HEAD
-=======
-function createDHT({ k = 20 } = {}) {
->>>>>>> add dht query randomness
-=======
->>>>>>> add additional props
   const dht = new DHT()
   dht.setProtocol(proto)
   dht.setEnabled(enabled)
