@@ -2,9 +2,7 @@
 
 const { test } = require('tap')
 
-const { generateComplete } = require('../mock/generate')
 const {
-  parseBuffer,
   getAllConnections,
   getConnections,
   getEnumByName,
@@ -13,11 +11,11 @@ const {
   statusNames,
 } = require('@libp2p-observer/data')
 
-const initialConnCount = 6
-const durationSeconds = 60
-
-const bin = generateComplete(initialConnCount, durationSeconds)
-const { states } = parseBuffer(bin)
+const {
+  states,
+  initialConnCount,
+  durationSeconds,
+} = require('./fixtures/generate')
 
 const timepointsExceptLatest = states.slice(0, -1)
 
@@ -98,15 +96,18 @@ test('Open connections increase traffic', t => {
       'packets'
     )
 
-    if (endPacketsIn <= startPacketsIn)
-      console.log('ID:---', connectionAtEnd.getId().toString())
-
-    t.ok(endBytesIn > startBytesIn, `${endBytesIn} > ${startBytesIn}`)
-    t.ok(endBytesOut > startBytesOut, `${endBytesOut} > ${startBytesOut}`)
-    t.ok(endPacketsIn > startPacketsIn, `${endPacketsIn} > ${startPacketsIn}`)
+    t.ok(endBytesIn > startBytesIn, `Bytes In: ${endBytesIn} > ${startBytesIn}`)
+    t.ok(
+      endBytesOut > startBytesOut,
+      `Bytes Out: ${endBytesOut} > ${startBytesOut}`
+    )
+    t.ok(
+      endPacketsIn > startPacketsIn,
+      `Packets In: ${endPacketsIn} > ${startPacketsIn}`
+    )
     t.ok(
       endPacketsOut > startPacketsOut,
-      `${endPacketsOut} > ${startPacketsOut}`
+      `Packets out: ${endPacketsOut} > ${startPacketsOut}`
     )
   }
   t.end()

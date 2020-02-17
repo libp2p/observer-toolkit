@@ -2,10 +2,12 @@
 
 const binary = require('./lib/binary')
 const enums = require('./lib/enums')
-const helpers = require('./lib/helpers')
+const connectionsList = require('./lib/connectionsList')
+const states = require('./lib/states')
 
 module.exports = {
   ...binary,
   ...enums,
-  ...helpers,
+  ...connectionsList,
+  ...states,
 }
