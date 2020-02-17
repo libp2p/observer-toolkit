@@ -8,11 +8,17 @@ const {
   proto: { DHT },
 } = require('@libp2p-observer/proto')
 
+const BUCKET_MOVE_PROBABILITY = 1 / 50
 const PEER_ADD_REMOVE_PROBABILITY = 1 / 40
 
 function mapArray(size, map) {
   // create a new array of predefined size and fill with values from map function
   return Array.apply(null, Array(size)).map(map)
+}
+
+function randomBucketMove(multiplier = 1) {
+  const move = random() <= BUCKET_MOVE_PROBABILITY * multiplier
+  return move ? Math.floor(Math.random() * 3) - 1 : 0
 }
 
 function randomQueryResult() {
@@ -74,6 +80,25 @@ function randomPeerAddRemove(multiplier = 1) {
 
 function createPeerIds({ peerCount = 5 } = {}) {
   return mapArray(peerCount, generateHashId)
+}
+
+function createPeerInDHT({
+  peerId = generateHashId(),
+  bucket = 0,
+  bucketAge = 0,
+  status = DHT.PeerInDHT.Status.ACTIVE,
+} = {}) {
+  const pdht = new DHT.PeerInDHT()
+  pdht.setPeerId(peerId)
+  pdht.setBucket(bucket)
+  pdht.setAgeInBucket(bucketAge)
+  pdht.setStatus(status)
+  return pdht
+}
+
+function createPeersInDHT({ peerIds = [], peerCount = 30 } = {}) {
+  const targets = peerIds.length ? peerIds : mapArray(peerCount, generateHashId)
+  return targets.map(peerId => createPeerInDHT({ peerId }))
 }
 
 function createQuery({
@@ -139,6 +164,8 @@ function createDHT({ k = 20 } = {}) {
   dht.setParams(params)
   const queries = createQueries({ peerIds })
   dht.setQueryList(queries)
+  const peers = createPeersInDHT()
+  dht.setPeerInDhtList(peers)
 
   return dht
 }
@@ -150,6 +177,28 @@ function updatePeerIds(peerIds) {
   if (randomPeerAddRemove()) {
     peerIds.push(generateHashId())
   }
+}
+
+function updatePeerInDHT(peer) {
+  updatePeerInDHTBucket(peer)
+  // peer.setStatus(status)
+}
+
+function updatePeerInDHTBucket(peer) {
+  const move = randomBucketMove()
+  const oldBucket = peer.getBucket()
+  const newBucket = Math.max(0, oldBucket + move)
+  if (newBucket !== oldBucket) {
+    peer.setBucket(newBucket)
+    peer.setAgeInBucket(0)
+  } else {
+    const age = peer.getAgeInBucket()
+    peer.setAgeInBucket(age + 1000)
+  }
+}
+
+function updatePeersInDHT(peers) {
+  peers.forEach(p => updatePeerInDHT(p))
 }
 
 function updateQuery(query) {
@@ -166,6 +215,10 @@ function updateDHT(dht, now) {
   const queries = dht.getQueryList()
   updateQueries(queries)
   dht.setQueryList(queries)
+
+  const peers = dht.getPeerInDhtList()
+  updatePeersInDHT(peers)
+  dht.setPeerInDhtList(peers)
 }
 
 module.exports = {

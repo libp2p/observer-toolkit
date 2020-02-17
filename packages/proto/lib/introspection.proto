@@ -217,6 +217,27 @@ message DHT {
     // number of disjoint paths to use.
     uint64 disjoint_paths       = 3;
   }
+  
+  // Peer in DHT
+  message PeerInDHT {
+
+    // The status of a peer
+    enum Status {
+        ACTIVE  = 0;
+        MISSING  = 1;
+        DISCONNECTED = 2;
+        EJECTED = 3;
+    }
+
+    // the peer id of the host system
+    string peer_id          = 1;
+    // bucket
+    uint32 bucket           = 2;
+    // age in bucket (ms)
+    uint32 age_in_bucket    = 3;
+    // status of the peer
+    Status status           = 4;
+  }
 
   message Query {
     // Trigger of the query.
@@ -279,27 +300,8 @@ message DHT {
   Params params                       = 4;
   // queries data
   repeated Query query                = 5;
-}
-
-// Peer Type
-message PeerType {
-
-    // The status of a peer
-    enum Status {
-        ACTIVE  = 0;
-        MISSING  = 1;
-        DISCONNECTED = 2;
-        EJECTED = 3;
-    }
-
-    // the peer id of the host system
-    string peer_id          = 1;
-    // bucket
-    uint32 bucket           = 2;
-    // age in bucket (ms)
-    uint32 age_in_bucket    = 3;
-    // status of the peer
-    Status status           = 4;
+  // peers in the dht
+  repeated PeerInDHT peer_in_dht      = 6; 
 }
 
 // Subsystems encapsulates all instrumented subsystems for a libp2p host.
@@ -308,8 +310,6 @@ message Subsystems {
   repeated Connection connections = 1;
   // the DHT subsystem.
   DHT dht = 2;
-  // Peer Type
-  PeerType peer_type = 3; 
 }
 
 // Connections and streams output for a time interval is one of these.

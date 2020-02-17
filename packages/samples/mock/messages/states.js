@@ -22,7 +22,6 @@ function createState(connectionsList, now, dht) {
   const subsystems = new Subsystems()
   subsystems.setConnectionsList(connectionsList)
   subsystems.setDht(dht)
-
   state.setSubsystems(subsystems)
 
   return state
