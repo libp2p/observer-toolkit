@@ -41,6 +41,7 @@ const {
   generateComplete,
   generateConnections,
   generateDHT,
+  generateEvent,
   generateRuntime,
   generateStates,
   generateVersion,
@@ -82,10 +83,26 @@ if (socksrv) {
     let utcTo = Date.now()
     let utcFrom = utcTo - durationSeconds * 1000
     let tmrEmitter = null
+    let tmrEvent = null
     const connections = generateConnections(connectionsCount, utcFrom)
     const dht = generateDHT()
     const version = generateVersion()
     const runtime = generateRuntime()
+
+    function sendEvent({
+      type: null
+    } = {}) {
+      // send event
+      const _utcFrom = utcTo - 1000
+      const _utcTo = Date.now()
+      const event = generateEvent( { type, now: utcTo } )
+      const data = Buffer.concat([version, runtime, event]).toString('binary')
+      if (data) {
+        utcFrom = _utcFrom
+        utcTo = _utcTo
+      }
+      ws.send(data)
+    }
 
     function sendState() {
       // send states
