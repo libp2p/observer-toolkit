@@ -10,6 +10,7 @@ const {
   addStreamsToConnection,
 } = require('./messages/connections')
 const { createDHT, updateDHT } = require('./messages/dht')
+const { createEvent } = require('./messages/events')
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
 const { createProtocolDataPacket } = require('./messages/protocol-data-packet')
@@ -46,6 +47,12 @@ function updateConnections(connections, total, now) {
     addStreamsToConnection(connection, { now, secondsOpen: random() })
     connections.push(connection)
   }
+}
+
+function generateEvent(now) {
+  const event = createEvent(now)
+  const eventPacket = createProtocolDataPacket(event)
+  return createBufferSegment(eventPacket)
 }
 
 function generateState(connections, now, dht) {
@@ -97,6 +104,7 @@ module.exports = {
   generateComplete,
   generateConnections,
   generateDHT,
+  generateEvent,
   generateRuntime,
   generateState,
   generateStates,
