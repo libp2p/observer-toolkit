@@ -49,9 +49,12 @@ function updateConnections(connections, total, now) {
   }
 }
 
-function generateEvent(now) {
-  const event = createEvent(now)
-  const eventPacket = createProtocolDataPacket(event)
+function generateEvent({
+  now = Date.now(),
+  type = ''
+} = {}) {
+  const event = createEvent({ now, type })
+  const eventPacket = createProtocolDataPacket(event, false, true)
   return createBufferSegment(eventPacket)
 }
 
