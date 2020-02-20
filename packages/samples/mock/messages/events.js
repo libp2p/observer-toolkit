@@ -3,15 +3,18 @@
 const {
   proto: { Event },
 } = require('@libp2p-observer/proto')
-// const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
+const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
-// const { SNAPSHOT_DURATION } = require('../utils')
-// const { createTraffic, sumTraffic } = require('../messages/traffic')
-
-function createEvent(now) {
+function createEvent({
+    now = Date.now(),
+    type = ''
+} = {}) {
   const event = new Event()
 
-//   event. .... //
+  event.setType(type)
+  event.setTs(new Timestamp([now]))
+  const content = event.getContentMap()
+  // content.set('message', 'Test message')
 
   return event
 }

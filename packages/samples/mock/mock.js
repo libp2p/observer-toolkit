@@ -90,13 +90,13 @@ if (socksrv) {
     const runtime = generateRuntime()
 
     function sendEvent({
-      type: null
+      type = ''
     } = {}) {
       // send event
       const _utcFrom = utcTo - 1000
       const _utcTo = Date.now()
-      const event = generateEvent( { type, now: utcTo } )
-      const data = Buffer.concat([version, runtime, event]).toString('binary')
+      const event = generateEvent({ type })
+      const data = Buffer.concat([version, event]).toString('binary')
       if (data) {
         utcFrom = _utcFrom
         utcTo = _utcTo
@@ -138,6 +138,7 @@ if (socksrv) {
           signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
         ) {
           tmrEmitter = setInterval(function() {
+            sendEvent({ type: 'ping' })
             sendState()
           }, 1000)
         } else if (
