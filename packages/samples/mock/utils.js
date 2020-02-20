@@ -19,11 +19,15 @@ const OPEN_CLOSE_PROBABILITY = 1 / 40
 
 const HOST_PEER_ID = 'peer-id-of-host'
 
+let peerIdsGenerated = 0
 function generateHashId() {
-  const randomNumber = Math.pow(0.5 / random(), 5 / random())
-  return createHash('sha256')
+  const randomNumber = peerIdsGenerated + Math.pow(0.5 / random(), 5 / random())
+  const hash = createHash('sha256')
     .update(randomNumber.toString())
     .digest('hex')
+
+  peerIdsGenerated++
+  return hash
 }
 
 function getRandomiser() {
