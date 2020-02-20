@@ -83,15 +83,13 @@ if (socksrv) {
     let utcTo = Date.now()
     let utcFrom = utcTo - durationSeconds * 1000
     let tmrEmitter = null
-    let tmrEvent = null
+    // let tmrEvent = null
     const connections = generateConnections(connectionsCount, utcFrom)
     const dht = generateDHT()
     const version = generateVersion()
     const runtime = generateRuntime()
 
-    function sendEvent({
-      type = ''
-    } = {}) {
+    function sendEvent({ type = '' } = {}) {
       // send event
       const _utcFrom = utcTo - 1000
       const _utcTo = Date.now()
