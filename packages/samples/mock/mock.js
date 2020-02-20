@@ -76,11 +76,11 @@ if (socksrv) {
     const version = generateVersion()
     const runtime = generateRuntime()
 
-    function sendEvent({ type = '' } = {}) {
+    function sendEvent({ type = '', content = {} } = {}) {
       // send event
       const _utcFrom = utcTo - 1000
       const _utcTo = Date.now()
-      const event = generateEvent({ type })
+      const event = generateEvent({ type, content })
       const data = Buffer.concat([version, event]).toString('binary')
       if (data) {
         utcFrom = _utcFrom
@@ -100,6 +100,12 @@ if (socksrv) {
         utcTo,
         dht
       )
+      // send event when connection is opening
+      connections
+        .filter(cn => cn.getStatus() === 2)
+        .forEach(cn => {
+          sendEvent({ type: 'connection', content: { peerId: cn.getPeerId() } })
+        })
       const data = states.length
         ? Buffer.concat([version, runtime, ...states]).toString('binary')
         : ''
@@ -123,7 +129,6 @@ if (socksrv) {
           signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
         ) {
           tmrEmitter = setInterval(function() {
-            sendEvent({ type: 'ping' })
             sendState()
           }, 1000)
         } else if (
