@@ -82,7 +82,7 @@ function generateComplete(connectionsCount, durationSeconds, peersCount) {
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
   const startTs = utcFrom - Math.floor(random() * 1000)
-  const dht = generateDHT({ startTs, peerIds, peersCount })
+  const dht = generateDHT({ startTs, peerIds, peersCount, connections })
   const states = generateStates(
     connections,
     connectionsCount,

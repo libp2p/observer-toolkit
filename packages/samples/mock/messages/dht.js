@@ -9,6 +9,7 @@ const {
 } = require('../utils')
 const { protocolList } = require('../enums/protocolList')
 const { dhtStatusList, presentInBuckets } = require('../enums/dhtStatusList')
+const { statusList } = require('../enums/statusList')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 const {
   proto: { DHT },
@@ -103,10 +104,21 @@ function createPeerInDHT({
   return pdht
 }
 
-function createPeersInDHT({ peerIds = [], peersCount = DEFAULT_PEERS } = {}) {
-  const targets = peerIds.length
+function createPeersInDHT({
+  peerIds = [],
+  peersCount = DEFAULT_PEERS,
+  connections = [],
+} = {}) {
+  const activeConnections = connections.filter(
+    conn => conn.getStatus() === statusList.getNum('ACTIVE')
+  )
+  const activeConnPeerIds = activeConnections.map(conn => conn.getPeerId())
+
+  const dhtOnlyPeerIds = peerIds.length
     ? peerIds
-    : mapArray(peersCount, generateHashId)
+    : mapArray(peersCount - activeConnPeerIds.length, generateHashId)
+
+  const targets = [...activeConnPeerIds, ...dhtOnlyPeerIds]
   return targets.map(peerId => createPeerInDHT({ peerId }))
 }
 
@@ -151,6 +163,7 @@ function createDHT({
   disjointPaths = 10,
   peerIds = [],
   peersCount = DEFAULT_PEERS,
+  connections = [],
 } = {}) {
   const dht = new DHT()
   dht.setProtocol(proto)
@@ -164,7 +177,7 @@ function createDHT({
   dht.setParams(params)
   const queries = createQueries({ peerIds })
   dht.setQueryList(queries)
-  const peers = createPeersInDHT({ peersCount })
+  const peers = createPeersInDHT({ peersCount, connections })
   dht.setPeerInDhtList(peers)
 
   return dht
