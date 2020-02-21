@@ -96,19 +96,42 @@ test('Open connections increase traffic', t => {
       'packets'
     )
 
-    t.ok(endBytesIn > startBytesIn, `Bytes In: ${endBytesIn} > ${startBytesIn}`)
-    t.ok(
-      endBytesOut > startBytesOut,
-      `Bytes Out: ${endBytesOut} > ${startBytesOut}`
-    )
-    t.ok(
-      endPacketsIn > startPacketsIn,
-      `Packets In: ${endPacketsIn} > ${startPacketsIn}`
-    )
-    t.ok(
-      endPacketsOut > startPacketsOut,
-      `Packets out: ${endPacketsOut} > ${startPacketsOut}`
-    )
+    if (connectionAtEnd.getStatus() === activeStatus) {
+      t.ok(
+        endBytesIn > startBytesIn,
+        `Bytes In: ${endBytesIn} > ${startBytesIn}`
+      )
+      t.ok(
+        endBytesOut > startBytesOut,
+        `Bytes Out: ${endBytesOut} > ${startBytesOut}`
+      )
+      t.ok(
+        endPacketsIn > startPacketsIn,
+        `Packets In: ${endPacketsIn} > ${startPacketsIn}`
+      )
+      t.ok(
+        endPacketsOut > startPacketsOut,
+        `Packets out: ${endPacketsOut} > ${startPacketsOut}`
+      )
+    } else {
+      // Swiftly-closed connections may have added no data, use >= not >
+      t.ok(
+        endBytesIn >= startBytesIn,
+        `Bytes In: ${endBytesIn} >= ${startBytesIn}`
+      )
+      t.ok(
+        endBytesOut >= startBytesOut,
+        `Bytes Out: ${endBytesOut} >= ${startBytesOut}`
+      )
+      t.ok(
+        endPacketsIn >= startPacketsIn,
+        `Packets In: ${endPacketsIn} >= ${startPacketsIn}`
+      )
+      t.ok(
+        endPacketsOut >= startPacketsOut,
+        `Packets out: ${endPacketsOut} >= ${startPacketsOut}`
+      )
+    }
   }
   t.end()
 })
