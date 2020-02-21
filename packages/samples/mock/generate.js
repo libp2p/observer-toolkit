@@ -61,7 +61,7 @@ function generateStates(connections, connectionsCount, utcFrom, utcTo, dht) {
     const now = utcFrom + state * 1000
     const connCount = state !== 1 ? connectionsCount : null
     updateConnections(connections, connCount, now)
-    updateDHT(dht)
+    updateDHT(dht, connections, now)
     stateBuffers.push(generateState(connections, now, dht))
   }
   return stateBuffers

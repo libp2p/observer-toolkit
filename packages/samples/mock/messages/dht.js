@@ -104,15 +104,19 @@ function createPeerInDHT({
   return pdht
 }
 
+function getActiveConnectionPeerIds(connections) {
+  const activeConnections = connections.filter(
+    conn => conn.getStatus() === statusList.getNum('ACTIVE')
+  )
+  return activeConnections.map(conn => conn.getPeerId())
+}
+
 function createPeersInDHT({
   peerIds = [],
   peersCount = DEFAULT_PEERS,
   connections = [],
 } = {}) {
-  const activeConnections = connections.filter(
-    conn => conn.getStatus() === statusList.getNum('ACTIVE')
-  )
-  const activeConnPeerIds = activeConnections.map(conn => conn.getPeerId())
+  const activeConnPeerIds = getActiveConnectionPeerIds(connections)
 
   const dhtOnlyPeerIds = peerIds.length
     ? peerIds
@@ -192,9 +196,11 @@ function updatePeerIds(peerIds) {
   }
 }
 
-function updatePeerInDHT(peer) {
-  updatePeerInDHTBucket(peer)
-  // peer.setStatus(status)
+function updatePeerInDHT(peer, connection) {
+  updatePeerStatus(peer, connection)
+  if (peer.getStatus() === dhtStatusList.getNum('ACTIVE')) {
+    updatePeerInDHTBucket(peer)
+  }
 }
 
 function updatePeerInDHTBucket(peer) {
@@ -210,8 +216,25 @@ function updatePeerInDHTBucket(peer) {
   }
 }
 
-function updatePeersInDHT(peers) {
-  peers.forEach(p => updatePeerInDHT(p))
+function updatePeersInDHT(peers, connections, dht) {
+  const activeConnPeerIds = getActiveConnectionPeerIds(connections)
+
+  peers.forEach(dhtPeer => {
+    const peerId = dhtPeer.getPeerId()
+    const connection = connections.find(
+      conn => conn.getPeerId() === dhtPeer.getPeerId()
+    )
+    updatePeerInDHT(dhtPeer, connection)
+
+    const activeConnIndex = activeConnPeerIds.indexOf(peerId)
+    if (activeConnIndex !== -1) activeConnPeerIds.splice(activeConnIndex, 1)
+  })
+
+  // If any active connection peer IDs aren't found in DHT, add peers for them
+  activeConnPeerIds.forEach(peerId => {
+    const newPeer = createPeerInDHT({ peerId })
+    dht.addPeerInDht(newPeer)
+  })
 }
 
 function updateQuery(query) {
@@ -224,13 +247,13 @@ function updateQueries(queries) {
   queries.forEach(q => updateQuery(q))
 }
 
-function updateDHT(dht, now) {
+function updateDHT(dht, connections, now) {
   const queries = dht.getQueryList()
   updateQueries(queries)
   dht.setQueryList(queries)
 
   const peers = dht.getPeerInDhtList()
-  updatePeersInDHT(peers)
+  updatePeersInDHT(peers, connections, dht)
   dht.setPeerInDhtList(peers)
 
   validateBucketSizes(dht)
@@ -306,6 +329,34 @@ function fixOverflowingBucket(peersInBucket, bucketIndex, dht) {
 
 function ejectPeer(peer) {
   peer.setStatus(dhtStatusList.getNum('EJECTED'))
+}
+
+function updatePeerStatus(peer, connection) {
+  // If this corresponds to a connection, mimic its status
+  if (connection) {
+    setPeerStatusByConnection(peer, connection)
+    return
+  }
+
+  // If not, it can randomly toggle missing or un-missing, or, be disconnected
+  const peerStatusName = dhtStatusList.getItem(peer.getStatus())
+  if (peerStatusName !== 'ACTIVE' && peerStatusName !== 'MISSING') return
+
+  if (randomPeerAddRemove()) {
+    peer.setStatus(
+      dhtStatusList.getNum(peerStatusName === 'ACTIVE' ? 'MISSING' : 'ACTIVE')
+    )
+  } else if (randomPeerAddRemove()) {
+    peer.setStatus(dhtStatusList.getNum('DISCONNECTED'))
+  }
+}
+
+function setPeerStatusByConnection(peer, connection) {
+  const connStatusName = statusList.getItem(connection.getStatus())
+  const connectionIsActive =
+    connStatusName === 'ACTIVE' || connStatusName === 'OPENING'
+  const peerStatusName = connectionIsActive ? 'ACTIVE' : 'DISCONNECTED'
+  peer.setStatus(dhtStatusList.getNum(peerStatusName))
 }
 
 module.exports = {
