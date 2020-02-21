@@ -42,9 +42,9 @@ function getRandomiser() {
   let index = 0
   const pseudoRandom = () => {
     // Avoid flakey test failures with varied but consistent values
-    index = index < 19 ? index + 1 : 1
-    const decimal = (index / 2) * 0.1
-    // 0.05, 0.9, 0.15, 0.8, 0.25, 0.7...
+    index = index < 39 ? index + 1 : 1
+    const decimal = (index / 4) * 0.1
+    // 0.025, 0.95, 0.075, 0.9, 0.125, 0.85...
     return index % 2 ? decimal : 1 - decimal
   }
   return pseudoRandom
