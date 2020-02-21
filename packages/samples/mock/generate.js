@@ -73,7 +73,7 @@ function generateVersion() {
   return versionBuf
 }
 
-function generateComplete(connectionsCount, durationSeconds) {
+function generateComplete(connectionsCount, durationSeconds, peersCount) {
   const utcTo = Date.now()
   const utcFrom = utcTo - durationSeconds * 1000
 
@@ -82,7 +82,7 @@ function generateComplete(connectionsCount, durationSeconds) {
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
   const startTs = utcFrom - Math.floor(random() * 1000)
-  const dht = generateDHT({ startTs, peerIds })
+  const dht = generateDHT({ startTs, peerIds, peersCount })
   const states = generateStates(
     connections,
     connectionsCount,

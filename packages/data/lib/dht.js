@@ -12,6 +12,13 @@ const maxBucketNum = 255
 
 // Convenience functions for extracting DHT (Distributed Hash Tables) data from states
 
+function peerPresentInBucket(peer) {
+  const active = getEnumByName('ACTIVE', dhtStatusNames)
+  const missing = getEnumByName('MISSING', dhtStatusNames)
+  const status = peer.getStatus()
+  return status === active || status === missing
+}
+
 function getDht(state) {
   const dht = state.getSubsystems().getDht()
   return dht
@@ -35,12 +42,14 @@ function getDhtPeers(state, status = null) {
   const peers = getDht(state).getPeerInDhtList()
   if (!status) return peers
 
+  if (status === 'present') return peers.filter(peerPresentInBucket)
+
   const statusNum = getEnumByName(status, dhtStatusNames)
   return peers.filter(peer => peer.getStatus() === statusNum)
 }
 
 function getAllDhtBuckets(state) {
-  const buckets = getDhtPeers(state).reduce((buckets, peer) => {
+  const buckets = getDhtPeers(state, 'present').reduce((buckets, peer) => {
     const bucketNum = peer.getBucket()
     if (typeof bucketNum !== 'number' || bucketNum > maxBucketNum)
       return buckets
@@ -61,7 +70,9 @@ function getDhtBucket(bucketNum, state) {
       `Invalid DHT bucket number (${bucketNum} > ${maxBucketNum})`
     )
 
-  return getDhtPeers(state).filter(peer => peer.getBucket() === bucketNum)
+  return getDhtPeers(state, 'present').filter(
+    peer => peer.getBucket() === bucketNum
+  )
 }
 
 function getDhtQueries(state, options) {

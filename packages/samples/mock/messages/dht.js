@@ -1,8 +1,14 @@
 'use strict'
 
 // const { argv } = require('yargs')
-const { random, randomNormalDistribution, generateHashId } = require('../utils')
+const {
+  random,
+  randomNormalDistribution,
+  generateHashId,
+  DEFAULT_PEERS,
+} = require('../utils')
 const { protocolList } = require('../enums/protocolList')
+const { dhtStatusList, presentInBuckets } = require('../enums/dhtStatusList')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 const {
   proto: { DHT },
@@ -10,6 +16,7 @@ const {
 
 const BUCKET_MOVE_PROBABILITY = 1 / 50
 const PEER_ADD_REMOVE_PROBABILITY = 1 / 40
+const MAX_BUCKETS = 256
 
 function mapArray(size, map) {
   // create a new array of predefined size and fill with values from map function
@@ -78,8 +85,8 @@ function randomPeerAddRemove(multiplier = 1) {
   return random() <= PEER_ADD_REMOVE_PROBABILITY * multiplier
 }
 
-function createPeerIds({ peerCount = 5 } = {}) {
-  return mapArray(peerCount, generateHashId)
+function createPeerIds({ peersCount = DEFAULT_PEERS } = {}) {
+  return mapArray(peersCount, generateHashId)
 }
 
 function createPeerInDHT({
@@ -96,8 +103,10 @@ function createPeerInDHT({
   return pdht
 }
 
-function createPeersInDHT({ peerIds = [], peerCount = 30 } = {}) {
-  const targets = peerIds.length ? peerIds : mapArray(peerCount, generateHashId)
+function createPeersInDHT({ peerIds = [], peersCount = DEFAULT_PEERS } = {}) {
+  const targets = peerIds.length
+    ? peerIds
+    : mapArray(peersCount, generateHashId)
   return targets.map(peerId => createPeerInDHT({ peerId }))
 }
 
@@ -141,6 +150,7 @@ function createDHT({
   alpha = 3,
   disjointPaths = 10,
   peerIds = [],
+  peersCount = DEFAULT_PEERS,
 } = {}) {
   const dht = new DHT()
   dht.setProtocol(proto)
@@ -154,7 +164,7 @@ function createDHT({
   dht.setParams(params)
   const queries = createQueries({ peerIds })
   dht.setQueryList(queries)
-  const peers = createPeersInDHT()
+  const peers = createPeersInDHT({ peersCount })
   dht.setPeerInDhtList(peers)
 
   return dht
@@ -177,7 +187,7 @@ function updatePeerInDHT(peer) {
 function updatePeerInDHTBucket(peer) {
   const move = randomBucketMove()
   const oldBucket = peer.getBucket()
-  const newBucket = Math.max(0, oldBucket + move)
+  const newBucket = Math.min(Math.max(0, oldBucket + move), MAX_BUCKETS - 1)
   if (newBucket !== oldBucket) {
     peer.setBucket(newBucket)
     peer.setAgeInBucket(0)
@@ -209,6 +219,80 @@ function updateDHT(dht, now) {
   const peers = dht.getPeerInDhtList()
   updatePeersInDHT(peers)
   dht.setPeerInDhtList(peers)
+
+  validateBucketSizes(dht)
+
+  // Helpful for debugging bucket allocation:
+  /*
+  console.log(
+    'Peer bucket allocation:',
+    dht.getPeerInDhtList().length,
+    dht.getPeerInDhtList().reduce((oldBuckets, peer) => {
+      const newBuckets = { ...oldBuckets }
+      const bucketIndex = peer.getBucket()
+      if (typeof bucketIndex === 'number') {
+        if (typeof newBuckets[bucketIndex] === 'number') {
+          newBuckets[bucketIndex] += 1
+        } else {
+          newBuckets[bucketIndex] = 1
+        }
+      }
+      return newBuckets
+    }, {})
+  )
+  */
+}
+
+function validateBucketSizes(
+  dht,
+  bucketIndexes = [...Array(MAX_BUCKETS).keys()]
+) {
+  const peers = dht.getPeerInDhtList()
+  const k = dht.getParams().getK()
+
+  const buckets = bucketIndexes.map(index => ({
+    peers: peers.filter(
+      peer => presentInBuckets(peer.getStatus()) && peer.getBucket() === index
+    ),
+    index,
+  }))
+
+  const overflowingBuckets = buckets.filter(({ peers }) => peers.length > k)
+
+  overflowingBuckets.forEach(({ peers, index }) =>
+    fixOverflowingBucket(peers, index, dht)
+  )
+}
+
+function fixOverflowingBucket(peersInBucket, bucketIndex, dht) {
+  const k = dht.getParams().getK()
+  const movedPeers = []
+
+  while (peersInBucket.length > k) {
+    const randomPeerIndex = Math.floor(random() * peersInBucket.length)
+    const randomPeer = peersInBucket[randomPeerIndex]
+
+    if (bucketIndex === 0) {
+      // Move from 'catch-all' bucket to allocated bucket
+      // In real LibP2P, is based on bitwise XOR i.e. kademlia distance of peer Id
+      // We'll use random bucket, favouring higher numbers (= more similar XOR)
+      const weightedRand = Math.max(Math.pow(random(), 1 / 10), 1 / MAX_BUCKETS)
+      const allocatedBucket = Math.ceil(weightedRand * (MAX_BUCKETS - 1))
+
+      randomPeer.setBucket(allocatedBucket)
+
+      validateBucketSizes(dht, [allocatedBucket])
+    } else {
+      ejectPeer(randomPeer)
+    }
+
+    const [movedPeer] = peersInBucket.splice(randomPeerIndex, 1)
+    movedPeers.push(movedPeer)
+  }
+}
+
+function ejectPeer(peer) {
+  peer.setStatus(dhtStatusList.getNum('EJECTED'))
 }
 
 module.exports = {

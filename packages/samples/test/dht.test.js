@@ -58,11 +58,11 @@ test('Allocation of DHT peers to buckets is correct.', t => {
     const allBuckets = getAllDhtBuckets(state)
     const foundPeers = new Set()
 
-    for (const peersInBucket of Object.values(allBuckets)) {
+    for (const [bucketNum, peersInBucket] of Object.entries(allBuckets)) {
       // Correct number of peers per bucket
       t.ok(
         peersInBucket.length <= k,
-        `peersInBucket.length (${peersInBucket.length}) <= k (${k})`
+        `peersInBucket.length (${peersInBucket.length}) <= k (${k}) for bucket ${bucketNum} in state ${i}`
       )
 
       // Each peer is in one and only one bucket

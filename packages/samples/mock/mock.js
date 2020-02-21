@@ -22,6 +22,11 @@ const { argv } = require('yargs').options({
     describe: 'number of streams per typical simulated connection',
     type: 'number',
   },
+  p: {
+    alias: 'peers',
+    describe: 'number of peers in DHT at start of simulation',
+    type: 'number',
+  },
 })
 const { createWriteStream } = require('fs')
 
@@ -30,6 +35,7 @@ const {
   DEFAULT_CONNECTIONS,
   DEFAULT_DURATION,
   DEFAULT_FILE,
+  DEFAULT_PEERS,
 } = require('./utils')
 const {
   generateComplete,
@@ -49,6 +55,7 @@ const {
   streams: streamsCount = DEFAULT_STREAMS,
   connections: connectionsCount = DEFAULT_CONNECTIONS,
   duration: durationSeconds = DEFAULT_DURATION,
+  peers: peersCount = DEFAULT_PEERS,
   file,
   socksrv,
 } = argv

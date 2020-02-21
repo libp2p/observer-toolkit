@@ -55,6 +55,7 @@ describe('DHT data helpers', () => {
     for (const state of states) {
       const allPeers = getDhtPeers(state)
       const activePeers = getDhtPeers(state, 'ACTIVE')
+      const presentPeers = getDhtPeers(state, 'present')
       const disconnectedPeers = getDhtPeers(state, 'DISCONNECTED')
 
       expect(allPeers.length).toBeGreaterThanOrEqual(activePeers.length)
@@ -65,6 +66,11 @@ describe('DHT data helpers', () => {
       )
       expect(peerIdSet(filteredActivePeers)).toEqual(peerIdSet(activePeers))
 
+      const activeInPresent = activePeers.filter(peer =>
+        presentPeers.includes(peer)
+      )
+      expect(peerIdSet(activePeers)).toEqual(peerIdSet(activeInPresent))
+
       const disconnected = getEnumByName('DISCONNECTED', dhtStatusNames)
       const filteredDisconnectedPeers = allPeers.filter(
         peer => peer.getStatus() === disconnected
@@ -72,6 +78,10 @@ describe('DHT data helpers', () => {
       expect(peerIdSet(filteredDisconnectedPeers)).toEqual(
         peerIdSet(disconnectedPeers)
       )
+      const disconnectedInPresent = disconnectedPeers.filter(peer =>
+        presentPeers.includes(peer)
+      )
+      expect(peerIdSet(disconnectedInPresent)).toEqual(peerIdSet([]))
     }
   })
 
@@ -98,13 +108,13 @@ describe('DHT data helpers', () => {
 
       currentBucketNum++
     }
-    const allPeers = getDhtPeers(states[0])
+    const presentPeers = getDhtPeers(states[0], 'present')
 
     const allPeersInBuckets = Object.values(
       allBuckets
     ).reduce((peers, bucketPeers) => [...peers, ...bucketPeers])
 
-    expect(peerIdSet(allPeersInBuckets)).toEqual(peerIdSet(allPeers))
+    expect(peerIdSet(allPeersInBuckets)).toEqual(peerIdSet(presentPeers))
   })
 
   it('gets current DHT queries with optional filters', () => {
