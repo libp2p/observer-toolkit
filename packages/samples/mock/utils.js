@@ -108,6 +108,11 @@ function decodeBinToNum(buf, offset = 0) {
   return buf.readUIntLE(offset, 4)
 }
 
+function mapArray(size, map) {
+  // create a new array of predefined size and fill with values from map function
+  return Array.apply(null, Array(size)).map(map)
+}
+
 module.exports = {
   DEFAULT_CONNECTIONS,
   DEFAULT_DURATION,
@@ -128,4 +133,5 @@ module.exports = {
   randomBandwidth,
   randomOpenClose,
   generateHashId,
+  mapArray,
 }

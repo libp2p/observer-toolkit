@@ -1,16 +1,17 @@
 'use strict'
 
-// const { argv } = require('yargs')
 const {
   random,
   randomNormalDistribution,
   generateHashId,
   DEFAULT_PEERS,
+  mapArray,
 } = require('../utils')
 const { protocolList } = require('../enums/protocolList')
 const { dhtStatusList, presentInBuckets } = require('../enums/dhtStatusList')
 const { statusList } = require('../enums/statusList')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
+const { updateQueries, createQueries } = require('./dht-queries')
 const {
   proto: { DHT },
 } = require('@libp2p-observer/proto')
@@ -19,75 +20,13 @@ const BUCKET_MOVE_PROBABILITY = 1 / 50
 const PEER_ADD_REMOVE_PROBABILITY = 1 / 40
 const MAX_BUCKETS = 256
 
-function mapArray(size, map) {
-  // create a new array of predefined size and fill with values from map function
-  return Array.apply(null, Array(size)).map(map)
-}
-
 function randomBucketMove(multiplier = 1) {
   const move = random() <= BUCKET_MOVE_PROBABILITY * multiplier
   return move ? Math.floor(Math.random() * 3) - 1 : 0
 }
 
-function randomQueryResult() {
-  const results = [
-    DHT.Query.Result.SUCCESS,
-    DHT.Query.Result.ERROR,
-    DHT.Query.Result.TIMEOUT,
-    DHT.Query.Result.PENDING,
-  ]
-  const idx = Math.round(
-    randomNormalDistribution({
-      min: 0,
-      max: 3,
-      skew: 1.5,
-    })
-  )
-  return results[idx]
-}
-
-function randomQueryTrigger() {
-  const results = [DHT.Query.Trigger.API, DHT.Query.Trigger.DISCOVERY]
-  const i = Math.floor(Math.random() * results.length)
-  return results[i]
-}
-
-function randomQueryTime() {
-  return Math.round(
-    randomNormalDistribution({
-      min: 5,
-      max: 100,
-      skew: 1.5,
-    })
-  )
-}
-
-function randomQueryTotalSteps() {
-  return Math.round(
-    randomNormalDistribution({
-      min: 1,
-      max: 10,
-      skew: 1.5,
-    })
-  )
-}
-
-function randomQueryType() {
-  const results = [
-    DHT.Query.Type.CONTENT,
-    DHT.Query.Type.PROVIDER,
-    DHT.Query.Type.VALUE,
-  ]
-  const i = Math.floor(Math.random() * results.length)
-  return results[i]
-}
-
 function randomPeerAddRemove(multiplier = 1) {
   return random() <= PEER_ADD_REMOVE_PROBABILITY * multiplier
-}
-
-function createPeerIds({ peersCount = DEFAULT_PEERS } = {}) {
-  return mapArray(peersCount, generateHashId)
 }
 
 function createPeerInDHT({
@@ -126,38 +65,6 @@ function createPeersInDHT({
   return targets.map(peerId => createPeerInDHT({ peerId }))
 }
 
-function createQuery({
-  queryId = generateHashId(),
-  targetPeerId = generateHashId(),
-  totalTimeMs = randomQueryTime(),
-  totalSteps = randomQueryTotalSteps(),
-  trigger = randomQueryTrigger(),
-  type = randomQueryType(),
-  result = randomQueryResult(),
-} = {}) {
-  const query = new DHT.Query()
-  query.setId(queryId)
-  query.setTargetPeerId(targetPeerId)
-  query.setTotalTimeMs(totalTimeMs)
-  query.setTotalSteps(totalSteps)
-
-  const peerIds = createPeerIds()
-  query.setPeerIdsList(peerIds)
-
-  query.setTrigger(trigger)
-  query.setType(type)
-  query.setResult(result)
-  query.setSentTs(new Timestamp(Date.now()))
-  return query
-}
-
-function createQueries({ peerIds = [], queryCount = 10 } = {}) {
-  const targets = peerIds.length
-    ? peerIds
-    : mapArray(queryCount, generateHashId)
-  return targets.map(targetPeerId => createQuery({ targetPeerId }))
-}
-
 function createDHT({
   k = 20,
   proto = protocolList.getRandom(),
@@ -185,15 +92,6 @@ function createDHT({
   dht.setPeerInDhtList(peers)
 
   return dht
-}
-
-function updatePeerIds(peerIds) {
-  peerIds.forEach((item, idx, arr) => {
-    arr.splice(idx, Number(randomPeerAddRemove()))
-  })
-  if (randomPeerAddRemove()) {
-    peerIds.push(generateHashId())
-  }
 }
 
 function updatePeerInDHT(peer, connection) {
@@ -235,16 +133,6 @@ function updatePeersInDHT(peers, connections, dht) {
     const newPeer = createPeerInDHT({ peerId })
     dht.addPeerInDht(newPeer)
   })
-}
-
-function updateQuery(query) {
-  const peerIds = query.getPeerIdsList()
-  updatePeerIds(peerIds)
-  query.setPeerIdsList(peerIds)
-}
-
-function updateQueries(queries) {
-  queries.forEach(q => updateQuery(q))
 }
 
 function updateDHT(dht, connections, now) {
