@@ -50,18 +50,10 @@ function getActiveConnectionPeerIds(connections) {
   return activeConnections.map(conn => conn.getPeerId())
 }
 
-function createPeersInDHT({
-  peerIds = [],
-  peersCount = DEFAULT_PEERS,
-  connections = [],
-} = {}) {
-  const activeConnPeerIds = getActiveConnectionPeerIds(connections)
+function createPeersInDHT({ peerIds = [], peersCount = DEFAULT_PEERS } = {}) {
+  const dhtOnlyPeerIds = mapArray(peersCount - peerIds.length, generateHashId)
 
-  const dhtOnlyPeerIds = peerIds.length
-    ? peerIds
-    : mapArray(peersCount - activeConnPeerIds.length, generateHashId)
-
-  const targets = [...activeConnPeerIds, ...dhtOnlyPeerIds]
+  const targets = [...peerIds, ...dhtOnlyPeerIds]
   return targets.map(peerId => createPeerInDHT({ peerId }))
 }
 
@@ -88,7 +80,7 @@ function createDHT({
   dht.setParams(params)
   const queries = createQueries({ peerIds })
   dht.setQueryList(queries)
-  const peers = createPeersInDHT({ peersCount, connections })
+  const peers = createPeersInDHT({ peerIds, peersCount, connections })
   dht.setPeerInDhtList(peers)
 
   return dht
