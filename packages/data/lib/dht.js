@@ -1,6 +1,5 @@
 'use strict'
 
-const { getSubsystems } = require('./states')
 const {
   getEnumByName,
   dhtStatusNames,
@@ -38,7 +37,6 @@ function getDhtStatus(state) {
 }
 
 function getDhtPeers(state, status = null) {
-  const dht = getDht(state)
   const peers = getDht(state).getPeerInDhtList()
   if (!status) return peers
 

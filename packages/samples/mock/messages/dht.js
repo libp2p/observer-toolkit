@@ -2,16 +2,15 @@
 
 const {
   random,
-  randomNormalDistribution,
   generateHashId,
   DEFAULT_PEERS,
   mapArray,
+  createTimestamp,
 } = require('../utils')
 const { protocolList } = require('../enums/protocolList')
 const { dhtStatusList, presentInBuckets } = require('../enums/dhtStatusList')
 const { statusList } = require('../enums/statusList')
-const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
-const { updateQueries, createQueries } = require('./dht-queries')
+const { createQueries } = require('./dht-queries')
 const {
   proto: { DHT },
 } = require('@libp2p-observer/proto')
@@ -51,7 +50,10 @@ function getActiveConnectionPeerIds(connections) {
 }
 
 function createPeersInDHT({ peerIds = [], peersCount = DEFAULT_PEERS } = {}) {
-  const dhtOnlyPeerIds = mapArray(peersCount - peerIds.length, generateHashId)
+  const dhtOnlyPeerIds = mapArray(
+    Math.max(0, peersCount - peerIds.length),
+    generateHashId
+  )
 
   const targets = [...peerIds, ...dhtOnlyPeerIds]
   return targets.map(peerId => createPeerInDHT({ peerId }))
@@ -71,7 +73,7 @@ function createDHT({
   const dht = new DHT()
   dht.setProtocol(proto)
   dht.setEnabled(enabled)
-  dht.setStartTs(new Timestamp([startTs]))
+  dht.setStartTs(createTimestamp(startTs))
 
   const params = new DHT.Params()
   params.setK(k)

@@ -1,6 +1,7 @@
 'use strict'
 
 const { createHash } = require('crypto')
+const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
 const DEFAULT_CONNECTIONS = 6
 const DEFAULT_DURATION = 10 // Seconds
@@ -113,6 +114,10 @@ function mapArray(size, map) {
   return Array.apply(null, Array(size)).map(map)
 }
 
+function createTimestamp(utcNum) {
+  return new Timestamp([Math.round(utcNum)])
+}
+
 module.exports = {
   DEFAULT_CONNECTIONS,
   DEFAULT_DURATION,
@@ -134,4 +139,5 @@ module.exports = {
   randomOpenClose,
   generateHashId,
   mapArray,
+  createTimestamp,
 }

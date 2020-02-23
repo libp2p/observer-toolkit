@@ -11,9 +11,7 @@ import {
   getStreamTraffic,
 } from './connectionsList'
 
-import { statusNames, roleNames, transportNames } from './enums'
-
-import { getLatestTimepoint, getTime, getTimeIndex } from './states'
+import { getLatestTimepoint } from './states'
 
 const { Connection } = proto
 const { states } = loadSample()

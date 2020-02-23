@@ -1,13 +1,13 @@
 'use strict'
 
 const { proto } = require('@libp2p-observer/proto')
-const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
 const {
   encodeNumToBin,
   random,
   randomLatency,
   randomOpenClose,
+  createTimestamp,
 } = require('../utils')
 const { protocolList } = require('../enums/protocolList')
 const { roleList } = require('../enums/roleList')
@@ -113,8 +113,8 @@ function createStreamTimeline({ open = 0, close = 0 }) {
 }
 
 function mockStreamTimeline(streamTimeline, { open, close }) {
-  if (open) streamTimeline.setOpenTs(new Timestamp([Math.round(open)]))
-  if (close) streamTimeline.setCloseTs(new Timestamp([Math.round(close)]))
+  if (open) streamTimeline.setOpenTs(createTimestamp(open))
+  if (close) streamTimeline.setCloseTs(createTimestamp(close))
 }
 
 module.exports = {

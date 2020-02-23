@@ -5,13 +5,11 @@ const {
   randomNormalDistribution,
   generateHashId,
   mapArray,
+  createTimestamp,
 } = require('../utils')
-const { protocolList } = require('../enums/protocolList')
-const { dhtStatusList, presentInBuckets } = require('../enums/dhtStatusList')
+const { dhtStatusList } = require('../enums/dhtStatusList')
 const { dhtQueryDirectionList } = require('../enums/dhtQueryDirectionList')
 
-const { statusList } = require('../enums/statusList')
-const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 const {
   proto: { DHT },
 } = require('@libp2p-observer/proto')
@@ -49,7 +47,7 @@ function randomQueryCount(activePeerCount) {
 
 function randomQuerySentTime(utcTo, utcFrom) {
   const interval = utcTo - utcFrom
-  return utcFrom + random() * interval
+  return Math.round(utcFrom + random() * interval)
 }
 
 function randomPeerIdsIncludingOwn(activeDhtPeers, ownPeerId) {
@@ -151,8 +149,7 @@ function createQuery({
   query.setResult(result)
 
   const randomTs = randomQuerySentTime(utcTo, utcFrom)
-
-  query.setSentTs(new Timestamp([sentTs || randomTs]))
+  query.setSentTs(createTimestamp(sentTs || randomTs))
   return query
 }
 

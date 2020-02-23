@@ -22,10 +22,10 @@ function $WIDGET_COMPONENT({ children }) {
   const currentTimepoint = useContext(TimeContext)
 
   const { start, end } = getStateTimes(currentTimepoint)
-  const timeIndex = getTimeIndex(timepoints, time)
+  const timeIndex = getTimeIndex(timepoints, end)
 
   // Allow user to try out data object methods in console
-  window.data = { time, currentTimepoint, timepoints }
+  window.data = { start, end, currentTimepoint, timepoints }
 
   /* eslint-disable-next-line no-console */
   console.log('window.data: ', window.data)

@@ -1,4 +1,3 @@
-import { proto } from '@libp2p-observer/proto'
 import { loadSample } from '@libp2p-observer/testing'
 
 import {
@@ -7,34 +6,19 @@ import {
   getDhtBucket,
   getAllDhtBuckets,
   getDhtStatus,
-  getDhtQueryTimes,
 } from './dht'
-
-import { getStateTimes } from './states'
-
-import { getConnections } from './connectionsList'
 
 import {
   dhtQueryDirectionNames,
   dhtQueryResultNames,
   dhtStatusNames,
   getEnumByName,
-  roleNames,
-  statusNames,
-  transportNames,
 } from './enums'
 
 const { states } = loadSample()
-const sortByPeerId = (a, b) => a.getPeerId() - b.getPeerId()
 
 function peerIdSet(peersArray) {
   return new Set(peersArray.map(peer => peer.getPeerId()))
-}
-
-function getClassProps(instance) {
-  // To use for class matching of protobuf classes instead of toBeInstanceOf
-  // They can't be matched with instanceof because they lack a name property
-  return Object.keys(Object.getPrototypeOf(instance).constructor)
 }
 
 if (!states.length)

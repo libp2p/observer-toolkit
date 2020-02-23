@@ -1,7 +1,6 @@
 'use strict'
 
 const { argv } = require('yargs')
-const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 const {
   proto: { Connection, EndpointPair, StreamList },
 } = require('@libp2p-observer/proto')
@@ -17,6 +16,7 @@ const {
   randomLatency,
   randomOpenClose,
   generateHashId,
+  createTimestamp,
 } = require('../utils')
 const { createTraffic, sumTraffic } = require('../messages/traffic')
 const {
@@ -196,9 +196,9 @@ function mockConnectionActivity(connection, now) {
 }
 
 function mockConnectionTimeline({ timeline, open, close, upgraded }) {
-  const openTs = open && new Timestamp([Math.round(open)])
-  const closeTs = close && new Timestamp([Math.round(close)])
-  const upgradedTs = upgraded && new Timestamp([Math.round(upgraded)])
+  const openTs = open && createTimestamp(open)
+  const closeTs = close && createTimestamp(close)
+  const upgradedTs = upgraded && createTimestamp(upgraded)
 
   if (!timeline) return [openTs, closeTs, upgradedTs]
 

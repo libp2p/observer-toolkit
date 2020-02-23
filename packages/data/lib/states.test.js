@@ -1,4 +1,3 @@
-import { proto } from '@libp2p-observer/proto'
 import { loadSample } from '@libp2p-observer/testing'
 
 import {
@@ -11,7 +10,7 @@ import {
 
 import { getEnumByName, statusNames, roleNames, transportNames } from './enums'
 
-const { states, runtime } = loadSample()
+const { states } = loadSample()
 
 describe('states data helpers', () => {
   it('gets timepoints from dataset', () => {
