@@ -71,15 +71,13 @@ function createDHT({
   const dht = new DHT()
   dht.setProtocol(proto)
   dht.setEnabled(enabled)
-  dht.setStartTs(new Timestamp(startTs))
+  dht.setStartTs(new Timestamp([startTs]))
 
   const params = new DHT.Params()
   params.setK(k)
   params.setAlpha(alpha)
   params.setDisjointPaths(disjointPaths)
   dht.setParams(params)
-  const queries = createQueries({ peerIds })
-  dht.setQueryList(queries)
   const peers = createPeersInDHT({ peerIds, peersCount, connections })
   dht.setPeerInDhtList(peers)
 
@@ -127,16 +125,15 @@ function updatePeersInDHT(peers, connections, dht) {
   })
 }
 
-function updateDHT(dht, connections, now) {
-  const queries = dht.getQueryList()
-  updateQueries(queries)
-  dht.setQueryList(queries)
-
+function updateDHT(dht, connections, utcFrom, utcTo) {
   const peers = dht.getPeerInDhtList()
   updatePeersInDHT(peers, connections, dht)
   dht.setPeerInDhtList(peers)
 
   validateBucketSizes(dht)
+
+  const queries = createQueries({ dht, utcFrom, utcTo })
+  dht.setQueryList(queries)
 
   // Helpful for debugging bucket allocation:
   /*

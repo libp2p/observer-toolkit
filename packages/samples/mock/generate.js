@@ -58,11 +58,13 @@ function generateStates(connections, connectionsCount, utcFrom, utcTo, dht) {
   const stateBuffers = []
   const states = Math.floor((utcTo - utcFrom) / 1000)
   for (let state = 1; state <= states; state++) {
-    const now = utcFrom + state * 1000
+    const intervalEnd = utcFrom + state * 1000
+    const intervalStart = intervalEnd - 1000
+
     const connCount = state !== 1 ? connectionsCount : null
-    updateConnections(connections, connCount, now)
-    updateDHT(dht, connections, now)
-    stateBuffers.push(generateState(connections, now, dht))
+    updateConnections(connections, connCount, intervalEnd)
+    updateDHT(dht, connections, intervalStart, intervalEnd)
+    stateBuffers.push(generateState(connections, intervalEnd, dht))
   }
   return stateBuffers
 }
@@ -81,8 +83,10 @@ function generateComplete(connectionsCount, durationSeconds, peersCount) {
   const runtime = generateRuntime()
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
+
   const startTs = utcFrom - Math.floor(random() * 1000)
   const dht = generateDHT({ startTs, peerIds, peersCount, connections })
+
   const states = generateStates(
     connections,
     connectionsCount,
