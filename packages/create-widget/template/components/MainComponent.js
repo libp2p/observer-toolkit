@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { getTime, getTimeIndex } from '@libp2p-observer/data'
+import { getStateTimes, getTimeIndex } from '@libp2p-observer/data'
 import { DataContext, TimeContext } from '@libp2p-observer/sdk'
 
 const ExampleStyledHeader = styled.h2`
@@ -21,11 +21,11 @@ function $WIDGET_COMPONENT({ children }) {
   const timepoints = useContext(DataContext)
   const currentTimepoint = useContext(TimeContext)
 
-  const time = getTime(currentTimepoint)
-  const timeIndex = getTimeIndex(timepoints, time)
+  const { start, end } = getStateTimes(currentTimepoint)
+  const timeIndex = getTimeIndex(timepoints, end)
 
   // Allow user to try out data object methods in console
-  window.data = { time, currentTimepoint, timepoints }
+  window.data = { start, end, currentTimepoint, timepoints }
 
   /* eslint-disable-next-line no-console */
   console.log('window.data: ', window.data)
@@ -35,7 +35,8 @@ function $WIDGET_COMPONENT({ children }) {
       <ExampleStyledHeader>Hello $WIDGET_COMPONENT</ExampleStyledHeader>
       <p>
         Time point <b>{timeIndex + 1}</b> of {timepoints.length} is selected,
-        containing data from <b>{new Date(time).toLocaleString()}</b>.
+        containing data from <b>{new Date(start).toLocaleString()}</b> to{' '}
+        <b>{new Date(end).toLocaleString()}</b>.
       </p>
       <p>Open your browser's console to explore all available data.</p>
       {children}

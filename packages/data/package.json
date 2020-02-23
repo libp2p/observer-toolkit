@@ -14,7 +14,7 @@
     "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
   },
   "scripts": {
-    "test": "CI=true jest --silent"
+    "test": "CI=true jest"
   },
   "bugs": {
     "url": "https://github.com/nearform/libp2p-introspection-ui/issues"

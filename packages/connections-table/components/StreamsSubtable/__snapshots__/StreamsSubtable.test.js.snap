@@ -42,6 +42,16 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
   font-weight: 600;
 }
 
+.c22 {
+  display: inline-block;
+  padding: 0px 4px;
+  background: rgba(0,99,109,0.15);
+  color: rgba(0,99,109,1);
+  white-space: nowrap;
+  font-size: 8pt;
+  font-weight: 600;
+}
+
 .c13 {
   line-height: 2em;
   display: inline-block;
@@ -351,7 +361,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
             <td
               class="c11"
             >
-              other-protocol
+              some-protocol
             </td>
             <td
               class="c14"
@@ -365,7 +375,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   <span
                     class="c17"
                   >
-                    835
+                    71.3
                     <span
                       class="c18"
                     >
@@ -378,7 +388,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   >
                     <div
                       class="c20"
-                      style="height: 24.60081086345628%; width: 24.60081086345628%; margin: 37.69959456827186% 37.69959456827186% 37.69959456827186% 37.69959456827186%;"
+                      style="height: 2.4997353347193796%; width: 2.4997353347193796%; margin: 48.75013233264031% 48.75013233264031% 48.75013233264031% 48.75013233264031%;"
                     />
                   </div>
                 </span>
@@ -396,7 +406,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   <span
                     class="c17"
                   >
-                    835
+                    71.3
                     <span
                       class="c18"
                     >
@@ -409,7 +419,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   >
                     <div
                       class="c21"
-                      style="height: 24.60081086345628%; width: 24.60081086345628%; margin: 37.69959456827186% 37.69959456827186% 37.69959456827186% 37.69959456827186%;"
+                      style="height: 2.4997353347193796%; width: 2.4997353347193796%; margin: 48.75013233264031% 48.75013233264031% 48.75013233264031% 48.75013233264031%;"
                     />
                   </div>
                 </span>
@@ -423,231 +433,36 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
               class="c11"
             >
               <span
-                class="c12"
+                class="c22"
               >
                 <span
                   class="c6"
                   role="img"
                 >
                   <svg
-                    viewBox="0 0 32 32"
+                    viewBox="0 0 96 96"
                   >
-                    <path
-                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M10.654 15.287H21.27v1.425H10.654z"
-                      fill="currentColor"
-                    />
+                    <g
+                      data-name="Layer 34"
+                    >
+                      <path
+                        d="M48 19a29 29 0 11-29 29 29 29 0 0129-29m0-4a33 33 0 1033 33 33 33 0 00-33-33z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M35.32 46.81l8.73 11.46 16.63-20.54"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-miterlimit="10"
+                        stroke-width="4"
+                      />
+                    </g>
                   </svg>
                 </span>
                 <span
                   class="c13"
                 >
-                  CLOSED
-                </span>
-              </span>
-            </td>
-            <td
-              class="c11"
-            >
-              other-protocol
-            </td>
-            <td
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  <span
-                    class="c17"
-                  >
-                    922
-                    <span
-                      class="c18"
-                    >
-                      mb
-                    </span>
-                  </span>
-                  <div
-                    class="c19"
-                    size="24"
-                  >
-                    <div
-                      class="c20"
-                      style="height: 25.856124012629213%; width: 25.856124012629213%; margin: 37.071937993685395% 37.071937993685395% 37.071937993685395% 37.071937993685395%;"
-                    />
-                  </div>
-                </span>
-              </span>
-            </td>
-            <td
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  <span
-                    class="c17"
-                  >
-                    922
-                    <span
-                      class="c18"
-                    >
-                      mb
-                    </span>
-                  </span>
-                  <div
-                    class="c19"
-                    size="24"
-                  >
-                    <div
-                      class="c21"
-                      style="height: 25.856124012629213%; width: 25.856124012629213%; margin: 37.071937993685395% 37.071937993685395% 37.071937993685395% 37.071937993685395%;"
-                    />
-                  </div>
-                </span>
-              </span>
-            </td>
-          </tr>
-          <tr
-            class="c10"
-          >
-            <td
-              class="c11"
-            >
-              <span
-                class="c12"
-              >
-                <span
-                  class="c6"
-                  role="img"
-                >
-                  <svg
-                    viewBox="0 0 32 32"
-                  >
-                    <path
-                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M10.654 15.287H21.27v1.425H10.654z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </span>
-                <span
-                  class="c13"
-                >
-                  CLOSED
-                </span>
-              </span>
-            </td>
-            <td
-              class="c11"
-            >
-              other-protocol
-            </td>
-            <td
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  <span
-                    class="c17"
-                  >
-                    748
-                    <span
-                      class="c18"
-                    >
-                      mb
-                    </span>
-                  </span>
-                  <div
-                    class="c19"
-                    size="24"
-                  >
-                    <div
-                      class="c20"
-                      style="height: 23.289355980401446%; width: 23.289355980401446%; margin: 38.35532200979928% 38.35532200979928% 38.35532200979928% 38.35532200979928%;"
-                    />
-                  </div>
-                </span>
-              </span>
-            </td>
-            <td
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  <span
-                    class="c17"
-                  >
-                    748
-                    <span
-                      class="c18"
-                    >
-                      mb
-                    </span>
-                  </span>
-                  <div
-                    class="c19"
-                    size="24"
-                  >
-                    <div
-                      class="c21"
-                      style="height: 23.289355980401446%; width: 23.289355980401446%; margin: 38.35532200979928% 38.35532200979928% 38.35532200979928% 38.35532200979928%;"
-                    />
-                  </div>
-                </span>
-              </span>
-            </td>
-          </tr>
-          <tr
-            class="c10"
-          >
-            <td
-              class="c11"
-            >
-              <span
-                class="c12"
-              >
-                <span
-                  class="c6"
-                  role="img"
-                >
-                  <svg
-                    viewBox="0 0 32 32"
-                  >
-                    <path
-                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M10.654 15.287H21.27v1.425H10.654z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </span>
-                <span
-                  class="c13"
-                >
-                  CLOSED
+                  ACTIVE
                 </span>
               </span>
             </td>
@@ -668,7 +483,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   <span
                     class="c17"
                   >
-                    931
+                    918
                     <span
                       class="c18"
                     >
@@ -681,7 +496,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   >
                     <div
                       class="c20"
-                      style="height: 25.972745403934468%; width: 25.972745403934468%; margin: 37.013627298032766% 37.013627298032766% 37.013627298032766% 37.013627298032766%;"
+                      style="height: 8.969466795145685%; width: 8.969466795145685%; margin: 45.51526660242716% 45.51526660242716% 45.51526660242716% 45.51526660242716%;"
                     />
                   </div>
                 </span>
@@ -699,7 +514,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   <span
                     class="c17"
                   >
-                    931
+                    918
                     <span
                       class="c18"
                     >
@@ -712,7 +527,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   >
                     <div
                       class="c21"
-                      style="height: 25.972745403934468%; width: 25.972745403934468%; margin: 37.013627298032766% 37.013627298032766% 37.013627298032766% 37.013627298032766%;"
+                      style="height: 8.969466795145685%; width: 8.969466795145685%; margin: 45.51526660242716% 45.51526660242716% 45.51526660242716% 45.51526660242716%;"
                     />
                   </div>
                 </span>
@@ -726,130 +541,36 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
               class="c11"
             >
               <span
-                class="c12"
+                class="c22"
               >
                 <span
                   class="c6"
                   role="img"
                 >
                   <svg
-                    viewBox="0 0 32 32"
+                    viewBox="0 0 96 96"
                   >
-                    <path
-                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M10.654 15.287H21.27v1.425H10.654z"
-                      fill="currentColor"
-                    />
+                    <g
+                      data-name="Layer 34"
+                    >
+                      <path
+                        d="M48 19a29 29 0 11-29 29 29 29 0 0129-29m0-4a33 33 0 1033 33 33 33 0 00-33-33z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M35.32 46.81l8.73 11.46 16.63-20.54"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-miterlimit="10"
+                        stroke-width="4"
+                      />
+                    </g>
                   </svg>
                 </span>
                 <span
                   class="c13"
                 >
-                  CLOSED
-                </span>
-              </span>
-            </td>
-            <td
-              class="c11"
-            >
-              other-protocol
-            </td>
-            <td
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  <span
-                    class="c17"
-                  >
-                    63.2
-                    <span
-                      class="c18"
-                    >
-                      mb
-                    </span>
-                  </span>
-                  <div
-                    class="c19"
-                    size="24"
-                  >
-                    <div
-                      class="c20"
-                      style="height: 6.766897594222001%; width: 6.766897594222001%; margin: 46.616551202889% 46.616551202889% 46.616551202889% 46.616551202889%;"
-                    />
-                  </div>
-                </span>
-              </span>
-            </td>
-            <td
-              class="c14"
-            >
-              <span
-                class="c15"
-              >
-                <span
-                  class="c16"
-                >
-                  <span
-                    class="c17"
-                  >
-                    63.2
-                    <span
-                      class="c18"
-                    >
-                      mb
-                    </span>
-                  </span>
-                  <div
-                    class="c19"
-                    size="24"
-                  >
-                    <div
-                      class="c21"
-                      style="height: 6.766897594222001%; width: 6.766897594222001%; margin: 46.616551202889% 46.616551202889% 46.616551202889% 46.616551202889%;"
-                    />
-                  </div>
-                </span>
-              </span>
-            </td>
-          </tr>
-          <tr
-            class="c10"
-          >
-            <td
-              class="c11"
-            >
-              <span
-                class="c12"
-              >
-                <span
-                  class="c6"
-                  role="img"
-                >
-                  <svg
-                    viewBox="0 0 32 32"
-                  >
-                    <path
-                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M10.654 15.287H21.27v1.425H10.654z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </span>
-                <span
-                  class="c13"
-                >
-                  CLOSED
+                  ACTIVE
                 </span>
               </span>
             </td>
@@ -870,7 +591,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   <span
                     class="c17"
                   >
-                    500
+                    20.1
                     <span
                       class="c18"
                     >
@@ -883,7 +604,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   >
                     <div
                       class="c20"
-                      style="height: 19.044533962091876%; width: 19.044533962091876%; margin: 40.47773301895406% 40.47773301895406% 40.47773301895406% 40.47773301895406%;"
+                      style="height: 1.3289709882527891%; width: 1.3289709882527891%; margin: 49.335514505873604% 49.335514505873604% 49.335514505873604% 49.335514505873604%;"
                     />
                   </div>
                 </span>
@@ -901,7 +622,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   <span
                     class="c17"
                   >
-                    500
+                    20.1
                     <span
                       class="c18"
                     >
@@ -914,7 +635,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   >
                     <div
                       class="c21"
-                      style="height: 19.044533962091876%; width: 19.044533962091876%; margin: 40.47773301895406% 40.47773301895406% 40.47773301895406% 40.47773301895406%;"
+                      style="height: 1.3289709882527891%; width: 1.3289709882527891%; margin: 49.335514505873604% 49.335514505873604% 49.335514505873604% 49.335514505873604%;"
                     />
                   </div>
                 </span>
@@ -928,36 +649,43 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
               class="c11"
             >
               <span
-                class="c12"
+                class="c22"
               >
                 <span
                   class="c6"
                   role="img"
                 >
                   <svg
-                    viewBox="0 0 32 32"
+                    viewBox="0 0 96 96"
                   >
-                    <path
-                      d="M16 7.387a8.612 8.612 0 018.612 8.615c0 4.752-3.854 8.606-8.612 8.606-4.756 0-8.61-3.854-8.61-8.606A8.61 8.61 0 0116 7.387m0-1.188c-5.412 0-9.8 4.389-9.8 9.803 0 5.41 4.388 9.799 9.8 9.799 5.413 0 9.801-4.389 9.801-9.799 0-5.414-4.389-9.803-9.801-9.803z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M10.654 15.287H21.27v1.425H10.654z"
-                      fill="currentColor"
-                    />
+                    <g
+                      data-name="Layer 34"
+                    >
+                      <path
+                        d="M48 19a29 29 0 11-29 29 29 29 0 0129-29m0-4a33 33 0 1033 33 33 33 0 00-33-33z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M35.32 46.81l8.73 11.46 16.63-20.54"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-miterlimit="10"
+                        stroke-width="4"
+                      />
+                    </g>
                   </svg>
                 </span>
                 <span
                   class="c13"
                 >
-                  CLOSED
+                  ACTIVE
                 </span>
               </span>
             </td>
             <td
               class="c11"
             >
-              other-protocol
+              some-protocol
             </td>
             <td
               class="c14"
@@ -971,7 +699,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   <span
                     class="c17"
                   >
-                    49.2
+                    875
                     <span
                       class="c18"
                     >
@@ -984,7 +712,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   >
                     <div
                       class="c20"
-                      style="height: 5.9722693918817%; width: 5.9722693918817%; margin: 47.01386530405915% 47.01386530405915% 47.01386530405915% 47.01386530405915%;"
+                      style="height: 8.759800215158261%; width: 8.759800215158261%; margin: 45.62009989242087% 45.62009989242087% 45.62009989242087% 45.62009989242087%;"
                     />
                   </div>
                 </span>
@@ -1002,7 +730,7 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   <span
                     class="c17"
                   >
-                    49.2
+                    875
                     <span
                       class="c18"
                     >
@@ -1015,7 +743,219 @@ exports[`StreamsSubtable renders connection's streams as expected 1`] = `
                   >
                     <div
                       class="c21"
-                      style="height: 5.9722693918817%; width: 5.9722693918817%; margin: 47.01386530405915% 47.01386530405915% 47.01386530405915% 47.01386530405915%;"
+                      style="height: 8.759800215158261%; width: 8.759800215158261%; margin: 45.62009989242087% 45.62009989242087% 45.62009989242087% 45.62009989242087%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+          </tr>
+          <tr
+            class="c10"
+          >
+            <td
+              class="c11"
+            >
+              <span
+                class="c22"
+              >
+                <span
+                  class="c6"
+                  role="img"
+                >
+                  <svg
+                    viewBox="0 0 96 96"
+                  >
+                    <g
+                      data-name="Layer 34"
+                    >
+                      <path
+                        d="M48 19a29 29 0 11-29 29 29 29 0 0129-29m0-4a33 33 0 1033 33 33 33 0 00-33-33z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M35.32 46.81l8.73 11.46 16.63-20.54"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-miterlimit="10"
+                        stroke-width="4"
+                      />
+                    </g>
+                  </svg>
+                </span>
+                <span
+                  class="c13"
+                >
+                  ACTIVE
+                </span>
+              </span>
+            </td>
+            <td
+              class="c11"
+            >
+              some-protocol
+            </td>
+            <td
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    61.9
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c20"
+                      style="height: 2.3293186709061846%; width: 2.3293186709061846%; margin: 48.835340664546905% 48.835340664546905% 48.835340664546905% 48.835340664546905%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+            <td
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    61.9
+                    <span
+                      class="c18"
+                    >
+                      mb
+                    </span>
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c21"
+                      style="height: 2.3293186709061846%; width: 2.3293186709061846%; margin: 48.835340664546905% 48.835340664546905% 48.835340664546905% 48.835340664546905%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+          </tr>
+          <tr
+            class="c10"
+          >
+            <td
+              class="c11"
+            >
+              <span
+                class="c22"
+              >
+                <span
+                  class="c6"
+                  role="img"
+                >
+                  <svg
+                    viewBox="0 0 96 96"
+                  >
+                    <g
+                      data-name="Layer 34"
+                    >
+                      <path
+                        d="M48 19a29 29 0 11-29 29 29 29 0 0129-29m0-4a33 33 0 1033 33 33 33 0 00-33-33z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M35.32 46.81l8.73 11.46 16.63-20.54"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-miterlimit="10"
+                        stroke-width="4"
+                      />
+                    </g>
+                  </svg>
+                </span>
+                <span
+                  class="c13"
+                >
+                  ACTIVE
+                </span>
+              </span>
+            </td>
+            <td
+              class="c11"
+            >
+              some-protocol
+            </td>
+            <td
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    0
+                    <span
+                      class="c18"
+                    />
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c20"
+                      style="height: 0%; width: 0%; margin: 50% 50% 50% 50%;"
+                    />
+                  </div>
+                </span>
+              </span>
+            </td>
+            <td
+              class="c14"
+            >
+              <span
+                class="c15"
+              >
+                <span
+                  class="c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    0
+                    <span
+                      class="c18"
+                    />
+                  </span>
+                  <div
+                    class="c19"
+                    size="24"
+                  >
+                    <div
+                      class="c21"
+                      style="height: 0%; width: 0%; margin: 50% 50% 50% 50%;"
                     />
                   </div>
                 </span>

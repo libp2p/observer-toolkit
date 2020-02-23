@@ -7,15 +7,11 @@ import {
   getConnections,
   getConnectionTraffic,
   getConnectionAge,
-  getEnumByName,
   getStreamAge,
   getStreamTraffic,
-  getLatestTimepoint,
-  getTime,
-  getTimeIndex,
-} from './helpers'
+} from './connectionsList'
 
-import { statusNames, roleNames, transportNames } from './enums'
+import { getLatestTimepoint } from './states'
 
 const { Connection } = proto
 const { states } = loadSample()
@@ -29,7 +25,7 @@ function getClassProps(instance) {
 if (!states.length)
   throw new Error('Deserialization error prevents testing helpers')
 
-describe('data helpers', () => {
+describe('connectionsList data helpers', () => {
   it('gets connection data from sample protobuf file', () => {
     const allConnections = getAllConnections(states)
     expect(allConnections).toBeInstanceOf(Array)
@@ -152,29 +148,5 @@ describe('data helpers', () => {
       expect(typeof streamAge).toBe('number')
       expect(streamAge >= 0).toBeTruthy()
     }
-  })
-
-  it('gets timepoints from dataset', () => {
-    let index = 0
-    let lastTimestamp = 0
-    for (const timepoint of states) {
-      const timeIndex = getTimeIndex(states, getTime(timepoint))
-      expect(timeIndex).toBe(index)
-
-      const timestamp = getTime(timepoint)
-      expect(timestamp > lastTimestamp).toBeTruthy()
-      expect(typeof timestamp).toBe('number')
-
-      lastTimestamp = timestamp
-      index++
-    }
-    expect(states[index - 1]).toEqual(getLatestTimepoint(states))
-  }, 20000)
-
-  it('gets valid enums only', () => {
-    expect(typeof getEnumByName('ERROR', statusNames)).toBe('number')
-    expect(typeof getEnumByName('RESPONDER', roleNames)).toBe('number')
-    expect(typeof getEnumByName('RDP', transportNames)).toBe('number')
-    expect(() => getEnumByName('missing enum name', statusNames)).toThrow()
   })
 })

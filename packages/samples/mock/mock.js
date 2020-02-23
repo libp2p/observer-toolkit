@@ -22,6 +22,11 @@ const { argv } = require('yargs').options({
     describe: 'number of streams per typical simulated connection',
     type: 'number',
   },
+  p: {
+    alias: 'peers',
+    describe: 'number of peers in DHT at start of simulation',
+    type: 'number',
+  },
 })
 const { createWriteStream } = require('fs')
 
@@ -30,10 +35,12 @@ const {
   DEFAULT_CONNECTIONS,
   DEFAULT_DURATION,
   DEFAULT_FILE,
+  DEFAULT_PEERS,
 } = require('./utils')
 const {
   generateComplete,
   generateConnections,
+  generateDHT,
   generateRuntime,
   generateStates,
   generateVersion,
@@ -48,6 +55,7 @@ const {
   streams: streamsCount = DEFAULT_STREAMS,
   connections: connectionsCount = DEFAULT_CONNECTIONS,
   duration: durationSeconds = DEFAULT_DURATION,
+  peers: peersCount = DEFAULT_PEERS,
   file,
   socksrv,
 } = argv
@@ -55,8 +63,14 @@ const filePath = file === '' ? DEFAULT_FILE : null
 
 if (filePath) {
   console.log(`
-    Writing to ${filePath}.
-    ${durationSeconds} seconds, ${connectionsCount} initial connections of ~${streamsCount} streams.
+
+    Writing to ${filePath} with:
+
+    - ${durationSeconds} seconds sample duration ('-d ${durationSeconds}')
+    - ${connectionsCount} initial connections ('-c ${connectionsCount}')
+    - Around ~${streamsCount} streams per connection ('-s ${streamsCount}')
+    - At least ${peersCount} initial peers in the DHT ('-p ${peersCount}')
+
   `)
 }
 
@@ -69,6 +83,7 @@ if (socksrv) {
     let utcFrom = utcTo - durationSeconds * 1000
     let tmrEmitter = null
     const connections = generateConnections(connectionsCount, utcFrom)
+    const dht = generateDHT()
     const version = generateVersion()
     const runtime = generateRuntime()
 
@@ -80,7 +95,8 @@ if (socksrv) {
         connections,
         connectionsCount,
         utcFrom,
-        utcTo
+        utcTo,
+        dht
       )
       const data = states.length
         ? Buffer.concat([version, runtime, ...states]).toString('binary')
@@ -117,6 +133,15 @@ if (socksrv) {
         }
       }
     })
+    // on connection, send initial packet
+    const states = generateStates(
+      connections,
+      connectionsCount,
+      utcFrom,
+      utcTo,
+      dht
+    )
+    ws.send(Buffer.concat([version, runtime, ...states]).toString('binary'))
   })
 } else {
   const bufferSegments = generateComplete(connectionsCount, durationSeconds)

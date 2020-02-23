@@ -1,11 +1,13 @@
 'use strict'
 
 const { createHash } = require('crypto')
+const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
 const DEFAULT_CONNECTIONS = 6
 const DEFAULT_DURATION = 10 // Seconds
 const DEFAULT_FILE = `mock-${Date.now()}`
 const DEFAULT_STREAMS = 10
+const DEFAULT_PEERS = 30
 
 // This may need to become configurable, but that's not currently planned
 const SNAPSHOT_DURATION = 1000 // Miliseconds
@@ -19,11 +21,15 @@ const OPEN_CLOSE_PROBABILITY = 1 / 40
 
 const HOST_PEER_ID = 'peer-id-of-host'
 
+let peerIdsGenerated = 0
 function generateHashId() {
-  const randomNumber = Math.pow(0.5 / random(), 5 / random())
-  return createHash('sha256')
+  const randomNumber = peerIdsGenerated + Math.pow(0.5 / random(), 5 / random())
+  const hash = createHash('sha256')
     .update(randomNumber.toString())
     .digest('hex')
+
+  peerIdsGenerated++
+  return hash
 }
 
 function getRandomiser() {
@@ -37,9 +43,9 @@ function getRandomiser() {
   let index = 0
   const pseudoRandom = () => {
     // Avoid flakey test failures with varied but consistent values
-    index = index < 19 ? index + 1 : 1
-    const decimal = (index / 2) * 0.1
-    // 0.05, 0.9, 0.15, 0.8, 0.25, 0.7...
+    index = index < 39 ? index + 1 : 1
+    const decimal = (index / 4) * 0.1
+    // 0.025, 0.95, 0.075, 0.9, 0.125, 0.85...
     return index % 2 ? decimal : 1 - decimal
   }
   return pseudoRandom
@@ -103,11 +109,21 @@ function decodeBinToNum(buf, offset = 0) {
   return buf.readUIntLE(offset, 4)
 }
 
+function mapArray(size, map) {
+  // create a new array of predefined size and fill with values from map function
+  return Array.apply(null, Array(size)).map(map)
+}
+
+function createTimestamp(utcNum) {
+  return new Timestamp([Math.round(utcNum)])
+}
+
 module.exports = {
   DEFAULT_CONNECTIONS,
   DEFAULT_DURATION,
   DEFAULT_FILE,
   DEFAULT_STREAMS,
+  DEFAULT_PEERS,
   SNAPSHOT_DURATION,
   HOUR_IN_SECONDS,
   GIGABYTE_IN_BYTES,
@@ -122,4 +138,6 @@ module.exports = {
   randomBandwidth,
   randomOpenClose,
   generateHashId,
+  mapArray,
+  createTimestamp,
 }
