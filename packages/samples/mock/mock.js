@@ -63,8 +63,14 @@ const filePath = file === '' ? DEFAULT_FILE : null
 
 if (filePath) {
   console.log(`
-    Writing to ${filePath}.
-    ${durationSeconds} seconds, ${connectionsCount} initial connections of ~${streamsCount} streams.
+
+    Writing to ${filePath} with:
+
+    - ${durationSeconds} seconds sample duration ('-d ${durationSeconds}')
+    - ${connectionsCount} initial connections ('-c ${connectionsCount}')
+    - Around ~${streamsCount} streams per connection ('-s ${streamsCount}')
+    - At least ${peersCount} initial peers in the DHT ('-p ${peersCount}')
+
   `)
 }
 
