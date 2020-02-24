@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useCallback, useRef } from 'react'
 
-function getScaledContext(canvasElem, width, height, canvasContextType) {
+function getScaledContext(canvasRef, width, height, canvasContextType) {
+  const canvasElem = canvasRef.current
   if (!canvasElem) {
     return null
   }
@@ -41,18 +42,17 @@ function useCanvas({
     animationRef.current.isAnimating = false
   }
 
-  const canvasElem = canvasRef.current || null
-
-  const canvasContext = useMemo(
-    () => getScaledContext(canvasElem, width, height, canvasContextType),
-    [canvasElem, width, height, canvasContextType]
+  const getCanvasContext = useCallback(
+    () => getScaledContext(canvasRef, width, height, canvasContextType),
+    [canvasRef, width, height, canvasContextType]
   )
 
   useEffect(() => {
+    const canvasElem = canvasRef.current
     if (!(canvasElem instanceof HTMLCanvasElement)) return
 
     const animateFrame = animateCanvas({
-      canvasContext,
+      canvasContext: getCanvasContext(),
       canvasElem,
       width,
       height,
@@ -75,7 +75,7 @@ function useCanvas({
   return {
     canvasRef,
     animationRef,
-    canvasContext,
+    getCanvasContext,
   }
 }
 
