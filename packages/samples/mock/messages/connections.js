@@ -118,11 +118,6 @@ function updateConnection(connection, now) {
         timeline,
         open: now - 1000 + secondsOpen * 1000,
       })
-      addStreamsToConnection(connection, {
-        secondsOpen,
-        status: statusList.getNum('OPENING'),
-        now,
-      })
       break
     case 'CLOSING':
       newStatusName = 'CLOSED'

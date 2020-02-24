@@ -35,15 +35,37 @@ test('Expected connections exist', t => {
   t.end()
 })
 
+test('Connections have unique IDs', t => {
+  const uniquePeerIds = new Set()
+  const peerIds = lastConnectionsList.map(conn => conn.getPeerId())
+  const duplicatePeerIds = peerIds.filter(peerId => {
+    if (uniquePeerIds.has(peerId)) return true
+    uniquePeerIds.add(peerId)
+    return false
+  })
+  t.strictSame(duplicatePeerIds, [], 'Expect no duplicate peer ids')
+
+  const uniqueConnIds = new Set()
+  const connIds = lastConnectionsList.map(conn => conn.getId().toString())
+  const duplicateConnIds = connIds.filter(connId => {
+    if (uniqueConnIds.has(connId)) return true
+    uniqueConnIds.add(connId)
+    return false
+  })
+  t.strictSame(duplicateConnIds, [], 'Expect no duplicate connection ids')
+
+  t.end()
+})
+
 test('Open connections increase traffic', t => {
   const activeStatus = getEnumByName('ACTIVE', statusNames)
-  const openConnections = getAllConnections(timepointsExceptLatest, {
+  const everOpenConnections = getAllConnections(timepointsExceptLatest, {
     filter: connection => connection.getStatus() === activeStatus,
   })
 
-  t.ok(openConnections.length >= initialConnCount)
+  t.ok(everOpenConnections.length >= initialConnCount)
 
-  for (const connectionAtStart of openConnections) {
+  for (const connectionAtStart of everOpenConnections) {
     const connectionId = connectionAtStart.getId().toString()
 
     const startBytesIn = getConnectionTraffic(connectionAtStart, 'in', 'bytes')
@@ -75,6 +97,9 @@ test('Open connections increase traffic', t => {
       'out',
       'packets'
     )
+
+    if (endPacketsIn <= startPacketsIn)
+      console.log('ID:---', connectionAtEnd.getId().toString())
 
     t.ok(endBytesIn > startBytesIn, `${endBytesIn} > ${startBytesIn}`)
     t.ok(endBytesOut > startBytesOut, `${endBytesOut} > ${startBytesOut}`)

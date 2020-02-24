@@ -8,7 +8,7 @@ const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 const { SNAPSHOT_DURATION } = require('../utils')
 const { createTraffic, sumTraffic } = require('../messages/traffic')
 
-function createState(connectionsList, now) {
+function createState(connectionsList, now, dht) {
   const state = new State()
 
   state.setInstantTs(new Timestamp([now]))
@@ -20,8 +20,8 @@ function createState(connectionsList, now) {
   sumTraffic(stateTraffic, connectionsList)
 
   const subsystems = new Subsystems()
-
   subsystems.setConnectionsList(connectionsList)
+  subsystems.setDht(dht)
   state.setSubsystems(subsystems)
 
   return state
