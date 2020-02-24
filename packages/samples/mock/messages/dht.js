@@ -26,8 +26,8 @@ function randomBucketMove(multiplier = 1) {
   return move ? Math.floor(Math.random() * 3) - 1 : 0
 }
 
-function randomPeerAddRemove(multiplier = 1) {
-  return random() <= PEER_ADD_REMOVE_PROBABILITY * multiplier
+function randomPeerAddRemove(divider = 1) {
+  return random() <= PEER_ADD_REMOVE_PROBABILITY / divider
 }
 
 function createPeerInDHT({
@@ -225,7 +225,7 @@ function updatePeerStatus(peer, connection) {
     peer.setStatus(
       dhtStatusList.getNum(peerStatusName === 'ACTIVE' ? 'MISSING' : 'ACTIVE')
     )
-  } else if (randomPeerAddRemove()) {
+  } else if (randomPeerAddRemove(30)) {
     peer.setStatus(dhtStatusList.getNum('DISCONNECTED'))
   }
 }
