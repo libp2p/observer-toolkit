@@ -246,8 +246,8 @@ function DhtPeer({
 }
 
 DhtPeer.propTypes = {
-  inboundQueries: T.array.isRequired,
-  outboundQueries: T.array.isRequired,
+  inboundQueries: T.array,
+  outboundQueries: T.array,
   age: T.number.isRequired,
   peerId: T.string.isRequired,
   status: T.string.isRequired,
