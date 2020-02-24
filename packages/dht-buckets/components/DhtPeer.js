@@ -19,7 +19,7 @@ const maxGlowSize = 12
 
 const Container = styled.div.attrs(({ age }) => ({
   style: {
-    transform: `scale(${0.4 * Math.min(1, age / cutoff) + 0.2})`,
+    transform: `scale(${0.5 * Math.min(1, age / cutoff) + 0.5})`,
   },
 }))`
   position: relative;
@@ -38,9 +38,13 @@ const InnerChip = styled.div`
   position: absolute;
   width: ${innerSize}px;
   height: ${innerSize}px;
-  background: ${({ theme }) => theme.color('background', 0)};
+  background: ${({ theme, status }) =>
+    status === 'ACTIVE'
+      ? theme.color('contrast', 2)
+      : theme.color('background', 2, 0.25)};
   top: ${gutterSize}px;
   left: ${gutterSize}px;
+  ${({ theme }) => theme.transition()}
 `
 
 function peakHalfWay(timeSinceQuery) {
@@ -236,7 +240,7 @@ function DhtPeer({
   return (
     <Container age={age}>
       <Canvas ref={canvasRef} />
-      <InnerChip age={age} />
+      <InnerChip age={age} status={status} />
     </Container>
   )
 }
