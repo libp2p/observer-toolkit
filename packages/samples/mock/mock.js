@@ -92,14 +92,8 @@ if (socksrv) {
 
     function sendEvent({ now = Date.now(), type = '', content = {} } = {}) {
       // send event
-      // const _utcFrom = utcTo - 1000
-      // const _utcTo = Date.now()
       const event = generateEvent({ now, type, content })
       const data = Buffer.concat([version, event]).toString('binary')
-      // if (data) {
-      //   utcFrom = _utcFrom
-      //   utcTo = _utcTo
-      // }
       ws.send(data)
     }
 
