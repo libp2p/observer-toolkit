@@ -19,11 +19,6 @@ describe('StreamsSubtable', () => {
     </WidgetContext>
   )
 
-  it("renders connection's streams as expected", () => {
-    const { asFragment } = renderWithData(<StreamsSubtableInContext />)
-    expect(asFragment()).toMatchSnapshot()
-  })
-
   it('has a row for each stream in the connection', () => {
     const { getAllByTableRow } = renderWithData(<StreamsSubtableInContext />)
     const streamsCount = getStreams(connection).length
