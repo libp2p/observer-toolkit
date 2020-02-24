@@ -47,6 +47,7 @@ const {
   generateVersion,
 } = require('./generate')
 
+const { random } = require('./utils')
 const WebSocket = require('ws')
 const {
   proto: { ClientSignal },
@@ -89,16 +90,16 @@ if (socksrv) {
     const version = generateVersion()
     const runtime = generateRuntime()
 
-    function sendEvent({ type = '', content = {} } = {}) {
+    function sendEvent({ now = Date.now(), type = '', content = {} } = {}) {
       // send event
-      const _utcFrom = utcTo - 1000
-      const _utcTo = Date.now()
-      const event = generateEvent({ type, content })
+      // const _utcFrom = utcTo - 1000
+      // const _utcTo = Date.now()
+      const event = generateEvent({ now, type, content })
       const data = Buffer.concat([version, event]).toString('binary')
-      if (data) {
-        utcFrom = _utcFrom
-        utcTo = _utcTo
-      }
+      // if (data) {
+      //   utcFrom = _utcFrom
+      //   utcTo = _utcTo
+      // }
       ws.send(data)
     }
 
@@ -117,8 +118,25 @@ if (socksrv) {
       connections
         .filter(cn => cn.getStatus() === 2)
         .forEach(cn => {
-          sendEvent({ type: 'connection', content: { peerId: cn.getPeerId() } })
+          const ts = utcTo - (random() * 800 + 100)
+          sendEvent({
+            now: ts,
+            type: 'opening',
+            content: { peerId: cn.getPeerId() },
+          })
         })
+      // send event when connection is closing
+      connections
+        .filter(cn => cn.getStatus() === 3)
+        .forEach(cn => {
+          const ts = utcTo - (random() * 800 + 100)
+          sendEvent({
+            now: ts,
+            type: 'closing',
+            content: { peerId: cn.getPeerId() },
+          })
+        })
+      // state
       const data = states.length
         ? Buffer.concat([version, runtime, ...states]).toString('binary')
         : ''
@@ -126,7 +144,9 @@ if (socksrv) {
         utcFrom = _utcFrom
         utcTo = _utcTo
       }
-      ws.send(data)
+      setTimeout(() => {
+        ws.send(data)
+      }, 100)
     }
 
     // ready signal handler
