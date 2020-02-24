@@ -6,6 +6,7 @@ import {
   getDhtBucket,
   getAllDhtBuckets,
   getDhtStatus,
+  getKademliaDistance,
 } from './dht'
 
 import {
@@ -132,5 +133,23 @@ describe('DHT data helpers', () => {
         )
       ).toHaveLength(0)
     }
+  })
+
+  it('Calculates Kademlia distance correctly', () => {
+    const string64 = end => 'a'.repeat(64 - end.length) + end
+
+    const aaa64 = string64('')
+
+    expect(getKademliaDistance(aaa64, string64('b'))).toBe(255)
+
+    expect(getKademliaDistance(aaa64, string64('bb'))).toBe(251)
+
+    expect(getKademliaDistance(aaa64, string64('bbb'))).toBe(247)
+
+    expect(getKademliaDistance(aaa64, string64('b'.repeat(61)))).toBe(15)
+
+    expect(getKademliaDistance(aaa64, string64('b'.repeat(62)))).toBe(11)
+
+    expect(getKademliaDistance(aaa64, string64('b'.repeat(63)))).toBe(7)
   })
 })

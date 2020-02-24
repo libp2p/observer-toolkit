@@ -4,6 +4,7 @@ const {
   random,
   generateHashId,
   DEFAULT_PEERS,
+  HOST_PEER_ID,
   mapArray,
   createTimestamp,
 } = require('../utils')
@@ -14,6 +15,7 @@ const { createQueries } = require('./dht-queries')
 const {
   proto: { DHT },
 } = require('@libp2p-observer/proto')
+const { getKademliaDistance } = require('@libp2p-observer/data')
 
 const BUCKET_MOVE_PROBABILITY = 1 / 50
 const PEER_ADD_REMOVE_PROBABILITY = 1 / 40
@@ -188,15 +190,13 @@ function fixOverflowingBucket(peersInBucket, bucketIndex, dht) {
     const randomPeer = peersInBucket[randomPeerIndex]
 
     if (bucketIndex === 0) {
-      // Move from 'catch-all' bucket to allocated bucket
-      // In real LibP2P, is based on bitwise XOR i.e. kademlia distance of peer Id
-      // We'll use random bucket, favouring higher numbers (= more similar XOR)
-      const weightedRand = Math.max(Math.pow(random(), 1 / 10), 1 / MAX_BUCKETS)
-      const allocatedBucket = Math.ceil(weightedRand * (MAX_BUCKETS - 1))
+      // Move from 'catch-all' bucket to allocated bucket by distance
+      const distance =
+        getKademliaDistance(randomPeer.getPeerId(), HOST_PEER_ID) || 1
 
-      randomPeer.setBucket(allocatedBucket)
+      randomPeer.setBucket(distance)
 
-      validateBucketSizes(dht, [allocatedBucket])
+      validateBucketSizes(dht, [distance])
     } else {
       ejectPeer(randomPeer)
     }

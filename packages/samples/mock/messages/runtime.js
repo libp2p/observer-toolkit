@@ -4,16 +4,14 @@ const {
   proto: { Runtime },
 } = require('@libp2p-observer/proto')
 
-const { generateHashId } = require('../utils')
+const { HOST_PEER_ID } = require('../utils')
 
 function createRuntime() {
-  const peerId = generateHashId()
-
   return new Runtime([
     'go-libp2p', // Implementation
     '2', // Version
     'macOS', // Platform
-    peerId, // Introspecting user's own peer ID
+    HOST_PEER_ID, // Introspecting user's own peer ID
   ])
 }
 

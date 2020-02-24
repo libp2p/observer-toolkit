@@ -106,6 +106,20 @@ function getDhtQueryTimes(dhtQuery) {
   }
 }
 
+function getKademliaDistance(peerId_A, peerId_B) {
+  const bufA = Buffer.from(peerId_A, 'hex')
+  const bufB = Buffer.from(peerId_B, 'hex')
+
+  // Credit @mafintosh https://github.com/mafintosh/kademlia-routing-table/blob/master/index.js
+  for (let i = 0; i < bufA.length; i++) {
+    const a = bufA[i]
+    const b = bufB[i]
+
+    if (a !== b) return i * 8 + Math.clz32(a ^ b) - 24
+  }
+  return maxBucketNum
+}
+
 module.exports = {
   getDht,
   getDhtQueries,
@@ -114,4 +128,5 @@ module.exports = {
   getDhtBucket,
   getAllDhtBuckets,
   getDhtQueryTimes,
+  getKademliaDistance,
 }

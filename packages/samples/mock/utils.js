@@ -19,8 +19,6 @@ const GIGABYTE_IN_BYTES = 1e9
 // Chance that any one connection or stream will open or close in one second
 const OPEN_CLOSE_PROBABILITY = 1 / 40
 
-const HOST_PEER_ID = 'peer-id-of-host'
-
 let peerIdsGenerated = 0
 function generateHashId() {
   const randomNumber = peerIdsGenerated + Math.pow(0.5 / random(), 5 / random())
@@ -117,6 +115,9 @@ function mapArray(size, map) {
 function createTimestamp(utcNum) {
   return new Timestamp([Math.round(utcNum)])
 }
+
+// Create a new random hash each time script is run
+const HOST_PEER_ID = generateHashId()
 
 module.exports = {
   DEFAULT_CONNECTIONS,
