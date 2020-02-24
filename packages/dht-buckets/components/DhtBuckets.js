@@ -10,15 +10,9 @@ function DhtBuckets({ children }) {
   const currentState = useContext(TimeContext)
   const timestamp = getTime(currentState)
 
-  console.log(states)
-  window.data = states
-
   const buckets = getAllDhtBuckets(currentState)
   const { [0]: catchAllBucketPeers, ...numberedBucketPeers } = buckets
 
-  window.buckets = buckets
-  window.catchAllBucketPeers = catchAllBucketPeers
-  window.numberedBucketPeers = numberedBucketPeers
   return (
     <DhtActivePeers
       catchAllBucketPeers={catchAllBucketPeers}
