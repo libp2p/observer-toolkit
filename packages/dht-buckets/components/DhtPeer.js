@@ -1,6 +1,8 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
+
+import { DhtQueryContext } from './context/DhtQueryProvider'
 
 import { useCanvas } from '@libp2p-observer/sdk'
 
@@ -15,9 +17,9 @@ const innerSize = 18
 const gutterSize = (outerSize - innerSize) / 2
 const maxGlowSize = 12
 
-const Container = styled.div.attrs(({ distance, age }) => ({
+const Container = styled.div.attrs(({ age }) => ({
   style: {
-    transform: `scale(${1 - distance / 100})`,
+    transform: `scale(${0.4 * Math.min(1, age / cutoff) + 0.2})`,
   },
 }))`
   position: relative;
@@ -32,18 +34,13 @@ const Canvas = styled.canvas`
   z-index: 5;
 `
 
-const InnerChip = styled.div.attrs(({ distance, age }) => ({
-  style: {
-    opacity: 0.4 * Math.min(1, age / cutoff) + 0.2,
-  },
-}))`
+const InnerChip = styled.div`
   position: absolute;
   width: ${innerSize}px;
   height: ${innerSize}px;
-  background: ${({ theme, distance }) => theme.color('background', 0)};
+  background: ${({ theme }) => theme.color('background', 0)};
   top: ${gutterSize}px;
   left: ${gutterSize}px;
-  opacity: ${({ age }) => 0.4 * Math.min(1, age / cutoff) + 0.6};
 `
 
 function peakHalfWay(timeSinceQuery) {
@@ -95,7 +92,7 @@ function paintResidualGlow(
   theme
 ) {
   const { filtered, total, totalWeighted } = queries.reduce(
-    (obj, queryTime) => {
+    (obj, { start: queryTime }) => {
       const timeSinceQuery = currentTime - queryTime
       if (queryTime + glowDuration > currentTime || timeSinceQuery > cutoff)
         return obj
@@ -155,7 +152,7 @@ function paintQueryGlows({
   const currentTime = stateStartTime + msSinceRender
 
   const activeQueries = queries.filter(
-    queryTime =>
+    ({ start: queryTime }) =>
       queryTime <= currentTime && currentTime - queryTime <= glowDuration
   )
 
@@ -163,7 +160,7 @@ function paintQueryGlows({
 
   if (!activeQueries.length) return false
 
-  activeQueries.forEach(queryTime =>
+  activeQueries.forEach(({ start: queryTime }) =>
     paintActiveGlow(currentTime - queryTime, canvasContext, direction, theme)
   )
 
@@ -171,13 +168,25 @@ function paintQueryGlows({
 }
 
 function DhtPeer({
-  inboundQueries,
-  outboundQueries,
-  distance,
+  inboundQueries = [],
+  outboundQueries = [],
+  peerId,
   age,
+  status,
   timestamp,
   theme,
 }) {
+  const queriesByPeerId = useContext(DhtQueryContext)
+
+  if (queriesByPeerId[peerId]) {
+    inboundQueries = queriesByPeerId[peerId].INBOUND
+    outboundQueries = queriesByPeerId[peerId].OUTBOUND
+  }
+
+  // Get queries from context / hook, but allow props to override e.g. storybook demos
+  if (!inboundQueries) inboundQueries = queriesByPeerId[peerId].INBOUND
+  if (!outboundQueries) outboundQueries = queriesByPeerId[peerId].OUTBOUND
+
   const animateCanvas = useCallback(
     ({ canvasContext, width, height, clearAnimation } = {}) => {
       const timeOfRender = performance.now()
@@ -225,9 +234,9 @@ function DhtPeer({
   })
 
   return (
-    <Container distance={distance} age={age}>
+    <Container age={age}>
       <Canvas ref={canvasRef} />
-      <InnerChip distance={distance} age={age} />
+      <InnerChip age={age} />
     </Container>
   )
 }
@@ -235,8 +244,9 @@ function DhtPeer({
 DhtPeer.propTypes = {
   inboundQueries: T.array.isRequired,
   outboundQueries: T.array.isRequired,
-  distance: T.number.isRequired,
   age: T.number.isRequired,
+  peerId: T.string.isRequired,
+  status: T.string.isRequired,
   timestamp: T.number.isRequired,
   theme: T.object.isRequired,
 }

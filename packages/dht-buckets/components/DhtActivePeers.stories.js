@@ -7,23 +7,29 @@ import DhtActivePeers from './DhtActivePeers'
 
 const initialAge = 7000
 
+const mapQueryTimes = time => ({ start: time })
+
 const bucket0 = [
   {
     distance: 45,
     age: 7000,
-    inboundQueries: [1000, 1800, 4000, 3950, 4100, 4300, 4550, 4850, 7000],
-    outboundQueries: [200, 1600, 1100, 6500, 7300, 7700, 8100, 8400],
+    inboundQueries: [1000, 1800, 4000, 3950, 4100, 4300, 4550, 4850, 7000].map(
+      mapQueryTimes
+    ),
+    outboundQueries: [200, 1600, 1100, 6500, 7300, 7700, 8100, 8400].map(
+      mapQueryTimes
+    ),
   },
   {
     distance: 25,
     age: 14000,
-    inboundQueries: [4400, 9000],
-    outboundQueries: [1100, 1150, 1200],
+    inboundQueries: [4400, 9000].map(mapQueryTimes),
+    outboundQueries: [1100, 1150, 1200].map(mapQueryTimes),
   },
   {
     distance: 5,
     age: 2000,
-    inboundQueries: [7300, 7400, 7500, 7600, 7700],
+    inboundQueries: [7300, 7400, 7500, 7600, 7700].map(mapQueryTimes),
     outboundQueries: [],
   },
   {
@@ -35,62 +41,70 @@ const bucket0 = [
   {
     distance: 12,
     age: 20000,
-    inboundQueries: [100, 11500, 13200],
-    outboundQueries: [12000, 12500, 15000],
+    inboundQueries: [100, 11500, 13200].map(mapQueryTimes),
+    outboundQueries: [12000, 12500, 15000].map(mapQueryTimes),
   },
   {
     distance: 45,
     age: 20000,
-    inboundQueries: [4400, 9000],
+    inboundQueries: [4400, 9000].map(mapQueryTimes),
     outboundQueries: [],
   },
   {
     distance: 12,
     age: 2000,
     inboundQueries: [],
-    outboundQueries: [1100, 1150, 1200],
+    outboundQueries: [1100, 1150, 1200].map(mapQueryTimes),
   },
   {
     distance: 25,
     age: 14000,
-    inboundQueries: [100, 11500, 13200],
-    outboundQueries: [200, 1600, 1100, 6500, 7300, 7700, 8100, 8400],
+    inboundQueries: [100, 11500, 13200].map(mapQueryTimes),
+    outboundQueries: [200, 1600, 1100, 6500, 7300, 7700, 8100, 8400].map(
+      mapQueryTimes
+    ),
   },
   {
     distance: 12,
     age: 20000,
-    inboundQueries: [1000, 1800, 4000, 3950, 4100, 4300, 4550, 4850, 7000],
+    inboundQueries: [1000, 1800, 4000, 3950, 4100, 4300, 4550, 4850, 7000].map(
+      mapQueryTimes
+    ),
     outboundQueries: [],
   },
   {
     distance: 5,
     age: 7000,
-    inboundQueries: [7300, 7400, 7500, 7600, 7700],
-    outboundQueries: [1100, 1150, 1200],
+    inboundQueries: [7300, 7400, 7500, 7600, 7700].map(mapQueryTimes),
+    outboundQueries: [1100, 1150, 1200].map(mapQueryTimes),
   },
   {
     distance: 5,
     age: 14000,
     inboundQueries: [],
-    outboundQueries: [200, 1600, 1100, 6500, 7300, 7700, 8100, 8400],
+    outboundQueries: [200, 1600, 1100, 6500, 7300, 7700, 8100, 8400].map(
+      mapQueryTimes
+    ),
   },
   {
     distance: 25,
     age: 2000,
-    inboundQueries: [100, 11500, 13200],
-    outboundQueries: [12000, 12500, 15000],
+    inboundQueries: [100, 11500, 13200].map(mapQueryTimes),
+    outboundQueries: [12000, 12500, 15000].map(mapQueryTimes),
   },
   {
     distance: 12,
     age: 7000,
-    inboundQueries: [1000, 1800, 4000, 3950, 4100, 4300, 4550, 4850, 7000],
+    inboundQueries: [1000, 1800, 4000, 3950, 4100, 4300, 4550, 4850, 7000].map(
+      mapQueryTimes
+    ),
     outboundQueries: [],
   },
   {
     distance: 12,
     age: 20000,
-    inboundQueries: [7300, 7400, 7500, 7600, 7700],
-    outboundQueries: [12000, 12500, 15000],
+    inboundQueries: [7300, 7400, 7500, 7600, 7700].map(mapQueryTimes),
+    outboundQueries: [12000, 12500, 15000].map(mapQueryTimes),
   },
 ].map(randomisePeer)
 
@@ -99,6 +113,14 @@ const buckets = [5, 15, 25, 30].map(averageDistance =>
 )
 
 buckets.push(getRandomBucket(35, 8))
+
+const bucketsObj = buckets.reduce(
+  (obj, bucket, index) => ({
+    ...obj,
+    [index]: bucket,
+  }),
+  {}
+)
 
 function getRandomBucket(averageDistance, length = 20) {
   const peers = []
@@ -153,7 +175,7 @@ function DhtActivePeersFixture() {
     <ThemeWrapper>
       <DhtActivePeers
         catchAllBucketPeers={bucket0}
-        numberedBucketPeers={buckets}
+        numberedBucketPeers={bucketsObj}
         timestamp={timestamp}
       />
     </ThemeWrapper>

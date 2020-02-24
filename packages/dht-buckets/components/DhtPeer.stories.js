@@ -8,9 +8,22 @@ import DhtPeer from './DhtPeer'
 const distance = 45
 const initialAge = 7000
 
-const inboundQueries = [1000, 1800, 4000, 3950, 4100, 4300, 4550, 4850, 7000]
+const mapQueryTimes = time => ({ start: time })
+const inboundQueries = [
+  1000,
+  1800,
+  4000,
+  3950,
+  4100,
+  4300,
+  4550,
+  4850,
+  7000,
+].map(mapQueryTimes)
 
-const outboundQueries = [200, 1600, 1100, 6500, 7300, 7700, 8100, 8400]
+const outboundQueries = [200, 1600, 1100, 6500, 7300, 7700, 8100, 8400].map(
+  mapQueryTimes
+)
 
 function DhtPeerFixture() {
   const [timestamp, setTimestamp] = useState(0)

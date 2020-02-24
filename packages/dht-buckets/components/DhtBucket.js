@@ -2,6 +2,8 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
+import { dhtStatusNames } from '@libp2p-observer/data'
+
 import DhtPeer from './DhtPeer'
 
 // TODO: get this from messages and/or settings
@@ -11,6 +13,18 @@ const slotSize = 24
 const borderWidth = 1
 
 const peersPerRow = 4
+
+function processPeers(peers) {
+  // Unpack protobuf peer data unless it's already pre-unpacked
+  return peers.map(peer => {
+    if (!peer.getPeerId) return peer
+    return {
+      peerId: peer.getPeerId(),
+      age: peer.getAgeInBucket(),
+      status: dhtStatusNames[peer.getStatus()],
+    }
+  })
+}
 
 const Container = styled.div`
   background: ${({ theme, bkgColorIndex }) =>
@@ -59,28 +73,21 @@ const sortByAge = (a, b) => b.age - a.age
 const sortByDistance = (a, b) => a.distance - b.distance
 
 function getTitle(peers, index) {
-  const { min, max } = peers.reduce(
-    ({ min, max }, peer) => ({
-      min: Math.floor(Math.min(min, peer.distance)),
-      max: Math.ceil(Math.max(max, peer.distance)),
-    }),
-    { min: Infinity, max: 0 }
-  )
-
-  return `${index}: Distances ${min}–${max}`
+  return `${index}`
 }
 
 function DhtBucket({
-  peers,
+  peers = [],
   index = 1,
   timestamp,
   title = getTitle(peers, index),
 }) {
+  console.log('bucketCapacity', bucketCapacity, 'peers.length', peers.length)
   const emptySlots = bucketCapacity - peers.length
 
   const isBucket0 = index === 0
 
-  const slots = [...peers, ...Array(emptySlots)].sort(
+  const slots = [...processPeers(peers), ...Array(emptySlots)].sort(
     isBucket0 ? sortByDistance : sortByAge
   )
 
@@ -101,7 +108,8 @@ function DhtBucket({
                 <DhtPeer
                   inboundQueries={peer.inboundQueries}
                   outboundQueries={peer.outboundQueries}
-                  distance={peer.distance}
+                  peerId={peer.peerId}
+                  status={peer.status}
                   age={peer.age}
                   timestamp={timestamp}
                 />
