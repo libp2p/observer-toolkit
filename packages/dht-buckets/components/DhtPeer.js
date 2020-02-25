@@ -5,7 +5,8 @@ import styled, { withTheme } from 'styled-components'
 import { DhtQueryContext } from './context/DhtQueryProvider'
 import DhtPeerInfo from './DhtPeerInfo'
 
-import { useCanvas, Tooltip } from '@libp2p-observer/sdk'
+import { getKademliaDistance } from '@libp2p-observer/data'
+import { useCanvas, RuntimeContext, Tooltip } from '@libp2p-observer/sdk'
 
 // TODO: make this configurable and / or come from data
 const timeResolution = 1000
@@ -46,6 +47,17 @@ const InnerChip = styled.div`
   top: ${gutterSize}px;
   left: ${gutterSize}px;
   ${({ theme }) => theme.transition()}
+`
+
+const Distance = styled.div`
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: ${outerSize}px;
+  height: ${outerSize}px;
+  color: ${({ theme }) => theme.color('contrast', 0, 0.8)};
+  ${({ theme }) => theme.text('label', 'small')};
+  text-align: center;
 `
 
 function peakHalfWay(timeSinceQuery) {
@@ -180,8 +192,11 @@ function DhtPeer({
   status,
   timestamp,
   theme,
+  showDistance = false,
 }) {
   const queriesByPeerId = useContext(DhtQueryContext)
+  const runtime = useContext(RuntimeContext)
+  const distance = getKademliaDistance(peerId, runtime.getPeerId())
 
   if (queriesByPeerId[peerId]) {
     inboundQueries = queriesByPeerId[peerId].INBOUND
@@ -245,6 +260,7 @@ function DhtPeer({
           peerId={peerId}
           status={status}
           age={age}
+          distance={distance}
           inboundQueries={inboundQueries}
           outboundQueries={outboundQueries}
         />
@@ -254,6 +270,7 @@ function DhtPeer({
         <Canvas ref={canvasRef} />
         <InnerChip age={age} status={status} />
       </Container>
+      {showDistance && <Distance>{distance}</Distance>}
     </Tooltip>
   )
 }

@@ -6,6 +6,7 @@ import { PeerIdChip } from '@libp2p-observer/sdk'
 
 const Container = styled.ul`
   padding: 0;
+  margin: 0;
   list-style: none;
 `
 
@@ -22,7 +23,14 @@ const InfoItemLabel = styled.label`
   width: ${({ theme }) => theme.spacing(12)};
 `
 
-function DhtPeerInfo({ peerId, age, status, inboundQueries, outboundQueries }) {
+function DhtPeerInfo({
+  peerId,
+  age,
+  status,
+  distance,
+  inboundQueries,
+  outboundQueries,
+}) {
   return (
     <Container>
       <InfoItem>
@@ -36,6 +44,10 @@ function DhtPeerInfo({ peerId, age, status, inboundQueries, outboundQueries }) {
       <InfoItem>
         <InfoItemLabel>Age</InfoItemLabel>
         {age}
+      </InfoItem>
+      <InfoItem>
+        <InfoItemLabel>Distance</InfoItemLabel>
+        {distance}
       </InfoItem>
     </Container>
   )

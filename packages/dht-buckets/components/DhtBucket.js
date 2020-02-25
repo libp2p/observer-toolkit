@@ -107,6 +107,7 @@ function DhtBucket({
                   status={peer.status}
                   age={peer.age}
                   timestamp={timestamp}
+                  showDistance={isBucket0}
                 />
               </PeerContainer>
             )}
