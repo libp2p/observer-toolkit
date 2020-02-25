@@ -3,8 +3,9 @@ import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
 import { DhtQueryContext } from './context/DhtQueryProvider'
+import DhtPeerInfo from './DhtPeerInfo'
 
-import { useCanvas } from '@libp2p-observer/sdk'
+import { useCanvas, Tooltip } from '@libp2p-observer/sdk'
 
 // TODO: make this configurable and / or come from data
 const timeResolution = 1000
@@ -238,10 +239,22 @@ function DhtPeer({
   })
 
   return (
-    <Container age={age}>
-      <Canvas ref={canvasRef} />
-      <InnerChip age={age} status={status} />
-    </Container>
+    <Tooltip
+      content={
+        <DhtPeerInfo
+          peerId={peerId}
+          status={status}
+          age={age}
+          inboundQueries={inboundQueries}
+          outboundQueries={outboundQueries}
+        />
+      }
+    >
+      <Container age={age}>
+        <Canvas ref={canvasRef} />
+        <InnerChip age={age} status={status} />
+      </Container>
+    </Tooltip>
   )
 }
 
