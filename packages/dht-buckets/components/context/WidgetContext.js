@@ -12,6 +12,7 @@ import {
 } from '@libp2p-observer/sdk'
 
 import { DhtQueryProvider } from './DhtQueryProvider'
+import { PeerSlotsProvider } from './PeerSlotsProvider'
 
 const directionNamesList = Object.values(dhtQueryDirectionNames)
 const resultNamesList = Object.values(dhtQueryResultNames)
@@ -38,7 +39,9 @@ function WidgetContext({ children }) {
 
   return (
     <FilterProvider filterDefs={filterDefs}>
-      <DhtQueryProvider>{children}</DhtQueryProvider>
+      <PeerSlotsProvider>
+        <DhtQueryProvider>{children}</DhtQueryProvider>
+      </PeerSlotsProvider>
     </FilterProvider>
   )
 }

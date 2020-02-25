@@ -1,23 +1,28 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useRef, useEffect } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
-
-import { DhtQueryContext } from './context/DhtQueryProvider'
-import DhtPeerInfo from './DhtPeerInfo'
 
 import { getKademliaDistance } from '@libp2p-observer/data'
 import { useCanvas, RuntimeContext, Tooltip } from '@libp2p-observer/sdk'
 
-// TODO: make this configurable and / or come from data
-const timeResolution = 1000
-const cutoff = 15000
+import { DhtQueryContext } from './context/DhtQueryProvider'
+import DhtPeerInfo from './DhtPeerInfo'
+import {
+  getAbsolutePosition,
+  diffAbsolutePositions,
+  getTranslateString,
+} from '../utils/positioning'
+import { paintQueryGlows } from '../utils/paint'
 
-const glowDuration = 600
-
-const outerSize = 24
-const innerSize = 18
-const gutterSize = (outerSize - innerSize) / 2
-const maxGlowSize = 12
+import {
+  timeResolution,
+  cutoff,
+  glowDuration,
+  outerSize,
+  innerSize,
+  gutterSize,
+  maxGlowSize,
+} from '../utils/constants'
 
 const Container = styled.div.attrs(({ age }) => ({
   style: {
@@ -60,128 +65,33 @@ const Distance = styled.div`
   text-align: center;
 `
 
-function peakHalfWay(timeSinceQuery) {
-  const halfTime = glowDuration / 2
-
-  const diff = halfTime - Math.abs(timeSinceQuery - halfTime)
-  const dec = diff / halfTime
-  return dec
-}
-
-function paintActiveGlow(timeSinceQuery, canvasContext, direction, theme) {
-  const completion = timeSinceQuery / glowDuration
-
-  const midwayDec = peakHalfWay(timeSinceQuery)
-
-  const size = midwayDec * maxGlowSize
-  const coordPlacement = direction === 'in' ? 0.3 : 0.7
-  const coord = outerSize * coordPlacement
-  const innerCoord = coord + outerSize * (completion - 0.5)
-
-  const colorKey = direction === 'in' ? 'primary' : 'secondary'
-  const cols = [
-    theme.color('background', 0, 0.5 + midwayDec / 2),
-    theme.color(colorKey, 0, midwayDec / 2),
-    theme.color(colorKey, 0, 0),
+function getTransitionStyles(slotRef, previousSlotRef) {
+  const noop = [
+    {
+      transition: 'none',
+      transform: 'none',
+    },
   ]
+  if (!previousSlotRef) return noop
 
-  const gradient = canvasContext.createRadialGradient(
-    coord,
-    coord,
-    0,
-    innerCoord,
-    innerCoord,
-    size
-  )
-  gradient.addColorStop(0, cols[0])
-  gradient.addColorStop(0.25 + midwayDec / 2, cols[1])
-  gradient.addColorStop(1, cols[2])
+  const newSlot = slotRef.current
+  const oldSlot = previousSlotRef.current
 
-  canvasContext.fillStyle = gradient
-  canvasContext.fillRect(0, 0, outerSize, outerSize)
-}
+  if (!newSlot || !oldSlot || newSlot === oldSlot) return noop
 
-function paintResidualGlow(
-  queries,
-  currentTime,
-  canvasContext,
-  direction,
-  theme
-) {
-  const { filtered, total, totalWeighted } = queries.reduce(
-    (obj, { start: queryTime }) => {
-      const timeSinceQuery = currentTime - queryTime
-      if (queryTime + glowDuration > currentTime || timeSinceQuery > cutoff)
-        return obj
-      return {
-        filtered: [...obj.filtered, timeSinceQuery],
-        total: obj.total + timeSinceQuery,
-        totalWeighted: obj.totalWeighted + (1 - timeSinceQuery / cutoff),
-      }
+  const oldPos = getAbsolutePosition(oldSlot)
+  const newPos = getAbsolutePosition(newSlot)
+  const diffPos = diffAbsolutePositions(oldPos, newPos)
+  return [
+    {
+      transform: getTranslateString(diffPos),
+      transition: 'none',
     },
     {
-      filtered: [],
-      total: 0,
-      totalWeighted: 0,
-    }
-  )
-
-  const coord = outerSize * (direction === 'in' ? 0.2 : 0.8)
-
-  const meanTimeSinceQuery = filtered.length ? total / filtered.length : 0
-  const midStopPosition = meanTimeSinceQuery / cutoff
-
-  const maxWeightedTotal = 10 // An arbitray figure for the max opacity
-  const opacity = Math.min(1, Math.sqrt(totalWeighted / maxWeightedTotal))
-
-  const colorKey = direction === 'in' ? 'primary' : 'secondary'
-  const colorIndex = direction === 'in' ? 0 : 1
-  const cols = [
-    theme.color(colorKey, colorIndex, opacity),
-    theme.color(colorKey, colorIndex, opacity / 2),
-    theme.color(colorKey, colorIndex, 0),
+      transform: getTranslateString({ x: 0, y: 0 }),
+      transition: '300ms transform ease-out',
+    },
   ]
-
-  const gradient = canvasContext.createRadialGradient(
-    coord,
-    coord,
-    0,
-    coord,
-    coord,
-    maxGlowSize
-  )
-  gradient.addColorStop(0, cols[0])
-  gradient.addColorStop(0.2 + midStopPosition * 0.8, cols[1])
-  gradient.addColorStop(1, cols[2])
-
-  canvasContext.fillStyle = gradient
-  canvasContext.fillRect(gutterSize, gutterSize, innerSize, innerSize)
-}
-
-function paintQueryGlows({
-  canvasContext,
-  queries,
-  stateStartTime,
-  msSinceRender,
-  theme,
-  direction,
-}) {
-  const currentTime = stateStartTime + msSinceRender
-
-  const activeQueries = queries.filter(
-    ({ start: queryTime }) =>
-      queryTime <= currentTime && currentTime - queryTime <= glowDuration
-  )
-
-  paintResidualGlow(queries, currentTime, canvasContext, direction, theme)
-
-  if (!activeQueries.length) return false
-
-  activeQueries.forEach(({ start: queryTime }) =>
-    paintActiveGlow(currentTime - queryTime, canvasContext, direction, theme)
-  )
-
-  return true
 }
 
 function DhtPeer({
@@ -192,11 +102,27 @@ function DhtPeer({
   status,
   timestamp,
   theme,
+  slotRef,
+  previousSlotRef,
   showDistance = false,
 }) {
   const queriesByPeerId = useContext(DhtQueryContext)
   const runtime = useContext(RuntimeContext)
   const distance = getKademliaDistance(peerId, runtime.getPeerId())
+
+  const peerRef = useRef()
+  const transitionStyles = getTransitionStyles(slotRef, previousSlotRef)
+  useEffect(() => {
+    const applyTransitionStyles = async i => {
+      const styles = transitionStyles[i]
+      if (!styles || !peerRef.current) return
+      Object.entries(styles).forEach(([key, style]) => {
+        peerRef.current.style[key] = style
+      })
+      setTimeout(() => applyTransitionStyles(i + 1), 0)
+    }
+    applyTransitionStyles(0)
+  })
 
   if (queriesByPeerId[peerId]) {
     inboundQueries = queriesByPeerId[peerId].INBOUND
@@ -254,24 +180,24 @@ function DhtPeer({
   })
 
   return (
-    <Tooltip
-      content={
-        <DhtPeerInfo
-          peerId={peerId}
-          status={status}
-          age={age}
-          distance={distance}
-          inboundQueries={inboundQueries}
-          outboundQueries={outboundQueries}
-        />
-      }
-    >
-      <Container age={age}>
+    <Container age={age} ref={peerRef}>
+      <Tooltip
+        content={
+          <DhtPeerInfo
+            peerId={peerId}
+            status={status}
+            age={age}
+            distance={distance}
+            inboundQueries={inboundQueries}
+            outboundQueries={outboundQueries}
+          />
+        }
+      >
         <Canvas ref={canvasRef} />
         <InnerChip age={age} status={status} />
-      </Container>
-      {showDistance && <Distance>{distance}</Distance>}
-    </Tooltip>
+        {showDistance && <Distance>{distance}</Distance>}
+      </Tooltip>
+    </Container>
   )
 }
 

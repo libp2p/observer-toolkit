@@ -4,15 +4,14 @@ import styled from 'styled-components'
 
 import { dhtStatusNames } from '@libp2p-observer/data'
 
-import DhtPeer from './DhtPeer'
+import DhtBucketSlot from './DhtBucketSlot'
 
-// TODO: get this from messages and/or settings
-const bucketCapacity = 20
-
-const slotSize = 24
-const borderWidth = 1
-
-const peersPerRow = 4
+import {
+  bucketCapacity,
+  slotSize,
+  borderWidth,
+  peersPerRow,
+} from '../utils/constants'
 
 function processPeers(peers) {
   // Unpack protobuf peer data unless it's already pre-unpacked
@@ -40,27 +39,6 @@ const BucketSlots = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-`
-
-const Slot = styled.div`
-  position: relative;
-  margin: 4px;
-  background: ${({ theme, isEmpty, bkgColorIndex }) =>
-    isEmpty
-      ? theme.color('tertiary', bkgColorIndex)
-      : theme.color('contrast', 0)};
-  border-width: ${borderWidth}px;
-  border-style: solid;
-  border-color: ${({ theme, isEmpty }) =>
-    theme.color('background', 1, isEmpty ? 0.2 : 0)};
-  width: ${slotSize - 2 * borderWidth}px;
-  height: ${slotSize - 2 * borderWidth}px;
-`
-
-const PeerContainer = styled.div`
-  top: -2px;
-  left: -2px;
-  position: relative;
 `
 
 const Title = styled.h4`
@@ -93,25 +71,13 @@ function DhtBucket({
       <Title>{title}</Title>
       <BucketSlots>
         {slots.map((peer, index) => (
-          <Slot
-            isEmpty={!peer}
-            bkgColorIndex={bkgColorIndex}
+          <DhtBucketSlot
             key={`bucket_slot_${index}`}
-          >
-            {peer && (
-              <PeerContainer>
-                <DhtPeer
-                  inboundQueries={peer.inboundQueries}
-                  outboundQueries={peer.outboundQueries}
-                  peerId={peer.peerId}
-                  status={peer.status}
-                  age={peer.age}
-                  timestamp={timestamp}
-                  showDistance={isBucket0}
-                />
-              </PeerContainer>
-            )}
-          </Slot>
+            peer={peer}
+            timestamp={timestamp}
+            isBucket0={isBucket0}
+            bkgColorIndex={bkgColorIndex}
+          />
         ))}
       </BucketSlots>
     </Container>
