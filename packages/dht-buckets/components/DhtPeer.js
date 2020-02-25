@@ -60,9 +60,12 @@ const Distance = styled.div`
   left: 0;
   width: ${outerSize}px;
   height: ${outerSize}px;
-  color: ${({ theme }) => theme.color('contrast', 0, 0.8)};
+  color: ${({ theme }) => theme.color('contrast', 0, 0.9)};
   ${({ theme }) => theme.text('label', 'small')};
   text-align: center;
+  font-weight: bold;
+  z-index: 5;
+  letter-spacing: -0.05em; // Ensure 3-digit numbers fit
 `
 
 function getTransitionStyles(slotRef, previousSlotRef) {
