@@ -109,4 +109,6 @@ module.exports = {
   generateState,
   generateStates,
   generateVersion,
+  updateConnections,
+  updateDHT,
 }
