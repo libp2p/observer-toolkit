@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { dhtStatusNames } from '@libp2p-observer/data'
 
 import DhtBucketSlot from './DhtBucketSlot'
+import DhtBucketInfo from './DhtBucketInfo'
 
 import {
   bucketCapacity,
@@ -26,6 +27,12 @@ function processPeers(peers) {
 }
 
 const Container = styled.div`
+  border-left: 1px solid ${({ theme }) => theme.color('background', 1)};
+  border-right: 1px solid ${({ theme }) => theme.color('background', 1)};
+  padding: ${({ theme }) => theme.spacing([1, 0.5])};
+`
+
+const Bucket = styled.div`
   background: ${({ theme, bkgColorIndex }) =>
     theme.color('tertiary', bkgColorIndex)};
   width: ${({ theme }) =>
@@ -67,19 +74,22 @@ function DhtBucket({
   const bkgColorIndex = isBucket0 ? 2 : 3
 
   return (
-    <Container bkgColorIndex={bkgColorIndex}>
-      <Title>{title}</Title>
-      <BucketSlots>
-        {slots.map((peer, index) => (
-          <DhtBucketSlot
-            key={`bucket_slot_${index}`}
-            peer={peer}
-            timestamp={timestamp}
-            isBucket0={isBucket0}
-            bkgColorIndex={bkgColorIndex}
-          />
-        ))}
-      </BucketSlots>
+    <Container>
+      <Bucket bkgColorIndex={bkgColorIndex}>
+        <Title>{title}</Title>
+        <BucketSlots>
+          {slots.map((peer, index) => (
+            <DhtBucketSlot
+              key={`bucket_slot_${index}`}
+              peer={peer}
+              timestamp={timestamp}
+              isBucket0={isBucket0}
+              bkgColorIndex={bkgColorIndex}
+            />
+          ))}
+        </BucketSlots>
+      </Bucket>
+      <DhtBucketInfo peers={processedPeers} />
     </Container>
   )
 }

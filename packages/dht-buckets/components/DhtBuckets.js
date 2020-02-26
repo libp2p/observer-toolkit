@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import T from 'prop-types'
 
-import { getAllDhtBuckets, getTime } from '@libp2p-observer/data'
+import { getDhtPeers, getAllDhtBuckets, getTime } from '@libp2p-observer/data'
 import { DataContext, TimeContext } from '@libp2p-observer/sdk'
 import DhtActivePeers from './DhtActivePeers'
 

@@ -32,7 +32,7 @@ function AccordionControl({
   isOpen,
   setIsOpen,
   children,
-  overrides = {},
+  override = {},
   ...props
 }) {
   const toggleOpen = () => setIsOpen(!isOpen)
@@ -40,7 +40,7 @@ function AccordionControl({
     <AccordionButton
       onClick={toggleOpen}
       active={isOpen}
-      as={overrides.AccordionButton}
+      as={override.AccordionButton}
       {...props}
     >
       {children}
