@@ -60,9 +60,9 @@ function DhtBucket({
 
   const isBucket0 = bucketNum === 0
 
-  const slots = [...processPeers(peers), ...Array(emptySlots)].sort(
-    isBucket0 ? sortByDistance : sortByAge
-  )
+  const processedPeers = processPeers(peers)
+  processedPeers.sort(sortByAge)
+  const slots = [...processedPeers, ...Array(emptySlots)]
 
   const bkgColorIndex = isBucket0 ? 2 : 3
 

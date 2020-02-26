@@ -104,7 +104,7 @@ function paintActiveGlow(timeSinceQuery, canvasContext, direction, theme) {
   const midwayDec = _peakHalfWay(timeSinceQuery)
 
   const size = midwayDec * maxGlowSize
-  const coordPlacement = direction === 'in' ? 0.3 : 0.7
+  const coordPlacement = direction === 'in' ? 0.2 : 0.8
   const coord = outerSize * coordPlacement
   const innerCoord = coord + outerSize * (completion - 0.5)
 

@@ -24,14 +24,26 @@ import {
   maxGlowSize,
 } from '../utils/constants'
 
-const Container = styled.div.attrs(({ age }) => ({
-  style: {
-    transform: `scale(${0.5 * Math.min(1, age / cutoff) + 0.5})`,
-  },
-}))`
+const Container = styled.div.attrs(({ age, theme }) => {
+  const offset = Math.sqrt(age) / 70
+  const opacity = Math.min(0.4, Math.sqrt(age) / (cutoff * 0.1)) + 0.6
+  return {
+    style: {
+      top: `-${offset}px`,
+      left: `-${offset}px`,
+      boxShadow: `${offset}px ${offset}px 1px 1px ${theme.color(
+        'contrast',
+        0,
+        opacity
+      )}`,
+    },
+  }
+})`
   position: relative;
   width: ${outerSize}px;
   height: ${outerSize}px;
+  margin-top: ${gutterSize}px;
+  margin-left: ${gutterSize}px;
 `
 
 const Canvas = styled.canvas`
@@ -41,16 +53,29 @@ const Canvas = styled.canvas`
   z-index: 5;
 `
 
-const InnerChip = styled.div`
+const InnerChip = styled.div.attrs(({ theme, age }) => {
+  const opacity = Math.min(0.5, Math.sqrt(age) / (cutoff * 0.1))
+  const color = theme.color('background', 0, opacity)
+  return {
+    style: {
+      borderTopColor: color,
+      borderLeftColor: color,
+    },
+  }
+})`
   position: absolute;
   width: ${innerSize}px;
   height: ${innerSize}px;
+  top: ${gutterSize}px;
+  left: ${gutterSize}px;
+  border-width: ${gutterSize}px;
+  border-style: solid;
+  border-color: transparent;
+  border-color: transparent;
   background: ${({ theme, status }) =>
     status === 'ACTIVE'
       ? theme.color('contrast', 2)
       : theme.color('background', 2, 0.25)};
-  top: ${gutterSize}px;
-  left: ${gutterSize}px;
   ${({ theme }) => theme.transition()}
 `
 
@@ -69,14 +94,24 @@ const Distance = styled.div`
 `
 
 function getTransitionStyles(slotRef, previousSlotRef) {
+  const appear = [
+    {
+      transition: 'none',
+      opacity: 0,
+    },
+    {
+      transition: '300ms opacity ease-in',
+      opacity: 1,
+    },
+  ]
+  if (!previousSlotRef) return appear
+
   const noop = [
     {
       transition: 'none',
       transform: 'none',
     },
   ]
-  if (!previousSlotRef) return noop
-
   const newSlot = slotRef.current
   const oldSlot = previousSlotRef.current
 
@@ -92,7 +127,7 @@ function getTransitionStyles(slotRef, previousSlotRef) {
     },
     {
       transform: getTranslateString({ x: 0, y: 0 }),
-      transition: '300ms transform ease-out',
+      transition: '300ms transform ease-in-out',
     },
   ]
 }

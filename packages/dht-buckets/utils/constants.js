@@ -2,12 +2,12 @@
 const timeResolution = 1000
 const cutoff = 15000
 
-const glowDuration = 600
+const glowDuration = 800
 
-const outerSize = 24
-const innerSize = 18
-const gutterSize = (outerSize - innerSize) / 2
-const maxGlowSize = 12
+const outerSize = 22
+const innerSize = 22
+const gutterSize = 1
+const maxGlowSize = 14
 
 const bucketCapacity = 20
 

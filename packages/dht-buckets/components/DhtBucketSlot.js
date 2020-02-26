@@ -13,7 +13,7 @@ const Slot = styled.div`
   background: ${({ theme, isEmpty, bkgColorIndex }) =>
     isEmpty
       ? theme.color('tertiary', bkgColorIndex)
-      : theme.color('contrast', 0)};
+      : theme.color('contrast', 0, 0.25)};
   border-width: ${borderWidth}px;
   border-style: solid;
   border-color: ${({ theme, isEmpty }) =>
