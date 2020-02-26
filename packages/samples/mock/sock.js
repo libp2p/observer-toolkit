@@ -31,7 +31,14 @@ const msgQueue = []
 function generateMessages({ connectionsCount }) {
   const utcNow = Date.now()
 
-  updateConnections(connections, connectionsCount, utcNow)
+  if (!connections.length) {
+    connections.length = 0
+    const conns = generateConnections(connectionsCount, utcNow - 1000)
+    updateConnections(conns, null, utcNow)
+    connections.push(...conns)
+  } else {
+    updateConnections(connections, connectionsCount, utcNow)
+  }
 
   // send event when connection is opening/closing
   connections
@@ -41,13 +48,15 @@ function generateMessages({ connectionsCount }) {
       const type = cn.getStatus() === 2 ? 'opening' : 'closing'
       const content = { peerId: cn.getPeerId() }
       const event = generateEvent({ now, type, content })
-      msgQueue.push({ ts: now, type: 'event', data: event })
+      const data = Buffer.concat([version, runtime, event]).toString('binary')
+      msgQueue.push({ ts: now, type: 'event', data })
     })
 
   updateDHT(dht)
 
   const state = generateState(connections, utcNow, dht)
-  msgQueue.push({ ts: utcNow, type: 'state', data: state })
+  const data = Buffer.concat([version, runtime, state]).toString('binary')
+  msgQueue.push({ ts: utcNow + 1000, type: 'state', data })
 }
 
 function sendQueue(ws) {
@@ -61,11 +70,7 @@ function sendQueue(ws) {
   queue
     .sort((a, b) => a.ts - b.ts)
     .forEach(item => {
-      const buf =
-        item.type === 'state'
-          ? Buffer.concat([version, runtime, item.data]).toString('binary')
-          : Buffer.concat([version, item.data]).toString('binary')
-      ws.send(buf)
+      ws.send(item.data)
     })
 }
 
@@ -96,12 +101,6 @@ function handleClientMessage(ws, msg) {
 }
 
 function start({ connectionsCount = 0 }) {
-  // initial connections if none exist
-  if (!connectionsCount) {
-    connections.length = 0
-    connections.push(generateConnections(connectionsCount, Date.now()))
-  }
-
   // generate states
   //tmrMessages =
   setInterval(() => {
@@ -113,7 +112,6 @@ function start({ connectionsCount = 0 }) {
     ws.on('message', msg => {
       handleClientMessage(ws, msg)
     })
-    sendQueue(ws)
   })
 
   server.on('upgrade', function upgrade(request, socket, head) {
@@ -126,72 +124,6 @@ function start({ connectionsCount = 0 }) {
   server.listen(8080, () => {
     console.log('Websocket server listening on ws://localhost:8080')
   })
-
-  //   function sendEvent({ now = Date.now(), type = '', content = {} } = {}) {
-  //     // send event
-  //     const event = generateEvent({ now, type, content })
-  //     const data = Buffer.concat([version, event]).toString('binary')
-  //     ws.send(data)
-  //   }
-
-  //   function sendState() {
-  //     // send states
-  //     const _utcFrom = utcTo - 1000
-  //     const _utcTo = Date.now()
-  //     const states = generateStates(
-  //       connections,
-  //       connectionsCount,
-  //       utcFrom,
-  //       utcTo,
-  //       dht
-  //     )
-  //     // state
-  //     const data = states.length
-  //       ? Buffer.concat([version, runtime, ...states]).toString('binary')
-  //       : ''
-  //     if (data) {
-  //       utcFrom = _utcFrom
-  //       utcTo = _utcTo
-  //     }
-  //     setTimeout(() => {
-  //       ws.send(data)
-  //     }, 100)
-  //   }
-
-  //   // ready signal handler
-  //   ws.on('message', msg => {
-  //     // check client signal
-  //     if (msg) {
-  //       const clientSignal = ClientSignal.deserializeBinary(msg)
-  //       const signal = clientSignal.getSignal()
-  //       if (signal === ClientSignal.Signal.SEND_DATA) {
-  //         sendState()
-  //       } else if (
-  //         signal === ClientSignal.Signal.START_PUSH_EMITTER ||
-  //         signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
-  //       ) {
-  //         tmrEmitter = setInterval(function() {
-  //           sendState()
-  //         }, 1000)
-  //       } else if (
-  //         signal === ClientSignal.Signal.STOP_PUSH_EMITTER ||
-  //         signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER
-  //       ) {
-  //         if (tmrEmitter) {
-  //           clearInterval(tmrEmitter)
-  //         }
-  //       }
-  //     }
-  //   })
-  // //   // on connection, send initial packet
-  // //   const states = generateStates(
-  // //     connections,
-  // //     connectionsCount,
-  // //     utcFrom,
-  // //     utcTo,
-  // //     dht
-  // //   )
-  //   ws.send(Buffer.concat([version, runtime, ...states]).toString('binary'))
 }
 
 module.exports = {
