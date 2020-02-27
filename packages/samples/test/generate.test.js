@@ -98,9 +98,6 @@ test('Open connections increase traffic', t => {
       'packets'
     )
 
-    if (endPacketsIn <= startPacketsIn)
-      console.log('ID:---', connectionAtEnd.getId().toString())
-
     t.ok(endBytesIn > startBytesIn, `${endBytesIn} > ${startBytesIn}`)
     t.ok(endBytesOut > startBytesOut, `${endBytesOut} > ${startBytesOut}`)
     t.ok(endPacketsIn > startPacketsIn, `${endPacketsIn} > ${startPacketsIn}`)
