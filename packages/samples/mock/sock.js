@@ -80,12 +80,12 @@ function handleClientMessage(ws, msg) {
     const clientSignal = ClientSignal.deserializeBinary(msg)
     const signal = clientSignal.getSignal()
     if (signal === ClientSignal.Signal.SEND_DATA) {
-      sendQueue(ws) // sendState()
+      sendQueue(ws)
     } else if (
       signal === ClientSignal.Signal.START_PUSH_EMITTER ||
       signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
     ) {
-      // tmrQueueProcess =
+      // TODO: implement unpause/start diff of timer emitter
       setInterval(() => {
         sendQueue(ws)
       }, 200)
@@ -93,16 +93,13 @@ function handleClientMessage(ws, msg) {
       signal === ClientSignal.Signal.STOP_PUSH_EMITTER ||
       signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER
     ) {
-      // if (tmrEmitter) {
-      //     clearInterval(tmrEmitter)
-      // }
+      // TODO: implement pause/stop of timer emitter
     }
   }
 }
 
 function start({ connectionsCount = 0 }) {
   // generate states
-  //tmrMessages =
   setInterval(() => {
     generateMessages({ connectionsCount })
   }, 1000)
