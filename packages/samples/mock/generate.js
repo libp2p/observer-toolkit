@@ -43,8 +43,8 @@ function generateRuntime() {
   return createBufferSegment(runtimePacket)
 }
 
-function updateConnections(connections, total, now) {
-  connections.forEach(connection => updateConnection(connection, now))
+function updateConnections(connections, total, now, duration) {
+  connections.forEach(connection => updateConnection(connection, now, duration))
   if (randomOpenClose(total)) {
     // open a new connection
     const connection = createConnection({
@@ -93,18 +93,17 @@ function generateActivity({
   dht,
   version,
   runtime,
+  duration,
 }) {
   // Generates states and events for file and stdout output
   let msgBuffers = []
-  const states = Math.floor((utcTo - utcFrom) / 1000)
+  const states = Math.floor((utcTo - utcFrom) / duration)
 
   for (let state = 1; state <= states; state++) {
-    const intervalEnd = utcFrom + state * 1000
-    const intervalStart = intervalEnd - 1000
+    const intervalEnd = utcFrom + state * duration
+    const intervalStart = intervalEnd - duration
 
-    // At first iteration, ensure initial connections count === connectionsCount
-    if (state !== 1)
-      updateConnections(connections, connectionsCount, intervalEnd)
+    updateConnections(connections, connectionsCount, intervalEnd, duration)
 
     const events = generateConnectionEvents({
       connections,
@@ -112,6 +111,7 @@ function generateActivity({
       utcNow: intervalStart,
       version,
       runtime,
+      duration,
     })
     const eventBuffers = events.map(({ event }) => event)
     msgBuffers = [...msgBuffers, ...eventBuffers]
@@ -122,6 +122,7 @@ function generateActivity({
       utcFrom: intervalStart,
       utcTo: intervalEnd,
       msgBuffers,
+      duration,
     })
     msgBuffers.push(generateState(connections, intervalEnd, dht))
   }
@@ -134,17 +135,17 @@ function generateVersion() {
   return versionBuf
 }
 
-function generateComplete(connectionsCount, durationSeconds, peersCount) {
+function generateComplete(connectionsCount, durationSeconds, peersCount, durationSnapshot) {
   const utcTo = Date.now()
-  const utcFrom = utcTo - durationSeconds * 1000
+  const utcFrom = utcTo - durationSeconds * durationSnapshot
 
   const version = generateVersion()
   const runtime = generateRuntime()
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
 
-  const startTs = utcFrom - Math.floor(random() * 1000)
-  const dht = generateDHT({ startTs, peerIds, peersCount, connections })
+  const startTs = utcFrom - Math.floor(random() * durationSnapshot)
+  const dht = generateDHT({ startTs, peerIds, peersCount, connections, durationSnapshot })
 
   const activityMsgs = generateActivity({
     connections,
@@ -154,6 +155,7 @@ function generateComplete(connectionsCount, durationSeconds, peersCount) {
     dht,
     version,
     runtime,
+    durationSnapshot,
   })
 
   return Buffer.concat([version, runtime, ...activityMsgs])

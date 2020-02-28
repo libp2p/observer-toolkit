@@ -101,7 +101,7 @@ function addStreamsToConnection(connection, { secondsOpen, now }) {
   connection.setStreams(streamList)
 }
 
-function updateConnection(connection, now) {
+function updateConnection(connection, now, duration) {
   const traffic = connection.getTraffic()
   const timeline = connection.getTimeline()
   const streamsArray = connection.getStreams().getStreamsList()
@@ -116,14 +116,14 @@ function updateConnection(connection, now) {
       secondsOpen = random()
       mockConnectionTimeline({
         timeline,
-        open: now - 1000 + secondsOpen * 1000,
+        open: now - duration + secondsOpen * 1000,
       })
       break
     case 'CLOSING':
       newStatusName = 'CLOSED'
       mockConnectionTimeline({
         timeline,
-        close: now - random() * 1000,
+        close: now - random() * duration,
       })
       break
     case 'ACTIVE':

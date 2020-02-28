@@ -15,6 +15,7 @@ const {
   updateConnections,
   updateDHT,
 } = require('./generate')
+const { DEFAULT_SNAPSHOT_DURATION } = require('../utils')
 
 const connections = []
 const version = generateVersion()
@@ -26,21 +27,21 @@ const wss = new WebSocket.Server({ noServer: true })
 
 const msgQueue = []
 
-function generateMessages({ connectionsCount, peersCount }) {
+function generateMessages({ connectionsCount, durationSnapshot, peersCount }) {
   const utcNow = Date.now()
-  const utcFrom = utcNow,
-    utcTo = utcNow + 1000
+  const utcFrom = utcNow
+  const utcTo = utcNow + durationSnapshot
   const dht = generateDHT({ peersCount })
 
   if (!connections.length) {
     connections.length = 0
-    const conns = generateConnections(connectionsCount, utcFrom - 1000)
-    updateConnections(conns, null, utcFrom)
+    const conns = generateConnections(connectionsCount, utcNow - durationSnapshot)
+    updateConnections(conns, null, utcFrom, durationSnapshot)
     connections.push(...conns)
     return
   }
 
-  updateConnections(connections, connectionsCount, utcTo)
+  updateConnections(connections, connectionsCount, utcTo, durationSnapshot)
   updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version })
 
   generateConnectionEvents({
@@ -49,6 +50,7 @@ function generateMessages({ connectionsCount, peersCount }) {
     utcNow,
     version,
     runtime,
+    durationSnapshot,
   })
 
   const state = generateState(connections, utcTo, dht)
@@ -96,11 +98,11 @@ function handleClientMessage(ws, msg) {
   }
 }
 
-function start({ connectionsCount = 0, peersCount }) {
+function start({ connectionsCount = 0, duration = DEFAULT_SNAPSHOT_DURATION, peersCount } = {}) {
   // generate states
   setInterval(() => {
-    generateMessages({ connectionsCount, peersCount })
-  }, 1000)
+    generateMessages({ connectionsCount, peersCount, duration })
+  }, duration)
 
   // handle messages
   wss.on('connection', ws => {

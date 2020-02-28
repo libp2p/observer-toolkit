@@ -8,9 +8,7 @@ const DEFAULT_DURATION = 10 // Seconds
 const DEFAULT_FILE = `mock-${Date.now()}`
 const DEFAULT_STREAMS = 10
 const DEFAULT_PEERS = 30
-
-// This may need to become configurable, but that's not currently planned
-const SNAPSHOT_DURATION = 1000 // Miliseconds
+const DEFAULT_SNAPSHOT_DURATION = 1000 // Miliseconds
 
 const HOUR_IN_SECONDS = 3600
 const GIGABYTE_IN_BYTES = 1e9
@@ -127,7 +125,7 @@ module.exports = {
   DEFAULT_FILE,
   DEFAULT_STREAMS,
   DEFAULT_PEERS,
-  SNAPSHOT_DURATION,
+  DEFAULT_SNAPSHOT_DURATION,
   HOUR_IN_SECONDS,
   GIGABYTE_IN_BYTES,
   HOST_PEER_ID,
