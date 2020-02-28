@@ -1,9 +1,9 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
 import { uploadWebSocket } from '../../utils'
-import { SetterContext } from '../context/DataProvider'
+import { useDatastore } from '../../hooks'
 
 const defaultUrl = 'ws://localhost:8080'
 
@@ -28,7 +28,7 @@ const Container = styled.span`
 function WebSocketInput({ title }) {
   const inputRef = useRef()
   const [isLoading, setIsLoading] = useState(false)
-  const { dispatchDataset } = useContext(SetterContext)
+  const { removeData, updateData, updateSource } = useDatastore()
 
   function handleKeyPress(e) {
     if (e.key === 'Enter' || e.keyCode === 13) handleSubmit()
@@ -43,19 +43,18 @@ function WebSocketInput({ title }) {
     )
   }
 
-  function handleUploadStart() {
+  function handleUploadStart(url) {
+    removeData()
+    updateSource({ type: 'live', name: url })
     setIsLoading(true)
   }
 
-  function handleUploadChunk(data) {
-    dispatchDataset({
-      action: 'append',
-      data,
-    })
+  function handleUploadFinish() {
+    setIsLoading(false)
   }
 
-  function handleUploadFinish(url) {
-    setIsLoading(false)
+  function handleUploadChunk(data) {
+    updateData(data)
   }
 
   return (

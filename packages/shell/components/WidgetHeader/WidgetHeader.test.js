@@ -7,7 +7,7 @@ import {
   DataProvider,
   FilterProvider,
 } from '@libp2p-observer/sdk'
-import { renderWithTheme, within } from '@libp2p-observer/testing'
+import { renderWithData, within } from '@libp2p-observer/testing'
 
 import WidgetHeader from './WidgetHeader'
 
@@ -44,7 +44,7 @@ MockWidgetStack.propTypes = {
 
 describe('WidgetHeader', () => {
   it('opens and closes on clicking button', async () => {
-    const { getByText, queryAllByText, findAllByText } = renderWithTheme(
+    const { getByText, queryAllByText, findAllByText } = renderWithData(
       <MockWidgetStack filterDef={mockListFilter} />
     )
 
@@ -74,7 +74,7 @@ describe('WidgetHeader', () => {
       findByRole,
       findByText,
       queryAllByText,
-    } = renderWithTheme(<MockWidgetStack filterDef={mockListFilter} />)
+    } = renderWithData(<MockWidgetStack filterDef={mockListFilter} />)
 
     const getTrayButton = text => {
       const buttons = getAllByRole('button')
@@ -125,7 +125,7 @@ describe('WidgetHeader', () => {
   it('fires closeWidget fn on clicking close button, with tooltip', async () => {
     const mockCloseFn = jest.fn()
 
-    const { getByAriaLabel, queryAllByText } = renderWithTheme(
+    const { getByAriaLabel, queryAllByText } = renderWithData(
       <MockWidgetStack filterDef={mockListFilter} mockCloseFn={mockCloseFn} />
     )
 

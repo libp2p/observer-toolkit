@@ -7,13 +7,15 @@ import ThemeWrapper from './ThemeWrapper'
 import loadSample from '../loaders/loadSample'
 
 // Load data synchronously using Node FS so tests don't need to re-render
-const mockData = loadSample()
+const { source, data } = loadSample()
 
 function DataTestWrapper({ providers = {}, children }) {
   const _DataProvider = providers.DataProvider || DataProvider
   return (
     <ThemeWrapper contexts={providers}>
-      <_DataProvider initialData={mockData}>{children}</_DataProvider>
+      <_DataProvider initialSource={source} initialData={data}>
+        {children}
+      </_DataProvider>
     </ThemeWrapper>
   )
 }

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { Icon } from '@libp2p-observer/sdk'
+import { Icon, SourceContext } from '@libp2p-observer/sdk'
 
 const Container = styled.div`
   display: flex;
@@ -42,12 +42,9 @@ const ButtonText = styled.span`
   `}
 `
 
-function DataTypeControl({ metadata, openDataTray }) {
+function DataTypeControl({ openDataTray }) {
   const [isHighlighted, setHighlighted] = useState(false)
-
-  if (!metadata) return ''
-
-  const { type, name } = metadata
+  const { type, name } = useContext(SourceContext)
 
   const iconNames = {
     sample: 'cloud',
@@ -85,7 +82,6 @@ function DataTypeControl({ metadata, openDataTray }) {
 }
 
 DataTypeControl.propTypes = {
-  metadata: T.object,
   openDataTray: T.func.isRequired,
 }
 

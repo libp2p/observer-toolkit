@@ -1,13 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
 import samples from '@libp2p-observer/samples'
-import {
-  applySampleData,
-  DataContext,
-  SetterContext,
-} from '@libp2p-observer/sdk'
+import { applySampleData, useDatastore } from '@libp2p-observer/sdk'
 
 const SamplesTray = styled.div`
   position: absolute;
@@ -49,17 +45,14 @@ const SampleImg = styled.img`
 
 function SamplesList({ onLoad }) {
   const [isLoading, setIsLoading] = useState('')
-  const { dispatchDataset } = useContext(SetterContext)
-  const dataset = useContext(DataContext)
+  const { removeData, updateData, updateSource } = useDatastore()
 
   function handleClick(samplePath) {
-    if (dataset.isSample) {
-      dispatchDataset({
-        action: 'remove',
-      })
-      return
+    const handleUploadStart = name => {
+      removeData()
+      updateSource({ type: 'sample', name })
+      setIsLoading(samplePath)
     }
-    const handleUploadStart = () => setIsLoading(samplePath)
     applySampleData(
       samplePath,
       handleUploadStart,
@@ -68,17 +61,13 @@ function SamplesList({ onLoad }) {
     )
   }
 
-  function handleUploadChunk(data) {
-    data.isSample = true
-    dispatchDataset({
-      action: 'replace',
-      data,
-    })
-  }
-
   function handleUploadFinished() {
     if (isLoading) setIsLoading(false)
     if (onLoad) onLoad()
+  }
+
+  function handleUploadChunk(data) {
+    updateData(data)
   }
 
   return (

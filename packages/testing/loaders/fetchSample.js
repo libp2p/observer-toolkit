@@ -20,14 +20,15 @@ async function fetchSample(filename = defaultFilename) {
 
   const sampleData = parseImport(fileData)
 
-  if (sampleData.states) {
-    sampleData.states.metadata = {
-      type: 'sample',
-      name: 'Demo sample data',
-    }
+  const source = {
+    type: 'sample',
+    name: 'Demo sample data',
   }
 
-  return sampleData
+  return {
+    data: sampleData,
+    source,
+  }
 }
 
 export default fetchSample
