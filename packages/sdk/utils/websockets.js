@@ -16,6 +16,18 @@ function createClientSignalMessage(
   return clientSignal.serializeBinary()
 }
 
+function getMessageDataBuffer(msg, done) {
+  if (msg.data instanceof Blob) {
+    const fileReader = new FileReader()
+    fileReader.onload = function(event) {
+      done(event.target.result)
+    }
+    fileReader.readAsArrayBuffer(msg.data)
+  } else {
+    done(new Buffer(msg.data, 'binary'))
+  }
+}
+
 function getSignal(cmd) {
   if (cmd === 'data') return proto.ClientSignal.Signal.SEND_DATA
   if (cmd === 'start') return proto.ClientSignal.Signal.START_PUSH_EMITTER
@@ -42,18 +54,18 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
 
   ws.addEventListener('message', function(msg) {
     // process incoming message
-    if (msg.data) {
-      const buf = new Buffer(msg.data, 'binary')
-      bl.append(buf.slice(4))
-      processUploadBuffer(bl, onUploadChunk)
-    }
-
-    if (!usePushEmitter) {
-      // request data manually
-      setTimeout(() => {
-        sendSignal('data')
-      }, 1000)
-    }
+    getMessageDataBuffer(msg, buf => {
+      if (buf) {
+        bl.append(buf.slice(4))
+        processUploadBuffer(bl, onUploadChunk)
+      }
+      if (!usePushEmitter) {
+        // request data manually
+        setTimeout(() => {
+          sendSignal('data')
+        }, 1000)
+      }
+    })
   })
   ws.addEventListener('close', function() {
     if (onUploadFinished) onUploadFinished(url)
