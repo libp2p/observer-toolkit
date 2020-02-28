@@ -10,14 +10,9 @@ const {
   addStreamsToConnection,
 } = require('./messages/connections')
 const { createDHT, updateDHT } = require('./messages/dht')
-const { createEvent } = require('./messages/events')
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
-const {
-  createProtocolEventPacket,
-  createProtocolRuntimePacket,
-  createProtocolStatePacket,
-} = require('./messages/protocol-data-packet')
+const { createProtocolDataPacket } = require('./messages/protocol-data-packet')
 const { statusList } = require('./enums/statusList')
 
 function generateConnections(total, now) {
@@ -36,7 +31,7 @@ function generateDHT(opt = {}) {
 
 function generateRuntime() {
   const runtime = createRuntime()
-  const runtimePacket = createProtocolRuntimePacket(runtime)
+  const runtimePacket = createProtocolDataPacket(runtime, true)
   return createBufferSegment(runtimePacket)
 }
 
@@ -53,15 +48,9 @@ function updateConnections(connections, total, now) {
   }
 }
 
-function generateEvent({ now = Date.now(), type = '', content = {} } = {}) {
-  const event = createEvent({ now, type, content })
-  const eventPacket = createProtocolEventPacket(event)
-  return createBufferSegment(eventPacket)
-}
-
 function generateState(connections, now, dht) {
   const state = createState(connections, now, dht)
-  const statePacket = createProtocolStatePacket(state)
+  const statePacket = createProtocolDataPacket(state)
   return createBufferSegment(statePacket)
 }
 
@@ -108,11 +97,8 @@ module.exports = {
   generateComplete,
   generateConnections,
   generateDHT,
-  generateEvent,
   generateRuntime,
   generateState,
   generateStates,
   generateVersion,
-  updateConnections,
-  updateDHT,
 }

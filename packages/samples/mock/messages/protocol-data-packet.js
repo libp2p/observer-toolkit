@@ -4,38 +4,20 @@ const {
   proto: { ProtocolDataPacket, Version },
 } = require('@libp2p-observer/proto')
 
-function createProtocolDataPacket(message, type) {
+function createProtocolDataPacket(message, isRuntime = false) {
   const dataPacket = new ProtocolDataPacket()
 
   dataPacket.setVersion(new Version(1))
 
-  if (type === 'runtime') {
+  if (isRuntime) {
     dataPacket.setRuntime(message)
-  } else if (type === 'event') {
-    dataPacket.setEvent(message)
   } else {
-    // state
     dataPacket.setState(message)
   }
 
   return dataPacket
 }
 
-function createProtocolEventPacket(message) {
-  return createProtocolDataPacket(message, 'event')
-}
-
-function createProtocolRuntimePacket(message) {
-  return createProtocolDataPacket(message, 'runtime')
-}
-
-function createProtocolStatePacket(message) {
-  return createProtocolDataPacket(message, 'state')
-}
-
 module.exports = {
   createProtocolDataPacket,
-  createProtocolEventPacket,
-  createProtocolRuntimePacket,
-  createProtocolStatePacket,
 }

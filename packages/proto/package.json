@@ -10,7 +10,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "protoc": "protoc --js_out=import_style=commonjs,binary:. lib/introspection.proto && node lib/prepend-disable-lint.js"
+    "protoc": "protoc --js_out=import_style=commonjs,binary:. protobuf/introspection.proto && node protobuf/prepend-disable-lint.js"
   },
   "dependencies": {
     "google-protobuf": "^3.10.0"
