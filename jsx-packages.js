@@ -4,6 +4,7 @@
 const jsxPackages = [
   'catalogue',
   'connections-table',
+  'events-table',
   'sdk',
   'shell',
   'streams-table',
