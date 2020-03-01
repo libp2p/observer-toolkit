@@ -1,6 +1,7 @@
 import { useMemo, useReducer } from 'react'
 import T from 'prop-types'
-import { scaleLinear, scaleTime, scaleLog } from 'd3'
+
+import { getTicks } from '../utils'
 
 function updatePoolings(oldPoolings, { action, poolings, index }) {
   const poolingsArray = Array.isArray(poolings) ? poolings : [poolings]
@@ -30,72 +31,6 @@ function editPooling(oldPoolings, poolingsArray) {
     Object.assign(newPoolings[index], pooling)
   })
   return newPoolings
-}
-
-function getScaleType(type) {
-  switch (type) {
-    case 'linear':
-      return scaleLinear
-    case 'log':
-      return scaleLog
-    case 'time':
-      return scaleTime
-    default:
-      throw new Error`Unrecognised data pooling type "${type}"`()
-  }
-}
-
-function getPools(data, { mapData, poolsCount, poolType = 'linear' }) {
-  const mappedData = mapData ? data.map(mapData) : data
-  const scaler = getScaleType(poolType)()
-
-  const { min, max } = mappedData.reduce(
-    ({ min, max }, datum) => {
-      return { min: Math.min(min, datum), max: Math.max(max, datum) }
-    },
-    { min: Infinity, max: -Infinity }
-  )
-
-  scaler.domain([min, max])
-  scaler.nice(poolsCount)
-  let pools = scaler.ticks(poolsCount)
-
-  let redoPools = false
-  let [domainLower, domainUpper] = scaler.domain()
-
-  // "niced" d3 ticks *should* always enclose domain, but don't always, especially
-  // with log scales: e.g. [ 0.01, 1, 100 ], max = 999, upper domain niced to 1000
-  if (pools[0] > min) {
-    redoPools = true
-    switch (poolType) {
-      case 'linear':
-        domainLower = pools[0] - (pools[1] - pools[0])
-        break
-      case 'log':
-        domainLower = pools[0] * (pools[0] / pools[1])
-        break
-    }
-  }
-  const lastIndex = pools.length - 1
-  if (pools[lastIndex] < max) {
-    redoPools = true
-    switch (poolType) {
-      case 'linear':
-        domainUpper = pools[lastIndex] + (pools[1] - pools[0])
-        break
-      case 'log':
-        domainUpper = pools[lastIndex] * (pools[0] / pools[1])
-        break
-    }
-  }
-
-  if (redoPools) {
-    scaler.domain([domainLower, domainUpper])
-    scaler.nice(poolsCount)
-    pools = scaler.ticks(poolsCount)
-  }
-
-  return pools
 }
 
 function poolData(data, poolSets, poolings, setIndex) {
@@ -130,9 +65,20 @@ function usePooledData({ data, poolings = {} }) {
   )
 
   const { pooledData, poolSets } = useMemo(() => {
-    const poolSets = poolingsArray.map((pooling, index) =>
-      getPools(data, pooling)
-    )
+    const poolSets = poolingsArray.map((pooling, index) => {
+      const { scaleType, mapData } = pooling
+      const ticksCount =
+        typeof pooling.poolsCount === 'number'
+          ? pooling.poolsCount + 1
+          : undefined
+
+      return getTicks({
+        data,
+        ticksCount,
+        scaleType,
+        mapData,
+      })
+    })
     const pooledData = poolData(data, poolSets, poolingsArray, 0)
 
     return {
@@ -150,8 +96,8 @@ function usePooledData({ data, poolings = {} }) {
 
 const poolingShape = T.shape({
   mapData: T.func,
-  poolCount: T.number,
-  poolType: T.string,
+  poolsCount: T.number,
+  scaleType: T.string,
 })
 
 usePooledData.propTypes = {

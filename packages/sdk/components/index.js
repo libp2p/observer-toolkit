@@ -1,6 +1,7 @@
 export * from './context'
 export * from './input'
 export * from './DataTable'
+export * from './Histogram'
 export * from './PeerId'
 
 export { default as AccordionControl } from './AccordionControl'

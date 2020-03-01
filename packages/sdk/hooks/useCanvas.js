@@ -22,11 +22,21 @@ function getScaledContext(canvasRef, width, height, canvasContextType) {
   return canvasContext
 }
 
+function getTweenPosition(startTime, animationDuration) {
+  if (!animationDuration) return 1
+
+  const now = performance.now()
+  const timeElapsed = now - startTime
+  return Math.min(1, timeElapsed / animationDuration)
+}
+
 function useCanvas({
   width,
   height,
   canvasContextType = '2d',
   animateCanvas = null,
+  animationDuration = 0,
+  animationEasing,
 }) {
   const canvasRef = useRef()
   const animationRef = useRef({
@@ -59,8 +69,25 @@ function useCanvas({
       animationRef,
     })
 
-    const animate = timestamp => {
-      animationRef.current.isAnimating = animateFrame(timestamp)
+    const startTime = performance.now()
+
+    // reqAnimFrameTs is the timestamp passed in by requestAnimationFrame()
+    // It is relative to a different time than performance.now() and so
+    // will give odd results if used in comparisons with performance.now()
+    const animate = reqAnimFrameTs => {
+      const uneasedTweenPosition = getTweenPosition(
+        startTime,
+        animationDuration
+      )
+      const tweenPosition = animationEasing
+        ? animationEasing(uneasedTweenPosition)
+        : uneasedTweenPosition
+
+      animationRef.current.isAnimating = animateFrame({
+        tweenPosition,
+        reqAnimFrameTs,
+        startTime,
+      })
       if (animationRef.current.isAnimating) {
         animationRef.current.animationFrame = requestAnimationFrame(animate)
       }

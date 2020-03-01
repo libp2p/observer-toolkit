@@ -3,10 +3,11 @@ import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
 import {
-  StyledButton,
   usePooledData,
   AccordionControl,
+  Histogram,
   PeerIdChip,
+  StyledButton,
 } from '@libp2p-observer/sdk'
 
 const InfoList = styled.ul`
@@ -48,15 +49,10 @@ const Placeholder = styled.div`
 function DhtBucketInfo({ peers }) {
   const { pooledData, poolSets } = usePooledData({
     data: peers,
-    poolings: [
-      { mapData: peer => peer.age },
-      { mapData: peer => peer.distance },
-    ],
+    poolings: [{ mapData: peer => peer.age }],
   })
 
   const [peerIdListIsOpen, setPeerIdListIsOpen] = useState(false)
-
-  console.log('pooledData', pooledData, 'poolSets', poolSets)
 
   return (
     <InfoList>
@@ -83,7 +79,14 @@ function DhtBucketInfo({ peers }) {
       </InfoItem>
       <InfoItem>
         <InfoItemLabel>Peers by age</InfoItemLabel>
-        <Placeholder />
+        <Placeholder>
+          <Histogram
+            pooledData={pooledData}
+            poolSets={poolSets}
+            unit={'s'}
+            verticalLines={4}
+          />
+        </Placeholder>
       </InfoItem>
       <InfoItem>
         <InfoItemLabel>Incoming queries</InfoItemLabel>

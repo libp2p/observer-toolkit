@@ -10,11 +10,18 @@ const Canvas = styled.canvas`
   height: 100%;
 `
 
-function CanvasCover({ width, height, animationGetter, children }) {
+function CanvasCover({
+  width,
+  height,
+  animateCanvas,
+  animationDuration,
+  children,
+}) {
   const { canvasRef } = useCanvas({
     width,
     height,
-    animationGetter,
+    animateCanvas,
+    animationDuration,
   })
 
   return <Canvas ref={canvasRef} />

@@ -172,7 +172,7 @@ function DhtPeer({
   if (!outboundQueries) outboundQueries = queriesByPeerId[peerId].OUTBOUND
 
   const animateCanvas = useCallback(
-    ({ canvasContext, width, height, clearAnimation } = {}) => {
+    ({ canvasContext, width, height } = {}) => {
       const timeOfRender = performance.now()
       const stateStartTime = timestamp - timeResolution
 
