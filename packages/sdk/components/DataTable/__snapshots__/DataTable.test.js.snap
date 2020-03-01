@@ -69,6 +69,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   color: rgba(93,94,96,0.8);
   text-transform: uppercase;
   white-space: nowrap;
+  width: auto;
 }
 
 .c8 {
@@ -88,6 +89,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   color: rgba(93,94,96,0.8);
   text-transform: uppercase;
   white-space: nowrap;
+  width: auto;
   text-align: right;
 }
 
@@ -101,7 +103,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   padding-left: 24px;
   padding-right: 16px;
   text-align: left;
-  padding-right: 32px;
+  padding: 8px 32px 8px 24px;
   font-weight: 400;
   font-family: plex-sans;
   color: rgb(93,94,96);
@@ -117,7 +119,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   padding-left: 24px;
   padding-right: 16px;
   text-align: left;
-  padding-right: 32px;
+  padding: 8px 32px 8px 24px;
   font-weight: 400;
   font-family: plex-sans;
   color: rgb(93,94,96);
