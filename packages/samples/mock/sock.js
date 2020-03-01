@@ -52,7 +52,7 @@ function generateMessages({ connectionsCount }) {
       msgQueue.push({ ts: now, type: 'event', data })
     })
 
-  updateDHT(dht)
+  updateDHT(dht, connections, utcNow, utcNow + 1000)
 
   const state = generateState(connections, utcNow, dht)
   const data = Buffer.concat([version, runtime, state]).toString('binary')
