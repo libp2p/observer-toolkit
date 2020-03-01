@@ -3,10 +3,17 @@ import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
 import { getKademliaDistance } from '@libp2p-observer/data'
-import { useCanvas, RuntimeContext, Tooltip } from '@libp2p-observer/sdk'
+import {
+  useCanvas,
+  PeersContext,
+  RuntimeContext,
+  SetterContext,
+  Tooltip,
+} from '@libp2p-observer/sdk'
 
 import { DhtQueryContext } from './context/DhtQueryProvider'
 import DhtPeerInfo from './DhtPeerInfo'
+import DhtPeerHighlighting from './DhtPeerHighlighting'
 import {
   getAbsolutePosition,
   diffAbsolutePositions,
@@ -145,6 +152,8 @@ function DhtPeer({
   showDistance = false,
 }) {
   const queriesByPeerId = useContext(DhtQueryContext)
+  const { setPeerIds } = useContext(SetterContext)
+
   const runtime = useContext(RuntimeContext)
   const distance = getKademliaDistance(peerId, runtime.getPeerId())
 
@@ -217,9 +226,18 @@ function DhtPeer({
     animateCanvas,
   })
 
+  const handleMouseOver = () => setPeerIds([peerId])
+  const handleMouseOut = () => setPeerIds([])
+
   return (
-    <Container age={age} ref={peerRef}>
+    <Container
+      age={age}
+      ref={peerRef}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    >
       <Tooltip
+        fixOn="no-hover"
         content={
           <DhtPeerInfo
             peerId={peerId}
@@ -234,6 +252,7 @@ function DhtPeer({
         <Canvas ref={canvasRef} />
         <InnerChip age={age} status={status} />
         {showDistance && <Distance>{distance}</Distance>}
+        <DhtPeerHighlighting peerId={peerId} />
       </Tooltip>
     </Container>
   )

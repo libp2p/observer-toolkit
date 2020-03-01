@@ -34,6 +34,15 @@ function tweenValues(before, after, tweenPosition) {
   return before + diff * tweenPosition
 }
 
+function isInsideRect(pointer, rect) {
+  return (
+    pointer.x >= rect.x &&
+    pointer.x <= rect.x + rect.width &&
+    pointer.y >= rect.y &&
+    pointer.y <= rect.y + rect.height
+  )
+}
+
 function isNotNumeric(value, name = 'Value') {
   // Return throwable error message if NaN or non-number
   return isNaN(value)
@@ -65,5 +74,6 @@ export {
   throwIf,
   getMinMaxValues,
   tweenValues,
+  isInsideRect,
   validateNumbers,
 }

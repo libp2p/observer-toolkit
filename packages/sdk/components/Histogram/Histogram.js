@@ -8,6 +8,7 @@ import React, {
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
+import { SetterContext } from '../context'
 import CanvasCover from '../CanvasCover'
 import { getTicks } from '../../utils'
 import paintGrid from './paintGrid'
@@ -20,6 +21,9 @@ function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
     pooledData,
     poolSets,
   })
+  const { setPeerIds } = useContext(SetterContext)
+
+  const hotSpotsRef = useRef([])
 
   const onAnimationComplete = () => {
     setPreviousData({
@@ -46,6 +50,9 @@ function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
           continueAnimation = false
         }
 
+        const hotSpots = []
+        hotSpots.defaultAction = () => setPeerIds([])
+
         canvasContext.clearRect(0, 0, width, height)
 
         const ticksProps = { min: 0, ticksCount: verticalLines }
@@ -68,20 +75,35 @@ function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
           ...paintProps,
         })
 
+        // TODO: un-hardcode the expectation of peer IDs
+        const actions = pooledData.map(arr => () => {
+          setPeerIds(arr.map(item => item.peerId))
+        })
+
         paintBars({
           counts,
           previousCounts,
           cellWidth,
           cellHeight,
+          hotSpots,
+          actions,
           ...paintProps,
         })
+
+        hotSpotsRef.current = hotSpots
 
         return continueAnimation
       }
     },
     [pooledData, poolSets, previousData]
   )
-  return <CanvasCover animateCanvas={animateCanvas} animationDuration={500} />
+  return (
+    <CanvasCover
+      animateCanvas={animateCanvas}
+      animationDuration={500}
+      hotSpotsRef={hotSpotsRef}
+    />
+  )
 }
 
 Histogram.propTypes = {

@@ -34,12 +34,12 @@ function DhtPeerInfo({
   return (
     <Container>
       <InfoItem>
-        <InfoItemLabel>Peer ID</InfoItemLabel>
-        <PeerIdChip peerId={peerId} />
-      </InfoItem>
-      <InfoItem>
         <InfoItemLabel>Status</InfoItemLabel>
         {status}
+      </InfoItem>
+      <InfoItem>
+        <InfoItemLabel>Peer ID</InfoItemLabel>
+        <PeerIdChip peerId={peerId} />
       </InfoItem>
       <InfoItem>
         <InfoItemLabel>Age</InfoItemLabel>

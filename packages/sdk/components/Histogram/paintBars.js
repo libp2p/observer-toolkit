@@ -1,5 +1,7 @@
 import { tweenValues } from '../../utils'
 
+const noop = () => {}
+
 function paintBars({
   counts,
   previousCounts,
@@ -8,10 +10,12 @@ function paintBars({
   canvasContext,
   width,
   height,
+  hotSpots,
+  actions,
   tweenPosition,
   theme,
 }) {
-  canvasContext.fillStyle = 'red'
+  canvasContext.fillStyle = theme.color('tertiary', 3)
   canvasContext.strokeStyle = 'none'
 
   let barIndex = 0
@@ -27,6 +31,16 @@ function paintBars({
     const y = height - barHeight
 
     canvasContext.rect(x, y, barWidth, barHeight)
+
+    hotSpots.push({
+      action: actions[barIndex] || noop,
+      area: {
+        x,
+        y,
+        width: barWidth,
+        height: barHeight,
+      },
+    })
 
     barIndex++
   }
