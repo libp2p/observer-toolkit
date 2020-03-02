@@ -44,10 +44,8 @@ const AccordionButton = styled.button`
   ${({ theme }) => theme.text('body', 'medium')}
 `
 
-const Placeholder = styled.div`
-  height: 70px;
-  border: 1px solid ${({ theme }) => theme.color('background', 2)};
-  background: ${({ theme }) => theme.color('background', 0, 0.5)};
+const ChartContainer = styled.div`
+  height: 90px;
 `
 
 function getQueries(queriesByPeerId, peerIds, direction, timeNow) {
@@ -128,36 +126,36 @@ function DhtBucketInfo({ peers }) {
       </InfoItem>
       <InfoItem>
         <InfoItemLabel>Peers by age</InfoItemLabel>
-        <Placeholder>
+        <ChartContainer>
           <Histogram
             pooledData={ageData}
             poolSets={ageSets}
             unit={'s'}
-            verticalLines={4}
+            verticalLines={3}
           />
-        </Placeholder>
+        </ChartContainer>
       </InfoItem>
       <InfoItem>
         <InfoItemLabel>Incoming queries</InfoItemLabel>
-        <Placeholder>
+        <ChartContainer>
           <Histogram
             pooledData={inboundData}
             poolSets={inboundSets}
             unit={'s'}
-            verticalLines={4}
+            verticalLines={3}
           />
-        </Placeholder>
+        </ChartContainer>
       </InfoItem>
       <InfoItem>
         <InfoItemLabel>Outgoing queries</InfoItemLabel>
-        <Placeholder>
+        <ChartContainer>
           <Histogram
             pooledData={outboundData}
             poolSets={outboundSets}
             unit={'s'}
-            verticalLines={4}
+            verticalLines={3}
           />
-        </Placeholder>
+        </ChartContainer>
       </InfoItem>
     </InfoList>
   )

@@ -14,8 +14,12 @@ function paintBars({
   actions,
   countPerCell,
   tweenPosition,
+  xAxisSpace = 0,
+  yAxisSpace = 0,
   theme,
 }) {
+  const innerHeight = height - yAxisSpace
+
   canvasContext.fillStyle = theme.color('tertiary', 3)
   canvasContext.strokeStyle = 'none'
 
@@ -26,10 +30,10 @@ function paintBars({
     const previousCount = previousCounts[barIndex] || 0
 
     const tweenedCount = tweenValues(previousCount, count, tweenPosition)
-    const x = barIndex * cellWidth + 0.25 * cellWidth
+    const x = barIndex * cellWidth + 0.25 * cellWidth + xAxisSpace
     const barWidth = 0.5 * cellWidth
     const barHeight = (tweenedCount / countPerCell) * cellHeight
-    const y = height - barHeight
+    const y = innerHeight - barHeight
 
     canvasContext.rect(x, y, barWidth, barHeight)
 

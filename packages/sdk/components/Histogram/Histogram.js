@@ -16,7 +16,15 @@ import paintBars from './paintBars'
 
 const mapLength = arr => arr.length
 
-function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
+function Histogram({
+  pooledData,
+  poolSets,
+  unit,
+  verticalLines = 8,
+  xAxisSpace = 20,
+  yAxisSpace = 4,
+  theme,
+}) {
   const [previousData, setPreviousData] = useState({
     pooledData,
     poolSets,
@@ -58,7 +66,9 @@ function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
 
         const ticksProps = { min: 0, ticksCount: verticalLines }
 
-        const yTicks = getTicks({ data: counts, ...ticksProps })
+        const yTicks = getTicks({ data: counts, ...ticksProps }).filter(
+          tickNum => !(tickNum % 1)
+        )
         const previousYTicks = getTicks({ data: previousCounts, ...ticksProps })
 
         const paintProps = {
@@ -66,6 +76,8 @@ function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
           width,
           height,
           tweenPosition,
+          xAxisSpace,
+          yAxisSpace,
           theme,
         }
         const { cellWidth, cellHeight, countPerCell } = paintGrid({
