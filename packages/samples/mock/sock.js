@@ -5,7 +5,6 @@ const WebSocket = require('ws')
 const {
   proto: { ClientSignal },
 } = require('@libp2p-observer/proto')
-const { random } = require('./utils')
 const {
   generateConnections,
   generateConnectionEvents,
@@ -16,11 +15,6 @@ const {
   updateConnections,
   updateDHT,
 } = require('./generate')
-
-const {
-  createPeerDisconnectingEvent,
-  createPeerConnectingEvent,
-} = require('./messages/events')
 
 const connections = []
 const version = generateVersion()
