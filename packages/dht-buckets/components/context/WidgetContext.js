@@ -21,19 +21,19 @@ function WidgetContext({ children }) {
   const filterDefs = [
     getListFilter({
       name: 'Filter query direction',
-      mapFilter: query => directionNamesList[query.getDirection()],
+      mapFilter: query => query.direction,
       valueNames: directionNamesList,
     }),
     getListFilter({
       name: 'Filter query result',
-      mapFilter: query => resultNamesList[query.getResult()],
+      mapFilter: query => query.result,
       valueNames: resultNamesList,
     }),
     getRangeFilter({
       name: 'Filter query duration',
       mapFilter: query => query.duration,
       min: 0,
-      max: 1000, // TODO: See how real libp2p data exposes query limit
+      max: 500, // TODO: See how real libp2p data exposes query limit
     }),
   ]
 
