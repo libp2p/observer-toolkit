@@ -102,7 +102,7 @@ function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
   return (
     <CanvasCover
       animateCanvas={animateCanvas}
-      animationDuration={500}
+      animationDuration={400}
       hotSpotsRef={hotSpotsRef}
     />
   )

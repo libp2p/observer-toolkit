@@ -8,7 +8,11 @@ import {
   Histogram,
   PeerIdChip,
   StyledButton,
+  TimeContext,
 } from '@libp2p-observer/sdk'
+import { getStateTimes } from '@libp2p-observer/data'
+
+import { DhtQueryContext } from './context/DhtQueryProvider'
 
 const InfoList = styled.ul`
   padding: 0;
@@ -46,10 +50,55 @@ const Placeholder = styled.div`
   background: ${({ theme }) => theme.color('background', 0, 0.5)};
 `
 
+function getQueries(queriesByPeerId, peerIds, direction, timeNow) {
+  const queries = Object.entries(queriesByPeerId).reduce(
+    (queries, [peerId, peerQueries]) => {
+      if (!peerIds.includes(peerId)) return queries
+
+      const processedQueries = peerQueries[direction].map(query => ({
+        elapsed: timeNow - query.start,
+        peerId: peerId,
+      }))
+      return [...queries, ...processedQueries]
+    },
+    []
+  )
+
+  return queries
+}
+
 function DhtBucketInfo({ peers }) {
-  const { pooledData, poolSets } = usePooledData({
+  const queriesByPeerId = useContext(DhtQueryContext)
+  const timepoint = useContext(TimeContext)
+  const { end: timeNow } = getStateTimes(timepoint)
+
+  const { pooledData: ageData, poolSets: ageSets } = usePooledData({
     data: peers,
     poolings: [{ mapData: peer => peer.age }],
+  })
+
+  const peerIds = peers.map(peer => peer.peerId)
+  const inboundQueries = getQueries(
+    queriesByPeerId,
+    peerIds,
+    'INBOUND',
+    timeNow
+  )
+  const outboundQueries = getQueries(
+    queriesByPeerId,
+    peerIds,
+    'OUTBOUND',
+    timeNow
+  )
+
+  const { pooledData: inboundData, poolSets: inboundSets } = usePooledData({
+    data: inboundQueries,
+    poolings: [{ mapData: query => query.elapsed }],
+  })
+
+  const { pooledData: outboundData, poolSets: outboundSets } = usePooledData({
+    data: outboundQueries,
+    poolings: [{ mapData: query => query.elapsed }],
   })
 
   const [peerIdListIsOpen, setPeerIdListIsOpen] = useState(false)
@@ -81,8 +130,8 @@ function DhtBucketInfo({ peers }) {
         <InfoItemLabel>Peers by age</InfoItemLabel>
         <Placeholder>
           <Histogram
-            pooledData={pooledData}
-            poolSets={poolSets}
+            pooledData={ageData}
+            poolSets={ageSets}
             unit={'s'}
             verticalLines={4}
           />
@@ -90,11 +139,25 @@ function DhtBucketInfo({ peers }) {
       </InfoItem>
       <InfoItem>
         <InfoItemLabel>Incoming queries</InfoItemLabel>
-        <Placeholder />
+        <Placeholder>
+          <Histogram
+            pooledData={inboundData}
+            poolSets={inboundSets}
+            unit={'s'}
+            verticalLines={4}
+          />
+        </Placeholder>
       </InfoItem>
       <InfoItem>
         <InfoItemLabel>Outgoing queries</InfoItemLabel>
-        <Placeholder />
+        <Placeholder>
+          <Histogram
+            pooledData={outboundData}
+            poolSets={outboundSets}
+            unit={'s'}
+            verticalLines={4}
+          />
+        </Placeholder>
       </InfoItem>
     </InfoList>
   )
