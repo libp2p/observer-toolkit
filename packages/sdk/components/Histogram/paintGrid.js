@@ -48,8 +48,9 @@ function paintGrid({
     const xPos = poolIndex * cellWidth + xAxisSpace
     canvasContext.moveTo(xPos, 0)
     canvasContext.lineTo(xPos, innerHeight)
-    if (yAxisSpace > 5)
+    if (yAxisSpace > 5 && !isNaN(pools[poolIndex])) {
       canvasContext.fillText(pools[poolIndex], xPos, height - 5)
+    }
 
     poolIndex++
   }
@@ -62,7 +63,7 @@ function paintGrid({
     const yPos = innerHeight - yTickIndex * cellHeight
     canvasContext.moveTo(xAxisSpace, yPos)
     canvasContext.lineTo(width, yPos)
-    if (xAxisSpace)
+    if (xAxisSpace && !isNaN(yTicks[yTickIndex]))
       canvasContext.fillText(yTicks[yTickIndex], xAxisSpace - 4, yPos)
 
     yTickIndex++
