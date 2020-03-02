@@ -35,8 +35,6 @@ const InfoItemLabel = styled.label`
   ${({ theme }) => theme.text('label', 'small')}
   text-transform: uppercase;
   color: ${({ theme }) => theme.color('tertiary', 2)};
-  display: inline-block;
-  width: ${({ theme }) => theme.spacing(12)};
 `
 
 const AccordionButton = styled.button`
@@ -44,9 +42,7 @@ const AccordionButton = styled.button`
   ${({ theme }) => theme.text('body', 'medium')}
 `
 
-const ChartContainer = styled.div`
-  height: 90px;
-`
+const ChartContainer = styled.div``
 
 function getQueries(queriesByPeerId, peerIds, direction, timeNow) {
   const queries = Object.entries(queriesByPeerId).reduce(
@@ -125,34 +121,34 @@ function DhtBucketInfo({ peers }) {
         )}
       </InfoItem>
       <InfoItem>
-        <InfoItemLabel>Peers by age</InfoItemLabel>
-        <ChartContainer>
-          <Histogram
-            pooledData={ageData}
-            poolSets={ageSets}
-            unit={'s'}
-            verticalLines={3}
-          />
-        </ChartContainer>
-      </InfoItem>
-      <InfoItem>
-        <InfoItemLabel>Incoming queries</InfoItemLabel>
+        <InfoItemLabel>Incoming queries by recency</InfoItemLabel>
         <ChartContainer>
           <Histogram
             pooledData={inboundData}
             poolSets={inboundSets}
-            unit={'s'}
+            xAxisSuffix={'ms ago'}
             verticalLines={3}
           />
         </ChartContainer>
       </InfoItem>
       <InfoItem>
-        <InfoItemLabel>Outgoing queries</InfoItemLabel>
+        <InfoItemLabel>Outgoing queries by recency</InfoItemLabel>
         <ChartContainer>
           <Histogram
             pooledData={outboundData}
             poolSets={outboundSets}
-            unit={'s'}
+            xAxisSuffix={'ms ago'}
+            verticalLines={3}
+          />
+        </ChartContainer>
+      </InfoItem>
+      <InfoItem>
+        <InfoItemLabel>Peers by time in bucket</InfoItemLabel>
+        <ChartContainer>
+          <Histogram
+            pooledData={ageData}
+            poolSets={ageSets}
+            xAxisSuffix={'ms'}
             verticalLines={3}
           />
         </ChartContainer>

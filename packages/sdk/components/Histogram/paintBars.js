@@ -10,8 +10,6 @@ function paintBars({
   canvasContext,
   width,
   height,
-  hotSpots,
-  actions,
   countPerCell,
   tweenPosition,
   xAxisSpace = 0,
@@ -36,16 +34,6 @@ function paintBars({
     const y = innerHeight - barHeight
 
     canvasContext.rect(x, y, barWidth, barHeight)
-
-    hotSpots.push({
-      action: actions[barIndex] || noop,
-      area: {
-        x,
-        y,
-        width: barWidth,
-        height: barHeight,
-      },
-    })
 
     barIndex++
   }

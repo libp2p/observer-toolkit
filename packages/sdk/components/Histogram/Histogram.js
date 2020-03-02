@@ -16,10 +16,21 @@ import paintBars from './paintBars'
 
 const mapLength = arr => arr.length
 
+const Container = styled.div`
+  position: relative;
+  height: 90px;
+`
+
+const XAxisLabel = styled.div`
+  height: 16px;
+  text-align: center;
+  ${({ theme }) => theme.text('label', 'medium')}
+`
+
 function Histogram({
   pooledData,
   poolSets,
-  unit,
+  xAxisSuffix = '',
   verticalLines = 8,
   xAxisSpace = 20,
   yAxisSpace = 4,
@@ -29,8 +40,10 @@ function Histogram({
     pooledData,
     poolSets,
   })
+  const [highlightedArea, setHighlightedArea] = useState(null)
   const { setPeerIds } = useContext(SetterContext)
 
+  const xAxisLabelRef = useRef()
   const hotSpotsRef = useRef([])
 
   const onAnimationComplete = () => {
@@ -63,6 +76,19 @@ function Histogram({
         hotSpots.defaultAction = () => setPeerIds([])
 
         canvasContext.clearRect(0, 0, width, height)
+
+        if (highlightedArea) {
+          const fillCol = theme.color('background', 0)
+          const strokeCol = theme.color('background', 2)
+          canvasContext.fillStyle = fillCol
+          canvasContext.strokeStyle = strokeCol
+          canvasContext.fillRect(
+            highlightedArea.area.x,
+            highlightedArea.area.y,
+            highlightedArea.area.width,
+            highlightedArea.area.height
+          )
+        }
 
         const ticksProps = { min: 0, ticksCount: verticalLines }
 
@@ -98,25 +124,54 @@ function Histogram({
           previousCounts,
           cellWidth,
           cellHeight,
-          hotSpots,
-          actions,
           countPerCell,
           ...paintProps,
         })
 
-        hotSpotsRef.current = hotSpots
+        hotSpotsRef.current = poolSets[0].map((pool, i) => {
+          const upper = poolSets[0][i + 1]
+          const label = !upper ? `>= ${pool}` : `${pool}-${upper}`
+          const area = {
+            x: xAxisSpace + cellWidth * i,
+            y: 0,
+            width: cellWidth,
+            height: height,
+          }
+
+          const action = () => {
+            actions[i] && actions[i]()
+            setHighlightedArea({
+              label: label + xAxisSuffix,
+              area,
+            })
+          }
+          return {
+            action,
+            area,
+          }
+        })
 
         return continueAnimation
       }
     },
-    [pooledData, poolSets, previousData]
+    [pooledData, poolSets, previousData, highlightedArea]
   )
+
+  const handleMouseOut = () => {
+    setPeerIds([])
+    setHighlightedArea(null)
+  }
   return (
-    <CanvasCover
-      animateCanvas={animateCanvas}
-      animationDuration={400}
-      hotSpotsRef={hotSpotsRef}
-    />
+    <>
+      <Container onMouseOut={handleMouseOut}>
+        <CanvasCover
+          animateCanvas={animateCanvas}
+          animationDuration={400}
+          hotSpotsRef={hotSpotsRef}
+        />
+      </Container>
+      <XAxisLabel>{highlightedArea && highlightedArea.label}</XAxisLabel>
+    </>
   )
 }
 
