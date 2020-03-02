@@ -4,6 +4,8 @@ import { BufferList } from 'bl'
 function uploadDataFile(file, onUploadStart, onUploadFinished, onUploadChunk) {
   if (!file) return
 
+  const name = file.name
+
   const blobSlice = Blob.prototype.slice
   const versionFieldSize = 4
   const chunkSize = 1000 * 1024
@@ -14,23 +16,22 @@ function uploadDataFile(file, onUploadStart, onUploadFinished, onUploadChunk) {
   let currentChunk = 0
 
   reader.onload = e => {
-    const metadata = { type: 'upload', name: file.name }
     if (currentChunk <= chunks) {
       const buf = Buffer.from(event.currentTarget.result)
       if (currentChunk > 0) {
         bl.append(buf)
-        processUploadBuffer(bl, onUploadChunk, metadata)
+        processUploadBuffer(bl, onUploadChunk)
       }
       const start = versionFieldSize + currentChunk * chunkSize
       const end = start + chunkSize >= file.size ? file.size : start + chunkSize
       reader.readAsArrayBuffer(blobSlice.call(file, start, end))
       currentChunk++
     } else {
-      if (onUploadFinished) onUploadFinished(file)
+      if (onUploadFinished) onUploadFinished(name)
     }
   }
   reader.readAsArrayBuffer(blobSlice.call(file, 0, versionFieldSize))
-  if (onUploadStart) onUploadStart(file)
+  if (onUploadStart) onUploadStart(name)
 }
 
 async function applySampleData(
@@ -39,7 +40,9 @@ async function applySampleData(
   onUploadFinished,
   onUploadChunk = () => {}
 ) {
-  if (onUploadStart) onUploadStart()
+  const name = samplePath.match(/[/|\\]?([^/|\\]*)$/)[1]
+
+  if (onUploadStart) onUploadStart(name)
 
   const bl = new BufferList()
   const response = await fetch(samplePath)
@@ -51,20 +54,14 @@ async function applySampleData(
 
   const arrbuf = await response.arrayBuffer()
 
-  const metadata = {
-    type: 'sample',
-    name: samplePath.match(/[/|\\]?([^/|\\]*)$/)[1],
-  }
-
   const buf = Buffer.from(arrbuf)
   bl.append(buf.slice(4))
-  processUploadBuffer(bl, onUploadChunk, metadata)
-  onUploadFinished()
+  processUploadBuffer(bl, onUploadChunk)
+  onUploadFinished(name)
 }
 
-function processUploadBuffer(bufferList, onUploadChunk, metadata) {
+function processUploadBuffer(bufferList, onUploadChunk) {
   const data = parseBufferList(bufferList)
-  if (metadata && data.states) data.states.metadata = metadata
   onUploadChunk(data)
 }
 

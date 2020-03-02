@@ -36,25 +36,26 @@ function stackData(keyedData, keys) {
   const dataStacker = stack().keys(keys)
 
   const stackedData = dataStacker(keyedData)
-
-  const maxY = getMaxAreaPeak(stackedData)
-
-  // Assumes all stacked data will be by timepoint - if not will need more options
   const xScale = scaleTime()
-  // Scaling from dataset[0] leaves a gap of the width of 1 datapoint
-  const minX = keyedData[0].time
-  const maxX = keyedData[keyedData.length - 1].time
-
   const yScale = scaleLinear()
 
-  validateNumbers({
-    maxY,
-    minX,
-    maxX,
-  })
+  if (keyedData.length) {
+    const maxY = getMaxAreaPeak(stackedData)
 
-  xScale.domain([minX, maxX])
-  yScale.domain([0, maxY])
+    // Assumes all stacked data will be by timepoint - if not will need more options
+    // Scaling from dataset[0] leaves a gap of the width of 1 datapoint
+    const minX = keyedData[0].time
+    const maxX = keyedData[keyedData.length - 1].time
+
+    validateNumbers({
+      maxY,
+      minX,
+      maxX,
+    })
+
+    xScale.domain([minX, maxX])
+    yScale.domain([0, maxY])
+  }
 
   return {
     stackedData,

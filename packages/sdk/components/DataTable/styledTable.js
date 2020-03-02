@@ -26,12 +26,13 @@ const TableHead = styled.th`
   color: ${({ theme }) => theme.color('text', 1, 0.8)};
   text-transform: uppercase;
   white-space: nowrap;
+  width: ${({ width = 'auto' }) => width};
   ${({ align }) => (align ? `text-align: ${align};` : '')}
 `
 
 const TableCell = styled.td`
   ${({ theme }) => theme.styles.tableCell}
-  padding-right: ${({ theme }) => theme.spacing(4)};
+  padding: ${({ theme, padding = [1, 4, 1, 3] }) => theme.spacing(padding)};
   font-weight: 400;
   font-family: plex-sans;
   color: ${({ theme }) => theme.color('text', 1)};

@@ -326,6 +326,13 @@ message State {
   uint32 snapshot_duration_ms          = 5;
 }
 
+// Event
+message Event {
+    string type                     = 1;
+    google.protobuf.Timestamp ts    = 2;
+    map<string, string> content     = 3;
+}
+
 // ProtocolDataPacket wraps messages to be sent to clients to allow extension
 // based on new types of data sources
 message ProtocolDataPacket {
@@ -335,6 +342,7 @@ message ProtocolDataPacket {
   oneof message {
       State state     = 2;
       Runtime runtime = 3;
+      Event event     = 4;
   }
 }
 

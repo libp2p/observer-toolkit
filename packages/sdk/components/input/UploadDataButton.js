@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import { useDropzone } from 'react-dropzone'
 
 import { uploadDataFile } from '../../utils'
-import { SetterContext } from '../context/DataProvider'
+import { SourceContext } from '../context/DataProvider'
+import { useDatastore } from '../../hooks'
 
 const FileButton = styled.button`
   cursor: pointer;
@@ -33,28 +34,28 @@ const defaultTitle = 'Pick or drop libp2p protobuf file'
 
 function UploadDataButton({ onLoad, title = defaultTitle, overrides = {} }) {
   const [isLoading, setIsLoading] = useState(false)
-  const [fileName, setFileName] = useState('')
-  const { dispatchDataset } = useContext(SetterContext)
+  const { name: fileName } = useContext(SourceContext)
+  const { removeData, updateData, updateSource } = useDatastore()
 
   const handleUpload = useCallback(
     files => {
-      const onUploadStart = () => setIsLoading(true)
+      const onUploadStart = name => {
+        removeData()
+        updateSource({ type: 'upload', name })
+        setIsLoading(true)
+      }
       const onUploadFinish = file => {
         setIsLoading(false)
-        setFileName(file.name)
         if (onLoad) onLoad()
       }
       const onUploadChunk = data => {
-        dispatchDataset({
-          action: 'append',
-          data,
-        })
+        updateData(data)
       }
       files.forEach(file =>
         uploadDataFile(file, onUploadStart, onUploadFinish, onUploadChunk)
       )
     },
-    [dispatchDataset, setIsLoading, setFileName, onLoad]
+    [removeData, updateSource, onLoad, updateData]
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

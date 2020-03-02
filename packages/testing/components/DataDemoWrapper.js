@@ -7,28 +7,30 @@ import ThemeWrapper from './ThemeWrapper'
 import fetchSample from '../loaders/fetchSample'
 
 function DataDemoWrapper({ children }) {
-  const [mockData, setMockData] = useState(null)
+  const [mock, setMock] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
   // Load data asynchronously using browser fetch
   useEffect(() => {
-    if (isLoading || !!mockData) return
+    if (isLoading || !!mock) return
     setIsLoading(true)
 
-    const applyMockData = async () => {
-      const mockData = await fetchSample()
+    const applyMock = async () => {
+      const mock = await fetchSample()
 
-      setMockData(mockData)
+      setMock(mock)
       setIsLoading(false)
     }
-    applyMockData()
-  }, [isLoading, mockData, setMockData, setIsLoading])
+    applyMock()
+  }, [isLoading, mock, setMock, setIsLoading])
 
-  return !mockData ? (
+  return !mock ? (
     'Preparing sample data...'
   ) : (
     <ThemeWrapper>
-      <DataProvider initialData={mockData}>{children}</DataProvider>
+      <DataProvider initialSource={mock.source} initialData={mock.data}>
+        {children}
+      </DataProvider>
     </ThemeWrapper>
   )
 }

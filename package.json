@@ -17,6 +17,7 @@
     "lint": "eslint . --ext .js",
     "lint-fix": "eslint . --ext .js --fix",
     "mock-file": "lerna exec --scope=\"@libp2p-observer/samples\" -- npm run mock-file --",
+    "mock-sock": "lerna exec --scope=\"@libp2p-observer/samples\" -- npm run mock-sock --",
     "prettier": "prettier --check './**/*.js'",
     "prettier-fix": "prettier --write './**/*.js'",
     "storybook:connections-table": "lerna exec --scope=\"@libp2p-observer/connections-table\" -- npm run storybook",

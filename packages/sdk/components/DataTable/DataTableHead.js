@@ -26,7 +26,6 @@ function DataTableHead({
   setSortColumn,
   sortDirection,
   setSortDirection,
-  ...props
 }) {
   const [hover, setHover] = useState(false)
   const isSortable = !!columnDef.sort
@@ -57,7 +56,7 @@ function DataTableHead({
       onClick={sortIconAction}
       align={columnDef.align}
       as={override.TableHead}
-      {...props}
+      {...(columnDef.cellProps || {})}
     >
       <TableHeadInner
         isSortable={isSortable}

@@ -14,7 +14,9 @@ import {
 import { getLatestTimepoint } from './states'
 
 const { Connection } = proto
-const { states } = loadSample()
+const {
+  data: { states },
+} = loadSample()
 
 function getClassProps(instance) {
   // To use for class matching of protobuf classes instead of toBeInstanceOf
