@@ -35,8 +35,10 @@ function getRandomiser() {
 
   const isTest = !!process.env.TAP
 
+  // The *tiny* but real chance of Math.random() returning actual 0 is an edge case we don't need
+  const randomAndTruthy = () => Math.random() || randomAndTruthy()
   /* istanbul ignore if */
-  if (!isTest) return Math.random
+  if (!isTest) return randomAndTruthy
 
   let index = 0
   const pseudoRandom = () => {
