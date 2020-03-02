@@ -5,11 +5,11 @@ const WebSocket = require('ws')
 const {
   proto: { ClientSignal },
 } = require('@libp2p-observer/proto')
-const { random, decodeBinToNum } = require('./utils')
+const { random } = require('./utils')
 const {
   generateConnections,
+  generateConnectionEvents,
   generateDHT,
-  generateEvent,
   generateRuntime,
   generateState,
   generateVersion,
@@ -17,8 +17,10 @@ const {
   updateDHT,
 } = require('./generate')
 
-const { roleList } = require('./enums/roleList')
-const { transportList } = require('./enums/transportList')
+const {
+  createPeerDisconnectingEvent,
+  createPeerConnectingEvent,
+} = require('./messages/events')
 
 const connections = []
 const version = generateVersion()
@@ -47,31 +49,13 @@ function generateMessages({ connectionsCount, peersCount }) {
   updateConnections(connections, connectionsCount, utcTo)
   updateDHT(dht, connections, utcFrom, utcTo)
 
-  // send event when connection is opening/closing
-  connections
-    .filter(cn => cn.getStatus() === 2 || cn.getStatus() === 3)
-    .forEach(cn => {
-      const now = utcFrom + Math.floor(random() * 800 + 100)
-      const type = cn.getStatus() === 2 ? 'PeerConnecting' : 'PeerDisconnecting'
-      const content = {
-        peerId: cn.getPeerId(),
-        transport: transportList.getItem(decodeBinToNum(cn.getTransportId())),
-      }
-      if (type === 'PeerDisconnecting') {
-        const open = cn
-          .getTimeline()
-          .getOpenTs()
-          .getSeconds()
-        content.age = `${now - open}`
-        content.openTime = `${open}`
-      }
-      if (type === 'PeerConnecting') {
-        content.role = roleList.getItem(cn.getRole())
-      }
-      const event = generateEvent({ now, type, content })
-      const data = Buffer.concat([version, runtime, event]).toString('binary')
-      msgQueue.push({ ts: now, type: 'event', data })
-    })
+  generateConnectionEvents({
+    connections,
+    msgQueue,
+    utcNow,
+    version,
+    runtime,
+  })
 
   const state = generateState(connections, utcTo, dht)
   const data = Buffer.concat([version, runtime, state]).toString('binary')

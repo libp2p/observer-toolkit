@@ -10,7 +10,11 @@ const {
   addStreamsToConnection,
 } = require('./messages/connections')
 const { createDHT, updateDHT } = require('./messages/dht')
-const { createEvent } = require('./messages/events')
+const {
+  createEvent,
+  getPeerDisconnectingProps,
+  getPeerConnectingProps,
+} = require('./messages/events')
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
 const {
@@ -59,25 +63,70 @@ function generateEvent({ now = Date.now(), type = '', content = {} } = {}) {
   return createBufferSegment(eventPacket)
 }
 
+function generateConnectionEvents({
+  connections,
+  msgQueue = [],
+  utcNow,
+  version,
+  runtime,
+}) {
+  // send event when connection is opening/closing
+  connections
+    .filter(cn => cn.getStatus() === 2 || cn.getStatus() === 3)
+    .forEach(cn => {
+      const now = utcNow + Math.floor(random() * 800 + 100)
+      const getEventProps =
+        cn.getStatus() === 2
+          ? getPeerConnectingProps
+          : getPeerDisconnectingProps
+      const event = generateEvent(getEventProps(now, cn))
+      const data = Buffer.concat([version, runtime, event]).toString('binary')
+      msgQueue.push({ ts: now, type: 'event', data, event })
+    })
+
+  return msgQueue
+}
+
 function generateState(connections, now, dht) {
   const state = createState(connections, now, dht)
   const statePacket = createProtocolStatePacket(state)
   return createBufferSegment(statePacket)
 }
 
-function generateStates(connections, connectionsCount, utcFrom, utcTo, dht) {
-  const stateBuffers = []
+function generateActivity({
+  connections,
+  connectionsCount,
+  utcFrom,
+  utcTo,
+  dht,
+  version,
+  runtime,
+}) {
+  // Generates states and events for file and stdout output
+  let msgBuffers = []
   const states = Math.floor((utcTo - utcFrom) / 1000)
+
   for (let state = 1; state <= states; state++) {
     const intervalEnd = utcFrom + state * 1000
     const intervalStart = intervalEnd - 1000
 
     const connCount = state !== 1 ? connectionsCount : null
     updateConnections(connections, connCount, intervalEnd)
+
+    const events = generateConnectionEvents({
+      connections,
+      msgBuffers,
+      utcNow: intervalStart,
+      version,
+      runtime,
+    })
+    const eventBuffers = events.map(({ event }) => event)
+    msgBuffers = [...msgBuffers, ...eventBuffers]
+
     updateDHT(dht, connections, intervalStart, intervalEnd)
-    stateBuffers.push(generateState(connections, intervalEnd, dht))
+    msgBuffers.push(generateState(connections, intervalEnd, dht))
   }
-  return stateBuffers
+  return msgBuffers
 }
 
 function generateVersion() {
@@ -98,24 +147,28 @@ function generateComplete(connectionsCount, durationSeconds, peersCount) {
   const startTs = utcFrom - Math.floor(random() * 1000)
   const dht = generateDHT({ startTs, peerIds, peersCount, connections })
 
-  const states = generateStates(
+  const activityMsgs = generateActivity({
     connections,
     connectionsCount,
     utcFrom,
     utcTo,
-    dht
-  )
-  return Buffer.concat([version, runtime, ...states])
+    dht,
+    version,
+    runtime,
+  })
+
+  return Buffer.concat([version, runtime, ...activityMsgs])
 }
 
 module.exports = {
   generateComplete,
   generateConnections,
+  generateConnectionEvents,
   generateDHT,
   generateEvent,
   generateRuntime,
   generateState,
-  generateStates,
+  generateActivity,
   generateVersion,
   updateConnections,
   updateDHT,
