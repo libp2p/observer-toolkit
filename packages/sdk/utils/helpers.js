@@ -19,6 +19,30 @@ function calculatableProp(prop, allowUndefined = false) {
   return num
 }
 
+function getMinMaxValues(numericData) {
+  const { min, max } = numericData.reduce(
+    ({ min, max }, num) => {
+      return { min: Math.min(min, num), max: Math.max(max, num) }
+    },
+    { min: Infinity, max: -Infinity }
+  )
+  return { min, max }
+}
+
+function tweenValues(before, after, tweenPosition) {
+  const diff = after - before
+  return before + diff * tweenPosition
+}
+
+function isInsideRect(pointer, rect) {
+  return (
+    pointer.x >= rect.x &&
+    pointer.x <= rect.x + rect.width &&
+    pointer.y >= rect.y &&
+    pointer.y <= rect.y + rect.height
+  )
+}
+
 function isNotNumeric(value, name = 'Value') {
   // Return throwable error message if NaN or non-number
   return isNaN(value)
@@ -48,5 +72,8 @@ export {
   copyToClipboard,
   isNotNumeric,
   throwIf,
+  getMinMaxValues,
+  tweenValues,
+  isInsideRect,
   validateNumbers,
 }

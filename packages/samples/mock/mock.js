@@ -83,7 +83,7 @@ if (socksrv) {
     let utcFrom = utcTo - durationSeconds * 1000
     let tmrEmitter = null
     const connections = generateConnections(connectionsCount, utcFrom)
-    const dht = generateDHT()
+    const dht = generateDHT({ peersCount })
     const version = generateVersion()
     const runtime = generateRuntime()
 
@@ -144,7 +144,11 @@ if (socksrv) {
     ws.send(Buffer.concat([version, runtime, ...states]).toString('binary'))
   })
 } else {
-  const bufferSegments = generateComplete(connectionsCount, durationSeconds)
+  const bufferSegments = generateComplete(
+    connectionsCount,
+    durationSeconds,
+    peersCount
+  )
   const writer = filePath ? createWriteStream(filePath) : process.stdout
   writer.write(bufferSegments)
 }

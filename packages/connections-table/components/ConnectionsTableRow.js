@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {
   DataTableRow,
   Icon,
-  PeerContext,
+  PeersContext,
   SetterContext,
   StyledButton,
   TableCell,
@@ -24,17 +24,17 @@ const ExpandStreamsCell = styled(TableCell)`
 
 function ConnectionsTableRow({ rowContentProps, columnDefs, ...rowProps }) {
   const [isExpanded, setIsExpanded] = useState(false)
-  const globalPeerId = useContext(PeerContext)
-  const { setPeerId } = useContext(SetterContext)
+  const globalPeerIds = useContext(PeersContext)
+  const { setPeerIds } = useContext(SetterContext)
   const peerIdRow = rowContentProps.find(row => row.columnName === 'peerId')
   const peerId = peerIdRow ? peerIdRow.value : null
-  const isHighlighted = peerId === globalPeerId
+  const isHighlighted = globalPeerIds.includes(peerId)
 
   function mouseEnterHandler() {
-    if (peerId !== globalPeerId) setPeerId(peerId)
+    if (!globalPeerIds.includes(peerId)) setPeerIds([peerId])
   }
   function mouseLeaveHandler() {
-    if (globalPeerId) setPeerId(null)
+    if (globalPeerIds.length) setPeerIds([])
   }
 
   const streamsRow = rowContentProps.find(row => row.columnName === 'streams')
