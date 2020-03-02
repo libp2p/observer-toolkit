@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/libp2p-introspection-ui/static/css/main.737171de.chunk.css",
-    "main.js": "/libp2p-introspection-ui/static/js/main.baf61a1b.chunk.js",
-    "main.js.map": "/libp2p-introspection-ui/static/js/main.baf61a1b.chunk.js.map",
+    "main.js": "/libp2p-introspection-ui/static/js/main.e0533d93.chunk.js",
+    "main.js.map": "/libp2p-introspection-ui/static/js/main.e0533d93.chunk.js.map",
     "runtime-main.js": "/libp2p-introspection-ui/static/js/runtime-main.a93826f0.js",
     "runtime-main.js.map": "/libp2p-introspection-ui/static/js/runtime-main.a93826f0.js.map",
     "static/js/2.bded40f8.chunk.js": "/libp2p-introspection-ui/static/js/2.bded40f8.chunk.js",
     "static/js/2.bded40f8.chunk.js.map": "/libp2p-introspection-ui/static/js/2.bded40f8.chunk.js.map",
     "index.html": "/libp2p-introspection-ui/index.html",
-    "precache-manifest.4092afad9fe2270a8172d9e1e877cffc.js": "/libp2p-introspection-ui/precache-manifest.4092afad9fe2270a8172d9e1e877cffc.js",
+    "precache-manifest.44235fd74a6b625b56f91a68f1ed5b06.js": "/libp2p-introspection-ui/precache-manifest.44235fd74a6b625b56f91a68f1ed5b06.js",
     "service-worker.js": "/libp2p-introspection-ui/service-worker.js",
     "static/css/main.737171de.chunk.css.map": "/libp2p-introspection-ui/static/css/main.737171de.chunk.css.map",
     "static/media/IBMPlexMono-Light.otf": "/libp2p-introspection-ui/static/media/IBMPlexMono-Light.f9679767.otf",
@@ -35,6 +35,6 @@
     "static/js/runtime-main.a93826f0.js",
     "static/js/2.bded40f8.chunk.js",
     "static/css/main.737171de.chunk.css",
-    "static/js/main.baf61a1b.chunk.js"
+    "static/js/main.e0533d93.chunk.js"
   ]
 }
