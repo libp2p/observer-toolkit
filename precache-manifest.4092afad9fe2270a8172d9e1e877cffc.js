@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "998ecf0b14197551f795ad9ef0f71c02",
+    "revision": "89f2002b97d7bd04f445034a830917ab",
     "url": "/libp2p-introspection-ui/index.html"
   },
   {
-    "revision": "2e6435d8ba1fc0596690",
+    "revision": "cbadcd14d6b2016e47e5",
     "url": "/libp2p-introspection-ui/static/css/main.737171de.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/libp2p-introspection-ui/static/js/2.bded40f8.chunk.js"
   },
   {
-    "revision": "2e6435d8ba1fc0596690",
-    "url": "/libp2p-introspection-ui/static/js/main.81e77c52.chunk.js"
+    "revision": "cbadcd14d6b2016e47e5",
+    "url": "/libp2p-introspection-ui/static/js/main.baf61a1b.chunk.js"
   },
   {
     "revision": "499a410a0c2e7b1fc7b5",
