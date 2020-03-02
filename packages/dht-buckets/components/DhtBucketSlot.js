@@ -88,4 +88,13 @@ function DhtSlot({
   )
 }
 
+DhtSlot.propTypes = {
+  peer: T.object,
+  timestamp: T.number,
+  isBucket0: T.bool,
+  bkgColorIndex: T.number,
+  selectedPeer: T.object,
+  setSelectedPeer: T.func,
+}
+
 export default DhtSlot

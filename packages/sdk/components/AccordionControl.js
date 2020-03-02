@@ -57,7 +57,7 @@ AccordionControl.propTypes = {
   isOpen: T.bool.isRequired,
   setIsOpen: T.func.isRequired,
   children: T.node.isRequired,
-  overrides: T.object,
+  override: T.object,
 }
 
 export default AccordionControl

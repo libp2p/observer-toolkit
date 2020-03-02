@@ -22,5 +22,8 @@ function DhtPeerHighlighting({ peerId }) {
 
   return isHighlighted ? <Highlight /> : ''
 }
+DhtPeerHighlighting.propTypes = {
+  peerId: T.string,
+}
 
 export default DhtPeerHighlighting

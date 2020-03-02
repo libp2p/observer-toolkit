@@ -1,13 +1,12 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import T from 'prop-types'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 
 import {
   usePooledData,
   AccordionControl,
   Histogram,
   PeerIdChip,
-  StyledButton,
   TimeContext,
 } from '@libp2p-observer/sdk'
 import { getStateTimes } from '@libp2p-observer/data'

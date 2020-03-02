@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useRef,
-  useEffect,
-  useState,
-} from 'react'
+import React, { useCallback, useContext, useRef, useState } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
@@ -48,15 +42,14 @@ function Histogram({
   const [highlightedArea, setHighlightedArea] = useState(null)
   const { setPeerIds } = useContext(SetterContext)
 
-  const xAxisLabelRef = useRef()
   const hotSpotsRef = useRef([])
 
-  const onAnimationComplete = () => {
+  const onAnimationComplete = useCallback(() => {
     setPreviousData({
       pooledData,
       poolSets,
     })
-  }
+  }, [pooledData, poolSets])
 
   const counts = pooledData.map(mapLength)
   const previousCounts = previousData.pooledData.map(mapLength)
@@ -159,7 +152,22 @@ function Histogram({
         return continueAnimation
       }
     },
-    [pooledData, poolSets, previousData, highlightedArea]
+    [
+      previousData.pooledData,
+      previousData.poolSets,
+      pooledData,
+      poolSets,
+      highlightedArea,
+      verticalLines,
+      counts,
+      previousCounts,
+      xAxisSpace,
+      yAxisSpace,
+      theme,
+      onAnimationComplete,
+      setPeerIds,
+      xAxisSuffix,
+    ]
   )
 
   const handleMouseOut = () => {
@@ -188,7 +196,11 @@ function Histogram({
 Histogram.propTypes = {
   pooledData: T.array,
   poolSets: T.array,
-  unit: T.string,
+  xAxisSuffix: T.string,
+  verticalLines: T.number,
+  xAxisSpace: T.number,
+  yAxisSpace: T.number,
+  theme: T.object,
 }
 
 export default withTheme(Histogram)

@@ -45,10 +45,7 @@ function CanvasCover({
     }
 
     canvasRef.current.addEventListener('mousemove', handleMouseMove)
-    return () => {
-      canvasRef.current.removeEventListener('mousemove', handleMouseMove)
-    }
-  }, [hotSpotsRef])
+  }, [canvasRef, hotSpotsRef])
 
   return <Canvas ref={canvasRef} />
 }
@@ -56,7 +53,9 @@ function CanvasCover({
 CanvasCover.propTypes = {
   width: T.number,
   height: T.number,
-  animationGetter: T.func,
+  animateCanvas: T.func,
+  animationDuration: T.number,
+  hotSpotsRef: T.object,
   children: T.node,
 }
 

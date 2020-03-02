@@ -7,12 +7,7 @@ import { dhtStatusNames } from '@libp2p-observer/data'
 import DhtBucketSlot from './DhtBucketSlot'
 import DhtBucketInfo from './DhtBucketInfo'
 
-import {
-  bucketCapacity,
-  slotSize,
-  borderWidth,
-  peersPerRow,
-} from '../utils/constants'
+import { bucketCapacity, slotSize, peersPerRow } from '../utils/constants'
 
 function processPeers(peers) {
   // Unpack protobuf peer data unless it's already pre-unpacked
@@ -55,7 +50,6 @@ const Title = styled.h4`
 `
 
 const sortByAge = (a, b) => b.age - a.age
-const sortByDistance = (a, b) => a.distance - b.distance
 
 function DhtBucket({
   peers = [],
@@ -77,14 +71,9 @@ function DhtBucket({
       selectedPeer &&
       !processedPeers.some(({ peerId }) => selectedPeer.peerId)
     ) {
-      console.log(
-        'PEER NOT FOUND',
-        selectedPeer.peerId,
-        processedPeers.map(peer => peerId)
-      )
       setSelectedPeer(null)
     }
-  })
+  }, [selectedPeer, processedPeers])
 
   const bkgColorIndex = isBucket0 ? 2 : 3
 
@@ -115,7 +104,7 @@ function DhtBucket({
 
 DhtBucket.propTypes = {
   peers: T.array,
-  index: T.number,
+  bucketNum: T.number,
   timestamp: T.number.isRequired,
   title: T.string,
   children: T.node,
