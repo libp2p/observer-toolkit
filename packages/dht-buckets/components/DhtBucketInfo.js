@@ -100,24 +100,37 @@ function DhtBucketInfo({ peers }) {
   return (
     <InfoList>
       <InfoItem>
-        <InfoItemLabel>Peer IDs</InfoItemLabel>
-        <AccordionControl
-          isOpen={peerIdListIsOpen}
-          setIsOpen={setPeerIdListIsOpen}
-          override={{
-            AccordionButton,
-          }}
-        >
-          Show {peers.length} peer IDs
-        </AccordionControl>
-        {peerIdListIsOpen && (
-          <InfoList>
-            {peers.map(peer => (
-              <PeerListItem key={peer.peerId}>
-                <PeerIdChip peerId={peer.peerId} />
+        {peers.length === 1 ? (
+          <>
+            <InfoItemLabel>Peer ID</InfoItemLabel>
+            <InfoList>
+              <PeerListItem key={peers[0].peerId}>
+                <PeerIdChip peerId={peers[0].peerId} />
               </PeerListItem>
-            ))}
-          </InfoList>
+            </InfoList>
+          </>
+        ) : (
+          <>
+            <InfoItemLabel>Peer IDs</InfoItemLabel>
+            <AccordionControl
+              isOpen={peerIdListIsOpen}
+              setIsOpen={setPeerIdListIsOpen}
+              override={{
+                AccordionButton,
+              }}
+            >
+              Show {peers.length} peer IDs
+            </AccordionControl>
+            {peerIdListIsOpen && (
+              <InfoList>
+                {peers.map(peer => (
+                  <PeerListItem key={peer.peerId}>
+                    <PeerIdChip peerId={peer.peerId} />
+                  </PeerListItem>
+                ))}
+              </InfoList>
+            )}
+          </>
         )}
       </InfoItem>
       <InfoItem>

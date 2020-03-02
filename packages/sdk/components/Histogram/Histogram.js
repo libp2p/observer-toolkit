@@ -16,6 +16,11 @@ import paintBars from './paintBars'
 
 const mapLength = arr => arr.length
 
+const getXAxisLabel = (pool, suffix) => {
+  if (!pool.length) return ''
+  return `${pool[0]}-${pool[pool.length - 1]}${suffix}`
+}
+
 const Container = styled.div`
   position: relative;
   height: 90px;
@@ -161,6 +166,11 @@ function Histogram({
     setPeerIds([])
     setHighlightedArea(null)
   }
+
+  const xAxisLabel = highlightedArea
+    ? highlightedArea.label
+    : getXAxisLabel(poolSets[0], xAxisSuffix)
+
   return (
     <>
       <Container onMouseOut={handleMouseOut}>
@@ -170,7 +180,7 @@ function Histogram({
           hotSpotsRef={hotSpotsRef}
         />
       </Container>
-      <XAxisLabel>{highlightedArea && highlightedArea.label}</XAxisLabel>
+      <XAxisLabel>{xAxisLabel}</XAxisLabel>
     </>
   )
 }

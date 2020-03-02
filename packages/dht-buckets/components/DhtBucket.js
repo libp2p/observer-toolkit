@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -63,6 +63,7 @@ function DhtBucket({
   timestamp,
   title = `${bucketNum}`,
 }) {
+  const [selectedPeer, setSelectedPeer] = useState(null)
   const emptySlots = bucketCapacity - peers.length
 
   const isBucket0 = bucketNum === 0
@@ -71,7 +72,23 @@ function DhtBucket({
   processedPeers.sort(sortByAge)
   const slots = [...processedPeers, ...Array(emptySlots)]
 
+  useEffect(() => {
+    if (
+      selectedPeer &&
+      !processedPeers.some(({ peerId }) => selectedPeer.peerId)
+    ) {
+      console.log(
+        'PEER NOT FOUND',
+        selectedPeer.peerId,
+        processedPeers.map(peer => peerId)
+      )
+      setSelectedPeer(null)
+    }
+  })
+
   const bkgColorIndex = isBucket0 ? 2 : 3
+
+  const infoPeers = selectedPeer ? [selectedPeer] : processedPeers
 
   return (
     <Container>
@@ -85,11 +102,13 @@ function DhtBucket({
               timestamp={timestamp}
               isBucket0={isBucket0}
               bkgColorIndex={bkgColorIndex}
+              selectedPeer={selectedPeer}
+              setSelectedPeer={setSelectedPeer}
             />
           ))}
         </BucketSlots>
       </Bucket>
-      <DhtBucketInfo peers={processedPeers} />
+      <DhtBucketInfo peers={infoPeers} />
     </Container>
   )
 }

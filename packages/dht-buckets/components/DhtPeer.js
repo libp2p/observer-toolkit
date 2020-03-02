@@ -12,7 +12,6 @@ import {
 } from '@libp2p-observer/sdk'
 
 import { DhtQueryContext } from './context/DhtQueryProvider'
-import DhtPeerInfo from './DhtPeerInfo'
 import DhtPeerHighlighting from './DhtPeerHighlighting'
 import {
   getAbsolutePosition,
@@ -236,24 +235,10 @@ function DhtPeer({
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
-      <Tooltip
-        fixOn="no-hover"
-        content={
-          <DhtPeerInfo
-            peerId={peerId}
-            status={status}
-            age={age}
-            distance={distance}
-            inboundQueries={inboundQueries}
-            outboundQueries={outboundQueries}
-          />
-        }
-      >
-        <Canvas ref={canvasRef} />
-        <InnerChip age={age} status={status} />
-        {showDistance && <Distance>{distance}</Distance>}
-        <DhtPeerHighlighting peerId={peerId} />
-      </Tooltip>
+      <Canvas ref={canvasRef} />
+      <InnerChip age={age} status={status} />
+      {showDistance && <Distance>{distance}</Distance>}
+      <DhtPeerHighlighting peerId={peerId} />
     </Container>
   )
 }
