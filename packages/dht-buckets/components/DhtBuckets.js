@@ -1,12 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
 
-import { getDhtPeers, getAllDhtBuckets, getTime } from '@libp2p-observer/data'
-import { DataContext, TimeContext } from '@libp2p-observer/sdk'
+import { getAllDhtBuckets, getTime } from '@libp2p-observer/data'
+import { TimeContext } from '@libp2p-observer/sdk'
 import DhtActivePeers from './DhtActivePeers'
 
 function DhtBuckets({ children }) {
-  const states = useContext(DataContext)
   const currentState = useContext(TimeContext)
   const timestamp = getTime(currentState)
 

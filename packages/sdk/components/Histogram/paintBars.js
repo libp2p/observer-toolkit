@@ -1,7 +1,5 @@
 import { tweenValues } from '../../utils'
 
-const noop = () => {}
-
 function paintBars({
   counts,
   previousCounts,

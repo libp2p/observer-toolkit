@@ -58,7 +58,7 @@ function paintGrid({
 
   let yTickIndex = 0
   const yTickEnd = Math.max(yTicks.length, previousYTicks.length)
-  while (yTickIndex < yTicks.length) {
+  while (yTickIndex < yTickEnd) {
     const yPos = innerHeight - yTickIndex * cellHeight
     canvasContext.moveTo(xAxisSpace, yPos)
     canvasContext.lineTo(width, yPos)

@@ -3,13 +3,7 @@ import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
 import { getKademliaDistance } from '@libp2p-observer/data'
-import {
-  useCanvas,
-  PeersContext,
-  RuntimeContext,
-  SetterContext,
-  Tooltip,
-} from '@libp2p-observer/sdk'
+import { useCanvas, RuntimeContext, SetterContext } from '@libp2p-observer/sdk'
 
 import { DhtQueryContext } from './context/DhtQueryProvider'
 import DhtPeerHighlighting from './DhtPeerHighlighting'
@@ -23,11 +17,9 @@ import { paintQueryGlows } from '../utils/paint'
 import {
   timeResolution,
   cutoff,
-  glowDuration,
   outerSize,
   innerSize,
   gutterSize,
-  maxGlowSize,
 } from '../utils/constants'
 
 const Container = styled.div.attrs(({ age, theme }) => {
@@ -250,6 +242,9 @@ DhtPeer.propTypes = {
   peerId: T.string.isRequired,
   status: T.string.isRequired,
   timestamp: T.number.isRequired,
+  slotRef: T.object,
+  previousSlotRef: T.object,
+  showDistance: T.bool,
   theme: T.object.isRequired,
 }
 
