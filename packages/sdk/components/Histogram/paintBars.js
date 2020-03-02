@@ -12,6 +12,7 @@ function paintBars({
   height,
   hotSpots,
   actions,
+  countPerCell,
   tweenPosition,
   theme,
 }) {
@@ -27,7 +28,7 @@ function paintBars({
     const tweenedCount = tweenValues(previousCount, count, tweenPosition)
     const x = barIndex * cellWidth + 0.25 * cellWidth
     const barWidth = 0.5 * cellWidth
-    const barHeight = tweenedCount * cellHeight
+    const barHeight = (tweenedCount / countPerCell) * cellHeight
     const y = height - barHeight
 
     canvasContext.rect(x, y, barWidth, barHeight)

@@ -16,7 +16,8 @@ function getQueriesByPeerId(relevantStates, currentState, applyFilters) {
     (keyed, peer) => ({
       ...keyed,
       [peer.getPeerId()]: { INBOUND: [], OUTBOUND: [] },
-    })
+    }),
+    {}
   )
 
   // If necessary for performance, could use useReducer and append queries from new states

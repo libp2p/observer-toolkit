@@ -39,6 +39,7 @@ function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
     ({ canvasContext, canvasElem, width, height, animationRef }) => {
       return ({ tweenPosition }) => {
         let continueAnimation = true
+
         if (tweenPosition === 1) {
           onAnimationComplete()
           continueAnimation = false
@@ -67,7 +68,7 @@ function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
           tweenPosition,
           theme,
         }
-        const { cellWidth, cellHeight } = paintGrid({
+        const { cellWidth, cellHeight, countPerCell } = paintGrid({
           pools: poolSets[0],
           previousPools: previousData.poolSets[0],
           yTicks,
@@ -87,6 +88,7 @@ function Histogram({ pooledData, poolSets, unit, verticalLines = 8, theme }) {
           cellHeight,
           hotSpots,
           actions,
+          countPerCell,
           ...paintProps,
         })
 

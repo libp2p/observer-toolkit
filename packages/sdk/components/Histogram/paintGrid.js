@@ -60,6 +60,7 @@ function paintGrid({
   return {
     cellWidth,
     cellHeight,
+    countPerCell: yTicks[1] - yTicks[0],
   }
 }
 
