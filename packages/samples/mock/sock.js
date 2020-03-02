@@ -5,20 +5,16 @@ const WebSocket = require('ws')
 const {
   proto: { ClientSignal },
 } = require('@libp2p-observer/proto')
-const { random, decodeBinToNum } = require('./utils')
 const {
   generateConnections,
+  generateConnectionEvents,
   generateDHT,
-  generateEvent,
   generateRuntime,
   generateState,
   generateVersion,
   updateConnections,
   updateDHT,
 } = require('./generate')
-
-const { roleList } = require('./enums/roleList')
-const { transportList } = require('./enums/transportList')
 
 const connections = []
 const dht = generateDHT()
@@ -44,32 +40,13 @@ function generateMessages({ connectionsCount }) {
   } else {
     updateConnections(connections, connectionsCount, utcNow)
   }
-
-  // send event when connection is opening/closing
-  connections
-    .filter(cn => cn.getStatus() === 2 || cn.getStatus() === 3)
-    .forEach(cn => {
-      const now = utcNow + Math.floor(random() * 800 + 100)
-      const type = cn.getStatus() === 2 ? 'PeerConnecting' : 'PeerDisconnecting'
-      const content = {
-        peerId: cn.getPeerId(),
-        transport: transportList.getItem(decodeBinToNum(cn.getTransportId())),
-      }
-      if (type === 'PeerDisconnecting') {
-        const open = cn
-          .getTimeline()
-          .getOpenTs()
-          .getSeconds()
-        content.age = `${now - open}`
-        content.openTime = `${open}`
-      }
-      if (type === 'PeerConnecting') {
-        content.role = roleList.getItem(cn.getRole())
-      }
-      const event = generateEvent({ now, type, content })
-      const data = Buffer.concat([version, runtime, event]).toString('binary')
-      msgQueue.push({ ts: now, type: 'event', data })
-    })
+  generateConnectionEvents({
+    connections,
+    msgQueue,
+    utcNow,
+    version,
+    runtime,
+  })
 
   updateDHT(dht, connections, utcNow, utcNow + 1000)
 
