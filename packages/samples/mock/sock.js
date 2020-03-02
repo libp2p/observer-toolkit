@@ -29,6 +29,8 @@ const wss = new WebSocket.Server({ noServer: true })
 // let tmrMessages
 // let tmrQueueProcess
 
+let active = true
+
 const msgQueue = []
 
 function generateMessages({ connectionsCount }) {
@@ -91,6 +93,8 @@ function sendQueue(ws) {
     })
 }
 
+let sendQueueInterval
+
 function handleClientMessage(ws, msg) {
   // check client signal
   if (msg) {
@@ -102,14 +106,17 @@ function handleClientMessage(ws, msg) {
       signal === ClientSignal.Signal.START_PUSH_EMITTER ||
       signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
     ) {
+      active = true
       // TODO: implement unpause/start diff of timer emitter
-      setInterval(() => {
-        sendQueue(ws)
+      sendQueueInterval = setInterval(() => {
+        if (active) sendQueue(ws)
       }, 200)
     } else if (
       signal === ClientSignal.Signal.STOP_PUSH_EMITTER ||
       signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER
     ) {
+      active = false
+      clearInterval(sendQueueInterval)
       // TODO: implement pause/stop of timer emitter
     }
   }
@@ -118,7 +125,7 @@ function handleClientMessage(ws, msg) {
 function start({ connectionsCount = 0 }) {
   // generate states
   setInterval(() => {
-    generateMessages({ connectionsCount })
+    if (active) generateMessages({ connectionsCount })
   }, 1000)
 
   // handle messages
