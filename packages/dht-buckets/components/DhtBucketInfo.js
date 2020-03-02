@@ -158,11 +158,7 @@ function DhtBucketInfo({ peers }) {
 }
 
 DhtBucketInfo.propTypes = {
-  inboundQueries: T.array.isRequired,
-  outboundQueries: T.array.isRequired,
-  age: T.number.isRequired,
-  peerId: T.string.isRequired,
-  status: T.string.isRequired,
+  peers: T.array.isRequired,
 }
 
 export default DhtBucketInfo
