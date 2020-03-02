@@ -2,12 +2,7 @@ import React, { useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import {
-  AccordionControl,
-  Icon,
-  SlideDown,
-  Tooltip,
-} from '@libp2p-observer/sdk'
+import { AccordionControl, Icon, SlideDown } from '@libp2p-observer/sdk'
 import FiltersButton from './FiltersButton'
 import FiltersTray from './FiltersTray'
 
@@ -52,11 +47,6 @@ const Section = styled.section`
   border-bottom: 1px solid ${({ theme }) => theme.color('background', 1)};
 `
 
-const TooltipContent = styled.div`
-  color: ${({ theme }) => theme.color('highlight', 1)};
-  white-space: nowrap;
-`
-
 function WidgetHeader({ name, description, closeWidget }) {
   const [descriptionOpen, setDescriptionOpen] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
@@ -76,22 +66,12 @@ function WidgetHeader({ name, description, closeWidget }) {
         <FiltersButton isOpen={filtersOpen} setIsOpen={setFiltersOpen} />
         {closeWidget && (
           <CloseButton>
-            <Tooltip
-              side="left"
-              fixOn="never"
-              content={
-                <TooltipContent>
-                  Close and return <br /> to catalogue
-                </TooltipContent>
-              }
-            >
-              <Icon
-                aria-label="Close"
-                type="cancel"
-                onClick={closeWidget}
-                size={'3em'}
-              />
-            </Tooltip>
+            <Icon
+              aria-label="Close"
+              type="cancel"
+              onClick={closeWidget}
+              size={'3em'}
+            />
           </CloseButton>
         )}
       </Header>
