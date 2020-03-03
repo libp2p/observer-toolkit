@@ -12,7 +12,7 @@ import {
 import { DataContext, FilterContext, TimeContext } from '@libp2p-observer/sdk'
 
 function getQueriesByPeerId(relevantStates, currentState, applyFilters) {
-  const queriesByPeerId = getDhtPeers(currentState, 'present').reduce(
+  const queriesByPeerId = getDhtPeers(currentState).reduce(
     (keyed, peer) => ({
       ...keyed,
       [peer.getPeerId()]: { INBOUND: [], OUTBOUND: [] },
@@ -52,7 +52,7 @@ function useDhtQueries() {
   const timestamp = getTime(currentState)
   const timeIndex = getTimeIndex(states, timestamp)
 
-  const relevantStates = states.slice(0, timeIndex)
+  const relevantStates = states.slice(0, timeIndex + 1)
 
   const queriesByPeerId = useMemo(
     () => getQueriesByPeerId(relevantStates, currentState, applyFilters),
