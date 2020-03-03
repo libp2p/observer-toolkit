@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import DhtBucket from './DhtBucket'
+import DhtColumn from './DhtColumn/DhtColumn'
 
 const Container = styled.div`
   background: ${({ theme, backgroundColorIndex }) =>
@@ -20,7 +20,7 @@ function DhtActivePeers({
 }) {
   return (
     <Container>
-      <DhtBucket
+      <DhtColumn
         peers={catchAllBucketPeers}
         timestamp={timestamp}
         bucketNum={0}
@@ -28,7 +28,7 @@ function DhtActivePeers({
         title="0 — Catch-all"
       />
       {Object.entries(numberedBucketPeers).map(([bucketStr, peers]) => (
-        <DhtBucket
+        <DhtColumn
           peers={peers}
           timestamp={timestamp}
           bucketNum={Number(bucketStr)}

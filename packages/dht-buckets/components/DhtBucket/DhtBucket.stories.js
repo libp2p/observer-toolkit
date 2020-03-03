@@ -5,6 +5,16 @@ import { ThemeWrapper } from '@libp2p-observer/testing'
 
 import DhtBucket from './DhtBucket'
 
+const getRandomPeerId = () =>
+  Array.from({ length: 64 }, () =>
+    (Math.random() * 16).toString(16).slice(0, 1)
+  ).join('')
+
+const getRandomMultiplier = (dec = 0.1) => 1 - dec + 2 * dec * Math.random()
+
+const randomiseTimes = times =>
+  times.map(time => ({ start: time * getRandomMultiplier() }))
+
 const peers = [
   {
     distance: 45,
@@ -90,7 +100,17 @@ const peers = [
     inboundQueries: [7300, 7400, 7500, 7600, 7700],
     outboundQueries: [12000, 12500, 15000],
   },
-]
+].map(randomisePeer)
+
+function randomisePeer(peer) {
+  return {
+    ...peer,
+    status: Math.random() > 0.5 ? 'ACTIVE' : 'MISSING',
+    peerId: getRandomPeerId(),
+    inboundQueries: randomiseTimes(peer.inboundQueries),
+    outboundQueries: randomiseTimes(peer.outboundQueries),
+  }
+}
 
 function DhtBucketFixture() {
   const [timestamp, setTimestamp] = useState(0)
@@ -114,4 +134,6 @@ function DhtBucketFixture() {
   )
 }
 
-storiesOf('DhtBuckets', module).add('DhtBucket', () => <DhtBucketFixture />)
+storiesOf('DhtBuckets', module).add('DhtBucket', () => <DhtBucketFixture />, {
+  wrapper: 'data',
+})
