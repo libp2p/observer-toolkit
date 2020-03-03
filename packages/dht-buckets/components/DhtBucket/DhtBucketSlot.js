@@ -2,10 +2,10 @@ import React, { useRef, useContext, useEffect } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import DhtPeer from './DhtPeer'
-import { PeerSlotsContext } from './context/PeerSlotsProvider'
+import DhtPeer from '../DhtPeer/DhtPeer'
+import { PeerSlotsContext } from '../context/PeerSlotsProvider'
 
-import { slotSize, borderWidth } from '../utils/constants'
+import { slotSize, borderWidth } from '../../utils/constants'
 
 const Slot = styled.div`
   position: relative;

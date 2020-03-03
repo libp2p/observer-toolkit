@@ -5,14 +5,14 @@ import styled, { withTheme } from 'styled-components'
 import { getKademliaDistance } from '@libp2p-observer/data'
 import { useCanvas, RuntimeContext, SetterContext } from '@libp2p-observer/sdk'
 
-import { DhtQueryContext } from './context/DhtQueryProvider'
+import { DhtQueryContext } from '../context/DhtQueryProvider'
 import DhtPeerHighlighting from './DhtPeerHighlighting'
 import {
   getAbsolutePosition,
   diffAbsolutePositions,
   getTranslateString,
-} from '../utils/positioning'
-import { paintQueryGlows } from '../utils/paint'
+} from '../../utils/positioning'
+import { paintQueryGlows } from '../../utils/paint'
 
 import {
   timeResolution,
@@ -20,7 +20,7 @@ import {
   outerSize,
   innerSize,
   gutterSize,
-} from '../utils/constants'
+} from '../../utils/constants'
 
 const Container = styled.div.attrs(({ age, theme }) => {
   const offset = Math.sqrt(age) / 70
@@ -146,6 +146,7 @@ function DhtPeer({
   const { setPeerIds } = useContext(SetterContext)
 
   const runtime = useContext(RuntimeContext)
+
   const distance = getKademliaDistance(peerId, runtime.getPeerId())
 
   const peerRef = useRef()

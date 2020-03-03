@@ -11,7 +11,7 @@ import {
 } from '@libp2p-observer/sdk'
 import { getStateTimes } from '@libp2p-observer/data'
 
-import { DhtQueryContext } from './context/DhtQueryProvider'
+import { DhtQueryContext } from '../context/DhtQueryProvider'
 
 const InfoList = styled.ul`
   padding: 0;
