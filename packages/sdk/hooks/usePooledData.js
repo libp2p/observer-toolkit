@@ -68,9 +68,7 @@ function usePooledData({ data, poolings = {} }) {
     const poolSets = poolingsArray.map((pooling, index) => {
       const { scaleType, mapData } = pooling
       const ticksCount =
-        typeof pooling.poolsCount === 'number'
-          ? pooling.poolsCount + 1
-          : undefined
+        typeof pooling.poolsCount === 'number' ? pooling.poolsCount : undefined
 
       return getTicks({
         data,
