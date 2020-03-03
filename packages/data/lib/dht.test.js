@@ -140,16 +140,18 @@ describe('DHT data helpers', () => {
 
     const aaa64 = string64('')
 
-    expect(getKademliaDistance(aaa64, string64('b'))).toBe(255)
+    expect(getKademliaDistance(aaa64, string64('b'))).toBe(256)
 
-    expect(getKademliaDistance(aaa64, string64('bb'))).toBe(251)
+    expect(getKademliaDistance(aaa64, string64('bb'))).toBe(252)
 
-    expect(getKademliaDistance(aaa64, string64('bbb'))).toBe(247)
+    expect(getKademliaDistance(aaa64, string64('bbb'))).toBe(248)
 
-    expect(getKademliaDistance(aaa64, string64('b'.repeat(61)))).toBe(15)
+    expect(getKademliaDistance(aaa64, string64('b'.repeat(61)))).toBe(16)
 
-    expect(getKademliaDistance(aaa64, string64('b'.repeat(62)))).toBe(11)
+    expect(getKademliaDistance(aaa64, string64('b'.repeat(62)))).toBe(12)
 
-    expect(getKademliaDistance(aaa64, string64('b'.repeat(63)))).toBe(7)
+    expect(getKademliaDistance(aaa64, string64('b'.repeat(63)))).toBe(8)
+
+    expect(getKademliaDistance(aaa64, '0'.repeat(64))).toBe(1)
   })
 })
