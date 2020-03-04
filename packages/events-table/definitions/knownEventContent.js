@@ -20,7 +20,7 @@ const knownEventContent = {
     Renderer: RenderPeerId,
   },
   openTime: {
-    label: 'Time opened',
+    label: 'Opened',
     Renderer: RenderTime,
   },
 }
