@@ -5,19 +5,11 @@ import {
 } from '../components/contentRenderers'
 
 const knownEventContent = {
-  default: {
-    Renderer: RenderAsString,
-  },
+  default: RenderAsString,
   // This is a non-exhaustive list of some event content types
   // common or distinct enough to be worth handling as special cases
-  peerId: {
-    label: 'Peer ID',
-    Renderer: RenderPeerId,
-  },
-  openTime: {
-    label: 'Opened',
-    Renderer: RenderTime,
-  },
+  peerId: RenderPeerId,
+  openTime: RenderTime,
 }
 
 export default knownEventContent

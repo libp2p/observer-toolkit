@@ -12,22 +12,35 @@ const Nowrap = styled.span`
 `
 
 const rendererPropType = {
-  content: T.string.isRequired,
-  type: T.string, // Event type
+  value: T.string.isRequired,
+  children: T.node,
 }
 
-function RenderAsString({ content }) {
-  return JSON.stringify(content)
+function NullHandler({ children, value }) {
+  return value === null ? '' : children
+}
+NullHandler.propTypes = rendererPropType
+
+function RenderAsString({ value }) {
+  return <NullHandler value={value}>{JSON.stringify(value)}</NullHandler>
 }
 RenderAsString.propTypes = rendererPropType
 
-function RenderPeerId({ content }) {
-  return <PeerIdChip peerId={content} />
+function RenderPeerId({ value }) {
+  return (
+    <NullHandler value={value}>
+      <PeerIdChip peerId={value} />
+    </NullHandler>
+  )
 }
 RenderPeerId.propTypes = rendererPropType
 
-function RenderTime({ content }) {
-  return <Nowrap>{timeFormatter(content)}</Nowrap>
+function RenderTime({ value }) {
+  return (
+    <NullHandler value={value}>
+      <Nowrap>{timeFormatter(value)}</Nowrap>
+    </NullHandler>
+  )
 }
 RenderTime.propTypes = rendererPropType
 
