@@ -13,6 +13,8 @@ import { getStateTimes } from '@libp2p-observer/data'
 
 import { DhtQueryContext } from '../context/DhtQueryProvider'
 
+import { getQueryTimesByPeer } from '../../utils/queries'
+
 const InfoList = styled.ul`
   padding: 0;
   margin: 0;
@@ -43,55 +45,42 @@ const AccordionButton = styled.button`
 
 const ChartContainer = styled.div``
 
-function getQueries(queriesByPeerId, peerIds, direction, timeNow) {
-  const queries = Object.entries(queriesByPeerId).reduce(
-    (queries, [peerId, peerQueries]) => {
-      if (!peerIds.includes(peerId)) return queries
-
-      const processedQueries = peerQueries[direction].map(query => ({
-        elapsed: timeNow - query.start,
-        peerId: peerId,
-      }))
-      return [...queries, ...processedQueries]
-    },
-    []
-  )
-
-  return queries
-}
-
 function DhtBucketInfo({ peers }) {
-  const queriesByPeerId = useContext(DhtQueryContext)
+  const { queriesByPeerId, poolSetsElapsed, poolSetsAge } =
+    useContext(DhtQueryContext) || {}
   const timepoint = useContext(TimeContext)
   const { end: timeNow } = getStateTimes(timepoint)
 
   const { pooledData: ageData, poolSets: ageSets } = usePooledData({
     data: peers,
     poolings: [{ mapData: peer => peer.age }],
+    poolSets: poolSetsAge,
   })
 
   const peerIds = peers.map(peer => peer.peerId)
-  const inboundQueries = getQueries(
+  const inboundQueries = getQueryTimesByPeer({
     queriesByPeerId,
     peerIds,
-    'INBOUND',
-    timeNow
-  )
-  const outboundQueries = getQueries(
+    direction: 'INBOUND',
+    timeNow,
+  })
+  const outboundQueries = getQueryTimesByPeer({
     queriesByPeerId,
     peerIds,
-    'OUTBOUND',
-    timeNow
-  )
+    direction: 'OUTBOUND',
+    timeNow,
+  })
 
   const { pooledData: inboundData, poolSets: inboundSets } = usePooledData({
     data: inboundQueries,
     poolings: [{ mapData: query => query.elapsed }],
+    poolSets: poolSetsElapsed,
   })
 
   const { pooledData: outboundData, poolSets: outboundSets } = usePooledData({
     data: outboundQueries,
     poolings: [{ mapData: query => query.elapsed }],
+    poolSets: poolSetsElapsed,
   })
 
   const [peerIdListIsOpen, setPeerIdListIsOpen] = useState(false)
