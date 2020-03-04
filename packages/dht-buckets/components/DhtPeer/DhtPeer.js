@@ -142,7 +142,7 @@ function DhtPeer({
   previousSlotRef,
   showDistance = false,
 }) {
-  const queriesByPeerId = useContext(DhtQueryContext)
+  const { queriesByPeerId } = useContext(DhtQueryContext)
   const { setPeerIds } = useContext(SetterContext)
 
   const runtime = useContext(RuntimeContext)

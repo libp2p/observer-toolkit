@@ -57,7 +57,7 @@ function poolData(data, poolSets, poolings, setIndex) {
   })
 }
 
-function usePooledData({ data, poolings = {} }) {
+function usePooledData({ data, poolings = {}, poolSets: providedPoolSets }) {
   const [poolingsArray, dispatchPoolings] = useReducer(
     updatePoolings,
     poolings,
@@ -65,25 +65,29 @@ function usePooledData({ data, poolings = {} }) {
   )
 
   const { pooledData, poolSets } = useMemo(() => {
-    const poolSets = poolingsArray.map((pooling, index) => {
-      const { scaleType, mapData } = pooling
-      const ticksCount =
-        typeof pooling.poolsCount === 'number' ? pooling.poolsCount : undefined
+    const poolSets =
+      providedPoolSets ||
+      poolingsArray.map((pooling, index) => {
+        const { scaleType, mapData } = pooling
+        const ticksCount =
+          typeof pooling.poolsCount === 'number'
+            ? pooling.poolsCount
+            : undefined
 
-      return getTicks({
-        data,
-        ticksCount,
-        scaleType,
-        mapData,
+        return getTicks({
+          data,
+          ticksCount,
+          scaleType,
+          mapData,
+        })
       })
-    })
     const pooledData = poolData(data, poolSets, poolingsArray, 0)
 
     return {
       pooledData,
       poolSets,
     }
-  }, [data, poolingsArray])
+  }, [data, poolingsArray, providedPoolSets])
 
   return {
     dispatchPoolings,
