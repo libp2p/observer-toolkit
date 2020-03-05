@@ -217,26 +217,35 @@ message DHT {
     // number of disjoint paths to use.
     uint64 disjoint_paths       = 3;
   }
-  
+
   // Peer in DHT
   message PeerInDHT {
 
-    // The status of a peer
+    // The DHT's relationship with this peer
     enum Status {
         ACTIVE  = 0;
         MISSING  = 1;
-        DISCONNECTED = 2;
-        EJECTED = 3;
+        REJECTED = 2;
+        CANDIDATE = 3;
+    }
+
+    message Change {
+      google.protobuf.Timestamp change_ts = 1;
+
+      oneof message {
+        Status prior_status  = 2;
+        bool prior_in_bucket = 3;
+      }
     }
 
     // the peer id of the host system
     string peer_id          = 1;
-    // bucket
-    uint32 bucket           = 2;
-    // age in bucket (ms)
-    uint32 age_in_bucket    = 3;
-    // status of the peer
-    Status status           = 4;
+    // peer is in bucket=kad-distance (else, catch-all bucket 0)
+    bool in_bucket          = 2;
+    // current status of the peer
+    Status status           = 3;
+    // changes occuring in this time interval
+    repeated Change changes = 4;
   }
 
   message Query {
