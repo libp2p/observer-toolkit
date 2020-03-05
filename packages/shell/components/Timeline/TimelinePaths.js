@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { SetterContext, PeerContext, useAreaChart } from '@libp2p-observer/sdk'
+import { SetterContext, PeersContext, useAreaChart } from '@libp2p-observer/sdk'
 
 import DataTicks from './DataTicks'
 import TimeTicks from './TimeTicks'
@@ -38,8 +38,8 @@ function TimelinePaths({
   stackedData,
   leftGutter,
 }) {
-  const globalPeerId = useContext(PeerContext)
-  const { setPeerId } = useContext(SetterContext)
+  const globalPeerIds = useContext(PeersContext)
+  const { setPeerIds } = useContext(SetterContext)
   const flip = dataDirection === 'out'
 
   const pathDefs = useAreaChart({
@@ -63,13 +63,13 @@ function TimelinePaths({
       <StyledSvg height={height}>
         {pathDefs &&
           pathDefs.map(({ pathDef, peerId }, index) => {
-            const highlighted = peerId === globalPeerId
+            const highlighted = globalPeerIds.includes(peerId)
 
             function mouseEnterHandler() {
-              if (peerId !== globalPeerId) setPeerId(peerId)
+              if (!globalPeerIds.includes(peerId)) setPeerIds([peerId])
             }
             function mouseLeaveHandler() {
-              if (globalPeerId) setPeerId(null)
+              if (globalPeerIds.length) setPeerIds([])
             }
 
             const key = `${peerId}_paths`

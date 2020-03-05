@@ -6,7 +6,7 @@ import { getLatestTimepoint } from '@libp2p-observer/data'
 const DataContext = createContext()
 const RuntimeContext = createContext()
 const TimeContext = createContext()
-const PeerContext = createContext()
+const PeersContext = createContext()
 const SetterContext = createContext()
 
 function updateData(oldData, { action, data }) {
@@ -49,7 +49,7 @@ function replaceDataSet(data) {
 function DataProvider({ initialData = null, initialTime, children }) {
   // This is structured to avoid re-renders disrupting user interactions e.g. unfocusing input
   const [dataset, dispatchDataset] = useReducer(updateData, initialData)
-  const [peerId, setPeerId] = useState(null)
+  const [peerIds, setPeerIds] = useState([])
 
   if (dataset && !initialTime) initialTime = getLatestTimepoint(dataset.states)
   const [timepoint, setTimepoint] = useState(null)
@@ -59,7 +59,7 @@ function DataProvider({ initialData = null, initialTime, children }) {
   const dataSetters = useRef({
     dispatchDataset,
     setTimepoint,
-    setPeerId,
+    setPeerIds,
   })
 
   const states = dataset ? dataset.states : []
@@ -77,11 +77,11 @@ function DataProvider({ initialData = null, initialTime, children }) {
     <DataContext.Provider value={states}>
       <RuntimeContext.Provider value={runtime}>
         <TimeContext.Provider value={displayedTimepoint}>
-          <PeerContext.Provider value={peerId}>
+          <PeersContext.Provider value={peerIds}>
             <SetterContext.Provider value={dataSetters.current}>
               {children}
             </SetterContext.Provider>
-          </PeerContext.Provider>
+          </PeersContext.Provider>
         </TimeContext.Provider>
       </RuntimeContext.Provider>
     </DataContext.Provider>
@@ -99,6 +99,6 @@ export {
   DataContext,
   RuntimeContext,
   TimeContext,
-  PeerContext,
+  PeersContext,
   SetterContext,
 }

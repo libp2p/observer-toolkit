@@ -29,10 +29,11 @@ const palette = {
     '32, 155, 198',
   ],
   tertiary: [
-    // green
+    // green / teal
     '196, 209, 18',
     '159, 176, 0',
-    '0, 99, 109',
+    '13, 62, 80',
+    '13, 43, 59',
   ],
   highlight: [
     // magenta / crimson
@@ -44,7 +45,7 @@ const palette = {
 const color = (col, val = 0, alpha) => {
   // For example, `theme.color('secondary', 1, 0.5)` for translucent blue
   const rgb = palette[col][val]
-  return alpha ? `rgba(${rgb}, ${alpha})` : `rgb(${rgb})`
+  return typeof alpha === 'number' ? `rgba(${rgb}, ${alpha})` : `rgb(${rgb})`
 }
 
 const spacingPx = 8
