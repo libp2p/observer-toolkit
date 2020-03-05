@@ -9,5 +9,6 @@ export { default as usePooledData } from './usePooledData'
 export { default as useStackedData } from './useStackedData'
 export { default as useTabularData } from './useTabularData'
 
-// Chart-specific
+// Output preparers
 export { default as useAreaChart } from './useAreaChart'
+export { default as useCanvas } from './useCanvas'

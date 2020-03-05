@@ -206,7 +206,7 @@ describe('usePooledData hook', () => {
         poolings: {
           mapData: map_d,
           poolsCount: 3,
-          poolType: 'log',
+          scaleType: 'log',
         },
       })
 

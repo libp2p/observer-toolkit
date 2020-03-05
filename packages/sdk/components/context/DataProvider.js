@@ -8,7 +8,7 @@ const DataContext = createContext()
 const EventsContext = createContext()
 const RuntimeContext = createContext()
 const TimeContext = createContext()
-const PeerContext = createContext()
+const PeersContext = createContext()
 const SetterContext = createContext()
 
 function updateData(oldData, { action, data }) {
@@ -48,7 +48,7 @@ function DataProvider({
   const [states, dispatchStates] = useReducer(updateData, initialStates)
   const [events, dispatchEvents] = useReducer(updateData, initialEvents)
   const [runtime, setRuntime] = useState(initialRuntime)
-  const [peerId, setPeerId] = useState(null)
+  const [peerIds, setPeerIds] = useState([])
   const [source, setSource] = useState(initialSource)
 
   if (!initialTime) initialTime = getLatestTimepoint(states)
@@ -61,7 +61,7 @@ function DataProvider({
     dispatchEvents,
     setRuntime,
     setTimepoint,
-    setPeerId,
+    setPeerIds,
     setSource,
   })
 
@@ -78,13 +78,13 @@ function DataProvider({
       <RuntimeContext.Provider value={runtime}>
         <TimeContext.Provider value={displayedTimepoint}>
           <EventsContext.Provider value={events}>
-            <PeerContext.Provider value={peerId}>
+            <PeersContext.Provider value={peerIds}>
               <SourceContext.Provider value={source}>
                 <SetterContext.Provider value={dataSetters.current}>
                   {children}
                 </SetterContext.Provider>
               </SourceContext.Provider>
-            </PeerContext.Provider>
+            </PeersContext.Provider>
           </EventsContext.Provider>
         </TimeContext.Provider>
       </RuntimeContext.Provider>
@@ -107,7 +107,7 @@ export {
   DataContext,
   RuntimeContext,
   TimeContext,
-  PeerContext,
+  PeersContext,
   SetterContext,
   EventsContext,
   SourceContext,

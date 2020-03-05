@@ -115,7 +115,7 @@ function getKademliaDistance(peerId_A, peerId_B) {
     const a = bufA[i]
     const b = bufB[i]
 
-    if (a !== b) return i * 8 + Math.clz32(a ^ b) - 24
+    if (a !== b) return i * 8 + Math.clz32(a ^ b) - 24 + 1
   }
   return maxBucketNum
 }

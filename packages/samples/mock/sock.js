@@ -21,7 +21,6 @@ const { roleList } = require('./enums/roleList')
 const { transportList } = require('./enums/transportList')
 
 const connections = []
-const dht = generateDHT()
 const version = generateVersion()
 const runtime = generateRuntime()
 const server = http.createServer()
@@ -31,8 +30,9 @@ const wss = new WebSocket.Server({ noServer: true })
 
 const msgQueue = []
 
-function generateMessages({ connectionsCount }) {
+function generateMessages({ connectionsCount, peersCount }) {
   const utcNow = Date.now()
+  const dht = generateDHT({ peersCount })
 
   if (!connections.length) {
     connections.length = 0
@@ -115,10 +115,10 @@ function handleClientMessage(ws, msg) {
   }
 }
 
-function start({ connectionsCount = 0 }) {
+function start({ connectionsCount = 0, peersCount }) {
   // generate states
   setInterval(() => {
-    generateMessages({ connectionsCount })
+    generateMessages({ connectionsCount, peersCount })
   }, 1000)
 
   // handle messages
