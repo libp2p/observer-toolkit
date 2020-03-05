@@ -53,6 +53,31 @@ message DataGauge {
 
 // Runtime encapsulates runtime info about a node.
 message Runtime {
+    // metadata about types of event data being sent
+    message EventType {
+      // Name of event type e.g. PeerConnecting
+      string name                        = 1;
+      repeated EventProperty properties  = 2;
+    }
+
+    // metadata about content types in event's key:value content field
+    message EventProperty {
+      // tell listener how to sort, filter or display known content properties
+      enum PropertyType {
+        // treat as a simple primitive
+        STRING      = 1; // default
+        NUMBER      = 2;
+        // apply human-readable formatting
+        TIME        = 10;
+        PEERID      = 11;
+        // embedded arrays and/or object trees
+        JSON        = 90;
+      }
+      // property name of content e.g. openTs
+      string name                 = 1;
+      PropertyType type           = 2;
+    }
+
     // e.g. go-libp2p, js-libp2p, rust-libp2p, etc.
     string implementation           = 1;
     // e.g. 1.2.3.
@@ -65,6 +90,8 @@ message Runtime {
     uint32 keep_stale_data_ms       = 5;
     // frequency to send new states
     uint32 send_state_interval_ms   = 6;
+    // metadata describing configured event types
+    repeated EventType event_types  = 7;
 }
 
 // EndpointPair is a pair of multiaddrs.
