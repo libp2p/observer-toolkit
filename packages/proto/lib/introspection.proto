@@ -256,23 +256,19 @@ message DHT {
         CANDIDATE = 3;
     }
 
-    message Change {
+    message StatusChange {
+      // time change occurred
       google.protobuf.Timestamp change_ts = 1;
-
-      oneof message {
-        Status prior_status  = 2;
-        bool prior_in_bucket = 3;
-      }
+      // current status of the peer at timestamp
+      Status status  = 2;
+      // peer is in bucket=kad-distance (else, catch-all bucket 0)
+      bool in_bucket = 3;
     }
 
     // the peer id of the host system
     string peer_id          = 1;
-    // peer is in bucket=kad-distance (else, catch-all bucket 0)
-    bool in_bucket          = 2;
-    // current status of the peer
-    Status status           = 3;
     // changes occuring in this time interval
-    repeated Change changes = 4;
+    repeated StatusChange changes = 2;
   }
 
   message Query {
