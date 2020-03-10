@@ -262,6 +262,8 @@ message DHT {
     string peer_id          = 1;
     // the peer's status when data snapshot is taken
     Status status           = 2;
+    // age in bucket (ms)
+    uint32 age_in_bucket    = 3;
   }
 
   // A "k-bucket" containing peers of a certain kadamelia distance
