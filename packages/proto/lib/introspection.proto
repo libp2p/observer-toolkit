@@ -271,55 +271,15 @@ message DHT {
     repeated StatusChange changes = 2;
   }
 
-  message Query {
-    // Trigger of the query.
-    enum Trigger {
-        API                     = 0;
-        DISCOVERY               = 1;
-    }
 
-    // Type of the query.
-    enum Type {
-        CONTENT                 = 0;
-        PROVIDER                = 1;
-        VALUE                   = 2;
-    }
-
-    // Direction of the query
-    enum Direction {
-        INBOUND                 = 0;
-        OUTBOUND                = 1;
-    }
-
-    // Status indicating the result of the query
-    enum Result {
-        SUCCESS                 = 0;
-        ERROR                   = 1;
-        TIMEOUT                 = 2;
-        // Pending queries may be absent, depending on data collection
-        PENDING                 = 3;
-    }
-
-    // id of the query; used for internal referencing (<== TODO: confirm this)
-    bytes id                          = 1;
-    // id of the peer being sought by this query
-    string target_peer_id             = 2;
-    // total time of the query in miliseconds
-    uint64 total_time_ms              = 3;
-    // number of iterative lookups before reaching result
-    uint64 total_steps                = 4;
-    // peers queried.
-    repeated string peer_ids          = 5;
-    // trigger of the query
-    Trigger trigger                   = 6;
-    // type of the query.
-    Type type                         = 7;
-    // status indicating the result of the query
-    Result result                     = 8;
-    // time query was dispatched
-    google.protobuf.Timestamp sent_ts = 9;
-    // direction indicating an inbound or outbound query
-    Direction direction               = 10;
+  // Counters of query events, by status
+  message QueryGauge {
+    // Cumulative counter of queries with "SUCCESS" status
+    uint64 success    = 1;
+    // Cumulative counter of queries with "ERROR" status
+    uint64 error      = 2;
+    // Cumulative counter of queries with "TIMEOUT" status
+    uint64 timeout    = 3;
   }
 
   // DHT protocol name
@@ -330,10 +290,10 @@ message DHT {
   google.protobuf.Timestamp start_ts  = 3;
   // params of the dht.
   Params params                       = 4;
-  // queries data
-  repeated Query query                = 5;
-  // peers in the dht
-  repeated PeerInDHT peer_in_dht      = 6; 
+  // counts inbound queries received from other peers
+  QueryGauge incoming_queries         = 5;
+  // counts outbound queries dispatched by this peer
+  QueryGauge outgoing_queries         = 6;
 }
 
 // Subsystems encapsulates all instrumented subsystems for a libp2p host.
