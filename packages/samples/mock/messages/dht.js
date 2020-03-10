@@ -21,24 +21,35 @@ const BUCKET_MOVE_PROBABILITY = 1 / 50
 const PEER_ADD_REMOVE_PROBABILITY = 1 / 40
 const MAX_BUCKETS = 256
 
-function randomBucketMove(multiplier = 1) {
-  const move = random() <= BUCKET_MOVE_PROBABILITY * multiplier
-  return move ? Math.floor(Math.random() * 3) - 1 : 0
-}
-
 function randomPeerAddRemove(divider = 1) {
   return random() <= PEER_ADD_REMOVE_PROBABILITY / divider
 }
 
+function getCurrentBucketPeers(bucket) {
+  const inBucketStatuses = ['ACTIVE', 'MISSING']
+  return bucket
+    .getPeerList()
+    .filter(peer =>
+      inBucketStatuses.includes(dhtStatusList.getItem(peer.getStatus()))
+    )
+}
+
+function removePeerFromBucket(peer, bucket) {
+  const peerList = bucket.getPeerInDhtList()
+  const peerIndex = peerList.findIndex(
+    ({ getPeerId }) => getPeerId() === peer.getPeerId()
+  )
+  peerList.splice(peerIndex, 1)
+  return peerList
+}
+
 function createPeerInDHT({
   peerId = generateHashId(),
-  bucket = 0,
   bucketAge = 0,
   status = DHT.PeerInDHT.Status.ACTIVE,
 } = {}) {
   const pdht = new DHT.PeerInDHT()
   pdht.setPeerId(peerId)
-  pdht.setBucket(bucket)
   pdht.setAgeInBucket(bucketAge)
   pdht.setStatus(status)
   return pdht
@@ -76,6 +87,7 @@ function createDHT({
   dht.setProtocol(proto)
   dht.setEnabled(enabled)
   dht.setStartTs(createTimestamp(startTs))
+  dht.addBucket({ distance: 0 })
 
   const params = new DHT.Params()
   params.setK(k)
@@ -96,16 +108,8 @@ function updatePeerInDHT(peer, connection) {
 }
 
 function updatePeerInDHTBucket(peer) {
-  const move = randomBucketMove()
-  const oldBucket = peer.getBucket()
-  const newBucket = Math.min(Math.max(0, oldBucket + move), MAX_BUCKETS - 1)
-  if (newBucket !== oldBucket) {
-    peer.setBucket(newBucket)
-    peer.setAgeInBucket(0)
-  } else {
-    const age = peer.getAgeInBucket()
-    peer.setAgeInBucket(age + 1000)
-  }
+  const age = peer.getAgeInBucket()
+  peer.setAgeInBucket(age + 1000)
 }
 
 function updatePeersInDHT(peers, connections, dht) {
@@ -160,54 +164,44 @@ function updateDHT(dht, connections, utcFrom, utcTo) {
   */
 }
 
-function validateBucketSizes(
-  dht,
-  bucketIndexes = [...Array(MAX_BUCKETS).keys()]
-) {
-  const peers = dht.getPeerInDhtList()
+function validateBucketSizes(dht, buckets = dht.getBucketList()) {
   const k = dht.getParams().getK()
 
-  const buckets = bucketIndexes.map(index => ({
-    peers: peers.filter(
-      peer => presentInBuckets(peer.getStatus()) && peer.getBucket() === index
-    ),
-    index,
-  }))
-
-  const overflowingBuckets = buckets.filter(({ peers }) => peers.length > k)
-
-  overflowingBuckets.forEach(({ peers, index }) =>
-    fixOverflowingBucket(peers, index, dht)
+  const overflowingBuckets = buckets.filter(
+    bucket => getCurrentBucketPeers(bucket).length > k
   )
+
+  overflowingBuckets.forEach(bucket => fixOverflowingBucket(bucket, dht))
 }
 
-function fixOverflowingBucket(peersInBucket, bucketIndex, dht) {
+function fixOverflowingBucket(bucket, dht) {
   const k = dht.getParams().getK()
-  const movedPeers = []
 
-  while (peersInBucket.length > k) {
+  while (bucket.getPeerInDhtList().length > k) {
     const randomPeerIndex = Math.floor(random() * peersInBucket.length)
-    const randomPeer = peersInBucket[randomPeerIndex]
+    const randomPeer = bucket.getPeerInDhtList()[randomPeerIndex]
 
-    if (bucketIndex === 0) {
+    if (bucket.getDistance() === 0) {
       // Move from 'catch-all' bucket to allocated bucket by distance
       const distance =
         getKademliaDistance(randomPeer.getPeerId(), HOST_PEER_ID) || 1
 
-      randomPeer.setBucket(distance)
+      const newBucket = dht
+        .getBucketList()
+        .find(({ getDistance }) => getDistance() === distance)
 
-      validateBucketSizes(dht, [distance])
+      removePeerFromBucket(randomPeer, bucket)
+      newBucket.addPeerInDht(randomPeer)
+
+      validateBucketSizes(dht, [newBucket])
     } else {
       ejectPeer(randomPeer)
     }
-
-    const [movedPeer] = peersInBucket.splice(randomPeerIndex, 1)
-    movedPeers.push(movedPeer)
   }
 }
 
 function ejectPeer(peer) {
-  peer.setStatus(dhtStatusList.getNum('EJECTED'))
+  peer.setStatus(dhtStatusList.getNum('CANDIDATE'))
 }
 
 function updatePeerStatus(peer, connection) {
