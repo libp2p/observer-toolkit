@@ -65,8 +65,8 @@ message Runtime {
       // tell listener how to sort, filter or display known content properties
       enum PropertyType {
         // treat as a simple primitive
-        STRING      = 1; // default
-        NUMBER      = 2;
+        STRING      = 0; // default
+        NUMBER      = 1;
         // apply human-readable formatting
         TIME        = 10;
         PEERID      = 11;
