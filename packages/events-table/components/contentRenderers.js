@@ -21,6 +21,24 @@ function RenderAsString({ content }) {
 }
 RenderAsString.propTypes = rendererPropType
 
+function RenderJsonString({ content }) {
+  // simplified without parsing
+  const value = content.replace('{"', '","').replace('"}', '","')
+  const items = value.split('","').map(v => {
+    const kv = v.split('":"')
+    return kv.length === 2 ? (
+      <span>
+        <b>{kv[0]}: </b>
+        {kv[1]}&nbsp;
+      </span>
+    ) : (
+      ''
+    )
+  })
+  return <>{items}</>
+}
+RenderJsonString.propTypes = rendererPropType
+
 function RenderPeerId({ content }) {
   return <PeerIdChip peerId={content} />
 }
@@ -31,4 +49,4 @@ function RenderTime({ content }) {
 }
 RenderTime.propTypes = rendererPropType
 
-export { RenderAsString, RenderPeerId, RenderTime }
+export { RenderAsString, RenderJsonString, RenderPeerId, RenderTime }

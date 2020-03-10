@@ -330,7 +330,7 @@ message State {
 message Event {
     string type                     = 1;
     google.protobuf.Timestamp ts    = 2;
-    map<string, string> content     = 3;
+    string content                  = 3; // stringified json
 }
 
 // ProtocolDataPacket wraps messages to be sent to clients to allow extension

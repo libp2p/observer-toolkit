@@ -41,17 +41,15 @@ TimeContent.propTypes = {
   value: T.string,
 }
 
-function EventContent({ value = [], type }) {
+function EventContent({ value = '', type }) {
   return (
     <ContentsContainer>
-      {value.map(([contentKey, content]) => (
-        <EventContentsItem
-          key={`${type}:${contentKey}`}
-          contentKey={contentKey}
-          content={content}
-          type={type}
-        />
-      ))}
+      <EventContentsItem
+        key={`json:${type}`}
+        contentKey="json"
+        content={value}
+        type={type}
+      />
     </ContentsContainer>
   )
 }

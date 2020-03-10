@@ -6377,9 +6377,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         ts:
           (f = msg.getTs()) &&
           google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-        contentMap: (f = msg.getContentMap())
-          ? f.toObject(includeInstance, undefined)
-          : [],
+        content: jspb.Message.getFieldWithDefault(msg, 3, ''),
       }
 
     if (includeInstance) {
@@ -6427,18 +6425,8 @@ proto.introspection.Event.deserializeBinaryFromReader = function(msg, reader) {
         msg.setTs(value)
         break
       case 3:
-        var value = msg.getContentMap()
-        reader.readMessage(value, function(message, reader) {
-          jspb.Map.deserializeBinary(
-            message,
-            reader,
-            jspb.BinaryReader.prototype.readString,
-            jspb.BinaryReader.prototype.readString,
-            null,
-            '',
-            ''
-          )
-        })
+        var value = /** @type {string} */ (reader.readString())
+        msg.setContent(value)
         break
       default:
         reader.skipField()
@@ -6479,14 +6467,9 @@ proto.introspection.Event.serializeBinaryToWriter = function(message, writer) {
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     )
   }
-  f = message.getContentMap(true)
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(
-      3,
-      writer,
-      jspb.BinaryWriter.prototype.writeString,
-      jspb.BinaryWriter.prototype.writeString
-    )
+  f = message.getContent()
+  if (f.length > 0) {
+    writer.writeString(3, f)
   }
 }
 
@@ -6543,27 +6526,19 @@ proto.introspection.Event.prototype.hasTs = function() {
 }
 
 /**
- * map<string, string> content = 3;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<string,string>}
+ * optional string content = 3;
+ * @return {string}
  */
-proto.introspection.Event.prototype.getContentMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<string,string>} */ (jspb.Message.getMapField(
-    this,
-    3,
-    opt_noLazyCreate,
-    null
-  ))
+proto.introspection.Event.prototype.getContent = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ''))
 }
 
 /**
- * Clears values from the map. The map will be non-null.
+ * @param {string} value
  * @return {!proto.introspection.Event} returns this
  */
-proto.introspection.Event.prototype.clearContentMap = function() {
-  this.getContentMap().clear()
-  return this
+proto.introspection.Event.prototype.setContent = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value)
 }
 
 /**

@@ -10,10 +10,7 @@ function createEvent({ now = Date.now(), type = '', content = {} } = {}) {
 
   event.setType(type)
   event.setTs(new Timestamp([now]))
-  const contentMap = event.getContentMap()
-  Object.keys(content).forEach(key => {
-    contentMap.set(key, content[key])
-  })
+  event.setContent(JSON.stringify(content))
   return event
 }
 

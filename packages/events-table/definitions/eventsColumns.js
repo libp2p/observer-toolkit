@@ -37,12 +37,12 @@ const typeCol = {
 const contentCol = {
   name: 'content',
   getProps: event => ({
-    value: event.getContentMap().getEntryList(),
+    value: event.getContent(), // Map().getEntryList(),
     type: event.getType(),
     key: JSON.stringify({
       time: event.getTs().getSeconds(),
       type: event.getType(),
-      content: event.getContentMap().getEntryList(),
+      content: event.getContent(), // Map().getEntryList(),
     }),
   }),
   cellProps: {
