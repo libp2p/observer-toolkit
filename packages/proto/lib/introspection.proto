@@ -247,30 +247,31 @@ message DHT {
 
   // Peer in DHT
   message PeerInDHT {
-
     // The DHT's relationship with this peer
     enum Status {
-        ACTIVE  = 0;
-        MISSING  = 1;
-        REJECTED = 2;
-        CANDIDATE = 3;
+      // Connected, in a bucket, ready to send/receive queries
+      ACTIVE      = 0;
+      // Not currently connected, still "in" a bucket (e.g. temporarily disconnected)
+      MISSING     = 1;
+      // Removed from a bucket or candidate list (e.g. connection lost or too slow)
+      REJECTED    = 2;
+      // Was reachable when last checked, waiting to join a currently-full bucket
+      CANDIDATE   = 3;
     }
-
-    message StatusChange {
-      // time change occurred
-      google.protobuf.Timestamp change_ts = 1;
-      // current status of the peer at timestamp
-      Status status  = 2;
-      // peer is in bucket=kad-distance (else, catch-all bucket 0)
-      bool in_bucket = 3;
-    }
-
     // the peer id of the host system
     string peer_id          = 1;
-    // changes occuring in this time interval
-    repeated StatusChange changes = 2;
+    // the peer's status when data snapshot is taken
+    Status status           = 2;
   }
 
+  // A "k-bucket" containing peers of a certain kadamelia distance
+  message Bucket {
+    // Contains peers of this distance; or, 0 is "catch-all" bucket
+    uint32 distance             = 1;
+    // Peers associated with this bucket
+    repeated PeerInDHT peers    = 2;
+    // Bucket may need more fields depending on WIP remodeling
+  }
 
   // Counters of query events, by status
   message QueryGauge {
