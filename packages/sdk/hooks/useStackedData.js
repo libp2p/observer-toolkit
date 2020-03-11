@@ -3,6 +3,7 @@ import { useContext, useMemo } from 'react'
 import useSorter from '../hooks/useSorter'
 import { FilterContext } from '../components/context/FilterProvider'
 import { DataContext } from '../components/context/DataProvider'
+import { getNumericSorter } from '../sorters'
 
 import { scaleLinear, scaleTime, stack } from 'd3'
 
@@ -22,17 +23,26 @@ function getMaxAreaPeak(stackedData) {
   )
 }
 
-function getKeyedData(dataset, sorter, applyFilters, getKeys, keyData) {
-  const keys = getKeys(dataset, sorter, applyFilters)
+function getKeyedData(
+  dataset,
+  xSorter,
+  ySorter,
+  applyFilters,
+  getKeys,
+  keyData
+) {
+  const keys = getKeys(dataset, ySorter, applyFilters)
 
   // Returns array of objects with a numeric value for each key
   // and a property for the x-axis value.
   const keyedData = keyData(dataset, keys)
-
+  const from = performance.now()
+  keyedData.sort(xSorter)
+  console.log(performance.now() - from)
   return { keys, keyedData }
 }
 
-function stackData(keyedData, keys) {
+function stackData(keyedData, keys, xSorter) {
   const dataStacker = stack().keys(keys)
 
   const stackedData = dataStacker(keyedData)
@@ -67,22 +77,32 @@ function stackData(keyedData, keys) {
 function useStackedData({
   getKeys,
   keyData,
-  getSorter,
-  mapSorter,
-  defaultDirection = '',
+  mapYSorter,
+  getYSorter = getNumericSorter,
+  defaultYSortDirection = 'desc',
+  mapXSorter = d => d.time,
+  getXSorter = getNumericSorter,
+  defaultXSortDirection = 'asc',
 }) {
   const dataset = useContext(DataContext)
   const { applyFilters } = useContext(FilterContext)
 
-  const { sorter, setSortDirection } = useSorter({
-    getSorter,
-    mapSorter: mapSorter,
-    defaultDirection: 'desc',
+  const { sorter: xSorter, setSortDirection: setXSortDirection } = useSorter({
+    getSorter: getXSorter,
+    mapSorter: mapXSorter,
+    defaultDirection: defaultXSortDirection,
+  })
+
+  const { sorter: ySorter, setSortDirection: setYSortDirection } = useSorter({
+    getSorter: getYSorter,
+    mapSorter: mapYSorter,
+    defaultDirection: defaultYSortDirection,
   })
 
   const { keys, keyedData } = useMemo(
-    () => getKeyedData(dataset, sorter, applyFilters, getKeys, keyData),
-    [dataset, sorter, applyFilters, getKeys, keyData]
+    () =>
+      getKeyedData(dataset, xSorter, ySorter, applyFilters, getKeys, keyData),
+    [dataset, xSorter, ySorter, applyFilters, getKeys, keyData]
   )
 
   // If we need to optimise this further for live data, can compare new data to
@@ -96,7 +116,8 @@ function useStackedData({
     stackedData,
     xScale,
     yScale,
-    setSortDirection,
+    setXSortDirection,
+    setYSortDirection,
   }
 }
 
