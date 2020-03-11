@@ -22,20 +22,28 @@ function RenderAsString({ content }) {
 RenderAsString.propTypes = rendererPropType
 
 function RenderJsonString({ content }) {
-  // simplified without parsing
-  const value = content.replace('{"', '","').replace('"}', '","')
-  const items = value.split('","').map(v => {
-    const kv = v.split('":"')
-    return kv.length === 2 ? (
-      <span>
-        <b>{kv[0]}: </b>
-        {kv[1]}&nbsp;
-      </span>
-    ) : (
-      ''
-    )
-  })
-  return <>{items}</>
+  try {
+    const json = JSON.parse(content)
+    const items = Object.keys(json)
+      .sort()
+      .map(key => {
+        const value =
+          typeof json[key] === 'string' ||
+          typeof json[key] === 'number' ||
+          typeof json[key] === 'boolean'
+            ? json[key]
+            : typeof json[key]
+        return (
+          <span key={key}>
+            <b>{key}: </b>
+            {value}&nbsp;
+          </span>
+        )
+      })
+    return <>{items}</>
+  } catch (error) {
+    return ''
+  }
 }
 RenderJsonString.propTypes = rendererPropType
 
