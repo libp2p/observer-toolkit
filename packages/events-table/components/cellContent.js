@@ -3,7 +3,8 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import getEventContent from '../utils/getEventContent'
-import { RenderTime } from './contentRenderers'
+import parseJsonString from '../utils/parseJsonString'
+import { RenderTime, RenderJsonString } from './contentRenderers'
 
 const ContentsContainer = styled.div`
   padding: ${({ theme }) => theme.spacing()};
@@ -42,14 +43,18 @@ TimeContent.propTypes = {
 }
 
 function EventContent({ value = '', type }) {
+  const content = parseJsonString(value)
+
   return (
     <ContentsContainer>
-      <EventContentsItem
-        key={`json:${type}`}
-        contentKey="json"
-        content={value}
-        type={type}
-      />
+      {content.map(({ key, value }) => (
+        <EventContentsItem
+          key={`${type}:${key}`}
+          contentKey={key}
+          content={value}
+          type={type}
+        />
+      ))}
     </ContentsContainer>
   )
 }
@@ -76,4 +81,12 @@ EventContentsItem.propTypes = {
   type: T.string,
 }
 
-export { TimeContent, EventContent }
+function RawJsonContent({ value = '' }) {
+  // TODO: add expand button similar to connections table streams subtable
+  return <RenderJsonString content={value} />
+}
+RawJsonContent.propTypes = {
+  value: T.string,
+}
+
+export { TimeContent, EventContent, RawJsonContent }

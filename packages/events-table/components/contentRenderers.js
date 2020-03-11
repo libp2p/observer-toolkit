@@ -11,6 +11,17 @@ const Nowrap = styled.span`
   white-space: nowrap;
 `
 
+const RawJson = styled.pre`
+  padding: ${({ theme }) => theme.spacing(0.5)};
+  background: ${({ theme }) => theme.color('background', 1)};
+  font-family: 'plex-mono';
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  position: relative;
+  text-overflow: ellipsis;
+`
+
 const rendererPropType = {
   content: T.string.isRequired,
   type: T.string, // Event type
@@ -22,28 +33,7 @@ function RenderAsString({ content }) {
 RenderAsString.propTypes = rendererPropType
 
 function RenderJsonString({ content }) {
-  try {
-    const json = JSON.parse(content)
-    const items = Object.keys(json)
-      .sort()
-      .map(key => {
-        const value =
-          typeof json[key] === 'string' ||
-          typeof json[key] === 'number' ||
-          typeof json[key] === 'boolean'
-            ? json[key]
-            : typeof json[key]
-        return (
-          <span key={key}>
-            <b>{key}: </b>
-            {value}&nbsp;
-          </span>
-        )
-      })
-    return <>{items}</>
-  } catch (error) {
-    return ''
-  }
+  return <RawJson>{content}</RawJson>
 }
 RenderJsonString.propTypes = rendererPropType
 

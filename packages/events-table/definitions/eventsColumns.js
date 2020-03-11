@@ -1,6 +1,10 @@
 import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
 
-import { TimeContent, EventContent } from '../components/cellContent'
+import {
+  TimeContent,
+  EventContent,
+  RawJsonContent,
+} from '../components/cellContent'
 
 const stringSorter = {
   getSorter: getStringSorter,
@@ -21,7 +25,7 @@ const timeCol = {
   sort: numericSorter,
   align: 'right',
   cellProps: {
-    width: '15%',
+    width: '11%',
   },
 }
 
@@ -30,30 +34,42 @@ const typeCol = {
   getProps: event => ({ value: event.getType() }),
   sort: stringSorter,
   cellProps: {
-    width: '15%',
+    width: '11%',
   },
 }
 
 const contentCol = {
   name: 'content',
   getProps: event => ({
-    value: event.getContent(), // Map().getEntryList(),
+    value: event.getContent(),
     type: event.getType(),
     key: JSON.stringify({
       time: event.getTs().getSeconds(),
       type: event.getType(),
-      content: event.getContent(), // Map().getEntryList(),
+      content: event.getContent(),
     }),
   }),
   cellProps: {
     padding: 0,
-    width: '70%',
+    width: '56%',
   },
   renderContent: EventContent,
   rowKey: 'key',
 }
 
+const jsonCol = {
+  name: 'json',
+  header: 'Raw JSON',
+  getProps: event => ({
+    value: event.getContent(),
+  }),
+  renderContent: RawJsonContent,
+  cellProps: {
+    width: '22%',
+  },
+}
+
 // Define column order
-const columns = [timeCol, typeCol, contentCol]
+const columns = [timeCol, typeCol, contentCol, jsonCol]
 
 export default columns
