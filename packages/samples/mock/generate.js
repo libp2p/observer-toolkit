@@ -1,6 +1,6 @@
 'use strict'
 
-const { random, randomOpenClose } = require('./utils')
+const { SECOND_IN_MS, random, randomOpenClose } = require('./utils')
 
 const { createBufferSegment } = require('../output/binary')
 const {
@@ -137,14 +137,14 @@ function generateVersion() {
 
 function generateComplete(connectionsCount, durationSeconds, peersCount, durationSnapshot) {
   const utcTo = Date.now()
-  const utcFrom = utcTo - durationSeconds * durationSnapshot
+  const utcFrom = utcTo - durationSeconds * SECOND_IN_MS
 
   const version = generateVersion()
   const runtime = generateRuntime()
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
 
-  const startTs = utcFrom - Math.floor(random() * durationSnapshot)
+  const startTs = utcFrom - Math.floor(random() * SECOND_IN_MS)
   const dht = generateDHT({ startTs, peerIds, peersCount, connections, durationSnapshot })
 
   const activityMsgs = generateActivity({

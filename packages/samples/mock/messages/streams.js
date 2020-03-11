@@ -3,6 +3,7 @@
 const { proto } = require('@libp2p-observer/proto')
 
 const {
+  SECOND_IN_MS,
   encodeNumToBin,
   random,
   randomLatency,
@@ -70,14 +71,14 @@ function updateStream(
       newStatusName = 'CLOSED'
       secondsOpen = random() * connectionSecondsOpen
       mockStreamTimeline(stream.getTimeline(), {
-        close: now - 1000 + secondsOpen * 1000,
+        close: now - 1000 + secondsOpen * SECOND_IN_MS,
       })
       break
     case 'ACTIVE':
       if (connectionStatusName === 'CLOSED') {
         newStatusName = 'CLOSED'
         mockStreamTimeline(stream.getTimeline(), {
-          close: now - 1000 + secondsOpen * 1000,
+          close: now - 1000 + secondsOpen * SECOND_IN_MS,
         })
         secondsOpen = 0
       } else if (connectionStatusName === 'CLOSING' || randomOpenClose()) {
@@ -102,7 +103,7 @@ function mockStreamActivity(stream, now) {
   if (!open) return
 
   const activityEnd = timeline.getCloseTs() || now
-  const secondsOpen = (activityEnd - open) / 1000
+  const secondsOpen = (activityEnd - open) / SECOND_IN_MS
   mockTrafficRandomUpdate(stream.getTraffic(), secondsOpen)
 }
 

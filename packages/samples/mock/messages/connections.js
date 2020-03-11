@@ -8,6 +8,7 @@ const {
 const {
   HOST_PEER_ID,
   HOUR_IN_SECONDS,
+  SECOND_IN_MS,
   DEFAULT_STREAMS,
   decodeBinToNum,
   encodeNumToBin,
@@ -116,7 +117,7 @@ function updateConnection(connection, now, duration) {
       secondsOpen = random()
       mockConnectionTimeline({
         timeline,
-        open: now - duration + secondsOpen * 1000,
+        open: now - duration + secondsOpen * SECOND_IN_MS,
       })
       break
     case 'CLOSING':
@@ -169,7 +170,7 @@ function mockConnectionActivity(connection, now) {
   const msOpen = Math.round(
     randomNormalDistribution({
       min: 1,
-      max: HOUR_IN_SECONDS * 1000,
+      max: HOUR_IN_SECONDS * SECOND_IN_MS,
       skew: 6, // Mean 2 mins
     })
   )
@@ -184,7 +185,7 @@ function mockConnectionActivity(connection, now) {
 
   addStreamsToConnection(connection, {
     status,
-    secondsOpen: msOpen / 1000,
+    secondsOpen: msOpen / SECOND_IN_MS,
     now,
   })
 
