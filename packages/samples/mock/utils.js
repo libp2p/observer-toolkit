@@ -8,7 +8,7 @@ const DEFAULT_DURATION = 10 // Seconds
 const DEFAULT_FILE = `mock-${Date.now()}`
 const DEFAULT_STREAMS = 10
 const DEFAULT_PEERS = 30
-const DEFAULT_SNAPSHOT_DURATION = 1000 // Miliseconds
+const DEFAULT_SNAPSHOT_DURATION = 2000 // Miliseconds
 
 const HOUR_IN_SECONDS = 3600
 const SECOND_IN_MS = 1000
