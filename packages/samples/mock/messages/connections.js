@@ -144,6 +144,7 @@ function updateConnection(connection, now, duration) {
       connectionStatusName: newStatusName,
       connectionSecondsOpen: secondsOpen,
       now,
+      duration,
     })
   })
 

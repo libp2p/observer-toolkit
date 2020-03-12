@@ -46,7 +46,7 @@ function createStream({
 
 function updateStream(
   stream,
-  { connectionStatusName, connectionSecondsOpen = 1, now }
+  { connectionStatusName, connectionSecondsOpen = 1, now, duration }
 ) {
   const statusNum = stream.getStatus()
 
@@ -71,14 +71,14 @@ function updateStream(
       newStatusName = 'CLOSED'
       secondsOpen = random() * connectionSecondsOpen
       mockStreamTimeline(stream.getTimeline(), {
-        close: now - 1000 + secondsOpen * SECOND_IN_MS,
+        close: now - duration + secondsOpen * SECOND_IN_MS,
       })
       break
     case 'ACTIVE':
       if (connectionStatusName === 'CLOSED') {
         newStatusName = 'CLOSED'
         mockStreamTimeline(stream.getTimeline(), {
-          close: now - 1000 + secondsOpen * SECOND_IN_MS,
+          close: now - duration + secondsOpen * SECOND_IN_MS,
         })
         secondsOpen = 0
       } else if (connectionStatusName === 'CLOSING' || randomOpenClose()) {
