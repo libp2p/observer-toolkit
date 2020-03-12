@@ -1,43 +1,62 @@
 import React from 'react'
+import T from 'prop-types'
 
 import { fireEvent } from '@testing-library/react'
 
 import { catchErrorSilently, renderWithTheme } from '@libp2p-observer/testing'
+import { DataProvider } from '@libp2p-observer/sdk'
 import DataTypeControl from './DataTypeControl'
+
+const initialData = {
+  runtime: {
+    getPeerId: () =>
+      '75171c9d7b5b5b99d6d93aaaa2e802dc9473369e41a323a0c1020837180ba20b',
+  },
+}
+
+function DataTypeWithSource({ source, openDataTray = () => {} }) {
+  return (
+    <DataProvider initialSource={source} initialData={initialData}>
+      <DataTypeControl openDataTray={openDataTray} />
+    </DataProvider>
+  )
+}
+DataTypeWithSource.propTypes = {
+  source: T.object.isRequired,
+  openDataTray: T.any,
+}
 
 describe('DataTypeControl', () => {
   it('renders as expected for sample data', () => {
-    const metadata = {
+    const source = {
       type: 'sample',
       name: 'test sample name',
     }
     const { asFragment } = renderWithTheme(
-      <DataTypeControl metadata={metadata} openDataTray={() => {}} />
+      <DataTypeWithSource source={source} />
     )
     expect(asFragment()).toMatchSnapshot()
   })
 
   it('renders as expected for uploaded file', () => {
-    const metadata = {
+    const source = {
       type: 'upload',
       name: 'test filename',
     }
     const { asFragment } = renderWithTheme(
-      <DataTypeControl metadata={metadata} openDataTray={() => {}} />
+      <DataTypeWithSource source={source} />
     )
     expect(asFragment()).toMatchSnapshot()
   })
 
   it('throws if trying to render an invalid type', () => {
-    const metadata = {
+    const source = {
       type: 'invalid-type',
       name: 'test invalid type',
     }
     expect(
       catchErrorSilently(() =>
-        renderWithTheme(
-          <DataTypeControl metadata={metadata} openDataTray={() => {}} />
-        )
+        renderWithTheme(<DataTypeWithSource source={source} />)
       )
     ).toBeInstanceOf(Error)
   })
@@ -46,7 +65,7 @@ describe('DataTypeControl', () => {
     const name = 'test mouseover target'
     const highlightedText = 'Change data source'
 
-    const metadata = {
+    const source = {
       type: 'sample',
       name,
     }
@@ -54,9 +73,7 @@ describe('DataTypeControl', () => {
       getByText,
       queryAllByText,
       queryAllByHighlighted,
-    } = renderWithTheme(
-      <DataTypeControl metadata={metadata} openDataTray={() => {}} />
-    )
+    } = renderWithTheme(<DataTypeWithSource source={source} />)
     expect(queryAllByHighlighted()).toHaveLength(0)
     expect(queryAllByText(highlightedText)).toHaveLength(0)
 

@@ -10,7 +10,9 @@ import {
 
 import { getEnumByName, statusNames, roleNames, transportNames } from './enums'
 
-const { states } = loadSample()
+const {
+  data: { states },
+} = loadSample()
 
 describe('states data helpers', () => {
   it('gets timepoints from dataset', () => {

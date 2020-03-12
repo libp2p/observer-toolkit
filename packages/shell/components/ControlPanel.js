@@ -35,7 +35,7 @@ function ControlPanel() {
     <Container>
       <RootNodeProvider>
         <DataPanelSection>
-          <DataPanel metadata={dataset.metadata} />
+          <DataPanel />
         </DataPanelSection>
         <TimePanelSection>
           <Timeline leftGutter={leftGutter} />

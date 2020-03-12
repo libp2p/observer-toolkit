@@ -2,7 +2,9 @@ import { loadSample } from '@libp2p-observer/testing'
 
 describe('binary deserialization', () => {
   it('deserializes binary protobuf file', () => {
-    const { states } = loadSample()
+    const {
+      data: { states },
+    } = loadSample()
 
     expect(states, 'Sample data should deserialize to an array').toBeInstanceOf(
       Array

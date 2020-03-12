@@ -5,7 +5,7 @@ const WebSocket = require('ws')
 const {
   proto: { ClientSignal },
 } = require('@libp2p-observer/proto')
-const { random } = require('./utils')
+const { random, decodeBinToNum } = require('./utils')
 const {
   generateConnections,
   generateDHT,
@@ -16,6 +16,9 @@ const {
   updateConnections,
   updateDHT,
 } = require('./generate')
+
+const { roleList } = require('./enums/roleList')
+const { transportList } = require('./enums/transportList')
 
 const connections = []
 const version = generateVersion()
@@ -29,34 +32,50 @@ const msgQueue = []
 
 function generateMessages({ connectionsCount, peersCount }) {
   const utcNow = Date.now()
+  const utcFrom = utcNow,
+    utcTo = utcNow + 1000
   const dht = generateDHT({ peersCount })
 
   if (!connections.length) {
     connections.length = 0
-    const conns = generateConnections(connectionsCount, utcNow - 1000)
-    updateConnections(conns, null, utcNow)
+    const conns = generateConnections(connectionsCount, utcFrom - 1000)
+    updateConnections(conns, null, utcFrom)
     connections.push(...conns)
-  } else {
-    updateConnections(connections, connectionsCount, utcNow)
+    return
   }
+
+  updateConnections(connections, connectionsCount, utcTo)
+  updateDHT(dht, connections, utcFrom, utcTo)
 
   // send event when connection is opening/closing
   connections
     .filter(cn => cn.getStatus() === 2 || cn.getStatus() === 3)
     .forEach(cn => {
-      const now = utcNow + Math.floor(random() * 800 + 100)
-      const type = cn.getStatus() === 2 ? 'opening' : 'closing'
-      const content = { peerId: cn.getPeerId() }
+      const now = utcFrom + Math.floor(random() * 800 + 100)
+      const type = cn.getStatus() === 2 ? 'PeerConnecting' : 'PeerDisconnecting'
+      const content = {
+        peerId: cn.getPeerId(),
+        transport: transportList.getItem(decodeBinToNum(cn.getTransportId())),
+      }
+      if (type === 'PeerDisconnecting') {
+        const open = cn
+          .getTimeline()
+          .getOpenTs()
+          .getSeconds()
+        content.age = `${now - open}`
+        content.openTime = `${open}`
+      }
+      if (type === 'PeerConnecting') {
+        content.role = roleList.getItem(cn.getRole())
+      }
       const event = generateEvent({ now, type, content })
       const data = Buffer.concat([version, runtime, event]).toString('binary')
       msgQueue.push({ ts: now, type: 'event', data })
     })
 
-  updateDHT(dht, connections, utcNow, utcNow + 1000)
-
-  const state = generateState(connections, utcNow, dht)
+  const state = generateState(connections, utcTo, dht)
   const data = Buffer.concat([version, runtime, state]).toString('binary')
-  msgQueue.push({ ts: utcNow + 1000, type: 'state', data })
+  msgQueue.push({ ts: utcTo, type: 'state', data })
 }
 
 function sendQueue(ws) {

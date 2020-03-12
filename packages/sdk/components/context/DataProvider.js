@@ -3,7 +3,9 @@ import T from 'prop-types'
 
 import { getLatestTimepoint } from '@libp2p-observer/data'
 
+const SourceContext = createContext()
 const DataContext = createContext()
+const EventsContext = createContext()
 const RuntimeContext = createContext()
 const TimeContext = createContext()
 const PeersContext = createContext()
@@ -16,29 +18,15 @@ function updateData(oldData, { action, data }) {
     case 'replace':
       return replaceDataSet(data)
     case 'remove':
-      return null
+      return []
     default:
       throw new Error(`Action "${action}" not valid`)
   }
 }
 
 function appendToDataSet(newData, oldData) {
-  // if no old data, replace
   if (!oldData) return newData
-
-  // if runtime info, and different, replace
-  if (
-    oldData.runtime &&
-    newData.runtime &&
-    oldData.runtime.getPeerId() !== newData.runtime.getPeerId()
-  )
-    return newData
-
-  // merge data
-  const states = oldData.states.concat(newData.states)
-  states.metadata = { ...oldData.states.metadata, ...newData.states.metadata }
-
-  return { runtime: oldData.runtime, states }
+  return [...oldData, ...newData]
 }
 
 function replaceDataSet(data) {
@@ -46,24 +34,36 @@ function replaceDataSet(data) {
   return data
 }
 
-function DataProvider({ initialData = null, initialTime, children }) {
+function DataProvider({
+  initialData: {
+    states: initialStates = [],
+    events: initialEvents = [],
+    runtime: initialRuntime,
+  } = {},
+  initialSource,
+  initialTime,
+  children,
+}) {
   // This is structured to avoid re-renders disrupting user interactions e.g. unfocusing input
-  const [dataset, dispatchDataset] = useReducer(updateData, initialData)
+  const [states, dispatchStates] = useReducer(updateData, initialStates)
+  const [events, dispatchEvents] = useReducer(updateData, initialEvents)
+  const [runtime, setRuntime] = useState(initialRuntime)
   const [peerIds, setPeerIds] = useState([])
+  const [source, setSource] = useState(initialSource)
 
-  if (dataset && !initialTime) initialTime = getLatestTimepoint(dataset.states)
+  if (!initialTime) initialTime = getLatestTimepoint(states)
   const [timepoint, setTimepoint] = useState(null)
 
   // Bundle setters and make bundle persist, as defining this in normal function flow
   // causes context `value` to see a new object each run, causing re-renders every time
   const dataSetters = useRef({
-    dispatchDataset,
+    dispatchStates,
+    dispatchEvents,
+    setRuntime,
     setTimepoint,
     setPeerIds,
+    setSource,
   })
-
-  const states = dataset ? dataset.states : []
-  const runtime = dataset ? dataset.runtime : {}
 
   if (timepoint && !states.includes(timepoint)) {
     setTimepoint(null)
@@ -77,11 +77,15 @@ function DataProvider({ initialData = null, initialTime, children }) {
     <DataContext.Provider value={states}>
       <RuntimeContext.Provider value={runtime}>
         <TimeContext.Provider value={displayedTimepoint}>
-          <PeersContext.Provider value={peerIds}>
-            <SetterContext.Provider value={dataSetters.current}>
-              {children}
-            </SetterContext.Provider>
-          </PeersContext.Provider>
+          <EventsContext.Provider value={events}>
+            <PeersContext.Provider value={peerIds}>
+              <SourceContext.Provider value={source}>
+                <SetterContext.Provider value={dataSetters.current}>
+                  {children}
+                </SetterContext.Provider>
+              </SourceContext.Provider>
+            </PeersContext.Provider>
+          </EventsContext.Provider>
         </TimeContext.Provider>
       </RuntimeContext.Provider>
     </DataContext.Provider>
@@ -90,6 +94,10 @@ function DataProvider({ initialData = null, initialTime, children }) {
 
 DataProvider.propTypes = {
   initialData: T.object,
+  initialSource: T.shape({
+    type: T.string,
+    name: T.string,
+  }),
   initialTime: T.number,
   children: T.node.isRequired,
 }
@@ -101,4 +109,6 @@ export {
   TimeContext,
   PeersContext,
   SetterContext,
+  EventsContext,
+  SourceContext,
 }

@@ -9,7 +9,9 @@ import StreamsSubtable from './StreamsSubtable'
 import WidgetContext from '../context/WidgetContext'
 
 describe('StreamsSubtable', () => {
-  const { states } = loadSample()
+  const {
+    data: { states },
+  } = loadSample()
   const timepoint = getLatestTimepoint(states)
 
   const [connection] = getConnections(timepoint)

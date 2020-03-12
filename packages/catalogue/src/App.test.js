@@ -6,7 +6,9 @@ import { loadSample, within } from '@libp2p-observer/testing'
 import { getConnections, getLatestTimepoint } from '@libp2p-observer/data'
 import App from './App'
 
-const { states } = loadSample()
+const {
+  data: { states },
+} = loadSample()
 const timepoint = getLatestTimepoint(states)
 const connections = getConnections(timepoint)
 

@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
-import T from 'prop-types'
 
 import {
   RuntimeContext,
@@ -60,18 +59,20 @@ const CloseDataTray = styled.button`
   color: ${({ theme }) => theme.color('background', 0, 0.7)};
 `
 
-function DataPanel({ metadata = {} }) {
+function DataPanel() {
   const [isDataTrayOpen, setIsDataTrayOpen] = useState(false)
 
   const runtime = useContext(RuntimeContext)
-  const peerId = runtime.getPeerId()
+
+  if (!runtime) return ''
+  const peerId = runtime && runtime.getPeerId()
 
   const openDataTray = () => setIsDataTrayOpen(true)
   const closeDataTray = () => setIsDataTrayOpen(false)
 
   return (
     <>
-      <DataTypeControl metadata={metadata} openDataTray={openDataTray} />
+      <DataTypeControl openDataTray={openDataTray} />
 
       <DataPanelItem>
         <IconContainer>
@@ -114,10 +115,6 @@ function DataPanel({ metadata = {} }) {
       )}
     </>
   )
-}
-
-DataPanel.propTypes = {
-  metadata: T.object,
 }
 
 export default DataPanel

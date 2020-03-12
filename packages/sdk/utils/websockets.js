@@ -42,11 +42,10 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
 
   ws.addEventListener('message', function(msg) {
     // process incoming message
-    const metadata = { type: 'live', name: url }
     if (msg.data) {
       const buf = new Buffer(msg.data, 'binary')
       bl.append(buf.slice(4))
-      processUploadBuffer(bl, onUploadChunk, metadata)
+      processUploadBuffer(bl, onUploadChunk)
     }
 
     if (!usePushEmitter) {
@@ -71,7 +70,6 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
 
 function processUploadBuffer(bufferList, onUploadChunk, metadata) {
   const data = parseBufferList(bufferList)
-  if (metadata && data.states) data.states.metadata = metadata
   onUploadChunk(data)
 }
 

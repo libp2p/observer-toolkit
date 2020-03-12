@@ -23,8 +23,9 @@ describe('SamplesList', () => {
     const { findByText, getByText } = renderWithShell(
       <SamplesList onLoad={mockFn} />
     )
-    const { runtime } = loadSample()
-
+    const {
+      data: { runtime },
+    } = loadSample()
     const peerId = runtime.getPeerId()
 
     const getCurrentPeerId = async () => {

@@ -11,7 +11,9 @@ import ConnectionsTable from './ConnectionsTable'
 import WidgetContext from './context/WidgetContext'
 
 describe('ConnectionsTable', () => {
-  const { states } = loadSample()
+  const {
+    data: { states },
+  } = loadSample()
   const timepoint = getLatestTimepoint(states)
   const connections = getConnections(timepoint)
 

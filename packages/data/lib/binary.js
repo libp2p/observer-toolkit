@@ -2,6 +2,12 @@
 
 const { deserializeBinary, fnv1a } = require('@libp2p-observer/proto')
 
+const getEmptyMessages = () => ({
+  states: [],
+  events: [],
+  runtime: null,
+})
+
 function getMessageChecksum(buffer) {
   return fnv1a(buffer)
 }
@@ -17,10 +23,7 @@ function parseBuffer(buf) {
   const byteLength = Buffer.byteLength(buf)
 
   let bytesParsed = 0
-  const messages = {
-    states: [],
-    runtime: null,
-  }
+  const messages = getEmptyMessages()
 
   const versionNumberLength = 4
   const messageChecksumLength = 4
@@ -59,9 +62,13 @@ function parseBuffer(buf) {
 function addMessage(message, messages) {
   const runtimeContent = message.getRuntime()
   const stateContent = message.getState()
+  const eventContent = message.getEvent()
 
   if (stateContent) {
     messages.states.push(stateContent)
+  }
+  if (eventContent) {
+    messages.events.push(eventContent)
   }
   if (runtimeContent) {
     // By current proto def, runtime data can't reasonably change during a session, so,
@@ -86,10 +93,7 @@ function parseBase64(dataString) {
 function parseBufferList(bufferList) {
   const messageChecksumLength = 4
   const messageSizeLength = 4
-  const messages = {
-    states: [],
-    runtime: null,
-  }
+  const messages = getEmptyMessages()
 
   while (bufferList.length > messageChecksumLength + messageSizeLength) {
     // check for complete message in the buffer

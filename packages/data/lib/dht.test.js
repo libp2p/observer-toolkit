@@ -16,7 +16,9 @@ import {
   getEnumByName,
 } from './enums'
 
-const { states } = loadSample()
+const {
+  data: { states },
+} = loadSample()
 
 function peerIdSet(peersArray) {
   return new Set(peersArray.map(peer => peer.getPeerId()))

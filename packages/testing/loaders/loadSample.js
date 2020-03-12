@@ -16,13 +16,15 @@ function loadSample(filename = defaultFilename) {
   )
   const sampleData = parseImport(readFileSync(sampleFilePath))
 
-  if (sampleData.states)
-    sampleData.states.metadata = {
-      type: 'sample',
-      name: 'Test sample data',
-    }
+  const source = {
+    type: 'sample',
+    name: 'Test sample data',
+  }
 
-  return sampleData
+  return {
+    data: sampleData,
+    source,
+  }
 }
 
 export default loadSample
