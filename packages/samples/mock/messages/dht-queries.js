@@ -44,12 +44,12 @@ function randomQueryCount(activePeerCount) {
 }
 
 function randomQuerySentTime(utcTo, utcFrom) {
-  const interval = utcTo - utcFrom
-  if (!interval)
+  const duration = utcTo - utcFrom
+  if (!duration)
     throw new Error(
-      `Invalid interval of ${interval} ms (from ${utcFrom} to ${utcTo})`
+      `Invalid snapshot duration of ${duration} ms (from ${utcFrom} to ${utcTo})`
     )
-  return Math.round(utcFrom + random() * interval)
+  return Math.round(utcFrom + random() * duration)
 }
 
 function randomPeerIdsIncludingOwn(activeDhtPeers, ownPeerId) {
