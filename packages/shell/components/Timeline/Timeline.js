@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import { useStackedData, getNumericSorter } from '@libp2p-observer/sdk'
+import { useStackedData } from '@libp2p-observer/sdk'
 
 import { getTrafficChangesByPeer, getTotalTraffic, getPeerIds } from './utils'
 import TimelinePaths from './TimelinePaths'
@@ -42,15 +42,13 @@ function Timeline({ width = 700, leftGutter }) {
   const { stackedData, xScale, yScale: yScaleIn } = useStackedData({
     keyData: getTrafficChangesByPeer('in'),
     getKeys: getPeerIds,
-    getSorter: getNumericSorter,
-    mapSorter: getTotalTraffic,
+    mapYSorter: getTotalTraffic,
   })
 
   const { stackedData: stackedDataOut, yScale: yScaleOut } = useStackedData({
     keyData: getTrafficChangesByPeer('out'),
     getKeys: getPeerIds,
-    getSorter: getNumericSorter,
-    mapSorter: getTotalTraffic,
+    mapYSorter: getTotalTraffic,
   })
 
   // Make sure both data in and out use the same scale
