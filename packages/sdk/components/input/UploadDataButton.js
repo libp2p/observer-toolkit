@@ -34,7 +34,8 @@ const defaultTitle = 'Pick or drop libp2p protobuf file'
 
 function UploadDataButton({ onLoad, title = defaultTitle, overrides = {} }) {
   const [isLoading, setIsLoading] = useState(false)
-  const { name: fileName } = useContext(SourceContext)
+  const source = useContext(SourceContext)
+  const fileName = source ? source.name : null
   const { removeData, updateData, updateSource } = useDatastore()
 
   const handleUpload = useCallback(

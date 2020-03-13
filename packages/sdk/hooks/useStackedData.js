@@ -36,9 +36,7 @@ function getKeyedData(
   // Returns array of objects with a numeric value for each key
   // and a property for the x-axis value.
   const keyedData = keyData(dataset, keys)
-  const from = performance.now()
   keyedData.sort(xSorter)
-  console.log(performance.now() - from)
   return { keys, keyedData }
 }
 

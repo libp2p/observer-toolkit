@@ -20,14 +20,14 @@ const StyledSvg = styled.svg`
   background: ${({ theme }) => theme.color('contrast', 1)};
 `
 
-const StyledPath = styled.path.attrs(({ highlighted }) => ({
-  'data-highlighted': highlighted ? true : null,
-}))`
-  fill: ${({ theme, colorKey, opacity, highlighted }) => {
-    if (highlighted) return theme.color('background', 1)
-    return theme.color(colorKey, 0, opacity)
-  }};
-`
+const StyledPath = styled.path.attrs(
+  ({ theme, colorKey, opacity, highlighted }) => ({
+    'data-highlighted': highlighted ? true : null,
+    fill: highlighted
+      ? theme.color('background', 1)
+      : theme.color(colorKey, 0, opacity),
+  })
+)``
 
 function TimelinePaths({
   width,

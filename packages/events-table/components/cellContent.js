@@ -16,6 +16,7 @@ const ContentsItem = styled.div`
   border: 2px solid ${({ theme }) => theme.color('background', 1)};
   display: flex;
   align-items: stretch;
+  min-width: ${({ theme }) => theme.spacing(20)};
 `
 
 const ContentsContent = styled.div`
@@ -30,6 +31,7 @@ const ContentsLabel = styled.label`
   align-items: center;
   white-space: nowrap;
   text-transform: uppercase;
+  min-width: ${({ theme }) => theme.spacing(8)};
   background: ${({ theme }) => theme.color('background', 1)};
   color: ${({ theme }) => theme.color('contrast', 1)};
   ${({ theme }) => theme.text('label', 'small')}

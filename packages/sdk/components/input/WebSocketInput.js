@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import T from 'prop-types'
 import styled from 'styled-components'
 
 import { uploadWebSocket } from '../../utils'
@@ -25,7 +24,7 @@ const Container = styled.span`
   position: relative;
 `
 
-function WebSocketInput({ title }) {
+function WebSocketInput() {
   const inputRef = useRef()
   const [isLoading, setIsLoading] = useState(false)
   const { removeData, updateData, updateSource } = useDatastore()
@@ -71,10 +70,6 @@ function WebSocketInput({ title }) {
       )}
     </Container>
   )
-}
-
-WebSocketInput.propTypes = {
-  title: T.string.isRequired,
 }
 
 export default WebSocketInput

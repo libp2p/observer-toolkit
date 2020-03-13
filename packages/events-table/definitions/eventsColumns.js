@@ -25,7 +25,7 @@ const timeCol = {
   sort: numericSorter,
   align: 'right',
   cellProps: {
-    width: '11%',
+    width: '10%',
   },
 }
 
@@ -34,7 +34,7 @@ const typeCol = {
   getProps: event => ({ value: event.getType() }),
   sort: stringSorter,
   cellProps: {
-    width: '11%',
+    width: '12%',
   },
 }
 
@@ -51,7 +51,7 @@ const contentCol = {
   }),
   cellProps: {
     padding: 0,
-    width: '56%',
+    width: '62%',
   },
   renderContent: EventContent,
   rowKey: 'key',
@@ -65,7 +65,7 @@ const jsonCol = {
   }),
   renderContent: RawJsonContent,
   cellProps: {
-    width: '22%',
+    width: '16%',
   },
 }
 
