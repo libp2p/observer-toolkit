@@ -1,6 +1,11 @@
 'use strict'
 
-const { SECOND_IN_MS, random, randomOpenClose } = require('./utils')
+const {
+  CUTOFFTIME_SECONDS,
+  SECOND_IN_MS,
+  random,
+  randomOpenClose,
+} = require('./utils')
 
 const { createBufferSegment } = require('../output/binary')
 const {
@@ -53,6 +58,19 @@ function updateConnections(connections, total, now, duration) {
     addStreamsToConnection(connection, { now, secondsOpen: random() })
     connections.push(connection)
   }
+  // close connections beyond cutoff point
+  connections
+    .filter(connection => {
+      if (statusList.getItem(connection.getStatus()) !== 'CLOSED') {
+        return false
+      }
+      const timeline = connection.getTimeline()
+      const closedSecs = (now - timeline.getCloseTs()) / SECOND_IN_MS
+      return closedSecs >= CUTOFFTIME_SECONDS
+    })
+    .forEach((c, idx) => {
+      connections.splice(idx, 1)
+    })
 }
 
 function generateConnectionEvents({
