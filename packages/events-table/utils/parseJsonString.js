@@ -18,7 +18,15 @@ function parseJsonString(content) {
       })
     return items
   } catch (error) {
-    console.warn('ERROR CAUGHT', { content, error })
+    console.warn(
+      `Error parsing JSON string:
+
+${content}
+
+
+`,
+      error
+    )
     return []
   }
 }
