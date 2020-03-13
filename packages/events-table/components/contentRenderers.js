@@ -45,6 +45,9 @@ RenderPeerId.propTypes = rendererPropType
 function RenderTime({ content }) {
   return <Nowrap>{timeFormatter(content)}</Nowrap>
 }
-RenderTime.propTypes = rendererPropType
+RenderTime.propTypes = {
+  ...rendererPropType,
+  content: T.oneOfType([T.number, T.string]),
+}
 
 export { RenderAsString, RenderJsonString, RenderPeerId, RenderTime }
