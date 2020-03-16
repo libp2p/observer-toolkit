@@ -15,6 +15,7 @@ const {
   states,
   initialConnCount,
   durationSeconds,
+  durationSnapshot,
 } = require('./fixtures/generate')
 
 const timepointsExceptLatest = states.slice(0, -1)
