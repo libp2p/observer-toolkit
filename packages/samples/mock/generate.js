@@ -59,18 +59,16 @@ function updateConnections(connections, total, now, duration) {
     connections.push(connection)
   }
   // close connections beyond cutoff point
-  connections
-    .filter(connection => {
-      if (statusList.getItem(connection.getStatus()) !== 'CLOSED') {
-        return false
-      }
-      const timeline = connection.getTimeline()
-      const closedSecs = (now - timeline.getCloseTs()) / SECOND_IN_MS
-      return closedSecs >= CUTOFFTIME_SECONDS
-    })
-    .forEach((c, idx) => {
+  connections.forEach((cn, idx) => {
+    if (statusList.getItem(cn.getStatus()) !== 'CLOSED') {
+      return false
+    }
+    const timeline = cn.getTimeline()
+    const closedSecs = (now - timeline.getCloseTs()) / SECOND_IN_MS
+    if (closedSecs >= CUTOFFTIME_SECONDS) {
       connections.splice(idx, 1)
-    })
+    }
+  })
 }
 
 function generateConnectionEvents({
