@@ -95,8 +95,8 @@ function generateConnectionEvents({
   return msgQueue
 }
 
-function generateState(connections, now, dht) {
-  const state = createState(connections, now, dht)
+function generateState(connections, now, dht, duration) {
+  const state = createState(connections, now, dht, duration)
   const statePacket = createProtocolStatePacket(state)
   return createBufferSegment(statePacket)
 }

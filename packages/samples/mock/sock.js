@@ -53,7 +53,7 @@ function generateMessages({ connectionsCount, durationSnapshot, peersCount }) {
     durationSnapshot,
   })
 
-  const state = generateState(connections, utcTo, dht)
+  const state = generateState(connections, utcNow, dht, duration)
   const data = Buffer.concat([version, runtime, state]).toString('binary')
   msgQueue.push({ ts: utcTo, type: 'state', data })
 }
