@@ -42,8 +42,8 @@ function generateDHT(opt = {}) {
   return createDHT(opt)
 }
 
-function generateRuntime() {
-  const runtime = createRuntime()
+function generateRuntime(options = {}) {
+  const runtime = createRuntime((options = {}))
   const runtimePacket = createProtocolRuntimePacket(runtime)
   return createBufferSegment(runtimePacket)
 }
@@ -156,7 +156,7 @@ function generateComplete(connectionsCount, durationSeconds, peersCount, duratio
   const utcFrom = utcTo - durationSeconds * SECOND_IN_MS
 
   const version = generateVersion()
-  const runtime = generateRuntime()
+  const runtime = generateRuntime({ stateIntervalDuration: duration })
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
 

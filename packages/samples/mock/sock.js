@@ -19,11 +19,8 @@ const {
 
 const connections = []
 const version = generateVersion()
-const runtime = generateRuntime()
 const server = http.createServer()
 const wss = new WebSocket.Server({ noServer: true })
-// let tmrMessages
-// let tmrQueueProcess
 
 const msgQueue = []
 
@@ -44,6 +41,7 @@ function generateMessages({ connectionsCount, durationSnapshot, peersCount }) {
   updateConnections(connections, connectionsCount, utcTo, durationSnapshot)
   updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version })
 
+  const runtime = generateRuntime({ stateIntervalDuration: duration })
   generateConnectionEvents({
     connections,
     msgQueue,
