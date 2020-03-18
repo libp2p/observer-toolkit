@@ -293,10 +293,12 @@ message DHT {
   google.protobuf.Timestamp start_ts  = 3;
   // params of the dht.
   Params params                       = 4;
+  // existing, intantiated buckets and their contents
+  repeated Bucket buckets             = 5;
   // counts inbound queries received from other peers
-  QueryGauge incoming_queries         = 5;
+  QueryGauge incoming_queries         = 6;
   // counts outbound queries dispatched by this peer
-  QueryGauge outgoing_queries         = 6;
+  QueryGauge outgoing_queries         = 7;
 }
 
 // Subsystems encapsulates all instrumented subsystems for a libp2p host.
