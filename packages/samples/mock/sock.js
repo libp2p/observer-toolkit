@@ -41,7 +41,7 @@ function generateMessages({ connectionsCount, peersCount }) {
   }
 
   updateConnections(connections, connectionsCount, utcTo)
-  updateDHT(dht, connections, utcFrom, utcTo)
+  updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version })
 
   generateConnectionEvents({
     connections,
@@ -60,14 +60,15 @@ function sendQueue(ws) {
   const utcNow = Date.now()
   const queue = []
   msgQueue.forEach((item, idx) => {
-    if (item.ts <= utcNow) {
-      queue.push(msgQueue.splice(idx, 1)[0])
-    }
+    queue.push(msgQueue.splice(idx, 1)[0])
   })
+
   queue
     .sort((a, b) => a.ts - b.ts)
     .forEach(item => {
-      ws.send(item.data)
+      setTimeout(() => {
+        ws.send(item.data)
+      }, Math.max(0, item.ts - utcNow))
     })
 }
 

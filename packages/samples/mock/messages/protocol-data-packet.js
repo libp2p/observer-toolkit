@@ -13,9 +13,10 @@ function createProtocolDataPacket(message, type) {
     dataPacket.setRuntime(message)
   } else if (type === 'event') {
     dataPacket.setEvent(message)
-  } else {
-    // state
+  } else if (type === 'state') {
     dataPacket.setState(message)
+  } else {
+    throw new Error(`Unrecognised packet type "${type}"`)
   }
 
   return dataPacket

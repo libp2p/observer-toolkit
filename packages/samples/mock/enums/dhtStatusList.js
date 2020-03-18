@@ -9,13 +9,4 @@ const dhtStatusList = new EnumWithFrequency([
   [3, 'EJECTED', 4],
 ])
 
-const _inBucket = [
-  dhtStatusList.getNum('ACTIVE'),
-  dhtStatusList.getNum('MISSING'),
-]
-
-function presentInBuckets(statusNum) {
-  return _inBucket.includes(statusNum)
-}
-
-module.exports = { dhtStatusList, presentInBuckets }
+module.exports = { dhtStatusList }

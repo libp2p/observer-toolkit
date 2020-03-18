@@ -9,7 +9,7 @@ const {
   createTimestamp,
 } = require('../utils')
 const { protocolList } = require('../enums/protocolList')
-const { dhtStatusList, presentInBuckets } = require('../enums/dhtStatusList')
+const { dhtStatusList } = require('../enums/dhtStatusList')
 const { statusList } = require('../enums/statusList')
 const { createQueries } = require('./dht-queries')
 const {
@@ -17,9 +17,7 @@ const {
 } = require('@libp2p-observer/proto')
 const { getKademliaDistance } = require('@libp2p-observer/data')
 
-const BUCKET_MOVE_PROBABILITY = 1 / 50
 const PEER_ADD_REMOVE_PROBABILITY = 1 / 40
-const MAX_BUCKETS = 256
 
 function randomPeerAddRemove(divider = 1) {
   return random() <= PEER_ADD_REMOVE_PROBABILITY / divider
@@ -28,14 +26,14 @@ function randomPeerAddRemove(divider = 1) {
 function getCurrentBucketPeers(bucket) {
   const inBucketStatuses = ['ACTIVE', 'MISSING']
   return bucket
-    .getPeerList()
+    .getPeersList()
     .filter(peer =>
       inBucketStatuses.includes(dhtStatusList.getItem(peer.getStatus()))
     )
 }
 
 function removePeerFromBucket(peer, bucket) {
-  const peerList = bucket.getPeerInDhtList()
+  const peerList = bucket.getPeersList()
   const peerIndex = peerList.findIndex(
     ({ getPeerId }) => getPeerId() === peer.getPeerId()
   )
@@ -87,15 +85,16 @@ function createDHT({
   dht.setProtocol(proto)
   dht.setEnabled(enabled)
   dht.setStartTs(createTimestamp(startTs))
-  dht.addBucket({ distance: 0 })
+
+  // Start with just the "catch-all" zero-distance bucket then unfold as needed
+  const bucketZero = [0, createPeersInDHT({ peerIds, peersCount, connections })]
+  dht.addBuckets(new DHT.Bucket(bucketZero))
 
   const params = new DHT.Params()
   params.setK(k)
   params.setAlpha(alpha)
   params.setDisjointPaths(disjointPaths)
   dht.setParams(params)
-  const peers = createPeersInDHT({ peerIds, peersCount, connections })
-  dht.setPeerInDhtList(peers)
 
   return dht
 }
@@ -129,42 +128,41 @@ function updatePeersInDHT(peers, connections, dht) {
   // If any active connection peer IDs aren't found in DHT, add peers for them
   activeConnPeerIds.forEach(peerId => {
     const newPeer = createPeerInDHT({ peerId })
-    dht.addPeerInDht(newPeer)
+    dht.getBucketsList()[0].addPeers(newPeer)
   })
 }
 
-function updateDHT(dht, connections, utcFrom, utcTo) {
-  const peers = dht.getPeerInDhtList()
+function updateDHT({
+  dht,
+  connections,
+  utcFrom,
+  utcTo,
+  msgQueue,
+  msgBuffers,
+  version,
+}) {
+  const peers = dht
+    .getBucketsList()
+    .reduce((peers, bucket) => [...peers, ...bucket.getPeersList()], [])
+
   updatePeersInDHT(peers, connections, dht)
-  dht.setPeerInDhtList(peers)
 
   validateBucketSizes(dht)
 
-  const queries = createQueries({ dht, utcFrom, utcTo })
-  dht.setQueryList(queries)
+  const isLiveWebsocket = !!msgQueue
+  const msgTarget = isLiveWebsocket ? msgQueue : msgBuffers
+  const queries = createQueries({
+    dht,
+    utcFrom,
+    utcTo,
+    isLiveWebsocket,
+    version,
+  })
 
-  // Helpful for debugging bucket allocation:
-  /*
-  console.log(
-    'Peer bucket allocation:',
-    dht.getPeerInDhtList().length,
-    dht.getPeerInDhtList().reduce((oldBuckets, peer) => {
-      const newBuckets = { ...oldBuckets }
-      const bucketIndex = peer.getBucket()
-      if (typeof bucketIndex === 'number') {
-        if (typeof newBuckets[bucketIndex] === 'number') {
-          newBuckets[bucketIndex] += 1
-        } else {
-          newBuckets[bucketIndex] = 1
-        }
-      }
-      return newBuckets
-    }, {})
-  )
-  */
+  queries.forEach(event => msgTarget.push(event))
 }
 
-function validateBucketSizes(dht, buckets = dht.getBucketList()) {
+function validateBucketSizes(dht, buckets = dht.getBucketsList()) {
   const k = dht.getParams().getK()
 
   const overflowingBuckets = buckets.filter(
@@ -177,27 +175,35 @@ function validateBucketSizes(dht, buckets = dht.getBucketList()) {
 function fixOverflowingBucket(bucket, dht) {
   const k = dht.getParams().getK()
 
-  while (bucket.getPeerInDhtList().length > k) {
+  while (bucket.getPeersList().length > k) {
+    const peersInBucket = bucket.getPeersList()
     const randomPeerIndex = Math.floor(random() * peersInBucket.length)
-    const randomPeer = bucket.getPeerInDhtList()[randomPeerIndex]
+    const randomPeer = bucket.getPeersList()[randomPeerIndex]
 
     if (bucket.getDistance() === 0) {
       // Move from 'catch-all' bucket to allocated bucket by distance
       const distance =
         getKademliaDistance(randomPeer.getPeerId(), HOST_PEER_ID) || 1
 
-      const newBucket = dht
-        .getBucketList()
-        .find(({ getDistance }) => getDistance() === distance)
+      const newBucket = getOrCreateBucket(dht, distance)
 
       removePeerFromBucket(randomPeer, bucket)
-      newBucket.addPeerInDht(randomPeer)
+      newBucket.addPeers(randomPeer)
 
+      // Fix newBucket if it now overflows
       validateBucketSizes(dht, [newBucket])
     } else {
       ejectPeer(randomPeer)
     }
   }
+}
+
+function getOrCreateBucket(dht, distance) {
+  const existingBucket = dht
+    .getBucketsList()
+    .find(({ getDistance }) => getDistance() === distance)
+
+  return existingBucket || dht.addBuckets(new DHT.Bucket([distance]))
 }
 
 function ejectPeer(peer) {

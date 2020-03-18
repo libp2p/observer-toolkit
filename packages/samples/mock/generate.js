@@ -123,7 +123,13 @@ function generateActivity({
     const eventBuffers = events.map(({ event }) => event)
     msgBuffers = [...msgBuffers, ...eventBuffers]
 
-    updateDHT(dht, connections, intervalStart, intervalEnd)
+    updateDHT({
+      dht,
+      connections,
+      utcFrom: intervalStart,
+      utcTo: intervalEnd,
+      msgBuffers,
+    })
     msgBuffers.push(generateState(connections, intervalEnd, dht))
   }
   return msgBuffers

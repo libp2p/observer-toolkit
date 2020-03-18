@@ -5,16 +5,14 @@ const {
   randomNormalDistribution,
   generateHashId,
   mapArray,
-  createTimestamp,
 } = require('../utils')
+const { generateEvent } = require('./events')
 const { dhtStatusList } = require('../enums/dhtStatusList')
 const { dhtQueryDirectionList } = require('../enums/dhtQueryDirectionList')
+const { dhtQueryResultList } = require('../enums/dhtQueryResultList')
+const { dhtQueryTriggerList } = require('../enums/dhtQueryTriggerList')
+const { dhtQueryTypeList } = require('../enums/dhtQueryTypeList')
 
-const {
-  proto: { DHT },
-} = require('@libp2p-observer/proto')
-
-const INBOUND_PROBABILITY = 1 / 2
 const THIS_PEER_PROBABILITY = 1 / 10
 
 function randomQueryPeersCount() {
@@ -31,7 +29,7 @@ function randomQueryCount(activePeerCount) {
   const num = Math.round(
     randomNormalDistribution({
       min: 0,
-      max: activePeerCount * 3,
+      max: activePeerCount * 2,
       skew: 1,
     })
   )
@@ -47,6 +45,10 @@ function randomQueryCount(activePeerCount) {
 
 function randomQuerySentTime(utcTo, utcFrom) {
   const interval = utcTo - utcFrom
+  if (!interval)
+    throw new Error(
+      `Invalid interval of ${interval} ms (from ${utcFrom} to ${utcTo})`
+    )
   return Math.round(utcFrom + random() * interval)
 }
 
@@ -69,29 +71,6 @@ function createQueryPeerIds({ peersCount = randomQueryPeersCount() } = {}) {
   return mapArray(Math.round(peersCount), generateHashId)
 }
 
-function randomQueryResult() {
-  const results = [
-    DHT.Query.Result.SUCCESS,
-    DHT.Query.Result.ERROR,
-    DHT.Query.Result.TIMEOUT,
-    DHT.Query.Result.PENDING,
-  ]
-  const idx = Math.round(
-    randomNormalDistribution({
-      min: 0,
-      max: 3,
-      skew: 1.5,
-    })
-  )
-  return results[idx]
-}
-
-function randomQueryTrigger() {
-  const results = [DHT.Query.Trigger.API, DHT.Query.Trigger.DISCOVERY]
-  const i = Math.floor(Math.random() * results.length)
-  return results[i]
-}
-
 function randomQueryTime() {
   return Math.round(
     randomNormalDistribution({
@@ -112,48 +91,62 @@ function randomQueryTotalSteps() {
   )
 }
 
-function randomQueryType() {
-  const results = [
-    DHT.Query.Type.CONTENT,
-    DHT.Query.Type.PROVIDER,
-    DHT.Query.Type.VALUE,
-  ]
-  const i = Math.floor(Math.random() * results.length)
-  return results[i]
-}
-
 function createQuery({
-  direction,
-  peerIds,
   utcTo,
   utcFrom,
+  direction,
+  peerIds,
   queryId = generateHashId(),
   targetPeerId = generateHashId(),
   totalTimeMs = randomQueryTime(),
   totalSteps = randomQueryTotalSteps(),
-  trigger = randomQueryTrigger(),
-  type = randomQueryType(),
-  result = randomQueryResult(),
-  sentTs,
+  trigger = dhtQueryTriggerList.getRandom(1),
+  type = dhtQueryTypeList.getRandom(1),
+  result = dhtQueryResultList.getRandom(1),
+  sentTs = randomQuerySentTime(utcTo, utcFrom),
+  isLiveWebsocket = false,
+  version = null,
 } = {}) {
-  const query = new DHT.Query()
-  query.setId(queryId)
-  query.setDirection(direction)
-  query.setTargetPeerId(targetPeerId)
-  query.setTotalTimeMs(totalTimeMs)
-  query.setTotalSteps(totalSteps)
-  query.setPeerIdsList(peerIds)
+  const queryJSON = {
+    direction: dhtQueryDirectionList.getItem(direction),
+    peerIds,
+    queryId,
+    targetPeerId,
+    totalTimeMs,
+    totalSteps,
+    trigger,
+    type,
+    result,
+  }
 
-  query.setTrigger(trigger)
-  query.setType(type)
-  query.setResult(result)
+  const eventPacket = generateEvent({
+    now: sentTs,
+    type: getEventType(direction),
+    content: queryJSON,
+  })
 
-  const randomTs = randomQuerySentTime(utcTo, utcFrom)
-  query.setSentTs(createTimestamp(sentTs || randomTs))
-  return query
+  return isLiveWebsocket
+    ? {
+        ts: sentTs,
+        type: 'event',
+        data: Buffer.concat([version, eventPacket]).toString('binary'),
+        event: eventPacket,
+      }
+    : eventPacket
 }
 
-function createInboundQuery(activeDhtPeers, { ownPeerId, utcTo, utcFrom }) {
+function getEventType(type) {
+  switch (dhtQueryDirectionList.getItem(type)) {
+    case 'INBOUND':
+      return 'InboundDHTQuery'
+    case 'OUTBOUND':
+      return 'OutboundDHTQuery'
+    default:
+      throw new Error(`Unrecognised event type ${type}`)
+  }
+}
+
+function createInboundQuery(activeDhtPeers, { ownPeerId, ...props }) {
   const targetsThisPeer = random() <= THIS_PEER_PROBABILITY
   const peerIds = targetsThisPeer
     ? [...createQueryPeerIds(), randomDhtPeerId(activeDhtPeers)]
@@ -163,12 +156,11 @@ function createInboundQuery(activeDhtPeers, { ownPeerId, utcTo, utcFrom }) {
     targetPeerId: targetsThisPeer ? ownPeerId : generateHashId(),
     direction: dhtQueryDirectionList.getNum('INBOUND'),
     peerIds,
-    utcTo,
-    utcFrom,
+    ...props,
   })
 }
 
-function createOutboundQuery(activeDhtPeers, { ownPeerId, utcTo, utcFrom }) {
+function createOutboundQuery(activeDhtPeers, { ownPeerId, ...props }) {
   const fromThisPeer = random() <= THIS_PEER_PROBABILITY
   const peerIds = fromThisPeer
     ? [randomDhtPeerId(activeDhtPeers), ...createQueryPeerIds()]
@@ -177,21 +169,24 @@ function createOutboundQuery(activeDhtPeers, { ownPeerId, utcTo, utcFrom }) {
   return createQuery({
     direction: dhtQueryDirectionList.getNum('OUTBOUND'),
     peerIds,
-    utcTo,
-    utcFrom,
+    ...props,
   })
 }
 
 function createQueries({ dht, ...props }) {
-  const activeDhtPeers = dht
-    .getPeerInDhtList()
-    .filter(peer => peer.getStatus() === dhtStatusList.getNum('ACTIVE'))
+  const peers = dht
+    .getBucketsList()
+    .reduce((peers, bucket) => [...peers, ...bucket.getPeersList()], [])
+  const activeDhtPeers = peers.filter(
+    peer => peer.getStatus() === dhtStatusList.getNum('ACTIVE')
+  )
   const queryCount = randomQueryCount(activeDhtPeers.length)
 
   const createRandomQuery = () =>
-    random() <= INBOUND_PROBABILITY
+    dhtQueryDirectionList.getRandom(1) === 'INBOUND'
       ? createInboundQuery(activeDhtPeers, props)
       : createOutboundQuery(activeDhtPeers, props)
+
   return Array(queryCount)
     .fill()
     .map(createRandomQuery)
@@ -199,5 +194,4 @@ function createQueries({ dht, ...props }) {
 
 module.exports = {
   createQueries,
-  // Might need an 'updateQueries' fn if "pending" status is confirmed and needs mocking
 }
