@@ -372,6 +372,6 @@ message ClientSignal {
   Signal signal             = 2;
   // Correlated DataSource for this signal (if any)
   DataSource data_source    = 3;
-  // JSON stringified content to be sent to the emitter
+  // Optional: JSON stringified content to be sent to the emitter
   string content            = 4;
 }

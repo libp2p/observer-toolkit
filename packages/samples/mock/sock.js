@@ -74,40 +74,66 @@ function sendQueue(ws) {
     })
 }
 
-function handleClientMessage(ws, msg) {
+function handleClientMessage(client, server, msg) {
   // check client signal
   if (msg) {
     const clientSignal = ClientSignal.deserializeBinary(msg)
     const signal = clientSignal.getSignal()
     if (signal === ClientSignal.Signal.SEND_DATA) {
-      sendQueue(ws)
+      sendQueue(client)
     } else if (
       signal === ClientSignal.Signal.START_PUSH_EMITTER ||
       signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
     ) {
       // TODO: implement unpause/start diff of timer emitter
       setInterval(() => {
-        sendQueue(ws)
+        sendQueue(client)
       }, 200)
     } else if (
       signal === ClientSignal.Signal.STOP_PUSH_EMITTER ||
       signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER
     ) {
       // TODO: implement pause/stop of timer emitter
+    } else if (signal === ClientSignal.Signal.CONFIG_EMITTER) {
+      try {
+        const content = JSON.parse(clientSignal.getContent())
+        if (content.durationSnapshot) {
+          clearInterval(server.generator)
+          server.generator = setInterval(() => {
+            generateMessages({
+              connectionsCount: server.connectionsCount,
+              duration: content.durationSnapshot,
+            })
+          }, content.durationSnapshot)
+        }
+      } catch (error) {
+        // ..
+      }
     }
   }
 }
 
 function start({ connectionsCount = 0, duration = DEFAULT_SNAPSHOT_DURATION, peersCount } = {}) {
   // generate states
-  setInterval(() => {
+  wss.connectionsCount = connectionsCount
+  wss.generator = setInterval(() => {
     generateMessages({ connectionsCount, peersCount, duration })
   }, duration)
 
   // handle messages
   wss.on('connection', ws => {
+    // allow only 1 client connection, it's just a mock server
+    wss.clients.forEach(client => {
+      if (client !== ws) {
+        console.error(
+          'Closing previous connection! Only 1 allowed for mock server.'
+        )
+        client.close()
+      }
+    })
+    // handle incoming messages
     ws.on('message', msg => {
-      handleClientMessage(ws, msg)
+      handleClientMessage(ws, wss, msg)
     })
   })
 
