@@ -11,14 +11,13 @@ const {
 } = require('./messages/connections')
 const { createDHT, updateDHT } = require('./messages/dht')
 const {
-  createEvent,
   getPeerDisconnectingProps,
   getPeerConnectingProps,
+  generateEvent,
 } = require('./messages/events')
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
 const {
-  createProtocolEventPacket,
   createProtocolRuntimePacket,
   createProtocolStatePacket,
 } = require('./messages/protocol-data-packet')
@@ -55,12 +54,6 @@ function updateConnections(connections, total, now) {
     addStreamsToConnection(connection, { now, secondsOpen: random() })
     connections.push(connection)
   }
-}
-
-function generateEvent({ now = Date.now(), type = '', content = {} } = {}) {
-  const event = createEvent({ now, type, content })
-  const eventPacket = createProtocolEventPacket(event)
-  return createBufferSegment(eventPacket)
 }
 
 function generateConnectionEvents({
