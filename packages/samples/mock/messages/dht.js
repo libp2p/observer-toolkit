@@ -33,11 +33,18 @@ function getCurrentBucketPeers(bucket) {
 }
 
 function removePeerFromBucket(peer, bucket) {
+  const peerId = peer.getPeerId()
   const peerList = bucket.getPeersList()
-  const peerIndex = peerList.findIndex(
-    ({ getPeerId }) => getPeerId() === peer.getPeerId()
-  )
+  const peerIndex = peerList.findIndex(_peer => _peer.getPeerId() === peerId)
+
+  if (peerIndex < 0) {
+    throw new Error(
+      `Delete failed: bucket ${bucket.getDistance()} does not contain peer ${peerId}`
+    )
+  }
+
   peerList.splice(peerIndex, 1)
+  bucket.setPeersList(peerList)
   return peerList
 }
 
@@ -119,20 +126,18 @@ function updatePeersInDHT(peers, connections, dht) {
   const activeConnPeerIds = getActiveConnectionPeerIds(connections)
 
   peers.forEach(dhtPeer => {
-    const peerId = dhtPeer.getPeerId()
     const connection = connections.find(
       conn => conn.getPeerId() === dhtPeer.getPeerId()
     )
     updatePeerInDHT(dhtPeer, connection)
-
-    const activeConnIndex = activeConnPeerIds.indexOf(peerId)
-    if (activeConnIndex !== -1) activeConnPeerIds.splice(activeConnIndex, 1)
   })
 
   // If any active connection peer IDs aren't found in DHT, add peers for them
   activeConnPeerIds.forEach(peerId => {
-    const newPeer = createPeerInDHT({ peerId })
-    dht.getBucketsList()[0].addPeers(newPeer)
+    if (!peers.find(peer => peer.getPeerId() === peerId)) {
+      const newPeer = createPeerInDHT({ peerId })
+      dht.getBucketsList()[0].addPeers(newPeer)
+    }
   })
 }
 
@@ -179,10 +184,10 @@ function validateBucketSizes(dht, buckets = dht.getBucketsList()) {
 function fixOverflowingBucket(bucket, dht) {
   const k = dht.getParams().getK()
 
-  while (bucket.getPeersList().length > k) {
-    const peersInBucket = bucket.getPeersList()
+  while (getCurrentBucketPeers(bucket).length > k) {
+    const peersInBucket = getCurrentBucketPeers(bucket)
     const randomPeerIndex = Math.floor(random() * peersInBucket.length)
-    const randomPeer = bucket.getPeersList()[randomPeerIndex]
+    const randomPeer = peersInBucket[randomPeerIndex]
 
     if (bucket.getDistance() === 0) {
       // Move from 'catch-all' bucket to allocated bucket by distance
@@ -230,7 +235,7 @@ function updatePeerStatus(peer, connection) {
       dhtStatusList.getNum(peerStatusName === 'ACTIVE' ? 'MISSING' : 'ACTIVE')
     )
   } else if (randomPeerAddRemove(30)) {
-    peer.setStatus(dhtStatusList.getNum('DISCONNECTED'))
+    peer.setStatus(dhtStatusList.getNum('REJECTED'))
   }
 }
 
@@ -238,7 +243,7 @@ function setPeerStatusByConnection(peer, connection) {
   const connStatusName = statusList.getItem(connection.getStatus())
   const connectionIsActive =
     connStatusName === 'ACTIVE' || connStatusName === 'OPENING'
-  const peerStatusName = connectionIsActive ? 'ACTIVE' : 'DISCONNECTED'
+  const peerStatusName = connectionIsActive ? 'ACTIVE' : 'MISSING'
   peer.setStatus(dhtStatusList.getNum(peerStatusName))
 }
 
