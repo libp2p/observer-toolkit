@@ -118,7 +118,7 @@ test('DHT query timestamps and peer IDs correspond to this state snapshot.', t =
         ...getDhtPeers(previousState).map(peer => peer.getPeerId()),
       ]
 
-      const peerLists = queries.map(query => query.getPeerIdsList())
+      const peerLists = queries.map(query => query.peerIds)
 
       const invalidPeerLists = peerLists.filter(peerList => {
         return !potentialQueryPeerIds.some(peerId => peerList.includes(peerId))

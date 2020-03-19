@@ -7,18 +7,13 @@ import { renderWithData } from '@libp2p-observer/testing'
 import useDhtQueries from './useDhtQueries'
 
 function isQueryPresent(query, queriesByPeerId) {
-  return query.getPeerIdsList().some(peerId => {
+  return query.peerIds.some(peerId => {
     if (!queriesByPeerId[peerId]) return false
 
     const directionName = query.direction
     const directionalQueries = queriesByPeerId[peerId][directionName]
 
-    return directionalQueries.some(hookQuery => {
-      if (hookQuery.start !== query.sentTs) return false
-
-      if (hookQuery.duration !== query.totalTimeMs) return false
-      return true
-    })
+    return directionalQueries.some(({ queryId }) => queryId === query.queryId)
   })
 }
 

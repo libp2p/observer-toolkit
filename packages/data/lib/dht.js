@@ -92,7 +92,7 @@ function getDhtQueries(events, { state, ...options } = {}) {
 
     const content = getDhtQueryEventContent(event)
     // Optional filter by direction
-    if (options.direction && content.direction === options.direction)
+    if (options.direction && content.direction !== options.direction)
       return queries
 
     // Optional filter by result

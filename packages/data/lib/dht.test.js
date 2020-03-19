@@ -141,17 +141,11 @@ describe('DHT data helpers', () => {
       )
 
       expect(
-        resultsAndDirections.filter(
-          ({ result }) =>
-            result !== getEnumByName('SUCCESS', dhtQueryResultNames)
-        )
+        resultsAndDirections.filter(({ result }) => result !== 'SUCCESS')
       ).toHaveLength(0)
 
       expect(
-        resultsAndDirections.filter(
-          ({ direction }) =>
-            direction !== getEnumByName('INBOUND', dhtQueryDirectionNames)
-        )
+        resultsAndDirections.filter(({ direction }) => direction !== 'INBOUND')
       ).toHaveLength(0)
     }
 
