@@ -26,17 +26,17 @@ function DhtBuckets({ children }) {
   return (
     <Container>
       <DhtColumn
-        peers={catchAllBucketPeers}
+        peers={catchAllBucketPeers.getPeersList()}
         timestamp={timestamp}
         bucketNum={0}
         key={`bucket_0`}
         title="0 — Catch-all"
       />
-      {Object.entries(numberedBucketPeers).map(([bucketStr, peers]) => (
+      {Object.entries(numberedBucketPeers).map(([bucketStr, bucket]) => (
         <DhtColumn
-          peers={peers}
+          peers={bucket.getPeersList()}
           timestamp={timestamp}
-          bucketNum={Number(bucketStr)}
+          bucketNum={bucket.getDistance()}
           key={`bucket_${bucketStr}`}
         />
       ))}

@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const { runtime, states } = require('./fixtures/generate')
+const { runtime, states, events } = require('./fixtures/generate')
 
 const {
   getConnections,
@@ -9,6 +9,7 @@ const {
   getEnumByName,
   getDhtStatus,
   getAllDhtBuckets,
+  getDhtPeersInBucket,
   getStateTimes,
   getDhtQueries,
   getDhtQueryTimes,
@@ -58,7 +59,9 @@ test('Allocation of DHT peers to buckets is correct.', t => {
     const allBuckets = getAllDhtBuckets(state)
     const foundPeers = new Set()
 
-    for (const [bucketNum, peersInBucket] of Object.entries(allBuckets)) {
+    for (const [bucketNum, bucket] of Object.entries(allBuckets)) {
+      const peersInBucket = getDhtPeersInBucket(bucket)
+
       // Correct number of peers per bucket
       t.ok(
         peersInBucket.length <= k,
@@ -93,7 +96,8 @@ test('DHT query timestamps and peer IDs correspond to this state snapshot.', t =
 
   states.forEach((state, i) => {
     const { start, end } = getStateTimes(state)
-    const queries = getDhtQueries(state)
+
+    const queries = getDhtQueries(events, { state })
 
     // Check all queries are from this state's time interval
     const invalidTimes = queries

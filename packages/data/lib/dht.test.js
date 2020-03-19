@@ -4,6 +4,7 @@ import {
   getDhtQueries,
   getDhtPeers,
   getDhtBucket,
+  getDhtPeersInBucket,
   getAllDhtBuckets,
   getDhtStatus,
   getKademliaDistance,
@@ -16,8 +17,10 @@ import {
   getEnumByName,
 } from './enums'
 
+import { getStateTimes } from './states'
+
 const {
-  data: { states },
+  data: { states, events },
 } = loadSample()
 
 function peerIdSet(peersArray) {
@@ -73,41 +76,55 @@ describe('DHT data helpers', () => {
   })
 
   it('gets DHT peers by buckets', () => {
-    let currentBucketNum = 0
     const maxBucketNum = 255
 
-    // Invalid bucket => no array
-    expect(() => getDhtBucket(maxBucketNum + 1, states[0])).toThrow()
+    const invalidBucketNum = maxBucketNum + 1
+    expect(getDhtBucket(invalidBucketNum, states[0])).toBeFalsy()
 
     const allBuckets = getAllDhtBuckets(states[0])
+    const allPeerIdsInBuckets = new Set()
+    const duplicatedPeers = []
 
     // Every peer should appear exactly once
-    while (currentBucketNum <= maxBucketNum) {
-      const peersInBucket = getDhtBucket(currentBucketNum, states[0])
+    allBuckets.forEach(bucket => {
+      const peersInBucket = getDhtPeersInBucket(bucket, states[0])
+      peersInBucket.forEach(peer => {
+        const peerId = peer.getPeerId()
 
-      if (peersInBucket.length) {
-        expect(peerIdSet(allBuckets[currentBucketNum])).toEqual(
-          peerIdSet(peersInBucket)
-        )
-      } else {
-        expect(allBuckets[currentBucketNum]).toBeFalsy()
-      }
+        if (allPeerIdsInBuckets.has(peerId)) {
+          duplicatedPeers.push({
+            bucket: bucket.getDistance(),
+            peerId,
+          })
+        }
+        allPeerIdsInBuckets.add(peerId)
+      })
+    })
+    expect(duplicatedPeers).toEqual([])
 
-      currentBucketNum++
-    }
     const presentPeers = getDhtPeers(states[0], 'present')
-
-    const allPeersInBuckets = Object.values(
-      allBuckets
-    ).reduce((peers, bucketPeers) => [...peers, ...bucketPeers])
-
-    expect(peerIdSet(allPeersInBuckets)).toEqual(peerIdSet(presentPeers))
+    expect(allPeerIdsInBuckets).toEqual(peerIdSet(presentPeers))
   })
 
   it('gets current DHT queries with optional filters', () => {
+    const allQueriesFromAllStates = getDhtQueries(events)
+    const allQueriesAccumulated = new Set()
+    const duplicatedQueries = []
+
     for (const state of states) {
-      const allQueries = getDhtQueries(state)
-      const inboundSuccessQueries = getDhtQueries(state, {
+      const allQueries = getDhtQueries(events, { state })
+      allQueries.forEach(query => {
+        if (allQueriesAccumulated.has(query)) {
+          duplicatedQueries.push({
+            stateTimes: getStateTimes(state),
+            query,
+          })
+        }
+        allQueriesAccumulated.add(query)
+      })
+
+      const inboundSuccessQueries = getDhtQueries(events, {
+        state,
         result: 'SUCCESS',
         direction: 'INBOUND',
       })
@@ -116,10 +133,12 @@ describe('DHT data helpers', () => {
         inboundSuccessQueries.length
       )
 
-      const resultsAndDirections = inboundSuccessQueries.map(query => ({
-        result: query.getResult(),
-        direction: query.getDirection(),
-      }))
+      const resultsAndDirections = inboundSuccessQueries.map(
+        ({ result, direction }) => ({
+          result,
+          direction,
+        })
+      )
 
       expect(
         resultsAndDirections.filter(
@@ -135,6 +154,10 @@ describe('DHT data helpers', () => {
         )
       ).toHaveLength(0)
     }
+
+    expect(allQueriesFromAllStates.length).toBeGreaterThan(0)
+    expect(duplicatedQueries).toEqual([])
+    expect(allQueriesAccumulated).toEqual(new Set(allQueriesFromAllStates))
   })
 
   it('Calculates Kademlia distance correctly', () => {

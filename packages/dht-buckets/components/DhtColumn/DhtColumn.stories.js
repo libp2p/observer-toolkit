@@ -3,13 +3,13 @@ import T from 'prop-types'
 import { storiesOf } from '@storybook/react'
 
 import { TimeContext } from '@libp2p-observer/sdk'
-import { getDhtBucket, getTime } from '@libp2p-observer/data'
+import { getDhtBucketPeers, getTime } from '@libp2p-observer/data'
 
 import DhtColumn from './DhtColumn'
 
 function DhtColumnFixture({ bucketNum, title }) {
   const currentState = useContext(TimeContext)
-  const peers = getDhtBucket(bucketNum, currentState)
+  const peers = getDhtBucketPeers(bucketNum, currentState)
   const timestamp = getTime(currentState)
 
   return (

@@ -45,8 +45,7 @@ function generateRuntime() {
 
 function updateConnections(connections, total, now) {
   connections.forEach(connection => updateConnection(connection, now))
-  // ensure initial connections === connectionsCount at first iteration
-  if (total !== null && randomOpenClose(total)) {
+  if (randomOpenClose(total)) {
     // open a new connection
     const connection = createConnection({
       status: statusList.getNum('OPENING'),
@@ -103,8 +102,9 @@ function generateActivity({
     const intervalEnd = utcFrom + state * 1000
     const intervalStart = intervalEnd - 1000
 
-    const connCount = state !== 1 ? connectionsCount : null
-    updateConnections(connections, connCount, intervalEnd)
+    // At first iteration, ensure initial connections count === connectionsCount
+    if (state !== 1)
+      updateConnections(connections, connectionsCount, intervalEnd)
 
     const events = generateConnectionEvents({
       connections,

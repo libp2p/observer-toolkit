@@ -26,16 +26,16 @@ function paintQueryGlows({
   const currentTime = stateStartTime + msSinceRender
 
   const activeQueries = queries.filter(
-    ({ start: queryTime }) =>
-      queryTime <= currentTime && currentTime - queryTime <= glowDuration
+    ({ sentTs }) =>
+      sentTs <= currentTime && currentTime - sentTs <= glowDuration
   )
 
   paintResidualGlow(queries, currentTime, canvasContext, direction, theme)
 
   if (!activeQueries.length) return false
 
-  activeQueries.forEach(({ start: queryTime }) =>
-    paintActiveGlow(currentTime - queryTime, canvasContext, direction, theme)
+  activeQueries.forEach(({ sentTs }) =>
+    paintActiveGlow(currentTime - sentTs, canvasContext, direction, theme)
   )
 
   return true
@@ -49,9 +49,9 @@ function paintResidualGlow(
   theme
 ) {
   const { filtered, total, totalWeighted } = queries.reduce(
-    (obj, { start: queryTime }) => {
-      const timeSinceQuery = currentTime - queryTime
-      if (queryTime + glowDuration > currentTime || timeSinceQuery > cutoff)
+    (obj, { sentTs }) => {
+      const timeSinceQuery = currentTime - sentTs
+      if (sentTs + glowDuration > currentTime || timeSinceQuery > cutoff)
         return obj
       return {
         filtered: [...obj.filtered, timeSinceQuery],
@@ -70,6 +70,14 @@ function paintResidualGlow(
 
   const meanTimeSinceQuery = filtered.length ? total / filtered.length : 0
   const midStopPosition = meanTimeSinceQuery / cutoff
+
+  console.log({
+    meanTimeSinceQuery,
+    midStopPosition,
+    filtered,
+    total,
+    totalWeighted,
+  })
 
   const maxWeightedTotal = 10 // An arbitray figure for the max opacity
   const opacity = Math.min(1, Math.sqrt(totalWeighted / maxWeightedTotal))

@@ -87,7 +87,11 @@ function createDHT({
   dht.setStartTs(createTimestamp(startTs))
 
   // Start with just the "catch-all" zero-distance bucket then unfold as needed
-  const bucketZero = [0, createPeersInDHT({ peerIds, peersCount, connections })]
+  const bucketZero = new DHT.Bucket()
+  bucketZero.setDistance(0)
+  bucketZero.setPeersList(
+    createPeersInDHT({ peerIds, peersCount, connections })
+  )
   dht.addBuckets(new DHT.Bucket(bucketZero))
 
   const params = new DHT.Params()

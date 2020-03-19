@@ -29,7 +29,7 @@ function randomQueryCount(activePeerCount) {
   const num = Math.round(
     randomNormalDistribution({
       min: 0,
-      max: activePeerCount * 2,
+      max: activePeerCount * 3,
       skew: 1,
     })
   )
