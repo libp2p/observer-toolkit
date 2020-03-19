@@ -10,12 +10,7 @@ import {
   getKademliaDistance,
 } from './dht'
 
-import {
-  dhtQueryDirectionNames,
-  dhtQueryResultNames,
-  dhtStatusNames,
-  getEnumByName,
-} from './enums'
+import { dhtStatusNames, getEnumByName } from './enums'
 
 import { getStateTimes } from './states'
 
