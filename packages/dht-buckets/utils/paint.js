@@ -71,14 +71,6 @@ function paintResidualGlow(
   const meanTimeSinceQuery = filtered.length ? total / filtered.length : 0
   const midStopPosition = meanTimeSinceQuery / cutoff
 
-  console.log({
-    meanTimeSinceQuery,
-    midStopPosition,
-    filtered,
-    total,
-    totalWeighted,
-  })
-
   const maxWeightedTotal = 10 // An arbitray figure for the max opacity
   const opacity = Math.min(1, Math.sqrt(totalWeighted / maxWeightedTotal))
 
