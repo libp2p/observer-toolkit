@@ -89,10 +89,10 @@ function createDHT({
   // Start with just the "catch-all" zero-distance bucket then unfold as needed
   const bucketZero = new DHT.Bucket()
   bucketZero.setDistance(0)
-  bucketZero.setPeersList(
-    createPeersInDHT({ peerIds, peersCount, connections })
-  )
-  dht.addBuckets(new DHT.Bucket(bucketZero))
+
+  const peersList = createPeersInDHT({ peerIds, peersCount, connections })
+  bucketZero.setPeersList(peersList)
+  dht.addBuckets(bucketZero)
 
   const params = new DHT.Params()
   params.setK(k)
@@ -205,7 +205,7 @@ function fixOverflowingBucket(bucket, dht) {
 function getOrCreateBucket(dht, distance) {
   const existingBucket = dht
     .getBucketsList()
-    .find(({ getDistance }) => getDistance() === distance)
+    .find(bucket => bucket.getDistance() === distance)
 
   return existingBucket || dht.addBuckets(new DHT.Bucket([distance]))
 }

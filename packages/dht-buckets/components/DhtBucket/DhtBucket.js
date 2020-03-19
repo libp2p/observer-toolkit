@@ -37,10 +37,16 @@ function DhtBucket({
   setSelectedPeer,
 }) {
   const emptySlots = bucketCapacity - peers.length
+  if (emptySlots < 0) {
+    console.warn(
+      `Invalid data recieved: ${peers.length} peers in bucket ${bucketNum} with capacity ${bucketCapacity}`
+    )
+  }
+  const validatedEmptySlots = Math.max(0, emptySlots)
 
   const isBucket0 = bucketNum === 0
 
-  const slots = [...peers, ...Array(emptySlots)]
+  const slots = [...peers, ...Array(validatedEmptySlots)]
 
   const bkgColorIndex = isBucket0 ? 2 : 3
 
