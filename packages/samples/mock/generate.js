@@ -5,6 +5,7 @@ const {
   SECOND_IN_MS,
   random,
   randomOpenClose,
+  generateHashId,
 } = require('./utils')
 
 const { createBufferSegment } = require('../output/binary')
@@ -42,8 +43,12 @@ function generateDHT(opt = {}) {
   return createDHT(opt)
 }
 
+function generatePeerId() {
+  return generateHashId()
+}
+
 function generateRuntime(options = {}) {
-  const runtime = createRuntime((options = {}))
+  const runtime = createRuntime(options)
   const runtimePacket = createProtocolRuntimePacket(runtime)
   return createBufferSegment(runtimePacket)
 }
@@ -183,6 +188,7 @@ module.exports = {
   generateConnectionEvents,
   generateDHT,
   generateEvent,
+  generatePeerId,
   generateRuntime,
   generateState,
   generateActivity,

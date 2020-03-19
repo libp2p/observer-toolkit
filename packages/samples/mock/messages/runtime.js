@@ -4,15 +4,17 @@ const {
   proto: { Runtime },
 } = require('@libp2p-observer/proto')
 
-const { DEFAULT_SNAPSHOT_DURATION, HOST_PEER_ID, generateHashId } = require('../utils')
+const { DEFAULT_SNAPSHOT_DURATION, HOST_PEER_ID } = require('../utils')
 
-function createRuntime({ stateIntervalDuration = DEFAULT_SNAPSHOT_DURATION } = {}) {
-  const peerId = generateHashId()
+function createRuntime({
+  peerId = HOST_PEER_ID,
+  stateIntervalDuration = DEFAULT_SNAPSHOT_DURATION,
+} = {}) {
   const runtime = new Runtime([
     'go-libp2p', // Implementation
     '2', // Version
     'macOS', // Platform
-    HOST_PEER_ID, // Introspecting user's own peer ID
+    peerId, // Introspecting user's own peer ID
   ])
   runtime.setSendStateIntervalMs(stateIntervalDuration)
   return runtime

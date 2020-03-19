@@ -10,6 +10,8 @@ const {
   generateConnections,
   generateConnectionEvents,
   generateDHT,
+  generateEvent,
+  generatePeerId,
   generateRuntime,
   generateState,
   generateVersion,
@@ -19,6 +21,7 @@ const {
 
 const connections = []
 const version = generateVersion()
+const peerId = generatePeerId()
 const server = http.createServer()
 const wss = new WebSocket.Server({ noServer: true })
 
