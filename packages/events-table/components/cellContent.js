@@ -9,14 +9,16 @@ import { RenderTime, RenderJsonString } from './contentRenderers'
 const ContentsContainer = styled.div`
   padding: ${({ theme }) => theme.spacing()};
   display: flex;
+  flex-wrap: wrap;
 `
 
 const ContentsItem = styled.div`
-  margin: ${({ theme }) => theme.spacing([0, 2])};
+  margin: ${({ theme }) => theme.spacing([0.25, 2])};
   border: 2px solid ${({ theme }) => theme.color('background', 1)};
   display: flex;
   align-items: stretch;
   min-width: ${({ theme }) => theme.spacing(20)};
+  min-height: ${({ theme }) => theme.spacing(4)};
 `
 
 const ContentsContent = styled.div`
