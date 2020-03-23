@@ -11,14 +11,13 @@ const {
 } = require('./messages/connections')
 const { createDHT, updateDHT } = require('./messages/dht')
 const {
-  createEvent,
   getPeerDisconnectingProps,
   getPeerConnectingProps,
+  generateEvent,
 } = require('./messages/events')
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
 const {
-  createProtocolEventPacket,
   createProtocolRuntimePacket,
   createProtocolStatePacket,
 } = require('./messages/protocol-data-packet')
@@ -46,8 +45,7 @@ function generateRuntime() {
 
 function updateConnections(connections, total, now) {
   connections.forEach(connection => updateConnection(connection, now))
-  // ensure initial connections === connectionsCount at first iteration
-  if (total !== null && randomOpenClose(total)) {
+  if (randomOpenClose(total)) {
     // open a new connection
     const connection = createConnection({
       status: statusList.getNum('OPENING'),
@@ -55,12 +53,6 @@ function updateConnections(connections, total, now) {
     addStreamsToConnection(connection, { now, secondsOpen: random() })
     connections.push(connection)
   }
-}
-
-function generateEvent({ now = Date.now(), type = '', content = {} } = {}) {
-  const event = createEvent({ now, type, content })
-  const eventPacket = createProtocolEventPacket(event)
-  return createBufferSegment(eventPacket)
 }
 
 function generateConnectionEvents({
@@ -110,8 +102,9 @@ function generateActivity({
     const intervalEnd = utcFrom + state * 1000
     const intervalStart = intervalEnd - 1000
 
-    const connCount = state !== 1 ? connectionsCount : null
-    updateConnections(connections, connCount, intervalEnd)
+    // At first iteration, ensure initial connections count === connectionsCount
+    if (state !== 1)
+      updateConnections(connections, connectionsCount, intervalEnd)
 
     const events = generateConnectionEvents({
       connections,
@@ -123,7 +116,13 @@ function generateActivity({
     const eventBuffers = events.map(({ event }) => event)
     msgBuffers = [...msgBuffers, ...eventBuffers]
 
-    updateDHT(dht, connections, intervalStart, intervalEnd)
+    updateDHT({
+      dht,
+      connections,
+      utcFrom: intervalStart,
+      utcTo: intervalEnd,
+      msgBuffers,
+    })
     msgBuffers.push(generateState(connections, intervalEnd, dht))
   }
   return msgBuffers

@@ -13,7 +13,7 @@ function getQueryTimesByPeer({
       : [...peerQueries.INBOUND, ...peerQueries.OUTBOUND]
 
     const processedQueries = targetQueries.map(query => ({
-      elapsed: timeNow - query.start,
+      elapsed: timeNow - query.sentTs,
       peerId: peerId,
     }))
     return [...queries, ...processedQueries]

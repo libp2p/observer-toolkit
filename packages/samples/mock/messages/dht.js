@@ -9,7 +9,7 @@ const {
   createTimestamp,
 } = require('../utils')
 const { protocolList } = require('../enums/protocolList')
-const { dhtStatusList, presentInBuckets } = require('../enums/dhtStatusList')
+const { dhtStatusList } = require('../enums/dhtStatusList')
 const { statusList } = require('../enums/statusList')
 const { createQueries } = require('./dht-queries')
 const {
@@ -17,28 +17,44 @@ const {
 } = require('@libp2p-observer/proto')
 const { getKademliaDistance } = require('@libp2p-observer/data')
 
-const BUCKET_MOVE_PROBABILITY = 1 / 50
 const PEER_ADD_REMOVE_PROBABILITY = 1 / 40
-const MAX_BUCKETS = 256
-
-function randomBucketMove(multiplier = 1) {
-  const move = random() <= BUCKET_MOVE_PROBABILITY * multiplier
-  return move ? Math.floor(Math.random() * 3) - 1 : 0
-}
 
 function randomPeerAddRemove(divider = 1) {
   return random() <= PEER_ADD_REMOVE_PROBABILITY / divider
 }
 
+function getCurrentBucketPeers(bucket) {
+  const inBucketStatuses = ['ACTIVE', 'MISSING']
+  return bucket
+    .getPeersList()
+    .filter(peer =>
+      inBucketStatuses.includes(dhtStatusList.getItem(peer.getStatus()))
+    )
+}
+
+function removePeerFromBucket(peer, bucket) {
+  const peerId = peer.getPeerId()
+  const peerList = bucket.getPeersList()
+  const peerIndex = peerList.findIndex(_peer => _peer.getPeerId() === peerId)
+
+  if (peerIndex < 0) {
+    throw new Error(
+      `Delete failed: bucket ${bucket.getDistance()} does not contain peer ${peerId}`
+    )
+  }
+
+  peerList.splice(peerIndex, 1)
+  bucket.setPeersList(peerList)
+  return peerList
+}
+
 function createPeerInDHT({
   peerId = generateHashId(),
-  bucket = 0,
   bucketAge = 0,
   status = DHT.PeerInDHT.Status.ACTIVE,
 } = {}) {
   const pdht = new DHT.PeerInDHT()
   pdht.setPeerId(peerId)
-  pdht.setBucket(bucket)
   pdht.setAgeInBucket(bucketAge)
   pdht.setStatus(status)
   return pdht
@@ -77,13 +93,19 @@ function createDHT({
   dht.setEnabled(enabled)
   dht.setStartTs(createTimestamp(startTs))
 
+  // Start with just the "catch-all" zero-distance bucket then unfold as needed
+  const bucketZero = new DHT.Bucket()
+  bucketZero.setDistance(0)
+
+  const peersList = createPeersInDHT({ peerIds, peersCount, connections })
+  bucketZero.setPeersList(peersList)
+  dht.addBuckets(bucketZero)
+
   const params = new DHT.Params()
   params.setK(k)
   params.setAlpha(alpha)
   params.setDisjointPaths(disjointPaths)
   dht.setParams(params)
-  const peers = createPeersInDHT({ peerIds, peersCount, connections })
-  dht.setPeerInDhtList(peers)
 
   return dht
 }
@@ -96,118 +118,105 @@ function updatePeerInDHT(peer, connection) {
 }
 
 function updatePeerInDHTBucket(peer) {
-  const move = randomBucketMove()
-  const oldBucket = peer.getBucket()
-  const newBucket = Math.min(Math.max(0, oldBucket + move), MAX_BUCKETS - 1)
-  if (newBucket !== oldBucket) {
-    peer.setBucket(newBucket)
-    peer.setAgeInBucket(0)
-  } else {
-    const age = peer.getAgeInBucket()
-    peer.setAgeInBucket(age + 1000)
-  }
+  const age = peer.getAgeInBucket()
+  peer.setAgeInBucket(age + 1000)
 }
 
 function updatePeersInDHT(peers, connections, dht) {
   const activeConnPeerIds = getActiveConnectionPeerIds(connections)
 
   peers.forEach(dhtPeer => {
-    const peerId = dhtPeer.getPeerId()
     const connection = connections.find(
       conn => conn.getPeerId() === dhtPeer.getPeerId()
     )
     updatePeerInDHT(dhtPeer, connection)
-
-    const activeConnIndex = activeConnPeerIds.indexOf(peerId)
-    if (activeConnIndex !== -1) activeConnPeerIds.splice(activeConnIndex, 1)
   })
 
   // If any active connection peer IDs aren't found in DHT, add peers for them
   activeConnPeerIds.forEach(peerId => {
-    const newPeer = createPeerInDHT({ peerId })
-    dht.addPeerInDht(newPeer)
+    if (!peers.find(peer => peer.getPeerId() === peerId)) {
+      const newPeer = createPeerInDHT({ peerId })
+      dht.getBucketsList()[0].addPeers(newPeer)
+    }
   })
 }
 
-function updateDHT(dht, connections, utcFrom, utcTo) {
-  const peers = dht.getPeerInDhtList()
+function updateDHT({
+  dht,
+  connections,
+  utcFrom,
+  utcTo,
+  msgQueue,
+  msgBuffers,
+  version,
+}) {
+  const peers = dht
+    .getBucketsList()
+    .reduce((peers, bucket) => [...peers, ...bucket.getPeersList()], [])
+
   updatePeersInDHT(peers, connections, dht)
-  dht.setPeerInDhtList(peers)
 
   validateBucketSizes(dht)
 
-  const queries = createQueries({ dht, utcFrom, utcTo })
-  dht.setQueryList(queries)
+  const isLiveWebsocket = !!msgQueue
+  const msgTarget = isLiveWebsocket ? msgQueue : msgBuffers
+  const queries = createQueries({
+    dht,
+    utcFrom,
+    utcTo,
+    isLiveWebsocket,
+    version,
+  })
 
-  // Helpful for debugging bucket allocation:
-  /*
-  console.log(
-    'Peer bucket allocation:',
-    dht.getPeerInDhtList().length,
-    dht.getPeerInDhtList().reduce((oldBuckets, peer) => {
-      const newBuckets = { ...oldBuckets }
-      const bucketIndex = peer.getBucket()
-      if (typeof bucketIndex === 'number') {
-        if (typeof newBuckets[bucketIndex] === 'number') {
-          newBuckets[bucketIndex] += 1
-        } else {
-          newBuckets[bucketIndex] = 1
-        }
-      }
-      return newBuckets
-    }, {})
-  )
-  */
+  queries.forEach(event => msgTarget.push(event))
 }
 
-function validateBucketSizes(
-  dht,
-  bucketIndexes = [...Array(MAX_BUCKETS).keys()]
-) {
-  const peers = dht.getPeerInDhtList()
+function validateBucketSizes(dht, buckets = dht.getBucketsList()) {
   const k = dht.getParams().getK()
 
-  const buckets = bucketIndexes.map(index => ({
-    peers: peers.filter(
-      peer => presentInBuckets(peer.getStatus()) && peer.getBucket() === index
-    ),
-    index,
-  }))
-
-  const overflowingBuckets = buckets.filter(({ peers }) => peers.length > k)
-
-  overflowingBuckets.forEach(({ peers, index }) =>
-    fixOverflowingBucket(peers, index, dht)
+  const overflowingBuckets = buckets.filter(
+    bucket => getCurrentBucketPeers(bucket).length > k
   )
+
+  overflowingBuckets.forEach(bucket => fixOverflowingBucket(bucket, dht))
 }
 
-function fixOverflowingBucket(peersInBucket, bucketIndex, dht) {
+function fixOverflowingBucket(bucket, dht) {
   const k = dht.getParams().getK()
-  const movedPeers = []
 
-  while (peersInBucket.length > k) {
+  while (getCurrentBucketPeers(bucket).length > k) {
+    const peersInBucket = getCurrentBucketPeers(bucket)
     const randomPeerIndex = Math.floor(random() * peersInBucket.length)
     const randomPeer = peersInBucket[randomPeerIndex]
 
-    if (bucketIndex === 0) {
+    if (bucket.getDistance() === 0) {
       // Move from 'catch-all' bucket to allocated bucket by distance
       const distance =
         getKademliaDistance(randomPeer.getPeerId(), HOST_PEER_ID) || 1
 
-      randomPeer.setBucket(distance)
+      const newBucket = getOrCreateBucket(dht, distance)
 
-      validateBucketSizes(dht, [distance])
+      removePeerFromBucket(randomPeer, bucket)
+      newBucket.addPeers(randomPeer)
+
+      // Fix newBucket if it now overflows
+      validateBucketSizes(dht, [newBucket])
     } else {
       ejectPeer(randomPeer)
     }
-
-    const [movedPeer] = peersInBucket.splice(randomPeerIndex, 1)
-    movedPeers.push(movedPeer)
   }
 }
 
+function getOrCreateBucket(dht, distance) {
+  const existingBucket = dht
+    .getBucketsList()
+    .find(bucket => bucket.getDistance() === distance)
+
+  return existingBucket || dht.addBuckets(new DHT.Bucket([distance]))
+}
+
 function ejectPeer(peer) {
-  peer.setStatus(dhtStatusList.getNum('EJECTED'))
+  peer.setStatus(dhtStatusList.getNum('CANDIDATE'))
 }
 
 function updatePeerStatus(peer, connection) {
@@ -226,7 +235,7 @@ function updatePeerStatus(peer, connection) {
       dhtStatusList.getNum(peerStatusName === 'ACTIVE' ? 'MISSING' : 'ACTIVE')
     )
   } else if (randomPeerAddRemove(30)) {
-    peer.setStatus(dhtStatusList.getNum('DISCONNECTED'))
+    peer.setStatus(dhtStatusList.getNum('REJECTED'))
   }
 }
 
@@ -234,7 +243,7 @@ function setPeerStatusByConnection(peer, connection) {
   const connStatusName = statusList.getItem(connection.getStatus())
   const connectionIsActive =
     connStatusName === 'ACTIVE' || connStatusName === 'OPENING'
-  const peerStatusName = connectionIsActive ? 'ACTIVE' : 'DISCONNECTED'
+  const peerStatusName = connectionIsActive ? 'ACTIVE' : 'MISSING'
   peer.setStatus(dhtStatusList.getNum(peerStatusName))
 }
 

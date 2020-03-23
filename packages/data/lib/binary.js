@@ -101,7 +101,7 @@ function parseBufferList(bufferList) {
     const messageSize = bufferList.readUIntLE(4, messageSizeLength)
     const minimalBufferLength =
       messageChecksumLength + messageSizeLength + messageSize
-    if (bufferList.length <= minimalBufferLength) break
+    if (bufferList.length < minimalBufferLength) break
     // extract and verify message
     const messageBin = bufferList.slice(
       messageChecksumLength + messageSizeLength,

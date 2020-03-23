@@ -23,7 +23,7 @@ const RawJson = styled.pre`
 `
 
 const rendererPropType = {
-  content: T.string.isRequired,
+  content: T.oneOfType([T.number, T.string]).isRequired,
   type: T.string, // Event type
 }
 
@@ -45,9 +45,6 @@ RenderPeerId.propTypes = rendererPropType
 function RenderTime({ content }) {
   return <Nowrap>{timeFormatter(content)}</Nowrap>
 }
-RenderTime.propTypes = {
-  ...rendererPropType,
-  content: T.oneOfType([T.number, T.string]),
-}
+RenderTime.propTypes = rendererPropType
 
 export { RenderAsString, RenderJsonString, RenderPeerId, RenderTime }

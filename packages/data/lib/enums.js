@@ -49,6 +49,11 @@ const dhtQueryDirectionNames = {
   1: 'OUTBOUND',
 }
 
+const dhtQueryEventNames = {
+  0: 'InboundDHTQuery',
+  1: 'OutboundDHTQuery',
+}
+
 module.exports = {
   getEnumByName,
   dhtStatusNames,
@@ -57,4 +62,5 @@ module.exports = {
   transportNames,
   dhtQueryResultNames,
   dhtQueryDirectionNames,
+  dhtQueryEventNames,
 }

@@ -2,7 +2,11 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { getAllDhtBuckets, getTime } from '@libp2p-observer/data'
+import {
+  getAllDhtBuckets,
+  getDhtPeersInBucket,
+  getTime,
+} from '@libp2p-observer/data'
 import { TimeContext } from '@libp2p-observer/sdk'
 
 import DhtColumn from './DhtColumn/DhtColumn'
@@ -20,24 +24,29 @@ function DhtBuckets({ children }) {
   const currentState = useContext(TimeContext)
   const timestamp = getTime(currentState)
 
-  const buckets = getAllDhtBuckets(currentState)
-  const { [0]: catchAllBucketPeers, ...numberedBucketPeers } = buckets
+  const bucketsData = getAllDhtBuckets(currentState)
+    .map(bucket => ({
+      distance: bucket.getDistance(),
+      peers: getDhtPeersInBucket(bucket, currentState),
+    }))
+    .sort((a, b) => a.distance - b.distance)
+  const [catchAllBucketData, ...numberedBucketData] = bucketsData
 
   return (
     <Container>
       <DhtColumn
-        peers={catchAllBucketPeers}
+        peers={catchAllBucketData.peers}
         timestamp={timestamp}
         bucketNum={0}
         key={`bucket_0`}
         title="0 — Catch-all"
       />
-      {Object.entries(numberedBucketPeers).map(([bucketStr, peers]) => (
+      {numberedBucketData.map(({ distance, peers }) => (
         <DhtColumn
           peers={peers}
           timestamp={timestamp}
-          bucketNum={Number(bucketStr)}
-          key={`bucket_${bucketStr}`}
+          bucketNum={distance}
+          key={`bucket_${distance}`}
         />
       ))}
     </Container>

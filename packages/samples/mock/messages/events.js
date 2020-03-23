@@ -5,9 +5,13 @@ const {
 } = require('@libp2p-observer/proto')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
+const { createBufferSegment } = require('../../output/binary')
+
 const { transportList } = require('../enums/transportList')
 const { roleList } = require('../enums/roleList')
 const { decodeBinToNum } = require('../utils')
+
+const { createProtocolEventPacket } = require('./protocol-data-packet')
 
 function createEvent({ now = Date.now(), type = '', content = {} } = {}) {
   const event = new Event()
@@ -16,6 +20,12 @@ function createEvent({ now = Date.now(), type = '', content = {} } = {}) {
   event.setTs(new Timestamp([now]))
   event.setContent(JSON.stringify(content))
   return event
+}
+
+function generateEvent({ now = Date.now(), type = '', content = {} } = {}) {
+  const event = createEvent({ now, type, content })
+  const eventPacket = createProtocolEventPacket(event)
+  return createBufferSegment(eventPacket)
 }
 
 function _getPeerEventContent(now, connection) {
@@ -46,6 +56,7 @@ function getPeerConnectingProps(now, connection) {
 
 module.exports = {
   createEvent,
+  generateEvent,
   getPeerConnectingProps,
   getPeerDisconnectingProps,
 }
