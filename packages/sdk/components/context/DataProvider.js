@@ -3,6 +3,8 @@ import T from 'prop-types'
 
 import { getLatestTimepoint } from '@libp2p-observer/data'
 
+const CUTOFF = 15000
+
 const SourceContext = createContext()
 const DataContext = createContext()
 const EventsContext = createContext()
@@ -11,12 +13,34 @@ const TimeContext = createContext()
 const PeersContext = createContext()
 const SetterContext = createContext()
 
+function updateStates(msg) {
+  if (!msg.getStartTs || !msg.getSubsystems) {
+    return msg
+  }
+  const stateTs = msg.getStartTs().getSeconds()
+  const subsystems = msg.getSubsystems()
+  const connections = subsystems.getConnectionsList()
+  const cns = connections.filter(cn => {
+    if (!cn.getTimeline().getCloseTs()) {
+      return true
+    }
+    const closeTs = cn
+      .getTimeline()
+      .getCloseTs()
+      .getSeconds()
+    return stateTs - closeTs < CUTOFF
+  })
+  subsystems.setConnectionsList(cns)
+  msg.setSubsystems(subsystems)
+  return msg
+}
+
 function updateData(oldData, { action, data }) {
   switch (action) {
     case 'append':
-      return appendToDataSet(data, oldData)
+      return appendToDataSet(data, oldData).map(updateStates)
     case 'replace':
-      return replaceDataSet(data)
+      return replaceDataSet(data).map(updateStates)
     case 'remove':
       return []
     default:
