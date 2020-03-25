@@ -33,8 +33,8 @@ const transportNames = {
 const dhtStatusNames = {
   0: 'ACTIVE',
   1: 'MISSING',
-  2: 'DISCONNECTED',
-  3: 'EJECTED',
+  2: 'REJECTED',
+  3: 'CANDIDATE',
 }
 
 const dhtQueryResultNames = {

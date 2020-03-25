@@ -7,6 +7,8 @@ import { dhtStatusNames } from '@libp2p-observer/data'
 import DhtBucketInfo from './DhtBucketInfo'
 import DhtBucket from '../DhtBucket/DhtBucket'
 
+import CandidatePeers from './CandidatePeers'
+
 function processPeers(peers) {
   // Unpack protobuf peer data unless it's already pre-unpacked
   return peers.map(peer => {
@@ -23,6 +25,11 @@ const Container = styled.div`
   border-left: 1px solid ${({ theme }) => theme.color('background', 1)};
   border-right: 1px solid ${({ theme }) => theme.color('background', 1)};
   padding: ${({ theme }) => theme.spacing([1, 0.5])};
+`
+
+const Spacer = styled.div`
+  height: 32px;
+  background: grey;
 `
 
 const sortByAge = (a, b) => b.age - a.age
@@ -46,6 +53,7 @@ function DhtColumn({ peers = [], bucketNum = 1, timestamp, title }) {
 
   return (
     <Container>
+      {bucketNum !== 0 ? <CandidatePeers bucketNum={bucketNum} /> : <Spacer />}
       <DhtBucket
         peers={processedPeers}
         selectedPeer={selectedPeer}
