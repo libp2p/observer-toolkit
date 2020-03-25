@@ -22,16 +22,6 @@ const LastSegment = styled.span`
   font-weight: 500;
 `
 
-const Positioner = styled.div`
-  top: -${({ theme }) => theme.spacing(2, true)}px;
-  transform: none;
-  cursor: default;
-`
-
-const Tick = styled.div`
-  top: ${({ theme, tickSize }) => theme.spacing(2.5, true) + tickSize}px;
-`
-
 function getPeerSegment(segmentText, i, isLast) {
   if (!isLast)
     return (
@@ -90,7 +80,8 @@ function PeerIdTooltip({ peerId, children, override = {} }) {
     <Tooltip
       side="right"
       containerRef={rootNodeRef}
-      override={{ Positioner, Tick, ...override }}
+      override={override}
+      hang={2}
       content={
         <>
           <StyledButton
