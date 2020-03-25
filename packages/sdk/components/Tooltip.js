@@ -19,7 +19,15 @@ function getTickBorderColor(direction, color) {
   return `border-${invertedDirection}-color: ${color};`
 }
 
-function getPosition(direction, mainPosition) {
+function getPosition(
+  direction,
+  mainPosition,
+  hangPosition = null,
+  noTransform = false
+) {
+  const isHanging = typeof hangPosition === 'number'
+  const centredPosition = isHanging ? (hangPosition += 'px') : '50%'
+
   const isVertical = ['top', 'bottom'].includes(direction)
   const centredSide = isVertical ? 'left' : 'top'
 
@@ -27,13 +35,26 @@ function getPosition(direction, mainPosition) {
 
   return `
     ${direction}: ${mainPosition};
-    ${centredSide}: 50%;
-    transform: translate${centredAxis}(-50%);
+    ${centredSide}: ${centredPosition};
+    ${noTransform ? '' : `transform: translate${centredAxis}(-50%);`}
   `
 }
 
-function getTickPosition(direction, tickSize) {
-  return getPosition(direction, `-${tickSize * 2}px`)
+function getTickPosition(direction, tickSize, hang, theme) {
+  const mainPosition = `-${tickSize * 2}px`
+  if (typeof hang === 'number') {
+    const hangPosition = theme.spacing(hang + 0.5, true) + tickSize
+    return getPosition(direction, mainPosition, hangPosition)
+  }
+  return getPosition(direction, mainPosition)
+}
+
+function getOuterPosition(direction, mainPosition, hang, theme) {
+  if (typeof hang === 'number') {
+    const hangPosition = -1 * theme.spacing(hang, true)
+    return getPosition(direction, mainPosition, hangPosition, true)
+  }
+  return getPosition(direction, mainPosition)
 }
 
 function updateOffset(
@@ -110,8 +131,8 @@ const Target = styled.span.attrs(({ isOpen }) => ({
 const Positioner = styled.div`
   z-index: 15;
   position: absolute;
-  ${({ direction, tickSize, offsets }) =>
-    getPosition(direction, '100%', offsets)}
+  ${({ direction, tickSize, hang, theme }) =>
+    getOuterPosition(direction, '100%', hang, theme)}
 
   // Give a little space that tolerates small mouseouts around the tick shape
   ${({ direction, tickSize }) =>
@@ -138,8 +159,8 @@ const Tick = styled.div`
   z-index: 3;
   ${({ direction, theme, getColor }) =>
     getTickBorderColor(direction, getColor(theme))}
-  ${({ direction, tickSize, offsets }) =>
-    getTickPosition(direction, tickSize, offsets)}
+  ${({ direction, tickSize, hang, theme }) =>
+    getTickPosition(direction, tickSize, hang, theme)}
 `
 
 const CloseIcon = styled.a`
@@ -162,6 +183,7 @@ function Tooltip({
   colorIndex = 0,
   side = sideOptions[0],
   fixOn = fixOnOptions[0],
+  hang = false,
   content,
   toleranceX = 0,
   toleranceY = 0,
@@ -174,6 +196,11 @@ function Tooltip({
   const alwaysFix = fixOn === 'always'
   const noHover = fixOn === 'no-hover'
   const isClickable = clickToFix || noHover
+
+  if (hang && typeof hang !== 'number') {
+    // Allow 'hang' passed as true for a standard, overrideable hang amount
+    hang = 2
+  }
 
   const [isFixed, setIsFixed] = useState(alwaysFix || initiallyOpen)
   const [isShowing, setIsShowing] = useState(false)
@@ -235,6 +262,7 @@ function Tooltip({
           onClick={isClickable ? stopPropagation : null}
           direction={direction}
           tickSize={tickSize}
+          hang={hang}
           ref={positionerRef}
           as={override.Positioner}
         >
@@ -242,6 +270,7 @@ function Tooltip({
             direction={direction}
             tickSize={tickSize}
             getColor={getColor}
+            hang={hang}
             ref={tickRef}
             as={override.Tick}
           />
