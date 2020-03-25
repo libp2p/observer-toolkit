@@ -3,7 +3,8 @@ import T from 'prop-types'
 
 import { getLatestTimepoint } from '@libp2p-observer/data'
 
-const CUTOFF = 15000
+const CUTOFF_CONNECTION = 15000
+const CUTOFF_STATE = 60000
 
 const SourceContext = createContext()
 const DataContext = createContext()
@@ -13,34 +14,48 @@ const TimeContext = createContext()
 const PeersContext = createContext()
 const SetterContext = createContext()
 
-function updateStates(msg) {
-  if (!msg.getStartTs || !msg.getSubsystems) {
-    return msg
-  }
-  const stateTs = msg.getStartTs().getSeconds()
-  const subsystems = msg.getSubsystems()
-  const connections = subsystems.getConnectionsList()
-  const cns = connections.filter(cn => {
-    if (!cn.getTimeline().getCloseTs()) {
+function updateStates(data) {
+  let latestTs = data
+    .filter(msg => msg.getStartTs)
+    .map(msg => msg.getStartTs().getSeconds())
+    .sort()
+    .pop()
+  return data
+    .filter(msg => {
+      if (
+        msg.getStartTs &&
+        latestTs - msg.getStartTs().getSeconds() > CUTOFF_STATE
+      )
+        return false
       return true
-    }
-    const closeTs = cn
-      .getTimeline()
-      .getCloseTs()
-      .getSeconds()
-    return stateTs - closeTs < CUTOFF
-  })
-  subsystems.setConnectionsList(cns)
-  msg.setSubsystems(subsystems)
-  return msg
+    })
+    .map(msg => {
+      if (!msg.getStartTs || !msg.getSubsystems) return msg
+      const stateTs = msg.getStartTs().getSeconds()
+      const subsystems = msg.getSubsystems()
+      const connections = subsystems.getConnectionsList()
+      const cns = connections.filter(cn => {
+        if (!cn.getTimeline().getCloseTs()) {
+          return true
+        }
+        const closeTs = cn
+          .getTimeline()
+          .getCloseTs()
+          .getSeconds()
+        return stateTs - closeTs < CUTOFF_CONNECTION
+      })
+      subsystems.setConnectionsList(cns)
+      msg.setSubsystems(subsystems)
+      return msg
+    })
 }
 
 function updateData(oldData, { action, data }) {
   switch (action) {
     case 'append':
-      return appendToDataSet(data, oldData).map(updateStates)
+      return updateStates(appendToDataSet(data, oldData))
     case 'replace':
-      return replaceDataSet(data).map(updateStates)
+      return updateStates(replaceDataSet(data))
     case 'remove':
       return []
     default:
