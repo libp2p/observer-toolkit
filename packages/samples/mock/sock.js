@@ -8,6 +8,7 @@ const {
 const {
   generateConnections,
   generateConnectionEvents,
+  generateEventsFlood,
   generateDHT,
   generateRuntime,
   generateState,
@@ -45,6 +46,13 @@ function generateMessages({ connectionsCount, peersCount }) {
 
   generateConnectionEvents({
     connections,
+    msgQueue,
+    utcNow,
+    version,
+    runtime,
+  })
+
+  generateEventsFlood({
     msgQueue,
     utcNow,
     version,

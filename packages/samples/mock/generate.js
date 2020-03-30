@@ -79,6 +79,19 @@ function generateConnectionEvents({
   return msgQueue
 }
 
+function generateEventsFlood({ msgQueue = [], utcNow, version, runtime }) {
+  // generate a flood of events
+  const step = 20 // 1000 / 50
+  for (let i = 0; i < 1000; i += step) {
+    const now = utcNow + i
+    const event = generateEvent({ now, type: 'flood' })
+    const data = Buffer.concat([version, runtime, event]).toString('binary')
+    msgQueue.push({ ts: now, type: 'event', data, event })
+  }
+
+  return msgQueue
+}
+
 function generateState(connections, now, dht) {
   const state = createState(connections, now, dht)
   const statePacket = createProtocolStatePacket(state)
@@ -163,6 +176,7 @@ module.exports = {
   generateComplete,
   generateConnections,
   generateConnectionEvents,
+  generateEventsFlood,
   generateDHT,
   generateEvent,
   generateRuntime,
