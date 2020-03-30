@@ -156,7 +156,12 @@ function generateVersion() {
   return versionBuf
 }
 
-function generateComplete(connectionsCount, durationSeconds, peersCount, durationSnapshot) {
+function generateComplete(
+  connectionsCount,
+  durationSeconds,
+  peersCount,
+  durationSnapshot
+) {
   const utcTo = Date.now()
   const utcFrom = utcTo - durationSeconds * SECOND_IN_MS
 
@@ -166,7 +171,13 @@ function generateComplete(connectionsCount, durationSeconds, peersCount, duratio
   const peerIds = connections.map(c => c.getPeerId())
 
   const startTs = utcFrom - Math.floor(random() * SECOND_IN_MS)
-  const dht = generateDHT({ startTs, peerIds, peersCount, connections, durationSnapshot })
+  const dht = generateDHT({
+    startTs,
+    peerIds,
+    peersCount,
+    connections,
+    durationSnapshot,
+  })
 
   const activityMsgs = generateActivity({
     connections,

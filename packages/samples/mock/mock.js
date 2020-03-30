@@ -77,7 +77,7 @@ if (socksrv) {
   const bufferSegments = generateComplete(
     connectionsCount,
     peersCount,
-    durationSeconds,
+    durationSeconds
   )
   const writer = filePath ? createWriteStream(filePath) : process.stdout
   writer.write(bufferSegments)

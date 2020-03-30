@@ -35,7 +35,10 @@ function generateMessages({ connectionsCount, durationSnapshot, peersCount }) {
 
   if (!connections.length) {
     connections.length = 0
-    const conns = generateConnections(connectionsCount, utcNow - durationSnapshot)
+    const conns = generateConnections(
+      connectionsCount,
+      utcNow - durationSnapshot
+    )
     updateConnections(conns, null, utcFrom, durationSnapshot)
     connections.push(...conns)
     return
@@ -114,7 +117,11 @@ function handleClientMessage(client, server, msg) {
   }
 }
 
-function start({ connectionsCount = 0, duration = DEFAULT_SNAPSHOT_DURATION, peersCount } = {}) {
+function start({
+  connectionsCount = 0,
+  duration = DEFAULT_SNAPSHOT_DURATION,
+  peersCount,
+} = {}) {
   // generate states
   wss.connectionsCount = connectionsCount
   wss.generator = setInterval(() => {
