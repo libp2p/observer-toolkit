@@ -116,6 +116,11 @@ function mapArray(size, map) {
 }
 
 function createTimestamp(utcNum) {
+  if (typeof utcNum !== 'number' || Number.isNaN(utcNum)) {
+    throw new Error(
+      `Can't create timestamp from ${utcNum} (typeof ${typeof utcNum}), must be number`
+    )
+  }
   return new Timestamp([Math.round(utcNum)])
 }
 

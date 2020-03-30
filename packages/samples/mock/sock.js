@@ -5,13 +5,11 @@ const WebSocket = require('ws')
 const {
   proto: { ClientSignal },
 } = require('@libp2p-observer/proto')
-const { DEFAULT_SNAPSHOT_DURATION, random } = require('./utils')
+const { DEFAULT_SNAPSHOT_DURATION } = require('./utils')
 const {
   generateConnections,
   generateConnectionEvents,
   generateDHT,
-  generateEvent,
-  generatePeerId,
   generateRuntime,
   generateState,
   generateVersion,
@@ -21,7 +19,6 @@ const {
 
 const connections = []
 const version = generateVersion()
-const peerId = generatePeerId()
 const server = http.createServer()
 const wss = new WebSocket.Server({ noServer: true })
 
@@ -47,7 +44,7 @@ function generateMessages({ connectionsCount, durationSnapshot, peersCount }) {
   updateConnections(connections, connectionsCount, utcTo, durationSnapshot)
   updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version })
 
-  const runtime = generateRuntime({ stateIntervalDuration: duration })
+  const runtime = generateRuntime({ stateIntervalDuration: durationSnapshot })
   generateConnectionEvents({
     connections,
     msgQueue,
@@ -57,7 +54,7 @@ function generateMessages({ connectionsCount, durationSnapshot, peersCount }) {
     durationSnapshot,
   })
 
-  const state = generateState(connections, utcNow, dht, duration)
+  const state = generateState(connections, utcNow, dht, durationSnapshot)
   const data = Buffer.concat([version, runtime, state]).toString('binary')
   msgQueue.push({ ts: utcTo, type: 'state', data })
 }

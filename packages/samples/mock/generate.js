@@ -145,8 +145,11 @@ function generateActivity({
       msgBuffers,
       duration,
     })
-    msgBuffers.push(generateState(connections, intervalEnd, dht))
+
+    const statePacket = generateState(connections, intervalEnd, dht, duration)
+    msgBuffers.push(statePacket)
   }
+
   return msgBuffers
 }
 
@@ -166,17 +169,17 @@ function generateComplete(
   const utcFrom = utcTo - durationSeconds * SECOND_IN_MS
 
   const version = generateVersion()
-  const runtime = generateRuntime({ stateIntervalDuration: duration })
+  const runtime = generateRuntime({ stateIntervalDuration: durationSnapshot })
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
 
-  const startTs = utcFrom - Math.floor(random() * SECOND_IN_MS)
+  const startTs = utcFrom - Math.floor(random() * durationSnapshot)
   const dht = generateDHT({
     startTs,
     peerIds,
     peersCount,
     connections,
-    durationSnapshot,
+    duration: durationSnapshot,
   })
 
   const activityMsgs = generateActivity({
@@ -187,7 +190,7 @@ function generateComplete(
     dht,
     version,
     runtime,
-    durationSnapshot,
+    duration: durationSnapshot,
   })
 
   return Buffer.concat([version, runtime, ...activityMsgs])
