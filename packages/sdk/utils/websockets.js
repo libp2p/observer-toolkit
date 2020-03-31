@@ -35,8 +35,13 @@ function sendSignal(cmd) {
 
 function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   const bl = new BufferList()
+  const eventsBuffer = []
   const usePushEmitter = true
+  let eventsRelease = false
 
+  setInterval(() => {
+    eventsRelease = true
+  }, 1000)
   if (!url) return
   ws = new WebSocket(url)
 
@@ -45,7 +50,13 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
     if (msg.data) {
       const buf = new Buffer(msg.data, 'binary')
       bl.append(buf.slice(4))
-      processUploadBuffer(bl, onUploadChunk)
+      processUploadBuffer({
+        bufferList: bl,
+        eventsBuffer,
+        eventsRelease,
+        onUploadChunk,
+      })
+      eventsRelease = false
     }
 
     if (!usePushEmitter) {
@@ -68,8 +79,20 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   })
 }
 
-function processUploadBuffer(bufferList, onUploadChunk, metadata) {
+function processUploadBuffer({
+  bufferList,
+  eventsBuffer,
+  eventsRelease,
+  onUploadChunk,
+}) {
   const data = parseBufferList(bufferList)
+
+  const events = data.events || []
+  eventsBuffer.push(...events)
+  if (eventsRelease) {
+    data.events = eventsBuffer
+    eventsBuffer.length = 0
+  }
   onUploadChunk(data)
 }
 

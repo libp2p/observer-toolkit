@@ -81,7 +81,7 @@ function generateConnectionEvents({
 
 function generateEventsFlood({ msgQueue = [], utcNow, version, runtime }) {
   // generate a flood of events
-  const step = 20 // 1000 / 50
+  const step = 50 // .. every 50ms
   for (let i = 0; i < 1000; i += step) {
     const now = utcNow + i
     const event = generateEvent({ now, type: 'flood' })
