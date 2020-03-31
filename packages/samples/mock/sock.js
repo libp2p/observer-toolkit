@@ -24,6 +24,9 @@ const wss = new WebSocket.Server({ noServer: true })
 
 const msgQueue = []
 
+let lastDurationSnapshot
+let runtime
+
 function generateMessages({
   connectionsCount,
   duration: durationSnapshot,
@@ -33,6 +36,11 @@ function generateMessages({
   const utcFrom = utcNow
   const utcTo = utcNow + durationSnapshot
   const dht = generateDHT({ peersCount })
+
+  if (!runtime || lastDurationSnapshot !== durationSnapshot) {
+    runtime = generateRuntime({ stateIntervalDuration: durationSnapshot })
+    lastDurationSnapshot = durationSnapshot
+  }
 
   if (!connections.length) {
     connections.length = 0
@@ -48,7 +56,6 @@ function generateMessages({
   updateConnections(connections, connectionsCount, utcTo, durationSnapshot)
   updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version })
 
-  const runtime = generateRuntime({ stateIntervalDuration: durationSnapshot })
   generateConnectionEvents({
     connections,
     msgQueue,
