@@ -24,7 +24,11 @@ const wss = new WebSocket.Server({ noServer: true })
 
 const msgQueue = []
 
-function generateMessages({ connectionsCount, durationSnapshot, peersCount }) {
+function generateMessages({
+  connectionsCount,
+  duration: durationSnapshot,
+  peersCount,
+}) {
   const utcNow = Date.now()
   const utcFrom = utcNow
   const utcTo = utcNow + durationSnapshot

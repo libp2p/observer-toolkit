@@ -64,6 +64,7 @@ if (filePath) {
     Writing to ${filePath} with:
 
     - ${durationSeconds} seconds sample duration ('-d ${durationSeconds}')
+    - State messages every ${durationSnapshot} milliseconds
     - ${connectionsCount} initial connections ('-c ${connectionsCount}')
     - Around ~${streamsCount} streams per connection ('-s ${streamsCount}')
     - At least ${peersCount} initial peers in the DHT ('-p ${peersCount}')
@@ -76,8 +77,9 @@ if (socksrv) {
 } else {
   const bufferSegments = generateComplete(
     connectionsCount,
+    durationSeconds,
     peersCount,
-    durationSeconds
+    durationSnapshot
   )
   const writer = filePath ? createWriteStream(filePath) : process.stdout
   writer.write(bufferSegments)
