@@ -141,7 +141,8 @@ describe('ConnectionsTable', () => {
     const ageCell_2 = within(expandedRow_2).getByLabelText(/^time open/i)
     const age_2 = parseFloat(ageCell_2.textContent)
 
-    expect(age_2).toEqual(age - 1)
+    const secondsPerState = 2
+    expect(age_2).toEqual(age - secondsPerState)
 
     // Check it closes as expected, and stays closed
     const hideStreamsButton = within(expandedRow_2).getByAriaLabel('Close')
