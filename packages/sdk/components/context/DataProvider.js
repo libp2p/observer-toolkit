@@ -3,8 +3,7 @@ import T from 'prop-types'
 
 import { getLatestTimepoint } from '@libp2p-observer/data'
 
-const CUTOFF_CONNECTION = 15000
-const CUTOFF_STATE = 60000
+let CUTOFF_MS = 60000
 
 const SourceContext = createContext()
 const DataContext = createContext()
@@ -24,7 +23,7 @@ function updateStates(data) {
     .filter(msg => {
       if (
         msg.getStartTs &&
-        latestTs - msg.getStartTs().getSeconds() > CUTOFF_STATE
+        latestTs - msg.getStartTs().getSeconds() > CUTOFF_MS
       )
         return false
       return true
@@ -42,7 +41,7 @@ function updateStates(data) {
           .getTimeline()
           .getCloseTs()
           .getSeconds()
-        return stateTs - closeTs < CUTOFF_CONNECTION
+        return stateTs - closeTs < CUTOFF_MS
       })
       subsystems.setConnectionsList(cns)
       msg.setSubsystems(subsystems)
@@ -92,6 +91,10 @@ function DataProvider({
 
   if (!initialTime) initialTime = getLatestTimepoint(states)
   const [timepoint, setTimepoint] = useState(null)
+
+  if (runtime && runtime.getKeepStaleDataMs()) {
+    CUTOFF_MS = runtime.getKeepStaleDataMs()
+  }
 
   // Bundle setters and make bundle persist, as defining this in normal function flow
   // causes context `value` to see a new object each run, causing re-renders every time

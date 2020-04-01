@@ -25,6 +25,7 @@ const wss = new WebSocket.Server({ noServer: true })
 const msgQueue = []
 
 let lastDurationSnapshot
+let lastCutoffSeconds
 let runtime
 let dht
 
@@ -32,15 +33,24 @@ function generateMessages({
   connectionsCount,
   duration: durationSnapshot,
   peersCount,
+  cutoffSeconds,
 }) {
   const utcNow = Date.now()
   const utcFrom = utcNow
   const utcTo = utcNow + durationSnapshot
   if (!dht) dht = generateDHT({ peersCount })
 
-  if (!runtime || lastDurationSnapshot !== durationSnapshot) {
-    runtime = generateRuntime({ stateIntervalDuration: durationSnapshot })
+  if (
+    !runtime ||
+    lastDurationSnapshot !== durationSnapshot ||
+    cutoffSeconds !== lastCutoffSeconds
+  ) {
+    runtime = generateRuntime({
+      stateIntervalDuration: durationSnapshot,
+      cutoffSeconds,
+    })
     lastDurationSnapshot = durationSnapshot
+    lastCutoffSeconds = cutoffSeconds
   }
 
   if (!connections.length) {
@@ -49,12 +59,18 @@ function generateMessages({
       connectionsCount,
       utcNow - durationSnapshot
     )
-    updateConnections(conns, null, utcFrom, durationSnapshot)
+    updateConnections(conns, null, utcFrom, durationSnapshot, cutoffSeconds)
     connections.push(...conns)
     return
   }
 
-  updateConnections(connections, connectionsCount, utcTo, durationSnapshot)
+  updateConnections(
+    connections,
+    connectionsCount,
+    utcTo,
+    durationSnapshot,
+    cutoffSeconds
+  )
   updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version })
 
   generateConnectionEvents({
@@ -130,11 +146,12 @@ function start({
   connectionsCount = 0,
   duration = DEFAULT_SNAPSHOT_DURATION,
   peersCount,
+  cutoffSeconds,
 } = {}) {
   // generate states
   wss.connectionsCount = connectionsCount
   wss.generator = setInterval(() => {
-    generateMessages({ connectionsCount, peersCount, duration })
+    generateMessages({ connectionsCount, peersCount, duration, cutoffSeconds })
   }, duration)
 
   // handle messages
