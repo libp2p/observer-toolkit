@@ -26,6 +26,7 @@ const msgQueue = []
 
 let lastDurationSnapshot
 let runtime
+let dht
 
 function generateMessages({
   connectionsCount,
@@ -35,7 +36,7 @@ function generateMessages({
   const utcNow = Date.now()
   const utcFrom = utcNow
   const utcTo = utcNow + durationSnapshot
-  const dht = generateDHT({ peersCount })
+  if (!dht) dht = generateDHT({ peersCount })
 
   if (!runtime || lastDurationSnapshot !== durationSnapshot) {
     runtime = generateRuntime({ stateIntervalDuration: durationSnapshot })
