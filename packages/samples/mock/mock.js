@@ -71,11 +71,11 @@ if (filePath) {
     Writing to ${filePath} with:
 
     - ${durationSeconds} seconds sample duration ('-d ${durationSeconds}')
-    - State messages every ${durationSnapshot} milliseconds
+    - State messages every ${durationSnapshot} milliseconds ('-n ${durationSnapshot}')
     - ${connectionsCount} initial connections ('-c ${connectionsCount}')
     - Around ~${streamsCount} streams per connection ('-s ${streamsCount}')
     - At least ${peersCount} initial peers in the DHT ('-p ${peersCount}')
-    - Keeping old data for ${cutoffSeconds} seconds
+    - Keeping old data for ${cutoffSeconds} seconds ('-t ${cutoffSeconds}')
 
   `)
 }
