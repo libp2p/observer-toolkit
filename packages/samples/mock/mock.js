@@ -11,7 +11,7 @@ const { argv } = require('yargs').options({
     describe: 'number of seconds of data collection to simulate',
     type: 'number',
   },
-  sd: {
+  n: {
     alias: 'snapshot',
     describe: 'snapshot duration in milliseconds ',
     type: 'number',
