@@ -11,6 +11,9 @@ const presentStatuses = [
   getEnumByName('ACTIVE', dhtStatusNames),
   getEnumByName('MISSING', dhtStatusNames),
 ]
+
+const relevantEventNames = Object.values(dhtQueryEventNames)
+
 function peerPresentInBucket(peer) {
   const status = peer.getStatus()
   return presentStatuses.includes(status)
@@ -81,37 +84,35 @@ function getDhtQueries(events, { state, ...options } = {}) {
 
   const queries = events.reduce((queries, event) => {
     // Filter to only query events
-    if (!Object.values(dhtQueryEventNames).includes(event.getType()))
+    const type = event.getType()
+    if (!relevantEventNames.includes(type)) {
       return queries
+    }
 
-    const sentTs = event.getTs()
+    const sentTs = Number(event.getTs())
 
     // Optional filters by time
     if (options.fromTs && sentTs < options.fromTs) return queries
     if (options.toTs && sentTs > options.toTs) return queries
 
-    const content = getDhtQueryEventContent(event)
+    const direction = type.match(/inbound/i) ? 'INBOUND' : 'OUTBOUND'
     // Optional filter by direction
-    if (options.direction && content.direction !== options.direction)
+    if (options.direction && direction !== options.direction) {
       return queries
+    }
 
+    const content = JSON.parse(event.getContent())
     // Optional filter by result
     if (options.result && content.result !== options.result) return queries
 
-    // Map filtered array to only event's JSON content
+    content.direction = direction
+    content.sentTs = sentTs
+
+    // Map filtered array to event's processed content
     return [...queries, content]
   }, [])
 
   return queries
-}
-
-function getDhtQueryEventContent(event) {
-  const json = JSON.parse(event.getContent())
-  return {
-    sentTs: Number(event.getTs()),
-    direction: event.getType().match(/inbound/i) ? 'INBOUND' : 'OUTBOUND',
-    ...json,
-  }
 }
 
 function getDhtQueryTimes(dhtQuery) {
