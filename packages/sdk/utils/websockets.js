@@ -4,6 +4,12 @@ import { BufferList } from 'bl'
 
 let ws = null
 
+let eventsRelease = false
+
+setInterval(() => {
+  eventsRelease = true
+}, 1000)
+
 function createClientSignalMessage(
   signal,
   datasource = proto.ClientSignal.DataSource.STATE
@@ -37,11 +43,7 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   const bl = new BufferList()
   const eventsBuffer = []
   const usePushEmitter = true
-  let eventsRelease = false
 
-  setInterval(() => {
-    eventsRelease = true
-  }, 1000)
   if (!url) return
   ws = new WebSocket(url)
 
@@ -53,10 +55,8 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
       processUploadBuffer({
         bufferList: bl,
         eventsBuffer,
-        eventsRelease,
         onUploadChunk,
       })
-      eventsRelease = false
     }
 
     if (!usePushEmitter) {
@@ -79,21 +79,31 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   })
 }
 
-function processUploadBuffer({
-  bufferList,
-  eventsBuffer,
-  eventsRelease,
-  onUploadChunk,
-}) {
+function processUploadBuffer({ bufferList, eventsBuffer, onUploadChunk }) {
   const data = parseBufferList(bufferList)
+
+  console.log({
+    eventsRelease,
+    eventsBufferLength: eventsBuffer.length,
+    dataEvents: data.events,
+    data,
+  })
 
   const events = data.events || []
   eventsBuffer.push(...events)
   if (eventsRelease) {
-    data.events = eventsBuffer
+    onUploadChunk({
+      ...data,
+      events: [...eventsBuffer],
+    })
     eventsBuffer.length = 0
+    eventsRelease = false
+  } else {
+    onUploadChunk({
+      ...data,
+      events: [],
+    })
   }
-  onUploadChunk(data)
 }
 
 export { sendSignal, uploadWebSocket }
