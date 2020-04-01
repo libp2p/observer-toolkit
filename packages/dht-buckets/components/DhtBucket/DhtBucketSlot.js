@@ -34,21 +34,42 @@ const PeerContainer = styled.div`
   position: relative;
 `
 
-function DhtSlot({
+function getPreviousSlotRef(peer, peerSlotsRef, slotRef) {
+  const previousSlot = peerSlotsRef.current[peer.peerId]
+
+  // If this is first render, treat the peer like it was always here
+  if (!previousSlot && !slotRef.current) return slotRef
+
+  // Else return previous slot, or, nothing indicating this peer is newly appearing
+  return previousSlot || null
+}
+
+function DhtBucketSlot({
   peer,
   timestamp,
   isBucket0,
   bkgColorIndex,
   selectedPeer,
   setSelectedPeer,
+  slotIndex,
 }) {
   const slotRef = useRef()
   const peerSlotsRef = useContext(PeerSlotsContext)
-  const previousSlotRef = peer ? peerSlotsRef.current[peer.peerId] : null
+
+  const previousSlotRef = peer
+    ? getPreviousSlotRef(peer, peerSlotsRef, slotRef)
+    : slotRef.current
 
   useEffect(() => {
     if (peer) {
       peerSlotsRef.current[peer.peerId] = slotRef
+      slotRef.current.setAttribute('data-peerId', peer.peerId)
+    } else {
+      // Clear assignment of this slot on emptying so reappearing peers appear to reappear
+      const dataPeerId = slotRef.current.getAttribute('data-peerId')
+      if (dataPeerId && peerSlotsRef.current[dataPeerId] === slotRef) {
+        peerSlotsRef.current[dataPeerId] = null
+      }
     }
   })
 
@@ -72,6 +93,7 @@ function DhtSlot({
       {peer && (
         <PeerContainer>
           <DhtPeer
+            key={`peer_${peer.peerId}`}
             inboundQueries={peer.inboundQueries}
             outboundQueries={peer.outboundQueries}
             peerId={peer.peerId}
@@ -88,13 +110,14 @@ function DhtSlot({
   )
 }
 
-DhtSlot.propTypes = {
+DhtBucketSlot.propTypes = {
   peer: T.object,
   timestamp: T.number,
   isBucket0: T.bool,
   bkgColorIndex: T.number,
+  slotIndex: T.number,
   selectedPeer: T.object,
   setSelectedPeer: T.func,
 }
 
-export default DhtSlot
+export default DhtBucketSlot
