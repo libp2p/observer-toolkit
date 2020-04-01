@@ -19,6 +19,12 @@ function useDatastore(type) {
 
   const updateData = useCallback(
     ({ states = [], events = [], runtime }) => {
+      console.log('UPDATE:', {
+        states: states && states.length,
+        events: events && events.length,
+        runtime: !!runtime,
+      })
+
       if (states.length)
         dispatchStates({
           action: 'append',

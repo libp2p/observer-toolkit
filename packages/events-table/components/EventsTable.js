@@ -10,6 +10,8 @@ import {
 
 import eventsColumnDefs from '../definitions/eventsColumns'
 
+let lastTime = performance.now()
+
 function EventsTable() {
   const timepoint = useContext(TimeContext)
   const time = getTime(timepoint)
@@ -31,6 +33,13 @@ function EventsTable() {
     defaultSort: 'time',
   })
 
+  const now = performance.now()
+  console.log({
+    ms: Math.round(now - lastTime),
+    events: allEvents.length,
+  })
+  lastTime = now
+
   return (
     <DataTable
       contentProps={contentProps}
@@ -39,6 +48,7 @@ function EventsTable() {
       setSortColumn={setSortColumn}
       sortDirection={sortDirection}
       setSortDirection={setSortDirection}
+      limit={20}
     />
   )
 }

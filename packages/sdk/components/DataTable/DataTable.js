@@ -21,6 +21,7 @@ function DataTable({
   setSortColumn,
   sortDirection,
   setSortDirection,
+  limit,
   override = {},
 }) {
   const tbodyRef = useRef()
@@ -35,6 +36,8 @@ function DataTable({
     keyColumn
       ? rowContentProps[keyColumnIndex][keyColumn.rowKey]
       : `row_${rowIndex}`
+
+  const visibleRowProps = limit ? contentProps.slice(0, limit) : contentProps
 
   return (
     <SlidingRowProvider>
@@ -61,7 +64,7 @@ function DataTable({
             </THeadRow>
           </THead>
           <TBody ref={tbodyRef} as={override.TBody}>
-            {contentProps.map((rowContentProps, rowIndex) => {
+            {visibleRowProps.map((rowContentProps, rowIndex) => {
               const key = getRowKey(rowContentProps, rowIndex)
               return (
                 <DataTableRow
