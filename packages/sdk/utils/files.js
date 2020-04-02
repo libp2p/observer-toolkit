@@ -93,14 +93,21 @@ function processUploadBuffer({
   onUploadChunk,
 }) {
   const data = parseBufferList(bufferList)
-
   const events = data.events || []
   eventsBuffer.push(...events)
   if (eventsRelease) {
-    data.events = eventsBuffer
+    onUploadChunk({
+      ...data,
+      events: [...eventsBuffer],
+    })
     eventsBuffer.length = 0
+    eventsRelease = false
+  } else {
+    onUploadChunk({
+      ...data,
+      events: [],
+    })
   }
-  onUploadChunk(data)
 }
 
 export { uploadDataFile, applySampleData }
