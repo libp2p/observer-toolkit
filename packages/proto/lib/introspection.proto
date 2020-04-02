@@ -356,6 +356,8 @@ message ClientSignal {
     STOP_PUSH_EMITTER    = 2;
     PAUSE_PUSH_EMITTER   = 3;
     UNPAUSE_PUSH_EMITTER = 4;
+    
+    CONFIG_EMITTER       = 10;
   }
 
   // The source the data is expected to come from
@@ -365,9 +367,11 @@ message ClientSignal {
   }
 
   // Version of this protobuf
-  Version version        = 1;
+  Version version           = 1;
   // Signal to be sent
-  Signal signal          = 2;
+  Signal signal             = 2;
   // Correlated DataSource for this signal (if any)
-  DataSource data_source = 3;
+  DataSource data_source    = 3;
+  // Optional: JSON stringified content to be sent to the emitter
+  string content            = 4;
 }

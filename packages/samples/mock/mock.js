@@ -11,6 +11,11 @@ const { argv } = require('yargs').options({
     describe: 'number of seconds of data collection to simulate',
     type: 'number',
   },
+  n: {
+    alias: 'snapshot',
+    describe: 'snapshot duration in milliseconds ',
+    type: 'number',
+  },
   f: {
     alias: 'file',
     describe:
@@ -36,6 +41,7 @@ const {
   DEFAULT_DURATION,
   DEFAULT_FILE,
   DEFAULT_PEERS,
+  DEFAULT_SNAPSHOT_DURATION,
 } = require('./utils')
 const { generateComplete } = require('./generate')
 
@@ -46,6 +52,7 @@ const {
   connections: connectionsCount = DEFAULT_CONNECTIONS,
   duration: durationSeconds = DEFAULT_DURATION,
   peers: peersCount = DEFAULT_PEERS,
+  snapshot: durationSnapshot = DEFAULT_SNAPSHOT_DURATION,
   file,
   socksrv,
 } = argv
@@ -57,6 +64,7 @@ if (filePath) {
     Writing to ${filePath} with:
 
     - ${durationSeconds} seconds sample duration ('-d ${durationSeconds}')
+    - State messages every ${durationSnapshot} milliseconds
     - ${connectionsCount} initial connections ('-c ${connectionsCount}')
     - Around ~${streamsCount} streams per connection ('-s ${streamsCount}')
     - At least ${peersCount} initial peers in the DHT ('-p ${peersCount}')
@@ -65,12 +73,13 @@ if (filePath) {
 }
 
 if (socksrv) {
-  startServer({ connectionsCount })
+  startServer({ connectionsCount, peersCount, duration: durationSnapshot })
 } else {
   const bufferSegments = generateComplete(
     connectionsCount,
     durationSeconds,
-    peersCount
+    peersCount,
+    durationSnapshot
   )
   const writer = filePath ? createWriteStream(filePath) : process.stdout
   writer.write(bufferSegments)

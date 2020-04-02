@@ -4,15 +4,15 @@ const {
   proto: { State, Subsystems },
 } = require('@libp2p-observer/proto')
 
-const { SNAPSHOT_DURATION, createTimestamp } = require('../utils')
+const { createTimestamp } = require('../utils')
 const { createTraffic, sumTraffic } = require('../messages/traffic')
 
-function createState(connectionsList, now, dht) {
+function createState(connectionsList, now, dht, duration) {
   const state = new State()
 
   state.setInstantTs(createTimestamp(now))
-  state.setStartTs(createTimestamp(now))
-  state.setSnapshotDurationMs(SNAPSHOT_DURATION)
+  state.setStartTs(createTimestamp(now - duration + 1))
+  state.setSnapshotDurationMs(duration)
 
   const stateTraffic = createTraffic()
   state.setTraffic(stateTraffic)

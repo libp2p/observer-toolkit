@@ -8,11 +8,12 @@ const DEFAULT_DURATION = 10 // Seconds
 const DEFAULT_FILE = `mock-${Date.now()}`
 const DEFAULT_STREAMS = 10
 const DEFAULT_PEERS = 30
+const DEFAULT_SNAPSHOT_DURATION = 2000 // Miliseconds
 
-// This may need to become configurable, but that's not currently planned
-const SNAPSHOT_DURATION = 1000 // Miliseconds
+const CUTOFFTIME_SECONDS = 120
 
 const HOUR_IN_SECONDS = 3600
+const SECOND_IN_MS = 1000
 const GIGABYTE_IN_BYTES = 1e9
 
 // TODO: Make this relative to a CLI arg
@@ -115,6 +116,11 @@ function mapArray(size, map) {
 }
 
 function createTimestamp(utcNum) {
+  if (typeof utcNum !== 'number' || Number.isNaN(utcNum)) {
+    throw new Error(
+      `Can't create timestamp from ${utcNum} (typeof ${typeof utcNum}), must be number`
+    )
+  }
   return new Timestamp([Math.round(utcNum)])
 }
 
@@ -127,8 +133,10 @@ module.exports = {
   DEFAULT_FILE,
   DEFAULT_STREAMS,
   DEFAULT_PEERS,
-  SNAPSHOT_DURATION,
+  DEFAULT_SNAPSHOT_DURATION,
+  CUTOFFTIME_SECONDS,
   HOUR_IN_SECONDS,
+  SECOND_IN_MS,
   GIGABYTE_IN_BYTES,
   HOST_PEER_ID,
   OPEN_CLOSE_PROBABILITY,
