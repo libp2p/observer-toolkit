@@ -39,6 +39,7 @@ function EventsTable() {
       setSortColumn={setSortColumn}
       sortDirection={sortDirection}
       setSortDirection={setSortDirection}
+      limit={20}
     />
   )
 }
