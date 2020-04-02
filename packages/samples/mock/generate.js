@@ -1,7 +1,6 @@
 'use strict'
 
 const {
-  CUTOFFTIME_SECONDS,
   SECOND_IN_MS,
   random,
   randomOpenClose,
@@ -53,7 +52,7 @@ function generateRuntime(options = {}) {
   return createBufferSegment(runtimePacket)
 }
 
-function updateConnections(connections, total, now, duration) {
+function updateConnections(connections, total, now, duration, cutoffSeconds) {
   connections.forEach(connection => updateConnection(connection, now, duration))
   if (randomOpenClose(total)) {
     // open a new connection
@@ -70,7 +69,7 @@ function updateConnections(connections, total, now, duration) {
     }
     const timeline = cn.getTimeline()
     const closedSecs = (now - timeline.getCloseTs()) / SECOND_IN_MS
-    if (closedSecs >= CUTOFFTIME_SECONDS) {
+    if (closedSecs >= cutoffSeconds) {
       connections.splice(idx, 1)
     }
   })
@@ -115,6 +114,7 @@ function generateActivity({
   version,
   runtime,
   duration,
+  cutoffSeconds,
 }) {
   // Generates states and events for file and stdout output
   let msgBuffers = []
@@ -124,7 +124,13 @@ function generateActivity({
     const intervalEnd = utcFrom + state * duration
     const intervalStart = intervalEnd - duration
 
-    updateConnections(connections, connectionsCount, intervalEnd, duration)
+    updateConnections(
+      connections,
+      connectionsCount,
+      intervalEnd,
+      duration,
+      cutoffSeconds
+    )
 
     const events = generateConnectionEvents({
       connections,
@@ -163,13 +169,17 @@ function generateComplete(
   connectionsCount,
   durationSeconds,
   peersCount,
-  durationSnapshot
+  durationSnapshot,
+  cutoffSeconds
 ) {
   const utcTo = Date.now()
   const utcFrom = utcTo - durationSeconds * SECOND_IN_MS
 
   const version = generateVersion()
-  const runtime = generateRuntime({ stateIntervalDuration: durationSnapshot })
+  const runtime = generateRuntime({
+    stateIntervalDuration: durationSnapshot,
+    cutoffSeconds,
+  })
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
 
@@ -191,6 +201,7 @@ function generateComplete(
     version,
     runtime,
     duration: durationSnapshot,
+    cutoffSeconds,
   })
 
   return Buffer.concat([version, runtime, ...activityMsgs])

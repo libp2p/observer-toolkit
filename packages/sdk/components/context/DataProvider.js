@@ -3,6 +3,8 @@ import T from 'prop-types'
 
 import { getLatestTimepoint } from '@libp2p-observer/data'
 
+let CUTOFF_MS = 60000
+
 const SourceContext = createContext()
 const DataContext = createContext()
 const EventsContext = createContext()
@@ -11,12 +13,48 @@ const TimeContext = createContext()
 const PeersContext = createContext()
 const SetterContext = createContext()
 
+function updateStates(data) {
+  let latestTs = data
+    .filter(msg => msg.getStartTs)
+    .map(msg => msg.getStartTs().getSeconds())
+    .sort()
+    .pop()
+  return data
+    .filter(msg => {
+      if (
+        msg.getStartTs &&
+        latestTs - msg.getStartTs().getSeconds() > CUTOFF_MS
+      )
+        return false
+      return true
+    })
+    .map(msg => {
+      if (!msg.getStartTs || !msg.getSubsystems) return msg
+      const stateTs = msg.getStartTs().getSeconds()
+      const subsystems = msg.getSubsystems()
+      const connections = subsystems.getConnectionsList()
+      const cns = connections.filter(cn => {
+        if (!cn.getTimeline().getCloseTs()) {
+          return true
+        }
+        const closeTs = cn
+          .getTimeline()
+          .getCloseTs()
+          .getSeconds()
+        return stateTs - closeTs < CUTOFF_MS
+      })
+      subsystems.setConnectionsList(cns)
+      msg.setSubsystems(subsystems)
+      return msg
+    })
+}
+
 function updateData(oldData, { action, data }) {
   switch (action) {
     case 'append':
-      return appendToDataSet(data, oldData)
+      return updateStates(appendToDataSet(data, oldData))
     case 'replace':
-      return replaceDataSet(data)
+      return updateStates(replaceDataSet(data))
     case 'remove':
       return []
     default:
@@ -53,6 +91,10 @@ function DataProvider({
 
   if (!initialTime) initialTime = getLatestTimepoint(states)
   const [timepoint, setTimepoint] = useState(null)
+
+  if (runtime && runtime.getKeepStaleDataMs()) {
+    CUTOFF_MS = runtime.getKeepStaleDataMs()
+  }
 
   // Bundle setters and make bundle persist, as defining this in normal function flow
   // causes context `value` to see a new object each run, causing re-renders every time
