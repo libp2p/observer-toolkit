@@ -81,14 +81,6 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
 
 function processUploadBuffer({ bufferList, eventsBuffer, onUploadChunk }) {
   const data = parseBufferList(bufferList)
-
-  console.log({
-    eventsRelease,
-    eventsBufferLength: eventsBuffer.length,
-    dataEvents: data.events,
-    data,
-  })
-
   const events = data.events || []
   eventsBuffer.push(...events)
   if (eventsRelease) {
