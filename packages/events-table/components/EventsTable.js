@@ -18,28 +18,40 @@ function EventsTable() {
     event => event.getTs().getSeconds() <= time
   )
 
+  const rowsPerPageOptions = [10, 25, 50, 100]
+  const defaultPerPageIndex = 0
+
   const {
     columnDefs,
-    contentProps,
+    allContent,
+    shownContent,
     sortColumn,
     setSortColumn,
     sortDirection,
     setSortDirection,
+    setRange,
+    rowCounts,
   } = useTabularData({
     columns: eventsColumnDefs,
     data: eventsData,
     defaultSort: 'time',
+    defaultRange: [0, rowsPerPageOptions[defaultPerPageIndex]],
   })
 
   return (
     <DataTable
-      contentProps={contentProps}
+      allContent={allContent}
+      shownContent={shownContent}
       columnDefs={columnDefs}
       sortColumn={sortColumn}
       setSortColumn={setSortColumn}
       sortDirection={sortDirection}
       setSortDirection={setSortDirection}
-      limit={20}
+      setRange={setRange}
+      rowCounts={rowCounts}
+      rowsPerPageOptions={rowsPerPageOptions}
+      defaultPerPageIndex={defaultPerPageIndex}
+      hasPagination
     />
   )
 }

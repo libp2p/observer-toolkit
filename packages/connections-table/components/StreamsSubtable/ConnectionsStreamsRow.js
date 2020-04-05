@@ -46,7 +46,7 @@ const CloseIcon = styled.span``
 function ConnectionsStreamsRow({
   peerId,
   streamsCount,
-  rowContentProps,
+  rowContent,
   columnDefs,
   closeRow,
   onMouseEnter,
@@ -70,9 +70,7 @@ function ConnectionsStreamsRow({
           return (
             <PushApart key={name}>
               <label htmlFor={labelId}>{capitalisedInitial}:</label>
-              <span id={labelId}>
-                {renderContent(rowContentProps[cellIndex])}
-              </span>
+              <span id={labelId}>{renderContent(rowContent[cellIndex])}</span>
             </PushApart>
           )
         })}
@@ -98,7 +96,7 @@ function ConnectionsStreamsRow({
 ConnectionsStreamsRow.propTypes = {
   peerId: T.string.isRequired,
   streamsCount: T.number.isRequired,
-  rowContentProps: T.array.isRequired,
+  rowContent: T.array.isRequired,
   columnDefs: T.array.isRequired,
   closeRow: T.func.isRequired,
   onMouseEnter: T.func,

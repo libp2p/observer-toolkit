@@ -13,11 +13,14 @@ function ConnectionsTable() {
 
   const {
     columnDefs,
-    contentProps,
+    allContent,
+    shownContent,
     sortColumn,
     setSortColumn,
     sortDirection,
     setSortDirection,
+    setRange,
+    rowCounts,
   } = useTabularData({
     columns: connectionsColumnDefs,
     data: getConnections(timepoint),
@@ -30,12 +33,16 @@ function ConnectionsTable() {
 
   return (
     <DataTable
-      contentProps={contentProps}
+      allContent={allContent}
+      shownContent={shownContent}
       columnDefs={columnDefs}
       sortColumn={sortColumn}
       setSortColumn={setSortColumn}
       sortDirection={sortDirection}
       setSortDirection={setSortDirection}
+      setRange={setRange}
+      rowCounts={rowCounts}
+      hasPagination
       override={{ DataTableRow: ConnectionsTableRow }}
     />
   )

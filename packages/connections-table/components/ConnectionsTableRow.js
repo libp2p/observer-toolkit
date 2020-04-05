@@ -22,11 +22,11 @@ const ExpandStreamsCell = styled(TableCell)`
   padding-right: 0;
 `
 
-function ConnectionsTableRow({ rowContentProps, columnDefs, ...rowProps }) {
+function ConnectionsTableRow({ rowContent, columnDefs, ...rowProps }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const globalPeerIds = useContext(PeersContext)
   const { setPeerIds } = useContext(SetterContext)
-  const peerIdRow = rowContentProps.find(row => row.columnName === 'peerId')
+  const peerIdRow = rowContent.find(row => row.columnName === 'peerId')
   const peerId = peerIdRow ? peerIdRow.value : null
   const isHighlighted = globalPeerIds.includes(peerId)
 
@@ -37,7 +37,7 @@ function ConnectionsTableRow({ rowContentProps, columnDefs, ...rowProps }) {
     if (globalPeerIds.length) setPeerIds([])
   }
 
-  const streamsRow = rowContentProps.find(row => row.columnName === 'streams')
+  const streamsRow = rowContent.find(row => row.columnName === 'streams')
   const streamsCount = streamsRow ? streamsRow.value : null
 
   if (isExpanded) {
@@ -45,7 +45,7 @@ function ConnectionsTableRow({ rowContentProps, columnDefs, ...rowProps }) {
     return (
       <ConnectionsStreamsRow
         peerId={peerId}
-        rowContentProps={rowContentProps}
+        rowContent={rowContent}
         columnDefs={columnDefs}
         closeRow={closeRow}
         streamsCount={streamsCount}
@@ -61,7 +61,7 @@ function ConnectionsTableRow({ rowContentProps, columnDefs, ...rowProps }) {
 
   return (
     <DataTableRow
-      rowContentProps={rowContentProps}
+      rowContent={rowContent}
       columnDefs={columnDefs}
       onMouseEnter={mouseEnterHandler}
       onMouseLeave={mouseLeaveHandler}
@@ -81,7 +81,7 @@ function ConnectionsTableRow({ rowContentProps, columnDefs, ...rowProps }) {
 }
 
 ConnectionsTableRow.propTypes = {
-  rowContentProps: T.array.isRequired,
+  rowContent: T.array.isRequired,
   columnDefs: T.array.isRequired,
 }
 
