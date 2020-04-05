@@ -7,7 +7,7 @@ import { SlidingRowSetterContext } from './context/SlidingRowProvider'
 function DataTableRow({
   rowIndex,
   tbodyRef,
-  rowContentProps,
+  rowContent,
   columnDefs,
   slideDuration,
   children,
@@ -25,7 +25,7 @@ function DataTableRow({
           ({ renderContent, align, name, cellProps = {} }, cellIndex) => {
             return (
               <TableCell align={align} key={name} {...cellProps}>
-                {renderContent(rowContentProps[cellIndex])}
+                {renderContent(rowContent[cellIndex])}
               </TableCell>
             )
           }
@@ -33,7 +33,7 @@ function DataTableRow({
         {children}
       </>
     ),
-    [columnDefs, children, rowContentProps]
+    [columnDefs, children, rowContent]
   )
 
   useEffect(() => {
@@ -88,7 +88,7 @@ function DataTableRow({
 DataTableRow.propTypes = {
   rowIndex: T.number.isRequired,
   tbodyRef: T.object.isRequired,
-  rowContentProps: T.array.isRequired,
+  rowContent: T.array.isRequired,
   columnDefs: T.array.isRequired,
   slideDuration: T.number.isRequired,
   children: T.node,

@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import SlidingRowsContainer from './SlidingRowsContainer'
 import DefaultDataTableRow from './DataTableRow'
 import DefaultDataTableHead from './DataTableHead'
+import DataTablePagination from './DataTablePagination'
 import { Table, THead, THeadRow, TBody } from './styledTable'
 import { SlidingRowProvider } from './context/SlidingRowProvider'
 
@@ -15,16 +16,24 @@ const Container = styled.div`
 const slideDuration = 600
 
 function DataTable({
-  contentProps,
+  allContent,
+  shownContent,
   columnDefs,
   sortColumn,
   setSortColumn,
   sortDirection,
   setSortDirection,
-  limit,
+  setRange,
+  rowCounts = {},
+  hasPagination = false,
+  rowsPerPageOptions,
+  defaultPerPageIndex,
   override = {},
 }) {
   const tbodyRef = useRef()
+
+  const { firstIndex, shown } = rowCounts
+  const lastIndex = firstIndex + shown
 
   const DataTableRow = override.DataTableRow || DefaultDataTableRow
   const DataTableHead = override.DataTableHead || DefaultDataTableHead
@@ -32,12 +41,8 @@ function DataTable({
   // Key rows by a unique identifying property if one is declared in column def
   const keyColumnIndex = columnDefs.findIndex(colDef => !!colDef.rowKey)
   const keyColumn = keyColumnIndex >= 0 && columnDefs[keyColumnIndex]
-  const getRowKey = (rowContentProps, rowIndex) =>
-    keyColumn
-      ? rowContentProps[keyColumnIndex][keyColumn.rowKey]
-      : `row_${rowIndex}`
-
-  const visibleRowProps = limit ? contentProps.slice(0, limit) : contentProps
+  const getRowKey = (rowContent, rowIndex) =>
+    keyColumn ? rowContent[keyColumnIndex][keyColumn.rowKey] : `row_${rowIndex}`
 
   return (
     <SlidingRowProvider>
@@ -64,28 +69,40 @@ function DataTable({
             </THeadRow>
           </THead>
           <TBody ref={tbodyRef} as={override.TBody}>
-            {visibleRowProps.map((rowContentProps, rowIndex) => {
-              const key = getRowKey(rowContentProps, rowIndex)
+            {shownContent.map((rowContent, rowIndex) => {
+              const key = getRowKey(rowContent, rowIndex)
               return (
                 <DataTableRow
                   key={key}
-                  rowContentProps={rowContentProps}
+                  rowContent={rowContent}
                   columnDefs={columnDefs}
                   rowIndex={rowIndex}
                   tbodyRef={tbodyRef}
                   slideDuration={slideDuration}
+                  firstIndex={firstIndex}
+                  lastIndex={lastIndex}
                 />
               )
             })}
           </TBody>
         </Table>
+        {hasPagination && (
+          <DataTablePagination
+            setRange={setRange}
+            rowCounts={rowCounts}
+            rowsPerPageOptions={rowsPerPageOptions}
+            defaultPerPageIndex={defaultPerPageIndex}
+            override={override}
+          />
+        )}
       </Container>
     </SlidingRowProvider>
   )
 }
 
 DataTable.propTypes = {
-  contentProps: T.array.isRequired,
+  allContent: T.array.isRequired,
+  shownContent: T.array.isRequired,
   columnDefs: T.array.isRequired,
   columnMetadata: T.array,
   TableRow: T.any,
@@ -94,7 +111,11 @@ DataTable.propTypes = {
   setSortColumn: T.func,
   sortDirection: T.string,
   setSortDirection: T.func,
-  limit: T.number,
+  setRange: T.func,
+  hasPagination: T.bool,
+  rowCounts: T.object,
+  rowsPerPageOptions: T.array,
+  defaultPerPageIndex: T.number,
   override: T.object,
 }
 

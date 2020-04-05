@@ -77,14 +77,16 @@ function useTabularData({
   data,
   defaultSort,
   defaultFilter,
+  defaultRange,
   metadata = {},
 }) {
   const [sortColumn, setSortColumn] = useState(defaultSort)
+  const [range, setRange] = useState(defaultRange)
   const { applyFilters } = useContext(FilterContext)
 
   const columnsWithDefaults = applyColumnDefaults(columns)
 
-  const contentProps = useMemo(() => {
+  const allContent = useMemo(() => {
     return getContentProps(
       data.filter(applyFilters),
       columnsWithDefaults,
@@ -94,7 +96,7 @@ function useTabularData({
 
   const columnDefs = applyCalculations(
     columnsWithDefaults,
-    contentProps,
+    allContent,
     metadata
   )
 
@@ -102,15 +104,27 @@ function useTabularData({
     getInitialSortDef(sortColumn, columnDefs)
   )
 
-  contentProps.sort(sorter)
+  allContent.sort(sorter)
+
+  const shownContent = range ? allContent.slice(range[0], range[1]) : allContent
+
+  const rowCounts = {
+    total: allContent.length,
+    shown: shownContent.length,
+    maxShown: range ? range[1] - range[0] : allContent.length,
+    showFrom: range ? range[0] : 0,
+  }
 
   return {
     columnDefs,
-    contentProps,
+    allContent,
+    shownContent,
     sortColumn,
     setSortColumn,
     sortDirection,
     setSortDirection,
+    rowCounts,
+    setRange,
   }
 }
 
@@ -137,6 +151,7 @@ useTabularData.propTypes = {
   data: T.arrayOf(T.object).isRequired,
   defaultSort: T.string,
   defaultFilter: T.obj,
+  defaultRange: T.arrayOf(T.number),
   metadata: T.obj,
 }
 
