@@ -57,13 +57,6 @@ async function applySampleData(
   if (onUploadStart) onUploadStart(name)
 
   const bl = new BufferList()
-  const eventsBuffer = []
-  let eventsRelease = false
-
-  setInterval(() => {
-    eventsRelease = true
-  }, 1000)
-
   const response = await fetch(samplePath)
 
   if (!response.ok) {
@@ -77,37 +70,15 @@ async function applySampleData(
   bl.append(buf.slice(4))
   processUploadBuffer({
     bufferList: bl,
-    eventsBuffer,
-    eventsRelease,
     onUploadChunk,
   })
-  eventsRelease = false
 
   onUploadFinished(name)
 }
 
-function processUploadBuffer({
-  bufferList,
-  eventsBuffer,
-  eventsRelease,
-  onUploadChunk,
-}) {
+function processUploadBuffer({ bufferList, onUploadChunk }) {
   const data = parseBufferList(bufferList)
-  const events = data.events || []
-  eventsBuffer.push(...events)
-  if (eventsRelease) {
-    onUploadChunk({
-      ...data,
-      events: [...eventsBuffer],
-    })
-    eventsBuffer.length = 0
-    eventsRelease = false
-  } else {
-    onUploadChunk({
-      ...data,
-      events: [],
-    })
-  }
+  onUploadChunk(data)
 }
 
 export { uploadDataFile, applySampleData }
