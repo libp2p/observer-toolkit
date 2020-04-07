@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
+import uniqueId from 'lodash.uniqueid'
 
 const PaginationContainer = styled.section`
   z-index: 5;
@@ -89,6 +90,7 @@ function DataTablePagination({
   defaultPerPageIndex = 1,
   override = {},
 }) {
+  const [id] = useState(() => uniqueId('DataTablePagination_'))
   const [rowsPerPageIndex, setRowsPerPageIndex] = useState(defaultPerPageIndex)
 
   const rowsPerPage = rowCounts.maxShown
@@ -206,9 +208,11 @@ function DataTablePagination({
         </Pager>
       </PaginationBlock>
       <PaginationBlock as={override.PaginationBlock}>
-        <label>Rows per page:</label>
+        <label id={`${id}_perPage`}>Rows per page:</label>
         <PerPageSelectWrapper>
           <PerPageSelect
+            aria-labelledby={`${id}_perPage`}
+            name="PerPage"
             type="list"
             onChange={handlePerPageChange}
             defaultValue={rowsPerPageIndex}

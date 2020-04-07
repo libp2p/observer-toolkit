@@ -93,7 +93,9 @@ function updateOffset(
   }
 }
 
-const Target = styled.span`
+const Target = styled.span.attrs(({ isOpen }) => ({
+  'data-tooltip': isOpen ? 'open' : 'closed',
+}))`
   position: relative;
   display: inline-block;
   ${({ isClickable, noHover, isFixed, theme }) =>
@@ -197,6 +199,8 @@ function Tooltip({
 
   const direction = getInvertedDirection(side)
 
+  const isOpen = isFixed || isShowing
+
   return (
     <Target
       onMouseEnter={noHover ? null : show}
@@ -204,10 +208,11 @@ function Tooltip({
       onClick={(clickToFix && toggleFix) || (noHover && toggleShow) || null}
       isClickable={isClickable}
       isFixed={isFixed}
+      isOpen={isOpen}
       as={override.Target}
     >
       {children}
-      {(isFixed || isShowing) && (
+      {isOpen && (
         <Positioner
           style={{ marginLeft: 0, marginTop: 0 }}
           onClick={isClickable ? stopPropagation : null}

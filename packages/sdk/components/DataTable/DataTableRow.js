@@ -48,7 +48,7 @@ function DataTableRow({
   }, [rowRef, hideUntil, fadeIn])
 
   return (
-    <TableRow ref={rowRef} {...rowProps}>
+    <TableRow ref={rowRef} data-rowkey={rowContent.key} {...rowProps}>
       {prerenderedCells}
     </TableRow>
   )

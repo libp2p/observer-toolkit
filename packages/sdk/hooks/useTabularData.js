@@ -21,7 +21,7 @@ function getContentProps(data, columnDefs, metadata, getRowKey) {
       columnName: columnDef.name,
     }))
 
-    rowContent.key = getRowKey(rowContent)
+    rowContent.key = getRowKey(rowContent, rowIndex)
     return rowContent
   })
 }
@@ -95,8 +95,8 @@ function useTabularData({
       colDef => !!colDef.rowKey
     )
     const keyColumn = keyColumnIndex >= 0 && columnsWithDefaults[keyColumnIndex]
-    const getRowKey = rowContent =>
-      keyColumn ? rowContent[keyColumnIndex][keyColumn.rowKey] : null
+    const getRowKey = (rowContent, rowIndex) =>
+      keyColumn ? rowContent[keyColumnIndex][keyColumn.rowKey] : rowIndex
 
     return getContentProps(
       data.filter(applyFilters),
