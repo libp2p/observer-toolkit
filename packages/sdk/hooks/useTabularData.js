@@ -12,15 +12,18 @@ function mapSorterToColumn(colName, columnDefs) {
   }
 }
 
-function getContentProps(data, columnDefs, metadata) {
-  return data.map((datum, rowIndex) =>
-    columnDefs.map((columnDef, columnIndex) => ({
+function getContentProps(data, columnDefs, metadata, getRowKey) {
+  return data.map((datum, rowIndex) => {
+    const rowContent = columnDefs.map((columnDef, columnIndex) => ({
       ...columnDef.getProps(datum, metadata),
       rowIndex,
       columnIndex,
       columnName: columnDef.name,
     }))
-  )
+
+    rowContent.key = getRowKey(rowContent)
+    return rowContent
+  })
 }
 
 function applyColumnDefaults(columns) {
@@ -87,10 +90,19 @@ function useTabularData({
   const columnsWithDefaults = applyColumnDefaults(columns)
 
   const allContent = useMemo(() => {
+    // Key rows by a unique identifying property if one is declared in column def
+    const keyColumnIndex = columnsWithDefaults.findIndex(
+      colDef => !!colDef.rowKey
+    )
+    const keyColumn = keyColumnIndex >= 0 && columnsWithDefaults[keyColumnIndex]
+    const getRowKey = rowContent =>
+      keyColumn ? rowContent[keyColumnIndex][keyColumn.rowKey] : null
+
     return getContentProps(
       data.filter(applyFilters),
       columnsWithDefaults,
-      metadata
+      metadata,
+      getRowKey
     )
   }, [data, columnsWithDefaults, metadata, applyFilters])
 
@@ -105,6 +117,7 @@ function useTabularData({
   )
 
   allContent.sort(sorter)
+  allContent.forEach((item, index) => (item.index = index))
 
   const shownContent = range ? allContent.slice(range[0], range[1]) : allContent
 
