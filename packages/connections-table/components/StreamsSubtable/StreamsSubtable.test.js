@@ -1,5 +1,5 @@
 import React from 'react'
-import { loadSample, renderWithData } from '@libp2p-observer/testing'
+import { loadSample, renderWithData, within } from '@libp2p-observer/testing'
 import {
   getConnections,
   getStreams,
@@ -21,10 +21,18 @@ describe('StreamsSubtable', () => {
     </WidgetContext>
   )
 
-  it('has a row for each stream in the connection', () => {
-    const { getAllByTableRow } = renderWithData(<StreamsSubtableInContext />)
+  it('has a row for each stream in the connection, paginated', () => {
+    const { getAllByTableRow, getByRole } = renderWithData(
+      <StreamsSubtableInContext />
+    )
     const streamsCount = getStreams(connection).length
     const rows = getAllByTableRow()
-    expect(rows).toHaveLength(streamsCount)
+    const perPage = getByRole('listbox', { selector: '[name="PerPage"]' })
+    const [perPageSelectedOption] = [
+      ...within(perPage).getAllByRole('option'),
+    ].filter(elem => elem.value === perPage.value)
+    const rowsPerPage = Number(perPageSelectedOption.textContent)
+
+    expect(rows).toHaveLength(Math.min(streamsCount, rowsPerPage))
   })
 })

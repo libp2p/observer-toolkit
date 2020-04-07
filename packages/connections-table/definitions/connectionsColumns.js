@@ -12,8 +12,9 @@ import {
   BytesContent,
   PeerIdContent,
   StatusContent,
-  StreamsTableHead,
 } from '../components/cellContent'
+
+import ConnectionStreamsContent from '../components/StreamsSubtable/ConnectionStreamsContent'
 
 import * as statusSorter from '../utils/statusSorter'
 
@@ -96,10 +97,11 @@ const streamsCol = {
   name: 'streams',
   getProps: connection => ({
     value: connection.getStreams().getStreamsList().length,
+    connection,
   }),
   sort: numericSorter,
+  renderContent: ConnectionStreamsContent,
   align: 'right',
-  override: { TableHead: StreamsTableHead },
 }
 
 const transportCol = {

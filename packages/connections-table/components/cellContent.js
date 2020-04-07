@@ -8,19 +8,12 @@ import {
   DataNumber,
   PeerIdChip,
   StatusChip,
-  TableHead,
   TimeNumber,
   Tooltip,
 } from '@libp2p-observer/sdk'
 
 const Nowrap = styled.span`
   white-space: nowrap;
-`
-
-const StreamsTableHead = styled(TableHead).attrs(() => ({
-  colSpan: '2',
-}))`
-  text-align: center;
 `
 
 function StatusContent({ value }) {
@@ -75,10 +68,4 @@ AgeContent.propTypes = {
   maxValue: T.num,
 }
 
-export {
-  AgeContent,
-  BytesContent,
-  PeerIdContent,
-  StatusContent,
-  StreamsTableHead,
-}
+export { AgeContent, BytesContent, PeerIdContent, StatusContent }

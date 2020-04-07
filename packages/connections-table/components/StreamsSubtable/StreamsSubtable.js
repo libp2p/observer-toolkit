@@ -1,16 +1,11 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
 
 import { getStreams } from '@libp2p-observer/data'
 import { DataTable, useTabularData } from '@libp2p-observer/sdk'
 
 import { MetadataContext } from '../context/MetadataProvider'
 import streamsColumnDefs from '../../definitions/streamsColumns'
-
-const PaginationContainer = styled.section`
-  bottom: ${({ theme }) => theme.spacing(4)};
-`
 
 function StreamsSubTable({ connection }) {
   const metadata = useContext(MetadataContext)
@@ -51,7 +46,7 @@ function StreamsSubTable({ connection }) {
       rowsPerPageOptions={rowsPerPageOptions}
       defaultPerPageIndex={defaultPerPageIndex}
       hasPagination
-      override={{ PaginationContainer }}
+      hasSlidingRows={false}
     />
   )
 }
