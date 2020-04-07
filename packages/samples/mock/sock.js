@@ -178,8 +178,12 @@ function start({
   })
 
   // listen for connections
-  server.listen(8080, () => {
-    console.log('Websocket server listening on ws://localhost:8080')
+  server.listen(8080, err => {
+    if (err) {
+      console.error(err)
+    } else {
+      console.log('Websocket server listening on ws://localhost:8080')
+    }
   })
 }
 
