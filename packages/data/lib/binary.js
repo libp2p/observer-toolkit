@@ -118,6 +118,8 @@ function parseBufferList(bufferList) {
     if (valid) {
       const message = deserializeBinary(messageBuf)
       addMessage(message, messages)
+    } else {
+      console.error('Invalid data in buffer')
     }
     bufferList.consume(minimalBufferLength)
   }
