@@ -292,6 +292,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
           >
             <tr
               class="c13"
+              data-rowkey="a"
             >
               <td
                 class="c14"
@@ -318,6 +319,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
             </tr>
             <tr
               class="c13"
+              data-rowkey="b"
             >
               <td
                 class="c14"
@@ -346,6 +348,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
             </tr>
             <tr
               class="c13"
+              data-rowkey="c"
             >
               <td
                 class="c14"
@@ -372,6 +375,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
             </tr>
             <tr
               class="c13"
+              data-rowkey="d"
             >
               <td
                 class="c14"
@@ -398,6 +402,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
             </tr>
             <tr
               class="c13"
+              data-rowkey="e"
             >
               <td
                 class="c14"

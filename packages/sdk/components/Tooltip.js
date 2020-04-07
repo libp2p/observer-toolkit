@@ -237,7 +237,7 @@ function Tooltip({
           >
             {isClosable && (
               <CloseIcon>
-                <Icon type="remove" active onClick={close} />
+                <Icon type="remove" active onClick={close} aria-label="Close" />
               </CloseIcon>
             )}
             {content}
