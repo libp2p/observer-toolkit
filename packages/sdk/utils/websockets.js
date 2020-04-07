@@ -62,7 +62,9 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
 
   if (!url) return
   ws = new WebSocket(url)
-
+  ws.addEventListener('error', function(evt) {
+    console.error('WebSocket Error', evt)
+  })
   ws.addEventListener('message', function(msg) {
     // process incoming message
     if (msg.data) {
@@ -82,8 +84,13 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
       }, 1000)
     }
   })
-  ws.addEventListener('close', function() {
+  ws.addEventListener('close', function(evt) {
     if (onUploadFinished) onUploadFinished(url)
+    if (!evt.wasClean) {
+      console.error(
+        `WebSocket error (code: ${evt.code} / reason: "${evt.reason}")`
+      )
+    }
   })
   ws.addEventListener('open', function() {
     if (onUploadStart) onUploadStart(url)
