@@ -62,13 +62,9 @@ function useEventPropertyTypes() {
   )
 
   useEffect(() => {
-    console.log(runtime !== runtimeState, { runtime, runtimeState })
     if (runtime !== runtimeState) {
-      console.log('....')
       const eventTypes = getEventTypes(runtime)
       const newPropertyTypes = getAllEventProperties({ eventTypes })
-
-      console.log({ eventTypes, newPropertyTypes })
 
       dispatchPropertyTypes({
         action: 'applyMultiple',

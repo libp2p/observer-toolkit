@@ -76,12 +76,6 @@ function buildEventsColumns(
   propertyTypes,
   dispatchPropertyTypes
 ) {
-  console.log({
-    eventsColumnDefs,
-    propertyTypes,
-    dispatchPropertyTypes,
-  })
-
   const lastColumn = eventsColumnDefs.length - 1
 
   const newColumnDefs = [

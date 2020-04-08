@@ -32,8 +32,6 @@ function EventsTable() {
     dispatchPropertyTypes
   )
 
-  console.log(columns)
-
   const {
     columnDefs,
     allContent,
