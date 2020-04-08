@@ -22,7 +22,7 @@ const numericSorter = {
 
 const Container = styled.div`
   width: 640px;
-  max-height: 400px;
+  max-height: 500px;
   overflow: auto;
 `
 
@@ -49,6 +49,8 @@ const columnsDef = [
 ]
 
 function CandidatePeersTable({ candidatePeers }) {
+  const rowsPerPageOptions = [5, 10, 25, 50, 100]
+
   const {
     columnDefs,
     allContent,
@@ -79,6 +81,7 @@ function CandidatePeersTable({ candidatePeers }) {
         rowCounts={rowCounts}
         hasPagination
         hasSlidingRows={false}
+        rowsPerPageOptions={rowsPerPageOptions}
       />
     </Container>
   )
