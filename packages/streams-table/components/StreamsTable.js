@@ -35,13 +35,18 @@ function StreamsTable() {
   const timepoints = useContext(DataContext)
   const metadata = useMemo(() => getMaxValues(timepoints), [timepoints])
 
+  const defaultPerPageIndex = 2
+
   const {
     columnDefs,
-    contentProps,
+    allContent,
+    shownContent,
     sortColumn,
     setSortColumn,
     sortDirection,
     setSortDirection,
+    setRange,
+    rowCounts,
   } = useTabularData({
     columns: streamsColumnDefs,
     data: streamsData,
@@ -51,12 +56,17 @@ function StreamsTable() {
 
   return (
     <DataTable
-      contentProps={contentProps}
+      allContent={allContent}
+      shownContent={shownContent}
       columnDefs={columnDefs}
       sortColumn={sortColumn}
       setSortColumn={setSortColumn}
       sortDirection={sortDirection}
       setSortDirection={setSortDirection}
+      setRange={setRange}
+      rowCounts={rowCounts}
+      defaultPerPageIndex={defaultPerPageIndex}
+      hasPagination
     />
   )
 }

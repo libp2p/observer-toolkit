@@ -18,12 +18,14 @@ function MockDataTable() {
   }
 
   const {
+    allContent,
+    shownContent,
     columnDefs,
-    contentProps,
     sortColumn,
     setSortColumn,
     sortDirection,
     setSortDirection,
+    rowCounts,
   } = useTabularData({
     columns: mockColumnDefs,
     data,
@@ -44,12 +46,14 @@ function MockDataTable() {
         ))}
       </div>
       <DataTable
-        contentProps={contentProps}
+        allContent={allContent}
+        shownContent={shownContent}
         columnDefs={columnDefs}
         sortColumn={sortColumn}
         setSortColumn={setSortColumn}
         sortDirection={sortDirection}
         setSortDirection={setSortDirection}
+        rowCounts={rowCounts}
       />
     </div>
   )

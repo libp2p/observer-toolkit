@@ -4,6 +4,12 @@ import { BufferList } from 'bl'
 
 let ws = null
 
+let eventsRelease = false
+
+setInterval(() => {
+  eventsRelease = true
+}, 200)
+
 function createClientSignalMessage(
   signal,
   content = {},
@@ -18,17 +24,18 @@ function createClientSignalMessage(
   return clientSignal.serializeBinary()
 }
 
-function getMessageDataBuffer(msg, done) {
-  if (msg.data instanceof Blob) {
-    const fileReader = new FileReader()
-    fileReader.onload = function(event) {
-      done(event.target.result)
-    }
-    fileReader.readAsArrayBuffer(msg.data)
-  } else {
-    done(new Buffer(msg.data, 'binary'))
-  }
-}
+// TODO: use this helper when we connect to REPL ws server
+// function getMessageDataBuffer(msg, done) {
+//   if (msg.data instanceof Blob) {
+//     const fileReader = new FileReader()
+//     fileReader.onload = function(event) {
+//       done(event.target.result)
+//     }
+//     fileReader.readAsArrayBuffer(msg.data)
+//   } else {
+//     done(new Buffer(msg.data, 'binary'))
+//   }
+// }
 
 function getSignal(cmd) {
   if (cmd === 'data') return proto.ClientSignal.Signal.SEND_DATA
@@ -50,6 +57,7 @@ function sendSignal(cmd, content) {
 
 function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   const bl = new BufferList()
+  const eventsBuffer = []
   const usePushEmitter = true
 
   if (!url) return
@@ -57,18 +65,22 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
 
   ws.addEventListener('message', function(msg) {
     // process incoming message
-    getMessageDataBuffer(msg, buf => {
-      if (buf) {
-        bl.append(buf.slice(4))
-        processUploadBuffer(bl, onUploadChunk)
-      }
-      if (!usePushEmitter) {
-        // request data manually
-        setTimeout(() => {
-          sendSignal('data')
-        }, 1000)
-      }
-    })
+    if (msg.data) {
+      const buf = new Buffer(msg.data, 'binary')
+      bl.append(buf.slice(4))
+      processUploadBuffer({
+        bufferList: bl,
+        eventsBuffer,
+        onUploadChunk,
+      })
+    }
+
+    if (!usePushEmitter) {
+      // request data manually
+      setTimeout(() => {
+        sendSignal('data')
+      }, 1000)
+    }
   })
   ws.addEventListener('close', function() {
     if (onUploadFinished) onUploadFinished(url)
@@ -77,18 +89,29 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
     if (onUploadStart) onUploadStart(url)
     if (usePushEmitter) {
       sendSignal('start')
-      // setTimeout(() => {
-      //   sendSignal('config', { durationSnapshot: 1000 })
-      // }, 5000)
     } else {
       sendSignal('data')
     }
   })
 }
 
-function processUploadBuffer(bufferList, onUploadChunk, metadata) {
+function processUploadBuffer({ bufferList, eventsBuffer, onUploadChunk }) {
   const data = parseBufferList(bufferList)
-  onUploadChunk(data)
+  const events = data.events || []
+  eventsBuffer.push(...events)
+  if (eventsRelease) {
+    onUploadChunk({
+      ...data,
+      events: [...eventsBuffer],
+    })
+    eventsBuffer.length = 0
+    eventsRelease = false
+  } else {
+    onUploadChunk({
+      ...data,
+      events: [],
+    })
+  }
 }
 
 export { sendSignal, uploadWebSocket }

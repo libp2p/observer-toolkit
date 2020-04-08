@@ -47,6 +47,7 @@ exports[`FilterChip renders, matching snapshot 1`] = `
     >
       <span
         class="c2"
+        data-tooltip="closed"
       >
         <span
           class="c3"

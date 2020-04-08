@@ -11,7 +11,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   flex-direction: inherit;
 }
 
-.c7 {
+.c9 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -22,7 +22,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   height: 2em;
 }
 
-.c10 {
+.c12 {
   display: inline-block;
 }
 
@@ -42,17 +42,18 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   outline: none;
 }
 
-.c3 {
+.c4 {
   border-collapse: collapse;
   table-layout: fixed;
   width: 100%;
 }
 
-.c11 {
+.c13 {
+  border-spacing: 0;
   border-bottom: 1px solid rgba(241,242,240,0.5);
 }
 
-.c4 {
+.c6 {
   font-family: plex-sans,sans-serif;
   line-height: 1.6em;
   font-size: 9pt;
@@ -70,63 +71,70 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   text-transform: uppercase;
   white-space: nowrap;
   width: auto;
+}
+
+.c10 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding-right: 0;
+  font-family: plex-sans;
+  font-weight: 600;
+  background-color: rgba(32,155,198,0.2);
+  color: rgba(93,94,96,0.8);
+  text-transform: uppercase;
+  white-space: nowrap;
+  width: auto;
+  text-align: right;
+}
+
+.c14 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding: 8px 32px 8px 24px;
+  font-weight: 400;
+  font-family: plex-sans;
+  color: rgb(93,94,96);
+}
+
+.c15 {
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 9pt;
+  line-height: 1.2em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 16px;
+  text-align: left;
+  padding: 8px 32px 8px 24px;
+  font-weight: 400;
+  font-family: plex-sans;
+  color: rgb(93,94,96);
+  text-align: right;
+}
+
+.c3 {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  top: 48px;
 }
 
 .c8 {
-  font-family: plex-sans,sans-serif;
-  line-height: 1.6em;
-  font-size: 9pt;
-  line-height: 1.2em;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 24px;
-  padding-right: 16px;
-  text-align: left;
-  padding-right: 0;
-  font-family: plex-sans;
-  font-weight: 600;
-  background-color: rgba(32,155,198,0.2);
-  color: rgba(93,94,96,0.8);
-  text-transform: uppercase;
-  white-space: nowrap;
-  width: auto;
-  text-align: right;
-}
-
-.c12 {
-  font-family: plex-sans,sans-serif;
-  line-height: 1.6em;
-  font-size: 9pt;
-  line-height: 1.2em;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 24px;
-  padding-right: 16px;
-  text-align: left;
-  padding: 8px 32px 8px 24px;
-  font-weight: 400;
-  font-family: plex-sans;
-  color: rgb(93,94,96);
-}
-
-.c13 {
-  font-family: plex-sans,sans-serif;
-  line-height: 1.6em;
-  font-size: 9pt;
-  line-height: 1.2em;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 24px;
-  padding-right: 16px;
-  text-align: left;
-  padding: 8px 32px 8px 24px;
-  font-weight: 400;
-  font-family: plex-sans;
-  color: rgb(93,94,96);
-  text-align: right;
-}
-
-.c6 {
   height: 2em;
   width: 2em;
   display: inline-block;
@@ -140,7 +148,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   transform: rotate(90deg);
 }
 
-.c9 {
+.c11 {
   height: 2em;
   width: 2em;
   display: inline-block;
@@ -151,12 +159,17 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   transform: rotate(90deg);
 }
 
-.c5 {
+.c7 {
   cursor: pointer;
 }
 
 .c2 {
   position: relative;
+}
+
+.c5 {
+  border-spacing: 0;
+  height: 48px;
 }
 
 <div
@@ -180,29 +193,33 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
       <div
         class="c2"
       >
-        <table
+        <div
           class="c3"
+          style="display: block;"
+        />
+        <table
+          class="c4"
         >
           <thead
             class=""
           >
             <tr
-              class=""
+              class="c5"
             >
               <th
-                class="c4"
+                class="c6"
               >
                 <div
-                  class="c5"
+                  class="c7"
                 >
                   <strong>
                     Name of item
                   </strong>
                   <span
-                    class="c6"
+                    class="c8"
                   >
                     <span
-                      class="c7"
+                      class="c9"
                       role="img"
                     >
                       <svg
@@ -218,28 +235,28 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
                 </div>
               </th>
               <th
-                class="c8"
+                class="c10"
               >
                 <div
-                  class="c5"
+                  class="c7"
                 >
                   Numeric cells
                   <span
-                    class="c9"
+                    class="c11"
                   >
                     <span
-                      class="c7"
+                      class="c9"
                       role="img"
                     >
                       <span
-                        class="c10"
+                        class="c12"
                       />
                     </span>
                   </span>
                 </div>
               </th>
               <th
-                class="c4"
+                class="c6"
               >
                 <div
                   class=""
@@ -248,21 +265,21 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
                 </div>
               </th>
               <th
-                class="c4"
+                class="c6"
               >
                 <div
-                  class="c5"
+                  class="c7"
                 >
                   mockPercentCalc
                   <span
-                    class="c9"
+                    class="c11"
                   >
                     <span
-                      class="c7"
+                      class="c9"
                       role="img"
                     >
                       <span
-                        class="c10"
+                        class="c12"
                       />
                     </span>
                   </span>
@@ -274,46 +291,48 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
             class=""
           >
             <tr
-              class="c11"
+              class="c13"
+              data-rowkey="a"
             >
               <td
-                class="c12"
+                class="c14"
               >
                 a
               </td>
               <td
-                class="c13"
+                class="c15"
               >
                 3
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 <em>
                   okay
                 </em>
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 10%
               </td>
             </tr>
             <tr
-              class="c11"
+              class="c13"
+              data-rowkey="b"
             >
               <td
-                class="c12"
+                class="c14"
               >
                 b
               </td>
               <td
-                class="c13"
+                class="c15"
               >
                 4
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 <strong
                   role="alert"
@@ -322,78 +341,81 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
                 </strong>
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 40%
               </td>
             </tr>
             <tr
-              class="c11"
+              class="c13"
+              data-rowkey="c"
             >
               <td
-                class="c12"
+                class="c14"
               >
                 c
               </td>
               <td
-                class="c13"
+                class="c15"
               >
                 2
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 <em>
                   okay
                 </em>
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 20%
               </td>
             </tr>
             <tr
-              class="c11"
+              class="c13"
+              data-rowkey="d"
             >
               <td
-                class="c12"
+                class="c14"
               >
                 d
               </td>
               <td
-                class="c13"
+                class="c15"
               >
                 5
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 <em>
                   okay
                 </em>
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 2%
               </td>
             </tr>
             <tr
-              class="c11"
+              class="c13"
+              data-rowkey="e"
             >
               <td
-                class="c12"
+                class="c14"
               >
                 e
               </td>
               <td
-                class="c13"
+                class="c15"
               >
                 1
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 <strong
                   role="alert"
@@ -402,7 +424,7 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
                 </strong>
               </td>
               <td
-                class="c12"
+                class="c14"
               >
                 28%
               </td>

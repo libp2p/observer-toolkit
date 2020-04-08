@@ -92,9 +92,22 @@ function generateConnectionEvents({
           ? getPeerConnectingProps
           : getPeerDisconnectingProps
       const event = generateEvent(getEventProps(now, cn))
-      const data = Buffer.concat([version, runtime, event]).toString('binary')
+      const data = Buffer.concat([version, event]).toString('binary')
       msgQueue.push({ ts: now, type: 'event', data, event })
     })
+
+  return msgQueue
+}
+
+function generateEventsFlood({ msgQueue = [], utcNow, version, runtime }) {
+  // generate a flood of events
+  const step = 50 // .. every 50ms
+  for (let i = 0; i < 1000; i += step) {
+    const now = utcNow + i
+    const event = generateEvent({ now, type: 'flood' })
+    const data = Buffer.concat([version, event]).toString('binary')
+    msgQueue.push({ ts: now, type: 'event', data, event })
+  }
 
   return msgQueue
 }
@@ -211,6 +224,7 @@ module.exports = {
   generateComplete,
   generateConnections,
   generateConnectionEvents,
+  generateEventsFlood,
   generateDHT,
   generateEvent,
   generatePeerId,

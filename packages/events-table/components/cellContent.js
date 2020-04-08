@@ -2,42 +2,88 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import getEventContent from '../utils/getEventContent'
-import parseJsonString from '../utils/parseJsonString'
-import { RenderTime, RenderJsonString } from './contentRenderers'
+import ReactJson from 'react-json-view'
+import {
+  copyToClipboard,
+  Icon,
+  StyledButton,
+  Tooltip,
+} from '@libp2p-observer/sdk'
 
-const ContentsContainer = styled.div`
-  padding: ${({ theme }) => theme.spacing()};
-  display: flex;
-  flex-wrap: wrap;
-`
+import { RenderTime } from './contentRenderers'
 
-const ContentsItem = styled.div`
-  margin: ${({ theme }) => theme.spacing([0.25, 2])};
-  border: 2px solid ${({ theme }) => theme.color('background', 1)};
-  display: flex;
-  align-items: stretch;
-  min-width: ${({ theme }) => theme.spacing(20)};
-  min-height: ${({ theme }) => theme.spacing(4)};
-`
-
-const ContentsContent = styled.div`
-  padding: ${({ theme }) => theme.spacing([0.5, 1])};
+const RawJsonContainer = styled.div`
   display: flex;
   align-items: center;
 `
 
-const ContentsLabel = styled.label`
-  padding: ${({ theme }) => theme.spacing([0.5, 1])};
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  text-transform: uppercase;
-  min-width: ${({ theme }) => theme.spacing(8)};
+const RawJsonFull = styled.pre`
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding: ${({ theme }) => theme.spacing([2, 1])};
   background: ${({ theme }) => theme.color('background', 1)};
-  color: ${({ theme }) => theme.color('contrast', 1)};
-  ${({ theme }) => theme.text('label', 'small')}
+  font-family: 'plex-mono';
 `
+
+const CopyButton = styled(StyledButton)`
+  margin: ${({ theme }) => theme.spacing([0, 1])};
+`
+
+const JsonContainer = styled.div`
+  max-width: 900px;
+  max-height: 450px;
+  display: flex;
+  flex-direction: column;
+`
+
+const JsonTreeContainer = styled.div`
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+  padding-top: ${({ theme }) => theme.spacing(2)};
+  margin-top: ${({ theme }) => theme.spacing(1)};
+  border-top: 1px solid ${({ theme }) => theme.color('background', 2)};
+`
+
+const ExpandIcon = styled.span`
+  transform: rotate(90deg);
+  margin-right: ${({ theme }) => theme.spacing(-1)};
+  [data-tooltip='open'] > button > & {
+    transform: rotate(180deg);
+  }
+  ${({ theme }) => theme.transition({ property: 'transform' })}
+`
+
+const ExpandButton = styled(StyledButton)`
+  ${({ theme }) => theme.transition()}
+  [data-tooltip="open"] > & {
+    background: ${({ theme }) => theme.color('background', 1)};
+  }
+`
+
+function EventPropertyHeader({ typeData, dispatchPropertyTypes }) {
+  const handleRemove = e => {
+    e.stopPropagation()
+    dispatchPropertyTypes({
+      action: 'disable',
+      data: typeData,
+    })
+  }
+  return (
+    <Tooltip
+      fixOn="never"
+      content={<button onClick={handleRemove}>Remove</button>}
+    >
+      {typeData.name}
+    </Tooltip>
+  )
+}
+EventPropertyHeader.propTypes = {
+  typeData: T.object.isRequired,
+  dispatchPropertyTypes: T.func.isRequired,
+}
 
 function TimeContent({ value }) {
   return <RenderTime content={value} />
@@ -46,51 +92,45 @@ TimeContent.propTypes = {
   value: T.string,
 }
 
-function EventContent({ value = '', type }) {
-  const content = parseJsonString(value)
-
+function ShowJsonButton({ value = '' }) {
   return (
-    <ContentsContainer>
-      {content.map(({ key, value }) => (
-        <EventContentsItem
-          key={`${type}:${key}`}
-          contentKey={key}
-          content={value}
-          type={type}
-        />
-      ))}
-    </ContentsContainer>
+    <Tooltip
+      side="bottom"
+      fixOn="no-hover"
+      toleranceY={null}
+      toleranceX={-32}
+      content={<RawJsonExpanded value={value} />}
+    >
+      <ExpandButton>
+        Show JSON
+        <Icon type="expand" override={{ Container: ExpandIcon }} />
+      </ExpandButton>
+    </Tooltip>
   )
 }
-EventContent.propTypes = {
-  value: T.array,
-  type: T.string,
-}
-
-function EventContentsItem({ contentKey, content, type }) {
-  const { label, Renderer } = getEventContent(contentKey)
-
-  return (
-    <ContentsItem>
-      <ContentsLabel>{label}</ContentsLabel>
-      <ContentsContent>
-        <Renderer content={content} type={type} />
-      </ContentsContent>
-    </ContentsItem>
-  )
-}
-EventContentsItem.propTypes = {
-  contentKey: T.string.isRequired,
-  content: T.any, // Should be a string but be prepared for the unexpected
-  type: T.string,
-}
-
-function RawJsonContent({ value = '' }) {
-  // TODO: add expand button similar to connections table streams subtable
-  return <RenderJsonString content={value} />
-}
-RawJsonContent.propTypes = {
+ShowJsonButton.propTypes = {
   value: T.string,
 }
 
-export { TimeContent, EventContent, RawJsonContent }
+function RawJsonExpanded({ value = '' }) {
+  return (
+    <JsonContainer>
+      <RawJsonContainer>
+        <RawJsonFull>{value}</RawJsonFull>
+        <CopyButton onClick={() => copyToClipboard(value)}>Copy</CopyButton>
+      </RawJsonContainer>
+      <JsonTreeContainer>
+        <ReactJson
+          src={JSON.parse(value)}
+          theme="bright:inverted"
+          iconStyle="triangle"
+        />
+      </JsonTreeContainer>
+    </JsonContainer>
+  )
+}
+RawJsonExpanded.propTypes = {
+  value: T.string,
+}
+
+export { EventPropertyHeader, TimeContent, ShowJsonButton }
