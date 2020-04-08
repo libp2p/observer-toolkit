@@ -289,6 +289,7 @@ Tooltip.propTypes = {
   toleranceY: T.number,
   override: T.object,
   containerRef: T.object,
+  hang: T.oneOfType([T.bool, T.number]),
 }
 
 export default Tooltip
