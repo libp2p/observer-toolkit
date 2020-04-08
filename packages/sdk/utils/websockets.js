@@ -8,7 +8,7 @@ let eventsRelease = false
 
 setInterval(() => {
   eventsRelease = true
-}, 400)
+}, 200)
 
 function createClientSignalMessage(
   signal,

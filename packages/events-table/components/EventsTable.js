@@ -15,6 +15,8 @@ import useEventPropertyTypes from '../hooks/useEventPropertyTypes'
 import buildEventsColumns from '../utils/buildEventsColumns'
 
 const PauseControlsBar = styled.section`
+  position: relative;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -114,6 +116,7 @@ function EventsTable() {
         rowsPerPageOptions={rowsPerPageOptions}
         defaultPerPageIndex={defaultPerPageIndex}
         hasPagination
+        hasSlidingRows={false}
       />
     </>
   )

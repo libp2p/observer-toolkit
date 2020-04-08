@@ -32,7 +32,6 @@ function SlidingRows({
   override = {},
 }) {
   const {
-    //    insertedRowsCount,
     disappearingRows,
     slidingShownRows,
     slidingOutRows,

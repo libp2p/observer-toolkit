@@ -17,7 +17,7 @@ const HeaderRow = styled(THeadRow)`
   height: ${({ rowHeight }) => rowHeight}px;
 `
 
-const slideDuration = 450
+const slideDuration = 400
 const defaultRowHeight = 48
 
 function getRowHeight(tbodyRef) {
