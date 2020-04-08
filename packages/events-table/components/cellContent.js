@@ -92,7 +92,7 @@ TimeContent.propTypes = {
   value: T.string,
 }
 
-function RawJsonTruncated({ value = '' }) {
+function ShowJsonButton({ value = '' }) {
   return (
     <Tooltip
       side="bottom"
@@ -108,7 +108,7 @@ function RawJsonTruncated({ value = '' }) {
     </Tooltip>
   )
 }
-RawJsonTruncated.propTypes = {
+ShowJsonButton.propTypes = {
   value: T.string,
 }
 
@@ -133,4 +133,4 @@ RawJsonExpanded.propTypes = {
   value: T.string,
 }
 
-export { EventPropertyHeader, TimeContent, RawJsonTruncated }
+export { EventPropertyHeader, TimeContent, ShowJsonButton }

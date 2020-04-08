@@ -2,7 +2,7 @@ import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
 
 import { RenderTime } from '../components/contentRenderers'
 
-import { RawJsonTruncated } from '../components/cellContent'
+import { ShowJsonButton } from '../components/cellContent'
 
 const stringSorter = {
   getSorter: getStringSorter,
@@ -42,7 +42,7 @@ const jsonCol = {
   getProps: event => ({
     value: event.getContent(),
   }),
-  renderContent: RawJsonTruncated,
+  renderContent: ShowJsonButton,
   cellProps: {
     width: '16%',
   },

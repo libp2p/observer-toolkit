@@ -1,10 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
+import styled from 'styled-components'
 
 import { getTime } from '@libp2p-observer/data'
 import {
   DataTable,
   EventsContext,
   TimeContext,
+  StyledButton,
   useTabularData,
 } from '@libp2p-observer/sdk'
 
@@ -12,7 +14,24 @@ import eventsColumnDefs from '../definitions/eventsColumns'
 import useEventPropertyTypes from '../hooks/useEventPropertyTypes'
 import buildEventsColumns from '../utils/buildEventsColumns'
 
+const PauseControlsBar = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: ${({ theme }) => theme.spacing([2, 1])};
+  padding: ${({ theme }) => theme.spacing([2, 1])};
+  background: ${({ theme }) => theme.color('background', 1)};
+  ${({ theme }) => theme.text('body', 'medium')}
+`
+
+const PauseControlsBlock = styled.div`
+  margin: ${({ theme }) => theme.spacing([0, 1])};
+`
+
 function EventsTable() {
+  const [isPaused, setIsPaused] = useState(false)
+  const [pausedEventsData, setPausedEventsData] = useState([])
+
   const timepoint = useContext(TimeContext)
   const time = getTime(timepoint)
 
@@ -32,6 +51,14 @@ function EventsTable() {
     dispatchPropertyTypes
   )
 
+  const eventsSincePause = eventsData.length - pausedEventsData.length
+  const changePausedState = (pause = true) => {
+    setIsPaused(pause)
+    setPausedEventsData(eventsData)
+  }
+  // Re-pause if we've gone back in time so events beyond timepoint get removed
+  if (eventsSincePause < 0 && isPaused) changePausedState(true)
+
   const {
     columnDefs,
     allContent,
@@ -44,26 +71,49 @@ function EventsTable() {
     rowCounts,
   } = useTabularData({
     columns,
-    data: eventsData,
+    data: isPaused ? pausedEventsData : eventsData,
     defaultSort: 'time',
     defaultRange: [0, rowsPerPageOptions[defaultPerPageIndex]],
   })
 
+  const pauseButtonText = isPaused
+    ? 'Unpause adding new events'
+    : 'Pause adding new events'
+
   return (
-    <DataTable
-      allContent={allContent}
-      shownContent={shownContent}
-      columnDefs={columnDefs}
-      sortColumn={sortColumn}
-      setSortColumn={setSortColumn}
-      sortDirection={sortDirection}
-      setSortDirection={setSortDirection}
-      setRange={setRange}
-      rowCounts={rowCounts}
-      rowsPerPageOptions={rowsPerPageOptions}
-      defaultPerPageIndex={defaultPerPageIndex}
-      hasPagination
-    />
+    <>
+      <PauseControlsBar>
+        <PauseControlsBlock>
+          <StyledButton onClick={() => changePausedState(!isPaused)}>
+            {pauseButtonText}
+          </StyledButton>
+        </PauseControlsBlock>
+
+        <PauseControlsBlock>
+          {isPaused ? (
+            <StyledButton onClick={() => changePausedState(true)}>
+              Add {eventsSincePause} new events
+            </StyledButton>
+          ) : (
+            `Showing all incoming events`
+          )}
+        </PauseControlsBlock>
+      </PauseControlsBar>
+      <DataTable
+        allContent={allContent}
+        shownContent={shownContent}
+        columnDefs={columnDefs}
+        sortColumn={sortColumn}
+        setSortColumn={setSortColumn}
+        sortDirection={sortDirection}
+        setSortDirection={setSortDirection}
+        setRange={setRange}
+        rowCounts={rowCounts}
+        rowsPerPageOptions={rowsPerPageOptions}
+        defaultPerPageIndex={defaultPerPageIndex}
+        hasPagination
+      />
+    </>
   )
 }
 
