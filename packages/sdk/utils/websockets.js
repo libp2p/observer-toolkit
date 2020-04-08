@@ -24,17 +24,18 @@ function createClientSignalMessage(
   return clientSignal.serializeBinary()
 }
 
-function getMessageDataBuffer(msg, done) {
-  if (msg.data instanceof Blob) {
-    const fileReader = new FileReader()
-    fileReader.onload = function(event) {
-      done(event.target.result)
-    }
-    fileReader.readAsArrayBuffer(msg.data)
-  } else {
-    done(new Buffer(msg.data, 'binary'))
-  }
-}
+// TODO: use this helper when we connect to REPL ws server
+// function getMessageDataBuffer(msg, done) {
+//   if (msg.data instanceof Blob) {
+//     const fileReader = new FileReader()
+//     fileReader.onload = function(event) {
+//       done(event.target.result)
+//     }
+//     fileReader.readAsArrayBuffer(msg.data)
+//   } else {
+//     done(new Buffer(msg.data, 'binary'))
+//   }
+// }
 
 function getSignal(cmd) {
   if (cmd === 'data') return proto.ClientSignal.Signal.SEND_DATA
@@ -88,9 +89,6 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
     if (onUploadStart) onUploadStart(url)
     if (usePushEmitter) {
       sendSignal('start')
-      // setTimeout(() => {
-      //   sendSignal('config', { durationSnapshot: 1000 })
-      // }, 5000)
     } else {
       sendSignal('data')
     }

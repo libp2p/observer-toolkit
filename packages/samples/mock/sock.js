@@ -9,7 +9,7 @@ const { DEFAULT_SNAPSHOT_DURATION } = require('./utils')
 const {
   generateConnections,
   generateConnectionEvents,
-  generateEventsFlood,
+  // generateEventsFlood,
   generateDHT,
   generateRuntime,
   generateState,
