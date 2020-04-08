@@ -308,6 +308,7 @@ Tooltip.propTypes = {
   hidePrevious: T.func,
   override: T.object,
   containerRef: T.object,
+  hang: T.oneOfType([T.bool, T.number]),
 }
 
 export default Tooltip

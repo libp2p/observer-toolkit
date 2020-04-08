@@ -28,8 +28,11 @@ const Container = styled.div`
 `
 
 const Spacer = styled.div`
-  height: 32px;
-  background: grey;
+  display: block;
+  background: ${({ theme }) => theme.color('background')};
+  padding: ${({ theme }) => theme.spacing()};
+  font-weight: 700;
+  ${({ theme }) => theme.text('label', 'medium')}
 `
 
 const sortByAge = (a, b) => b.age - a.age
@@ -56,7 +59,11 @@ function DhtColumn({ peers = [], bucketNum = 1, timestamp, title }) {
 
   return (
     <Container>
-      {bucketNum !== 0 ? <CandidatePeers bucketNum={bucketNum} /> : <Spacer />}
+      {bucketNum !== 0 ? (
+        <CandidatePeers bucketNum={bucketNum} />
+      ) : (
+        <Spacer>Catch-all bucket</Spacer>
+      )}
       <DhtBucket
         peers={processedPeers}
         selectedPeer={selectedPeer}

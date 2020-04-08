@@ -48,7 +48,6 @@ function DhtBuckets({ children }) {
         timestamp={timestamp}
         bucketNum={0}
         key={`bucket_0`}
-        title="0 — Catch-all"
       />
       {numberedBucketData.map(({ distance, peers }) => (
         <DhtColumn

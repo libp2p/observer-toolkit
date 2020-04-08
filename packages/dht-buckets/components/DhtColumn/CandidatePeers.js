@@ -21,11 +21,7 @@ function CandidatePeers({ bucketNum }) {
   const bucket = getDhtBucket(bucketNum, currentState)
   const candidatePeers = bucket
     .getPeersList()
-    .filter(
-      peer =>
-        console.log(dhtStatusNames[peer.getStatus()]) ||
-        dhtStatusNames[peer.getStatus()] === 'CANDIDATE'
-    )
+    .filter(peer => dhtStatusNames[peer.getStatus()] === 'CANDIDATE')
   const candidateCount = candidatePeers.length
 
   return (

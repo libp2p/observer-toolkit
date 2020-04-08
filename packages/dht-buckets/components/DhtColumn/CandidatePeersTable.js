@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -21,8 +21,8 @@ const numericSorter = {
 }
 
 const Container = styled.div`
-  width: 300px;
-  max-height: 400px;
+  width: 640px;
+  max-height: 500px;
   overflow: auto;
 `
 
@@ -49,15 +49,18 @@ const columnsDef = [
 ]
 
 function CandidatePeersTable({ candidatePeers }) {
-  console.log('candidatePeers', candidatePeers)
+  const rowsPerPageOptions = [5, 10, 25, 50, 100]
 
   const {
     columnDefs,
-    contentProps,
+    allContent,
+    shownContent,
     sortColumn,
     setSortColumn,
     sortDirection,
     setSortDirection,
+    setRange,
+    rowCounts,
   } = useTabularData({
     columns: columnsDef,
     data: candidatePeers,
@@ -67,12 +70,18 @@ function CandidatePeersTable({ candidatePeers }) {
   return (
     <Container>
       <DataTable
-        contentProps={contentProps}
+        allContent={allContent}
+        shownContent={shownContent}
         columnDefs={columnDefs}
         sortColumn={sortColumn}
         setSortColumn={setSortColumn}
         sortDirection={sortDirection}
         setSortDirection={setSortDirection}
+        setRange={setRange}
+        rowCounts={rowCounts}
+        hasPagination
+        hasSlidingRows={false}
+        rowsPerPageOptions={rowsPerPageOptions}
       />
     </Container>
   )
