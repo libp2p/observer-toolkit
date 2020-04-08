@@ -44,8 +44,12 @@ function filterRows(rows, columnIndexes, testCell) {
 function testRow(row, columnIndexes, testCell) {
   const rowCells = queryAllByRole(row, 'cell')
   const columnMatches = columnIndexes
-    ? columnIndexes.map(i => rowCells[i])
+    ? columnIndexes.reduce((columnMatches, i) => {
+        const cell = rowCells[i]
+        return cell ? [...columnMatches, cell] : columnMatches
+      }, [])
     : rowCells
+
   return columnMatches.some(cell => testCell(cell))
 }
 

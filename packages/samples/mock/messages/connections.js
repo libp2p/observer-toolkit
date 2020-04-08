@@ -8,6 +8,7 @@ const {
 const {
   HOST_PEER_ID,
   HOUR_IN_SECONDS,
+  SECOND_IN_MS,
   DEFAULT_STREAMS,
   decodeBinToNum,
   encodeNumToBin,
@@ -101,7 +102,7 @@ function addStreamsToConnection(connection, { secondsOpen, now }) {
   connection.setStreams(streamList)
 }
 
-function updateConnection(connection, now) {
+function updateConnection(connection, now, duration) {
   const traffic = connection.getTraffic()
   const timeline = connection.getTimeline()
   const streamsArray = connection.getStreams().getStreamsList()
@@ -116,14 +117,14 @@ function updateConnection(connection, now) {
       secondsOpen = random()
       mockConnectionTimeline({
         timeline,
-        open: now - 1000 + secondsOpen * 1000,
+        open: now - duration + secondsOpen * SECOND_IN_MS,
       })
       break
     case 'CLOSING':
       newStatusName = 'CLOSED'
       mockConnectionTimeline({
         timeline,
-        close: now - random() * 1000,
+        close: now - random() * duration,
       })
       break
     case 'ACTIVE':
@@ -143,6 +144,7 @@ function updateConnection(connection, now) {
       connectionStatusName: newStatusName,
       connectionSecondsOpen: secondsOpen,
       now,
+      duration,
     })
   })
 
@@ -169,7 +171,7 @@ function mockConnectionActivity(connection, now) {
   const msOpen = Math.round(
     randomNormalDistribution({
       min: 1,
-      max: HOUR_IN_SECONDS * 1000,
+      max: HOUR_IN_SECONDS * SECOND_IN_MS,
       skew: 6, // Mean 2 mins
     })
   )
@@ -184,7 +186,7 @@ function mockConnectionActivity(connection, now) {
 
   addStreamsToConnection(connection, {
     status,
-    secondsOpen: msOpen / 1000,
+    secondsOpen: msOpen / SECOND_IN_MS,
     now,
   })
 

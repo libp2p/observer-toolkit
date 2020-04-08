@@ -12,15 +12,27 @@ function uploadDataFile(file, onUploadStart, onUploadFinished, onUploadChunk) {
   const chunks = Math.ceil((file.size - versionFieldSize) / chunkSize)
   const reader = new FileReader()
   const bl = new BufferList()
+  const eventsBuffer = []
 
   let currentChunk = 0
+  let eventsRelease = false
+
+  setInterval(() => {
+    eventsRelease = true
+  }, 1000)
 
   reader.onload = e => {
     if (currentChunk <= chunks) {
       const buf = Buffer.from(event.currentTarget.result)
       if (currentChunk > 0) {
         bl.append(buf)
-        processUploadBuffer(bl, onUploadChunk)
+        processUploadBuffer({
+          bufferList: bl,
+          eventsBuffer,
+          eventsRelease,
+          onUploadChunk,
+        })
+        eventsRelease = false
       }
       const start = versionFieldSize + currentChunk * chunkSize
       const end = start + chunkSize >= file.size ? file.size : start + chunkSize
@@ -56,11 +68,15 @@ async function applySampleData(
 
   const buf = Buffer.from(arrbuf)
   bl.append(buf.slice(4))
-  processUploadBuffer(bl, onUploadChunk)
+  processUploadBuffer({
+    bufferList: bl,
+    onUploadChunk,
+  })
+
   onUploadFinished(name)
 }
 
-function processUploadBuffer(bufferList, onUploadChunk) {
+function processUploadBuffer({ bufferList, onUploadChunk }) {
   const data = parseBufferList(bufferList)
   onUploadChunk(data)
 }

@@ -63,6 +63,7 @@ function DhtBucket({
             bkgColorIndex={bkgColorIndex}
             selectedPeer={selectedPeer}
             setSelectedPeer={setSelectedPeer}
+            slotIndex={index}
           />
         ))}
       </BucketSlots>

@@ -11,20 +11,23 @@ const {
   statusNames,
 } = require('@libp2p-observer/data')
 
+const { SECOND_IN_MS } = require('../mock/utils')
 const {
   states,
   initialConnCount,
   durationSeconds,
+  durationSnapshot,
 } = require('./fixtures/generate')
 
 const timepointsExceptLatest = states.slice(0, -1)
 
 const initialConnectionsList = getConnections(states[0])
 const lastConnectionsList = getConnections(getLatestTimepoint(states))
+const statesPerSecond = durationSnapshot / SECOND_IN_MS
 
 test('Expected connections exist', t => {
   const lastConnCount = lastConnectionsList.length
-  t.equals(states.length, durationSeconds)
+  t.equals(states.length, durationSeconds * statesPerSecond)
   t.equals(initialConnectionsList.length, initialConnCount)
   t.ok(
     lastConnCount >= initialConnCount,

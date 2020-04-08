@@ -10,6 +10,7 @@ const Table = styled.table`
 const TableRow = styled.tr.attrs(({ highlighted }) => ({
   'data-highlighted': highlighted ? 'highlighted' : null,
 }))`
+  border-spacing: 0;
   border-bottom: 1px solid ${({ theme }) => theme.color('background', 1, 0.5)};
   ${({ highlighted, theme }) =>
     highlighted
@@ -41,7 +42,9 @@ const TableCell = styled.td`
 
 // Provide unstyled styled-components so users can provide overrides using `as`
 const THead = styled.thead``
-const THeadRow = styled.tr``
+const THeadRow = styled.tr`
+  border-spacing: 0;
+`
 const TBody = styled.tbody``
 
 export { Table, TableRow, TableHead, TableCell, THead, THeadRow, TBody }

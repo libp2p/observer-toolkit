@@ -78,10 +78,9 @@ describe('ConnectionsTable', () => {
 
   it('shows streams for a particular connection in streams subtable', async () => {
     const {
-      findByText,
       queryAllByTableRow,
+      queryByTableRow,
       getByTestId,
-      queryByText,
     } = renderWithShell(
       <WidgetContext>
         <ConnectionsTable />
@@ -105,21 +104,12 @@ describe('ConnectionsTable', () => {
     const ageCell = within(row).getByTableColumn(/^time open/i)
     const age = parseFloat(ageCell.textContent)
 
-    const streamsCell = within(row).getByTableColumn(/^streams/i)
-    const streamsCount = parseInt(streamsCell.textContent)
     const showStreamsButton = within(row).getByText('View streams')
 
     // Expand its streams table
     await fireEvent.click(showStreamsButton)
-    const expandedHeading = await findByText(
-      `Connection has ${streamsCount} streams:`
-    )
-    const expandedRow = expandedHeading.closest('tr')
-
-    // Check the data is for the correct connection
-    const subTablePeerIdChip = within(expandedRow).getByLabelText(/^peer id/i)
-    const subTablePeerId = subTablePeerIdChip.textContent
-    expect(subTablePeerId).toEqual(peerId)
+    const subtableTooltip = within(row).getByRole('tooltip')
+    expect(within(subtableTooltip).queryByRole('table')).toBeInTheDocument()
 
     // Nudge the time slider one to the left
     const timelineSlider = getByTestId('timeline-slider')
@@ -128,32 +118,35 @@ describe('ConnectionsTable', () => {
       await fireEvent.keyDown(timelineSlider, { key: 'ArrowLeft', keyCode: 37 })
     })
 
-    // Check the same connection is open with correct data showing
-    const expandedHeading_2 = await findByText(/^Connection has \d+ streams/)
-    const expandedRow_2 = expandedHeading_2.closest('tr')
+    const row_2 = queryByTableRow([
+      { column: /^peer id/i, textContent: peerId },
+    ])
 
-    const subTablePeerIdChip_2 = within(expandedRow_2).getByLabelText(
-      /^peer id/i
-    )
-    const subTablePeerId_2 = subTablePeerIdChip_2.textContent
-    expect(subTablePeerId_2).toEqual(peerId)
-
-    const ageCell_2 = within(expandedRow_2).getByLabelText(/^time open/i)
-    const age_2 = parseFloat(ageCell_2.textContent)
-
-    expect(age_2).toEqual(age - 1)
+    // Check tooltip is still open
+    const subtableTooltip_2 = within(row_2).getByRole('tooltip')
+    expect(within(subtableTooltip_2).queryByRole('table')).toBeInTheDocument()
 
     // Check it closes as expected, and stays closed
-    const hideStreamsButton = within(expandedRow_2).getByAriaLabel('Close')
+    const hideStreamsButton = within(subtableTooltip_2).getByAriaLabel('Close')
     await fireEvent.click(hideStreamsButton)
 
-    expect(queryByText(/^Connection has \d+ streams/)).not.toBeInTheDocument()
+    expect(within(row_2).queryByRole('tooltip')).not.toBeInTheDocument()
+
+    // Do this after closing the tooltip else it'll find subtable rows
+    const ageCell_2 = within(row_2).getByTableColumn(/^time open/i)
+    const age_2 = parseFloat(ageCell_2.textContent)
+    const secondsPerState = 2
+    expect(age_2).toEqual(age - secondsPerState)
 
     await fireEvent.click(timelineSlider)
     await act(async () => {
       await fireEvent.keyDown(timelineSlider, { key: 'ArrowLeft', keyCode: 37 })
     })
 
-    expect(queryByText(/^Connection has \d+ streams/)).not.toBeInTheDocument()
+    const row_3 = queryByTableRow([
+      { column: /^peer id/i, textContent: peerId },
+    ])
+
+    expect(within(row_3).queryByRole('tooltip')).not.toBeInTheDocument()
   })
 })

@@ -1,5 +1,6 @@
 import {
-  // getStreamAge,
+  getStreamAge,
+  getStreamTimeClosed,
   getStreamTraffic,
   statusNames,
 } from '@libp2p-observer/data'
@@ -75,9 +76,19 @@ const protocolCol = {
 const streamStatusCol = {
   name: 'stream-status',
   header: 'status',
-  getProps: stream => ({ value: statusNames[stream.getStatus()] }),
+  getProps: (stream, { timepoint }) => {
+    const status = statusNames[stream.getStatus()]
+    const timeOpen = getStreamAge(stream, timepoint)
+    const timeClosed = getStreamTimeClosed(stream, timepoint)
+    return {
+      value: status,
+      sortValue: [status, timeOpen, timeClosed],
+      id: stream.getId(),
+    }
+  },
   renderContent: StatusContent,
   sort: statusSorter,
+  rowKey: 'id',
 }
 
 // Define column order

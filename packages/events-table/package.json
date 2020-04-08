@@ -36,13 +36,23 @@
     "storybook": "^5.1.11"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/../../__jest__/setupTest.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/../../__jest__/setupTest.js"
+    ],
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/../../__jest__/styleMock.js"
     },
     "transform": {
       "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/filePaths.js",
-      "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
+      "\\.js$": [
+        "babel-jest",
+        {
+          "rootMode": "upward"
+        }
+      ]
     }
+  },
+  "dependencies": {
+    "react-json-view": "^1.19.1"
   }
 }

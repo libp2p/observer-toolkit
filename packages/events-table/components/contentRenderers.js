@@ -15,36 +15,36 @@ const RawJson = styled.pre`
   padding: ${({ theme }) => theme.spacing(0.5)};
   background: ${({ theme }) => theme.color('background', 1)};
   font-family: 'plex-mono';
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 100%;
-  position: relative;
-  text-overflow: ellipsis;
 `
 
 const rendererPropType = {
-  content: T.oneOfType([T.number, T.string]).isRequired,
+  value: T.oneOfType([T.number, T.string]).isRequired,
   type: T.string, // Event type
 }
 
-function RenderAsString({ content }) {
-  return JSON.stringify(content)
+function RenderString({ value }) {
+  return value
 }
-RenderAsString.propTypes = rendererPropType
+RenderString.propTypes = rendererPropType
 
-function RenderJsonString({ content }) {
-  return <RawJson>{content}</RawJson>
+function RenderNumber({ value }) {
+  return value
 }
-RenderJsonString.propTypes = rendererPropType
+RenderNumber.propTypes = rendererPropType
 
-function RenderPeerId({ content }) {
-  return <PeerIdChip peerId={content} />
+function RenderJson({ value }) {
+  return value ? <RawJson>{value}</RawJson> : ''
+}
+RenderJson.propTypes = rendererPropType
+
+function RenderPeerId({ value }) {
+  return value ? <PeerIdChip peerId={value} /> : ''
 }
 RenderPeerId.propTypes = rendererPropType
 
-function RenderTime({ content }) {
-  return <Nowrap>{timeFormatter(content)}</Nowrap>
+function RenderTime({ value }) {
+  return value ? <Nowrap>{timeFormatter(value)}</Nowrap> : ''
 }
 RenderTime.propTypes = rendererPropType
 
-export { RenderAsString, RenderJsonString, RenderPeerId, RenderTime }
+export { RenderString, RenderJson, RenderPeerId, RenderTime, RenderNumber }

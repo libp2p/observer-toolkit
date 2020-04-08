@@ -1,7 +1,7 @@
 'use strict'
 
 const EnumWithFrequency = require('./EnumWithFrequency')
-const { random, randomNormalDistribution } = require('../utils')
+const { SECOND_IN_MS, random, randomNormalDistribution } = require('../utils')
 
 const statusList = new EnumWithFrequency([
   [0, 'ACTIVE', 80],
@@ -18,7 +18,7 @@ function mockCloseTimeByStatus(status, open, now) {
     case 'ERROR':
       return null
     case 'CLOSING':
-      return Math.round(now + random() * 1000 - 500)
+      return Math.round(now + random() * SECOND_IN_MS - 500)
     case 'CLOSED':
       return Math.round(
         randomNormalDistribution({
@@ -40,7 +40,7 @@ function mockOpenTimeByStatus(status, secondsOpen, now) {
     case 'CLOSED':
       return Math.round(
         randomNormalDistribution({
-          min: now - secondsOpen * 1000,
+          min: now - secondsOpen * SECOND_IN_MS,
           max: now,
           skew: 1,
         })
