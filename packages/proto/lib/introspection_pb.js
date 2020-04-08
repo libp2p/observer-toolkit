@@ -7064,6 +7064,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.introspection.Version.toObject(includeInstance, f),
         signal: jspb.Message.getFieldWithDefault(msg, 2, 0),
         dataSource: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        content: jspb.Message.getFieldWithDefault(msg, 4, ''),
       }
 
     if (includeInstance) {
@@ -7120,6 +7121,10 @@ proto.introspection.ClientSignal.deserializeBinaryFromReader = function(
         var value = /** @type {!proto.introspection.ClientSignal.DataSource} */ (reader.readEnum())
         msg.setDataSource(value)
         break
+      case 4:
+        var value = /** @type {string} */ (reader.readString())
+        msg.setContent(value)
+        break
       default:
         reader.skipField()
         break
@@ -7166,6 +7171,10 @@ proto.introspection.ClientSignal.serializeBinaryToWriter = function(
   if (f !== 0.0) {
     writer.writeEnum(3, f)
   }
+  f = message.getContent()
+  if (f.length > 0) {
+    writer.writeString(4, f)
+  }
 }
 
 /**
@@ -7177,6 +7186,7 @@ proto.introspection.ClientSignal.Signal = {
   STOP_PUSH_EMITTER: 2,
   PAUSE_PUSH_EMITTER: 3,
   UNPAUSE_PUSH_EMITTER: 4,
+  CONFIG_EMITTER: 10,
 }
 
 /**
@@ -7251,6 +7261,22 @@ proto.introspection.ClientSignal.prototype.getDataSource = function() {
 /** @param {!proto.introspection.ClientSignal.DataSource} value */
 proto.introspection.ClientSignal.prototype.setDataSource = function(value) {
   jspb.Message.setProto3EnumField(this, 3, value)
+}
+
+/**
+ * optional string content = 4;
+ * @return {string}
+ */
+proto.introspection.ClientSignal.prototype.getContent = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ''))
+}
+
+/**
+ * @param {string} value
+ * @return {!proto.introspection.ClientSignal} returns this
+ */
+proto.introspection.ClientSignal.prototype.setContent = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value)
 }
 
 /**

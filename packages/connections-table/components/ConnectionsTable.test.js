@@ -126,6 +126,12 @@ describe('ConnectionsTable', () => {
     const subtableTooltip_2 = within(row_2).getByRole('tooltip')
     expect(within(subtableTooltip_2).queryByRole('table')).toBeInTheDocument()
 
+    const ageCell_2 = within(expandedRow_2).getByLabelText(/^time open/i)
+    const age_2 = parseFloat(ageCell_2.textContent)
+
+    const secondsPerState = 2
+    expect(age_2).toEqual(age - secondsPerState)
+
     // Check it closes as expected, and stays closed
     const hideStreamsButton = within(subtableTooltip_2).getByAriaLabel('Close')
     await fireEvent.click(hideStreamsButton)

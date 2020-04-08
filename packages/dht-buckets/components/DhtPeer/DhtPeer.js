@@ -1,26 +1,19 @@
-import React, { useCallback, useContext, useRef, useEffect } from 'react'
+import React, { useContext, useRef, useEffect } from 'react'
 import T from 'prop-types'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 
 import { getKademliaDistance } from '@libp2p-observer/data'
-import { useCanvas, RuntimeContext, SetterContext } from '@libp2p-observer/sdk'
+import { RuntimeContext, SetterContext } from '@libp2p-observer/sdk'
 
-import { DhtQueryContext } from '../context/DhtQueryProvider'
 import DhtPeerHighlighting from './DhtPeerHighlighting'
+import DhtPeerGlow from './DhtPeerGlow'
 import {
   getAbsolutePosition,
   diffAbsolutePositions,
   getTranslateString,
 } from '../../utils/positioning'
-import { paintQueryGlows } from '../../utils/paint'
 
-import {
-  timeResolution,
-  cutoff,
-  outerSize,
-  innerSize,
-  gutterSize,
-} from '../../utils/constants'
+import { cutoff, outerSize, innerSize, gutterSize } from '../../utils/constants'
 
 const Container = styled.div.attrs(({ age, theme }) => {
   const offset = Math.sqrt(age) / 70
@@ -42,13 +35,6 @@ const Container = styled.div.attrs(({ age, theme }) => {
   height: ${outerSize}px;
   margin-top: ${gutterSize}px;
   margin-left: ${gutterSize}px;
-`
-
-const Canvas = styled.canvas`
-  position: relative;
-  height: inherit;
-  width: inherit;
-  z-index: 5;
 `
 
 const InnerChip = styled.div.attrs(({ theme, age }) => {
@@ -137,17 +123,15 @@ function DhtPeer({
   age,
   status,
   timestamp,
-  theme,
   slotRef,
   previousSlotRef,
   showDistance = false,
 }) {
-  const { queriesByPeerId } = useContext(DhtQueryContext)
   const { setPeerIds } = useContext(SetterContext)
 
   const runtime = useContext(RuntimeContext)
-
   const distance = getKademliaDistance(peerId, runtime.getPeerId())
+  const stateDuration = runtime.getSendStateIntervalMs()
 
   const peerRef = useRef()
   const transitionStyles = getTransitionStyles(slotRef, previousSlotRef)
@@ -163,61 +147,6 @@ function DhtPeer({
     applyTransitionStyles(0)
   })
 
-  if (queriesByPeerId[peerId]) {
-    inboundQueries = queriesByPeerId[peerId].INBOUND
-    outboundQueries = queriesByPeerId[peerId].OUTBOUND
-  }
-
-  // Get queries from context / hook, but allow props to override e.g. storybook demos
-  if (!inboundQueries) inboundQueries = queriesByPeerId[peerId].INBOUND
-  if (!outboundQueries) outboundQueries = queriesByPeerId[peerId].OUTBOUND
-
-  const animateCanvas = useCallback(
-    ({ canvasContext, width, height } = {}) => {
-      const timeOfRender = performance.now()
-      const stateStartTime = timestamp - timeResolution
-
-      return () => {
-        // Don't use timestamps provided by requestAnimationFrame here, because
-        // they are relative to a different start point than performance.now()
-        const timeOfFrame = performance.now()
-
-        const msSinceRender = timeOfFrame - timeOfRender
-
-        const paintProps = {
-          width,
-          height,
-          canvasContext,
-          stateStartTime,
-          msSinceRender,
-          theme,
-        }
-
-        canvasContext.clearRect(0, 0, width, height)
-        const anyInboundGlow = paintQueryGlows({
-          direction: 'in',
-          queries: inboundQueries,
-          ...paintProps,
-        })
-        const anyOutboundGlow = paintQueryGlows({
-          direction: 'out',
-          queries: outboundQueries,
-          ...paintProps,
-        })
-
-        // Continue animating only if there's an active glow
-        return anyInboundGlow || anyOutboundGlow
-      }
-    },
-    [timestamp, theme, inboundQueries, outboundQueries]
-  )
-
-  const { canvasRef } = useCanvas({
-    width: outerSize,
-    height: outerSize,
-    animateCanvas,
-  })
-
   const handleMouseOver = () => setPeerIds([peerId])
   const handleMouseOut = () => setPeerIds([])
 
@@ -228,7 +157,13 @@ function DhtPeer({
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
-      <Canvas ref={canvasRef} />
+      <DhtPeerGlow
+        inboundQueries={inboundQueries}
+        outboundQueries={outboundQueries}
+        peerId={peerId}
+        timestamp={timestamp}
+        stateDuration={stateDuration}
+      />
       <InnerChip age={age} status={status} />
       {showDistance && <Distance>{distance}</Distance>}
       <DhtPeerHighlighting peerId={peerId} />
@@ -246,7 +181,6 @@ DhtPeer.propTypes = {
   slotRef: T.object,
   previousSlotRef: T.object,
   showDistance: T.bool,
-  theme: T.object.isRequired,
 }
 
-export default withTheme(DhtPeer)
+export default DhtPeer

@@ -110,26 +110,26 @@ function createDHT({
   return dht
 }
 
-function updatePeerInDHT(peer, connection) {
+function updatePeerInDHT(peer, connection, duration) {
   updatePeerStatus(peer, connection)
   if (peer.getStatus() === dhtStatusList.getNum('ACTIVE')) {
-    updatePeerInDHTBucket(peer)
+    updatePeerInDHTBucket(peer, duration)
   }
 }
 
-function updatePeerInDHTBucket(peer) {
+function updatePeerInDHTBucket(peer, duration) {
   const age = peer.getAgeInBucket()
-  peer.setAgeInBucket(age + 1000)
+  peer.setAgeInBucket(age + duration)
 }
 
-function updatePeersInDHT(peers, connections, dht) {
+function updatePeersInDHT(peers, connections, dht, duration) {
   const activeConnPeerIds = getActiveConnectionPeerIds(connections)
 
   peers.forEach(dhtPeer => {
     const connection = connections.find(
       conn => conn.getPeerId() === dhtPeer.getPeerId()
     )
-    updatePeerInDHT(dhtPeer, connection)
+    updatePeerInDHT(dhtPeer, connection, duration)
   })
 
   // If any active connection peer IDs aren't found in DHT, add peers for them
@@ -154,7 +154,9 @@ function updateDHT({
     .getBucketsList()
     .reduce((peers, bucket) => [...peers, ...bucket.getPeersList()], [])
 
-  updatePeersInDHT(peers, connections, dht)
+  const duration = utcTo - utcFrom
+
+  updatePeersInDHT(peers, connections, dht, duration)
 
   validateBucketSizes(dht)
 

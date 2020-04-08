@@ -12,14 +12,28 @@ setInterval(() => {
 
 function createClientSignalMessage(
   signal,
+  content = {},
   datasource = proto.ClientSignal.DataSource.STATE
 ) {
   if (!signal) return
   const clientSignal = new proto.ClientSignal()
   clientSignal.setVersion(new proto.Version(1))
   clientSignal.setSignal(signal)
+  clientSignal.setContent(JSON.stringify(content))
   clientSignal.setDataSource(datasource)
   return clientSignal.serializeBinary()
+}
+
+function getMessageDataBuffer(msg, done) {
+  if (msg.data instanceof Blob) {
+    const fileReader = new FileReader()
+    fileReader.onload = function(event) {
+      done(event.target.result)
+    }
+    fileReader.readAsArrayBuffer(msg.data)
+  } else {
+    done(new Buffer(msg.data, 'binary'))
+  }
 }
 
 function getSignal(cmd) {
@@ -28,12 +42,13 @@ function getSignal(cmd) {
   if (cmd === 'stop') return proto.ClientSignal.Signal.STOP_PUSH_EMITTER
   if (cmd === 'pause') return proto.ClientSignal.Signal.PAUSE_PUSH_EMITTER
   if (cmd === 'unpause') return proto.ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
+  if (cmd === 'config') return proto.ClientSignal.Signal.CONFIG_EMITTER
   throw new Error(`Unrecognised signal type "${cmd}"`)
 }
 
-function sendSignal(cmd) {
+function sendSignal(cmd, content) {
   const signal = getSignal(cmd)
-  const data = createClientSignalMessage(signal)
+  const data = createClientSignalMessage(signal, content)
   if (ws && data) {
     ws.send(data)
   }
@@ -73,6 +88,9 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
     if (onUploadStart) onUploadStart(url)
     if (usePushEmitter) {
       sendSignal('start')
+      // setTimeout(() => {
+      //   sendSignal('config', { durationSnapshot: 1000 })
+      // }, 5000)
     } else {
       sendSignal('data')
     }
