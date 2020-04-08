@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
 import { DataTableRow, PeersContext, SetterContext } from '@libp2p-observer/sdk'
 
 function ConnectionsTableRow({ rowContent, ...rowProps }) {

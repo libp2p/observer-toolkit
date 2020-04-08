@@ -78,11 +78,9 @@ describe('ConnectionsTable', () => {
 
   it('shows streams for a particular connection in streams subtable', async () => {
     const {
-      findByText,
       queryAllByTableRow,
       queryByTableRow,
       getByTestId,
-      queryByText,
     } = renderWithShell(
       <WidgetContext>
         <ConnectionsTable />
@@ -106,8 +104,6 @@ describe('ConnectionsTable', () => {
     const ageCell = within(row).getByTableColumn(/^time open/i)
     const age = parseFloat(ageCell.textContent)
 
-    const streamsCell = within(row).getByTableColumn(/^streams/i)
-    const streamsCount = parseInt(streamsCell.textContent)
     const showStreamsButton = within(row).getByText('View streams')
 
     // Expand its streams table

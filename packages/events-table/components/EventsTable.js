@@ -9,17 +9,30 @@ import {
 } from '@libp2p-observer/sdk'
 
 import eventsColumnDefs from '../definitions/eventsColumns'
+import useEventPropertyTypes from '../hooks/useEventPropertyTypes'
+import buildEventsColumns from '../utils/buildEventsColumns'
 
 function EventsTable() {
   const timepoint = useContext(TimeContext)
   const time = getTime(timepoint)
+
   const allEvents = useContext(EventsContext)
   const eventsData = allEvents.filter(
     event => event.getTs().getSeconds() <= time
   )
 
+  const { propertyTypes, dispatchPropertyTypes } = useEventPropertyTypes()
+
   const rowsPerPageOptions = [10, 25, 50, 100]
   const defaultPerPageIndex = 0
+
+  const columns = buildEventsColumns(
+    eventsColumnDefs,
+    propertyTypes,
+    dispatchPropertyTypes
+  )
+
+  console.log(columns)
 
   const {
     columnDefs,
@@ -32,7 +45,7 @@ function EventsTable() {
     setRange,
     rowCounts,
   } = useTabularData({
-    columns: eventsColumnDefs,
+    columns,
     data: eventsData,
     defaultSort: 'time',
     defaultRange: [0, rowsPerPageOptions[defaultPerPageIndex]],

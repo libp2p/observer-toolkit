@@ -64,9 +64,13 @@ DefaultRenderer.propTypes = {
   value: T.any,
 }
 
-function getInitialSortDef(sortColumn, columnDefs) {
-  const sortDef =
-    sortColumn && columnDefs.find(col => col.name === sortColumn).sort
+function getInitialSortDef(sortColumn, columnDefs, defaultSort) {
+  const sortColumnDef =
+    sortColumn && columnDefs.find(col => col.name === sortColumn)
+
+  if (!sortColumnDef) return getInitialSortDef(defaultSort, columnDefs)
+
+  const sortDef = sortColumnDef.sort
   if (!sortDef) return { disabled: true }
 
   return {
@@ -113,7 +117,7 @@ function useTabularData({
   )
 
   const { sorter, sortDirection, setSortDirection } = useSorter(
-    getInitialSortDef(sortColumn, columnDefs)
+    getInitialSortDef(sortColumn, columnDefs, defaultSort)
   )
 
   allContent.sort(sorter)
