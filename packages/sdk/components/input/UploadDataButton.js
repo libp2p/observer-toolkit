@@ -4,8 +4,7 @@ import styled from 'styled-components'
 import { useDropzone } from 'react-dropzone'
 
 import { uploadDataFile } from '../../utils'
-import { SourceContext } from '../context/DataProvider'
-import { useDatastore } from '../../hooks'
+import { SourceContext, SetterContext } from '../context/DataProvider'
 
 const FileButton = styled.button`
   cursor: pointer;
@@ -36,7 +35,7 @@ function UploadDataButton({ onLoad, title = defaultTitle, overrides = {} }) {
   const [isLoading, setIsLoading] = useState(false)
   const source = useContext(SourceContext)
   const fileName = source ? source.name : null
-  const { removeData, updateData, updateSource } = useDatastore()
+  const { removeData, updateData, updateSource } = useContext(SetterContext)
 
   const handleUpload = useCallback(
     files => {

@@ -1,13 +1,12 @@
-import { useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 
-import { SetterContext, SourceContext } from '../components/context'
-
-function useDatastore(type) {
-  const source = useContext(SourceContext)
-  const { dispatchStates, dispatchEvents, setRuntime, setSource } = useContext(
-    SetterContext
-  )
-
+function useDatastore({
+  source,
+  dispatchStates,
+  dispatchEvents,
+  setRuntime,
+  setSource,
+}) {
   const updateSource = useCallback(
     ({ name, type }) => {
       if (!source || type !== source.type || name !== source.name) {

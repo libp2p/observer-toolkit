@@ -2,6 +2,7 @@ import React, { useState, useReducer, useRef, createContext } from 'react'
 import T from 'prop-types'
 
 import { getLatestTimepoint } from '@libp2p-observer/data'
+import { useDatastore } from '../../hooks'
 
 let CUTOFF_MS = 60000
 
@@ -13,7 +14,7 @@ const TimeContext = createContext()
 const PeersContext = createContext()
 const SetterContext = createContext()
 
-function updateStates(data) {
+function updateStoredData(data) {
   let latestTs = data
     .filter(msg => msg.getStartTs)
     .map(msg => msg.getStartTs().getSeconds())
@@ -49,12 +50,12 @@ function updateStates(data) {
     })
 }
 
-function updateData(oldData, { action, data }) {
+function handleDispatchData(oldData, { action, data }) {
   switch (action) {
     case 'append':
-      return updateStates(appendToDataSet(data, oldData))
+      return updateStoredData(appendToStoredData(data, oldData))
     case 'replace':
-      return updateStates(replaceDataSet(data))
+      return updateStoredData(replaceStoredData(data))
     case 'remove':
       return []
     default:
@@ -62,12 +63,12 @@ function updateData(oldData, { action, data }) {
   }
 }
 
-function appendToDataSet(newData, oldData) {
+function appendToStoredData(newData, oldData) {
   if (!oldData) return newData
   return [...oldData, ...newData]
 }
 
-function replaceDataSet(data) {
+function replaceStoredData(data) {
   // E.g. after uploading a new file or connecting to a new source
   return data
 }
@@ -83,11 +84,19 @@ function DataProvider({
   children,
 }) {
   // This is structured to avoid re-renders disrupting user interactions e.g. unfocusing input
-  const [states, dispatchStates] = useReducer(updateData, initialStates)
-  const [events, dispatchEvents] = useReducer(updateData, initialEvents)
+  const [states, dispatchStates] = useReducer(handleDispatchData, initialStates)
+  const [events, dispatchEvents] = useReducer(handleDispatchData, initialEvents)
   const [runtime, setRuntime] = useState(initialRuntime)
   const [peerIds, setPeerIds] = useState([])
   const [source, setSource] = useState(initialSource)
+
+  const { updateSource, updateData, replaceData, removeData } = useDatastore({
+    source,
+    dispatchStates,
+    dispatchEvents,
+    setRuntime,
+    setSource,
+  })
 
   if (!initialTime) initialTime = getLatestTimepoint(states)
   const [timepoint, setTimepoint] = useState(null)
@@ -105,6 +114,10 @@ function DataProvider({
     setTimepoint,
     setPeerIds,
     setSource,
+    updateSource,
+    updateData,
+    replaceData,
+    removeData,
   })
 
   if (timepoint && !states.includes(timepoint)) {
