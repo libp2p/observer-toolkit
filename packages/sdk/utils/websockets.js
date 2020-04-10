@@ -88,7 +88,7 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
     if (onUploadFinished) onUploadFinished(url)
     if (!evt.wasClean) {
       console.error(
-        `WebSocket error (code: ${evt.code} / reason: "${evt.reason}")`
+        `WebSocket close was not clean (code: ${evt.code} / reason: "${evt.reason}")`
       )
     }
   })
