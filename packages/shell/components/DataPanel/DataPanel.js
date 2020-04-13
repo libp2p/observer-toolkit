@@ -105,10 +105,10 @@ function DataPanel() {
 
       {isDataTrayOpen && (
         <DataTrayContainer>
-          <DataTray onLoad={closeDataTray} />
+          <DataTray />
           <Icon
             type="remove"
-            onClick={() => setIsDataTrayOpen(false)}
+            onClick={closeDataTray}
             override={{ Container: CloseDataTray }}
           />
         </DataTrayContainer>
