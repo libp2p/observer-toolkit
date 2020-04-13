@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { uploadWebSocket } from '../../utils'
-import { useDatastore } from '../../hooks'
+import { SetterContext } from '../context/DataProvider'
 
 const defaultUrl = 'ws://localhost:8080'
 
@@ -27,7 +27,7 @@ const Container = styled.span`
 function WebSocketInput() {
   const inputRef = useRef()
   const [isLoading, setIsLoading] = useState(false)
-  const { removeData, updateData, updateSource } = useDatastore()
+  const { removeData, updateData, updateSource } = useContext(SetterContext)
 
   function handleKeyPress(e) {
     if (e.key === 'Enter' || e.keyCode === 13) handleSubmit()
