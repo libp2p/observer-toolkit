@@ -1,12 +1,81 @@
-import { useCallback, useContext } from 'react'
+import { useCallback, useReducer, useState } from 'react'
 
-import { SetterContext, SourceContext } from '../components/context'
+let CUTOFF_MS = 60000
 
-function useDatastore(type) {
-  const source = useContext(SourceContext)
-  const { dispatchStates, dispatchEvents, setRuntime, setSource } = useContext(
-    SetterContext
-  )
+function updateStoredData(data) {
+  let latestTs = data
+    .filter(msg => msg.getStartTs)
+    .map(msg => msg.getStartTs().getSeconds())
+    .sort()
+    .pop()
+  return data
+    .filter(msg => {
+      if (
+        msg.getStartTs &&
+        latestTs - msg.getStartTs().getSeconds() > CUTOFF_MS
+      )
+        return false
+      return true
+    })
+    .map(msg => {
+      if (!msg.getStartTs || !msg.getSubsystems) return msg
+      const stateTs = msg.getStartTs().getSeconds()
+      const subsystems = msg.getSubsystems()
+      const connections = subsystems.getConnectionsList()
+      const cns = connections.filter(cn => {
+        if (!cn.getTimeline().getCloseTs()) {
+          return true
+        }
+        const closeTs = cn
+          .getTimeline()
+          .getCloseTs()
+          .getSeconds()
+        return stateTs - closeTs < CUTOFF_MS
+      })
+      subsystems.setConnectionsList(cns)
+      msg.setSubsystems(subsystems)
+      return msg
+    })
+}
+
+function handleDispatchData(oldData, { action, data }) {
+  switch (action) {
+    case 'append':
+      return updateStoredData(appendToStoredData(data, oldData))
+    case 'replace':
+      return updateStoredData(replaceStoredData(data))
+    case 'remove':
+      return []
+    default:
+      throw new Error(`Action "${action}" not valid`)
+  }
+}
+
+function appendToStoredData(newData, oldData) {
+  if (!oldData) return newData
+  return [...oldData, ...newData]
+}
+
+function replaceStoredData(data) {
+  // E.g. after uploading a new file or connecting to a new source
+  return data
+}
+
+function useDatastore({
+  initialStates = [],
+  initialEvents = [],
+  initialRuntime,
+  initialSource,
+}) {
+  const [states, dispatchStates] = useReducer(handleDispatchData, initialStates)
+  const [events, dispatchEvents] = useReducer(handleDispatchData, initialEvents)
+  const [runtime, setRuntime] = useState(initialRuntime)
+  const [peerIds, setPeerIds] = useState([])
+  const [source, setSource] = useState(initialSource)
+
+  if (runtime && runtime.getKeepStaleDataMs()) {
+    CUTOFF_MS = runtime.getKeepStaleDataMs()
+  }
 
   const updateSource = useCallback(
     ({ name, type }) => {
@@ -56,10 +125,17 @@ function useDatastore(type) {
   }, [dispatchStates, dispatchEvents, setRuntime])
 
   return {
+    states,
+    events,
+    runtime,
+    peerIds,
+    source,
     updateSource,
     updateData,
     replaceData,
     removeData,
+    setPeerIds,
+    setRuntime,
   }
 }
 
