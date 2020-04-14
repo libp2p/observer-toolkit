@@ -7271,12 +7271,9 @@ proto.introspection.ClientSignal.prototype.getContent = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ''))
 }
 
-/**
- * @param {string} value
- * @return {!proto.introspection.ClientSignal} returns this
- */
+/** @param {string} value */
 proto.introspection.ClientSignal.prototype.setContent = function(value) {
-  return jspb.Message.setProto3StringField(this, 4, value)
+  jspb.Message.setProto3StringField(this, 4, value)
 }
 
 /**
