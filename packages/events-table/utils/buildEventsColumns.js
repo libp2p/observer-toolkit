@@ -1,6 +1,7 @@
 import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
 
 import {
+  RenderMultiple,
   RenderString,
   RenderJson,
   RenderPeerId,
@@ -51,23 +52,47 @@ function getRenderer(type) {
   }
 }
 
+function getEventHeader(typeData, dispatchPropertyTypes) {
+  return EventPropertyHeader({ typeData, dispatchPropertyTypes })
+}
+
 function _getColumns(propertyTypes, dispatchPropertyTypes) {
   return propertyTypes.reduce((columns, typeData) => {
     if (!typeData.enabled) return columns
 
-    const { renderContent, sort } = getRenderer(typeData.type)
-    return [
-      ...columns,
-      {
-        name: typeData.name,
+    const { name, hasMultiple, type } = typeData
+
+    const header = getEventHeader(typeData, dispatchPropertyTypes)
+    const getPropsValue = event => JSON.parse(event.getContent())[name] || ''
+
+    let newColumn
+    if (hasMultiple) {
+      newColumn = {
+        name,
+        renderContent: RenderMultiple,
         getProps: event => ({
-          value: JSON.parse(event.getContent())[typeData.name],
+          value: getPropsValue(event),
+          sortValue: getPropsValue(event).length,
+          type,
+          name,
+        }),
+        sort: numericSorter,
+        header,
+      }
+    } else {
+      const { renderContent, sort } = getRenderer(type)
+      newColumn = {
+        name,
+        getProps: event => ({
+          value: getPropsValue(event),
         }),
         renderContent,
         sort,
-        header: EventPropertyHeader({ typeData, dispatchPropertyTypes }),
-      },
-    ]
+        header,
+      }
+    }
+
+    return [...columns, newColumn]
   }, [])
 }
 
@@ -88,3 +113,4 @@ function buildEventsColumns(
 }
 
 export default buildEventsColumns
+export { getRenderer }

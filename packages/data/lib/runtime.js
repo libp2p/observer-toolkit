@@ -16,17 +16,22 @@ function getAllEventProperties({
 }) {
   const allProperties = []
   eventTypes.forEach(({ name: eventName, properties }) => {
-    properties.forEach(({ name: propName, type }) => {
-      const matchingNames = allProperties.filter(prop => prop.name === propName)
-      const matchingNameAndType = matchingNames.find(prop => prop.type === type)
+    properties.forEach(({ name: propName, type, hasMultiple }) => {
+      const match = allProperties.find(
+        prop =>
+          prop.name === propName &&
+          prop.type === type &&
+          prop.hasMultiple === hasMultiple
+      )
 
-      if (matchingNameAndType) {
-        matchingNameAndType.eventTypes.push(eventName)
+      if (match) {
+        match.eventTypes.push(eventName)
       } else {
         allProperties.push({
           name: propName,
           eventTypes: [eventName],
           type,
+          hasMultiple,
         })
       }
     })
@@ -51,9 +56,13 @@ function getEventTypeWithProperties({
   runtime,
   propertyTypeLookup = getPropertyTypeLookup(runtime),
 }) {
+  console.log(eventType.getPropertiesList())
+  window.proplist = eventType.getPropertiesList()
+
   return eventType.getPropertiesList().map(prop => ({
     name: prop.getName(),
     type: propertyTypeLookup[prop.getType()],
+    hasMultiple: prop.getHasMultiple(),
   }))
 }
 

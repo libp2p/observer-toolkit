@@ -26,7 +26,10 @@ function applyMultiplePropertyTypes(oldPropertyTypes, newPropertyTypes) {
   return updatedPropertyTypes
 }
 
-function enablePropertyType(oldPropertyTypes, { name, eventTypes, type }) {
+function enablePropertyType(
+  oldPropertyTypes,
+  { name, eventTypes, type, hasMultiple }
+) {
   const matchIndex = oldPropertyTypes.findIndex(
     prop => prop.name === name && prop.type === type
   )
@@ -36,7 +39,10 @@ function enablePropertyType(oldPropertyTypes, { name, eventTypes, type }) {
     newTypes[matchIndex] = { ...match, enabled: true }
     return newTypes
   } else {
-    return [...oldPropertyTypes, { name, eventTypes, type, enabled: true }]
+    return [
+      ...oldPropertyTypes,
+      { name, eventTypes, type, hasMultiple, enabled: true },
+    ]
   }
 }
 
