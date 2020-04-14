@@ -11,85 +11,10 @@ const {
   SECOND_IN_MS,
 } = require('../utils')
 
-const PeerConnecting = new Runtime.EventType(['PeerConnecting'])
-PeerConnecting.addProperties(
-  new Runtime.EventProperty([
-    'peerId',
-    Runtime.EventProperty.PropertyType['PEERID'],
-  ])
-)
-PeerConnecting.addProperties(
-  new Runtime.EventProperty([
-    'transport',
-    Runtime.EventProperty.PropertyType['STRING'],
-  ])
-)
-
-const PeerDisconnecting = new Runtime.EventType(['PeerDisconnecting'])
-PeerDisconnecting.addProperties(
-  new Runtime.EventProperty([
-    'peerId',
-    Runtime.EventProperty.PropertyType['PEERID'],
-  ])
-)
-PeerDisconnecting.addProperties(
-  new Runtime.EventProperty([
-    'timeOpen',
-    Runtime.EventProperty.PropertyType['TIME'],
-  ])
-)
-PeerDisconnecting.addProperties(
-  new Runtime.EventProperty([
-    'age',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
-)
-PeerDisconnecting.addProperties(
-  new Runtime.EventProperty([
-    'transport',
-    Runtime.EventProperty.PropertyType['STRING'],
-  ])
-)
-
-const InboundDHTQuery = new Runtime.EventType(['InboundDHTQuery'])
-InboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'result',
-    Runtime.EventProperty.PropertyType['STRING'],
-  ])
-)
-InboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'totalTimeMs',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
-)
-InboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'totalSteps',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
-)
-
-const OutboundDHTQuery = new Runtime.EventType(['OutboundDHTQuery'])
-OutboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'result',
-    Runtime.EventProperty.PropertyType['STRING'],
-  ])
-)
-OutboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'totalTimeMs',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
-)
-OutboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'totalSteps',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
-)
+const PeerConnecting = require('../event-types/PeerConnecting')
+const PeerDisconnecting = require('../event-types/PeerDisconnecting')
+const InboundDHTQuery = require('../event-types/InboundDHTQuery')
+const OutboundDHTQuery = require('../event-types/OutboundDHTQuery')
 
 function createRuntime({
   peerId = HOST_PEER_ID,
