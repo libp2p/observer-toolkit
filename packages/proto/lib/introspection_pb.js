@@ -5080,6 +5080,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         k: jspb.Message.getFieldWithDefault(msg, 1, 0),
         alpha: jspb.Message.getFieldWithDefault(msg, 2, 0),
         disjointPaths: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        beta: jspb.Message.getFieldWithDefault(msg, 4, 0),
       }
 
     if (includeInstance) {
@@ -5129,6 +5130,10 @@ proto.introspection.DHT.Params.deserializeBinaryFromReader = function(
         var value = /** @type {number} */ (reader.readUint64())
         msg.setDisjointPaths(value)
         break
+      case 4:
+        var value = /** @type {number} */ (reader.readUint64())
+        msg.setBeta(value)
+        break
       default:
         reader.skipField()
         break
@@ -5171,6 +5176,10 @@ proto.introspection.DHT.Params.serializeBinaryToWriter = function(
   if (f !== 0) {
     writer.writeUint64(3, f)
   }
+  f = message.getBeta()
+  if (f !== 0) {
+    writer.writeUint64(4, f)
+  }
 }
 
 /**
@@ -5210,6 +5219,19 @@ proto.introspection.DHT.Params.prototype.getDisjointPaths = function() {
 /** @param {number} value */
 proto.introspection.DHT.Params.prototype.setDisjointPaths = function(value) {
   jspb.Message.setProto3IntField(this, 3, value)
+}
+
+/**
+ * optional uint64 beta = 4;
+ * @return {number}
+ */
+proto.introspection.DHT.Params.prototype.getBeta = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0))
+}
+
+/** @param {number} value */
+proto.introspection.DHT.Params.prototype.setBeta = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value)
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -5433,7 +5455,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.introspection.DHT.Bucket.toObject = function(includeInstance, msg) {
     var f,
       obj = {
-        distance: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        cpl: jspb.Message.getFieldWithDefault(msg, 1, 0),
         peersList: jspb.Message.toObjectList(
           msg.getPeersList(),
           proto.introspection.DHT.PeerInDHT.toObject,
@@ -5478,7 +5500,7 @@ proto.introspection.DHT.Bucket.deserializeBinaryFromReader = function(
     switch (field) {
       case 1:
         var value = /** @type {number} */ (reader.readUint32())
-        msg.setDistance(value)
+        msg.setCpl(value)
         break
       case 2:
         var value = new proto.introspection.DHT.PeerInDHT()
@@ -5518,7 +5540,7 @@ proto.introspection.DHT.Bucket.serializeBinaryToWriter = function(
   writer
 ) {
   var f = undefined
-  f = message.getDistance()
+  f = message.getCpl()
   if (f !== 0) {
     writer.writeUint32(1, f)
   }
@@ -5533,15 +5555,15 @@ proto.introspection.DHT.Bucket.serializeBinaryToWriter = function(
 }
 
 /**
- * optional uint32 distance = 1;
+ * optional uint32 cpl = 1;
  * @return {number}
  */
-proto.introspection.DHT.Bucket.prototype.getDistance = function() {
+proto.introspection.DHT.Bucket.prototype.getCpl = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
 /** @param {number} value */
-proto.introspection.DHT.Bucket.prototype.setDistance = function(value) {
+proto.introspection.DHT.Bucket.prototype.setCpl = function(value) {
   jspb.Message.setProto3IntField(this, 1, value)
 }
 
