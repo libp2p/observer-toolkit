@@ -243,6 +243,9 @@ message DHT {
     uint64 alpha                = 2;
     // number of disjoint paths to use.
     uint64 disjoint_paths       = 3;
+    // number of peers closest to a target that must have responded
+    // in order for a given query path to complete
+    uint64 beta                 = 4;
   }
 
   // Peer in DHT
