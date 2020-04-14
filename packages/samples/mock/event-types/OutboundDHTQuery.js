@@ -24,5 +24,18 @@ OutboundDHTQuery.addProperties(
     Runtime.EventProperty.PropertyType['NUMBER'],
   ])
 )
+OutboundDHTQuery.addProperties(
+  new Runtime.EventProperty([
+    'totalSteps',
+    Runtime.EventProperty.PropertyType['NUMBER'],
+  ])
+)
+OutboundDHTQuery.addProperties(
+  new Runtime.EventProperty([
+    'peerIds',
+    Runtime.EventProperty.PropertyType['PEERID'],
+    true,
+  ])
+)
 
 module.exports = OutboundDHTQuery

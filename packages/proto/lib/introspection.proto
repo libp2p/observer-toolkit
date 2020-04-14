@@ -70,12 +70,16 @@ message Runtime {
         // apply human-readable formatting
         TIME        = 10;
         PEERID      = 11;
+        MULTIADDR   = 12;
         // embedded arrays and/or object trees
         JSON        = 90;
       }
       // property name of content e.g. openTs
       string name                 = 1;
+      // type to interpret content value as
       PropertyType type           = 2;
+      // if true, expect an array of values of type
+      bool has_multiple            = 3;
     }
 
     // e.g. go-libp2p, js-libp2p, rust-libp2p, etc.

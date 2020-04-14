@@ -1903,6 +1903,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         name: jspb.Message.getFieldWithDefault(msg, 1, ''),
         type: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        hasMultiple: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
       }
 
     if (includeInstance) {
@@ -1951,6 +1952,10 @@ proto.introspection.Runtime.EventProperty.deserializeBinaryFromReader = function
         var value = /** @type {!proto.introspection.Runtime.EventProperty.PropertyType} */ (reader.readEnum())
         msg.setType(value)
         break
+      case 3:
+        var value = /** @type {boolean} */ (reader.readBool())
+        msg.setHasMultiple(value)
+        break
       default:
         reader.skipField()
         break
@@ -1992,6 +1997,10 @@ proto.introspection.Runtime.EventProperty.serializeBinaryToWriter = function(
   if (f !== 0.0) {
     writer.writeEnum(2, f)
   }
+  f = message.getHasMultiple()
+  if (f) {
+    writer.writeBool(3, f)
+  }
 }
 
 /**
@@ -2002,6 +2011,7 @@ proto.introspection.Runtime.EventProperty.PropertyType = {
   NUMBER: 1,
   TIME: 10,
   PEERID: 11,
+  MULTIADDR: 12,
   JSON: 90,
 }
 
@@ -2033,6 +2043,25 @@ proto.introspection.Runtime.EventProperty.prototype.getType = function() {
 /** @param {!proto.introspection.Runtime.EventProperty.PropertyType} value */
 proto.introspection.Runtime.EventProperty.prototype.setType = function(value) {
   jspb.Message.setProto3EnumField(this, 2, value)
+}
+
+/**
+ * optional bool has_multiple = 3;
+ * @return {boolean}
+ */
+proto.introspection.Runtime.EventProperty.prototype.getHasMultiple = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(
+    this,
+    3,
+    false
+  ))
+}
+
+/** @param {boolean} value */
+proto.introspection.Runtime.EventProperty.prototype.setHasMultiple = function(
+  value
+) {
+  jspb.Message.setProto3BooleanField(this, 3, value)
 }
 
 /**
@@ -7204,10 +7233,8 @@ proto.introspection.ClientSignal.serializeBinaryToWriter = function(
  */
 proto.introspection.ClientSignal.Signal = {
   SEND_DATA: 0,
-  START_PUSH_EMITTER: 1,
-  STOP_PUSH_EMITTER: 2,
-  PAUSE_PUSH_EMITTER: 3,
-  UNPAUSE_PUSH_EMITTER: 4,
+  PAUSE_PUSH_EMITTER: 1,
+  UNPAUSE_PUSH_EMITTER: 2,
   CONFIG_EMITTER: 10,
 }
 
