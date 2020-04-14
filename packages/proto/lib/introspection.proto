@@ -237,7 +237,7 @@ message Stream {
 // DHT metrics and state.
 message DHT {
   message Params {
-    // maximum number of requests to perform.
+    // routing table bucket size.
     uint64 k                    = 1;
     // concurrency of asynchronous requests.
     uint64 alpha                = 2;
