@@ -77,18 +77,16 @@ describe('ConnectionsTable', () => {
   })
 
   it('shows streams for a particular connection in streams subtable', async () => {
-    const {
-      queryAllByTableRow,
-      queryByTableRow,
-      getByTestId,
-    } = renderWithShell(
+    const { getByRole, getByTestId } = renderWithShell(
       <WidgetContext>
         <ConnectionsTable />
       </WidgetContext>
     )
 
+    const table = getByRole('table')
+
     // Look up a row that has age > 1 s and streams > 0
-    const suitableRows = queryAllByTableRow([
+    const suitableRows = within(table).queryAllByTableRow([
       { column: /status/i, textContent: /active/i },
       { column: /time open/i, numericContent: num => num >= 1 },
       { column: /streams/i, numericContent: num => num >= 2 },
@@ -118,7 +116,7 @@ describe('ConnectionsTable', () => {
       await fireEvent.keyDown(timelineSlider, { key: 'ArrowLeft', keyCode: 37 })
     })
 
-    const row_2 = queryByTableRow([
+    const row_2 = within(table).queryByTableRow([
       { column: /^peer id/i, textContent: peerId },
     ])
 
@@ -143,7 +141,7 @@ describe('ConnectionsTable', () => {
       await fireEvent.keyDown(timelineSlider, { key: 'ArrowLeft', keyCode: 37 })
     })
 
-    const row_3 = queryByTableRow([
+    const row_3 = within(table).queryByTableRow([
       { column: /^peer id/i, textContent: peerId },
     ])
 

@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
 import samples from '@libp2p-observer/samples'
-import { applySampleData, useDatastore } from '@libp2p-observer/sdk'
+import { applySampleData, SetterContext } from '@libp2p-observer/sdk'
 
 const SamplesTray = styled.div`
   position: absolute;
@@ -45,7 +45,7 @@ const SampleImg = styled.img`
 
 function SamplesList({ onLoad }) {
   const [isLoading, setIsLoading] = useState('')
-  const { removeData, updateData, updateSource } = useDatastore()
+  const { removeData, updateData, updateSource } = useContext(SetterContext)
 
   function handleClick(samplePath) {
     const handleUploadStart = name => {
