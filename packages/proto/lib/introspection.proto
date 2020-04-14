@@ -352,15 +352,13 @@ message ProtocolDataPacket {
 message ClientSignal {
   // The signal to be sent to the server
   enum Signal {
-    // SEND_DATA is used for pull-based data emitters
+    // SEND_DATA with `data_source` requests messages from pull-based data emitters
     SEND_DATA            = 0;
-    // START_PUSH_EMITTER, STOP_PUSH_EMITTER, PAUSE_PUSH_EMITTER & UNPAUSE_PUSH_EMITTER
-    // are all used in the operation of push-based data emitters
-    START_PUSH_EMITTER   = 1;
-    STOP_PUSH_EMITTER    = 2;
-    PAUSE_PUSH_EMITTER   = 3;
-    UNPAUSE_PUSH_EMITTER = 4;
-    
+    // PAUSE_ & UNPAUSE_PUSH_EMITTER allows control of push-based data emitters
+    PAUSE_PUSH_EMITTER   = 1;
+    UNPAUSE_PUSH_EMITTER = 2;
+
+    // CONFIG_EMITTER with `content` sends a JSON object of settings to the emitter
     CONFIG_EMITTER       = 10;
   }
 
