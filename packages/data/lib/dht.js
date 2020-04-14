@@ -55,9 +55,7 @@ function getAllDhtBuckets(state) {
 }
 
 function getDhtBucket(bucketNum, state) {
-  return getAllDhtBuckets(state).find(
-    bucket => bucket.getDistance() === bucketNum
-  )
+  return getAllDhtBuckets(state).find(bucket => bucket.getCpl() === bucketNum)
 }
 
 function getDhtPeersInBucket(bucket, state) {

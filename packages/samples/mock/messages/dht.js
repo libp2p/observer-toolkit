@@ -39,7 +39,7 @@ function removePeerFromBucket(peer, bucket) {
 
   if (peerIndex < 0) {
     throw new Error(
-      `Delete failed: bucket ${bucket.getDistance()} does not contain peer ${peerId}`
+      `Delete failed: bucket ${bucket.getCpl()} does not contain peer ${peerId}`
     )
   }
 
@@ -95,7 +95,7 @@ function createDHT({
 
   // Start with just the "catch-all" zero-distance bucket then unfold as needed
   const bucketZero = new DHT.Bucket()
-  bucketZero.setDistance(0)
+  bucketZero.setCpl(0)
 
   const peersList = createPeersInDHT({ peerIds, peersCount, connections })
   bucketZero.setPeersList(peersList)
@@ -191,7 +191,7 @@ function fixOverflowingBucket(bucket, dht) {
     const randomPeerIndex = Math.floor(random() * peersInBucket.length)
     const randomPeer = peersInBucket[randomPeerIndex]
 
-    if (bucket.getDistance() === 0) {
+    if (bucket.getCpl() === 0) {
       // Move from 'catch-all' bucket to allocated bucket by distance
       const distance =
         getKademliaDistance(randomPeer.getPeerId(), HOST_PEER_ID) || 1
@@ -212,7 +212,7 @@ function fixOverflowingBucket(bucket, dht) {
 function getOrCreateBucket(dht, distance) {
   const existingBucket = dht
     .getBucketsList()
-    .find(bucket => bucket.getDistance() === distance)
+    .find(bucket => bucket.getCpl() === distance)
 
   return existingBucket || dht.addBuckets(new DHT.Bucket([distance]))
 }

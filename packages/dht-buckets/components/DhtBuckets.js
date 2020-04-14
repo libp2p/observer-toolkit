@@ -26,7 +26,7 @@ function DhtBuckets({ children }) {
 
   const bucketsData = getAllDhtBuckets(currentState)
     .map(bucket => ({
-      distance: bucket.getDistance(),
+      distance: bucket.getCpl(),
       peers: getDhtPeersInBucket(bucket, currentState),
     }))
     .sort((a, b) => a.distance - b.distance)

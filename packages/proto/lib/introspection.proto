@@ -268,8 +268,9 @@ message DHT {
 
   // A "k-bucket" containing peers of a certain kadamelia distance
   message Bucket {
-    // Contains peers of this distance; or, 0 is "catch-all" bucket
-    uint32 distance             = 1;
+    // CPL (Common Prefix Length) is the length of the common prefix
+    // between the ids of every peer in this bucket and the DHT peer id
+    uint32 cpl                  = 1;
     // Peers associated with this bucket
     repeated PeerInDHT peers    = 2;
     // Bucket may need more fields depending on WIP remodeling
