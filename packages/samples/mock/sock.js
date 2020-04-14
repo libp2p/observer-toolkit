@@ -29,6 +29,7 @@ let lastDurationSnapshot
 let lastCutoffSeconds
 let runtime
 let dht
+let stateIntervalId
 
 function generateMessages({
   connectionsCount,
@@ -111,18 +112,13 @@ function handleClientMessage(client, server, msg) {
     const signal = clientSignal.getSignal()
     if (signal === ClientSignal.Signal.SEND_DATA) {
       sendQueue(client)
-    } else if (
-      signal === ClientSignal.Signal.START_PUSH_EMITTER ||
-      signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
-    ) {
+    } else if (signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER) {
       // TODO: implement unpause/start diff of timer emitter
-      setInterval(() => {
+      if (stateIntervalId) clearInterval(stateIntervalId)
+      stateIntervalId = setInterval(() => {
         sendQueue(client)
       }, 200)
-    } else if (
-      signal === ClientSignal.Signal.STOP_PUSH_EMITTER ||
-      signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER
-    ) {
+    } else if (signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER) {
       // TODO: implement pause/stop of timer emitter
     } else if (signal === ClientSignal.Signal.CONFIG_EMITTER) {
       try {
@@ -159,7 +155,12 @@ function start({
   wss.on('connection', ws => {
     // allow only 1 client connection, it's just a mock server
     wss.clients.forEach(client => {
-      if (client !== ws) {
+      if (client === ws) {
+        if (stateIntervalId) clearInterval(stateIntervalId)
+        stateIntervalId = setInterval(() => {
+          sendQueue(client)
+        }, 200)
+      } else {
         console.error(
           'Closing previous connection! Only 1 allowed for mock server.'
         )
