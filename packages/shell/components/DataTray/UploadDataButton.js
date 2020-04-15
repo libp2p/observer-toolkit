@@ -3,8 +3,11 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { useDropzone } from 'react-dropzone'
 
-import { uploadDataFile } from '../../utils'
-import { SourceContext, SetterContext } from '../context/DataProvider'
+import {
+  uploadDataFile,
+  SourceContext,
+  SetterContext,
+} from '@libp2p-observer/sdk'
 
 const FileButton = styled.button`
   cursor: pointer;

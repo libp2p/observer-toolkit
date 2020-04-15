@@ -1,8 +1,7 @@
 import React, { useContext, useRef, useState } from 'react'
 import styled from 'styled-components'
 
-import { uploadWebSocket } from '../../utils'
-import { SetterContext } from '../context/DataProvider'
+import { uploadWebSocket, SetterContext } from '@libp2p-observer/sdk'
 
 const defaultUrl = 'ws://localhost:8080'
 

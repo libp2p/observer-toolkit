@@ -3,14 +3,11 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import get from 'lodash.get'
 
-import {
-  DataContext,
-  Icon,
-  UploadDataButton,
-  WebSocketInput,
-} from '@libp2p-observer/sdk'
+import { DataContext, Icon } from '@libp2p-observer/sdk'
 import DataTrayItem from './DataTrayItem'
 import SamplesList from './SamplesList'
+import WebSocketInput from './WebSocketInput'
+import UploadDataButton from './UploadDataButton'
 
 const Container = styled.section`
   background: ${({ theme }) => theme.color('contrast', 1)};
