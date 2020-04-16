@@ -72,7 +72,7 @@ message EventProperty {
     // type to interpret content value as
     PropertyType type           = 2;
     // if true, expect an array of values of `type`; else, singular
-    bool has_multiple            = 3;
+    bool has_multiple           = 3;
 }
 
 // Runtime encapsulates runtime info about a node.
@@ -80,7 +80,8 @@ message Runtime {
     // metadata about types of event data being sent
     message EventType {
       // Name of event type e.g. PeerConnecting
-      string name                        = 1;
+      string name                           = 1;
+      // Describes the property types for the content of events of this type
       repeated EventProperty properties  = 2;
     }
 
@@ -335,9 +336,12 @@ message State {
 
 // Event
 message Event {
-    string type                     = 1;
-    google.protobuf.Timestamp ts    = 2;
-    string content                  = 3; // stringified json
+    // type of event, same value as corresponding EventType definition
+    string type                        = 1;
+    // time this event occurred
+    google.protobuf.Timestamp ts       = 2;
+    // stringified json; top-level keys and value types match EventProperty definitions
+    string content                     = 3;
     // describes this event's properties; only used for event types the server had
     // not seen on connecting to the client and sending the first runtime
     repeated EventProperty properties  = 4;
