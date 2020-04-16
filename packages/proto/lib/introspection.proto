@@ -82,7 +82,7 @@ message Runtime {
       // Name of event type e.g. PeerConnecting
       string name                           = 1;
       // Describes the property types for the content of events of this type
-      repeated EventProperty properties  = 2;
+      repeated EventProperty propertyTypes  = 2;
     }
 
     // e.g. go-libp2p, js-libp2p, rust-libp2p, etc.
@@ -344,7 +344,7 @@ message Event {
     string content                     = 3;
     // describes this event's properties; only used for event types the server had
     // not seen on connecting to the client and sending the first runtime
-    repeated EventProperty properties  = 4;
+    repeated EventProperty propertyTypes  = 4;
 }
 
 // ProtocolDataPacket wraps messages to be sent to clients to allow extension

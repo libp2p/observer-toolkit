@@ -56,10 +56,7 @@ function getEventTypeWithProperties({
   runtime,
   propertyTypeLookup = getPropertyTypeLookup(runtime),
 }) {
-  console.log(eventType.getPropertiesList())
-  window.proplist = eventType.getPropertiesList()
-
-  return eventType.getPropertiesList().map(prop => ({
+  return eventType.getPropertyTypesList().map(prop => ({
     name: prop.getName(),
     type: propertyTypeLookup[prop.getType()],
     hasMultiple: prop.getHasMultiple(),
