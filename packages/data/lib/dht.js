@@ -1,7 +1,7 @@
 'use strict'
 
 const { getEnumByName, dhtStatusNames, dhtQueryEventNames } = require('./enums')
-
+const { getEventType } = require('./events')
 const { getStateTimes } = require('./states')
 
 const maxBucketNum = 255
@@ -82,7 +82,7 @@ function getDhtQueries(events, { state, ...options } = {}) {
 
   const queries = events.reduce((queries, event) => {
     // Filter to only query events
-    const type = event.getType()
+    const type = getEventType(event)
     if (!relevantEventNames.includes(type)) {
       return queries
     }

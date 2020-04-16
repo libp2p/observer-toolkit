@@ -1,6 +1,9 @@
 import { useContext, useEffect, useReducer, useState } from 'react'
 
-import { getEventTypes, getAllEventProperties } from '@libp2p-observer/data'
+import {
+  getRuntimeEventTypes,
+  getRuntimeEventProperties,
+} from '@libp2p-observer/data'
 import { RuntimeContext } from '@libp2p-observer/sdk'
 
 function updatePropertyTypes(oldPropertyTypes, { action, data }) {
@@ -69,8 +72,8 @@ function useEventPropertyTypes() {
 
   useEffect(() => {
     if (runtime !== runtimeState) {
-      const eventTypes = getEventTypes(runtime)
-      const newPropertyTypes = getAllEventProperties({ eventTypes })
+      const eventTypes = getRuntimeEventTypes(runtime)
+      const newPropertyTypes = getRuntimeEventProperties({ eventTypes })
 
       dispatchPropertyTypes({
         action: 'applyMultiple',

@@ -1,34 +1,23 @@
 'use strict'
 
 const {
-  proto: { Runtime },
+  proto: { EventType },
 } = require('@libp2p-observer/proto')
+const { EventProperty } = EventType
 
-const PeerDisconnecting = new Runtime.EventType(['PeerDisconnecting'])
+const PeerDisconnecting = new EventType(['PeerDisconnecting'])
 
-PeerDisconnecting.addProperties(
-  new Runtime.EventProperty([
-    'peerId',
-    Runtime.EventProperty.PropertyType['PEERID'],
-  ])
+PeerDisconnecting.addPropertyTypes(
+  new EventProperty(['peerId', EventProperty.PropertyType['PEERID']])
 )
-PeerDisconnecting.addProperties(
-  new Runtime.EventProperty([
-    'timeOpen',
-    Runtime.EventProperty.PropertyType['TIME'],
-  ])
+PeerDisconnecting.addPropertyTypes(
+  new EventProperty(['timeOpen', EventProperty.PropertyType['TIME']])
 )
-PeerDisconnecting.addProperties(
-  new Runtime.EventProperty([
-    'age',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
+PeerDisconnecting.addPropertyTypes(
+  new EventProperty(['age', EventProperty.PropertyType['NUMBER']])
 )
-PeerDisconnecting.addProperties(
-  new Runtime.EventProperty([
-    'transport',
-    Runtime.EventProperty.PropertyType['STRING'],
-  ])
+PeerDisconnecting.addPropertyTypes(
+  new EventProperty(['transport', EventProperty.PropertyType['STRING']])
 )
 
 module.exports = PeerDisconnecting

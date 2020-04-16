@@ -1,18 +1,27 @@
 'use strict'
 
-function getEventTypes(runtime) {
+const {
+  getEventPropertyLookup,
+  getEventTypeWithProperties,
+} = require('./events')
+
+function getRuntimeEventTypes(runtime) {
   if (!runtime) return []
-  const propertyTypeLookup = getPropertyTypeLookup(runtime)
-  const eventTypes = runtime.getEventTypesList().map(eventType => ({
-    name: eventType.getName(),
-    properties: getEventTypeWithProperties({ eventType, propertyTypeLookup }),
-  }))
+  let propertyTypeLookup
+  const eventTypes = runtime.getEventTypesList().map(eventType => {
+    if (!propertyTypeLookup)
+      propertyTypeLookup = getEventPropertyLookup(eventType)
+    return {
+      name: eventType.getName(),
+      properties: getEventTypeWithProperties({ eventType, propertyTypeLookup }),
+    }
+  })
   return eventTypes
 }
 
-function getAllEventProperties({
+function getRuntimeEventProperties({
   runtime,
-  eventTypes = getEventTypes(runtime),
+  eventTypes = getRuntimeEventTypes(runtime),
 }) {
   const allProperties = []
   eventTypes.forEach(({ name: eventName, properties }) => {
@@ -39,33 +48,7 @@ function getAllEventProperties({
   return allProperties
 }
 
-function getPropertyTypeLookup(runtime) {
-  const propertyTypesEnum = runtime.constructor.EventProperty.PropertyType
-  const numToStr = Object.entries(propertyTypesEnum).reduce(
-    (numToStr, [str, num]) => {
-      numToStr[num] = str
-      return numToStr
-    },
-    {}
-  )
-  return numToStr
-}
-
-function getEventTypeWithProperties({
-  eventType,
-  runtime,
-  propertyTypeLookup = getPropertyTypeLookup(runtime),
-}) {
-  return eventType.getPropertyTypesList().map(prop => ({
-    name: prop.getName(),
-    type: propertyTypeLookup[prop.getType()],
-    hasMultiple: prop.getHasMultiple(),
-  }))
-}
-
 module.exports = {
-  getEventTypes,
-  getAllEventProperties,
-  getPropertyTypeLookup,
-  getEventTypeWithProperties,
+  getRuntimeEventTypes,
+  getRuntimeEventProperties,
 }

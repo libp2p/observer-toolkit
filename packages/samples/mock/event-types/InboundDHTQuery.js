@@ -1,28 +1,20 @@
 'use strict'
 
 const {
-  proto: { Runtime },
+  proto: { EventType },
 } = require('@libp2p-observer/proto')
+const { EventProperty } = EventType
 
-const InboundDHTQuery = new Runtime.EventType(['InboundDHTQuery'])
+const InboundDHTQuery = new EventType(['InboundDHTQuery'])
 
-InboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'result',
-    Runtime.EventProperty.PropertyType['STRING'],
-  ])
+InboundDHTQuery.addPropertyTypes(
+  new EventProperty(['result', EventProperty.PropertyType['STRING']])
 )
-InboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'totalTimeMs',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
+InboundDHTQuery.addPropertyTypes(
+  new EventProperty(['totalTimeMs', EventProperty.PropertyType['NUMBER']])
 )
-InboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'totalSteps',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
+InboundDHTQuery.addPropertyTypes(
+  new EventProperty(['totalSteps', EventProperty.PropertyType['NUMBER']])
 )
 
 module.exports = InboundDHTQuery

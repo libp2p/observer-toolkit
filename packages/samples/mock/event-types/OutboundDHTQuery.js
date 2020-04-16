@@ -1,41 +1,26 @@
 'use strict'
 
 const {
-  proto: { Runtime },
+  proto: { EventType },
 } = require('@libp2p-observer/proto')
+const { EventProperty } = EventType
 
-const OutboundDHTQuery = new Runtime.EventType(['OutboundDHTQuery'])
+const OutboundDHTQuery = new EventType(['OutboundDHTQuery'])
 
-OutboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'result',
-    Runtime.EventProperty.PropertyType['STRING'],
-  ])
+OutboundDHTQuery.addPropertyTypes(
+  new EventProperty(['result', EventProperty.PropertyType['STRING']])
 )
-OutboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'totalTimeMs',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
+OutboundDHTQuery.addPropertyTypes(
+  new EventProperty(['totalTimeMs', EventProperty.PropertyType['NUMBER']])
 )
-OutboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'totalSteps',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
+OutboundDHTQuery.addPropertyTypes(
+  new EventProperty(['totalSteps', EventProperty.PropertyType['NUMBER']])
 )
-OutboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'totalSteps',
-    Runtime.EventProperty.PropertyType['NUMBER'],
-  ])
+OutboundDHTQuery.addPropertyTypes(
+  new EventProperty(['totalSteps', EventProperty.PropertyType['NUMBER']])
 )
-OutboundDHTQuery.addProperties(
-  new Runtime.EventProperty([
-    'peerIds',
-    Runtime.EventProperty.PropertyType['PEERID'],
-    true,
-  ])
+OutboundDHTQuery.addPropertyTypes(
+  new EventProperty(['peerIds', EventProperty.PropertyType['PEERID'], true])
 )
 
 module.exports = OutboundDHTQuery

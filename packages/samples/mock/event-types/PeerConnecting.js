@@ -1,22 +1,17 @@
 'use strict'
 
 const {
-  proto: { Runtime },
+  proto: { EventType },
 } = require('@libp2p-observer/proto')
+const { EventProperty } = EventType
 
-const PeerConnecting = new Runtime.EventType(['PeerConnecting'])
+const PeerConnecting = new EventType(['PeerConnecting'])
 
-PeerConnecting.addProperties(
-  new Runtime.EventProperty([
-    'peerId',
-    Runtime.EventProperty.PropertyType['PEERID'],
-  ])
+PeerConnecting.addPropertyTypes(
+  new EventProperty(['peerId', EventProperty.PropertyType['PEERID']])
 )
-PeerConnecting.addProperties(
-  new Runtime.EventProperty([
-    'transport',
-    Runtime.EventProperty.PropertyType['STRING'],
-  ])
+PeerConnecting.addPropertyTypes(
+  new EventProperty(['transport', EventProperty.PropertyType['STRING']])
 )
 
 module.exports = PeerConnecting
