@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -56,6 +56,9 @@ const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  &.clickable {
+    cursor: pointer;
+  }
 `
 
 const Details = styled.div`
@@ -146,23 +149,50 @@ const CloseIcon = styled(IconContainer)`
   background: none;
 `
 
+const ActiveData = styled.div`
+  ${({ theme }) => theme.text('heading', 'medium')}
+  margin-left: ${({ theme }) => theme.spacing(-2)};
+  cursor: pointer;
+`
+
+const ActiveDataIcon = styled.button`
+  margin-right: ${({ theme }) => theme.spacing()};
+`
+
 function DataTrayItem({
   isSelected,
+  isLoaded,
   select,
   deselect,
   iconType,
   name,
+  type,
   description,
-  children,
+  Component,
+  onLoad,
 }) {
+  const iconRef = useRef()
   const stopProp = e => e.stopPropagation()
   return (
     <Container onClick={select} isSelected={isSelected}>
       <ContainerInner>
         <SlideAcross onClick={stopProp} isSelected={isSelected}>
-          <SlideInner isSelected={isSelected}>{children}</SlideInner>
+          <SlideInner isSelected={isSelected}>
+            {isSelected &&
+              (isLoaded ? (
+                <ActiveData onClick={select}>
+                  <Icon
+                    type="remove"
+                    override={{ Container: ActiveDataIcon }}
+                  />
+                  {type}: <b>{name}</b>
+                </ActiveData>
+              ) : (
+                <Component onLoad={onLoad} iconRef={iconRef} />
+              ))}
+          </SlideInner>
         </SlideAcross>
-        <IconContainer isSelected={isSelected}>
+        <IconContainer isSelected={isSelected} ref={iconRef}>
           <Icon type={iconType} size="3em" active />
         </IconContainer>
         <Details isSelected={isSelected}>
@@ -185,12 +215,15 @@ function DataTrayItem({
 
 DataTrayItem.propTypes = {
   isSelected: T.bool,
+  isLoaded: T.bool,
   select: T.func.isRequired,
   deselect: T.func.isRequired,
   iconType: T.string.isRequired,
   name: T.string.isRequired,
+  type: T.string.isRequired,
   description: T.string.isRequired,
-  children: T.node,
+  Component: T.elementType.isRequired,
+  onLoad: T.func,
 }
 
 export default DataTrayItem

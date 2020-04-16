@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
-import get from 'lodash.get'
 
-import { DataContext, Icon } from '@libp2p-observer/sdk'
+import { SourceContext } from '@libp2p-observer/sdk'
 import DataTrayItem from './DataTrayItem'
 import SamplesList from './SamplesList'
 import WebSocketInput from './WebSocketInput'
@@ -17,16 +16,6 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
-
-const ActiveData = styled.div`
-  ${({ theme }) => theme.text('heading', 'medium')}
-  margin-left: ${({ theme }) => theme.spacing(-2)};
-  cursor: pointer;
-`
-
-const ActiveDataIcon = styled.button`
-  margin-right: ${({ theme }) => theme.spacing()};
 `
 
 const items = [
@@ -53,67 +42,43 @@ const items = [
   },
 ]
 
+function getInitialIndex(source) {
+  if (!source) return null
+  return items.findIndex(({ type }) => type === source.type)
+}
+
 function DataTray({ onLoad }) {
-  const states = useContext(DataContext)
-  const [isUnset, setIsUnset] = useState(false)
-  const activeType = get(states, 'metadata.type')
-  const activeName = get(states, 'metadata.name')
-
-  const [selectedIndex, setSelectedIndex] = useState(null)
-
-  useEffect(() => {
-    if (!activeType || isUnset) return
-    const index = items.findIndex(({ type }) => type === activeType)
-    if (index !== selectedIndex) {
-      if (typeof selectedIndex === 'number') {
-        setIsUnset(true)
-      } else {
-        setIsUnset(false)
-        setSelectedIndex(index)
-      }
-    }
-  }, [activeType, isUnset, selectedIndex])
+  const source = useContext(SourceContext)
+  const [selectedIndex, setSelectedIndex] = useState(getInitialIndex(source))
 
   const deselect = e => {
     e.stopPropagation()
-    setIsUnset(true)
     setSelectedIndex(null)
-  }
-
-  const reselect = e => {
-    const index = selectedIndex
-    deselect(e)
-    setSelectedIndex(index)
   }
 
   return (
     <Container>
-      {items.map(({ name, iconType, description, Component }, index) => {
+      {items.map(({ name, type, iconType, description, Component }, index) => {
         const isSelected = selectedIndex === index
-        const select = () => setSelectedIndex(index)
+        const isLoaded = source && source.type === type
+        const select = e => {
+          e.stopPropagation()
+          setSelectedIndex(index)
+        }
         return (
           <DataTrayItem
             isSelected={isSelected}
+            isLoaded={isLoaded}
             select={select}
             deselect={deselect}
             name={name}
+            type={type}
             description={description}
             iconType={iconType}
             key={name}
-          >
-            {isSelected &&
-              (activeName && !isUnset ? (
-                <ActiveData onClick={reselect}>
-                  <Icon
-                    type="remove"
-                    override={{ Container: ActiveDataIcon }}
-                  />
-                  {activeType}: <b>{activeName}</b>
-                </ActiveData>
-              ) : (
-                <Component onLoad={onLoad} />
-              ))}
-          </DataTrayItem>
+            Component={Component}
+            onLoad={onLoad}
+          />
         )
       })}
     </Container>

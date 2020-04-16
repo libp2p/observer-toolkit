@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone'
 
 import {
   uploadDataFile,
+  useHandlerOnRef,
   SourceContext,
   SetterContext,
 } from '@libp2p-observer/sdk'
@@ -34,7 +35,12 @@ function getButtonText(isLoading, isDragActive, fileName, title) {
 
 const defaultTitle = 'Pick or drop libp2p protobuf file'
 
-function UploadDataButton({ onLoad, title = defaultTitle, overrides = {} }) {
+function UploadDataButton({
+  onLoad,
+  title = defaultTitle,
+  iconRef,
+  overrides = {},
+}) {
   const [isLoading, setIsLoading] = useState(false)
   const source = useContext(SourceContext)
   const fileName = source ? source.name : null
@@ -65,12 +71,20 @@ function UploadDataButton({ onLoad, title = defaultTitle, overrides = {} }) {
     onDrop: handleUpload,
   })
 
+  const rootProps = getRootProps()
+  const inputProps = getInputProps()
+
+  useHandlerOnRef({
+    targetRef: iconRef,
+    handler: rootProps.onClick,
+  })
+
   const buttonText = getButtonText(isLoading, isDragActive, fileName, title)
 
   return (
-    <Container as={overrides.Container} {...getRootProps()}>
+    <Container as={overrides.Container} {...rootProps}>
       <FileButton isDragActive={isDragActive} as={overrides.FileButton}>
-        <NativeFileInput as={overrides.NativeFileInput} {...getInputProps()} />
+        <NativeFileInput as={overrides.NativeFileInput} {...inputProps} />
         {buttonText}
       </FileButton>
     </Container>
@@ -80,6 +94,7 @@ function UploadDataButton({ onLoad, title = defaultTitle, overrides = {} }) {
 UploadDataButton.propTypes = {
   onLoad: T.func,
   title: T.string,
+  iconRef: T.object,
   overrides: T.object,
 }
 

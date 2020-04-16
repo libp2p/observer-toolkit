@@ -1,7 +1,12 @@
 import React, { useContext, useRef, useState } from 'react'
 import styled from 'styled-components'
+import T from 'prop-types'
 
-import { uploadWebSocket, SetterContext } from '@libp2p-observer/sdk'
+import {
+  uploadWebSocket,
+  useHandlerOnRef,
+  SetterContext,
+} from '@libp2p-observer/sdk'
 
 const defaultUrl = 'ws://localhost:8080'
 
@@ -23,7 +28,7 @@ const Container = styled.span`
   position: relative;
 `
 
-function WebSocketInput() {
+function WebSocketInput({ iconRef }) {
   const inputRef = useRef()
   const [isLoading, setIsLoading] = useState(false)
   const { removeData, updateData, updateSource } = useContext(SetterContext)
@@ -32,7 +37,7 @@ function WebSocketInput() {
     if (e.key === 'Enter' || e.keyCode === 13) handleSubmit()
   }
 
-  function handleSubmit(event) {
+  function handleSubmit() {
     uploadWebSocket(
       inputRef.current.value,
       handleUploadStart,
@@ -55,6 +60,11 @@ function WebSocketInput() {
     updateData(data)
   }
 
+  useHandlerOnRef({
+    targetRef: iconRef,
+    handler: handleSubmit,
+  })
+
   return (
     <Container>
       {isLoading ? (
@@ -69,6 +79,10 @@ function WebSocketInput() {
       )}
     </Container>
   )
+}
+
+WebSocketInput.propTypes = {
+  iconRef: T.object,
 }
 
 export default WebSocketInput
