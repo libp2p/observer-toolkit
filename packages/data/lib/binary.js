@@ -91,8 +91,8 @@ function parseBase64(dataString) {
 }
 
 function parseBufferList(bufferList) {
-  const messageChecksumLength = 4
-  const messageSizeLength = 4
+  const messageChecksumLength = 0 // Until fixed on server
+  const messageSizeLength = 0 // Until fixed on server
   const messages = getEmptyMessages()
 
   while (bufferList.length > messageChecksumLength + messageSizeLength) {
