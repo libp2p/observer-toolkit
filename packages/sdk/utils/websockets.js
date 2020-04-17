@@ -24,18 +24,18 @@ function createClientSignalMessage(
   return clientSignal.serializeBinary()
 }
 
-// TODO: use this helper when we connect to REPL ws server
-// function getMessageDataBuffer(msg, done) {
-//   if (msg.data instanceof Blob) {
-//     const fileReader = new FileReader()
-//     fileReader.onload = function(event) {
-//       done(event.target.result)
-//     }
-//     fileReader.readAsArrayBuffer(msg.data)
-//   } else {
-//     done(new Buffer(msg.data, 'binary'))
-//   }
-// }
+function getMessageDataBuffer(msg, done) {
+  if (msg.data instanceof Blob) {
+    const fileReader = new FileReader()
+    fileReader.onload = function(event) {
+      const buf = new Uint8Array(event.target.result)
+      done(buf)
+    }
+    fileReader.readAsArrayBuffer(msg.data)
+  } else {
+    done(new Buffer(msg.data, 'binary'))
+  }
+}
 
 function getSignal(cmd) {
   if (cmd === 'data') return proto.ClientSignal.Signal.SEND_DATA
@@ -51,6 +51,7 @@ function sendSignal(cmd, content) {
   const signal = getSignal(cmd)
   const data = createClientSignalMessage(signal, content)
   if (ws && data) {
+    // const blobData = new Blob(data)
     ws.send(data)
   }
 }
@@ -68,12 +69,13 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   ws.addEventListener('message', function(msg) {
     // process incoming message
     if (msg.data) {
-      const buf = new Buffer(msg.data, 'binary')
-      bl.append(buf.slice(4))
-      processUploadBuffer({
-        bufferList: bl,
-        eventsBuffer,
-        onUploadChunk,
+      getMessageDataBuffer(msg, buf => {
+        bl.append(buf.slice(4))
+        processUploadBuffer({
+          bufferList: bl,
+          eventsBuffer,
+          onUploadChunk,
+        })
       })
     }
 
