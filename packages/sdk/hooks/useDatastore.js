@@ -4,21 +4,21 @@ let CUTOFF_MS = 60000
 
 function updateStoredData(data) {
   let latestTs = data
-    .filter(msg => msg.getStartTs)
+    .filter(msg => msg.hasStartTs())
     .map(msg => msg.getStartTs().getSeconds())
     .sort()
     .pop()
   return data
     .filter(msg => {
       if (
-        msg.getStartTs &&
+        msg.hasStartTs() &&
         latestTs - msg.getStartTs().getSeconds() > CUTOFF_MS
       )
         return false
       return true
     })
     .map(msg => {
-      if (!msg.getStartTs || !msg.getSubsystems) return msg
+      if (!msg.hasStartTs() || !msg.getSubsystems) return msg
       const stateTs = msg.getStartTs().getSeconds()
       const subsystems = msg.getSubsystems()
       const connections = subsystems.getConnectionsList()
