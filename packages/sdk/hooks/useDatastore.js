@@ -1,25 +1,29 @@
 import { useCallback, useReducer, useState } from 'react'
 
 let CUTOFF_MS = 60000
+let PRESUMED_STATE_LENGTH = 2000
+
+function getStartTs(msg) {
+  if (msg.getTs) return msg.getTs()
+
+  msg.hasStartTs()
+    ? msg.getStartTs().getSeconds()
+    : msg.getInstantTs().getSeconds() - PRESUMED_STATE_LENGTH
+}
 
 function updateStoredData(data) {
   let latestTs = data
-    .filter(msg => msg.hasStartTs())
-    .map(msg => msg.getStartTs().getSeconds())
+    .map(msg => getStartTs(msg))
     .sort()
     .pop()
   return data
     .filter(msg => {
-      if (
-        msg.hasStartTs() &&
-        latestTs - msg.getStartTs().getSeconds() > CUTOFF_MS
-      )
-        return false
+      if (latestTs - getStartTs(msg) > CUTOFF_MS) return false
       return true
     })
     .map(msg => {
-      if (!msg.hasStartTs() || !msg.getSubsystems) return msg
-      const stateTs = msg.getStartTs().getSeconds()
+      if (!msg.getSubsystems) return msg
+      const stateTs = getStartTs(msg)
       const subsystems = msg.getSubsystems()
       const connections = subsystems.getConnectionsList()
       const cns = connections.filter(cn => {
@@ -75,6 +79,9 @@ function useDatastore({
 
   if (runtime && runtime.getKeepStaleDataMs()) {
     CUTOFF_MS = runtime.getKeepStaleDataMs()
+  }
+  if (runtime && runtime.getSendStateIntervalMs()) {
+    PRESUMED_STATE_LENGTH = runtime.getSendStateIntervalMs()
   }
 
   const updateSource = useCallback(
