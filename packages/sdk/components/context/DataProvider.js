@@ -37,6 +37,7 @@ function DataProvider({
     removeData,
     setPeerIds,
     setRuntime,
+    setIsLoading,
   } = useDatastore({
     initialStates,
     initialEvents,
@@ -57,6 +58,7 @@ function DataProvider({
     updateData,
     replaceData,
     removeData,
+    setIsLoading,
   })
 
   if (timepoint && !states.includes(timepoint)) {

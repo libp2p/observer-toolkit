@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { SourceContext } from '@libp2p-observer/sdk'
+import { SetterContext, SourceContext } from '@libp2p-observer/sdk'
 import DataTrayItem from './DataTrayItem'
 import SamplesList from './SamplesList'
 import WebSocketInput from './WebSocketInput'
@@ -43,12 +43,16 @@ const items = [
 ]
 
 function getInitialIndex(source) {
-  if (!source) return null
-  return items.findIndex(({ type }) => type === source.type)
+  const index = items.findIndex(({ type }) => type === source.type)
+  return index !== -1 ? index : null
 }
 
-function DataTray({ onLoad }) {
+function DataTray({ handleNewData }) {
   const source = useContext(SourceContext)
+  const { removeData, updateData, updateSource, setIsLoading } = useContext(
+    SetterContext
+  )
+
   const [selectedIndex, setSelectedIndex] = useState(getInitialIndex(source))
 
   const deselect = e => {
@@ -56,28 +60,43 @@ function DataTray({ onLoad }) {
     setSelectedIndex(null)
   }
 
+  const handleUploadChunk = data => updateData(data)
+  const handleUploadFinished = () => {
+    setIsLoading(false)
+    if (handleNewData) handleNewData()
+  }
+
   return (
     <Container>
-      {items.map(({ name, type, iconType, description, Component }, index) => {
+      {items.map((dataItemProps, index) => {
+        const { name, type } = dataItemProps
         const isSelected = selectedIndex === index
-        const isLoaded = source && source.type === type
+        const isLoaded = source.type === type
+        const isLoading = isLoaded && source.isLoading
+
         const select = e => {
           e.stopPropagation()
           setSelectedIndex(index)
         }
+
+        const handleUploadStart = name => {
+          console.log('handleUploadStart...')
+          removeData()
+          updateSource({ type, name, isLoading: true })
+        }
+
         return (
           <DataTrayItem
+            key={name}
             isSelected={isSelected}
             isLoaded={isLoaded}
             select={select}
             deselect={deselect}
-            name={name}
-            type={type}
-            description={description}
-            iconType={iconType}
-            key={name}
-            Component={Component}
-            onLoad={onLoad}
+            isLoading={isLoading}
+            handleUploadStart={handleUploadStart}
+            handleUploadChunk={handleUploadChunk}
+            handleUploadFinished={handleUploadFinished}
+            {...dataItemProps}
           />
         )
       })}
@@ -86,7 +105,7 @@ function DataTray({ onLoad }) {
 }
 
 DataTray.propTypes = {
-  onLoad: T.func,
+  handleNewData: T.func,
 }
 
 export default DataTray

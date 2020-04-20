@@ -47,7 +47,18 @@ function handleDispatchData(oldData, { action, data }) {
     case 'remove':
       return []
     default:
-      throw new Error(`Action "${action}" not valid`)
+      throw new Error(`Action "${action}" not valid in handleDispatchData`)
+  }
+}
+
+function handleDispatchSource(oldSource, { action, source }) {
+  switch (action) {
+    case 'update':
+      return Object.assign({}, oldSource, source)
+    case 'setIsLoading':
+      return { ...oldSource, isLoading: source.isLoading }
+    default:
+      throw new Error(`Action "${action}" not valid in handleDispatchSource`)
   }
 }
 
@@ -62,28 +73,32 @@ function replaceStoredData(data) {
 }
 
 function useDatastore({
+  initialRuntime,
   initialStates = [],
   initialEvents = [],
-  initialRuntime,
-  initialSource,
+  initialSource = {},
 }) {
   const [states, dispatchStates] = useReducer(handleDispatchData, initialStates)
   const [events, dispatchEvents] = useReducer(handleDispatchData, initialEvents)
+  const [source, dispatchSource] = useReducer(
+    handleDispatchSource,
+    initialSource
+  )
   const [runtime, setRuntime] = useState(initialRuntime)
   const [peerIds, setPeerIds] = useState([])
-  const [source, setSource] = useState(initialSource)
 
   if (runtime && runtime.getKeepStaleDataMs()) {
     CUTOFF_MS = runtime.getKeepStaleDataMs()
   }
 
   const updateSource = useCallback(
-    ({ name, type }) => {
-      if (!source || type !== source.type || name !== source.name) {
-        setSource({ name, type })
-      }
-    },
-    [source, setSource]
+    newSource => dispatchSource({ action: 'update', source: newSource }),
+    [dispatchSource]
+  )
+  const setIsLoading = useCallback(
+    isLoading =>
+      dispatchSource({ action: 'setIsLoading', source: { isLoading } }),
+    [dispatchSource]
   )
 
   const updateData = useCallback(
@@ -131,6 +146,7 @@ function useDatastore({
     peerIds,
     source,
     updateSource,
+    setIsLoading,
     updateData,
     replaceData,
     removeData,

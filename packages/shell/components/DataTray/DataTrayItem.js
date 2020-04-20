@@ -169,26 +169,47 @@ function DataTrayItem({
   type,
   description,
   Component,
-  onLoad,
+  isLoading,
+  handleUploadStart,
+  handleUploadFinished,
+  handleUploadChunk,
 }) {
   const iconRef = useRef()
   const stopProp = e => e.stopPropagation()
+
   return (
     <Container onClick={select} isSelected={isSelected}>
       <ContainerInner>
         <SlideAcross onClick={stopProp} isSelected={isSelected}>
           <SlideInner isSelected={isSelected}>
             {isSelected &&
-              (isLoaded ? (
+              (isLoaded || isLoading ? (
                 <ActiveData onClick={select}>
-                  <Icon
-                    type="remove"
-                    override={{ Container: ActiveDataIcon }}
-                  />
-                  {type}: <b>{name}</b>
+                  {isLoading ? (
+                    <>
+                      <Icon
+                        type="remove"
+                        override={{ Container: ActiveDataIcon }}
+                      />
+                      Loading...
+                    </>
+                  ) : (
+                    <>
+                      <Icon
+                        type="remove"
+                        override={{ Container: ActiveDataIcon }}
+                      />
+                      {type}: <b>{name}</b>
+                    </>
+                  )}
                 </ActiveData>
               ) : (
-                <Component onLoad={onLoad} iconRef={iconRef} />
+                <Component
+                  iconRef={iconRef}
+                  handleUploadStart={handleUploadStart}
+                  handleUploadChunk={handleUploadChunk}
+                  handleUploadFinished={handleUploadFinished}
+                />
               ))}
           </SlideInner>
         </SlideAcross>
@@ -223,7 +244,10 @@ DataTrayItem.propTypes = {
   type: T.string.isRequired,
   description: T.string.isRequired,
   Component: T.elementType.isRequired,
-  onLoad: T.func,
+  isLoading: T.bool,
+  handleUploadStart: T.func.isRequired,
+  handleUploadFinished: T.func.isRequired,
+  handleUploadChunk: T.func.isRequired,
 }
 
 export default DataTrayItem

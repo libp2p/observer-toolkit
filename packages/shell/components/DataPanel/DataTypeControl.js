@@ -42,9 +42,16 @@ const ButtonText = styled.span`
   `}
 `
 
+function getButtonText(isHighlighted, isLoading, name) {
+  if (isLoading) return 'Loading...'
+  return isHighlighted ? 'Change data source' : name
+}
+
 function DataTypeControl({ openDataTray }) {
   const [isHighlighted, setHighlighted] = useState(false)
-  const { type, name } = useContext(SourceContext)
+  const { type, name, isLoading } = useContext(SourceContext)
+
+  if (!type) return ''
 
   const iconNames = {
     sample: 'cloud',
@@ -60,6 +67,7 @@ function DataTypeControl({ openDataTray }) {
   }
 
   const iconType = isHighlighted ? 'back' : iconNames[type]
+  const buttonText = getButtonText(isHighlighted, isLoading, name)
 
   // TODO: When implementing live ws mode:
   //  - Make icon pulse gently while live
@@ -74,9 +82,7 @@ function DataTypeControl({ openDataTray }) {
       <IconButton isHighlighted={isHighlighted}>
         <Icon type={iconType} />
       </IconButton>
-      <ButtonText isHighlighted={isHighlighted}>
-        {isHighlighted ? 'Change data source' : name}
-      </ButtonText>
+      <ButtonText isHighlighted={isHighlighted}>{buttonText}</ButtonText>
     </Container>
   )
 }

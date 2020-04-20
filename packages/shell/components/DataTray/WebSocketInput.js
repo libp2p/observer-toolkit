@@ -1,12 +1,8 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import T from 'prop-types'
 
-import {
-  uploadWebSocket,
-  useHandlerOnRef,
-  SetterContext,
-} from '@libp2p-observer/sdk'
+import { uploadWebSocket, useHandlerOnRef } from '@libp2p-observer/sdk'
 
 const defaultUrl = 'ws://localhost:8080'
 
@@ -28,10 +24,14 @@ const Container = styled.span`
   position: relative;
 `
 
-function WebSocketInput({ iconRef }) {
+function WebSocketInput({
+  handleUploadStart,
+  handleUploadFinished,
+  handleUploadChunk,
+  iconRef,
+}) {
   const inputRef = useRef()
-  const [isLoading, setIsLoading] = useState(false)
-  const { removeData, updateData, updateSource } = useContext(SetterContext)
+  const websocketRef = useRef()
 
   function handleKeyPress(e) {
     if (e.key === 'Enter' || e.keyCode === 13) handleSubmit()
@@ -40,24 +40,11 @@ function WebSocketInput({ iconRef }) {
   function handleSubmit() {
     uploadWebSocket(
       inputRef.current.value,
+      websocketRef,
       handleUploadStart,
-      handleUploadFinish,
+      handleUploadFinished,
       handleUploadChunk
     )
-  }
-
-  function handleUploadStart(url) {
-    removeData()
-    updateSource({ type: 'live', name: url })
-    setIsLoading(true)
-  }
-
-  function handleUploadFinish() {
-    setIsLoading(false)
-  }
-
-  function handleUploadChunk(data) {
-    updateData(data)
   }
 
   useHandlerOnRef({
@@ -66,22 +53,22 @@ function WebSocketInput({ iconRef }) {
   })
 
   return (
-    <Container>
-      {isLoading ? (
-        'Loading...'
-      ) : (
-        <InputField
-          autoFocus
-          ref={inputRef}
-          defaultValue={defaultUrl}
-          onKeyPress={handleKeyPress}
-        />
-      )}
+    <Container onMouseOver={() => console.log(websocketRef)}>
+      <InputField
+        autoFocus
+        ref={inputRef}
+        defaultValue={defaultUrl}
+        onKeyPress={handleKeyPress}
+      />
+      }
     </Container>
   )
 }
 
 WebSocketInput.propTypes = {
+  handleUploadStart: T.func.isRequired,
+  handleUploadFinished: T.func.isRequired,
+  handleUploadChunk: T.func.isRequired,
   iconRef: T.object,
 }
 

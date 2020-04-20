@@ -1,14 +1,9 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { useDropzone } from 'react-dropzone'
 
-import {
-  uploadDataFile,
-  useHandlerOnRef,
-  SourceContext,
-  SetterContext,
-} from '@libp2p-observer/sdk'
+import { uploadDataFile, useHandlerOnRef } from '@libp2p-observer/sdk'
 
 const FileButton = styled.button`
   cursor: pointer;
@@ -27,44 +22,27 @@ const Container = styled.span`
   position: relative;
 `
 
-function getButtonText(isLoading, isDragActive, fileName, title) {
-  if (isDragActive) return 'Drop file to upload'
-  if (isLoading) return 'Loading...'
-  return fileName ? `Replace file '${fileName}'` : title
-}
-
 const defaultTitle = 'Pick or drop libp2p protobuf file'
+const draggingTitle = 'Drop file to upload'
 
 function UploadDataButton({
-  onLoad,
-  title = defaultTitle,
+  handleUploadStart,
+  handleUploadFinished,
+  handleUploadChunk,
   iconRef,
-  overrides = {},
 }) {
-  const [isLoading, setIsLoading] = useState(false)
-  const source = useContext(SourceContext)
-  const fileName = source ? source.name : null
-  const { removeData, updateData, updateSource } = useContext(SetterContext)
-
   const handleUpload = useCallback(
     files => {
-      const onUploadStart = name => {
-        removeData()
-        updateSource({ type: 'upload', name })
-        setIsLoading(true)
-      }
-      const onUploadFinish = file => {
-        setIsLoading(false)
-        if (onLoad) onLoad()
-      }
-      const onUploadChunk = data => {
-        updateData(data)
-      }
       files.forEach(file =>
-        uploadDataFile(file, onUploadStart, onUploadFinish, onUploadChunk)
+        uploadDataFile(
+          file,
+          handleUploadStart,
+          handleUploadFinished,
+          handleUploadChunk
+        )
       )
     },
-    [removeData, updateSource, onLoad, updateData]
+    [handleUploadStart, handleUploadFinished, handleUploadChunk]
   )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -79,12 +57,12 @@ function UploadDataButton({
     handler: rootProps.onClick,
   })
 
-  const buttonText = getButtonText(isLoading, isDragActive, fileName, title)
+  const buttonText = isDragActive ? draggingTitle : defaultTitle
 
   return (
-    <Container as={overrides.Container} {...rootProps}>
-      <FileButton isDragActive={isDragActive} as={overrides.FileButton}>
-        <NativeFileInput as={overrides.NativeFileInput} {...inputProps} />
+    <Container {...rootProps}>
+      <FileButton isDragActive={isDragActive}>
+        <NativeFileInput {...inputProps} />
         {buttonText}
       </FileButton>
     </Container>
@@ -92,10 +70,10 @@ function UploadDataButton({
 }
 
 UploadDataButton.propTypes = {
-  onLoad: T.func,
-  title: T.string,
+  handleUploadStart: T.func.isRequired,
+  handleUploadFinished: T.func.isRequired,
+  handleUploadChunk: T.func.isRequired,
   iconRef: T.object,
-  overrides: T.object,
 }
 
 export default UploadDataButton
