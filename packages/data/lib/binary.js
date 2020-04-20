@@ -99,7 +99,7 @@ function parseBufferList(bufferList) {
     // check for complete message in the buffer
     const messageChecksum = bufferList.readUIntLE(0, messageChecksumLength)
     const messageSize = messageSizeLength
-      ? bufferList.readUIntLE(3, messageSizeLength)
+      ? bufferList.readUIntLE(messageChecksumLength, messageSizeLength)
       : bufferList.length
     const minimalBufferLength =
       messageChecksumLength + messageSizeLength + messageSize
