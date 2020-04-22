@@ -1,8 +1,12 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import styled from 'styled-components'
 import T from 'prop-types'
 
-import { uploadWebSocket, useHandlerOnRef } from '@libp2p-observer/sdk'
+import {
+  uploadWebSocket,
+  useHandlerOnRef,
+  SetterContext,
+} from '@libp2p-observer/sdk'
 
 const defaultUrl = 'ws://localhost:8080'
 
@@ -30,8 +34,9 @@ function WebSocketInput({
   handleUploadChunk,
   iconRef,
 }) {
+  const { setWebsocket } = useContext(SetterContext)
+
   const inputRef = useRef()
-  const websocketRef = useRef()
 
   function handleKeyPress(e) {
     if (e.key === 'Enter' || e.keyCode === 13) handleSubmit()
@@ -40,10 +45,10 @@ function WebSocketInput({
   function handleSubmit() {
     uploadWebSocket(
       inputRef.current.value,
-      websocketRef,
       handleUploadStart,
       handleUploadFinished,
-      handleUploadChunk
+      handleUploadChunk,
+      setWebsocket
     )
   }
 
@@ -53,7 +58,7 @@ function WebSocketInput({
   })
 
   return (
-    <Container onMouseOver={() => console.log(websocketRef)}>
+    <Container>
       <InputField
         autoFocus
         ref={inputRef}

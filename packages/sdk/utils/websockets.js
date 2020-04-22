@@ -57,10 +57,10 @@ function sendSignal(cmd, content) {
 
 function uploadWebSocket(
   url,
-  websocketRef,
   onUploadStart,
   onUploadFinished,
-  onUploadChunk
+  onUploadChunk,
+  setWebsocket
 ) {
   const bl = new BufferList()
   const eventsBuffer = []
@@ -84,7 +84,6 @@ function uploadWebSocket(
       })
 
       if (!ws.hasReceivedData) {
-        console.log('hasReceivedData', ws)
         if (onUploadFinished) onUploadFinished(url)
         ws.hasReceivedData = true
       }
@@ -106,6 +105,7 @@ function uploadWebSocket(
   })
   ws.addEventListener('open', function() {
     if (onUploadStart) onUploadStart(url)
+    setWebsocket(ws)
     if (usePushEmitter) {
       sendSignal('start')
     } else {
