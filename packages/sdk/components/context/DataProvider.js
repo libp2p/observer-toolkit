@@ -31,7 +31,6 @@ function DataProvider({
     source,
 
     // Data setters
-    updateSource,
     updateData,
     replaceData,
     removeData,
@@ -54,7 +53,6 @@ function DataProvider({
     setRuntime,
     setTimepoint,
     setPeerIds,
-    updateSource,
     updateData,
     replaceData,
     removeData,

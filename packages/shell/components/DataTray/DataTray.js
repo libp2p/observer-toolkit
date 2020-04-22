@@ -2,7 +2,11 @@ import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { SetterContext, SourceContext } from '@libp2p-observer/sdk'
+import {
+  RootNodeProvider,
+  SetterContext,
+  SourceContext,
+} from '@libp2p-observer/sdk'
 import DataTrayItem from './DataTrayItem'
 import SamplesList from './SamplesList'
 import WebSocketInput from './WebSocketInput'
@@ -49,9 +53,7 @@ function getInitialIndex(source) {
 
 function DataTray({ handleNewData }) {
   const source = useContext(SourceContext)
-  const { removeData, updateData, updateSource, setIsLoading } = useContext(
-    SetterContext
-  )
+  const { removeData, updateData, setIsLoading } = useContext(SetterContext)
 
   const [selectedIndex, setSelectedIndex] = useState(getInitialIndex(source))
 
@@ -65,41 +67,46 @@ function DataTray({ handleNewData }) {
     setIsLoading(false)
     if (handleNewData) handleNewData()
   }
+  const handleRemoveData = () => {
+    setSelectedIndex(null)
+    removeData()
+  }
 
   return (
     <Container>
-      {items.map((dataItemProps, index) => {
-        const { name, type } = dataItemProps
-        const isSelected = selectedIndex === index
-        const isLoaded = source.type === type
-        const isLoading = isLoaded && source.isLoading
+      <RootNodeProvider>
+        {items.map((dataItemProps, index) => {
+          const { name, type } = dataItemProps
+          const isSelected = selectedIndex === index
+          const isLoaded = source.type === type
+          const isLoading = isLoaded && source.isLoading
 
-        const select = e => {
-          e.stopPropagation()
-          setSelectedIndex(index)
-        }
+          const select = e => {
+            e.stopPropagation()
+            setSelectedIndex(index)
+          }
 
-        const handleUploadStart = name => {
-          console.log('handleUploadStart...')
-          removeData()
-          updateSource({ type, name, isLoading: true })
-        }
+          const handleUploadStart = name => {
+            removeData({ type, name, isLoading: true })
+          }
 
-        return (
-          <DataTrayItem
-            key={name}
-            isSelected={isSelected}
-            isLoaded={isLoaded}
-            select={select}
-            deselect={deselect}
-            isLoading={isLoading}
-            handleUploadStart={handleUploadStart}
-            handleUploadChunk={handleUploadChunk}
-            handleUploadFinished={handleUploadFinished}
-            {...dataItemProps}
-          />
-        )
-      })}
+          return (
+            <DataTrayItem
+              key={name}
+              isSelected={isSelected}
+              isLoaded={isLoaded}
+              select={select}
+              deselect={deselect}
+              isLoading={isLoading}
+              handleUploadStart={handleUploadStart}
+              handleUploadChunk={handleUploadChunk}
+              handleUploadFinished={handleUploadFinished}
+              handleRemoveData={handleRemoveData}
+              {...dataItemProps}
+            />
+          )
+        })}
+      </RootNodeProvider>
     </Container>
   )
 }

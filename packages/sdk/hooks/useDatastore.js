@@ -57,6 +57,8 @@ function handleDispatchSource(oldSource, { action, source }) {
       return Object.assign({}, oldSource, source)
     case 'setIsLoading':
       return { ...oldSource, isLoading: source.isLoading }
+    case 'remove':
+      return getEmptySource()
     default:
       throw new Error(`Action "${action}" not valid in handleDispatchSource`)
   }
@@ -72,11 +74,19 @@ function replaceStoredData(data) {
   return data
 }
 
+function getEmptySource() {
+  return {
+    name: null,
+    type: null,
+    isLoading: false,
+  }
+}
+
 function useDatastore({
   initialRuntime,
   initialStates = [],
   initialEvents = [],
-  initialSource = {},
+  initialSource = getEmptySource(),
 }) {
   const [states, dispatchStates] = useReducer(handleDispatchData, initialStates)
   const [events, dispatchEvents] = useReducer(handleDispatchData, initialEvents)
@@ -91,10 +101,6 @@ function useDatastore({
     CUTOFF_MS = runtime.getKeepStaleDataMs()
   }
 
-  const updateSource = useCallback(
-    newSource => dispatchSource({ action: 'update', source: newSource }),
-    [dispatchSource]
-  )
   const setIsLoading = useCallback(
     isLoading =>
       dispatchSource({ action: 'setIsLoading', source: { isLoading } }),
@@ -119,7 +125,7 @@ function useDatastore({
   )
 
   const replaceData = useCallback(
-    ({ states = [], events = [], runtime }) => {
+    ({ states = [], events = [], runtime, source }) => {
       dispatchStates({
         action: states.length ? 'replace' : 'remove',
         data: states,
@@ -128,16 +134,26 @@ function useDatastore({
         action: events.length ? 'replace' : 'remove',
         data: events,
       })
+      source &&
+        dispatchSource({
+          action: 'update',
+          source,
+        })
       setRuntime(runtime)
     },
-    [dispatchStates, dispatchEvents, setRuntime]
+    [dispatchStates, dispatchEvents, dispatchSource, setRuntime]
   )
 
-  const removeData = useCallback(() => {
-    dispatchStates({ action: 'remove' })
-    dispatchEvents({ action: 'remove' })
-    setRuntime(undefined)
-  }, [dispatchStates, dispatchEvents, setRuntime])
+  const removeData = useCallback(
+    source => {
+      dispatchEvents({ action: 'remove' })
+      dispatchStates({ action: 'remove' })
+      setRuntime(undefined)
+
+      dispatchSource({ action: source ? 'update' : 'remove', source })
+    },
+    [dispatchEvents, dispatchStates, dispatchSource, setRuntime]
+  )
 
   return {
     states,
@@ -145,7 +161,6 @@ function useDatastore({
     runtime,
     peerIds,
     source,
-    updateSource,
     setIsLoading,
     updateData,
     replaceData,
