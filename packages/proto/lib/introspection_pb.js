@@ -13,8 +13,6 @@ var jspb = require('google-protobuf')
 var goog = jspb
 var global = Function('return this')()
 
-var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js')
-goog.object.extend(proto, google_protobuf_timestamp_pb)
 goog.exportSymbol('proto.introspection.ClientSignal', null, global)
 goog.exportSymbol('proto.introspection.ClientSignal.DataSource', null, global)
 goog.exportSymbol('proto.introspection.ClientSignal.Signal', null, global)
@@ -812,9 +810,12 @@ proto.introspection.Version.prototype.getVersion = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Version} returns this
+ */
 proto.introspection.Version.prototype.setVersion = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value)
+  return jspb.Message.setProto3IntField(this, 1, value)
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -955,9 +956,12 @@ proto.introspection.ResultCounter.prototype.getTotal = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.ResultCounter} returns this
+ */
 proto.introspection.ResultCounter.prototype.setTotal = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value)
+  return jspb.Message.setProto3IntField(this, 1, value)
 }
 
 /**
@@ -968,9 +972,12 @@ proto.introspection.ResultCounter.prototype.getOk = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.ResultCounter} returns this
+ */
 proto.introspection.ResultCounter.prototype.setOk = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value)
+  return jspb.Message.setProto3IntField(this, 2, value)
 }
 
 /**
@@ -981,9 +988,12 @@ proto.introspection.ResultCounter.prototype.getErr = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.ResultCounter} returns this
+ */
 proto.introspection.ResultCounter.prototype.setErr = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value)
+  return jspb.Message.setProto3IntField(this, 3, value)
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -1190,9 +1200,12 @@ proto.introspection.SlidingCounter.prototype.getOver1m = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver1m = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value)
+  return jspb.Message.setProto3IntField(this, 1, value)
 }
 
 /**
@@ -1203,9 +1216,12 @@ proto.introspection.SlidingCounter.prototype.getOver5m = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver5m = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value)
+  return jspb.Message.setProto3IntField(this, 2, value)
 }
 
 /**
@@ -1216,9 +1232,12 @@ proto.introspection.SlidingCounter.prototype.getOver15m = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver15m = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value)
+  return jspb.Message.setProto3IntField(this, 3, value)
 }
 
 /**
@@ -1229,9 +1248,12 @@ proto.introspection.SlidingCounter.prototype.getOver30m = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver30m = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value)
+  return jspb.Message.setProto3IntField(this, 4, value)
 }
 
 /**
@@ -1242,9 +1264,12 @@ proto.introspection.SlidingCounter.prototype.getOver1hr = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver1hr = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value)
+  return jspb.Message.setProto3IntField(this, 5, value)
 }
 
 /**
@@ -1255,9 +1280,12 @@ proto.introspection.SlidingCounter.prototype.getOver2hr = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver2hr = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value)
+  return jspb.Message.setProto3IntField(this, 6, value)
 }
 
 /**
@@ -1268,9 +1296,12 @@ proto.introspection.SlidingCounter.prototype.getOver4hr = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver4hr = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value)
+  return jspb.Message.setProto3IntField(this, 7, value)
 }
 
 /**
@@ -1281,9 +1312,12 @@ proto.introspection.SlidingCounter.prototype.getOver8hr = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver8hr = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value)
+  return jspb.Message.setProto3IntField(this, 8, value)
 }
 
 /**
@@ -1294,9 +1328,12 @@ proto.introspection.SlidingCounter.prototype.getOver12hr = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver12hr = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value)
+  return jspb.Message.setProto3IntField(this, 9, value)
 }
 
 /**
@@ -1307,9 +1344,12 @@ proto.introspection.SlidingCounter.prototype.getOver24hr = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.SlidingCounter} returns this
+ */
 proto.introspection.SlidingCounter.prototype.setOver24hr = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value)
+  return jspb.Message.setProto3IntField(this, 10, value)
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -1447,9 +1487,12 @@ proto.introspection.DataGauge.prototype.getCumBytes = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DataGauge} returns this
+ */
 proto.introspection.DataGauge.prototype.setCumBytes = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value)
+  return jspb.Message.setProto3IntField(this, 1, value)
 }
 
 /**
@@ -1460,9 +1503,12 @@ proto.introspection.DataGauge.prototype.getCumPackets = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DataGauge} returns this
+ */
 proto.introspection.DataGauge.prototype.setCumPackets = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value)
+  return jspb.Message.setProto3IntField(this, 2, value)
 }
 
 /**
@@ -1473,9 +1519,12 @@ proto.introspection.DataGauge.prototype.getInstBw = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DataGauge} returns this
+ */
 proto.introspection.DataGauge.prototype.setInstBw = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value)
+  return jspb.Message.setProto3IntField(this, 3, value)
 }
 
 /**
@@ -1777,11 +1826,14 @@ proto.introspection.EventType.EventProperty.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.EventType.EventProperty} returns this
+ */
 proto.introspection.EventType.EventProperty.prototype.setName = function(
   value
 ) {
-  jspb.Message.setProto3StringField(this, 1, value)
+  return jspb.Message.setProto3StringField(this, 1, value)
 }
 
 /**
@@ -1796,11 +1848,14 @@ proto.introspection.EventType.EventProperty.prototype.getType = function() {
   ))
 }
 
-/** @param {!proto.introspection.EventType.EventProperty.PropertyType} value */
+/**
+ * @param {!proto.introspection.EventType.EventProperty.PropertyType} value
+ * @return {!proto.introspection.EventType.EventProperty} returns this
+ */
 proto.introspection.EventType.EventProperty.prototype.setType = function(
   value
 ) {
-  jspb.Message.setProto3EnumField(this, 2, value)
+  return jspb.Message.setProto3EnumField(this, 2, value)
 }
 
 /**
@@ -1815,11 +1870,14 @@ proto.introspection.EventType.EventProperty.prototype.getHasMultiple = function(
   ))
 }
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.introspection.EventType.EventProperty} returns this
+ */
 proto.introspection.EventType.EventProperty.prototype.setHasMultiple = function(
   value
 ) {
-  jspb.Message.setProto3BooleanField(this, 3, value)
+  return jspb.Message.setProto3BooleanField(this, 3, value)
 }
 
 /**
@@ -1830,9 +1888,12 @@ proto.introspection.EventType.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.EventType} returns this
+ */
 proto.introspection.EventType.prototype.setName = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value)
+  return jspb.Message.setProto3StringField(this, 1, value)
 }
 
 /**
@@ -1847,9 +1908,12 @@ proto.introspection.EventType.prototype.getPropertyTypesList = function() {
   ))
 }
 
-/** @param {!Array<!proto.introspection.EventType.EventProperty>} value */
+/**
+ * @param {!Array<!proto.introspection.EventType.EventProperty>} value
+ * @return {!proto.introspection.EventType} returns this
+ */
 proto.introspection.EventType.prototype.setPropertyTypesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 2, value)
+  return jspb.Message.setRepeatedWrapperField(this, 2, value)
 }
 
 /**
@@ -1872,9 +1936,10 @@ proto.introspection.EventType.prototype.addPropertyTypes = function(
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.introspection.EventType} returns this
  */
 proto.introspection.EventType.prototype.clearPropertyTypesList = function() {
-  this.setPropertyTypesList([])
+  return this.setPropertyTypesList([])
 }
 
 /**
@@ -2067,9 +2132,12 @@ proto.introspection.Runtime.prototype.getImplementation = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.Runtime} returns this
+ */
 proto.introspection.Runtime.prototype.setImplementation = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value)
+  return jspb.Message.setProto3StringField(this, 1, value)
 }
 
 /**
@@ -2080,9 +2148,12 @@ proto.introspection.Runtime.prototype.getVersion = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.Runtime} returns this
+ */
 proto.introspection.Runtime.prototype.setVersion = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value)
+  return jspb.Message.setProto3StringField(this, 2, value)
 }
 
 /**
@@ -2093,9 +2164,12 @@ proto.introspection.Runtime.prototype.getPlatform = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.Runtime} returns this
+ */
 proto.introspection.Runtime.prototype.setPlatform = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value)
+  return jspb.Message.setProto3StringField(this, 3, value)
 }
 
 /**
@@ -2106,9 +2180,12 @@ proto.introspection.Runtime.prototype.getPeerId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.Runtime} returns this
+ */
 proto.introspection.Runtime.prototype.setPeerId = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value)
+  return jspb.Message.setProto3StringField(this, 4, value)
 }
 
 /**
@@ -2119,9 +2196,12 @@ proto.introspection.Runtime.prototype.getKeepStaleDataMs = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Runtime} returns this
+ */
 proto.introspection.Runtime.prototype.setKeepStaleDataMs = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value)
+  return jspb.Message.setProto3IntField(this, 5, value)
 }
 
 /**
@@ -2132,9 +2212,12 @@ proto.introspection.Runtime.prototype.getSendStateIntervalMs = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Runtime} returns this
+ */
 proto.introspection.Runtime.prototype.setSendStateIntervalMs = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value)
+  return jspb.Message.setProto3IntField(this, 6, value)
 }
 
 /**
@@ -2149,9 +2232,12 @@ proto.introspection.Runtime.prototype.getEventTypesList = function() {
   ))
 }
 
-/** @param {!Array<!proto.introspection.EventType>} value */
+/**
+ * @param {!Array<!proto.introspection.EventType>} value
+ * @return {!proto.introspection.Runtime} returns this
+ */
 proto.introspection.Runtime.prototype.setEventTypesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 7, value)
+  return jspb.Message.setRepeatedWrapperField(this, 7, value)
 }
 
 /**
@@ -2174,9 +2260,10 @@ proto.introspection.Runtime.prototype.addEventTypes = function(
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.introspection.Runtime} returns this
  */
 proto.introspection.Runtime.prototype.clearEventTypesList = function() {
-  this.setEventTypesList([])
+  return this.setEventTypesList([])
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -2308,9 +2395,12 @@ proto.introspection.EndpointPair.prototype.getSrcMultiaddr = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.EndpointPair} returns this
+ */
 proto.introspection.EndpointPair.prototype.setSrcMultiaddr = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value)
+  return jspb.Message.setProto3StringField(this, 1, value)
 }
 
 /**
@@ -2321,9 +2411,12 @@ proto.introspection.EndpointPair.prototype.getDstMultiaddr = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.EndpointPair} returns this
+ */
 proto.introspection.EndpointPair.prototype.setDstMultiaddr = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value)
+  return jspb.Message.setProto3StringField(this, 2, value)
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -2476,16 +2569,20 @@ proto.introspection.Traffic.prototype.getTrafficIn = function() {
   ))
 }
 
-/** @param {?proto.introspection.DataGauge|undefined} value */
+/**
+ * @param {?proto.introspection.DataGauge|undefined} value
+ * @return {!proto.introspection.Traffic} returns this
+ */
 proto.introspection.Traffic.prototype.setTrafficIn = function(value) {
-  jspb.Message.setWrapperField(this, 1, value)
+  return jspb.Message.setWrapperField(this, 1, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Traffic} returns this
  */
 proto.introspection.Traffic.prototype.clearTrafficIn = function() {
-  this.setTrafficIn(undefined)
+  return this.setTrafficIn(undefined)
 }
 
 /**
@@ -2508,16 +2605,20 @@ proto.introspection.Traffic.prototype.getTrafficOut = function() {
   ))
 }
 
-/** @param {?proto.introspection.DataGauge|undefined} value */
+/**
+ * @param {?proto.introspection.DataGauge|undefined} value
+ * @return {!proto.introspection.Traffic} returns this
+ */
 proto.introspection.Traffic.prototype.setTrafficOut = function(value) {
-  jspb.Message.setWrapperField(this, 2, value)
+  return jspb.Message.setWrapperField(this, 2, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Traffic} returns this
  */
 proto.introspection.Traffic.prototype.clearTrafficOut = function() {
-  this.setTrafficOut(undefined)
+  return this.setTrafficOut(undefined)
 }
 
 /**
@@ -2700,27 +2801,32 @@ proto.introspection.StreamList.prototype.getStreamIdsList_asU8 = function() {
   ))
 }
 
-/** @param {!(Array<!Uint8Array>|Array<string>)} value */
+/**
+ * @param {!(Array<!Uint8Array>|Array<string>)} value
+ * @return {!proto.introspection.StreamList} returns this
+ */
 proto.introspection.StreamList.prototype.setStreamIdsList = function(value) {
-  jspb.Message.setField(this, 1, value || [])
+  return jspb.Message.setField(this, 1, value || [])
 }
 
 /**
  * @param {!(string|Uint8Array)} value
  * @param {number=} opt_index
+ * @return {!proto.introspection.StreamList} returns this
  */
 proto.introspection.StreamList.prototype.addStreamIds = function(
   value,
   opt_index
 ) {
-  jspb.Message.addToRepeatedField(this, 1, value, opt_index)
+  return jspb.Message.addToRepeatedField(this, 1, value, opt_index)
 }
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.introspection.StreamList} returns this
  */
 proto.introspection.StreamList.prototype.clearStreamIdsList = function() {
-  this.setStreamIdsList([])
+  return this.setStreamIdsList([])
 }
 
 /**
@@ -2735,9 +2841,12 @@ proto.introspection.StreamList.prototype.getStreamsList = function() {
   ))
 }
 
-/** @param {!Array<!proto.introspection.Stream>} value */
+/**
+ * @param {!Array<!proto.introspection.Stream>} value
+ * @return {!proto.introspection.StreamList} returns this
+ */
 proto.introspection.StreamList.prototype.setStreamsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 2, value)
+  return jspb.Message.setRepeatedWrapperField(this, 2, value)
 }
 
 /**
@@ -2760,9 +2869,10 @@ proto.introspection.StreamList.prototype.addStreams = function(
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.introspection.StreamList} returns this
  */
 proto.introspection.StreamList.prototype.clearStreamsList = function() {
-  this.setStreamsList([])
+  return this.setStreamsList([])
 }
 
 /**
@@ -3128,15 +3238,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        openTs:
-          (f = msg.getOpenTs()) &&
-          google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-        upgradedTs:
-          (f = msg.getUpgradedTs()) &&
-          google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-        closeTs:
-          (f = msg.getCloseTs()) &&
-          google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+        openTs: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        upgradedTs: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        closeTs: jspb.Message.getFieldWithDefault(msg, 3, 0),
       }
 
     if (includeInstance) {
@@ -3178,27 +3282,15 @@ proto.introspection.Connection.Timeline.deserializeBinaryFromReader = function(
     var field = reader.getFieldNumber()
     switch (field) {
       case 1:
-        var value = new google_protobuf_timestamp_pb.Timestamp()
-        reader.readMessage(
-          value,
-          google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader
-        )
+        var value = /** @type {number} */ (reader.readUint64())
         msg.setOpenTs(value)
         break
       case 2:
-        var value = new google_protobuf_timestamp_pb.Timestamp()
-        reader.readMessage(
-          value,
-          google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader
-        )
+        var value = /** @type {number} */ (reader.readUint64())
         msg.setUpgradedTs(value)
         break
       case 3:
-        var value = new google_protobuf_timestamp_pb.Timestamp()
-        reader.readMessage(
-          value,
-          google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader
-        )
+        var value = /** @type {number} */ (reader.readUint64())
         msg.setCloseTs(value)
         break
       default:
@@ -3232,127 +3324,67 @@ proto.introspection.Connection.Timeline.serializeBinaryToWriter = function(
 ) {
   var f = undefined
   f = message.getOpenTs()
-  if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    )
+  if (f !== 0) {
+    writer.writeUint64(1, f)
   }
   f = message.getUpgradedTs()
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    )
+  if (f !== 0) {
+    writer.writeUint64(2, f)
   }
   f = message.getCloseTs()
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    )
+  if (f !== 0) {
+    writer.writeUint64(3, f)
   }
 }
 
 /**
- * optional google.protobuf.Timestamp open_ts = 1;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint64 open_ts = 1;
+ * @return {number}
  */
 proto.introspection.Connection.Timeline.prototype.getOpenTs = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (jspb.Message.getWrapperField(
-    this,
-    google_protobuf_timestamp_pb.Timestamp,
-    1
-  ))
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Connection.Timeline} returns this
+ */
 proto.introspection.Connection.Timeline.prototype.setOpenTs = function(value) {
-  jspb.Message.setWrapperField(this, 1, value)
+  return jspb.Message.setProto3IntField(this, 1, value)
 }
 
 /**
- * Clears the message field making it undefined.
- */
-proto.introspection.Connection.Timeline.prototype.clearOpenTs = function() {
-  this.setOpenTs(undefined)
-}
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.introspection.Connection.Timeline.prototype.hasOpenTs = function() {
-  return jspb.Message.getField(this, 1) != null
-}
-
-/**
- * optional google.protobuf.Timestamp upgraded_ts = 2;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint64 upgraded_ts = 2;
+ * @return {number}
  */
 proto.introspection.Connection.Timeline.prototype.getUpgradedTs = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (jspb.Message.getWrapperField(
-    this,
-    google_protobuf_timestamp_pb.Timestamp,
-    2
-  ))
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0))
 }
 
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Connection.Timeline} returns this
+ */
 proto.introspection.Connection.Timeline.prototype.setUpgradedTs = function(
   value
 ) {
-  jspb.Message.setWrapperField(this, 2, value)
+  return jspb.Message.setProto3IntField(this, 2, value)
 }
 
 /**
- * Clears the message field making it undefined.
- */
-proto.introspection.Connection.Timeline.prototype.clearUpgradedTs = function() {
-  this.setUpgradedTs(undefined)
-}
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.introspection.Connection.Timeline.prototype.hasUpgradedTs = function() {
-  return jspb.Message.getField(this, 2) != null
-}
-
-/**
- * optional google.protobuf.Timestamp close_ts = 3;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint64 close_ts = 3;
+ * @return {number}
  */
 proto.introspection.Connection.Timeline.prototype.getCloseTs = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (jspb.Message.getWrapperField(
-    this,
-    google_protobuf_timestamp_pb.Timestamp,
-    3
-  ))
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0))
 }
 
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Connection.Timeline} returns this
+ */
 proto.introspection.Connection.Timeline.prototype.setCloseTs = function(value) {
-  jspb.Message.setWrapperField(this, 3, value)
-}
-
-/**
- * Clears the message field making it undefined.
- */
-proto.introspection.Connection.Timeline.prototype.clearCloseTs = function() {
-  this.setCloseTs(undefined)
-}
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.introspection.Connection.Timeline.prototype.hasCloseTs = function() {
-  return jspb.Message.getField(this, 3) != null
+  return jspb.Message.setProto3IntField(this, 3, value)
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -3493,11 +3525,14 @@ proto.introspection.Connection.Attributes.prototype.getMultiplexer = function() 
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.Connection.Attributes} returns this
+ */
 proto.introspection.Connection.Attributes.prototype.setMultiplexer = function(
   value
 ) {
-  jspb.Message.setProto3StringField(this, 1, value)
+  return jspb.Message.setProto3StringField(this, 1, value)
 }
 
 /**
@@ -3508,11 +3543,14 @@ proto.introspection.Connection.Attributes.prototype.getEncryption = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.Connection.Attributes} returns this
+ */
 proto.introspection.Connection.Attributes.prototype.setEncryption = function(
   value
 ) {
-  jspb.Message.setProto3StringField(this, 2, value)
+  return jspb.Message.setProto3StringField(this, 2, value)
 }
 
 /**
@@ -3547,9 +3585,12 @@ proto.introspection.Connection.prototype.getId_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(this.getId()))
 }
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setId = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value)
+  return jspb.Message.setProto3BytesField(this, 1, value)
 }
 
 /**
@@ -3560,9 +3601,12 @@ proto.introspection.Connection.prototype.getPeerId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setPeerId = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value)
+  return jspb.Message.setProto3StringField(this, 2, value)
 }
 
 /**
@@ -3577,9 +3621,12 @@ proto.introspection.Connection.prototype.getStatus = function() {
   ))
 }
 
-/** @param {!proto.introspection.Status} value */
+/**
+ * @param {!proto.introspection.Status} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setStatus = function(value) {
-  jspb.Message.setProto3EnumField(this, 3, value)
+  return jspb.Message.setProto3EnumField(this, 3, value)
 }
 
 /**
@@ -3616,9 +3663,12 @@ proto.introspection.Connection.prototype.getTransportId_asU8 = function() {
   ))
 }
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setTransportId = function(value) {
-  jspb.Message.setProto3BytesField(this, 4, value)
+  return jspb.Message.setProto3BytesField(this, 4, value)
 }
 
 /**
@@ -3633,16 +3683,20 @@ proto.introspection.Connection.prototype.getEndpoints = function() {
   ))
 }
 
-/** @param {?proto.introspection.EndpointPair|undefined} value */
+/**
+ * @param {?proto.introspection.EndpointPair|undefined} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setEndpoints = function(value) {
-  jspb.Message.setWrapperField(this, 5, value)
+  return jspb.Message.setWrapperField(this, 5, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Connection} returns this
  */
 proto.introspection.Connection.prototype.clearEndpoints = function() {
-  this.setEndpoints(undefined)
+  return this.setEndpoints(undefined)
 }
 
 /**
@@ -3665,16 +3719,20 @@ proto.introspection.Connection.prototype.getTimeline = function() {
   ))
 }
 
-/** @param {?proto.introspection.Connection.Timeline|undefined} value */
+/**
+ * @param {?proto.introspection.Connection.Timeline|undefined} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setTimeline = function(value) {
-  jspb.Message.setWrapperField(this, 6, value)
+  return jspb.Message.setWrapperField(this, 6, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Connection} returns this
  */
 proto.introspection.Connection.prototype.clearTimeline = function() {
-  this.setTimeline(undefined)
+  return this.setTimeline(undefined)
 }
 
 /**
@@ -3697,9 +3755,12 @@ proto.introspection.Connection.prototype.getRole = function() {
   ))
 }
 
-/** @param {!proto.introspection.Role} value */
+/**
+ * @param {!proto.introspection.Role} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setRole = function(value) {
-  jspb.Message.setProto3EnumField(this, 7, value)
+  return jspb.Message.setProto3EnumField(this, 7, value)
 }
 
 /**
@@ -3714,16 +3775,20 @@ proto.introspection.Connection.prototype.getTraffic = function() {
   ))
 }
 
-/** @param {?proto.introspection.Traffic|undefined} value */
+/**
+ * @param {?proto.introspection.Traffic|undefined} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setTraffic = function(value) {
-  jspb.Message.setWrapperField(this, 8, value)
+  return jspb.Message.setWrapperField(this, 8, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Connection} returns this
  */
 proto.introspection.Connection.prototype.clearTraffic = function() {
-  this.setTraffic(undefined)
+  return this.setTraffic(undefined)
 }
 
 /**
@@ -3746,16 +3811,20 @@ proto.introspection.Connection.prototype.getAttribs = function() {
   ))
 }
 
-/** @param {?proto.introspection.Connection.Attributes|undefined} value */
+/**
+ * @param {?proto.introspection.Connection.Attributes|undefined} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setAttribs = function(value) {
-  jspb.Message.setWrapperField(this, 9, value)
+  return jspb.Message.setWrapperField(this, 9, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Connection} returns this
  */
 proto.introspection.Connection.prototype.clearAttribs = function() {
-  this.setAttribs(undefined)
+  return this.setAttribs(undefined)
 }
 
 /**
@@ -3774,9 +3843,12 @@ proto.introspection.Connection.prototype.getLatencyNs = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setLatencyNs = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value)
+  return jspb.Message.setProto3IntField(this, 10, value)
 }
 
 /**
@@ -3791,16 +3863,20 @@ proto.introspection.Connection.prototype.getStreams = function() {
   ))
 }
 
-/** @param {?proto.introspection.StreamList|undefined} value */
+/**
+ * @param {?proto.introspection.StreamList|undefined} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setStreams = function(value) {
-  jspb.Message.setWrapperField(this, 11, value)
+  return jspb.Message.setWrapperField(this, 11, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Connection} returns this
  */
 proto.introspection.Connection.prototype.clearStreams = function() {
-  this.setStreams(undefined)
+  return this.setStreams(undefined)
 }
 
 /**
@@ -3843,9 +3919,12 @@ proto.introspection.Connection.prototype.getConnId_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(this.getConnId()))
 }
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setConnId = function(value) {
-  jspb.Message.setOneofField(
+  return jspb.Message.setOneofField(
     this,
     16,
     proto.introspection.Connection.oneofGroups_[0],
@@ -3855,9 +3934,10 @@ proto.introspection.Connection.prototype.setConnId = function(value) {
 
 /**
  * Clears the field making it undefined.
+ * @return {!proto.introspection.Connection} returns this
  */
 proto.introspection.Connection.prototype.clearConnId = function() {
-  jspb.Message.setOneofField(
+  return jspb.Message.setOneofField(
     this,
     16,
     proto.introspection.Connection.oneofGroups_[0],
@@ -3885,9 +3965,12 @@ proto.introspection.Connection.prototype.getConn = function() {
   ))
 }
 
-/** @param {?proto.introspection.Connection|undefined} value */
+/**
+ * @param {?proto.introspection.Connection|undefined} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setConn = function(value) {
-  jspb.Message.setOneofWrapperField(
+  return jspb.Message.setOneofWrapperField(
     this,
     17,
     proto.introspection.Connection.oneofGroups_[0],
@@ -3897,9 +3980,10 @@ proto.introspection.Connection.prototype.setConn = function(value) {
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Connection} returns this
  */
 proto.introspection.Connection.prototype.clearConn = function() {
-  this.setConn(undefined)
+  return this.setConn(undefined)
 }
 
 /**
@@ -3918,29 +4002,34 @@ proto.introspection.Connection.prototype.getUserProvidedTagsList = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 99))
 }
 
-/** @param {!Array<string>} value */
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.introspection.Connection} returns this
+ */
 proto.introspection.Connection.prototype.setUserProvidedTagsList = function(
   value
 ) {
-  jspb.Message.setField(this, 99, value || [])
+  return jspb.Message.setField(this, 99, value || [])
 }
 
 /**
  * @param {string} value
  * @param {number=} opt_index
+ * @return {!proto.introspection.Connection} returns this
  */
 proto.introspection.Connection.prototype.addUserProvidedTags = function(
   value,
   opt_index
 ) {
-  jspb.Message.addToRepeatedField(this, 99, value, opt_index)
+  return jspb.Message.addToRepeatedField(this, 99, value, opt_index)
 }
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.introspection.Connection} returns this
  */
 proto.introspection.Connection.prototype.clearUserProvidedTagsList = function() {
-  this.setUserProvidedTagsList([])
+  return this.setUserProvidedTagsList([])
 }
 
 /**
@@ -4334,9 +4423,12 @@ proto.introspection.Stream.ConnectionRef.prototype.getConn = function() {
   ))
 }
 
-/** @param {?proto.introspection.Connection|undefined} value */
+/**
+ * @param {?proto.introspection.Connection|undefined} value
+ * @return {!proto.introspection.Stream.ConnectionRef} returns this
+ */
 proto.introspection.Stream.ConnectionRef.prototype.setConn = function(value) {
-  jspb.Message.setOneofWrapperField(
+  return jspb.Message.setOneofWrapperField(
     this,
     1,
     proto.introspection.Stream.ConnectionRef.oneofGroups_[0],
@@ -4346,9 +4438,10 @@ proto.introspection.Stream.ConnectionRef.prototype.setConn = function(value) {
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Stream.ConnectionRef} returns this
  */
 proto.introspection.Stream.ConnectionRef.prototype.clearConn = function() {
-  this.setConn(undefined)
+  return this.setConn(undefined)
 }
 
 /**
@@ -4391,9 +4484,12 @@ proto.introspection.Stream.ConnectionRef.prototype.getConnId_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(this.getConnId()))
 }
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.introspection.Stream.ConnectionRef} returns this
+ */
 proto.introspection.Stream.ConnectionRef.prototype.setConnId = function(value) {
-  jspb.Message.setOneofField(
+  return jspb.Message.setOneofField(
     this,
     2,
     proto.introspection.Stream.ConnectionRef.oneofGroups_[0],
@@ -4403,9 +4499,10 @@ proto.introspection.Stream.ConnectionRef.prototype.setConnId = function(value) {
 
 /**
  * Clears the field making it undefined.
+ * @return {!proto.introspection.Stream.ConnectionRef} returns this
  */
 proto.introspection.Stream.ConnectionRef.prototype.clearConnId = function() {
-  jspb.Message.setOneofField(
+  return jspb.Message.setOneofField(
     this,
     2,
     proto.introspection.Stream.ConnectionRef.oneofGroups_[0],
@@ -4458,12 +4555,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        openTs:
-          (f = msg.getOpenTs()) &&
-          google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-        closeTs:
-          (f = msg.getCloseTs()) &&
-          google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+        openTs: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        closeTs: jspb.Message.getFieldWithDefault(msg, 2, 0),
       }
 
     if (includeInstance) {
@@ -4505,19 +4598,11 @@ proto.introspection.Stream.Timeline.deserializeBinaryFromReader = function(
     var field = reader.getFieldNumber()
     switch (field) {
       case 1:
-        var value = new google_protobuf_timestamp_pb.Timestamp()
-        reader.readMessage(
-          value,
-          google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader
-        )
+        var value = /** @type {number} */ (reader.readUint64())
         msg.setOpenTs(value)
         break
       case 2:
-        var value = new google_protobuf_timestamp_pb.Timestamp()
-        reader.readMessage(
-          value,
-          google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader
-        )
+        var value = /** @type {number} */ (reader.readUint64())
         msg.setCloseTs(value)
         break
       default:
@@ -4551,85 +4636,45 @@ proto.introspection.Stream.Timeline.serializeBinaryToWriter = function(
 ) {
   var f = undefined
   f = message.getOpenTs()
-  if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    )
+  if (f !== 0) {
+    writer.writeUint64(1, f)
   }
   f = message.getCloseTs()
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    )
+  if (f !== 0) {
+    writer.writeUint64(2, f)
   }
 }
 
 /**
- * optional google.protobuf.Timestamp open_ts = 1;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint64 open_ts = 1;
+ * @return {number}
  */
 proto.introspection.Stream.Timeline.prototype.getOpenTs = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (jspb.Message.getWrapperField(
-    this,
-    google_protobuf_timestamp_pb.Timestamp,
-    1
-  ))
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Stream.Timeline} returns this
+ */
 proto.introspection.Stream.Timeline.prototype.setOpenTs = function(value) {
-  jspb.Message.setWrapperField(this, 1, value)
+  return jspb.Message.setProto3IntField(this, 1, value)
 }
 
 /**
- * Clears the message field making it undefined.
- */
-proto.introspection.Stream.Timeline.prototype.clearOpenTs = function() {
-  this.setOpenTs(undefined)
-}
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.introspection.Stream.Timeline.prototype.hasOpenTs = function() {
-  return jspb.Message.getField(this, 1) != null
-}
-
-/**
- * optional google.protobuf.Timestamp close_ts = 2;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint64 close_ts = 2;
+ * @return {number}
  */
 proto.introspection.Stream.Timeline.prototype.getCloseTs = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (jspb.Message.getWrapperField(
-    this,
-    google_protobuf_timestamp_pb.Timestamp,
-    2
-  ))
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0))
 }
 
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Stream.Timeline} returns this
+ */
 proto.introspection.Stream.Timeline.prototype.setCloseTs = function(value) {
-  jspb.Message.setWrapperField(this, 2, value)
-}
-
-/**
- * Clears the message field making it undefined.
- */
-proto.introspection.Stream.Timeline.prototype.clearCloseTs = function() {
-  this.setCloseTs(undefined)
-}
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.introspection.Stream.Timeline.prototype.hasCloseTs = function() {
-  return jspb.Message.getField(this, 2) != null
+  return jspb.Message.setProto3IntField(this, 2, value)
 }
 
 /**
@@ -4664,9 +4709,12 @@ proto.introspection.Stream.prototype.getId_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(this.getId()))
 }
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.introspection.Stream} returns this
+ */
 proto.introspection.Stream.prototype.setId = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value)
+  return jspb.Message.setProto3BytesField(this, 1, value)
 }
 
 /**
@@ -4677,9 +4725,12 @@ proto.introspection.Stream.prototype.getProtocol = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.Stream} returns this
+ */
 proto.introspection.Stream.prototype.setProtocol = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value)
+  return jspb.Message.setProto3StringField(this, 2, value)
 }
 
 /**
@@ -4694,9 +4745,12 @@ proto.introspection.Stream.prototype.getRole = function() {
   ))
 }
 
-/** @param {!proto.introspection.Role} value */
+/**
+ * @param {!proto.introspection.Role} value
+ * @return {!proto.introspection.Stream} returns this
+ */
 proto.introspection.Stream.prototype.setRole = function(value) {
-  jspb.Message.setProto3EnumField(this, 3, value)
+  return jspb.Message.setProto3EnumField(this, 3, value)
 }
 
 /**
@@ -4711,16 +4765,20 @@ proto.introspection.Stream.prototype.getTraffic = function() {
   ))
 }
 
-/** @param {?proto.introspection.Traffic|undefined} value */
+/**
+ * @param {?proto.introspection.Traffic|undefined} value
+ * @return {!proto.introspection.Stream} returns this
+ */
 proto.introspection.Stream.prototype.setTraffic = function(value) {
-  jspb.Message.setWrapperField(this, 4, value)
+  return jspb.Message.setWrapperField(this, 4, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Stream} returns this
  */
 proto.introspection.Stream.prototype.clearTraffic = function() {
-  this.setTraffic(undefined)
+  return this.setTraffic(undefined)
 }
 
 /**
@@ -4743,16 +4801,20 @@ proto.introspection.Stream.prototype.getConn = function() {
   ))
 }
 
-/** @param {?proto.introspection.Stream.ConnectionRef|undefined} value */
+/**
+ * @param {?proto.introspection.Stream.ConnectionRef|undefined} value
+ * @return {!proto.introspection.Stream} returns this
+ */
 proto.introspection.Stream.prototype.setConn = function(value) {
-  jspb.Message.setWrapperField(this, 5, value)
+  return jspb.Message.setWrapperField(this, 5, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Stream} returns this
  */
 proto.introspection.Stream.prototype.clearConn = function() {
-  this.setConn(undefined)
+  return this.setConn(undefined)
 }
 
 /**
@@ -4775,16 +4837,20 @@ proto.introspection.Stream.prototype.getTimeline = function() {
   ))
 }
 
-/** @param {?proto.introspection.Stream.Timeline|undefined} value */
+/**
+ * @param {?proto.introspection.Stream.Timeline|undefined} value
+ * @return {!proto.introspection.Stream} returns this
+ */
 proto.introspection.Stream.prototype.setTimeline = function(value) {
-  jspb.Message.setWrapperField(this, 6, value)
+  return jspb.Message.setWrapperField(this, 6, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Stream} returns this
  */
 proto.introspection.Stream.prototype.clearTimeline = function() {
-  this.setTimeline(undefined)
+  return this.setTimeline(undefined)
 }
 
 /**
@@ -4807,9 +4873,12 @@ proto.introspection.Stream.prototype.getStatus = function() {
   ))
 }
 
-/** @param {!proto.introspection.Status} value */
+/**
+ * @param {!proto.introspection.Status} value
+ * @return {!proto.introspection.Stream} returns this
+ */
 proto.introspection.Stream.prototype.setStatus = function(value) {
-  jspb.Message.setProto3EnumField(this, 7, value)
+  return jspb.Message.setProto3EnumField(this, 7, value)
 }
 
 /**
@@ -4820,9 +4889,12 @@ proto.introspection.Stream.prototype.getLatencyNs = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Stream} returns this
+ */
 proto.introspection.Stream.prototype.setLatencyNs = function(value) {
-  jspb.Message.setProto3IntField(this, 16, value)
+  return jspb.Message.setProto3IntField(this, 16, value)
 }
 
 /**
@@ -4833,27 +4905,32 @@ proto.introspection.Stream.prototype.getUserProvidedTagsList = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 99))
 }
 
-/** @param {!Array<string>} value */
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.introspection.Stream} returns this
+ */
 proto.introspection.Stream.prototype.setUserProvidedTagsList = function(value) {
-  jspb.Message.setField(this, 99, value || [])
+  return jspb.Message.setField(this, 99, value || [])
 }
 
 /**
  * @param {string} value
  * @param {number=} opt_index
+ * @return {!proto.introspection.Stream} returns this
  */
 proto.introspection.Stream.prototype.addUserProvidedTags = function(
   value,
   opt_index
 ) {
-  jspb.Message.addToRepeatedField(this, 99, value, opt_index)
+  return jspb.Message.addToRepeatedField(this, 99, value, opt_index)
 }
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.introspection.Stream} returns this
  */
 proto.introspection.Stream.prototype.clearUserProvidedTagsList = function() {
-  this.setUserProvidedTagsList([])
+  return this.setUserProvidedTagsList([])
 }
 
 /**
@@ -4894,9 +4971,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         protocol: jspb.Message.getFieldWithDefault(msg, 1, ''),
         enabled: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
-        startTs:
-          (f = msg.getStartTs()) &&
-          google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+        startTs: jspb.Message.getFieldWithDefault(msg, 3, 0),
         params:
           (f = msg.getParams()) &&
           proto.introspection.DHT.Params.toObject(includeInstance, f),
@@ -4954,11 +5029,7 @@ proto.introspection.DHT.deserializeBinaryFromReader = function(msg, reader) {
         msg.setEnabled(value)
         break
       case 3:
-        var value = new google_protobuf_timestamp_pb.Timestamp()
-        reader.readMessage(
-          value,
-          google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader
-        )
+        var value = /** @type {number} */ (reader.readUint64())
         msg.setStartTs(value)
         break
       case 4:
@@ -5029,12 +5100,8 @@ proto.introspection.DHT.serializeBinaryToWriter = function(message, writer) {
     writer.writeBool(2, f)
   }
   f = message.getStartTs()
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    )
+  if (f !== 0) {
+    writer.writeUint64(3, f)
   }
   f = message.getParams()
   if (f != null) {
@@ -5214,9 +5281,12 @@ proto.introspection.DHT.Params.prototype.getK = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT.Params} returns this
+ */
 proto.introspection.DHT.Params.prototype.setK = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value)
+  return jspb.Message.setProto3IntField(this, 1, value)
 }
 
 /**
@@ -5227,9 +5297,12 @@ proto.introspection.DHT.Params.prototype.getAlpha = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT.Params} returns this
+ */
 proto.introspection.DHT.Params.prototype.setAlpha = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value)
+  return jspb.Message.setProto3IntField(this, 2, value)
 }
 
 /**
@@ -5240,9 +5313,12 @@ proto.introspection.DHT.Params.prototype.getDisjointPaths = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT.Params} returns this
+ */
 proto.introspection.DHT.Params.prototype.setDisjointPaths = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value)
+  return jspb.Message.setProto3IntField(this, 3, value)
 }
 
 /**
@@ -5253,9 +5329,12 @@ proto.introspection.DHT.Params.prototype.getBeta = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT.Params} returns this
+ */
 proto.introspection.DHT.Params.prototype.setBeta = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value)
+  return jspb.Message.setProto3IntField(this, 4, value)
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -5406,9 +5485,12 @@ proto.introspection.DHT.PeerInDHT.prototype.getPeerId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.DHT.PeerInDHT} returns this
+ */
 proto.introspection.DHT.PeerInDHT.prototype.setPeerId = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value)
+  return jspb.Message.setProto3StringField(this, 1, value)
 }
 
 /**
@@ -5423,9 +5505,12 @@ proto.introspection.DHT.PeerInDHT.prototype.getStatus = function() {
   ))
 }
 
-/** @param {!proto.introspection.DHT.PeerInDHT.Status} value */
+/**
+ * @param {!proto.introspection.DHT.PeerInDHT.Status} value
+ * @return {!proto.introspection.DHT.PeerInDHT} returns this
+ */
 proto.introspection.DHT.PeerInDHT.prototype.setStatus = function(value) {
-  jspb.Message.setProto3EnumField(this, 2, value)
+  return jspb.Message.setProto3EnumField(this, 2, value)
 }
 
 /**
@@ -5436,9 +5521,12 @@ proto.introspection.DHT.PeerInDHT.prototype.getAgeInBucket = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT.PeerInDHT} returns this
+ */
 proto.introspection.DHT.PeerInDHT.prototype.setAgeInBucket = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value)
+  return jspb.Message.setProto3IntField(this, 3, value)
 }
 
 /**
@@ -5586,9 +5674,12 @@ proto.introspection.DHT.Bucket.prototype.getCpl = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT.Bucket} returns this
+ */
 proto.introspection.DHT.Bucket.prototype.setCpl = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value)
+  return jspb.Message.setProto3IntField(this, 1, value)
 }
 
 /**
@@ -5603,9 +5694,12 @@ proto.introspection.DHT.Bucket.prototype.getPeersList = function() {
   ))
 }
 
-/** @param {!Array<!proto.introspection.DHT.PeerInDHT>} value */
+/**
+ * @param {!Array<!proto.introspection.DHT.PeerInDHT>} value
+ * @return {!proto.introspection.DHT.Bucket} returns this
+ */
 proto.introspection.DHT.Bucket.prototype.setPeersList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 2, value)
+  return jspb.Message.setRepeatedWrapperField(this, 2, value)
 }
 
 /**
@@ -5628,9 +5722,10 @@ proto.introspection.DHT.Bucket.prototype.addPeers = function(
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.introspection.DHT.Bucket} returns this
  */
 proto.introspection.DHT.Bucket.prototype.clearPeersList = function() {
-  this.setPeersList([])
+  return this.setPeersList([])
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -5774,9 +5869,12 @@ proto.introspection.DHT.QueryGauge.prototype.getSuccess = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT.QueryGauge} returns this
+ */
 proto.introspection.DHT.QueryGauge.prototype.setSuccess = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value)
+  return jspb.Message.setProto3IntField(this, 1, value)
 }
 
 /**
@@ -5787,9 +5885,12 @@ proto.introspection.DHT.QueryGauge.prototype.getError = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT.QueryGauge} returns this
+ */
 proto.introspection.DHT.QueryGauge.prototype.setError = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value)
+  return jspb.Message.setProto3IntField(this, 2, value)
 }
 
 /**
@@ -5800,9 +5901,12 @@ proto.introspection.DHT.QueryGauge.prototype.getTimeout = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT.QueryGauge} returns this
+ */
 proto.introspection.DHT.QueryGauge.prototype.setTimeout = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value)
+  return jspb.Message.setProto3IntField(this, 3, value)
 }
 
 /**
@@ -5813,9 +5917,12 @@ proto.introspection.DHT.prototype.getProtocol = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.DHT} returns this
+ */
 proto.introspection.DHT.prototype.setProtocol = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value)
+  return jspb.Message.setProto3StringField(this, 1, value)
 }
 
 /**
@@ -5830,41 +5937,28 @@ proto.introspection.DHT.prototype.getEnabled = function() {
   ))
 }
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.introspection.DHT} returns this
+ */
 proto.introspection.DHT.prototype.setEnabled = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value)
+  return jspb.Message.setProto3BooleanField(this, 2, value)
 }
 
 /**
- * optional google.protobuf.Timestamp start_ts = 3;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint64 start_ts = 3;
+ * @return {number}
  */
 proto.introspection.DHT.prototype.getStartTs = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (jspb.Message.getWrapperField(
-    this,
-    google_protobuf_timestamp_pb.Timestamp,
-    3
-  ))
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0))
 }
 
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.DHT} returns this
+ */
 proto.introspection.DHT.prototype.setStartTs = function(value) {
-  jspb.Message.setWrapperField(this, 3, value)
-}
-
-/**
- * Clears the message field making it undefined.
- */
-proto.introspection.DHT.prototype.clearStartTs = function() {
-  this.setStartTs(undefined)
-}
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.introspection.DHT.prototype.hasStartTs = function() {
-  return jspb.Message.getField(this, 3) != null
+  return jspb.Message.setProto3IntField(this, 3, value)
 }
 
 /**
@@ -5879,16 +5973,20 @@ proto.introspection.DHT.prototype.getParams = function() {
   ))
 }
 
-/** @param {?proto.introspection.DHT.Params|undefined} value */
+/**
+ * @param {?proto.introspection.DHT.Params|undefined} value
+ * @return {!proto.introspection.DHT} returns this
+ */
 proto.introspection.DHT.prototype.setParams = function(value) {
-  jspb.Message.setWrapperField(this, 4, value)
+  return jspb.Message.setWrapperField(this, 4, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.DHT} returns this
  */
 proto.introspection.DHT.prototype.clearParams = function() {
-  this.setParams(undefined)
+  return this.setParams(undefined)
 }
 
 /**
@@ -5911,9 +6009,12 @@ proto.introspection.DHT.prototype.getBucketsList = function() {
   ))
 }
 
-/** @param {!Array<!proto.introspection.DHT.Bucket>} value */
+/**
+ * @param {!Array<!proto.introspection.DHT.Bucket>} value
+ * @return {!proto.introspection.DHT} returns this
+ */
 proto.introspection.DHT.prototype.setBucketsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 5, value)
+  return jspb.Message.setRepeatedWrapperField(this, 5, value)
 }
 
 /**
@@ -5933,9 +6034,10 @@ proto.introspection.DHT.prototype.addBuckets = function(opt_value, opt_index) {
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.introspection.DHT} returns this
  */
 proto.introspection.DHT.prototype.clearBucketsList = function() {
-  this.setBucketsList([])
+  return this.setBucketsList([])
 }
 
 /**
@@ -5950,16 +6052,20 @@ proto.introspection.DHT.prototype.getIncomingQueries = function() {
   ))
 }
 
-/** @param {?proto.introspection.DHT.QueryGauge|undefined} value */
+/**
+ * @param {?proto.introspection.DHT.QueryGauge|undefined} value
+ * @return {!proto.introspection.DHT} returns this
+ */
 proto.introspection.DHT.prototype.setIncomingQueries = function(value) {
-  jspb.Message.setWrapperField(this, 6, value)
+  return jspb.Message.setWrapperField(this, 6, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.DHT} returns this
  */
 proto.introspection.DHT.prototype.clearIncomingQueries = function() {
-  this.setIncomingQueries(undefined)
+  return this.setIncomingQueries(undefined)
 }
 
 /**
@@ -5982,16 +6088,20 @@ proto.introspection.DHT.prototype.getOutgoingQueries = function() {
   ))
 }
 
-/** @param {?proto.introspection.DHT.QueryGauge|undefined} value */
+/**
+ * @param {?proto.introspection.DHT.QueryGauge|undefined} value
+ * @return {!proto.introspection.DHT} returns this
+ */
 proto.introspection.DHT.prototype.setOutgoingQueries = function(value) {
-  jspb.Message.setWrapperField(this, 7, value)
+  return jspb.Message.setWrapperField(this, 7, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.DHT} returns this
  */
 proto.introspection.DHT.prototype.clearOutgoingQueries = function() {
-  this.setOutgoingQueries(undefined)
+  return this.setOutgoingQueries(undefined)
 }
 
 /**
@@ -6157,9 +6267,12 @@ proto.introspection.Subsystems.prototype.getConnectionsList = function() {
   ))
 }
 
-/** @param {!Array<!proto.introspection.Connection>} value */
+/**
+ * @param {!Array<!proto.introspection.Connection>} value
+ * @return {!proto.introspection.Subsystems} returns this
+ */
 proto.introspection.Subsystems.prototype.setConnectionsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value)
+  return jspb.Message.setRepeatedWrapperField(this, 1, value)
 }
 
 /**
@@ -6182,9 +6295,10 @@ proto.introspection.Subsystems.prototype.addConnections = function(
 
 /**
  * Clears the list making it empty but non-null.
+ * @return {!proto.introspection.Subsystems} returns this
  */
 proto.introspection.Subsystems.prototype.clearConnectionsList = function() {
-  this.setConnectionsList([])
+  return this.setConnectionsList([])
 }
 
 /**
@@ -6199,16 +6313,20 @@ proto.introspection.Subsystems.prototype.getDht = function() {
   ))
 }
 
-/** @param {?proto.introspection.DHT|undefined} value */
+/**
+ * @param {?proto.introspection.DHT|undefined} value
+ * @return {!proto.introspection.Subsystems} returns this
+ */
 proto.introspection.Subsystems.prototype.setDht = function(value) {
-  jspb.Message.setWrapperField(this, 2, value)
+  return jspb.Message.setWrapperField(this, 2, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Subsystems} returns this
  */
 proto.introspection.Subsystems.prototype.clearDht = function() {
-  this.setDht(undefined)
+  return this.setDht(undefined)
 }
 
 /**
@@ -6254,12 +6372,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         traffic:
           (f = msg.getTraffic()) &&
           proto.introspection.Traffic.toObject(includeInstance, f),
-        instantTs:
-          (f = msg.getInstantTs()) &&
-          google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-        startTs:
-          (f = msg.getStartTs()) &&
-          google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+        instantTs: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        startTs: jspb.Message.getFieldWithDefault(msg, 4, 0),
         snapshotDurationMs: jspb.Message.getFieldWithDefault(msg, 5, 0),
       }
 
@@ -6312,19 +6426,11 @@ proto.introspection.State.deserializeBinaryFromReader = function(msg, reader) {
         msg.setTraffic(value)
         break
       case 3:
-        var value = new google_protobuf_timestamp_pb.Timestamp()
-        reader.readMessage(
-          value,
-          google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader
-        )
+        var value = /** @type {number} */ (reader.readUint64())
         msg.setInstantTs(value)
         break
       case 4:
-        var value = new google_protobuf_timestamp_pb.Timestamp()
-        reader.readMessage(
-          value,
-          google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader
-        )
+        var value = /** @type {number} */ (reader.readUint64())
         msg.setStartTs(value)
         break
       case 5:
@@ -6375,20 +6481,12 @@ proto.introspection.State.serializeBinaryToWriter = function(message, writer) {
     )
   }
   f = message.getInstantTs()
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    )
+  if (f !== 0) {
+    writer.writeUint64(3, f)
   }
   f = message.getStartTs()
-  if (f != null) {
-    writer.writeMessage(
-      4,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    )
+  if (f !== 0) {
+    writer.writeUint64(4, f)
   }
   f = message.getSnapshotDurationMs()
   if (f !== 0) {
@@ -6408,16 +6506,20 @@ proto.introspection.State.prototype.getSubsystems = function() {
   ))
 }
 
-/** @param {?proto.introspection.Subsystems|undefined} value */
+/**
+ * @param {?proto.introspection.Subsystems|undefined} value
+ * @return {!proto.introspection.State} returns this
+ */
 proto.introspection.State.prototype.setSubsystems = function(value) {
-  jspb.Message.setWrapperField(this, 1, value)
+  return jspb.Message.setWrapperField(this, 1, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.State} returns this
  */
 proto.introspection.State.prototype.clearSubsystems = function() {
-  this.setSubsystems(undefined)
+  return this.setSubsystems(undefined)
 }
 
 /**
@@ -6440,16 +6542,20 @@ proto.introspection.State.prototype.getTraffic = function() {
   ))
 }
 
-/** @param {?proto.introspection.Traffic|undefined} value */
+/**
+ * @param {?proto.introspection.Traffic|undefined} value
+ * @return {!proto.introspection.State} returns this
+ */
 proto.introspection.State.prototype.setTraffic = function(value) {
-  jspb.Message.setWrapperField(this, 2, value)
+  return jspb.Message.setWrapperField(this, 2, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.State} returns this
  */
 proto.introspection.State.prototype.clearTraffic = function() {
-  this.setTraffic(undefined)
+  return this.setTraffic(undefined)
 }
 
 /**
@@ -6461,67 +6567,35 @@ proto.introspection.State.prototype.hasTraffic = function() {
 }
 
 /**
- * optional google.protobuf.Timestamp instant_ts = 3;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint64 instant_ts = 3;
+ * @return {number}
  */
 proto.introspection.State.prototype.getInstantTs = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (jspb.Message.getWrapperField(
-    this,
-    google_protobuf_timestamp_pb.Timestamp,
-    3
-  ))
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0))
 }
 
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.State} returns this
+ */
 proto.introspection.State.prototype.setInstantTs = function(value) {
-  jspb.Message.setWrapperField(this, 3, value)
+  return jspb.Message.setProto3IntField(this, 3, value)
 }
 
 /**
- * Clears the message field making it undefined.
- */
-proto.introspection.State.prototype.clearInstantTs = function() {
-  this.setInstantTs(undefined)
-}
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.introspection.State.prototype.hasInstantTs = function() {
-  return jspb.Message.getField(this, 3) != null
-}
-
-/**
- * optional google.protobuf.Timestamp start_ts = 4;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint64 start_ts = 4;
+ * @return {number}
  */
 proto.introspection.State.prototype.getStartTs = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (jspb.Message.getWrapperField(
-    this,
-    google_protobuf_timestamp_pb.Timestamp,
-    4
-  ))
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0))
 }
 
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.State} returns this
+ */
 proto.introspection.State.prototype.setStartTs = function(value) {
-  jspb.Message.setWrapperField(this, 4, value)
-}
-
-/**
- * Clears the message field making it undefined.
- */
-proto.introspection.State.prototype.clearStartTs = function() {
-  this.setStartTs(undefined)
-}
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.introspection.State.prototype.hasStartTs = function() {
-  return jspb.Message.getField(this, 4) != null
+  return jspb.Message.setProto3IntField(this, 4, value)
 }
 
 /**
@@ -6532,9 +6606,12 @@ proto.introspection.State.prototype.getSnapshotDurationMs = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0))
 }
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.State} returns this
+ */
 proto.introspection.State.prototype.setSnapshotDurationMs = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value)
+  return jspb.Message.setProto3IntField(this, 5, value)
 }
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -6569,9 +6646,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         type:
           (f = msg.getType()) &&
           proto.introspection.EventType.toObject(includeInstance, f),
-        ts:
-          (f = msg.getTs()) &&
-          google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+        ts: jspb.Message.getFieldWithDefault(msg, 2, 0),
         content: jspb.Message.getFieldWithDefault(msg, 3, ''),
       }
 
@@ -6616,11 +6691,7 @@ proto.introspection.Event.deserializeBinaryFromReader = function(msg, reader) {
         msg.setType(value)
         break
       case 2:
-        var value = new google_protobuf_timestamp_pb.Timestamp()
-        reader.readMessage(
-          value,
-          google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader
-        )
+        var value = /** @type {number} */ (reader.readUint64())
         msg.setTs(value)
         break
       case 3:
@@ -6663,12 +6734,8 @@ proto.introspection.Event.serializeBinaryToWriter = function(message, writer) {
     )
   }
   f = message.getTs()
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    )
+  if (f !== 0) {
+    writer.writeUint64(2, f)
   }
   f = message.getContent()
   if (f.length > 0) {
@@ -6688,16 +6755,20 @@ proto.introspection.Event.prototype.getType = function() {
   ))
 }
 
-/** @param {?proto.introspection.EventType|undefined} value */
+/**
+ * @param {?proto.introspection.EventType|undefined} value
+ * @return {!proto.introspection.Event} returns this
+ */
 proto.introspection.Event.prototype.setType = function(value) {
-  jspb.Message.setWrapperField(this, 1, value)
+  return jspb.Message.setWrapperField(this, 1, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.Event} returns this
  */
 proto.introspection.Event.prototype.clearType = function() {
-  this.setType(undefined)
+  return this.setType(undefined)
 }
 
 /**
@@ -6709,35 +6780,19 @@ proto.introspection.Event.prototype.hasType = function() {
 }
 
 /**
- * optional google.protobuf.Timestamp ts = 2;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint64 ts = 2;
+ * @return {number}
  */
 proto.introspection.Event.prototype.getTs = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (jspb.Message.getWrapperField(
-    this,
-    google_protobuf_timestamp_pb.Timestamp,
-    2
-  ))
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0))
 }
 
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+/**
+ * @param {number} value
+ * @return {!proto.introspection.Event} returns this
+ */
 proto.introspection.Event.prototype.setTs = function(value) {
-  jspb.Message.setWrapperField(this, 2, value)
-}
-
-/**
- * Clears the message field making it undefined.
- */
-proto.introspection.Event.prototype.clearTs = function() {
-  this.setTs(undefined)
-}
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.introspection.Event.prototype.hasTs = function() {
-  return jspb.Message.getField(this, 2) != null
+  return jspb.Message.setProto3IntField(this, 2, value)
 }
 
 /**
@@ -6748,9 +6803,12 @@ proto.introspection.Event.prototype.getContent = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.Event} returns this
+ */
 proto.introspection.Event.prototype.setContent = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value)
+  return jspb.Message.setProto3StringField(this, 3, value)
 }
 
 /**
@@ -6972,16 +7030,20 @@ proto.introspection.ProtocolDataPacket.prototype.getVersion = function() {
   ))
 }
 
-/** @param {?proto.introspection.Version|undefined} value */
+/**
+ * @param {?proto.introspection.Version|undefined} value
+ * @return {!proto.introspection.ProtocolDataPacket} returns this
+ */
 proto.introspection.ProtocolDataPacket.prototype.setVersion = function(value) {
-  jspb.Message.setWrapperField(this, 1, value)
+  return jspb.Message.setWrapperField(this, 1, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.ProtocolDataPacket} returns this
  */
 proto.introspection.ProtocolDataPacket.prototype.clearVersion = function() {
-  this.setVersion(undefined)
+  return this.setVersion(undefined)
 }
 
 /**
@@ -7004,9 +7066,12 @@ proto.introspection.ProtocolDataPacket.prototype.getState = function() {
   ))
 }
 
-/** @param {?proto.introspection.State|undefined} value */
+/**
+ * @param {?proto.introspection.State|undefined} value
+ * @return {!proto.introspection.ProtocolDataPacket} returns this
+ */
 proto.introspection.ProtocolDataPacket.prototype.setState = function(value) {
-  jspb.Message.setOneofWrapperField(
+  return jspb.Message.setOneofWrapperField(
     this,
     2,
     proto.introspection.ProtocolDataPacket.oneofGroups_[0],
@@ -7016,9 +7081,10 @@ proto.introspection.ProtocolDataPacket.prototype.setState = function(value) {
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.ProtocolDataPacket} returns this
  */
 proto.introspection.ProtocolDataPacket.prototype.clearState = function() {
-  this.setState(undefined)
+  return this.setState(undefined)
 }
 
 /**
@@ -7041,9 +7107,12 @@ proto.introspection.ProtocolDataPacket.prototype.getRuntime = function() {
   ))
 }
 
-/** @param {?proto.introspection.Runtime|undefined} value */
+/**
+ * @param {?proto.introspection.Runtime|undefined} value
+ * @return {!proto.introspection.ProtocolDataPacket} returns this
+ */
 proto.introspection.ProtocolDataPacket.prototype.setRuntime = function(value) {
-  jspb.Message.setOneofWrapperField(
+  return jspb.Message.setOneofWrapperField(
     this,
     3,
     proto.introspection.ProtocolDataPacket.oneofGroups_[0],
@@ -7053,9 +7122,10 @@ proto.introspection.ProtocolDataPacket.prototype.setRuntime = function(value) {
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.ProtocolDataPacket} returns this
  */
 proto.introspection.ProtocolDataPacket.prototype.clearRuntime = function() {
-  this.setRuntime(undefined)
+  return this.setRuntime(undefined)
 }
 
 /**
@@ -7078,9 +7148,12 @@ proto.introspection.ProtocolDataPacket.prototype.getEvent = function() {
   ))
 }
 
-/** @param {?proto.introspection.Event|undefined} value */
+/**
+ * @param {?proto.introspection.Event|undefined} value
+ * @return {!proto.introspection.ProtocolDataPacket} returns this
+ */
 proto.introspection.ProtocolDataPacket.prototype.setEvent = function(value) {
-  jspb.Message.setOneofWrapperField(
+  return jspb.Message.setOneofWrapperField(
     this,
     4,
     proto.introspection.ProtocolDataPacket.oneofGroups_[0],
@@ -7090,9 +7163,10 @@ proto.introspection.ProtocolDataPacket.prototype.setEvent = function(value) {
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.ProtocolDataPacket} returns this
  */
 proto.introspection.ProtocolDataPacket.prototype.clearEvent = function() {
-  this.setEvent(undefined)
+  return this.setEvent(undefined)
 }
 
 /**
@@ -7282,16 +7356,20 @@ proto.introspection.ClientSignal.prototype.getVersion = function() {
   ))
 }
 
-/** @param {?proto.introspection.Version|undefined} value */
+/**
+ * @param {?proto.introspection.Version|undefined} value
+ * @return {!proto.introspection.ClientSignal} returns this
+ */
 proto.introspection.ClientSignal.prototype.setVersion = function(value) {
-  jspb.Message.setWrapperField(this, 1, value)
+  return jspb.Message.setWrapperField(this, 1, value)
 }
 
 /**
  * Clears the message field making it undefined.
+ * @return {!proto.introspection.ClientSignal} returns this
  */
 proto.introspection.ClientSignal.prototype.clearVersion = function() {
-  this.setVersion(undefined)
+  return this.setVersion(undefined)
 }
 
 /**
@@ -7314,9 +7392,12 @@ proto.introspection.ClientSignal.prototype.getSignal = function() {
   ))
 }
 
-/** @param {!proto.introspection.ClientSignal.Signal} value */
+/**
+ * @param {!proto.introspection.ClientSignal.Signal} value
+ * @return {!proto.introspection.ClientSignal} returns this
+ */
 proto.introspection.ClientSignal.prototype.setSignal = function(value) {
-  jspb.Message.setProto3EnumField(this, 2, value)
+  return jspb.Message.setProto3EnumField(this, 2, value)
 }
 
 /**
@@ -7331,9 +7412,12 @@ proto.introspection.ClientSignal.prototype.getDataSource = function() {
   ))
 }
 
-/** @param {!proto.introspection.ClientSignal.DataSource} value */
+/**
+ * @param {!proto.introspection.ClientSignal.DataSource} value
+ * @return {!proto.introspection.ClientSignal} returns this
+ */
 proto.introspection.ClientSignal.prototype.setDataSource = function(value) {
-  jspb.Message.setProto3EnumField(this, 3, value)
+  return jspb.Message.setProto3EnumField(this, 3, value)
 }
 
 /**
@@ -7344,9 +7428,12 @@ proto.introspection.ClientSignal.prototype.getContent = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ''))
 }
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.introspection.ClientSignal} returns this
+ */
 proto.introspection.ClientSignal.prototype.setContent = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value)
+  return jspb.Message.setProto3StringField(this, 4, value)
 }
 
 /**
