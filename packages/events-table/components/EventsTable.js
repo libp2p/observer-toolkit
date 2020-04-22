@@ -40,9 +40,7 @@ function EventsTable() {
   const hideEventsAfter = time + timepoint.getSnapshotDurationMs() * 1.5
 
   const allEvents = useContext(EventsContext)
-  const eventsData = allEvents.filter(
-    event => event.getTs().getSeconds() <= hideEventsAfter
-  )
+  const eventsData = allEvents.filter(event => event.getTs() <= hideEventsAfter)
 
   const { propertyTypes, dispatchPropertyTypes } = useEventPropertyTypes()
 

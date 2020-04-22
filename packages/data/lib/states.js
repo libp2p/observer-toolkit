@@ -9,7 +9,7 @@ function getSubsystems(state) {
 // TODO: deprecate or rename this
 function getTime(state) {
   if (!state) return null
-  return state.getInstantTs().getSeconds()
+  return state.getInstantTs()
 }
 
 // TODO: rename 'timepoints' to 'states' everywhere
@@ -21,8 +21,6 @@ function getLatestTimepoint(timepoints) {
 function getStateTimes(state) {
   if (!state) return null
 
-  // Despite the name, 'getSeconds' returns a timestamp with milisecond granularity
-  // TODO: check this is still true when wired up to real data from go-libp2p
   const end = getTime(state)
   const duration = state.getSnapshotDurationMs()
   const start = end - duration

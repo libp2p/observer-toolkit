@@ -6,9 +6,9 @@ let PRESUMED_STATE_LENGTH = 2000
 function getStartTs(msg) {
   if (msg.getTs) return msg.getTs()
 
-  msg.hasStartTs()
-    ? msg.getStartTs().getSeconds()
-    : msg.getInstantTs().getSeconds() - PRESUMED_STATE_LENGTH
+  msg.getStartTs()
+    ? msg.getStartTs()
+    : msg.getInstantTs() - PRESUMED_STATE_LENGTH
 }
 
 function updateStoredData(data) {
@@ -30,10 +30,7 @@ function updateStoredData(data) {
         if (!cn.getTimeline().getCloseTs()) {
           return true
         }
-        const closeTs = cn
-          .getTimeline()
-          .getCloseTs()
-          .getSeconds()
+        const closeTs = cn.getTimeline().getCloseTs()
         return stateTs - closeTs < CUTOFF_MS
       })
       subsystems.setConnectionsList(cns)

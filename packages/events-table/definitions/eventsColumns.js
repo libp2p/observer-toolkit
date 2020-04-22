@@ -18,7 +18,7 @@ const numericSorter = {
 const timeCol = {
   name: 'time',
   getProps: event => {
-    return { value: event.getTs().getSeconds() }
+    return { value: event.getTs() }
   },
   renderContent: RenderTime,
   sort: numericSorter,

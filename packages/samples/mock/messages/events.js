@@ -39,10 +39,7 @@ function _getPeerEventContent(now, connection) {
 
 function getPeerDisconnectingProps(now, connection) {
   const content = _getPeerEventContent(now, connection)
-  const open = connection
-    .getTimeline()
-    .getOpenTs()
-    .getSeconds()
+  const open = connection.getTimeline().getOpenTs()
   content.age = `${now - open}`
   content.openTime = `${open}`
   return { now, type: 'PeerDisconnecting', content }

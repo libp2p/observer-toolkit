@@ -62,8 +62,8 @@ function _getAge(timeline, timepoint) {
   if (!openTs) return 0
 
   const closeTs = timeline.getCloseTs()
-  const endTime = closeTs ? closeTs.getSeconds() : getTime(timepoint)
-  return endTime - openTs.getSeconds()
+  const endTime = closeTs || getTime(timepoint)
+  return (endTime - openTs) / 1000
 }
 
 function getConnectionAge(connection, timepoint) {
@@ -79,7 +79,7 @@ function _getTimeClosed(timeline, timepoint) {
   if (!closeTs) return 0
 
   const endTime = getTime(timepoint)
-  return endTime - closeTs.getSeconds()
+  return endTime - closeTs
 }
 
 function getConnectionTimeClosed(connection, timepoint) {

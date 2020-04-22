@@ -31,7 +31,7 @@ function getDhtStatus(state) {
   return {
     enabled: dht.getEnabled(),
     protocol: dht.getProtocol(),
-    startTime: dht.getStartTs().getSeconds(),
+    startTime: dht.getStartTs(),
     alpha: params.getAlpha(),
     k: params.getK(),
   }
@@ -114,7 +114,6 @@ function getDhtQueries(events, { state, ...options } = {}) {
 }
 
 function getDhtQueryTimes(dhtQuery) {
-  // TODO: like getStateTimes, check .getSeconds() still gives ms timestamps with real data
   const start = dhtQuery.sentTs
   const duration = dhtQuery.totalTimeMs
   const end = start + duration
