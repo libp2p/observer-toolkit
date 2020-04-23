@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { Icon } from '@libp2p-observer/sdk'
+import { Icon, Tooltip, RootNodeContext } from '@libp2p-observer/sdk'
 
 const HEIGHT = 72
 const opacityTransition = {
@@ -56,6 +56,9 @@ const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  &.clickable {
+    cursor: pointer;
+  }
 `
 
 const Details = styled.div`
@@ -146,23 +149,86 @@ const CloseIcon = styled(IconContainer)`
   background: none;
 `
 
+const ActiveData = styled.div`
+  ${({ theme }) => theme.text('heading', 'medium')}
+  margin-left: ${({ theme }) => theme.spacing(-2)};
+  cursor: pointer;
+`
+
+const ActiveDataIcon = styled.button`
+  margin-right: ${({ theme }) => theme.spacing()};
+`
+
 function DataTrayItem({
   isSelected,
+  isLoaded,
   select,
   deselect,
   iconType,
   name,
+  type,
   description,
-  children,
+  Component,
+  isLoading,
+  handleUploadStart,
+  handleUploadFinished,
+  handleUploadChunk,
+  handleRemoveData,
 }) {
+  const rootNodeRef = useContext(RootNodeContext)
+  const iconRef = useRef()
   const stopProp = e => e.stopPropagation()
+  const [isReopened, setIsReopened] = useState(false)
+  useEffect(() => {
+    if (!isSelected && isReopened) setIsReopened(false)
+  }, [isReopened, isSelected, setIsReopened])
+
+  const isActive = (isLoaded || isLoading) && !isReopened
+  const activeDataText = isLoading ? (
+    'Loading...'
+  ) : (
+    <>
+      {type}: <b>{name}</b>
+    </>
+  )
+
   return (
     <Container onClick={select} isSelected={isSelected}>
       <ContainerInner>
         <SlideAcross onClick={stopProp} isSelected={isSelected}>
-          <SlideInner isSelected={isSelected}>{children}</SlideInner>
+          <SlideInner isSelected={isSelected}>
+            {isSelected &&
+              (isActive ? (
+                <ActiveData onClick={select}>
+                  <>
+                    <Tooltip
+                      side="left"
+                      fixOn="never"
+                      containerRef={rootNodeRef}
+                      content="Remove data"
+                    >
+                      <Icon
+                        onClick={handleRemoveData}
+                        type="remove"
+                        override={{ Container: ActiveDataIcon }}
+                      />
+                    </Tooltip>
+                    <span onClick={() => setIsReopened(true)}>
+                      {activeDataText}
+                    </span>
+                  </>
+                </ActiveData>
+              ) : (
+                <Component
+                  iconRef={iconRef}
+                  handleUploadStart={handleUploadStart}
+                  handleUploadChunk={handleUploadChunk}
+                  handleUploadFinished={handleUploadFinished}
+                />
+              ))}
+          </SlideInner>
         </SlideAcross>
-        <IconContainer isSelected={isSelected}>
+        <IconContainer isSelected={isSelected} ref={iconRef}>
           <Icon type={iconType} size="3em" active />
         </IconContainer>
         <Details isSelected={isSelected}>
@@ -185,12 +251,19 @@ function DataTrayItem({
 
 DataTrayItem.propTypes = {
   isSelected: T.bool,
+  isLoaded: T.bool,
   select: T.func.isRequired,
   deselect: T.func.isRequired,
   iconType: T.string.isRequired,
   name: T.string.isRequired,
+  type: T.string.isRequired,
   description: T.string.isRequired,
-  children: T.node,
+  Component: T.elementType.isRequired,
+  isLoading: T.bool,
+  handleUploadStart: T.func.isRequired,
+  handleUploadFinished: T.func.isRequired,
+  handleUploadChunk: T.func.isRequired,
+  handleRemoveData: T.func.isRequired,
 }
 
 export default DataTrayItem

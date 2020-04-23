@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useState } from 'react'
+import { useCallback, useReducer, useRef, useState } from 'react'
 
 let CUTOFF_MS = 60000
 
@@ -47,7 +47,20 @@ function handleDispatchData(oldData, { action, data }) {
     case 'remove':
       return []
     default:
-      throw new Error(`Action "${action}" not valid`)
+      throw new Error(`Action "${action}" not valid in handleDispatchData`)
+  }
+}
+
+function handleDispatchSource(oldSource, { action, source }) {
+  switch (action) {
+    case 'update':
+      return Object.assign({}, oldSource, source)
+    case 'setIsLoading':
+      return { ...oldSource, isLoading: source.isLoading }
+    case 'remove':
+      return getEmptySource()
+    default:
+      throw new Error(`Action "${action}" not valid in handleDispatchSource`)
   }
 }
 
@@ -61,29 +74,52 @@ function replaceStoredData(data) {
   return data
 }
 
+function getEmptySource() {
+  return {
+    name: null,
+    type: null,
+    isLoading: false,
+  }
+}
+
 function useDatastore({
+  initialRuntime,
   initialStates = [],
   initialEvents = [],
-  initialRuntime,
-  initialSource,
+  initialSource = getEmptySource(),
 }) {
   const [states, dispatchStates] = useReducer(handleDispatchData, initialStates)
   const [events, dispatchEvents] = useReducer(handleDispatchData, initialEvents)
+  const [source, dispatchSource] = useReducer(
+    handleDispatchSource,
+    initialSource
+  )
+  const [websocket, setWebsocket] = useState(null)
   const [runtime, setRuntime] = useState(initialRuntime)
   const [peerIds, setPeerIds] = useState([])
-  const [source, setSource] = useState(initialSource)
 
   if (runtime && runtime.getKeepStaleDataMs()) {
     CUTOFF_MS = runtime.getKeepStaleDataMs()
   }
 
-  const updateSource = useCallback(
-    ({ name, type }) => {
-      if (!source || type !== source.type || name !== source.name) {
-        setSource({ name, type })
+  const setIsLoading = useCallback(
+    isLoading =>
+      dispatchSource({ action: 'setIsLoading', source: { isLoading } }),
+    [dispatchSource]
+  )
+
+  // Access current websocket state inside ref-cached callbacks
+  const websocketRef = useRef()
+  websocketRef.current = websocket
+
+  const closeWebsocket = useCallback(
+    (reason, statusCode = 1000) => {
+      if (websocketRef.current) {
+        websocketRef.current.close(statusCode, reason)
+        setWebsocket(null)
       }
     },
-    [source, setSource]
+    [websocketRef, setWebsocket]
   )
 
   const updateData = useCallback(
@@ -104,7 +140,9 @@ function useDatastore({
   )
 
   const replaceData = useCallback(
-    ({ states = [], events = [], runtime }) => {
+    ({ states = [], events = [], runtime, source }) => {
+      closeWebsocket('Connection replaced by user')
+
       dispatchStates({
         action: states.length ? 'replace' : 'remove',
         data: states,
@@ -113,16 +151,27 @@ function useDatastore({
         action: events.length ? 'replace' : 'remove',
         data: events,
       })
+      source &&
+        dispatchSource({
+          action: 'update',
+          source,
+        })
       setRuntime(runtime)
     },
-    [dispatchStates, dispatchEvents, setRuntime]
+    [closeWebsocket]
   )
 
-  const removeData = useCallback(() => {
-    dispatchStates({ action: 'remove' })
-    dispatchEvents({ action: 'remove' })
-    setRuntime(undefined)
-  }, [dispatchStates, dispatchEvents, setRuntime])
+  const removeData = useCallback(
+    source => {
+      closeWebsocket('Connection removed by user')
+      dispatchEvents({ action: 'remove' })
+      dispatchStates({ action: 'remove' })
+      setRuntime(undefined)
+
+      dispatchSource({ action: source ? 'update' : 'remove', source })
+    },
+    [closeWebsocket]
+  )
 
   return {
     states,
@@ -130,12 +179,13 @@ function useDatastore({
     runtime,
     peerIds,
     source,
-    updateSource,
+    setIsLoading,
     updateData,
     replaceData,
     removeData,
     setPeerIds,
     setRuntime,
+    setWebsocket,
   }
 }
 
