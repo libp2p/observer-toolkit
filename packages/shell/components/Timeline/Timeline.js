@@ -5,7 +5,11 @@ import { withResizeDetector } from 'react-resize-detector'
 
 import { useStackedData } from '@libp2p-observer/sdk'
 
-import { getTrafficChangesByPeer, getTotalTraffic, getPeerIds } from './utils'
+import {
+  getTrafficChangesByConn,
+  getTotalTraffic,
+  getConnectionKeys,
+} from './utils'
 import TimelinePaths from './TimelinePaths'
 import TimeSlider from './TimeSlider'
 
@@ -40,14 +44,14 @@ const PathsContainer = styled.div`
 
 function Timeline({ width = 700, leftGutter }) {
   const { stackedData, xScale, yScale: yScaleIn } = useStackedData({
-    keyData: getTrafficChangesByPeer('in'),
-    getKeys: getPeerIds,
+    keyData: getTrafficChangesByConn('in'),
+    getKeys: getConnectionKeys,
     mapYSorter: getTotalTraffic,
   })
 
   const { stackedData: stackedDataOut, yScale: yScaleOut } = useStackedData({
-    keyData: getTrafficChangesByPeer('out'),
-    getKeys: getPeerIds,
+    keyData: getTrafficChangesByConn('out'),
+    getKeys: getConnectionKeys,
     mapYSorter: getTotalTraffic,
   })
 

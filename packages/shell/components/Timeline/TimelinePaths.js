@@ -62,7 +62,8 @@ function TimelinePaths({
       />
       <StyledSvg height={height}>
         {pathDefs &&
-          pathDefs.map(({ pathDef, peerId }, index) => {
+          pathDefs.map(({ pathDef, key }, index) => {
+            const peerId = key.split('_')[0]
             const highlighted = globalPeerIds.includes(peerId)
 
             function mouseEnterHandler() {
@@ -72,7 +73,6 @@ function TimelinePaths({
               if (globalPeerIds.length) setPeerIds([])
             }
 
-            const key = `${peerId}_${index}_paths`
             return (
               <StyledPath
                 key={key}
