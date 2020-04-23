@@ -20,10 +20,10 @@ function getTableParts(table) {
   if (!tbody) throw new Error('No <tbody> found as a child of provided table')
 
   // Filter to exclude contents of nested tables
-  const columnHeaders = getAllByRole(thead, 'columnheader').filter(
+  const columnHeaders = queryAllByRole(thead, 'columnheader').filter(
     th => th.closest('thead') === thead
   )
-  const rows = getAllByRole(tbody, 'row').filter(
+  const rows = queryAllByRole(tbody, 'row').filter(
     tr => tr.closest('tbody') === tbody
   )
 

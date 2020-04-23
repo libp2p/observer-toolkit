@@ -10,6 +10,36 @@ import { getConnections, getLatestTimepoint } from '@libp2p-observer/data'
 import ConnectionsTable from './ConnectionsTable'
 import WidgetContext from './context/WidgetContext'
 
+async function getSuitableRows(getAllByRole, timelineSlider) {
+  const table = getAllByRole('table').filter(
+    // Filter out sliding rows
+    table => table.querySelectorAll('th').length
+  )[0]
+  // Look up a row that has age > 1 s and streams > 0
+  const rows = within(table).queryAllByTableRow([
+    { column: /status/i, textContent: /active/i },
+    { column: /time open/i, numericContent: num => num >= 1 },
+    { column: /streams/i, numericContent: num => num >= 2 },
+  ])
+
+  if (rows.length) return rows
+
+  // If no suitable rows, nudge slider left until we reach one
+  await nudgeSliderLeft(timelineSlider)
+  const olderRows = await getSuitableRows(getAllByRole, timelineSlider)
+  return olderRows
+}
+
+async function nudgeSliderLeft(timelineSlider) {
+  // Get the timeline slider in focus
+  await fireEvent.click(timelineSlider)
+
+  // Select previous state using left arrow keyboard shortcut
+  await act(async () => {
+    await fireEvent.keyDown(timelineSlider, { key: 'ArrowLeft', keyCode: 37 })
+  })
+}
+
 describe('ConnectionsTable', () => {
   const {
     data: { states },
@@ -26,28 +56,33 @@ describe('ConnectionsTable', () => {
   })
 
   it('makes row and corresponding shell paths active on hover', async () => {
-    const { getByTestId } = renderWithShell(
+    const { getAllByRole, getByTestId } = renderWithShell(
       <WidgetContext>
         <ConnectionsTable />
       </WidgetContext>
     )
 
+    const timelineSlider = getByTestId('timeline-slider')
+    const suitableRows = await getSuitableRows(getAllByRole, timelineSlider)
+    expect(suitableRows).not.toHaveLength(0)
+
     const widget = within(getByTestId('widget'))
     const shell = within(getByTestId('shell'))
     const testHighlighting = isOn => {
-      let highlightedRow, highlightedPaths
+      let highlightedRows, highlightedPaths
       if (isOn) {
-        highlightedRow = widget.getByHighlighted()
+        highlightedRows = widget.getAllByHighlighted()
+        expect(highlightedRows.length).toBeTruthy()
 
         // 2 paths in shell, for data in and data out
         highlightedPaths = shell.getAllByHighlighted()
-        expect(highlightedPaths).toHaveLength(2)
+        expect(highlightedPaths).toHaveLength(highlightedRows.length * 2)
       } else {
         expect(widget.queryAllByHighlighted()).toHaveLength(0)
         expect(shell.queryAllByHighlighted()).toHaveLength(0)
       }
 
-      return [highlightedRow, highlightedPaths]
+      return [highlightedRows, highlightedPaths]
     }
 
     // Extract first row after rows[0] which is headers row
@@ -59,8 +94,8 @@ describe('ConnectionsTable', () => {
 
     // Row and corresponding paths highlight on mouseover row
     await fireEvent.mouseEnter(firstDataRow)
-    const [highlightedRow, highlightedPaths] = testHighlighting(true)
-    expect(highlightedRow).toBe(firstDataRow)
+    const [highlightedRows, highlightedPaths] = testHighlighting(true)
+    expect(highlightedRows[0]).toBe(firstDataRow)
 
     // Nothing is highlighted after mouseout
     await fireEvent.mouseLeave(firstDataRow)
@@ -69,30 +104,26 @@ describe('ConnectionsTable', () => {
     // Same row and paths highlight on mouseover one of the paths
     const previouslyHighlightedPath = highlightedPaths[0]
     await fireEvent.mouseEnter(highlightedPaths[0])
-    const [highlightedRowFromPath, highlightedPathsFromPath] = testHighlighting(
-      true
-    )
-    expect(highlightedRowFromPath).toBe(firstDataRow)
+    const [
+      highlightedRowsFromPath,
+      highlightedPathsFromPath,
+    ] = testHighlighting(true)
+    expect(highlightedRowsFromPath[0]).toBe(firstDataRow)
     expect(highlightedPathsFromPath[0]).toBe(previouslyHighlightedPath)
   })
 
   it('shows streams for a particular connection in streams subtable', async () => {
-    const { getByRole, getByTestId } = renderWithShell(
+    const { getByRole, getAllByRole, getByTestId } = renderWithShell(
       <WidgetContext>
         <ConnectionsTable />
       </WidgetContext>
     )
 
-    const table = getByRole('table')
-
-    // Look up a row that has age > 1 s and streams > 0
-    const suitableRows = within(table).queryAllByTableRow([
-      { column: /status/i, textContent: /active/i },
-      { column: /time open/i, numericContent: num => num >= 1 },
-      { column: /streams/i, numericContent: num => num >= 2 },
-    ])
+    const timelineSlider = getByTestId('timeline-slider')
+    const suitableRows = await getSuitableRows(getAllByRole, timelineSlider)
     expect(suitableRows).not.toHaveLength(0)
 
+    const table = getByRole('table')
     const row = suitableRows[0]
 
     // Get data items for chosen row
@@ -109,12 +140,7 @@ describe('ConnectionsTable', () => {
     const subtableTooltip = within(row).getByRole('tooltip')
     expect(within(subtableTooltip).queryByRole('table')).toBeInTheDocument()
 
-    // Nudge the time slider one to the left
-    const timelineSlider = getByTestId('timeline-slider')
-    await fireEvent.click(timelineSlider)
-    await act(async () => {
-      await fireEvent.keyDown(timelineSlider, { key: 'ArrowLeft', keyCode: 37 })
-    })
+    await nudgeSliderLeft(timelineSlider)
 
     const row_2 = within(table).queryByTableRow([
       { column: /^peer id/i, textContent: peerId },
@@ -136,10 +162,7 @@ describe('ConnectionsTable', () => {
     const secondsPerState = 2
     expect(age_2).toEqual(age - secondsPerState)
 
-    await fireEvent.click(timelineSlider)
-    await act(async () => {
-      await fireEvent.keyDown(timelineSlider, { key: 'ArrowLeft', keyCode: 37 })
-    })
+    await nudgeSliderLeft(timelineSlider)
 
     const row_3 = within(table).queryByTableRow([
       { column: /^peer id/i, textContent: peerId },
