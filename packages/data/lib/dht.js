@@ -91,7 +91,7 @@ function getDhtQueries(events, { state, ...options } = {}) {
 
     // Optional filters by time
     if (options.fromTs && sentTs < options.fromTs) return queries
-    if (options.toTs && sentTs > options.toTs) return queries
+    if (options.toTs && sentTs >= options.toTs) return queries
 
     const direction = type.match(/inbound/i) ? 'INBOUND' : 'OUTBOUND'
     // Optional filter by direction
