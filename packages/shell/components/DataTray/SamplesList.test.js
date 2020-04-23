@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import T from 'prop-types'
 import { fireEvent, act } from '@testing-library/react'
 import waitForExpect from 'wait-for-expect'
+
+import { SetterContext } from '@libp2p-observer/sdk'
 
 import {
   renderWithData,
@@ -11,9 +14,28 @@ import {
 
 import SamplesList from './SamplesList'
 
+function MockSamplesList({
+  handleUploadStart = () => {},
+  handleUploadFinished = () => {},
+}) {
+  const { updateData } = useContext(SetterContext)
+  const handleUploadChunk = data => updateData(data)
+  return (
+    <SamplesList
+      handleUploadChunk={handleUploadChunk}
+      handleUploadStart={handleUploadStart}
+      handleUploadFinished={handleUploadFinished}
+    />
+  )
+}
+MockSamplesList.propTypes = {
+  handleUploadStart: T.func,
+  handleUploadFinished: T.func,
+}
+
 describe('SamplesList', () => {
   it('renders as expected', () => {
-    const { asFragment } = renderWithData(<SamplesList />)
+    const { asFragment } = renderWithData(<MockSamplesList />)
     expect(asFragment()).toMatchSnapshot()
   })
 
@@ -21,7 +43,7 @@ describe('SamplesList', () => {
     const mockFn = jest.fn()
 
     const { findByText, getByText } = renderWithShell(
-      <SamplesList onLoad={mockFn} />
+      <MockSamplesList handleUploadFinished={mockFn} />
     )
     const {
       data: { runtime },

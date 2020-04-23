@@ -56,13 +56,20 @@ function sendSignal(cmd, content) {
   }
 }
 
-function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
+function uploadWebSocket(
+  url,
+  onUploadStart,
+  onUploadFinished,
+  onUploadChunk,
+  setWebsocket
+) {
   const bl = new BufferList()
   const eventsBuffer = []
   const usePushEmitter = true
 
   if (!url) return
   ws = new WebSocket(url)
+  ws.hasReceivedData = false
   ws.addEventListener('error', function(evt) {
     console.error('WebSocket Error', evt)
   })
@@ -77,6 +84,11 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
           onUploadChunk,
         })
       })
+
+      if (!ws.hasReceivedData) {
+        if (onUploadFinished) onUploadFinished(url)
+        ws.hasReceivedData = true
+      }
     }
 
     if (!usePushEmitter) {
@@ -87,7 +99,6 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
     }
   })
   ws.addEventListener('close', function(evt) {
-    if (onUploadFinished) onUploadFinished(url)
     if (!evt.wasClean) {
       console.error(
         `WebSocket close was not clean (code: ${evt.code} / reason: "${evt.reason}")`
@@ -96,6 +107,7 @@ function uploadWebSocket(url, onUploadStart, onUploadFinished, onUploadChunk) {
   })
   ws.addEventListener('open', function() {
     if (onUploadStart) onUploadStart(url)
+    setWebsocket(ws)
     if (usePushEmitter) {
       sendSignal('start')
     } else {

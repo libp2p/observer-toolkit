@@ -64,7 +64,6 @@ function DataPanel() {
 
   const runtime = useContext(RuntimeContext)
 
-  if (!runtime) return ''
   const peerId = runtime && runtime.getPeerId()
 
   const openDataTray = () => setIsDataTrayOpen(true)
@@ -86,16 +85,25 @@ function DataPanel() {
         </IconContainer>
         Export data
       </DataPanelItem>
-      <PeerIdTooltip peerId={peerId} override={{ Target: DataPanelItem }}>
-        <IconContainer>
-          <Icon type="marker" />
-        </IconContainer>
-        Peer id —
-        <IconContainer>
-          <PeerIdAvatar peerId={peerId} />
-        </IconContainer>
-        <PeerIdTruncated peerId={peerId} />
-      </PeerIdTooltip>
+      {peerId ? (
+        <PeerIdTooltip peerId={peerId} override={{ Target: DataPanelItem }}>
+          <IconContainer>
+            <Icon type="marker" />
+          </IconContainer>
+          Peer id —
+          <IconContainer>
+            <PeerIdAvatar peerId={peerId} />
+          </IconContainer>
+          <PeerIdTruncated peerId={peerId} />
+        </PeerIdTooltip>
+      ) : (
+        <DataPanelItem>
+          <IconContainer>
+            <Icon type="marker" />
+          </IconContainer>
+          Peer id — Not connected
+        </DataPanelItem>
+      )}
       <DataPanelItem>
         <IconContainer>
           <Icon type="forward" />
@@ -105,10 +113,10 @@ function DataPanel() {
 
       {isDataTrayOpen && (
         <DataTrayContainer>
-          <DataTray onLoad={closeDataTray} />
+          <DataTray handleNewData={closeDataTray} />
           <Icon
             type="remove"
-            onClick={() => setIsDataTrayOpen(false)}
+            onClick={closeDataTray}
             override={{ Container: CloseDataTray }}
           />
         </DataTrayContainer>

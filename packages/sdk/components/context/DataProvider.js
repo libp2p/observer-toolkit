@@ -11,6 +11,7 @@ const RuntimeContext = createContext()
 const TimeContext = createContext()
 const PeersContext = createContext()
 const SetterContext = createContext()
+const WebsocketContext = createContext()
 
 function DataProvider({
   initialData: {
@@ -29,14 +30,16 @@ function DataProvider({
     runtime,
     peerIds,
     source,
+    websocket,
 
     // Data setters
-    updateSource,
     updateData,
     replaceData,
     removeData,
     setPeerIds,
     setRuntime,
+    setIsLoading,
+    setWebsocket,
   } = useDatastore({
     initialStates,
     initialEvents,
@@ -53,10 +56,11 @@ function DataProvider({
     setRuntime,
     setTimepoint,
     setPeerIds,
-    updateSource,
     updateData,
     replaceData,
     removeData,
+    setIsLoading,
+    setWebsocket,
   })
 
   if (timepoint && !states.includes(timepoint)) {
@@ -74,9 +78,11 @@ function DataProvider({
           <EventsContext.Provider value={events}>
             <PeersContext.Provider value={peerIds}>
               <SourceContext.Provider value={source}>
-                <SetterContext.Provider value={dataSetters.current}>
-                  {children}
-                </SetterContext.Provider>
+                <WebsocketContext.Provider value={websocket}>
+                  <SetterContext.Provider value={dataSetters.current}>
+                    {children}
+                  </SetterContext.Provider>
+                </WebsocketContext.Provider>
               </SourceContext.Provider>
             </PeersContext.Provider>
           </EventsContext.Provider>
@@ -105,4 +111,5 @@ export {
   SetterContext,
   EventsContext,
   SourceContext,
+  WebsocketContext,
 }

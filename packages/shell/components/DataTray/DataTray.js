@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
-import get from 'lodash.get'
 
 import {
-  DataContext,
-  Icon,
-  UploadDataButton,
-  WebSocketInput,
+  RootNodeProvider,
+  SetterContext,
+  SourceContext,
 } from '@libp2p-observer/sdk'
 import DataTrayItem from './DataTrayItem'
 import SamplesList from './SamplesList'
+import WebSocketInput from './WebSocketInput'
+import UploadDataButton from './UploadDataButton'
 
 const Container = styled.section`
   background: ${({ theme }) => theme.color('contrast', 1)};
@@ -20,16 +20,6 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
-
-const ActiveData = styled.div`
-  ${({ theme }) => theme.text('heading', 'medium')}
-  margin-left: ${({ theme }) => theme.spacing(-2)};
-  cursor: pointer;
-`
-
-const ActiveDataIcon = styled.button`
-  margin-right: ${({ theme }) => theme.spacing()};
 `
 
 const items = [
@@ -56,75 +46,73 @@ const items = [
   },
 ]
 
-function DataTray({ onLoad }) {
-  const states = useContext(DataContext)
-  const [isUnset, setIsUnset] = useState(false)
-  const activeType = get(states, 'metadata.type')
-  const activeName = get(states, 'metadata.name')
+function getInitialIndex(source) {
+  const index = items.findIndex(({ type }) => type === source.type)
+  return index !== -1 ? index : null
+}
 
-  const [selectedIndex, setSelectedIndex] = useState(null)
+function DataTray({ handleNewData }) {
+  const source = useContext(SourceContext)
+  const { removeData, updateData, setIsLoading } = useContext(SetterContext)
 
-  useEffect(() => {
-    if (!activeType || isUnset) return
-    const index = items.findIndex(({ type }) => type === activeType)
-    if (index !== selectedIndex) {
-      if (typeof selectedIndex === 'number') {
-        setIsUnset(true)
-      } else {
-        setIsUnset(false)
-        setSelectedIndex(index)
-      }
-    }
-  }, [activeType, isUnset, selectedIndex])
+  const [selectedIndex, setSelectedIndex] = useState(getInitialIndex(source))
 
   const deselect = e => {
     e.stopPropagation()
-    setIsUnset(true)
     setSelectedIndex(null)
   }
 
-  const reselect = e => {
-    const index = selectedIndex
-    deselect(e)
-    setSelectedIndex(index)
+  const handleUploadChunk = data => updateData(data)
+  const handleUploadFinished = () => {
+    setIsLoading(false)
+    if (handleNewData) handleNewData()
+  }
+  const handleRemoveData = () => {
+    setSelectedIndex(null)
+    removeData()
   }
 
   return (
     <Container>
-      {items.map(({ name, iconType, description, Component }, index) => {
-        const isSelected = selectedIndex === index
-        const select = () => setSelectedIndex(index)
-        return (
-          <DataTrayItem
-            isSelected={isSelected}
-            select={select}
-            deselect={deselect}
-            name={name}
-            description={description}
-            iconType={iconType}
-            key={name}
-          >
-            {isSelected &&
-              (activeName && !isUnset ? (
-                <ActiveData onClick={reselect}>
-                  <Icon
-                    type="remove"
-                    override={{ Container: ActiveDataIcon }}
-                  />
-                  {activeType}: <b>{activeName}</b>
-                </ActiveData>
-              ) : (
-                <Component onLoad={onLoad} />
-              ))}
-          </DataTrayItem>
-        )
-      })}
+      <RootNodeProvider>
+        {items.map((dataItemProps, index) => {
+          const { name, type } = dataItemProps
+          const isSelected = selectedIndex === index
+          const isLoaded = source.type === type
+          const isLoading = isLoaded && source.isLoading
+
+          const select = e => {
+            e.stopPropagation()
+            setSelectedIndex(index)
+          }
+
+          const handleUploadStart = name => {
+            removeData({ type, name, isLoading: true })
+          }
+
+          return (
+            <DataTrayItem
+              key={name}
+              isSelected={isSelected}
+              isLoaded={isLoaded}
+              select={select}
+              deselect={deselect}
+              isLoading={isLoading}
+              handleUploadStart={handleUploadStart}
+              handleUploadChunk={handleUploadChunk}
+              handleUploadFinished={handleUploadFinished}
+              handleRemoveData={handleRemoveData}
+              {...dataItemProps}
+            />
+          )
+        })}
+      </RootNodeProvider>
     </Container>
   )
 }
 
 DataTray.propTypes = {
-  onLoad: T.func,
+  handleNewData: T.func,
 }
 
 export default DataTray

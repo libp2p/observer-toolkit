@@ -27,9 +27,20 @@ const TimePanelSection = styled.div`
   padding-right: ${({ theme }) => theme.spacing()};
 `
 
+const EmptyTimeline = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.color('background', 0, 0.5)};
+  text-align: middle;
+  ${({ theme }) => theme.text('heading', 'extraLarge')}
+  margin: 0;
+`
+
 function ControlPanel() {
   const dataset = useContext(DataContext)
-  if (!dataset || !dataset.length) return ''
 
   return (
     <Container>
@@ -38,7 +49,11 @@ function ControlPanel() {
           <DataPanel />
         </DataPanelSection>
         <TimePanelSection>
-          <Timeline leftGutter={leftGutter} />
+          {dataset.length > 1 ? (
+            <Timeline leftGutter={leftGutter} />
+          ) : (
+            <EmptyTimeline>Awaiting states data...</EmptyTimeline>
+          )}
         </TimePanelSection>
       </RootNodeProvider>
     </Container>

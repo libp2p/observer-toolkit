@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
 import samples from '@libp2p-observer/samples'
-import { applySampleData, SetterContext } from '@libp2p-observer/sdk'
+import { applySampleData } from '@libp2p-observer/sdk'
 
 const SamplesTray = styled.div`
   position: absolute;
@@ -43,16 +43,12 @@ const SampleImg = styled.img`
   display: block;
 `
 
-function SamplesList({ onLoad }) {
-  const [isLoading, setIsLoading] = useState('')
-  const { removeData, updateData, updateSource } = useContext(SetterContext)
-
+function SamplesList({
+  handleUploadStart,
+  handleUploadFinished,
+  handleUploadChunk,
+}) {
   function handleClick(samplePath) {
-    const handleUploadStart = name => {
-      removeData()
-      updateSource({ type: 'sample', name })
-      setIsLoading(samplePath)
-    }
     applySampleData(
       samplePath,
       handleUploadStart,
@@ -61,25 +57,14 @@ function SamplesList({ onLoad }) {
     )
   }
 
-  function handleUploadFinished() {
-    if (isLoading) setIsLoading(false)
-    if (onLoad) onLoad()
-  }
-
-  function handleUploadChunk(data) {
-    updateData(data)
-  }
-
   return (
     <>
       <div>Choose a sample:</div>
       <SamplesTray>
         {samples.map(({ name, img, file }) => {
-          const text = (isLoading === file && 'Loading...') || name
-
           return (
             <SampleItem key={name} onClick={() => handleClick(file)}>
-              {text}
+              {name}
               <SampleImg src={img} />
             </SampleItem>
           )
@@ -90,7 +75,9 @@ function SamplesList({ onLoad }) {
 }
 
 SamplesList.propTypes = {
-  onLoad: T.func,
+  handleUploadStart: T.func.isRequired,
+  handleUploadFinished: T.func.isRequired,
+  handleUploadChunk: T.func.isRequired,
 }
 
 export default SamplesList
