@@ -72,7 +72,7 @@ function TimelinePaths({
               if (globalPeerIds.length) setPeerIds([])
             }
 
-            const key = `${peerId}_paths`
+            const key = `${peerId}_${index}_paths`
             return (
               <StyledPath
                 key={key}

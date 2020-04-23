@@ -31,10 +31,13 @@ const numericSorter = {
 const peerIdCol = {
   name: 'peerId',
   header: 'Peer ID',
-  getProps: connection => ({ value: connection.getPeerId() }),
+  getProps: connection => ({
+    value: connection.getPeerId(),
+    rowKey: `${connection.getPeerId()}_${connection.getId()}`,
+  }),
   renderContent: PeerIdContent,
   sort: stringSorter,
-  rowKey: 'value',
+  rowKey: 'rowKey',
 }
 
 const dataInCol = {
