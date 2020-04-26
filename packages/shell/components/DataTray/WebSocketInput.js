@@ -34,7 +34,7 @@ function WebSocketInput({
   handleUploadChunk,
   iconRef,
 }) {
-  const { setWebsocket } = useContext(SetterContext)
+  const { dispatchWebsocket } = useContext(SetterContext)
 
   const inputRef = useRef()
 
@@ -48,7 +48,7 @@ function WebSocketInput({
       handleUploadStart,
       handleUploadFinished,
       handleUploadChunk,
-      setWebsocket
+      dispatchWebsocket
     )
   }
 

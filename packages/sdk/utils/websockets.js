@@ -2,8 +2,6 @@ import { parseBufferList } from '@libp2p-observer/data'
 import { proto } from '@libp2p-observer/proto'
 import { BufferList } from 'bl'
 
-let ws = null
-
 let eventsRelease = false
 
 setInterval(() => {
@@ -45,13 +43,15 @@ function getSignal(cmd) {
   throw new Error(`Unrecognised signal type "${cmd}"`)
 }
 
-function sendSignal(cmd, content) {
+function sendWsSignal(ws, cmd, content) {
   const signal = getSignal(cmd)
   const data = createClientSignalMessage(signal, content)
-  if (ws && data) {
-    // const blobData = new Blob(data)
-    ws.send(data)
-  }
+
+  if (!data)
+    throw new Error(
+      `No signal data from command "${cmd}" with content "${content}"`
+    )
+  ws.send(data)
 }
 
 function uploadWebSocket(
@@ -59,15 +59,16 @@ function uploadWebSocket(
   onUploadStart,
   onUploadFinished,
   onUploadChunk,
-  setWebsocket
+  dispatchWebsocket
 ) {
   const bl = new BufferList()
   const eventsBuffer = []
   const usePushEmitter = true
 
   if (!url) return
-  ws = new WebSocket(url)
-  ws.hasReceivedData = false
+  const ws = new WebSocket(url)
+  const sendSignal = (...args) => sendWsSignal(ws, ...args)
+
   ws.addEventListener('error', function(evt) {
     console.error('WebSocket Error', evt)
   })
@@ -83,10 +84,10 @@ function uploadWebSocket(
         })
       })
 
-      if (!ws.hasReceivedData) {
-        if (onUploadFinished) onUploadFinished(url)
-        ws.hasReceivedData = true
-      }
+      dispatchWebsocket({
+        action: 'onData',
+        callback: onUploadFinished(url),
+      })
     }
 
     if (!usePushEmitter) {
@@ -97,6 +98,7 @@ function uploadWebSocket(
     }
   })
   ws.addEventListener('close', function(evt) {
+    dispatchWebsocket({ action: 'onClose' })
     if (!evt.wasClean) {
       console.error(
         `WebSocket close was not clean (code: ${evt.code} / reason: "${evt.reason}")`
@@ -105,7 +107,11 @@ function uploadWebSocket(
   })
   ws.addEventListener('open', function() {
     if (onUploadStart) onUploadStart(url)
-    setWebsocket(ws)
+    dispatchWebsocket({
+      action: 'onOpen',
+      ws,
+      sendSignal,
+    })
     if (!usePushEmitter) sendSignal('data')
   })
 }
@@ -129,4 +135,4 @@ function processUploadBuffer({ bufferList, eventsBuffer, onUploadChunk }) {
   }
 }
 
-export { sendSignal, uploadWebSocket }
+export { sendWsSignal, uploadWebSocket }

@@ -39,7 +39,7 @@ function DataProvider({
     setPeerIds,
     setRuntime,
     setIsLoading,
-    setWebsocket,
+    dispatchWebsocket,
   } = useDatastore({
     initialStates,
     initialEvents,
@@ -60,7 +60,7 @@ function DataProvider({
     replaceData,
     removeData,
     setIsLoading,
-    setWebsocket,
+    dispatchWebsocket,
   })
 
   if (timepoint && !states.includes(timepoint)) {

@@ -75,6 +75,43 @@ function replaceStoredData(data) {
   return data
 }
 
+function handleDispatchWebsocket(oldWsData, { action, ...args }) {
+  switch (action) {
+    case 'onOpen':
+      return onWebsocketOpen(args)
+    case 'onData':
+      return onWebsocketData(oldWsData, args)
+    case 'close':
+      if (oldWsData) closeWebsocket(oldWsData.ws, args)
+    // fall through
+    case 'onClose':
+      return null
+    default:
+      throw new Error(`Action "${action}" not valid in handleDispatchWebsocket`)
+  }
+}
+
+function onWebsocketOpen({ ws, sendSignal }) {
+  return {
+    ws,
+    sendSignal,
+    hasData: false,
+  }
+}
+
+function onWebsocketData(oldWsData, { callback }) {
+  if (!oldWsData || oldWsData.hasData) return oldWsData
+  if (callback) callback()
+  return {
+    ...oldWsData,
+    hasData: true,
+  }
+}
+
+function closeWebsocket(ws, { reason, statusCode = 1000 }) {
+  ws.close(statusCode, reason)
+}
+
 function getEmptySource() {
   return {
     name: null,
@@ -95,7 +132,10 @@ function useDatastore({
     handleDispatchSource,
     initialSource
   )
-  const [websocket, setWebsocket] = useState(null)
+  const [websocket, dispatchWebsocket] = useReducer(
+    handleDispatchWebsocket,
+    null
+  )
   const [runtime, setRuntime] = useState(initialRuntime)
   const [peerIds, setPeerIds] = useState([])
 
@@ -112,20 +152,6 @@ function useDatastore({
     [dispatchSource]
   )
 
-  // Access current websocket state inside ref-cached callbacks
-  const websocketRef = useRef()
-  websocketRef.current = websocket
-
-  const closeWebsocket = useCallback(
-    (reason, statusCode = 1000) => {
-      if (websocketRef.current) {
-        websocketRef.current.close(statusCode, reason)
-        setWebsocket(null)
-      }
-    },
-    [websocketRef, setWebsocket]
-  )
-
   const updateData = useCallback(
     ({ states = [], events = [], runtime }) => {
       if (states.length)
@@ -140,13 +166,11 @@ function useDatastore({
         })
       if (runtime) setRuntime(runtime)
     },
-    [dispatchStates, dispatchEvents, setRuntime]
+    [dispatchEvents, dispatchStates, setRuntime]
   )
 
   const replaceData = useCallback(
     ({ states = [], events = [], runtime, source }) => {
-      closeWebsocket('Connection replaced by user')
-
       dispatchStates({
         action: states.length ? 'replace' : 'remove',
         data: states,
@@ -155,26 +179,46 @@ function useDatastore({
         action: events.length ? 'replace' : 'remove',
         data: events,
       })
+      setRuntime(runtime)
+
+      dispatchWebsocket({
+        action: 'close',
+        reason: 'Connection replaced by user',
+      })
       source &&
         dispatchSource({
           action: 'update',
           source,
         })
-      setRuntime(runtime)
     },
-    [closeWebsocket]
+    [
+      dispatchEvents,
+      dispatchStates,
+      dispatchSource,
+      dispatchWebsocket,
+      setRuntime,
+    ]
   )
 
   const removeData = useCallback(
     source => {
-      closeWebsocket('Connection removed by user')
       dispatchEvents({ action: 'remove' })
       dispatchStates({ action: 'remove' })
       setRuntime(undefined)
 
+      dispatchWebsocket({
+        action: 'close',
+        reason: 'Connection removed by user',
+      })
       dispatchSource({ action: source ? 'update' : 'remove', source })
     },
-    [closeWebsocket]
+    [
+      dispatchEvents,
+      dispatchStates,
+      dispatchSource,
+      dispatchWebsocket,
+      setRuntime,
+    ]
   )
 
   return {
@@ -189,7 +233,8 @@ function useDatastore({
     removeData,
     setPeerIds,
     setRuntime,
-    setWebsocket,
+    websocket,
+    dispatchWebsocket,
   }
 }
 
