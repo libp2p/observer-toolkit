@@ -80,7 +80,6 @@ function _getColumns(propertyTypes, dispatchPropertyTypes) {
       }
     } else {
       const { renderContent, sort } = getRenderer(type)
-      console.log(typeData, renderContent)
 
       newColumn = {
         name,

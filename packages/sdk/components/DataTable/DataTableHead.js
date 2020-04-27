@@ -26,6 +26,8 @@ function DataTableHead({
   setSortColumn,
   sortDirection,
   setSortDirection,
+  sticky,
+  override = {},
 }) {
   const [hover, setHover] = useState(false)
   const isSortable = !!columnDef.sort
@@ -47,7 +49,7 @@ function DataTableHead({
   const hoverIn = () => setHover(true)
   const hoverOut = () => setHover(false)
 
-  const override = columnDef.override || {}
+  const colOverride = columnDef.override || override
 
   return (
     <TableHead
@@ -55,7 +57,8 @@ function DataTableHead({
       sortDirection={isSorted ? sortDirection : null}
       onClick={sortIconAction}
       align={columnDef.align}
-      as={override.TableHead}
+      sticky={sticky}
+      as={colOverride.TableHead}
       {...(columnDef.cellProps || {})}
     >
       <TableHeadInner
@@ -63,7 +66,7 @@ function DataTableHead({
         hover={hover}
         onMouseEnter={hoverIn}
         onMouseLeave={hoverOut}
-        as={override.TableHeadInner}
+        as={colOverride.TableHeadInner}
       >
         {columnDef.header}
         {isSortable && (
@@ -73,7 +76,7 @@ function DataTableHead({
             columnDef={columnDef}
             sortDirection={sortDirection}
             sortDirectionOnClick={sortDirectionOnClick}
-            override={override}
+            override={colOverride}
           />
         )}
       </TableHeadInner>
@@ -88,6 +91,7 @@ DataTableHead.propTypes = {
   setSortColumn: T.func,
   sortDirection: T.string,
   setSortDirection: T.func,
+  sticky: T.oneOfType([T.number, T.bool]),
 }
 
 export default DataTableHead

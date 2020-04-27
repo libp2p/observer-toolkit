@@ -61,7 +61,7 @@ function SlidingRow({
 
   return (
     <Container ref={slideRef} distanceMoved={distanceMoved} role="presentation">
-      <Table as={override.TableHead}>
+      <Table as={override.Table}>
         <TBody as={override.TBody}>
           <RowRenderer rowContent={rowContent} columnDefs={columnDefs} />
         </TBody>

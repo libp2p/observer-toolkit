@@ -9,6 +9,7 @@ function DataTableRow({
   hideUntil = null,
   fadeIn = false,
   children,
+  override = {},
   ...rowProps
 }) {
   const rowRef = useRef()
@@ -48,7 +49,12 @@ function DataTableRow({
   }, [rowRef, hideUntil, fadeIn])
 
   return (
-    <TableRow ref={rowRef} data-rowkey={rowContent.key} {...rowProps}>
+    <TableRow
+      ref={rowRef}
+      data-rowkey={rowContent.key}
+      as={override.TableRow}
+      {...rowProps}
+    >
       {prerenderedCells}
     </TableRow>
   )

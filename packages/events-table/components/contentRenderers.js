@@ -19,20 +19,21 @@ const rendererPropType = {
 const ExpandIcon = styled.span`
   transform: rotate(90deg);
   margin-right: ${({ theme }) => theme.spacing(-1)};
-  [data-tooltip='open'] > button > & {
+  [data-tooltip='open'] > span > & {
     transform: rotate(180deg);
   }
   ${({ theme }) => theme.transition({ property: 'transform' })}
 `
 
 function RenderMultiple({ value, type, name }) {
+  if (!value) return ''
+
   const cellText = `${value.length} ${name}`
   if (!value.length) {
     return cellText
   }
 
   const renderer = getRenderer(type)
-  console.log({ renderer })
   const { renderContent } = renderer
   return (
     <Tooltip
