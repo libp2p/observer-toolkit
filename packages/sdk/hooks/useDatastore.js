@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useRef, useState } from 'react'
+import { useCallback, useReducer, useState } from 'react'
 
 let CUTOFF_MS = 60000
 let PRESUMED_STATE_LENGTH = 2000
@@ -81,6 +81,8 @@ function handleDispatchWebsocket(oldWsData, { action, ...args }) {
       return onWebsocketOpen(args)
     case 'onData':
       return onWebsocketData(oldWsData, args)
+    case 'onPauseChange':
+      return onWebsocketPauseChange(oldWsData, args)
     case 'close':
       if (oldWsData) closeWebsocket(oldWsData.ws, args)
     // fall through
@@ -95,6 +97,7 @@ function onWebsocketOpen({ ws, sendSignal }) {
   return {
     ws,
     sendSignal,
+    isPaused: false,
     hasData: false,
   }
 }
@@ -110,6 +113,16 @@ function onWebsocketData(oldWsData, { callback }) {
 
 function closeWebsocket(ws, { reason, statusCode = 1000 }) {
   ws.close(statusCode, reason)
+}
+
+function onWebsocketPauseChange(oldWsData, { isPaused }) {
+  // No error if connection closed between pause signal being sent and recieved
+  if (!oldWsData) return null
+
+  return {
+    ...oldWsData,
+    isPaused,
+  }
 }
 
 function getEmptySource() {
