@@ -3,12 +3,11 @@ import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
 import {
   RenderMultiple,
   RenderString,
-  RenderJson,
   RenderPeerId,
   RenderNumber,
   RenderTime,
 } from '../components/contentRenderers'
-import { EventPropertyHeader } from '../components/cellContent'
+import { EventPropertyHeader, ShowJsonButton } from '../components/cellContent'
 
 const stringSorter = {
   getSorter: getStringSorter,
@@ -44,7 +43,7 @@ function getRenderer(type) {
       }
     case 'JSON':
       return {
-        renderContent: RenderJson,
+        renderContent: ShowJsonButton,
         sort: stringSorter,
       }
     default:
@@ -81,6 +80,8 @@ function _getColumns(propertyTypes, dispatchPropertyTypes) {
       }
     } else {
       const { renderContent, sort } = getRenderer(type)
+      console.log(typeData, renderContent)
+
       newColumn = {
         name,
         getProps: event => ({

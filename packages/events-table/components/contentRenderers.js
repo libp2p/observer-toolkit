@@ -11,12 +11,6 @@ const Nowrap = styled.span`
   white-space: nowrap;
 `
 
-const RawJson = styled.pre`
-  padding: ${({ theme }) => theme.spacing(0.5)};
-  background: ${({ theme }) => theme.color('background', 1)};
-  font-family: 'plex-mono';
-`
-
 const rendererPropType = {
   value: T.oneOfType([T.number, T.string]).isRequired,
   type: T.string, // Event type
@@ -71,11 +65,6 @@ function RenderNumber({ value }) {
 }
 RenderNumber.propTypes = rendererPropType
 
-function RenderJson({ value }) {
-  return value ? <RawJson>{value}</RawJson> : ''
-}
-RenderJson.propTypes = rendererPropType
-
 function RenderPeerId({ value }) {
   return value ? <PeerIdChip peerId={value} /> : ''
 }
@@ -86,11 +75,4 @@ function RenderTime({ value }) {
 }
 RenderTime.propTypes = rendererPropType
 
-export {
-  RenderString,
-  RenderJson,
-  RenderPeerId,
-  RenderTime,
-  RenderNumber,
-  RenderMultiple,
-}
+export { RenderString, RenderPeerId, RenderTime, RenderNumber, RenderMultiple }
