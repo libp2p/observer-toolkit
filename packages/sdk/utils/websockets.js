@@ -39,8 +39,6 @@ function getMessageDataBuffer(msg, done) {
 
 function getSignal(cmd) {
   if (cmd === 'data') return proto.ClientSignal.Signal.SEND_DATA
-  if (cmd === 'start') return proto.ClientSignal.Signal.START_PUSH_EMITTER
-  if (cmd === 'stop') return proto.ClientSignal.Signal.STOP_PUSH_EMITTER
   if (cmd === 'pause') return proto.ClientSignal.Signal.PAUSE_PUSH_EMITTER
   if (cmd === 'unpause') return proto.ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
   if (cmd === 'config') return proto.ClientSignal.Signal.CONFIG_EMITTER
@@ -108,11 +106,7 @@ function uploadWebSocket(
   ws.addEventListener('open', function() {
     if (onUploadStart) onUploadStart(url)
     setWebsocket(ws)
-    if (usePushEmitter) {
-      sendSignal('start')
-    } else {
-      sendSignal('data')
-    }
+    if (!usePushEmitter) sendSignal('data')
   })
 }
 
