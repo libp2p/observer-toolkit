@@ -18,6 +18,12 @@ import eventsColumnDefs from '../definitions/eventsColumns'
 import useEventPropertyTypes from '../hooks/useEventPropertyTypes'
 import buildEventsColumns from '../utils/buildEventsColumns'
 
+const Container = styled.div`
+  border: 1px solid
+    ${({ theme, hasFocus }) =>
+      theme.color(hasFocus ? 'secondary' : 'background')};
+`
+
 const PauseControlsBar = styled.section`
   position: sticky;
   top: 0;
