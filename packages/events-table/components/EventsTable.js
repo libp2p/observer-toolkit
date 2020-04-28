@@ -62,7 +62,8 @@ function EventsTable({ theme }) {
   const timepoint = useContext(TimeContext)
   const time = getTime(timepoint)
 
-  const hideEventsAfter = time + timepoint.getSnapshotDurationMs() * 1.5
+  const snapshotDuration = timepoint ? timepoint.getSnapshotDurationMs() : 0
+  const hideEventsAfter = time + snapshotDuration * 1.5
 
   const allEvents = useContext(EventsContext)
   const eventsData = allEvents.filter(event => event.getTs() <= hideEventsAfter)
