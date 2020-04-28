@@ -1,12 +1,7 @@
 import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 
-import {
-  Icon,
-  SetterContext,
-  Tooltip,
-  WebsocketContext,
-} from '@libp2p-observer/sdk'
+import { Icon, SetterContext, WebsocketContext } from '@libp2p-observer/sdk'
 
 // TODO: animate circle for incoming state using stroke-dasharray transition
 // like in https://stackoverflow.com/questions/26178095/svg-circle-animation
@@ -25,10 +20,23 @@ const IconButton = styled.button`
   z-index: 2;
 `
 
-const TooltipContent = styled.div`
-  color: ${({ theme }) => theme.color('highlight')};
-  font-weight: 600;
+const IconWrapper = styled.span`
+  position: relative;
+`
+
+const ActionLabel = styled.div`
+  background: ${({ theme }) => theme.color('highlight')};
+  color: ${({ theme }) => theme.color('background')};
+  font-weight: 800;
   white-space: nowrap;
+  position: absolute;
+  border-radius: ${({ theme }) => theme.spacing(1)};
+  top: ${({ theme }) => theme.spacing(0.3)};
+  left: ${({ theme }) => theme.spacing(2)};
+  padding: ${({ theme }) => theme.spacing([0, 2])};
+  height: ${({ theme }) => theme.spacing(3)};
+  display: flex;
+  align-items: center;
 `
 
 function WebsocketControl() {
@@ -39,7 +47,7 @@ function WebsocketControl() {
   const showPauseIcon = hasFocus ? !isPaused : isPaused
   const iconType = showPauseIcon ? 'pause' : 'play'
 
-  const tooltipText = isPaused ? 'Unpause incoming data' : 'Pause incoming data'
+  const actionText = isPaused ? 'Unpause data' : 'Pause data'
 
   const handleFocus = e => {
     e.stopPropagation()
@@ -53,6 +61,9 @@ function WebsocketControl() {
   const handleClick = e => {
     e.stopPropagation()
 
+    // Data may have been disconnected before click is handled
+    if (!sendSignal) return
+
     const signalType = isPaused ? 'unpause' : 'pause'
     sendSignal(signalType)
 
@@ -65,24 +76,20 @@ function WebsocketControl() {
 
   // TODO: Add tooltip on the right saying "Pause" / "Unpause"
   return (
-    <Tooltip
-      fixOn="never"
-      side="right"
-      toleranceY={null}
-      content={<TooltipContent>{tooltipText}</TooltipContent>}
+    <IconButton
+      tabIndex={0}
+      onClick={handleClick}
+      onMouseEnter={handleFocus}
+      onFocus={handleFocus}
+      onMouseLeave={handleBlur}
+      onBlur={handleBlur}
+      hasFocus={hasFocus}
     >
-      <IconButton
-        tabIndex={0}
-        onClick={handleClick}
-        onMouseEnter={handleFocus}
-        onFocus={handleFocus}
-        onMouseLeave={handleBlur}
-        onBlur={handleBlur}
-        hasFocus={hasFocus}
-      >
+      {hasFocus && <ActionLabel>{actionText}</ActionLabel>}
+      <IconWrapper>
         <Icon type={iconType} />
-      </IconButton>
-    </Tooltip>
+      </IconWrapper>
+    </IconButton>
   )
 }
 
