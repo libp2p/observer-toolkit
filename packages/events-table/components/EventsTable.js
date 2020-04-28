@@ -112,7 +112,7 @@ function EventsTable({ theme }) {
     rowCounts,
   } = useTabularData({
     columns,
-    data: isLive ? eventsData : pausedEventsData,
+    data: !hasLiveSource || isLive ? eventsData : pausedEventsData,
     defaultSort: 'time',
     defaultRange: [0, rowsPerPageOptions[defaultPerPageIndex]],
   })
