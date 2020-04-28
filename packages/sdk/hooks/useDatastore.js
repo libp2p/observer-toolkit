@@ -6,7 +6,7 @@ let PRESUMED_STATE_LENGTH = 2000
 function getStartTs(msg) {
   if (msg.getTs) return msg.getTs()
 
-  msg.getStartTs()
+  return msg.getStartTs()
     ? msg.getStartTs()
     : msg.getInstantTs() - PRESUMED_STATE_LENGTH
 }
