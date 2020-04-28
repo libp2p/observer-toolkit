@@ -1,7 +1,7 @@
 'use strict'
 
 const { getEnumByName, dhtStatusNames, dhtQueryEventNames } = require('./enums')
-
+const { getEventType } = require('./events')
 const { getStateTimes } = require('./states')
 
 const maxBucketNum = 255
@@ -31,7 +31,7 @@ function getDhtStatus(state) {
   return {
     enabled: dht.getEnabled(),
     protocol: dht.getProtocol(),
-    startTime: dht.getStartTs().getSeconds(),
+    startTime: dht.getStartTs(),
     alpha: params.getAlpha(),
     k: params.getK(),
   }
@@ -55,9 +55,7 @@ function getAllDhtBuckets(state) {
 }
 
 function getDhtBucket(bucketNum, state) {
-  return getAllDhtBuckets(state).find(
-    bucket => bucket.getDistance() === bucketNum
-  )
+  return getAllDhtBuckets(state).find(bucket => bucket.getCpl() === bucketNum)
 }
 
 function getDhtPeersInBucket(bucket, state) {
@@ -84,7 +82,7 @@ function getDhtQueries(events, { state, ...options } = {}) {
 
   const queries = events.reduce((queries, event) => {
     // Filter to only query events
-    const type = event.getType()
+    const type = getEventType(event)
     if (!relevantEventNames.includes(type)) {
       return queries
     }
@@ -93,7 +91,7 @@ function getDhtQueries(events, { state, ...options } = {}) {
 
     // Optional filters by time
     if (options.fromTs && sentTs < options.fromTs) return queries
-    if (options.toTs && sentTs > options.toTs) return queries
+    if (options.toTs && sentTs >= options.toTs) return queries
 
     const direction = type.match(/inbound/i) ? 'INBOUND' : 'OUTBOUND'
     // Optional filter by direction
@@ -116,7 +114,6 @@ function getDhtQueries(events, { state, ...options } = {}) {
 }
 
 function getDhtQueryTimes(dhtQuery) {
-  // TODO: like getStateTimes, check .getSeconds() still gives ms timestamps with real data
   const start = dhtQuery.sentTs
   const duration = dhtQuery.totalTimeMs
   const end = start + duration

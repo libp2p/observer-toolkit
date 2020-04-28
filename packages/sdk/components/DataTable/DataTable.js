@@ -41,6 +41,9 @@ function DataTable({
   rowHeight,
   rowsPerPageOptions,
   defaultPerPageIndex,
+  sticky = true,
+  rowProps = {},
+  tbodyProps = {},
   override = {},
 }) {
   const tbodyRef = useRef()
@@ -74,7 +77,7 @@ function DataTable({
           override={override}
         />
       )}
-      <Table as={override.TableHead}>
+      <Table as={override.Table}>
         <THead as={override.THead}>
           <HeaderRow rowHeight={rowHeight} as={override.HeaderRow}>
             {columnDefs.map((columnDef, cellIndex) => (
@@ -86,11 +89,12 @@ function DataTable({
                 setSortColumn={setSortColumn}
                 sortDirection={sortDirection}
                 setSortDirection={setSortDirection}
+                sticky={sticky}
               />
             ))}
           </HeaderRow>
         </THead>
-        <TBody ref={tbodyRef} as={override.TBody}>
+        <TBody ref={tbodyRef} as={override.TBody} {...tbodyProps}>
           {shownContent.map((rowContent, shownRowIndex) => {
             const rowIndex = allContent
               ? allContent.indexOf(rowContent)
@@ -121,6 +125,7 @@ function DataTable({
                 tbodyRef={tbodyRef}
                 hideUntil={hideUntil}
                 fadeIn={isAppearing}
+                {...rowProps}
               />
             )
           })}
@@ -154,6 +159,9 @@ DataTable.propTypes = {
   rowHeight: T.number,
   rowsPerPageOptions: T.array,
   defaultPerPageIndex: T.number,
+  sticky: T.oneOfType([T.number, T.bool]),
+  rowProps: T.object,
+  tbodyProps: T.object,
   override: T.object,
 }
 

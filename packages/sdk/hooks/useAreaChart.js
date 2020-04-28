@@ -17,7 +17,7 @@ function scaleAreaChart(height, width, xScale, yScale, flip) {
 function getPathDefs(stackedData, areaMaker) {
   const pathDefs = stackedData.map(datum => ({
     pathDef: areaMaker(datum),
-    peerId: datum.key,
+    key: datum.key,
   }))
 
   return pathDefs

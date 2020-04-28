@@ -1,4 +1,5 @@
 import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
+import { getEventType } from '@libp2p-observer/data'
 
 import { RenderTime } from '../components/contentRenderers'
 
@@ -17,7 +18,7 @@ const numericSorter = {
 const timeCol = {
   name: 'time',
   getProps: event => {
-    return { value: event.getTs().getSeconds() }
+    return { value: event.getTs() }
   },
   renderContent: RenderTime,
   sort: numericSorter,
@@ -29,7 +30,7 @@ const timeCol = {
 
 const typeCol = {
   name: 'type',
-  getProps: event => ({ value: event.getType() }),
+  getProps: event => ({ value: getEventType(event) }),
   sort: stringSorter,
   cellProps: {
     width: '12%',

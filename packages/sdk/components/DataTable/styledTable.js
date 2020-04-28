@@ -19,11 +19,19 @@ const TableRow = styled.tr.attrs(({ highlighted }) => ({
 `
 
 const TableHead = styled.th`
+  ${({ sticky }) =>
+    sticky
+      ? `
+    z-index: 8;
+    position: sticky;
+    top: ${typeof sticky === 'number' ? sticky : 0}px;
+  `
+      : ''}
   ${({ theme }) => theme.styles.tableCell}
   padding-right: 0;
   font-family: plex-sans;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.color('secondary', 1, 0.2)};
+  background-color: ${({ theme }) => theme.color('secondary', 2)};
   color: ${({ theme }) => theme.color('text', 1, 0.8)};
   text-transform: uppercase;
   white-space: nowrap;

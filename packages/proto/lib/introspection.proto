@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
-
 package introspection;
 
 // Version of schema
@@ -50,34 +48,39 @@ message DataGauge {
     uint64 inst_bw      = 3;
 }
 
+// describes a type of event
+message EventType {
+    // metadata about content types in event's top-level content JSON
+    message EventProperty {
+        // tells client how to sort, filter or display known content properties
+        enum PropertyType {
+            // for properties to treat as a simple primitive
+            STRING      = 0; // default
+            NUMBER      = 1;
+            // for properties with special human-readable formatting
+            TIME        = 10;
+            PEERID      = 11;
+            MULTIADDR   = 12;
+            // for complex structures like nested arrays, object trees etc
+            JSON        = 90;
+        }
+        // property name of content e.g. openTs
+        string name                 = 1;
+        // type to interpret content value as
+        PropertyType type           = 2;
+        // if true, expect an array of values of `type`; else, singular
+        bool has_multiple           = 3;
+    }
+
+    // name of event type, e.g. PeerConnecting
+    string name                            = 1;
+    // for runtime, send property_types for all events already seen in events list
+    // for events, only send property_types in the first event of a type not in runtime
+    repeated EventProperty property_types  = 2;
+}
 
 // Runtime encapsulates runtime info about a node.
 message Runtime {
-    // metadata about types of event data being sent
-    message EventType {
-      // Name of event type e.g. PeerConnecting
-      string name                        = 1;
-      repeated EventProperty properties  = 2;
-    }
-
-    // metadata about content types in event's key:value content field
-    message EventProperty {
-      // tell listener how to sort, filter or display known content properties
-      enum PropertyType {
-        // treat as a simple primitive
-        STRING      = 0; // default
-        NUMBER      = 1;
-        // apply human-readable formatting
-        TIME        = 10;
-        PEERID      = 11;
-        // embedded arrays and/or object trees
-        JSON        = 90;
-      }
-      // property name of content e.g. openTs
-      string name                 = 1;
-      PropertyType type           = 2;
-    }
-
     // e.g. go-libp2p, js-libp2p, rust-libp2p, etc.
     string implementation           = 1;
     // e.g. 1.2.3.
@@ -138,14 +141,14 @@ message StreamList {
 
 // Connection reports metrics and state of a libp2p connection.
 message Connection {
-    // Timeline contains the timestamps of the well-known milestones of a connection.
+    // Timeline contains the timestamps (ms since epoch) of the well-known milestones of a connection.
     message Timeline {
         // the instant when a connection was opened on the wire.
-        google.protobuf.Timestamp open_ts = 1;
+        uint64 open_ts = 1;
         // the instant when the upgrade process (handshake, security, multiplexing) finished.
-        google.protobuf.Timestamp upgraded_ts = 2;
+        uint64 upgraded_ts = 2;
         // the instant when this connection was terminated.
-        google.protobuf.Timestamp close_ts = 3;
+        uint64 close_ts = 3;
     }
 
     // Attributes encapsulates the attributes of this connection.
@@ -203,12 +206,12 @@ message Stream {
         }
     }
 
-    // Timeline contains the timestamps of the well-known milestones of a stream.
+    // Timeline contains the timestamps (ms since epoch) of the well-known milestones of a stream.
     message Timeline {
         // the instant when the stream was opened.
-        google.protobuf.Timestamp open_ts = 1;
+        uint64 open_ts = 1;
         // the instant when the stream was terminated.
-        google.protobuf.Timestamp close_ts = 2;
+        uint64 close_ts = 2;
     }
 
     // the id of this stream, not to be shown in user tooling,
@@ -237,12 +240,15 @@ message Stream {
 // DHT metrics and state.
 message DHT {
   message Params {
-    // maximum number of requests to perform.
+    // routing table bucket size.
     uint64 k                    = 1;
     // concurrency of asynchronous requests.
     uint64 alpha                = 2;
     // number of disjoint paths to use.
     uint64 disjoint_paths       = 3;
+    // number of peers closest to a target that must have responded
+    // in order for a given query path to complete
+    uint64 beta                 = 4;
   }
 
   // Peer in DHT
@@ -268,8 +274,9 @@ message DHT {
 
   // A "k-bucket" containing peers of a certain kadamelia distance
   message Bucket {
-    // Contains peers of this distance; or, 0 is "catch-all" bucket
-    uint32 distance             = 1;
+    // CPL (Common Prefix Length) is the length of the common prefix
+    // between the ids of every peer in this bucket and the DHT peer id
+    uint32 cpl                  = 1;
     // Peers associated with this bucket
     repeated PeerInDHT peers    = 2;
     // Bucket may need more fields depending on WIP remodeling
@@ -289,8 +296,8 @@ message DHT {
   string protocol                     = 1;
   // protocol enabled.
   bool enabled                        = 2;
-  // timestap of start up.
-  google.protobuf.Timestamp start_ts  = 3;
+  // timestamp (ms since epoch) of start up.
+  uint64 start_ts                     = 3;
   // params of the dht.
   Params params                       = 4;
   // existing, intantiated buckets and their contents
@@ -316,18 +323,21 @@ message State {
   // overall traffic for this peer
   Traffic traffic                      = 2;
   // moment this data snapshot and instantaneous values were taken
-  google.protobuf.Timestamp instant_ts = 3;
+  uint64 instant_ts                    = 3;
   // start of included data collection (cumulative values counted from here)
-  google.protobuf.Timestamp start_ts   = 4;
+  uint64 start_ts                      = 4;
   // length of time up to instant_ts covered by this data snapshot
   uint32 snapshot_duration_ms          = 5;
 }
 
 // Event
 message Event {
-    string type                     = 1;
-    google.protobuf.Timestamp ts    = 2;
-    string content                  = 3; // stringified json
+    // definition of event type, containing only `name` unless this is first encounter of novel event
+    EventType type                     = 1;
+    // time this event occurred (ms since epoch)
+    uint64 ts                          = 2;
+    // stringified json; top-level keys and value types match EventProperty definitions
+    string content                     = 3;
 }
 
 // ProtocolDataPacket wraps messages to be sent to clients to allow extension
@@ -348,15 +358,13 @@ message ProtocolDataPacket {
 message ClientSignal {
   // The signal to be sent to the server
   enum Signal {
-    // SEND_DATA is used for pull-based data emitters
+    // SEND_DATA with `data_source` requests messages from pull-based data emitters
     SEND_DATA            = 0;
-    // START_PUSH_EMITTER, STOP_PUSH_EMITTER, PAUSE_PUSH_EMITTER & UNPAUSE_PUSH_EMITTER
-    // are all used in the operation of push-based data emitters
-    START_PUSH_EMITTER   = 1;
-    STOP_PUSH_EMITTER    = 2;
-    PAUSE_PUSH_EMITTER   = 3;
-    UNPAUSE_PUSH_EMITTER = 4;
-    
+    // PAUSE_ & UNPAUSE_PUSH_EMITTER allows control of push-based data emitters
+    PAUSE_PUSH_EMITTER   = 1;
+    UNPAUSE_PUSH_EMITTER = 2;
+
+    // CONFIG_EMITTER with `content` sends a JSON object of settings to the emitter
     CONFIG_EMITTER       = 10;
   }
 

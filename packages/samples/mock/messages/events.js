@@ -1,7 +1,7 @@
 'use strict'
 
 const {
-  proto: { Event },
+  proto: { Event, EventType },
 } = require('@libp2p-observer/proto')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
@@ -16,7 +16,7 @@ const { createProtocolEventPacket } = require('./protocol-data-packet')
 function createEvent({ now = Date.now(), type = '', content = {} } = {}) {
   const event = new Event()
 
-  event.setType(type)
+  event.setType(new EventType([type]))
   event.setTs(new Timestamp([now]))
   event.setContent(JSON.stringify(content))
   return event
@@ -39,10 +39,7 @@ function _getPeerEventContent(now, connection) {
 
 function getPeerDisconnectingProps(now, connection) {
   const content = _getPeerEventContent(now, connection)
-  const open = connection
-    .getTimeline()
-    .getOpenTs()
-    .getSeconds()
+  const open = connection.getTimeline().getOpenTs()
   content.age = `${now - open}`
   content.openTime = `${open}`
   return { now, type: 'PeerDisconnecting', content }

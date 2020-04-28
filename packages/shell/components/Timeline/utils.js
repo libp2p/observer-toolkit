@@ -25,23 +25,24 @@ function getTickOffsets(ticks, scale) {
   return tickOffsets
 }
 
-function getTrafficChangesByPeer(direction) {
+function getTrafficChangesByConn(direction) {
   // Can't calculate bytes added in first timepoint, so skip where index is 0
   const keyData = (dataset, keys) =>
     dataset.slice(1).map(
       // Get array of objects of mapped values added in each timepoint keyed by peerId
       (timepoint, previousTimepointIndex) => {
-        const connectionsById = getConnections(timepoint).reduce(
-          (connectionsById, connection) => {
-            connectionsById[connection.getPeerId()] = connection
-            return connectionsById
+        const connectionsByKey = getConnections(timepoint).reduce(
+          (connectionsByKey, connection) => {
+            const key = getConnectionKey(connection)
+            connectionsByKey[key] = connection
+            return connectionsByKey
           },
           {}
         )
 
-        const trafficByPeer = keys.reduce(
-          (trafficByPeer, peerId) => {
-            const connection = connectionsById[peerId]
+        const trafficByConn = keys.reduce(
+          (trafficByConn, key) => {
+            const connection = connectionsByKey[key]
 
             let bytes = 0
 
@@ -52,20 +53,20 @@ function getTrafficChangesByPeer(direction) {
               // Can't get bytes added first to previous, so skip it
               const previousTimepoint = dataset[previousTimepointIndex]
               const previousConn = getConnections(previousTimepoint).find(
-                conn => conn.getPeerId() === peerId
+                conn => getConnectionKey(conn) === key
               )
               if (previousConn) {
                 bytes -= getConnectionTraffic(previousConn, direction, 'bytes')
               }
             }
 
-            trafficByPeer[peerId] = bytes
-            return trafficByPeer
+            trafficByConn[key] = bytes
+            return trafficByConn
           },
           { time: getTime(timepoint) }
         )
-        validateNumbers(trafficByPeer)
-        return trafficByPeer
+        validateNumbers(trafficByConn)
+        return trafficByConn
       }
     )
   return keyData
@@ -78,11 +79,21 @@ function getTotalTraffic(connection) {
   return dataIn + dataOut
 }
 
-function getPeerIds(dataset, sorter, applyFilters) {
+function getConnectionKey(connection) {
+  return `${connection.getPeerId()}_${connection.getId()}`
+}
+
+function getConnectionKeys(dataset, sorter, applyFilters) {
   const allConnections = getAllConnections(dataset)
   const filteredConnections = allConnections.filter(applyFilters)
   filteredConnections.sort(sorter)
-  return filteredConnections.map(conn => conn.getPeerId())
+  const keys = filteredConnections.map(conn => getConnectionKey(conn))
+  return keys
 }
 
-export { getTickOffsets, getTrafficChangesByPeer, getTotalTraffic, getPeerIds }
+export {
+  getTickOffsets,
+  getTrafficChangesByConn,
+  getTotalTraffic,
+  getConnectionKeys,
+}

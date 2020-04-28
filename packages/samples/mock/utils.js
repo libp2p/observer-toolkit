@@ -1,7 +1,6 @@
 'use strict'
 
 const { createHash } = require('crypto')
-const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
 const DEFAULT_CONNECTIONS = 6
 const DEFAULT_DURATION = 10 // Seconds
@@ -120,7 +119,7 @@ function createTimestamp(utcNum) {
       `Can't create timestamp from ${utcNum} (typeof ${typeof utcNum}), must be number`
     )
   }
-  return new Timestamp([Math.round(utcNum)])
+  return Math.round(utcNum) // new Timestamp([Math.round(utcNum)])
 }
 
 // Create a new random hash each time script is run

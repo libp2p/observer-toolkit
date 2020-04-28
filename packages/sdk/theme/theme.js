@@ -1,3 +1,5 @@
+import { css, keyframes } from 'styled-components'
+
 const palette = {
   background: [
     // white / pale beige / pale grey
@@ -19,17 +21,19 @@ const palette = {
     '255, 255, 255',
   ],
   primary: [
-    // yellow / orange
+    // yellow / orange / pastel yellow
     '252, 189, 32',
     '232, 137, 0',
+    '255, 237, 186',
   ],
   secondary: [
-    // cyan / blue
+    // cyan / blue / pastel blue
     '112, 208, 224',
     '32, 155, 198',
+    '204, 235, 245',
   ],
   tertiary: [
-    // green / teal
+    // green / teal / dark / very dark teal
     '196, 209, 18',
     '159, 176, 0',
     '13, 62, 80',
@@ -160,13 +164,30 @@ function _getTransitionEntry({
   }`
 }
 
-const tableCell = `
+const tableCell = css`
   ${text('label', 'medium')}
   padding-top: ${spacing()};
   padding-bottom: ${spacing()};
   padding-left: ${spacing(3)};
   padding-right: ${spacing(2)};
   text-align: left;
+`
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 `
 
 export default {
@@ -176,4 +197,8 @@ export default {
   boxShadow,
   transition,
   styles: { tableCell },
+  keyframes: {
+    fadeIn,
+    fadeOut,
+  },
 }

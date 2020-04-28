@@ -98,7 +98,9 @@ function parseBufferList(bufferList) {
   while (bufferList.length > messageChecksumLength + messageSizeLength) {
     // check for complete message in the buffer
     const messageChecksum = bufferList.readUIntLE(0, messageChecksumLength)
-    const messageSize = bufferList.readUIntLE(4, messageSizeLength)
+    const messageSize = messageSizeLength
+      ? bufferList.readUIntLE(messageChecksumLength, messageSizeLength)
+      : bufferList.length
     const minimalBufferLength =
       messageChecksumLength + messageSizeLength + messageSize
     if (bufferList.length < minimalBufferLength) break
@@ -112,7 +114,9 @@ function parseBufferList(bufferList) {
     const messageBuf =
       messageBin instanceof Buffer ? messageBin : Buffer.from(messageBin)
 
-    const calcChecksum = getMessageChecksum(messageBuf)
+    const calcChecksum = messageChecksumLength
+      ? getMessageChecksum(messageBuf)
+      : messageChecksum
     const valid = messageChecksum === calcChecksum
     // deserialize and add message
     if (valid) {

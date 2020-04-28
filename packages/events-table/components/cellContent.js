@@ -93,6 +93,7 @@ TimeContent.propTypes = {
 }
 
 function ShowJsonButton({ value = '' }) {
+  if (!value) return ''
   return (
     <Tooltip
       side="bottom"

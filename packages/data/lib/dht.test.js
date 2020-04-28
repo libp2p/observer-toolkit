@@ -88,7 +88,7 @@ describe('DHT data helpers', () => {
 
         if (allPeerIdsInBuckets.has(peerId)) {
           duplicatedPeers.push({
-            bucket: bucket.getDistance(),
+            bucket: bucket.getCpl(),
             peerId,
           })
         }
