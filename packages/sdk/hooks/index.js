@@ -15,3 +15,4 @@ export { default as useTabularData } from './useTabularData'
 // Output preparers
 export { default as useAreaChart } from './useAreaChart'
 export { default as useCanvas } from './useCanvas'
+export { default as useFileBlob } from './useFileBlob'
