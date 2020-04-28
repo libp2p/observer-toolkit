@@ -79,6 +79,7 @@ function WidgetHeader({ name, description, closeWidget }) {
             <Tooltip
               side="left"
               fixOn="never"
+              toleranceY={null}
               content={
                 <TooltipContent>
                   Close and return <br /> to catalogue
