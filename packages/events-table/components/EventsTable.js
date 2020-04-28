@@ -124,7 +124,7 @@ function EventsTable({ theme }) {
     <>
       {hasLiveSource && (
         <PauseControlsBar height={barHeight}>
-          <EventsHeading>{shownContent.length} events</EventsHeading>
+          <EventsHeading>{allContent.length} events</EventsHeading>
           <PauseControlsBlock>
             {isLive ? (
               <PauseControlsItem>Showing all incoming events</PauseControlsItem>
