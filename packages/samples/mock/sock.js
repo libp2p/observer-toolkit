@@ -164,8 +164,8 @@ function start({
     // allow only 1 client connection, it's just a mock server
     wss.clients.forEach(client => {
       if (client === ws) {
-        if (stateIntervalId) clearInterval(stateIntervalId)
-        stateIntervalId = setInterval(() => {
+        clearInterval(sendInterval)
+        sendInterval = setInterval(() => {
           sendQueue(client)
         }, 200)
       } else {

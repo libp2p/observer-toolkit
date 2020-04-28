@@ -22,7 +22,7 @@ const IconButton = styled.button`
 
 function WebsocketControl() {
   const [hasFocus, setHasFocus] = useState(false)
-  const { isPaused, sendSignal } = useContext(WebsocketContext)
+  const { isPaused, sendSignal } = useContext(WebsocketContext) || {}
   const { dispatchWebsocket } = useContext(SetterContext)
 
   const showPauseIcon = hasFocus ? !isPaused : isPaused
