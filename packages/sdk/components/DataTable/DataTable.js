@@ -161,6 +161,7 @@ DataTable.propTypes = {
   defaultPerPageIndex: T.number,
   sticky: T.oneOfType([T.number, T.bool]),
   rowProps: T.object,
+  tbodyProps: T.object,
   override: T.object,
 }
 

@@ -66,6 +66,7 @@ DataTableRow.propTypes = {
   hideUntil: T.number,
   fadeIn: T.bool,
   children: T.node,
+  override: T.object,
 }
 
 export default DataTableRow

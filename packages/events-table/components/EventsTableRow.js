@@ -33,6 +33,7 @@ function EventsTableRow({
 
 EventsTableRow.propTypes = {
   rowIndex: T.number.isRequired,
+  changeHighlightedRowIndex: T.func.isRequired,
   highlightedRowIndex: T.number,
 }
 

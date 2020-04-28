@@ -12,7 +12,7 @@ const Nowrap = styled.span`
 `
 
 const rendererPropType = {
-  value: T.oneOfType([T.number, T.string]).isRequired,
+  value: T.oneOfType([T.number, T.string]),
   type: T.string, // Event type
 }
 
@@ -34,14 +34,16 @@ function RenderMultiple({ value, type, name }) {
   }
 
   const renderer = getRenderer(type)
-  const { renderContent } = renderer
+  const { renderContent: RenderContent } = renderer
   return (
     <Tooltip
       side="bottom"
       fixOn="no-hover"
       toleranceY={null}
       toleranceX={-32}
-      content={value.map(item => renderContent({ value: item }))}
+      content={value.map((item, i) => (
+        <RenderContent value={item} key={i} />
+      ))}
     >
       <Nowrap>
         {cellText}

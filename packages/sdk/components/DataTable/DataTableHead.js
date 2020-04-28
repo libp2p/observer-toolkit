@@ -92,6 +92,7 @@ DataTableHead.propTypes = {
   sortDirection: T.string,
   setSortDirection: T.func,
   sticky: T.oneOfType([T.number, T.bool]),
+  override: T.object,
 }
 
 export default DataTableHead

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
 import { getTime } from '@libp2p-observer/data'
@@ -16,12 +17,6 @@ import EventsTableRow from './EventsTableRow'
 import eventsColumnDefs from '../definitions/eventsColumns'
 import useEventPropertyTypes from '../hooks/useEventPropertyTypes'
 import buildEventsColumns from '../utils/buildEventsColumns'
-
-const Container = styled.div`
-  border: 1px solid
-    ${({ theme, hasFocus }) =>
-      theme.color(hasFocus ? 'secondary' : 'background')};
-`
 
 const PauseControlsBar = styled.section`
   position: sticky;
@@ -178,8 +173,7 @@ function EventsTable({ theme }) {
           changeHighlightedRowIndex,
         }}
         tbodyProps={{
-          onMouseLeave: () =>
-            console.log('LEAVE') || changeHighlightedRowIndex(null),
+          onMouseLeave: () => changeHighlightedRowIndex(null),
         }}
         override={{
           TableHead: EventsTableHead,
@@ -188,6 +182,9 @@ function EventsTable({ theme }) {
       />
     </>
   )
+}
+EventsTable.propTypes = {
+  theme: T.object.isRequired,
 }
 
 export default withTheme(EventsTable)
