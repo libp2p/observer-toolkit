@@ -113,16 +113,12 @@ function handleClientMessage(client, server, msg) {
     const signal = clientSignal.getSignal()
     if (signal === ClientSignal.Signal.SEND_DATA) {
       sendQueue(client)
-    } else if (
-      signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
-    ) {
+    } else if (signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER) {
       clearInterval(sendInterval)
       sendInterval = setInterval(() => {
         sendQueue(client)
       }, 200)
-    } else if (
-      signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER
-    ) {
+    } else if (signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER) {
       clearInterval(sendInterval)
     } else if (signal === ClientSignal.Signal.CONFIG_EMITTER) {
       try {

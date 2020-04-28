@@ -49,8 +49,6 @@ function getVersionBinary() {
 }
 
 function useFileBlob() {
-  console.log('IN useFileBlob')
-
   const states = useContext(DataContext)
   const events = useContext(EventsContext)
   const runtime = useContext(RuntimeContext)
