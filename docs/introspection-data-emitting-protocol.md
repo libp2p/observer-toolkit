@@ -11,8 +11,7 @@ This is a WebSocket based Protocol, due to the nature of WebSockets being native
 
 </details>
 
-When the client starts up, it will look for the local introspection port of the LibP2P network.
-There will also be an option to connect to another host.
+When the client starts up, it presents several ways to load introspection data. One is them is to connect to the introspection port of the LibP2P network on the local machine or on another host.
 Once connected, the introspection module will start extracting data defined in the introspection protobuf from other LibP2P modules such as swarm, or other source providers.
 
 The protocol is based on the premise of the server who is providing data is an "emitter".
@@ -28,11 +27,11 @@ This process will take away the backpressure resposibilty from the server for sn
 
 The specific functionality of the sequence of events for the state snapshot fetching is described in the sequence diagram, below.
 
-![Sequence diagram of protocol](./images/introspection-sequence-diagram.png "Sequence diagram of state snapshot fetching")
+![Sequence diagram of protocol](./images/sequence-diagram-snapshot-fetching.png "Sequence diagram of state snapshot fetching")
 
 The specific functionality of the sequence of events for the push emitter data is described in the sequence diagram, below.
 
-![Sequence diagram of protocol](./images/introspection-sequence-diagram.png "Sequence diagram of push emitter data sending")
+![Sequence diagram of protocol](./images/sequence-diagram-push-emitter.png "Sequence diagram of push emitter data sending")
 
 ## Specifics of protocol operation
 
