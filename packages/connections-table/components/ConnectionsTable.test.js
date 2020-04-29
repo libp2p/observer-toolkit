@@ -131,7 +131,11 @@ describe('ConnectionsTable', () => {
     const peerId = peerIdCell.textContent
 
     const ageCell = within(row).getByTableColumn(/^time open/i)
-    const age = parseFloat(ageCell.textContent)
+    const ageCellContent = within(ageCell).getByText(/\d+ ?\w+/)
+    await fireEvent.mouseEnter(ageCellContent)
+    const ageCellTooltip = await within(ageCell).findByRole('tooltip')
+    const age_ms = parseFloat(ageCellTooltip.textContent)
+    await fireEvent.mouseLeave(ageCellContent)
 
     const showStreamsButton = within(row).getByText('View streams')
 
@@ -142,9 +146,9 @@ describe('ConnectionsTable', () => {
 
     await nudgeSliderLeft(timelineSlider)
 
-    const row_2 = within(table).queryByTableRow([
+    const row_2 = within(table).queryAllByTableRow([
       { column: /^peer id/i, textContent: peerId },
-    ])
+    ])[0]
 
     // Check tooltip is still open
     const subtableTooltip_2 = within(row_2).getByRole('tooltip')
@@ -158,15 +162,20 @@ describe('ConnectionsTable', () => {
 
     // Do this after closing the tooltip else it'll find subtable rows
     const ageCell_2 = within(row_2).getByTableColumn(/^time open/i)
-    const age_2 = parseFloat(ageCell_2.textContent)
-    const secondsPerState = 2
-    expect(age_2).toEqual(age - secondsPerState)
+    const ageCellContent_2 = within(ageCell_2).getByText(/\d+ ?\w+/)
+    await fireEvent.mouseEnter(ageCellContent_2)
+    const ageCellTooltip_2 = await within(ageCell_2).findByRole('tooltip')
+
+    const age_2_ms = parseFloat(ageCellTooltip_2.textContent)
+    const msPerState = 2000
+    expect(age_2_ms).toEqual(age_ms - msPerState)
+    await fireEvent.mouseLeave(ageCellContent_2)
 
     await nudgeSliderLeft(timelineSlider)
 
-    const row_3 = within(table).queryByTableRow([
+    const row_3 = within(table).queryAllByTableRow([
       { column: /^peer id/i, textContent: peerId },
-    ])
+    ])[0]
 
     expect(within(row_3).queryByRole('tooltip')).not.toBeInTheDocument()
   })

@@ -64,10 +64,14 @@ function useConsoleApi({
   const [isInitialised, setIsInitialised] = useState(false)
   const theme = useContext(ThemeContext)
 
+  if (!isInitialised) {
+    const notInTest = typeof jest === 'undefined'
+    if (notInTest) outputWelcome(theme)
+  }
+
   useEffect(() => {
     if (!isInitialised) {
       setIsInitialised(true)
-      outputWelcome(theme)
     }
   }, [isInitialised, setIsInitialised, theme])
 
