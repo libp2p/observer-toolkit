@@ -17,7 +17,7 @@ const StyledLink = styled.a`
 function FileDownload() {
   const blob = useFileBlob()
   const blobURL = URL.createObjectURL(blob)
-  const filename = `${Date.now()}.libp2p.protobuf`
+  const filename = `${Date.now()}.libp2p.trace`
 
   const [fileSize, sizeUnit] = formatDataSize(blob.size)
 
