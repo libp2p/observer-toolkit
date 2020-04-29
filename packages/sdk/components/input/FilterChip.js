@@ -41,6 +41,7 @@ const Tick = styled.div`
 
 function FilterChip({
   filter: { name, enabled, values: filterValues, getFilterDef },
+  dispatchFilters,
 }) {
   const {
     FilterUi,
@@ -50,7 +51,6 @@ function FilterChip({
   } = getFilterDef()
 
   const rootNodeRef = useContext(RootNodeContext)
-  const dispatchFilters = useContext(FilterSetterContext)
 
   const dispatch = (actionName, values) =>
     dispatchFilters({
@@ -168,6 +168,7 @@ FilterChip.propTypes = {
     enabled: T.bool,
     getFilterDef: T.func.isRequired,
   }).isRequired,
+  dispatchFilters: T.func.isRequired,
   children: T.node,
 }
 

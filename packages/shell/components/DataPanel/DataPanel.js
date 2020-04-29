@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import {
   RuntimeContext,
+  SetterContext,
   Icon,
   PeerIdAvatar,
   PeerIdTooltip,
@@ -11,6 +12,7 @@ import {
 } from '@libp2p-observer/sdk'
 import DataTypeControl from './DataTypeControl'
 import FileDownload from './FileDownload'
+import GlobalFilterControl from './GlobalFilterControl'
 import RuntimeInfo from './RuntimeInfo'
 import { DataTray } from '../DataTray'
 
@@ -66,8 +68,11 @@ function DataPanel() {
   const [isDataTrayOpen, setIsDataTrayOpen] = useState(false)
 
   const runtime = useContext(RuntimeContext)
+  const { globalFilters } = useContext(SetterContext)
 
   const peerId = runtime && runtime.getPeerId()
+
+  const activeFilters = globalFilters.filter(filter => filter.enabled)
 
   const openDataTray = () => setIsDataTrayOpen(true)
   const closeDataTray = () => setIsDataTrayOpen(false)
@@ -77,10 +82,12 @@ function DataPanel() {
       <DataTypeControl openDataTray={openDataTray} />
 
       <DataPanelItem>
-        <IconContainer>
-          <Icon type="filter" />
-        </IconContainer>
-        0 filters applied
+        <Tooltip fixOn={'no-hover'} content={<GlobalFilterControl />}>
+          <IconContainer>
+            <Icon type="filter" />
+          </IconContainer>
+          {activeFilters.length} filters applied
+        </Tooltip>
       </DataPanelItem>
       <DataPanelItem>
         <Tooltip fixOn={'no-hover'} content={<FileDownload />}>

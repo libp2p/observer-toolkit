@@ -2,7 +2,8 @@ import React, { useState, useRef, createContext } from 'react'
 import T from 'prop-types'
 
 import { getLatestTimepoint } from '@libp2p-observer/data'
-import { useConsoleAPI, useDatastore } from '../../hooks'
+import { useConsoleAPI, useDatastore, useFilter } from '../../hooks'
+import { getRangeFilter } from '../../filters'
 
 const SourceContext = createContext()
 const DataContext = createContext()
@@ -12,6 +13,7 @@ const TimeContext = createContext()
 const PeersContext = createContext()
 const SetterContext = createContext()
 const WebsocketContext = createContext()
+const GlobalFilterContext = createContext()
 
 function DataProvider({
   initialData: {
@@ -59,6 +61,22 @@ function DataProvider({
     timepoint,
   })
 
+  const filterDefs = [
+    getRangeFilter({
+      name: 'Filter by time',
+      mapFilter: msg => (msg.getTs ? msg.getTs() : msg.getInstantTs()),
+      min: states.length ? states[0].getInstantTs() : 0,
+      max: states.length ? states[states.length - 1].getInstantTs() : 0,
+      stepInterval: 100,
+    }),
+  ]
+
+  const {
+    applyFilters,
+    dispatchFilters: dispatchGlobalFilters,
+    filters: globalFilters,
+  } = useFilter(filterDefs)
+
   // Bundle setters and make bundle persist, as defining this in normal function flow
   // causes context `value` to see a new object each run, causing re-renders every time
   const dataSetters = useRef({
@@ -70,6 +88,8 @@ function DataProvider({
     removeData,
     setIsLoading,
     dispatchWebsocket,
+    dispatchGlobalFilters,
+    globalFilters,
   })
 
   if (timepoint && !states.includes(timepoint)) {
@@ -78,19 +98,24 @@ function DataProvider({
 
   const displayedTimepoint = timepoint || initialTime || null
 
+  const filteredStates = states.filter(applyFilters)
+  const filteredEvents = events.filter(applyFilters)
+
   // Separate getters and setters so that components can set a context value without
   // then rerendering themselves because their useContext hook consumes that value
   return (
-    <DataContext.Provider value={states}>
+    <DataContext.Provider value={filteredStates}>
       <RuntimeContext.Provider value={runtime}>
         <TimeContext.Provider value={displayedTimepoint}>
-          <EventsContext.Provider value={events}>
+          <EventsContext.Provider value={filteredEvents}>
             <PeersContext.Provider value={peerIds}>
               <SourceContext.Provider value={source}>
                 <WebsocketContext.Provider value={websocket}>
-                  <SetterContext.Provider value={dataSetters.current}>
-                    {children}
-                  </SetterContext.Provider>
+                  <GlobalFilterContext.Provider value={globalFilters}>
+                    <SetterContext.Provider value={dataSetters.current}>
+                      {children}
+                    </SetterContext.Provider>
+                  </GlobalFilterContext.Provider>
                 </WebsocketContext.Provider>
               </SourceContext.Provider>
             </PeersContext.Provider>
@@ -121,4 +146,5 @@ export {
   EventsContext,
   SourceContext,
   WebsocketContext,
+  GlobalFilterContext,
 }

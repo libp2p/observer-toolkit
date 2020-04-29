@@ -103,9 +103,8 @@ function getMousePosition(mouseX, width) {
 }
 
 function getStepPosition(stepIndex, min, max, steps) {
-  const stepIndexWithinMin = Math.max(stepIndex, min)
-  if (!stepIndexWithinMin) return 0
-  return Math.min(stepIndexWithinMin, max) / steps
+  if (!stepIndex) return 0
+  return stepIndex / steps
 }
 
 function getStepIndex(position, steps) {
@@ -113,15 +112,24 @@ function getStepIndex(position, steps) {
   return nearestStepIndex
 }
 
-function getLowerStepIndex(value, isRange, min, max) {
+function getLowerStepIndex(value, isRange, steps) {
   if (typeof value === 'number') return value
-  return isRange ? min : max
+  return isRange ? 0 : steps
 }
 
-function getUpperStepIndex(value, isRange, max) {
+function getUpperStepIndex(value, isRange, steps) {
   if (!isRange) return null // Unused unless isRange
   if (typeof value === 'number') return value
-  return max
+  return steps
+}
+
+function getValueFromStepIndex(stepIndex, stepInterval, min) {
+  return stepIndex * stepInterval + min
+}
+
+function getStepIndexFromValue(value, stepInterval, min) {
+  if (typeof value !== 'number') return value
+  return Math.round((value - min) / stepInterval)
 }
 
 function getNearestFieldName(
@@ -183,8 +191,8 @@ function Slider({
 
   if (!steps) {
     // e.g. if highest value is 4.3 mb, stepInterval every 500kb => 9 steps, max is 4.5 mb
-    steps = Math.ceil(max / stepInterval)
-    max = steps * stepInterval
+    steps = Math.ceil((max - min) / stepInterval)
+    max = steps * stepInterval + min
   }
 
   /**
@@ -208,30 +216,38 @@ function Slider({
   // If a `value` has no defined number, position based on min/max
   // so the default display adapts as min/max change
   const lowerStepIndex = getLowerStepIndex(
-    values[fieldNames[0]],
+    getStepIndexFromValue(values[fieldNames[0]], stepInterval, min),
     isRange,
-    min,
-    max
+    steps
   )
-  const upperStepIndex = getUpperStepIndex(values[fieldNames[1]], isRange, max)
+  const upperStepIndex = getUpperStepIndex(
+    getStepIndexFromValue(values[fieldNames[1]], stepInterval, min),
+    isRange,
+    steps
+  )
 
   // Position is a decimal number >=0 <=1 representing the % distance along the slider
   const lowerPosition = getStepPosition(lowerStepIndex, min, max, steps)
+
   const upperPosition = isRange
     ? getStepPosition(upperStepIndex, min, max, steps)
     : null
 
-  const getValidatedIndex = (stepIndex, fieldName) => {
+  const getValidatedValue = (value, fieldName) => {
     const isLower = isRange && fieldName === fieldNames[0]
+    const stepIndex = getStepIndexFromValue(value, stepInterval, min)
+
     if (isLower) {
-      if (stepIndex <= min) return ['', false] // Follows `min` if it changes
-      if (stepIndex >= upperStepIndex) return [upperStepIndex, false] // Don't cross over
-      return [stepIndex, true]
+      if (value <= min) return ['', false] // Follows `min` if it changes
+      if (stepIndex >= upperStepIndex)
+        return [getValueFromStepIndex(upperStepIndex, stepInterval, min), false] // Don't cross over
+      return [value, true]
     }
 
-    if (stepIndex >= max) return ['', false] // Follows `max` if it changes
-    if (isRange && stepIndex <= lowerStepIndex) return [lowerStepIndex, false] // Don't cross over
-    return [stepIndex, true]
+    if (value >= max) return ['', false] // Follows `max` if it changes
+    if (isRange && stepIndex <= lowerStepIndex)
+      return [getValueFromStepIndex(lowerStepIndex, stepInterval, min), false] // Don't cross over
+    return [value, true]
   }
 
   /**
@@ -252,7 +268,9 @@ function Slider({
     const position = getMousePosition(mouseX, containerWidth)
 
     const stepIndex = getStepIndex(position, steps)
-    handleChange(stepIndex, fieldName)
+    const value = getValueFromStepIndex(stepIndex, stepInterval, min)
+
+    handleChange(value, fieldName)
   }
   const handleClick = async event => {
     let fieldName = fieldNames[0]
@@ -272,33 +290,36 @@ function Slider({
     focusRef.current.focus()
   }
   const handleNumberInput = (event, fieldName) => {
-    const stepIndex = parseInt(event.target.value)
-    if (isNaN(stepIndex)) {
+    const value = parseInt(event.target.value)
+
+    if (isNaN(value)) {
       updateNumberInput(fieldName, '')
     } else {
-      handleChange(stepIndex, fieldName)
+      handleChange(value, fieldName)
     }
   }
-  const handleChange = (stepIndex, fieldName) => {
-    const [newValue, wasValid] = getValidatedIndex(stepIndex, fieldName)
+  const handleChange = (value, fieldName) => {
+    const [newValue, wasValid] = getValidatedValue(value, fieldName)
+
     updateFieldValue(fieldName, newValue)
 
-    // If stepIndex was invalid, allow number input to keep it while user types
-    const numberInputValue = wasValid ? null : stepIndex
-    updateNumberInput(fieldName, numberInputValue)
+    // Allow number input field to display invalid numbers while user types
+    const displayValue = wasValid ? null : value
+    updateNumberInput(fieldName, displayValue)
   }
-  const updateFieldValue = async (fieldName, stepIndex) => {
-    if (
-      !isNaN(stepIndex) &&
-      stepIndex !== values[fieldName] &&
-      stepIndex >= min &&
-      stepIndex <= max
-    ) {
-      await setFieldValue(fieldName, stepIndex)
+  const updateFieldValue = async (fieldName, newValue) => {
+    const isValidNumber =
+      !isNaN(newValue) &&
+      newValue !== values[fieldName] &&
+      newValue >= min &&
+      newValue <= max
+
+    if (isValidNumber || newValue === '') {
+      await setFieldValue(fieldName, newValue)
       onChange()
     }
   }
-  const updateNumberInput = (fieldName, stepIndex) => {
+  const updateNumberInput = (fieldName, value) => {
     const isUpper = isRange && fieldName === 'max'
     const setNumberInput = isUpper ? setUpperNumberInput : setLowerNumberInput
     const numberInputRef = isUpper ? upperInputRef : lowerInputRef
@@ -306,13 +327,27 @@ function Slider({
     const isInFocus = document.activeElement === numberInputRef.current
 
     // Only set number input state while input is in focus
-    setNumberInput(isInFocus ? stepIndex : null)
+    setNumberInput(isInFocus ? value : null)
   }
 
   const nudgeLower = e =>
-    handleChange(lowerStepIndex + getNudgeNumber(e), fieldNames[0])
+    handleChange(
+      getValueFromStepIndex(
+        lowerStepIndex + getNudgeNumber(e),
+        stepInterval,
+        min
+      ),
+      fieldNames[0]
+    )
   const nudgeUpper = e =>
-    handleChange(upperStepIndex + getNudgeNumber(e), fieldNames[1])
+    handleChange(
+      getValueFromStepIndex(
+        upperStepIndex + getNudgeNumber(e),
+        stepInterval,
+        min
+      ),
+      fieldNames[1]
+    )
 
   /**
    *** Styling and inline style calculation
@@ -405,7 +440,9 @@ function Slider({
             min={min}
             max={max}
             value={
-              lowerNumberInput !== null ? lowerNumberInput : lowerStepIndex
+              lowerNumberInput !== null
+                ? lowerNumberInput
+                : getValueFromStepIndex(lowerStepIndex, stepInterval, min)
             }
             onChange={event => handleNumberInput(event, fieldNames[0])}
             onBlur={() => updateNumberInput(fieldNames[0], null)}
@@ -429,7 +466,9 @@ function Slider({
               min={min}
               max={max}
               value={
-                upperNumberInput !== null ? upperNumberInput : upperStepIndex
+                upperNumberInput !== null
+                  ? upperNumberInput
+                  : getValueFromStepIndex(upperStepIndex, stepInterval, min)
               }
               onChange={event => handleNumberInput(event, fieldNames[1])}
               onBlur={() => updateNumberInput(fieldNames[1], null)}

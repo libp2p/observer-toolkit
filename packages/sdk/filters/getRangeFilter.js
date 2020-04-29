@@ -12,6 +12,7 @@ const DefaultUi = Slider
 
 function getRangeFilter({
   steps,
+  stepInterval,
   min = 0,
   max = 0,
   name = 'Filter by range',
@@ -38,6 +39,7 @@ function getRangeFilter({
       min,
       max,
       steps,
+      stepInterval,
     },
   }
 }

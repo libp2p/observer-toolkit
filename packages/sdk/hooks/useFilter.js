@@ -98,15 +98,12 @@ function useFilter(filterDefs) {
 
   const applyFilters = useCallback(
     datum => {
-      if (!filters.length) return true
-      return filters
-        .filter(filter => filter.enabled)
-        .every(({ name, values, getFilterDef }) => {
-          const { doFilter, mapFilter } = getFilterDef()
-          return (
-            !values || doFilter(mapFilter ? mapFilter(datum) : datum, values)
-          )
-        })
+      const activeFilters = filters.filter(filter => filter.enabled)
+      if (!activeFilters.length) return true
+      return activeFilters.every(({ name, values, getFilterDef }) => {
+        const { doFilter, mapFilter } = getFilterDef()
+        return !values || doFilter(mapFilter ? mapFilter(datum) : datum, values)
+      })
     },
     [filters]
   )
