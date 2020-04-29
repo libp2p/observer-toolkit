@@ -38,15 +38,18 @@ function SlidingRows({
   } = slidingRowsByType
 
   useEffect(() => {
-    slidingRowsRef.current.style.display = 'block'
+    // React lint needs a variable pointing to ref elem for useEffect and cleanup
+    const slidingRowsElem = slidingRowsRef.current
+
+    slidingRowsElem.style.display = 'block'
     // Clear sliders once transition is complete
     const resetTimer = setTimeout(() => {
-      slidingRowsRef.current.style.display = 'none'
+      slidingRowsElem.style.display = 'none'
     }, slideDuration)
 
     return () => {
-      if (slidingRowsRef.current) {
-        slidingRowsRef.current.style.display = 'none'
+      if (slidingRowsElem) {
+        slidingRowsElem.style.display = 'none'
       }
       clearTimeout(resetTimer)
     }
