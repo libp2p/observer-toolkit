@@ -11,6 +11,7 @@ import {
 } from '@libp2p-observer/sdk'
 import DataTypeControl from './DataTypeControl'
 import FileDownload from './FileDownload'
+import RuntimeInfo from './RuntimeInfo'
 import { DataTray } from '../DataTray'
 
 const DataPanelItem = styled.span`
@@ -82,10 +83,10 @@ function DataPanel() {
         0 filters applied
       </DataPanelItem>
       <DataPanelItem>
-        <IconContainer>
-          <Icon type="doc" />
-        </IconContainer>
         <Tooltip fixOn={'no-hover'} content={<FileDownload />}>
+          <IconContainer>
+            <Icon type="doc" />
+          </IconContainer>
           Export data
         </Tooltip>
       </DataPanelItem>
@@ -109,10 +110,12 @@ function DataPanel() {
         </DataPanelItem>
       )}
       <DataPanelItem>
-        <IconContainer>
-          <Icon type="forward" />
-        </IconContainer>
-        About this peer
+        <Tooltip fixOn={'no-hover'} content={<RuntimeInfo />}>
+          <IconContainer>
+            <Icon type="forward" />
+          </IconContainer>
+          About this peer
+        </Tooltip>
       </DataPanelItem>
 
       {isDataTrayOpen && (
