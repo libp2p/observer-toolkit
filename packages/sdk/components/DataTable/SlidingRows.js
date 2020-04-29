@@ -33,7 +33,6 @@ function SlidingRows({
 }) {
   const {
     disappearingRows,
-    slidingShownRows,
     slidingOutRows,
     previousAllContent,
   } = slidingRowsByType
@@ -45,8 +44,13 @@ function SlidingRows({
       slidingRowsRef.current.style.display = 'none'
     }, slideDuration)
 
-    return () => clearTimeout(resetTimer)
-  })
+    return () => {
+      if (slidingRowsRef.current) {
+        slidingRowsRef.current.style.display = 'none'
+      }
+      clearTimeout(resetTimer)
+    }
+  }, [slidingRowsRef, slideDuration])
 
   return (
     <Container rowHeight={rowHeight} ref={slidingRowsRef}>
@@ -60,25 +64,6 @@ function SlidingRows({
             yFrom={yOffset}
             yTo={yOffset}
             fadeOut={true}
-            slideDuration={slideDuration}
-            rowHeight={rowHeight}
-          />
-        )
-      })}
-      {slidingShownRows.map(rowContent => {
-        const { yFrom, yTo } = getYFromTo(
-          rowContent,
-          previousAllContent,
-          rowHeight,
-          firstIndex
-        )
-        return (
-          <SlidingRow
-            key={`slide_${rowContent.key}`}
-            columnDefs={columnDefs}
-            rowContent={rowContent}
-            yFrom={yFrom}
-            yTo={yTo}
             slideDuration={slideDuration}
             rowHeight={rowHeight}
           />

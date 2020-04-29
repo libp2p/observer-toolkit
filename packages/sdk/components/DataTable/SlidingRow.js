@@ -5,24 +5,8 @@ import styled from 'styled-components'
 import { Table, TBody } from './styledTable'
 import DataTableRow from './DataTableRow'
 
-const Container = styled.div.attrs(({ theme, rowWidth, distanceMoved }) => {
-  // Make shadows stronger for rows moving further; cap this against these values
-  const relativeDistanceDec = Math.min(1, Math.sqrt(distanceMoved) / 32)
-
-  const shadowCol = theme.color('contrast', 0, 0.3 * relativeDistanceDec + 0.1)
-  const shadowYOffset = Math.round(2 + 4 * relativeDistanceDec)
-  const shadowSpread = shadowYOffset * 3
-
-  const boxShadow = `${shadowCol} 0 ${shadowYOffset}px ${shadowSpread}px`
-
-  return {
-    style: {
-      zIndex: Math.round(relativeDistanceDec * 30 + 2),
-      boxShadow,
-    },
-  }
-})`
-  background: ${({ theme }) => theme.color('background', 0, 0.9)};
+const Container = styled.div`
+  background: ${({ theme }) => theme.color('background')};
   position: absolute;
   width: 100%;
 `
