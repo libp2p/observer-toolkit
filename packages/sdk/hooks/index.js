@@ -1,8 +1,9 @@
 // UI helpers
 export { default as useHandlerOnRef } from './useHandlerOnRef'
 
-// Data modifiers
+// Data controls
 export { default as useCalculation } from './useCalculation'
+export { default as useConsoleAPI } from './useConsoleAPI'
 export { default as useDatastore } from './useDatastore'
 export { default as useFilter } from './useFilter'
 export { default as useSorter } from './useSorter'
