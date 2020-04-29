@@ -17,22 +17,59 @@ function getInsertedRowsCount(shownContent, previousShownContent) {
   return insertedRows.length
 }
 
-function getChangedShownRows(shownRows, insertedRowsCount, previousAllContent) {
-  const appearingRows = []
+function getChangedShownRows(
+  shownRows,
+  insertedRowsCount,
+  previousAllContent,
+  rowHeight,
+  firstIndex
+) {
+  const { appearingRows, slidingShownRows } = shownRows
+    .slice(insertedRowsCount)
+    .reduce(
+      ({ appearingRows, slidingShownRows }, row) => {
+        const previousRow = previousAllContent.find(
+          oldRow => oldRow.key === row.key
+        )
+        if (!previousRow)
+          return {
+            appearingRows: [...appearingRows, row.key],
+            slidingShownRows,
+          }
+        // Account for inserted rows because they will be slid by sliding the whole tbody
+        const expectedIndex = previousRow.index + insertedRowsCount
 
-  const slidingShownRows = shownRows.slice(insertedRowsCount).filter(row => {
-    const previousRow = previousAllContent.find(
-      oldRow => oldRow.key === row.key
+        // Filter unmoved rows - no change
+        if (expectedIndex === row.index)
+          return {
+            appearingRows,
+            slidingShownRows,
+          }
+
+        const yFromTop = getYOffset(row.index, rowHeight, firstIndex)
+        const yFromTopPrevious = getYOffset(
+          previousRow.index,
+          rowHeight,
+          firstIndex
+        )
+
+        return {
+          appearingRows,
+          slidingShownRows: [
+            ...slidingShownRows,
+            {
+              key: row.key,
+              yFrom: yFromTopPrevious - yFromTop,
+              yTo: 0,
+            },
+          ],
+        }
+      },
+      {
+        appearingRows: [],
+        slidingShownRows: [],
+      }
     )
-    if (!previousRow) {
-      appearingRows.push(row)
-      return false
-    }
-    // Account for inserted rows because they will be slid by sliding the whole tbody
-    const expectedIndex = previousRow.index + insertedRowsCount
-
-    return expectedIndex !== row.index
-  })
 
   return {
     appearingRows,
@@ -88,7 +125,9 @@ function getSlidingRowsByType(
   shownContent,
   allContent,
   previousShownContent,
-  previousAllContent
+  previousAllContent,
+  rowHeight,
+  firstIndex
 ) {
   const insertedRowsCount = getInsertedRowsCount(
     shownContent,
@@ -97,7 +136,9 @@ function getSlidingRowsByType(
   const { appearingRows, slidingShownRows } = getChangedShownRows(
     shownContent,
     insertedRowsCount,
-    previousAllContent
+    previousAllContent,
+    rowHeight,
+    firstIndex
   )
   const { slidingOutRows, disappearingRows } = getNewlyUnshownRows(
     previousShownContent,
@@ -115,6 +156,10 @@ function getSlidingRowsByType(
   }
 }
 
+function getYOffset(rowIndex, rowHeight, firstIndex) {
+  return (rowIndex - firstIndex) * rowHeight
+}
+
 function useSlidingRows({
   allContent,
   shownContent,
@@ -122,6 +167,7 @@ function useSlidingRows({
   slidingRowsRef,
   slideDuration,
   rowHeight,
+  firstIndex,
   disabled = false,
 }) {
   const [previousShownContent, setPreviousShownContent] = useState(shownContent)
@@ -133,7 +179,9 @@ function useSlidingRows({
           shownContent,
           allContent,
           previousShownContent,
-          previousAllContent
+          previousAllContent,
+          rowHeight,
+          firstIndex
         )
   )
 
@@ -145,7 +193,9 @@ function useSlidingRows({
         shownContent,
         allContent,
         previousShownContent,
-        previousAllContent
+        previousAllContent,
+        rowHeight,
+        firstIndex
       )
 
   useEffect(() => {

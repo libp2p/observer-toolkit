@@ -24,6 +24,7 @@ import marker from './icons/Marker'
 import expand from './icons/Expand'
 import remove from './icons/Remove'
 import play from './icons/Play'
+import pause from './icons/Pause'
 
 // Export an object of url paths; importer picks path by key
 export default {
@@ -45,4 +46,5 @@ export default {
   expand,
   remove,
   play,
+  pause,
 }

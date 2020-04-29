@@ -48,11 +48,6 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   width: 100%;
 }
 
-.c13 {
-  border-spacing: 0;
-  border-bottom: 1px solid rgba(241,242,240,0.5);
-}
-
 .c6 {
   z-index: 8;
   position: -webkit-sticky;
@@ -133,6 +128,11 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
   font-family: plex-sans;
   color: rgb(93,94,96);
   text-align: right;
+}
+
+.c13 {
+  border-spacing: 0;
+  border-bottom: 1px solid rgba(241,242,240,0.5);
 }
 
 .c3 {

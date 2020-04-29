@@ -33,20 +33,27 @@ function SlidingRows({
 }) {
   const {
     disappearingRows,
-    slidingShownRows,
     slidingOutRows,
     previousAllContent,
   } = slidingRowsByType
 
   useEffect(() => {
-    slidingRowsRef.current.style.display = 'block'
+    // React lint needs a variable pointing to ref elem for useEffect and cleanup
+    const slidingRowsElem = slidingRowsRef.current
+
+    slidingRowsElem.style.display = 'block'
     // Clear sliders once transition is complete
     const resetTimer = setTimeout(() => {
-      slidingRowsRef.current.style.display = 'none'
+      slidingRowsElem.style.display = 'none'
     }, slideDuration)
 
-    return () => clearTimeout(resetTimer)
-  })
+    return () => {
+      if (slidingRowsElem) {
+        slidingRowsElem.style.display = 'none'
+      }
+      clearTimeout(resetTimer)
+    }
+  }, [slidingRowsRef, slideDuration])
 
   return (
     <Container rowHeight={rowHeight} ref={slidingRowsRef}>
@@ -60,25 +67,6 @@ function SlidingRows({
             yFrom={yOffset}
             yTo={yOffset}
             fadeOut={true}
-            slideDuration={slideDuration}
-            rowHeight={rowHeight}
-          />
-        )
-      })}
-      {slidingShownRows.map(rowContent => {
-        const { yFrom, yTo } = getYFromTo(
-          rowContent,
-          previousAllContent,
-          rowHeight,
-          firstIndex
-        )
-        return (
-          <SlidingRow
-            key={`slide_${rowContent.key}`}
-            columnDefs={columnDefs}
-            rowContent={rowContent}
-            yFrom={yFrom}
-            yTo={yTo}
             slideDuration={slideDuration}
             rowHeight={rowHeight}
           />

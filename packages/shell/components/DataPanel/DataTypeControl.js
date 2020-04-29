@@ -4,6 +4,8 @@ import styled from 'styled-components'
 
 import { Icon, SourceContext } from '@libp2p-observer/sdk'
 
+import WebsocketControl from './WebsocketControl'
+
 const Container = styled.div`
   display: flex;
   background: ${({ theme }) => theme.color('contrast', 1)};
@@ -69,9 +71,7 @@ function DataTypeControl({ openDataTray }) {
   const iconType = isHighlighted ? 'back' : iconNames[type]
   const buttonText = getButtonText(isHighlighted, isLoading, name)
 
-  // TODO: When implementing live ws mode:
-  //  - Make icon pulse gently while live
-  //  - Show "pause" icon when paused
+  const isLive = type === 'live'
   return (
     <Container
       onMouseEnter={() => setHighlighted(true)}
@@ -79,9 +79,13 @@ function DataTypeControl({ openDataTray }) {
       data-highlighted={isHighlighted}
       onClick={openDataTray}
     >
-      <IconButton isHighlighted={isHighlighted}>
-        <Icon type={iconType} />
-      </IconButton>
+      {isLive ? (
+        <WebsocketControl />
+      ) : (
+        <IconButton isHighlighted={isHighlighted}>
+          <Icon type={iconType} />
+        </IconButton>
+      )}
       <ButtonText isHighlighted={isHighlighted}>{buttonText}</ButtonText>
     </Container>
   )

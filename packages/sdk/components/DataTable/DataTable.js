@@ -50,6 +50,7 @@ function DataTable({
   const slidingRowsRef = useRef()
 
   if (!rowHeight) rowHeight = getRowHeight(tbodyRef)
+  const firstIndex = rowCounts.showFrom
 
   const DataTableRow = override.DataTableRow || DefaultDataTableRow
   const DataTableHead = override.DataTableHead || DefaultDataTableHead
@@ -62,6 +63,7 @@ function DataTable({
     slidingRowsRef,
     slideDuration,
     rowHeight,
+    firstIndex,
   })
 
   return (
@@ -72,7 +74,7 @@ function DataTable({
           slidingRowsRef={slidingRowsRef}
           slidingRowsByType={slidingRowsByType}
           rowHeight={rowHeight}
-          firstIndex={rowCounts.showFrom}
+          firstIndex={firstIndex}
           slideDuration={slideDuration}
           override={override}
         />
@@ -99,22 +101,20 @@ function DataTable({
             const rowIndex = allContent
               ? allContent.indexOf(rowContent)
               : shownRowIndex
-            const isSliding =
-              hasSlidingRows &&
-              slidingRowsByType.slidingShownRows.some(
-                row => row.key === rowContent.key
-              )
-            const isAppearing =
-              !isSliding &&
-              hasSlidingRows &&
-              slidingRowsByType.appearingRows.some(
-                row => row.key === rowContent.key
-              )
 
-            const hideUntil =
-              (isSliding && slideDuration) ||
-              (isAppearing && slideDuration / 2) ||
-              null
+            let yFrom = null
+            let isAppearing = false
+            if (slidingRowsByType) {
+              const { slidingShownRows, appearingRows } = slidingRowsByType
+              const slidingShownRowsMatch = slidingShownRows.find(
+                ({ key }) => rowContent.key === key
+              )
+              if (slidingShownRowsMatch) {
+                yFrom = slidingShownRowsMatch.yFrom
+              } else if (appearingRows.find(key => rowContent.key === key)) {
+                isAppearing = true
+              }
+            }
 
             return (
               <DataTableRow
@@ -123,8 +123,8 @@ function DataTable({
                 columnDefs={columnDefs}
                 rowIndex={rowIndex}
                 tbodyRef={tbodyRef}
-                hideUntil={hideUntil}
                 fadeIn={isAppearing}
+                yFrom={yFrom}
                 {...rowProps}
               />
             )

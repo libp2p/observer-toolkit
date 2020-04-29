@@ -1,14 +1,24 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import T from 'prop-types'
+import styled, { css } from 'styled-components'
 
 import { TableRow, TableCell } from './styledTable'
+
+const FadeableTableRow = styled(TableRow)`
+  ${({ theme, fadeIn }) =>
+    fadeIn
+      ? css`
+          animation: 500ms ease-in 1 ${theme.keyframes.fadeIn};
+        `
+      : ''}
+`
 
 function DataTableRow({
   rowContent,
   columnDefs,
-  hideUntil = null,
   fadeIn = false,
   children,
+  yFrom,
   override = {},
   ...rowProps
 }) {
@@ -34,37 +44,35 @@ function DataTableRow({
   )
 
   useEffect(() => {
-    let timeout
-    if (hideUntil && rowRef.current) {
+    if (rowRef.current && yFrom) {
       rowRef.current.style.transition = ''
-      rowRef.current.style.visibility = 'hidden'
-      timeout = setTimeout(() => {
-        if (fadeIn) {
-          rowRef.current.style.transition = `${hideUntil}ms opacity ease-in`
-        }
-        rowRef.current.style.visibility = 'visible'
-      }, hideUntil)
+      rowRef.current.style.transform = `translateY(${yFrom}px)`
+      setTimeout(() => {
+        if (!rowRef.current) return
+        rowRef.current.style.transition = '500ms transform ease-in'
+        rowRef.current.style.transform = 'translateY(0px)'
+      })
     }
-    return () => timeout && clearTimeout(timeout)
-  }, [rowRef, hideUntil, fadeIn])
+  }, [rowRef, yFrom])
 
   return (
-    <TableRow
+    <FadeableTableRow
+      fadeIn={fadeIn}
       ref={rowRef}
       data-rowkey={rowContent.key}
       as={override.TableRow}
       {...rowProps}
     >
       {prerenderedCells}
-    </TableRow>
+    </FadeableTableRow>
   )
 }
 
 DataTableRow.propTypes = {
   rowContent: T.array.isRequired,
   columnDefs: T.array.isRequired,
-  hideUntil: T.number,
   fadeIn: T.bool,
+  yFrom: T.number,
   children: T.node,
   override: T.object,
 }

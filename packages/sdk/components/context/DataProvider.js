@@ -2,7 +2,7 @@ import React, { useState, useRef, createContext } from 'react'
 import T from 'prop-types'
 
 import { getLatestTimepoint } from '@libp2p-observer/data'
-import { useDatastore } from '../../hooks'
+import { useConsoleAPI, useDatastore } from '../../hooks'
 
 const SourceContext = createContext()
 const DataContext = createContext()
@@ -39,7 +39,7 @@ function DataProvider({
     setPeerIds,
     setRuntime,
     setIsLoading,
-    setWebsocket,
+    dispatchWebsocket,
   } = useDatastore({
     initialStates,
     initialEvents,
@@ -49,6 +49,15 @@ function DataProvider({
 
   if (!initialTime) initialTime = getLatestTimepoint(states)
   const [timepoint, setTimepoint] = useState(null)
+
+  useConsoleAPI({
+    states,
+    events,
+    runtime,
+    source,
+    websocket,
+    timepoint,
+  })
 
   // Bundle setters and make bundle persist, as defining this in normal function flow
   // causes context `value` to see a new object each run, causing re-renders every time
@@ -60,7 +69,7 @@ function DataProvider({
     replaceData,
     removeData,
     setIsLoading,
-    setWebsocket,
+    dispatchWebsocket,
   })
 
   if (timepoint && !states.includes(timepoint)) {

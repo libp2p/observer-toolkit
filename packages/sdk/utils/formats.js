@@ -36,15 +36,16 @@ function _formatNumberRecursion(num, units, maxRecursions) {
 
   const remainder = num - unitsInt * perUnit
   const nextSegment = _formatNumberRecursion(remainder, units, maxRecursions)
-  return nextSegment ? `${segment}, ${nextSegment}` : segment
+  const nextSegmentNum = Number(nextSegment.match(/^[\d|.]*/)[0])
+  return nextSegmentNum ? `${segment}, ${nextSegment}` : segment
 }
 
-function formatDuration(ms, maxRecursions = 2) {
+function formatDuration(ms, maxRecursions = 2, shortForm = false) {
   const units = [
     ['day', 86400000],
-    ['hour', 3600000],
-    ['minute', 60000],
-    ['second', 1000],
+    [shortForm ? 'hr' : 'hour', 3600000],
+    [shortForm ? 'min' : 'minute', 60000],
+    [shortForm ? 's' : 'second', 1000, shortForm ? 's' : null],
     ['ms', 1, 'ms'],
   ]
 

@@ -42,7 +42,7 @@ const peerIdCol = {
 
 const dataInCol = {
   name: 'data-in',
-  header: 'Data in',
+  header: 'Total data in',
   getProps: (connection, metadata) => ({
     value: getConnectionTraffic(connection, 'in', 'bytes'),
     maxValue: metadata.maxTraffic,
@@ -55,11 +55,33 @@ const dataInCol = {
 
 const dataOutCol = {
   name: 'data-out',
-  header: 'Data out',
+  header: 'Total data out',
   getProps: (connection, metadata) => ({
     value: getConnectionTraffic(connection, 'out', 'bytes'),
     maxValue: metadata.maxTraffic,
     colorKey: 'secondary',
+  }),
+  renderContent: BytesContent,
+  sort: numericSorter,
+  align: 'right',
+}
+
+const bwIn = {
+  name: 'bw-in',
+  header: 'Bandwidth in',
+  getProps: connection => ({
+    value: getConnectionTraffic(connection, 'in', 'instBw'),
+  }),
+  renderContent: BytesContent,
+  sort: numericSorter,
+  align: 'right',
+}
+
+const bwOut = {
+  name: 'bw-out',
+  header: 'Bandwidth out',
+  getProps: connection => ({
+    value: getConnectionTraffic(connection, 'out', 'instBw'),
   }),
   renderContent: BytesContent,
   sort: numericSorter,
@@ -144,7 +166,9 @@ const columns = [
   ageCol,
   closedCol,
   dataInCol,
+  bwIn,
   dataOutCol,
+  bwOut,
   streamsCol,
 ]
 

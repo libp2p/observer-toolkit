@@ -62,7 +62,8 @@ function EventsTable({ theme }) {
   const timepoint = useContext(TimeContext)
   const time = getTime(timepoint)
 
-  const hideEventsAfter = time + timepoint.getSnapshotDurationMs() * 1.5
+  const snapshotDuration = timepoint ? timepoint.getSnapshotDurationMs() : 0
+  const hideEventsAfter = time + snapshotDuration * 1.5
 
   const allEvents = useContext(EventsContext)
   const eventsData = allEvents.filter(event => event.getTs() <= hideEventsAfter)
@@ -124,7 +125,7 @@ function EventsTable({ theme }) {
     <>
       {hasLiveSource && (
         <PauseControlsBar height={barHeight}>
-          <EventsHeading>{shownContent.length} events</EventsHeading>
+          <EventsHeading>{allContent.length} events</EventsHeading>
           <PauseControlsBlock>
             {isLive ? (
               <PauseControlsItem>Showing all incoming events</PauseControlsItem>

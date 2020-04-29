@@ -92,6 +92,9 @@ function getStreamTimeClosed(stream, timepoint) {
 
 function _getTraffic(traffic, direction, type) {
   const byDirection = `getTraffic${direction === 'in' ? 'In' : 'Out'}`
+
+  if (type === 'instBw') return traffic[byDirection]().getInstBw()
+
   const byType = `getCum${type === 'bytes' ? 'Bytes' : 'Packets'}`
   return traffic[byDirection]()[byType]()
 }

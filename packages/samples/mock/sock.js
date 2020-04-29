@@ -29,7 +29,8 @@ let lastDurationSnapshot
 let lastCutoffSeconds
 let runtime
 let dht
-let stateIntervalId
+let sendInterval
+let generateInterval
 
 function generateMessages({
   connectionsCount,
@@ -113,13 +114,12 @@ function handleClientMessage(client, server, msg) {
     if (signal === ClientSignal.Signal.SEND_DATA) {
       sendQueue(client)
     } else if (signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER) {
-      // TODO: implement unpause/start diff of timer emitter
-      if (stateIntervalId) clearInterval(stateIntervalId)
-      stateIntervalId = setInterval(() => {
+      clearInterval(sendInterval)
+      sendInterval = setInterval(() => {
         sendQueue(client)
       }, 200)
     } else if (signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER) {
-      // TODO: implement pause/stop of timer emitter
+      clearInterval(sendInterval)
     } else if (signal === ClientSignal.Signal.CONFIG_EMITTER) {
       try {
         const content = JSON.parse(clientSignal.getContent())
@@ -147,17 +147,21 @@ function start({
 } = {}) {
   // generate states
   wss.connectionsCount = connectionsCount
-  wss.generator = setInterval(() => {
+
+  clearInterval(generateInterval)
+  clearInterval(sendInterval)
+  generateInterval = setInterval(() => {
     generateMessages({ connectionsCount, peersCount, duration, cutoffSeconds })
   }, duration)
+  wss.generator = generateInterval
 
   // handle messages
   wss.on('connection', ws => {
     // allow only 1 client connection, it's just a mock server
     wss.clients.forEach(client => {
       if (client === ws) {
-        if (stateIntervalId) clearInterval(stateIntervalId)
-        stateIntervalId = setInterval(() => {
+        clearInterval(sendInterval)
+        sendInterval = setInterval(() => {
           sendQueue(client)
         }, 200)
       } else {

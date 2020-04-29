@@ -7,11 +7,14 @@ import {
   PeerIdAvatar,
   PeerIdTooltip,
   PeerIdTruncated,
+  Tooltip,
 } from '@libp2p-observer/sdk'
 import DataTypeControl from './DataTypeControl'
+import FileDownload from './FileDownload'
+import RuntimeInfo from './RuntimeInfo'
 import { DataTray } from '../DataTray'
 
-const DataPanelItem = styled.a`
+const DataPanelItem = styled.span`
   display: block;
   font-weight: 600;
   background: none;
@@ -80,10 +83,12 @@ function DataPanel() {
         0 filters applied
       </DataPanelItem>
       <DataPanelItem>
-        <IconContainer>
-          <Icon type="doc" />
-        </IconContainer>
-        Export data
+        <Tooltip fixOn={'no-hover'} content={<FileDownload />}>
+          <IconContainer>
+            <Icon type="doc" />
+          </IconContainer>
+          Export data
+        </Tooltip>
       </DataPanelItem>
       {peerId ? (
         <PeerIdTooltip peerId={peerId} override={{ Target: DataPanelItem }}>
@@ -105,10 +110,12 @@ function DataPanel() {
         </DataPanelItem>
       )}
       <DataPanelItem>
-        <IconContainer>
-          <Icon type="forward" />
-        </IconContainer>
-        About this peer
+        <Tooltip fixOn={'no-hover'} content={<RuntimeInfo />}>
+          <IconContainer>
+            <Icon type="forward" />
+          </IconContainer>
+          About this peer
+        </Tooltip>
       </DataPanelItem>
 
       {isDataTrayOpen && (

@@ -4,14 +4,6 @@ import { renderForSDK, within } from '@libp2p-observer/testing'
 
 import { ThemedMockDataTable } from '../../test-fixtures/MockDataTable'
 
-function getSlidingRows(nodes) {
-  const slidingRows = nodes.reduce((rows, node) => {
-    const row = node.querySelectorAll(':scope > table tr')
-    return row.length === 1 ? [...rows, ...row] : rows
-  }, [])
-  return slidingRows
-}
-
 describe('DataTable', () => {
   it('Renders as expected, matching snapshot', () => {
     const { asFragment } = renderForSDK(<ThemedMockDataTable />)
@@ -60,19 +52,14 @@ describe('DataTable', () => {
   })
 
   it('Changes cell order on clicking sort column headers', async () => {
-    const {
-      findAllByRole,
-      getByText,
-      getAllByTableColumn,
-      queryAllByRole,
-    } = renderForSDK(<ThemedMockDataTable />)
+    const { getByText, getAllByTableColumn, queryAllByRole } = renderForSDK(
+      <ThemedMockDataTable />
+    )
 
     await act(async () => {
       await fireEvent.click(getByText('Numeric cells'))
     })
-    // rows except 'b' and 'e' should slide
-    expect(getSlidingRows(await findAllByRole('presentation'))).toHaveLength(3)
-    expect(queryAllByRole('table')).toHaveLength(4)
+    expect(queryAllByRole('table')).toHaveLength(1)
 
     // wait for sliding to complete and sliding rows to be erased
     await wait(() => {
@@ -89,12 +76,9 @@ describe('DataTable', () => {
   })
 
   it('Sort persists and updates as datum changes', async () => {
-    const {
-      findAllByRole,
-      getByText,
-      queryAllByRole,
-      queryByRole,
-    } = renderForSDK(<ThemedMockDataTable />)
+    const { getByText, queryAllByRole, queryByRole } = renderForSDK(
+      <ThemedMockDataTable />
+    )
 
     await act(async () => {
       await fireEvent.click(getByText('Numeric cells'))
@@ -107,8 +91,6 @@ describe('DataTable', () => {
     await act(async () => {
       await fireEvent.click(getByText('Select [0]'))
     })
-
-    expect(getSlidingRows(await findAllByRole('presentation'))).toHaveLength(2)
 
     await wait(() => {
       expect(queryAllByRole('table')).toHaveLength(1)

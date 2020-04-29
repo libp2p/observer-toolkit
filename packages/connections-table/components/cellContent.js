@@ -8,7 +8,7 @@ import {
   DataNumber,
   PeerIdChip,
   StatusChip,
-  TimeNumber,
+  FormatedNumber,
   Tooltip,
 } from '@libp2p-observer/sdk'
 
@@ -53,11 +53,11 @@ BytesContent.propTypes = {
 }
 
 function AgeContent({ value, maxValue }) {
-  const ageSeconds = Math.round(value / 1000)
+  const ageMs = Math.round(value)
   return (
-    <Tooltip content={<Nowrap>{formatDuration(value)}</Nowrap>}>
+    <Tooltip content={<FormatedNumber value={ageMs} unit="ms" />}>
       <Nowrap>
-        <TimeNumber value={ageSeconds} />
+        <Nowrap>{formatDuration(value, 2, true)}</Nowrap>
         <Bubble value={value} maxValue={maxValue} inline size={24} />
       </Nowrap>
     </Tooltip>

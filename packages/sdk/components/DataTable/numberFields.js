@@ -61,4 +61,4 @@ DataNumber.propTypes = {
   value: T.number.isRequired,
 }
 
-export { TimeNumber, DataNumber }
+export { TimeNumber, DataNumber, FormatedNumber }
