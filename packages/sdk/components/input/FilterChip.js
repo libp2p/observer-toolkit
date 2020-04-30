@@ -42,6 +42,8 @@ const Tick = styled.div`
 function FilterChip({
   filter: { name, enabled, values: filterValues, getFilterDef },
   dispatchFilters,
+  side = 'bottom',
+  isOpen = false,
 }) {
   const {
     FilterUi,
@@ -79,9 +81,17 @@ function FilterChip({
     },
   }
 
+  // If new values have been added, we need to merge them in
+  const areValuesCurrent =
+    filterValues &&
+    isEqual(Object.keys(filterValues), Object.keys(initialValues))
+  const formInitialValues = areValuesCurrent
+    ? filterValues
+    : Object.assign({}, initialValues, filterValues)
+
   return (
     <Formik
-      initialValues={filterValues || initialValues}
+      initialValues={formInitialValues}
       onSubmit={(values, { setSubmitting }) => {
         handleChange(values)
         setSubmitting(false)
@@ -129,9 +139,10 @@ function FilterChip({
         return (
           <Container>
             <Tooltip
-              side={'bottom'}
+              side={side}
               containerRef={rootNodeRef}
               fixOn={'no-hover'}
+              initiallyOpen={isOpen}
               toleranceY={null}
               override={{ Positioner, Tick }}
               content={

@@ -15,8 +15,6 @@ function GlobalFilterControl() {
   const globalFilters = useContext(GlobalFilterContext)
   const { dispatchGlobalFilters } = useContext(SetterContext)
 
-  console.log(globalFilters, dispatchGlobalFilters)
-
   return (
     <Container>
       {globalFilters.map(filter => (
@@ -24,6 +22,8 @@ function GlobalFilterControl() {
           filter={filter}
           key={filter.name}
           dispatchFilters={dispatchGlobalFilters}
+          isOpen={globalFilters.length === 1}
+          side="top"
         />
       ))}
     </Container>

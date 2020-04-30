@@ -1,9 +1,9 @@
 import React, { useState, useRef, createContext } from 'react'
 import T from 'prop-types'
 
-import { getLatestTimepoint } from '@libp2p-observer/data'
+import { getEventType, getLatestTimepoint } from '@libp2p-observer/data'
 import { useConsoleAPI, useDatastore, useFilter } from '../../hooks'
-import { getRangeFilter } from '../../filters'
+import { getListFilter, getRangeFilter } from '../../filters'
 
 const SourceContext = createContext()
 const DataContext = createContext()
@@ -68,6 +68,17 @@ function DataProvider({
       min: states.length ? states[0].getInstantTs() : 0,
       max: states.length ? states[states.length - 1].getInstantTs() : 0,
       stepInterval: 100,
+    }),
+    getListFilter({
+      name: 'Filter event types',
+      mapFilter: msg => {
+        if (!msg.getType) return null
+        const eventType = getEventType(msg)
+        return eventType || null
+      },
+      valueNames: runtime
+        ? runtime.getEventTypesList().map(type => type.getName())
+        : [],
     }),
   ]
 

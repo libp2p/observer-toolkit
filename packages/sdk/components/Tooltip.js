@@ -166,6 +166,7 @@ function Tooltip({
   toleranceX = 0,
   toleranceY = 0,
   containerRef = { current: document.body },
+  initiallyOpen = false,
   override = {},
 }) {
   const clickToFix = fixOn === 'click'
@@ -173,7 +174,7 @@ function Tooltip({
   const noHover = fixOn === 'no-hover'
   const isClickable = clickToFix || noHover
 
-  const [isFixed, setIsFixed] = useState(alwaysFix)
+  const [isFixed, setIsFixed] = useState(alwaysFix || initiallyOpen)
   const [isShowing, setIsShowing] = useState(false)
 
   const positionerRef = useRef()

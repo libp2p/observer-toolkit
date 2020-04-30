@@ -82,22 +82,22 @@ function DataPanel() {
     <>
       <DataTypeControl openDataTray={openDataTray} />
 
-      <DataPanelItem>
-        <Tooltip fixOn={'no-hover'} content={<GlobalFilterControl />}>
+      <Tooltip fixOn={'no-hover'} content={<GlobalFilterControl />}>
+        <DataPanelItem>
           <IconContainer>
             <Icon type="filter" active={!!activeFilters.length} />
           </IconContainer>
           {activeFilters.length} filter{pluralFilters && 's'} applied
-        </Tooltip>
-      </DataPanelItem>
-      <DataPanelItem>
-        <Tooltip fixOn={'no-hover'} content={<FileDownload />}>
+        </DataPanelItem>
+      </Tooltip>
+      <Tooltip fixOn={'no-hover'} content={<FileDownload />}>
+        <DataPanelItem>
           <IconContainer>
             <Icon type="doc" />
           </IconContainer>
           Export data
-        </Tooltip>
-      </DataPanelItem>
+        </DataPanelItem>
+      </Tooltip>
       {peerId ? (
         <PeerIdTooltip peerId={peerId} override={{ Target: DataPanelItem }}>
           <IconContainer>
@@ -117,14 +117,14 @@ function DataPanel() {
           Peer id — Not connected
         </DataPanelItem>
       )}
-      <DataPanelItem>
-        <Tooltip fixOn={'no-hover'} content={<RuntimeInfo />}>
+      <Tooltip fixOn={'no-hover'} content={<RuntimeInfo />}>
+        <DataPanelItem>
           <IconContainer>
             <Icon type="forward" />
           </IconContainer>
           About this peer
-        </Tooltip>
-      </DataPanelItem>
+        </DataPanelItem>
+      </Tooltip>
 
       {isDataTrayOpen && (
         <DataTrayContainer>
