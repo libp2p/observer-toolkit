@@ -1,4 +1,4 @@
-import React, { useState, useRef, createContext } from 'react'
+import React, { useMemo, useState, useRef, createContext } from 'react'
 import T from 'prop-types'
 
 import { getEventType, getLatestTimepoint } from '@libp2p-observer/data'
@@ -116,8 +116,14 @@ function DataProvider({
 
   const displayedTimepoint = timepoint || initialTime || null
 
-  const filteredStates = states.filter(applyFilters)
-  const filteredEvents = events.filter(applyFilters)
+  const filteredStates = useMemo(() => states.filter(applyFilters), [
+    states,
+    applyFilters,
+  ])
+  const filteredEvents = useMemo(() => events.filter(applyFilters), [
+    events,
+    applyFilters,
+  ])
 
   // Separate getters and setters so that components can set a context value without
   // then rerendering themselves because their useContext hook consumes that value
