@@ -6,6 +6,7 @@ import { Field } from 'formik'
 import { calculatableProp } from '../../../utils/helpers'
 import Icon from '../../Icon'
 import Tooltip from '../../Tooltip'
+import NumberInput from './NumberInput'
 
 const CONTROL_WIDTH = 16
 const BAR_HEIGHT = 8
@@ -61,34 +62,8 @@ const Control = styled.div`
 const NumberFieldsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: ${({ theme }) => theme.spacing()};
+  padding: ${({ theme }) => theme.spacing([1, 0])};
   margin-top: ${({ theme }) => theme.spacing()};
-`
-
-const NumberInput = styled.input`
-  font-family: 'plex-mono';
-  background: ${({ theme }) => theme.color('background', 1)};
-  padding: ${({ theme }) =>
-    `${theme.spacing(0.5)} 0 ${theme.spacing(0.5)} ${theme.spacing(8)}`};
-  font-weight: 400;
-  color: ${({ theme, isDefault }) =>
-    theme.color(isDefault ? 'text' : 'highlight', 1)};
-  :focus {
-    font-weight: 800;
-  }
-`
-
-const NumberLabelWrapper = styled.span`
-  display: inline-block;
-  position: relative;
-`
-
-const NumberLabel = styled.label`
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  padding: ${({ theme }) => theme.spacing(0.5)};
 `
 
 function getMouseX(event, containerRef) {
@@ -169,6 +144,7 @@ function Slider({
   setFieldValue,
   controlWidth = CONTROL_WIDTH,
   width = WIDTH,
+  valueType = null,
   override = {},
   tooltipProps = {},
 }) {
@@ -206,12 +182,6 @@ function Slider({
   const upperControlRef = useRef()
 
   const [fieldIsSliding, setFieldSliding] = useState('')
-
-  // Statefully store temporarily-invalid input while a user types,
-  // e.g. if the lower end of a range is "5", the upper end is "12",
-  // store the (invalid) "1" when user deletes "2" while typing "14"
-  const [lowerNumberInput, setLowerNumberInput] = useState(null)
-  const [upperNumberInput, setUpperNumberInput] = useState(null)
 
   // If a `value` has no defined number, position based on min/max
   // so the default display adapts as min/max change
@@ -289,24 +259,12 @@ function Slider({
       fieldName === fieldNames[0] ? lowerControlRef : upperControlRef
     focusRef.current.focus()
   }
-  const handleNumberInput = (event, fieldName) => {
-    const value = parseInt(event.target.value)
 
-    if (isNaN(value)) {
-      updateNumberInput(fieldName, '')
-    } else {
-      handleChange(value, fieldName)
-    }
-  }
   const handleChange = (value, fieldName) => {
     const [newValue, wasValid] = getValidatedValue(value, fieldName)
-
     updateFieldValue(fieldName, newValue)
-
-    // Allow number input field to display invalid numbers while user types
-    const displayValue = wasValid ? null : value
-    updateNumberInput(fieldName, displayValue)
   }
+
   const updateFieldValue = async (fieldName, newValue) => {
     const isValidNumber =
       !isNaN(newValue) &&
@@ -318,16 +276,6 @@ function Slider({
       await setFieldValue(fieldName, newValue)
       onChange()
     }
-  }
-  const updateNumberInput = (fieldName, value) => {
-    const isUpper = isRange && fieldName === 'max'
-    const setNumberInput = isUpper ? setUpperNumberInput : setLowerNumberInput
-    const numberInputRef = isUpper ? upperInputRef : lowerInputRef
-
-    const isInFocus = document.activeElement === numberInputRef.current
-
-    // Only set number input state while input is in focus
-    setNumberInput(isInFocus ? value : null)
   }
 
   const nudgeLower = e =>
@@ -430,57 +378,37 @@ function Slider({
         />
       </Bar>
       <NumberFieldsWrapper as={override.NumberFieldsWrapper}>
-        <NumberLabelWrapper as={override.NumberLabelWrapper}>
-          {isRange && <NumberLabel as={override.NumberLabel}>Min:</NumberLabel>}
+        <NumberInput
+          label={isRange ? 'Min' : null}
+          value={values[fieldNames[0]]}
+          min={min}
+          max={max}
+          step={stepInterval}
+          defaultValue={isRange ? min : max}
+          value={getValueFromStepIndex(lowerStepIndex, stepInterval, min)}
+          setFieldValue={newValue => updateFieldValue(fieldNames[0], newValue)}
+          getValidatedValue={newValue =>
+            getValidatedValue(newValue, fieldNames[0])
+          }
+          override={override}
+        />
+        {isRange && (
           <NumberInput
-            type="number"
-            ref={lowerInputRef}
-            step={stepInterval}
-            isDefault={typeof values[fieldNames[0]] !== 'number'}
+            label="Max"
+            value={values[fieldNames[1]]}
             min={min}
             max={max}
-            value={
-              lowerNumberInput !== null
-                ? lowerNumberInput
-                : getValueFromStepIndex(lowerStepIndex, stepInterval, min)
+            step={stepInterval}
+            defaultValue={max}
+            value={getValueFromStepIndex(upperStepIndex, stepInterval, min)}
+            setFieldValue={newValue =>
+              updateFieldValue(fieldNames[1], newValue)
             }
-            onChange={event => handleNumberInput(event, fieldNames[0])}
-            onBlur={() => updateNumberInput(fieldNames[0], null)}
-            as={override.NumberInput}
+            getValidatedValue={newValue =>
+              getValidatedValue(newValue, fieldNames[1])
+            }
+            override={override}
           />
-          <Icon
-            type="cancel"
-            onClick={() => updateFieldValue(fieldNames[0], '')}
-            active={typeof values[fieldNames[0]] === 'number'}
-            disabled={typeof values[fieldNames[0]] !== 'number'}
-          />
-        </NumberLabelWrapper>
-        {isRange && (
-          <NumberLabelWrapper as={override.NumberLabelWrapper}>
-            <NumberLabel as={override.NumberLabel}>Max:</NumberLabel>
-            <NumberInput
-              type="number"
-              ref={upperInputRef}
-              step={stepInterval}
-              isDefault={typeof values[fieldNames[1]] !== 'number'}
-              min={min}
-              max={max}
-              value={
-                upperNumberInput !== null
-                  ? upperNumberInput
-                  : getValueFromStepIndex(upperStepIndex, stepInterval, min)
-              }
-              onChange={event => handleNumberInput(event, fieldNames[1])}
-              onBlur={() => updateNumberInput(fieldNames[1], null)}
-              as={override.NumberInput}
-            />
-            <Icon
-              type="cancel"
-              onClick={() => updateFieldValue(fieldNames[1], '')}
-              active={typeof values[fieldNames[1]] === 'number'}
-              disabled={typeof values[fieldNames[1]] !== 'number'}
-            />
-          </NumberLabelWrapper>
         )}
       </NumberFieldsWrapper>
     </Container>
