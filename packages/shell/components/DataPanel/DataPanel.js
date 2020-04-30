@@ -73,6 +73,7 @@ function DataPanel() {
   const peerId = runtime && runtime.getPeerId()
 
   const activeFilters = globalFilters.filter(filter => filter.enabled)
+  const pluralFilters = activeFilters.length !== 1
 
   const openDataTray = () => setIsDataTrayOpen(true)
   const closeDataTray = () => setIsDataTrayOpen(false)
@@ -84,9 +85,9 @@ function DataPanel() {
       <DataPanelItem>
         <Tooltip fixOn={'no-hover'} content={<GlobalFilterControl />}>
           <IconContainer>
-            <Icon type="filter" />
+            <Icon type="filter" active={!!activeFilters.length} />
           </IconContainer>
-          {activeFilters.length} filters applied
+          {activeFilters.length} filter{pluralFilters && 's'} applied
         </Tooltip>
       </DataPanelItem>
       <DataPanelItem>
