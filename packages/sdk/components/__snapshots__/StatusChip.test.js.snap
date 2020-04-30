@@ -2,16 +2,7 @@
 
 exports[`status chip renders ACTIVE status as expected 1`] = `
 <DocumentFragment>
-  .c0 {
-  width: inherit;
-  height: inherit;
-  display: inherit;
-  -webkit-flex-direction: inherit;
-  -ms-flex-direction: inherit;
-  flex-direction: inherit;
-}
-
-.c2 {
+  .c2 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -20,6 +11,15 @@ exports[`status chip renders ACTIVE status as expected 1`] = `
   vertical-align: middle;
   width: 2em;
   height: 2em;
+}
+
+.c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
 }
 
 .c1 {

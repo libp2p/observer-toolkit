@@ -15,6 +15,12 @@ const SetterContext = createContext()
 const WebsocketContext = createContext()
 const GlobalFilterContext = createContext()
 
+function _getStateTime(state) {
+  if (state.getInstantTs) return state.getInstantTs()
+  // Don't fail on encountering anomalous state
+  return 0
+}
+
 function DataProvider({
   initialData: {
     states: initialStates = [],
@@ -64,9 +70,9 @@ function DataProvider({
   const filterDefs = [
     getRangeFilter({
       name: 'Filter by time',
-      mapFilter: msg => (msg.getTs ? msg.getTs() : msg.getInstantTs()),
-      min: states.length ? states[0].getInstantTs() : 0,
-      max: states.length ? states[states.length - 1].getInstantTs() : 0,
+      mapFilter: msg => (msg.getTs ? msg.getTs() : _getStateTime(msg)),
+      min: states.length ? _getStateTime(states[0]) : 0,
+      max: states.length ? _getStateTime(states[states.length - 1]) : 0,
       stepInterval: 1,
       numberFieldType: 'time',
     }),

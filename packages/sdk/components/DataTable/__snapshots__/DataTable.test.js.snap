@@ -2,16 +2,7 @@
 
 exports[`DataTable Renders as expected, matching snapshot 1`] = `
 <DocumentFragment>
-  .c0 {
-  width: inherit;
-  height: inherit;
-  display: inherit;
-  -webkit-flex-direction: inherit;
-  -ms-flex-direction: inherit;
-  flex-direction: inherit;
-}
-
-.c9 {
+  .c9 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -24,6 +15,15 @@ exports[`DataTable Renders as expected, matching snapshot 1`] = `
 
 .c12 {
   display: inline-block;
+}
+
+.c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
 }
 
 .c1 {
