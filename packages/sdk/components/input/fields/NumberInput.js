@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import T from 'prop-types'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 
 import TimeInput from './TimeInput'
 import Icon from '../../Icon'
@@ -56,12 +56,13 @@ function NumberInput({
   const updateManagedValue = value => {
     // Send validated value to handler passed in by parent
     const [validValue, wasValid] = getValidatedValue(value)
+
     setFieldValue(validValue)
 
     // Allow input to display invalid numbers while user types
     const isInFocus = document.activeElement === inputRef.current
     if (isInFocus) {
-      const newDisplayValue = wasValid ? null : value
+      const newDisplayValue = wasValid ? defaultValue : value
       setDisplayValue(newDisplayValue)
     }
   }
@@ -70,7 +71,7 @@ function NumberInput({
     const value = parseFloat(event.target.value)
 
     if (isNaN(value)) {
-      setDisplayValue(defaultValue)
+      setDisplayValue('')
     } else {
       updateValue(value)
     }
@@ -115,6 +116,16 @@ function NumberInput({
       />
     </NumberFieldWrapper>
   )
+}
+
+NumberInput.propTypes = {
+  label: T.string,
+  value: T.oneOfType([T.number, T.string]), // '' if empty field value
+  defaultValue: T.number,
+  type: T.string,
+  setFieldValue: T.func,
+  getValidatedValue: T.func,
+  override: T.object,
 }
 
 export default NumberInput

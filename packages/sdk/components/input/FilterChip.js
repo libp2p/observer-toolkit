@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { Formik } from 'formik'
 import isEqual from 'lodash.isequal'
 
-import { FilterSetterContext } from '../context/FilterProvider'
 import Icon from '../Icon'
 import Chip from '../Chip'
 import Tooltip from '../Tooltip'
@@ -180,6 +179,8 @@ FilterChip.propTypes = {
     getFilterDef: T.func.isRequired,
   }).isRequired,
   dispatchFilters: T.func.isRequired,
+  side: T.string,
+  isOpen: T.bool,
   children: T.node,
 }
 

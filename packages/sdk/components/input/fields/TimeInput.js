@@ -1,6 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 
 function splitTime(timestamp) {
   const time = new Date(timestamp)

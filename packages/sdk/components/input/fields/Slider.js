@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { Field } from 'formik'
 
 import { calculatableProp } from '../../../utils/helpers'
-import Icon from '../../Icon'
 import Tooltip from '../../Tooltip'
 import NumberInput from './NumberInput'
 
@@ -144,7 +143,6 @@ function Slider({
   setFieldValue,
   controlWidth = CONTROL_WIDTH,
   width = WIDTH,
-  valueType = null,
   numberFieldType = 'number',
   override = {},
   tooltipProps = {},
@@ -177,8 +175,6 @@ function Slider({
    **/
 
   const containerRef = useRef()
-  const lowerInputRef = useRef()
-  const upperInputRef = useRef()
   const lowerControlRef = useRef()
   const upperControlRef = useRef()
 
@@ -262,7 +258,7 @@ function Slider({
   }
 
   const handleChange = (value, fieldName) => {
-    const [newValue, wasValid] = getValidatedValue(value, fieldName)
+    const [newValue] = getValidatedValue(value, fieldName)
     updateFieldValue(fieldName, newValue)
   }
 
@@ -382,7 +378,6 @@ function Slider({
         <NumberInput
           label={isRange ? 'Min' : null}
           type={numberFieldType}
-          value={values[fieldNames[0]]}
           min={min}
           max={max}
           step={stepInterval}
@@ -398,7 +393,6 @@ function Slider({
           <NumberInput
             label="Max"
             type={numberFieldType}
-            value={values[fieldNames[1]]}
             min={min}
             max={max}
             step={stepInterval}
@@ -429,6 +423,7 @@ Slider.propTypes = {
   stepInterval: T.number,
   controlWidth: T.number,
   width: T.number,
+  numberFieldType: T.string,
   override: T.object,
   tooltipProps: T.object,
 }

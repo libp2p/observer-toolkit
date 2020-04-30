@@ -259,6 +259,7 @@ Tooltip.propTypes = {
   content: T.node,
   toleranceX: T.number,
   toleranceY: T.number,
+  initiallyOpen: T.bool,
   override: T.object,
   containerRef: T.object,
 }
