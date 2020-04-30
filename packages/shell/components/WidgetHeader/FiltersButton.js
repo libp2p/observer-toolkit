@@ -7,7 +7,7 @@ import { AccordionControl, FilterContext, Icon } from '@libp2p-observer/sdk'
 const nbsp = '\u00a0'
 
 const AccordionButton = styled.button`
-  color: ${({ theme, isActive }) =>
+  color: ${({ theme, hasActiveFilters }) =>
     hasActiveFilters ? theme.color('highlight') : theme.color('text', 2)};
   border: 1px solid currentColor;
   background: none;

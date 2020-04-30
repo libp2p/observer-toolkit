@@ -1,30 +1,80 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import isEqual from 'lodash.isequal'
 
 import {
   FilterChip,
   FilterContext,
   FilterSetterContext,
+  Icon,
+  StyledButton,
 } from '@libp2p-observer/sdk'
 
 const Container = styled.div`
   display: flex;
+  justify-content: space-between;
+`
+
+const FiltersList = styled.div`
+  display: flex;
+`
+
+const ToggleAllButton = styled(StyledButton)`
+  padding: ${({ theme }) => theme.spacing()};
+  ${({ theme, disabled }) =>
+    disabled
+      ? css`
+          border: none;
+          font-weight: 400;
+        `
+      : ''}
 `
 
 function FiltersTray({ overrides = {} }) {
   const { filters } = useContext(FilterContext)
   const dispatchFilters = useContext(FilterSetterContext)
 
+  const areAllActive = filters.every(filter => filter.enabled)
+  const areAllReset = filters.every(({ values, getFilterDef }) => {
+    const { initialValues } = getFilterDef()
+    return isEqual(values, initialValues)
+  })
+
+  const toggleAllText =
+    (areAllReset && 'All filters are unset') ||
+    `${areAllActive ? 'Disable' : 'Enable'} all filters`
+  const handleFilterAll = () =>
+    filters.forEach(filter =>
+      dispatchFilters({
+        action: areAllActive ? 'disable' : 'enable',
+        name: filter.name,
+      })
+    )
+
   return (
     <Container>
-      {filters.map(filter => (
-        <FilterChip
-          filter={filter}
-          key={filter.name}
-          dispatchFilters={dispatchFilters}
-        />
-      ))}
+      <FiltersList>
+        {filters.map(filter => (
+          <FilterChip
+            filter={filter}
+            key={filter.name}
+            dispatchFilters={dispatchFilters}
+          />
+        ))}
+      </FiltersList>
+      <ToggleAllButton
+        onClick={!areAllReset && handleFilterAll}
+        disabled={areAllReset}
+      >
+        {!areAllReset && (
+          <Icon
+            active={areAllActive}
+            type={areAllActive ? 'check' : 'uncheck'}
+          />
+        )}
+        {toggleAllText}
+      </ToggleAllButton>
     </Container>
   )
 }
