@@ -10,7 +10,7 @@ import NumberInput from './NumberInput'
 
 const CONTROL_WIDTH = 16
 const BAR_HEIGHT = 8
-const WIDTH = 340
+const WIDTH = 510
 
 const Container = styled.div`
   padding: ${({ theme }) => theme.spacing([3, 2, 0])};
@@ -145,6 +145,7 @@ function Slider({
   controlWidth = CONTROL_WIDTH,
   width = WIDTH,
   valueType = null,
+  numberFieldType = 'number',
   override = {},
   tooltipProps = {},
 }) {
@@ -380,6 +381,7 @@ function Slider({
       <NumberFieldsWrapper as={override.NumberFieldsWrapper}>
         <NumberInput
           label={isRange ? 'Min' : null}
+          type={numberFieldType}
           value={values[fieldNames[0]]}
           min={min}
           max={max}
@@ -395,6 +397,7 @@ function Slider({
         {isRange && (
           <NumberInput
             label="Max"
+            type={numberFieldType}
             value={values[fieldNames[1]]}
             min={min}
             max={max}

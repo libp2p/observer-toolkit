@@ -11,14 +11,13 @@ const defaultFilter = (targetValue, values) => {
 const DefaultUi = Slider
 
 function getRangeFilter({
-  steps,
-  stepInterval,
   min = 0,
   max = 0,
   name = 'Filter by range',
   doFilter = defaultFilter,
   FilterUi = DefaultUi,
   mapFilter,
+  ...inputProps
 }) {
   // Use empty strings for null values so form elements don't become uncontrolled
   const initialValues = {
@@ -38,8 +37,7 @@ function getRangeFilter({
     filterUiProps: {
       min,
       max,
-      steps,
-      stepInterval,
+      ...inputProps,
     },
   }
 }

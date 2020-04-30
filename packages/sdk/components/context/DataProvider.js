@@ -67,7 +67,8 @@ function DataProvider({
       mapFilter: msg => (msg.getTs ? msg.getTs() : msg.getInstantTs()),
       min: states.length ? states[0].getInstantTs() : 0,
       max: states.length ? states[states.length - 1].getInstantTs() : 0,
-      stepInterval: 100,
+      stepInterval: 1,
+      numberFieldType: 'time',
     }),
     getListFilter({
       name: 'Filter event types',

@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
+import TimeInput from './TimeInput'
 import Icon from '../../Icon'
 
 const NumberInputField = styled.input`
@@ -32,6 +33,7 @@ function NumberInput({
   label,
   value = null,
   defaultValue = null,
+  type = 'number',
   setFieldValue,
   getValidatedValue = value => [value, true],
   override,
@@ -84,16 +86,27 @@ function NumberInput({
   return (
     <NumberFieldWrapper as={override.NumberLabelWrapper}>
       {label && <NumberLabel as={override.NumberLabel}>{label}</NumberLabel>}
-      <NumberInputField
-        type="number"
-        ref={inputRef}
-        isDefault={isDefault}
-        value={fieldValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        as={override.NumberInputField}
-        {...props}
-      />
+      {(type === 'number' && (
+        <NumberInputField
+          type="number"
+          ref={inputRef}
+          isDefault={isDefault}
+          value={fieldValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          as={override.NumberInputField}
+          {...props}
+        />
+      )) ||
+        (type === 'time' && (
+          <TimeInput
+            value={fieldValue}
+            onBlur={handleBlur}
+            updateValue={updateValue}
+            as={override.NumberInputField}
+            {...props}
+          />
+        ))}
       <Icon
         type="cancel"
         onClick={() => updateValue(defaultValue)}
