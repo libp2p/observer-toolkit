@@ -44,6 +44,7 @@ function FilterChip({
   side = 'bottom',
   isOpen = false,
   hidePrevious = null,
+  format = null,
 }) {
   const {
     FilterUi,
@@ -153,6 +154,7 @@ function FilterChip({
                   setFieldValue={setFieldValue}
                   fieldNames={valueNames}
                   title={name}
+                  format={format}
                   {...filterUiProps}
                 />
               }
@@ -184,6 +186,7 @@ FilterChip.propTypes = {
   side: T.string,
   isOpen: T.bool,
   hidePrevious: T.func,
+  format: T.func,
   children: T.node,
 }
 

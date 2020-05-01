@@ -144,6 +144,7 @@ function Slider({
   controlWidth = CONTROL_WIDTH,
   width = WIDTH,
   numberFieldType = 'number',
+  format = null,
   override = {},
   tooltipProps = {},
 }) {
@@ -387,6 +388,7 @@ function Slider({
           getValidatedValue={newValue =>
             getValidatedValue(newValue, fieldNames[0])
           }
+          format={format}
           override={override}
         />
         {isRange && (
@@ -404,6 +406,7 @@ function Slider({
             getValidatedValue={newValue =>
               getValidatedValue(newValue, fieldNames[1])
             }
+            format={format}
             override={override}
           />
         )}
@@ -424,6 +427,7 @@ Slider.propTypes = {
   controlWidth: T.number,
   width: T.number,
   numberFieldType: T.string,
+  format: T.func,
   override: T.object,
   tooltipProps: T.object,
 }

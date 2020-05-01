@@ -29,6 +29,16 @@ const NumberLabel = styled.label`
   padding: ${({ theme }) => theme.spacing(0.5)};
 `
 
+const FormattedValue = styled.div`
+  position: absolute;
+  bottom: ${({ theme }) => theme.spacing(-1)};
+  ${({ theme }) => theme.text('label', 'medium')};
+  color: ${({ theme }) => theme.color('text', 2)};
+  font-weight: 300;
+  width: 100%;
+  text-align: center;
+`
+
 function NumberInput({
   label,
   value = null,
@@ -36,6 +46,7 @@ function NumberInput({
   type = 'number',
   setFieldValue,
   getValidatedValue = value => [value, true],
+  format = null,
   override,
   ...props
 }) {
@@ -84,20 +95,27 @@ function NumberInput({
   const fieldValue = displayValue === defaultValue ? value : displayValue
   const isDefault = fieldValue === defaultValue
 
+  const hasFormattedValue = !!format && typeof fieldValue === 'number'
+
   return (
     <NumberFieldWrapper as={override.NumberLabelWrapper}>
       {label && <NumberLabel as={override.NumberLabel}>{label}</NumberLabel>}
       {(type === 'number' && (
-        <NumberInputField
-          type="number"
-          ref={inputRef}
-          isDefault={isDefault}
-          value={fieldValue}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          as={override.NumberInputField}
-          {...props}
-        />
+        <>
+          <NumberInputField
+            type="number"
+            ref={inputRef}
+            isDefault={isDefault}
+            value={fieldValue}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            as={override.NumberInputField}
+            {...props}
+          />
+          {hasFormattedValue && (
+            <FormattedValue>{format(fieldValue, true)}</FormattedValue>
+          )}
+        </>
       )) ||
         (type === 'time' && (
           <TimeInput
@@ -125,6 +143,7 @@ NumberInput.propTypes = {
   type: T.string,
   setFieldValue: T.func,
   getValidatedValue: T.func,
+  format: T.func,
   override: T.object,
 }
 
