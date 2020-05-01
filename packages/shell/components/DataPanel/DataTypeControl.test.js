@@ -13,6 +13,7 @@ const initialData = {
       '75171c9d7b5b5b99d6d93aaaa2e802dc9473369e41a323a0c1020837180ba20b',
     getKeepStaleDataMs: () => 30000,
     getSendStateIntervalMs: () => 2000,
+    getEventTypesList: () => [],
   },
 }
 

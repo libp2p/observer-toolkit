@@ -69,11 +69,12 @@ function _getColumns(propertyTypes, dispatchPropertyTypes) {
       newColumn = {
         name,
         renderContent: RenderMultiple,
-        getProps: event => ({
+        getProps: (event, { hidePrevious }) => ({
           value: getPropsValue(event),
           sortValue: getPropsValue(event).length,
           type,
           name,
+          hidePrevious,
         }),
         sort: numericSorter,
         header,
@@ -83,8 +84,9 @@ function _getColumns(propertyTypes, dispatchPropertyTypes) {
 
       newColumn = {
         name,
-        getProps: event => ({
+        getProps: (event, { hidePrevious }) => ({
           value: getPropsValue(event),
+          hidePrevious,
         }),
         renderContent,
         sort,

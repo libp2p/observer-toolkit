@@ -1,6 +1,11 @@
 import React, { useContext } from 'react'
 
-import { DataTable, TimeContext, useTabularData } from '@libp2p-observer/sdk'
+import {
+  DataTable,
+  TimeContext,
+  useHidePrevious,
+  useTabularData,
+} from '@libp2p-observer/sdk'
 import { getConnections } from '@libp2p-observer/data'
 
 import ConnectionsTableRow from './ConnectionsTableRow'
@@ -10,6 +15,7 @@ import { MetadataContext } from './context/MetadataProvider'
 function ConnectionsTable() {
   const timepoint = useContext(TimeContext)
   const metadata = useContext(MetadataContext)
+  const hidePrevious = useHidePrevious()
 
   const {
     columnDefs,
@@ -27,6 +33,7 @@ function ConnectionsTable() {
     defaultSort: 'status',
     metadata: {
       timepoint,
+      hidePrevious,
       ...metadata,
     },
   })

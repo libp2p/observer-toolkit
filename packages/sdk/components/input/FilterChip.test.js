@@ -8,6 +8,7 @@ import {
   DataContext,
   DataProvider,
   FilterContext,
+  FilterSetterContext,
   FilterProvider,
 } from '../context'
 import { getListFilter } from '../../filters'
@@ -26,6 +27,7 @@ const mockCs = [
   { type: 'c', num: 3 },
 ]
 const mockData = [...mockAs, ...mockBs, ...mockCs]
+mockData
 
 const filterName = 'mock list filter'
 
@@ -58,8 +60,9 @@ FilterChipStack.propTypes = {
 }
 
 function FilterChipWrapper() {
+  const dispatchFilters = useContext(FilterSetterContext)
   const { filters } = useContext(FilterContext)
-  return <FilterChip filter={filters[0]} />
+  return <FilterChip filter={filters[0]} dispatchFilters={dispatchFilters} />
 }
 
 describe('FilterChip', () => {

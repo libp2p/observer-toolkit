@@ -2,19 +2,19 @@
 
 exports[`FilterChip renders, matching snapshot 1`] = `
 <DocumentFragment>
-  .c0 {
+  .c2 {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.c0 {
   width: inherit;
   height: inherit;
   display: inherit;
   -webkit-flex-direction: inherit;
   -ms-flex-direction: inherit;
   flex-direction: inherit;
-}
-
-.c2 {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
 }
 
 .c3 {

@@ -1,8 +1,9 @@
-import React, { useState, useRef, createContext } from 'react'
+import React, { useMemo, useState, useRef, createContext } from 'react'
 import T from 'prop-types'
 
-import { getLatestTimepoint } from '@libp2p-observer/data'
-import { useConsoleAPI, useDatastore } from '../../hooks'
+import { getEventType, getLatestTimepoint } from '@libp2p-observer/data'
+import { useConsoleAPI, useDatastore, useFilter } from '../../hooks'
+import { getListFilter, getRangeFilter } from '../../filters'
 
 const SourceContext = createContext()
 const DataContext = createContext()
@@ -12,6 +13,13 @@ const TimeContext = createContext()
 const PeersContext = createContext()
 const SetterContext = createContext()
 const WebsocketContext = createContext()
+const GlobalFilterContext = createContext()
+
+function _getStateTime(state) {
+  if (state.getInstantTs) return state.getInstantTs()
+  // Don't fail on encountering anomalous state
+  return 0
+}
 
 function DataProvider({
   initialData: {
@@ -59,6 +67,34 @@ function DataProvider({
     timepoint,
   })
 
+  const filterDefs = [
+    getRangeFilter({
+      name: 'Filter by time',
+      mapFilter: msg => (msg.getTs ? msg.getTs() : _getStateTime(msg)),
+      min: states.length ? _getStateTime(states[0]) : 0,
+      max: states.length ? _getStateTime(states[states.length - 1]) : 0,
+      stepInterval: 1,
+      numberFieldType: 'time',
+    }),
+    getListFilter({
+      name: 'Filter event types',
+      mapFilter: msg => {
+        if (!msg.getType) return null
+        const eventType = getEventType(msg)
+        return eventType || null
+      },
+      valueNames: runtime
+        ? runtime.getEventTypesList().map(type => type.getName())
+        : [],
+    }),
+  ]
+
+  const {
+    applyFilters,
+    dispatchFilters: dispatchGlobalFilters,
+    filters: globalFilters,
+  } = useFilter(filterDefs)
+
   // Bundle setters and make bundle persist, as defining this in normal function flow
   // causes context `value` to see a new object each run, causing re-renders every time
   const dataSetters = useRef({
@@ -70,6 +106,8 @@ function DataProvider({
     removeData,
     setIsLoading,
     dispatchWebsocket,
+    dispatchGlobalFilters,
+    globalFilters,
   })
 
   if (timepoint && !states.includes(timepoint)) {
@@ -78,19 +116,30 @@ function DataProvider({
 
   const displayedTimepoint = timepoint || initialTime || null
 
+  const filteredStates = useMemo(() => states.filter(applyFilters), [
+    states,
+    applyFilters,
+  ])
+  const filteredEvents = useMemo(() => events.filter(applyFilters), [
+    events,
+    applyFilters,
+  ])
+
   // Separate getters and setters so that components can set a context value without
   // then rerendering themselves because their useContext hook consumes that value
   return (
-    <DataContext.Provider value={states}>
+    <DataContext.Provider value={filteredStates}>
       <RuntimeContext.Provider value={runtime}>
         <TimeContext.Provider value={displayedTimepoint}>
-          <EventsContext.Provider value={events}>
+          <EventsContext.Provider value={filteredEvents}>
             <PeersContext.Provider value={peerIds}>
               <SourceContext.Provider value={source}>
                 <WebsocketContext.Provider value={websocket}>
-                  <SetterContext.Provider value={dataSetters.current}>
-                    {children}
-                  </SetterContext.Provider>
+                  <GlobalFilterContext.Provider value={globalFilters}>
+                    <SetterContext.Provider value={dataSetters.current}>
+                      {children}
+                    </SetterContext.Provider>
+                  </GlobalFilterContext.Provider>
                 </WebsocketContext.Provider>
               </SourceContext.Provider>
             </PeersContext.Provider>
@@ -121,4 +170,5 @@ export {
   EventsContext,
   SourceContext,
   WebsocketContext,
+  GlobalFilterContext,
 }

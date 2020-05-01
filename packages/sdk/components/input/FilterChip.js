@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { Formik } from 'formik'
 import isEqual from 'lodash.isequal'
 
-import { FilterSetterContext } from '../context/FilterProvider'
 import Icon from '../Icon'
 import Chip from '../Chip'
 import Tooltip from '../Tooltip'
@@ -41,6 +40,11 @@ const Tick = styled.div`
 
 function FilterChip({
   filter: { name, enabled, values: filterValues, getFilterDef },
+  dispatchFilters,
+  side = 'bottom',
+  isOpen = false,
+  hidePrevious = null,
+  format = null,
 }) {
   const {
     FilterUi,
@@ -50,7 +54,6 @@ function FilterChip({
   } = getFilterDef()
 
   const rootNodeRef = useContext(RootNodeContext)
-  const dispatchFilters = useContext(FilterSetterContext)
 
   const dispatch = (actionName, values) =>
     dispatchFilters({
@@ -79,9 +82,17 @@ function FilterChip({
     },
   }
 
+  // If new values have been added, we need to merge them in
+  const areValuesCurrent =
+    filterValues &&
+    isEqual(Object.keys(filterValues), Object.keys(initialValues))
+  const formInitialValues = areValuesCurrent
+    ? filterValues
+    : Object.assign({}, initialValues, filterValues)
+
   return (
     <Formik
-      initialValues={filterValues || initialValues}
+      initialValues={formInitialValues}
       onSubmit={(values, { setSubmitting }) => {
         handleChange(values)
         setSubmitting(false)
@@ -129,9 +140,11 @@ function FilterChip({
         return (
           <Container>
             <Tooltip
-              side={'bottom'}
+              side={side}
               containerRef={rootNodeRef}
               fixOn={'no-hover'}
+              initiallyOpen={isOpen}
+              hidePrevious={hidePrevious}
               toleranceY={null}
               override={{ Positioner, Tick }}
               content={
@@ -141,6 +154,7 @@ function FilterChip({
                   setFieldValue={setFieldValue}
                   fieldNames={valueNames}
                   title={name}
+                  format={format}
                   {...filterUiProps}
                 />
               }
@@ -168,6 +182,11 @@ FilterChip.propTypes = {
     enabled: T.bool,
     getFilterDef: T.func.isRequired,
   }).isRequired,
+  dispatchFilters: T.func.isRequired,
+  side: T.string,
+  isOpen: T.bool,
+  hidePrevious: T.func,
+  format: T.func,
   children: T.node,
 }
 

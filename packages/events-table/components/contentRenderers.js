@@ -25,7 +25,7 @@ const ExpandIcon = styled.span`
   ${({ theme }) => theme.transition({ property: 'transform' })}
 `
 
-function RenderMultiple({ value, type, name }) {
+function RenderMultiple({ value, type, name, hidePrevious }) {
   if (!value) return ''
 
   const cellText = `${value.length} ${name}`
@@ -41,6 +41,7 @@ function RenderMultiple({ value, type, name }) {
       fixOn="no-hover"
       toleranceY={null}
       toleranceX={-32}
+      hidePrevious={hidePrevious}
       content={value.map((item, i) => (
         <RenderContent value={item} key={i} />
       ))}
@@ -56,6 +57,7 @@ RenderMultiple.propTypes = {
   value: T.array.isRequired,
   type: T.string.isRequired,
   name: T.string.isRequired,
+  hidePrevious: T.func,
 }
 
 function RenderString({ value }) {

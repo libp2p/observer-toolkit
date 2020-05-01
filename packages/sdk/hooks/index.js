@@ -1,5 +1,6 @@
 // UI helpers
 export { default as useHandlerOnRef } from './useHandlerOnRef'
+export { default as useHidePrevious } from './useHidePrevious'
 
 // Data controls
 export { default as useCalculation } from './useCalculation'

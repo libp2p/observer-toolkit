@@ -7,8 +7,8 @@ import { AccordionControl, FilterContext, Icon } from '@libp2p-observer/sdk'
 const nbsp = '\u00a0'
 
 const AccordionButton = styled.button`
-  color: ${({ theme, isActive }) =>
-    isActive ? theme.color('highlight') : theme.color('text', 2)};
+  color: ${({ theme, hasActiveFilters }) =>
+    hasActiveFilters ? theme.color('highlight') : theme.color('text', 2)};
   border: 1px solid currentColor;
   background: none;
   margin: ${({ theme }) => theme.spacing([0, 4, 0, 1])};
@@ -22,7 +22,7 @@ function FiltersButton({ setIsOpen, isOpen = false }) {
   const { filters } = useContext(FilterContext)
   const enabledFilterCount = filters.filter(filter => filter.enabled).length
 
-  const isActive = !!enabledFilterCount
+  const hasActiveFilters = !!enabledFilterCount
 
   // Use &nbsp;s in singular case to reduce jarring change in text length
   const labelText = `${enabledFilterCount} active filter${
@@ -33,8 +33,8 @@ function FiltersButton({ setIsOpen, isOpen = false }) {
     <AccordionControl
       setIsOpen={setIsOpen}
       isOpen={isOpen}
-      isActive={isActive}
-      data-highlighted={isActive}
+      hasActiveFilters={hasActiveFilters}
+      data-highlighted={hasActiveFilters}
       overrides={{ AccordionButton }}
     >
       <Icon type="filter" />

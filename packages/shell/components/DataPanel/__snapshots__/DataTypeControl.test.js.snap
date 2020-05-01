@@ -2,16 +2,7 @@
 
 exports[`DataTypeControl renders as expected for sample data 1`] = `
 <DocumentFragment>
-  .c0 {
-  width: inherit;
-  height: inherit;
-  display: inherit;
-  -webkit-flex-direction: inherit;
-  -ms-flex-direction: inherit;
-  flex-direction: inherit;
-}
-
-.c3 {
+  .c3 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -20,6 +11,15 @@ exports[`DataTypeControl renders as expected for sample data 1`] = `
   vertical-align: middle;
   width: 2em;
   height: 2em;
+}
+
+.c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
 }
 
 .c1 {
@@ -103,16 +103,7 @@ exports[`DataTypeControl renders as expected for sample data 1`] = `
 
 exports[`DataTypeControl renders as expected for uploaded file 1`] = `
 <DocumentFragment>
-  .c0 {
-  width: inherit;
-  height: inherit;
-  display: inherit;
-  -webkit-flex-direction: inherit;
-  -ms-flex-direction: inherit;
-  flex-direction: inherit;
-}
-
-.c3 {
+  .c3 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -121,6 +112,15 @@ exports[`DataTypeControl renders as expected for uploaded file 1`] = `
   vertical-align: middle;
   width: 2em;
   height: 2em;
+}
+
+.c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
 }
 
 .c1 {

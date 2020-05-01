@@ -92,7 +92,7 @@ TimeContent.propTypes = {
   value: T.string,
 }
 
-function ShowJsonButton({ value = '' }) {
+function ShowJsonButton({ value = '', hidePrevious }) {
   if (!value) return ''
   return (
     <Tooltip
@@ -100,6 +100,7 @@ function ShowJsonButton({ value = '' }) {
       fixOn="no-hover"
       toleranceY={null}
       toleranceX={-32}
+      hidePrevious={hidePrevious}
       content={<RawJsonExpanded value={value} />}
     >
       <ExpandButton>
@@ -111,6 +112,7 @@ function ShowJsonButton({ value = '' }) {
 }
 ShowJsonButton.propTypes = {
   value: T.string,
+  hidePrevious: T.func,
 }
 
 function RawJsonExpanded({ value = '' }) {

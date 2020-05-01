@@ -40,8 +40,9 @@ const typeCol = {
 const jsonCol = {
   name: 'json',
   header: 'Raw JSON',
-  getProps: event => ({
+  getProps: (event, { hidePrevious }) => ({
     value: event.getContent(),
+    hidePrevious,
   }),
   renderContent: ShowJsonButton,
   cellProps: {

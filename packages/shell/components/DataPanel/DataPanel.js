@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import {
   RuntimeContext,
+  SetterContext,
   Icon,
   PeerIdAvatar,
   PeerIdTooltip,
@@ -11,6 +12,7 @@ import {
 } from '@libp2p-observer/sdk'
 import DataTypeControl from './DataTypeControl'
 import FileDownload from './FileDownload'
+import GlobalFilterControl from './GlobalFilterControl'
 import RuntimeInfo from './RuntimeInfo'
 import { DataTray } from '../DataTray'
 
@@ -66,8 +68,12 @@ function DataPanel() {
   const [isDataTrayOpen, setIsDataTrayOpen] = useState(false)
 
   const runtime = useContext(RuntimeContext)
+  const { globalFilters } = useContext(SetterContext)
 
   const peerId = runtime && runtime.getPeerId()
+
+  const activeFilters = globalFilters.filter(filter => filter.enabled)
+  const pluralFilters = activeFilters.length !== 1
 
   const openDataTray = () => setIsDataTrayOpen(true)
   const closeDataTray = () => setIsDataTrayOpen(false)
@@ -76,20 +82,22 @@ function DataPanel() {
     <>
       <DataTypeControl openDataTray={openDataTray} />
 
-      <DataPanelItem>
-        <IconContainer>
-          <Icon type="filter" />
-        </IconContainer>
-        0 filters applied
-      </DataPanelItem>
-      <DataPanelItem>
-        <Tooltip fixOn={'no-hover'} content={<FileDownload />}>
+      <Tooltip fixOn={'no-hover'} content={<GlobalFilterControl />}>
+        <DataPanelItem>
+          <IconContainer>
+            <Icon type="filter" active={!!activeFilters.length} />
+          </IconContainer>
+          {activeFilters.length} filter{pluralFilters && 's'} applied
+        </DataPanelItem>
+      </Tooltip>
+      <Tooltip fixOn={'no-hover'} content={<FileDownload />}>
+        <DataPanelItem>
           <IconContainer>
             <Icon type="doc" />
           </IconContainer>
           Export data
-        </Tooltip>
-      </DataPanelItem>
+        </DataPanelItem>
+      </Tooltip>
       {peerId ? (
         <PeerIdTooltip peerId={peerId} override={{ Target: DataPanelItem }}>
           <IconContainer>
@@ -109,14 +117,14 @@ function DataPanel() {
           Peer id — Not connected
         </DataPanelItem>
       )}
-      <DataPanelItem>
-        <Tooltip fixOn={'no-hover'} content={<RuntimeInfo />}>
+      <Tooltip fixOn={'no-hover'} content={<RuntimeInfo />}>
+        <DataPanelItem>
           <IconContainer>
             <Icon type="forward" />
           </IconContainer>
           About this peer
-        </Tooltip>
-      </DataPanelItem>
+        </DataPanelItem>
+      </Tooltip>
 
       {isDataTrayOpen && (
         <DataTrayContainer>

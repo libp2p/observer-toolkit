@@ -5,15 +5,19 @@ import {
   getConnections,
   getConnectionTraffic,
   getConnectionAge,
+  getConnectionTimeClosed,
   getStreams,
   statusNames,
 } from '@libp2p-observer/data'
 import {
+  formatDuration,
+  formatDataSize,
   getListFilter,
   getRangeFilter,
   useCalculation,
   FilterProvider,
   DataContext,
+  TimeContext,
 } from '@libp2p-observer/sdk'
 
 import { MetadataProvider } from './MetadataProvider'
@@ -43,6 +47,7 @@ function getMaxValues(timepoints) {
 
 function WidgetContext({ children }) {
   const timepoints = useContext(DataContext)
+  const currentTimepoint = useContext(TimeContext)
 
   // If performance becomes an issue on live-streaming data, use
   // useReducer and compare appended data only instead of whole dataset
@@ -68,6 +73,34 @@ function WidgetContext({ children }) {
       mapFilter: conn => getStreams(conn).length,
       min: 0,
       max: maxStreams,
+    }),
+    getRangeFilter({
+      name: 'Filter total bytes in',
+      mapFilter: conn => getConnectionTraffic(conn, 'in', 'bytes'),
+      min: 0,
+      max: metadata.maxTraffic,
+      format: formatDataSize,
+    }),
+    getRangeFilter({
+      name: 'Filter total bytes out',
+      mapFilter: conn => getConnectionTraffic(conn, 'out', 'bytes'),
+      min: 0,
+      max: metadata.maxTraffic,
+      format: formatDataSize,
+    }),
+    getRangeFilter({
+      name: 'Filter miliseconds open',
+      mapFilter: conn => getConnectionAge(conn, currentTimepoint),
+      min: 0,
+      max: metadata.maxAge,
+      format: formatDuration,
+    }),
+    getRangeFilter({
+      name: 'Filter miliseconds closed',
+      mapFilter: conn => getConnectionTimeClosed(conn, currentTimepoint),
+      min: 0,
+      max: metadata.maxAge,
+      format: formatDuration,
     }),
   ]
 

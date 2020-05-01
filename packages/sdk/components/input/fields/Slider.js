@@ -4,12 +4,12 @@ import styled from 'styled-components'
 import { Field } from 'formik'
 
 import { calculatableProp } from '../../../utils/helpers'
-import Icon from '../../Icon'
 import Tooltip from '../../Tooltip'
+import NumberInput from './NumberInput'
 
 const CONTROL_WIDTH = 16
 const BAR_HEIGHT = 8
-const WIDTH = 340
+const WIDTH = 510
 
 const Container = styled.div`
   padding: ${({ theme }) => theme.spacing([3, 2, 0])};
@@ -61,34 +61,8 @@ const Control = styled.div`
 const NumberFieldsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: ${({ theme }) => theme.spacing()};
+  padding: ${({ theme }) => theme.spacing([1, 0])};
   margin-top: ${({ theme }) => theme.spacing()};
-`
-
-const NumberInput = styled.input`
-  font-family: 'plex-mono';
-  background: ${({ theme }) => theme.color('background', 1)};
-  padding: ${({ theme }) =>
-    `${theme.spacing(0.5)} 0 ${theme.spacing(0.5)} ${theme.spacing(8)}`};
-  font-weight: 400;
-  color: ${({ theme, isDefault }) =>
-    theme.color(isDefault ? 'text' : 'highlight', 1)};
-  :focus {
-    font-weight: 800;
-  }
-`
-
-const NumberLabelWrapper = styled.span`
-  display: inline-block;
-  position: relative;
-`
-
-const NumberLabel = styled.label`
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  padding: ${({ theme }) => theme.spacing(0.5)};
 `
 
 function getMouseX(event, containerRef) {
@@ -103,9 +77,8 @@ function getMousePosition(mouseX, width) {
 }
 
 function getStepPosition(stepIndex, min, max, steps) {
-  const stepIndexWithinMin = Math.max(stepIndex, min)
-  if (!stepIndexWithinMin) return 0
-  return Math.min(stepIndexWithinMin, max) / steps
+  if (!stepIndex) return 0
+  return stepIndex / steps
 }
 
 function getStepIndex(position, steps) {
@@ -113,15 +86,24 @@ function getStepIndex(position, steps) {
   return nearestStepIndex
 }
 
-function getLowerStepIndex(value, isRange, min, max) {
+function getLowerStepIndex(value, isRange, steps) {
   if (typeof value === 'number') return value
-  return isRange ? min : max
+  return isRange ? 0 : steps
 }
 
-function getUpperStepIndex(value, isRange, max) {
+function getUpperStepIndex(value, isRange, steps) {
   if (!isRange) return null // Unused unless isRange
   if (typeof value === 'number') return value
-  return max
+  return steps
+}
+
+function getValueFromStepIndex(stepIndex, stepInterval, min) {
+  return stepIndex * stepInterval + min
+}
+
+function getStepIndexFromValue(value, stepInterval, min) {
+  if (typeof value !== 'number') return value
+  return Math.round((value - min) / stepInterval)
 }
 
 function getNearestFieldName(
@@ -161,6 +143,8 @@ function Slider({
   setFieldValue,
   controlWidth = CONTROL_WIDTH,
   width = WIDTH,
+  numberFieldType = 'number',
+  format = null,
   override = {},
   tooltipProps = {},
 }) {
@@ -183,8 +167,8 @@ function Slider({
 
   if (!steps) {
     // e.g. if highest value is 4.3 mb, stepInterval every 500kb => 9 steps, max is 4.5 mb
-    steps = Math.ceil(max / stepInterval)
-    max = steps * stepInterval
+    steps = Math.ceil((max - min) / stepInterval)
+    max = steps * stepInterval + min
   }
 
   /**
@@ -192,46 +176,46 @@ function Slider({
    **/
 
   const containerRef = useRef()
-  const lowerInputRef = useRef()
-  const upperInputRef = useRef()
   const lowerControlRef = useRef()
   const upperControlRef = useRef()
 
   const [fieldIsSliding, setFieldSliding] = useState('')
 
-  // Statefully store temporarily-invalid input while a user types,
-  // e.g. if the lower end of a range is "5", the upper end is "12",
-  // store the (invalid) "1" when user deletes "2" while typing "14"
-  const [lowerNumberInput, setLowerNumberInput] = useState(null)
-  const [upperNumberInput, setUpperNumberInput] = useState(null)
-
   // If a `value` has no defined number, position based on min/max
   // so the default display adapts as min/max change
   const lowerStepIndex = getLowerStepIndex(
-    values[fieldNames[0]],
+    getStepIndexFromValue(values[fieldNames[0]], stepInterval, min),
     isRange,
-    min,
-    max
+    steps
   )
-  const upperStepIndex = getUpperStepIndex(values[fieldNames[1]], isRange, max)
+  const upperStepIndex = getUpperStepIndex(
+    getStepIndexFromValue(values[fieldNames[1]], stepInterval, min),
+    isRange,
+    steps
+  )
 
   // Position is a decimal number >=0 <=1 representing the % distance along the slider
   const lowerPosition = getStepPosition(lowerStepIndex, min, max, steps)
+
   const upperPosition = isRange
     ? getStepPosition(upperStepIndex, min, max, steps)
     : null
 
-  const getValidatedIndex = (stepIndex, fieldName) => {
+  const getValidatedValue = (value, fieldName) => {
     const isLower = isRange && fieldName === fieldNames[0]
+    const stepIndex = getStepIndexFromValue(value, stepInterval, min)
+
     if (isLower) {
-      if (stepIndex <= min) return ['', false] // Follows `min` if it changes
-      if (stepIndex >= upperStepIndex) return [upperStepIndex, false] // Don't cross over
-      return [stepIndex, true]
+      if (value <= min) return ['', false] // Follows `min` if it changes
+      if (stepIndex >= upperStepIndex)
+        return [getValueFromStepIndex(upperStepIndex, stepInterval, min), false] // Don't cross over
+      return [value, true]
     }
 
-    if (stepIndex >= max) return ['', false] // Follows `max` if it changes
-    if (isRange && stepIndex <= lowerStepIndex) return [lowerStepIndex, false] // Don't cross over
-    return [stepIndex, true]
+    if (value >= max) return ['', false] // Follows `max` if it changes
+    if (isRange && stepIndex <= lowerStepIndex)
+      return [getValueFromStepIndex(lowerStepIndex, stepInterval, min), false] // Don't cross over
+    return [value, true]
   }
 
   /**
@@ -252,7 +236,9 @@ function Slider({
     const position = getMousePosition(mouseX, containerWidth)
 
     const stepIndex = getStepIndex(position, steps)
-    handleChange(stepIndex, fieldName)
+    const value = getValueFromStepIndex(stepIndex, stepInterval, min)
+
+    handleChange(value, fieldName)
   }
   const handleClick = async event => {
     let fieldName = fieldNames[0]
@@ -271,48 +257,43 @@ function Slider({
       fieldName === fieldNames[0] ? lowerControlRef : upperControlRef
     focusRef.current.focus()
   }
-  const handleNumberInput = (event, fieldName) => {
-    const stepIndex = parseInt(event.target.value)
-    if (isNaN(stepIndex)) {
-      updateNumberInput(fieldName, '')
-    } else {
-      handleChange(stepIndex, fieldName)
-    }
-  }
-  const handleChange = (stepIndex, fieldName) => {
-    const [newValue, wasValid] = getValidatedIndex(stepIndex, fieldName)
-    updateFieldValue(fieldName, newValue)
 
-    // If stepIndex was invalid, allow number input to keep it while user types
-    const numberInputValue = wasValid ? null : stepIndex
-    updateNumberInput(fieldName, numberInputValue)
+  const handleChange = (value, fieldName) => {
+    const [newValue] = getValidatedValue(value, fieldName)
+    updateFieldValue(fieldName, newValue)
   }
-  const updateFieldValue = async (fieldName, stepIndex) => {
-    if (
-      !isNaN(stepIndex) &&
-      stepIndex !== values[fieldName] &&
-      stepIndex >= min &&
-      stepIndex <= max
-    ) {
-      await setFieldValue(fieldName, stepIndex)
+
+  const updateFieldValue = async (fieldName, newValue) => {
+    const isValidNumber =
+      !isNaN(newValue) &&
+      newValue !== values[fieldName] &&
+      newValue >= min &&
+      newValue <= max
+
+    if (isValidNumber || newValue === '') {
+      await setFieldValue(fieldName, newValue)
       onChange()
     }
   }
-  const updateNumberInput = (fieldName, stepIndex) => {
-    const isUpper = isRange && fieldName === 'max'
-    const setNumberInput = isUpper ? setUpperNumberInput : setLowerNumberInput
-    const numberInputRef = isUpper ? upperInputRef : lowerInputRef
-
-    const isInFocus = document.activeElement === numberInputRef.current
-
-    // Only set number input state while input is in focus
-    setNumberInput(isInFocus ? stepIndex : null)
-  }
 
   const nudgeLower = e =>
-    handleChange(lowerStepIndex + getNudgeNumber(e), fieldNames[0])
+    handleChange(
+      getValueFromStepIndex(
+        lowerStepIndex + getNudgeNumber(e),
+        stepInterval,
+        min
+      ),
+      fieldNames[0]
+    )
   const nudgeUpper = e =>
-    handleChange(upperStepIndex + getNudgeNumber(e), fieldNames[1])
+    handleChange(
+      getValueFromStepIndex(
+        upperStepIndex + getNudgeNumber(e),
+        stepInterval,
+        min
+      ),
+      fieldNames[1]
+    )
 
   /**
    *** Styling and inline style calculation
@@ -395,53 +376,39 @@ function Slider({
         />
       </Bar>
       <NumberFieldsWrapper as={override.NumberFieldsWrapper}>
-        <NumberLabelWrapper as={override.NumberLabelWrapper}>
-          {isRange && <NumberLabel as={override.NumberLabel}>Min:</NumberLabel>}
+        <NumberInput
+          label={isRange ? 'Min' : null}
+          type={numberFieldType}
+          min={min}
+          max={max}
+          step={stepInterval}
+          defaultValue={isRange ? min : max}
+          value={getValueFromStepIndex(lowerStepIndex, stepInterval, min)}
+          setFieldValue={newValue => updateFieldValue(fieldNames[0], newValue)}
+          getValidatedValue={newValue =>
+            getValidatedValue(newValue, fieldNames[0])
+          }
+          format={format}
+          override={override}
+        />
+        {isRange && (
           <NumberInput
-            type="number"
-            ref={lowerInputRef}
-            step={stepInterval}
-            isDefault={typeof values[fieldNames[0]] !== 'number'}
+            label="Max"
+            type={numberFieldType}
             min={min}
             max={max}
-            value={
-              lowerNumberInput !== null ? lowerNumberInput : lowerStepIndex
+            step={stepInterval}
+            defaultValue={max}
+            value={getValueFromStepIndex(upperStepIndex, stepInterval, min)}
+            setFieldValue={newValue =>
+              updateFieldValue(fieldNames[1], newValue)
             }
-            onChange={event => handleNumberInput(event, fieldNames[0])}
-            onBlur={() => updateNumberInput(fieldNames[0], null)}
-            as={override.NumberInput}
+            getValidatedValue={newValue =>
+              getValidatedValue(newValue, fieldNames[1])
+            }
+            format={format}
+            override={override}
           />
-          <Icon
-            type="cancel"
-            onClick={() => updateFieldValue(fieldNames[0], '')}
-            active={typeof values[fieldNames[0]] === 'number'}
-            disabled={typeof values[fieldNames[0]] !== 'number'}
-          />
-        </NumberLabelWrapper>
-        {isRange && (
-          <NumberLabelWrapper as={override.NumberLabelWrapper}>
-            <NumberLabel as={override.NumberLabel}>Max:</NumberLabel>
-            <NumberInput
-              type="number"
-              ref={upperInputRef}
-              step={stepInterval}
-              isDefault={typeof values[fieldNames[1]] !== 'number'}
-              min={min}
-              max={max}
-              value={
-                upperNumberInput !== null ? upperNumberInput : upperStepIndex
-              }
-              onChange={event => handleNumberInput(event, fieldNames[1])}
-              onBlur={() => updateNumberInput(fieldNames[1], null)}
-              as={override.NumberInput}
-            />
-            <Icon
-              type="cancel"
-              onClick={() => updateFieldValue(fieldNames[1], '')}
-              active={typeof values[fieldNames[1]] === 'number'}
-              disabled={typeof values[fieldNames[1]] !== 'number'}
-            />
-          </NumberLabelWrapper>
         )}
       </NumberFieldsWrapper>
     </Container>
@@ -459,6 +426,8 @@ Slider.propTypes = {
   stepInterval: T.number,
   controlWidth: T.number,
   width: T.number,
+  numberFieldType: T.string,
+  format: T.func,
   override: T.object,
   tooltipProps: T.object,
 }

@@ -52,7 +52,7 @@ function formatDuration(ms, maxRecursions = 2, shortForm = false) {
   return _formatNumberRecursion(ms, units, maxRecursions)
 }
 
-function formatDataSize(num) {
+function formatDataSize(num, string = false) {
   if (num === 0) return ['0']
 
   const units = [
@@ -63,7 +63,9 @@ function formatDataSize(num) {
     ['kb', 1e3],
     ['bytes', 1],
   ]
-  return formatNumber(num, units)
+
+  const partsArray = formatNumber(num, units)
+  return string ? `${partsArray[0]} ${partsArray[1]}` : partsArray
 }
 
 function formatTime(timestamp) {
