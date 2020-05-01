@@ -113,7 +113,7 @@ function NumberInput({
             {...props}
           />
           {hasFormattedValue && (
-            <FormattedValue>{format(fieldValue, true)}</FormattedValue>
+            <FormattedValue>{format(fieldValue, 2)}</FormattedValue>
           )}
         </>
       )) ||
