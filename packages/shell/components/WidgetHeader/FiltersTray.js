@@ -38,17 +38,18 @@ function FiltersTray({ overrides = {} }) {
 
   const hidePrevious = useHidePrevious()
 
-  const areAllActive = filters.every(filter => filter.enabled)
-  const areAllReset = filters.every(({ values, getFilterDef }) => {
+  const setFilters = filters.filter(({ values, getFilterDef }) => {
     const { initialValues } = getFilterDef()
-    return isEqual(values, initialValues)
+    return !isEqual(values, initialValues)
   })
+  const areAllReset = !setFilters.length
+  const areAllActive = setFilters.every(filter => filter.enabled)
 
   const toggleAllText =
     (areAllReset && 'All filters are unset') ||
     `${areAllActive ? 'Disable' : 'Enable'} all filters`
   const handleFilterAll = () =>
-    filters.forEach(filter =>
+    setFilters.forEach(filter =>
       dispatchFilters({
         action: areAllActive ? 'disable' : 'enable',
         name: filter.name,
