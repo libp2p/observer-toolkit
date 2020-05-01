@@ -18,7 +18,7 @@ const AccordionButton = styled(StyledButton)`
   ${({ theme }) => theme.transition()}
 `
 
-const AccordionIcon = styled.span`
+const VerticalIcon = styled.span`
   ${colorTransition}
   transform: rotate(0deg);
   ${({ active }) =>
@@ -28,14 +28,26 @@ const AccordionIcon = styled.span`
     `}
 `
 
+const HorizontalIcon = styled(VerticalIcon)`
+  transform: rotate(-90deg);
+  ${({ active }) =>
+    active &&
+    css`
+      transform: rotate(90deg);
+    `}
+`
+
 function AccordionControl({
   isOpen,
   setIsOpen,
   children,
+  direction = 'vertical',
   override = {},
   ...props
 }) {
   const toggleOpen = () => setIsOpen(!isOpen)
+
+  const IconContainer = direction === 'vertical' ? VerticalIcon : HorizontalIcon
   return (
     <AccordionButton
       onClick={toggleOpen}
@@ -47,7 +59,7 @@ function AccordionControl({
       <Icon
         type={'expand'}
         active={isOpen}
-        override={{ Container: AccordionIcon }}
+        override={{ Container: IconContainer }}
       />
     </AccordionButton>
   )
@@ -56,6 +68,7 @@ function AccordionControl({
 AccordionControl.propTypes = {
   isOpen: T.bool.isRequired,
   setIsOpen: T.func.isRequired,
+  direction: T.string,
   children: T.node.isRequired,
   override: T.object,
 }

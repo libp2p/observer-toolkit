@@ -6,8 +6,16 @@ import {
 } from '@libp2p-observer/data'
 import { RuntimeContext } from '@libp2p-observer/sdk'
 
+function _getPropertyTypes(runtime) {
+  const eventTypes = getRuntimeEventTypes(runtime)
+  const propertyTypes = getRuntimeEventProperties({ eventTypes })
+  return propertyTypes
+}
+
 function updatePropertyTypes(oldPropertyTypes, { action, data }) {
   switch (action) {
+    case 'clear':
+      return []
     case 'applyMultiple':
       return applyMultiplePropertyTypes(oldPropertyTypes, data)
     case 'enable':
@@ -65,27 +73,69 @@ function useEventPropertyTypes() {
   const runtime = useContext(RuntimeContext)
 
   const [runtimeState, setRuntimeState] = useState(null)
+  const [unappliedPropertyTypes, setUnappliedPropertyTypes] = useState(null)
   const [propertyTypes, dispatchPropertyTypes] = useReducer(
     updatePropertyTypes,
     []
   )
 
   useEffect(() => {
-    if (runtime !== runtimeState) {
-      const eventTypes = getRuntimeEventTypes(runtime)
-      const newPropertyTypes = getRuntimeEventProperties({ eventTypes })
+    if (!runtime && !runtimeState) {
+      return
+    }
+
+    if (!runtime && runtimeState) {
+      setRuntimeState(null)
+      dispatchPropertyTypes({ action: 'clear' })
+      return
+    }
+
+    if (runtime && !runtimeState) {
+      const propertyTypes = _getPropertyTypes(runtime)
 
       dispatchPropertyTypes({
         action: 'applyMultiple',
-        data: newPropertyTypes,
+        data: propertyTypes,
       })
+
       setRuntimeState(runtime)
+      return
     }
-  }, [runtime, runtimeState, dispatchPropertyTypes, setRuntimeState])
+
+    if (runtime.getPeerId() !== runtimeState.getPeerId()) {
+      setRuntimeState(runtime)
+      dispatchPropertyTypes({ action: 'clear' })
+      return
+    }
+
+    if (runtime !== runtimeState) {
+      const oldPropertyTypes = _getPropertyTypes(runtimeState)
+      const currentPropertyTypes = _getPropertyTypes(runtime)
+
+      const newPropertyTypes = currentPropertyTypes.filter(
+        property =>
+          !oldPropertyTypes.some(
+            oldProperty => property.name === oldProperty.name
+          )
+      )
+
+      if (newPropertyTypes.length) {
+        setUnappliedPropertyTypes(newPropertyTypes)
+      }
+    }
+  }, [
+    runtime,
+    runtimeState,
+    dispatchPropertyTypes,
+    setRuntimeState,
+    setUnappliedPropertyTypes,
+  ])
 
   return {
     propertyTypes,
     dispatchPropertyTypes,
+    unappliedPropertyTypes,
+    setUnappliedPropertyTypes,
   }
 }
 
