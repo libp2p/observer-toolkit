@@ -63,28 +63,6 @@ const ExpandButton = styled(StyledButton)`
   }
 `
 
-function EventPropertyHeader({ typeData, dispatchPropertyTypes }) {
-  const handleRemove = e => {
-    e.stopPropagation()
-    dispatchPropertyTypes({
-      action: 'disable',
-      data: typeData,
-    })
-  }
-  return (
-    <Tooltip
-      fixOn="never"
-      content={<button onClick={handleRemove}>Remove</button>}
-    >
-      {typeData.name}
-    </Tooltip>
-  )
-}
-EventPropertyHeader.propTypes = {
-  typeData: T.object.isRequired,
-  dispatchPropertyTypes: T.func.isRequired,
-}
-
 function TimeContent({ value }) {
   return <RenderTime content={value} />
 }
@@ -136,4 +114,4 @@ RawJsonExpanded.propTypes = {
   value: T.string,
 }
 
-export { EventPropertyHeader, TimeContent, ShowJsonButton }
+export { TimeContent, ShowJsonButton }

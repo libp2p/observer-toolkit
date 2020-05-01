@@ -17,9 +17,6 @@ OutboundDHTQuery.addPropertyTypes(
   new EventProperty(['totalSteps', EventProperty.PropertyType['NUMBER']])
 )
 OutboundDHTQuery.addPropertyTypes(
-  new EventProperty(['totalSteps', EventProperty.PropertyType['NUMBER']])
-)
-OutboundDHTQuery.addPropertyTypes(
   new EventProperty(['peerIds', EventProperty.PropertyType['PEERID'], true])
 )
 

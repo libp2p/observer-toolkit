@@ -8,44 +8,16 @@ import {
   EventsContext,
   SourceContext,
   TimeContext,
-  StyledButton,
   useHidePrevious,
   useTabularData,
   TableHead,
 } from '@libp2p-observer/sdk'
 
 import EventsTableRow from './EventsTableRow'
+import EventsControlsBar from './EventsControlsBar'
 import eventsColumnDefs from '../definitions/eventsColumns'
 import useEventPropertyTypes from '../hooks/useEventPropertyTypes'
 import buildEventsColumns from '../utils/buildEventsColumns'
-
-const PauseControlsBar = styled.section`
-  position: sticky;
-  top: 0;
-  z-index: 6;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: ${({ barHeight }) => barHeight}px;
-  padding: ${({ theme }) => theme.spacing([1, 0])};
-  background: ${({ theme }) => theme.color('secondary', 2)};
-  ${({ theme }) => theme.text('body', 'medium')}
-`
-
-const PauseControlsBlock = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`
-
-const PauseControlsItem = styled.div`
-  margin: ${({ theme }) => theme.spacing([0, 1])};
-`
-
-const EventsHeading = styled.h2`
-  ${({ theme }) => theme.text('heading', 'medium')};
-  margin: ${({ theme }) => theme.spacing([0, 2])};
-`
 
 const EventsTableHead = styled(TableHead)`
   padding-top: 0;
@@ -71,11 +43,15 @@ function EventsTable({ theme }) {
   const allEvents = useContext(EventsContext)
   const eventsData = allEvents.filter(event => event.getTs() <= hideEventsAfter)
 
-  const { propertyTypes, dispatchPropertyTypes } = useEventPropertyTypes()
-
   const rowsPerPageOptions = [10, 25, 50, 100]
   const defaultPerPageIndex = 0
 
+  const {
+    propertyTypes,
+    dispatchPropertyTypes,
+    unappliedPropertyTypes,
+    setUnappliedPropertyTypes,
+  } = useEventPropertyTypes()
   const columns = buildEventsColumns(
     eventsColumnDefs,
     propertyTypes,
@@ -99,6 +75,8 @@ function EventsTable({ theme }) {
   // Re-pause if we've gone back in time so events beyond timepoint get removed
   if (eventsSincePause < 0 && isPaused) changePausedState(true)
 
+  const currentEventsData =
+    !hasLiveSource || isLive ? eventsData : pausedEventsData
   const {
     columnDefs,
     allContent,
@@ -111,53 +89,30 @@ function EventsTable({ theme }) {
     rowCounts,
   } = useTabularData({
     columns,
-    data: !hasLiveSource || isLive ? eventsData : pausedEventsData,
+    data: currentEventsData,
     defaultSort: 'time',
     defaultRange: [0, rowsPerPageOptions[defaultPerPageIndex]],
     metadata: { hidePrevious },
   })
 
-  const pauseButtonText = isPaused ? 'Unpause' : 'Pause'
-
   const barHeight = hasLiveSource ? theme.spacing(4, true) : 0
-
-  const pausedText = `Incoming events paused${
-    !isPaused && highlightedRowIndex !== null ? ' while row is highlighted' : ''
-  }`
 
   return (
     <>
-      {hasLiveSource && (
-        <PauseControlsBar height={barHeight}>
-          <EventsHeading>{allContent.length} events</EventsHeading>
-          <PauseControlsBlock>
-            {isLive ? (
-              <PauseControlsItem>Showing all incoming events</PauseControlsItem>
-            ) : (
-              <>
-                <PauseControlsItem>{pausedText}</PauseControlsItem>
-                <PauseControlsItem>
-                  <StyledButton
-                    onClick={() => changePausedState(isPaused)}
-                    disabled={!eventsSincePause}
-                  >
-                    {!eventsSincePause ? (
-                      <>No events since pausing</>
-                    ) : (
-                      <>Show {eventsSincePause} new events</>
-                    )}
-                  </StyledButton>
-                </PauseControlsItem>
-              </>
-            )}
-            <PauseControlsItem>
-              <StyledButton onClick={() => changePausedState(!isPaused)}>
-                {pauseButtonText}
-              </StyledButton>
-            </PauseControlsItem>
-          </PauseControlsBlock>
-        </PauseControlsBar>
-      )}
+      <EventsControlsBar
+        barHeight={barHeight}
+        currentEventsData={currentEventsData}
+        hasLiveSource={hasLiveSource}
+        isLive={isLive}
+        changePausedState={changePausedState}
+        eventsSincePause={eventsSincePause}
+        isPaused={isPaused}
+        highlightedRowIndex={highlightedRowIndex}
+        propertyTypes={propertyTypes}
+        dispatchPropertyTypes={dispatchPropertyTypes}
+        unappliedPropertyTypes={unappliedPropertyTypes}
+        setUnappliedPropertyTypes={setUnappliedPropertyTypes}
+      />
       <DataTable
         allContent={allContent}
         shownContent={shownContent}

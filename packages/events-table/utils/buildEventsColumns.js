@@ -7,7 +7,7 @@ import {
   RenderNumber,
   RenderTime,
 } from '../components/contentRenderers'
-import { EventPropertyHeader, ShowJsonButton } from '../components/cellContent'
+import { ShowJsonButton } from '../components/cellContent'
 
 const stringSorter = {
   getSorter: getStringSorter,
@@ -51,17 +51,12 @@ function getRenderer(type) {
   }
 }
 
-function getEventHeader(typeData, dispatchPropertyTypes) {
-  return EventPropertyHeader({ typeData, dispatchPropertyTypes })
-}
-
 function _getColumns(propertyTypes, dispatchPropertyTypes) {
   return propertyTypes.reduce((columns, typeData) => {
     if (!typeData.enabled) return columns
 
     const { name, hasMultiple, type } = typeData
 
-    const header = getEventHeader(typeData, dispatchPropertyTypes)
     const getPropsValue = event => JSON.parse(event.getContent())[name] || ''
 
     let newColumn
@@ -77,7 +72,6 @@ function _getColumns(propertyTypes, dispatchPropertyTypes) {
           hidePrevious,
         }),
         sort: numericSorter,
-        header,
       }
     } else {
       const { renderContent, sort } = getRenderer(type)
@@ -90,7 +84,6 @@ function _getColumns(propertyTypes, dispatchPropertyTypes) {
         }),
         renderContent,
         sort,
-        header,
       }
     }
 
