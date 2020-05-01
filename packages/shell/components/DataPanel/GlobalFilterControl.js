@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import {
+  useHidePrevious,
   FilterChip,
   GlobalFilterContext,
   SetterContext,
@@ -15,6 +16,8 @@ function GlobalFilterControl() {
   const globalFilters = useContext(GlobalFilterContext)
   const { dispatchGlobalFilters } = useContext(SetterContext)
 
+  const hidePrevious = useHidePrevious()
+
   return (
     <Container>
       {globalFilters.map(filter => (
@@ -24,6 +27,7 @@ function GlobalFilterControl() {
           dispatchFilters={dispatchGlobalFilters}
           isOpen={globalFilters.length === 1}
           side="top"
+          hidePrevious={hidePrevious}
         />
       ))}
     </Container>

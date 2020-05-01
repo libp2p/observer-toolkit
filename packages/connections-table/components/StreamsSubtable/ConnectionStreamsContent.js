@@ -33,7 +33,12 @@ const ExpandButton = styled(StyledButton)`
   }
 `
 
-function ConnectionStreamsContent({ value, streamsCount = value, connection }) {
+function ConnectionStreamsContent({
+  value,
+  streamsCount = value,
+  connection,
+  hidePrevious,
+}) {
   const streamsButtonText = streamsCount ? `View streams` : 'No streams'
 
   return (
@@ -44,6 +49,7 @@ function ConnectionStreamsContent({ value, streamsCount = value, connection }) {
         fixOn="no-hover"
         toleranceY={null}
         toleranceX={-32}
+        hidePrevious={hidePrevious}
         content={<StreamsSubtable connection={connection} />}
       >
         <ExpandButton disabled={!streamsCount}>
@@ -61,6 +67,7 @@ ConnectionStreamsContent.propTypes = {
   value: T.number,
   connection: T.object.isRequired,
   streamsCount: T.number,
+  hidePrevious: T.func,
 }
 
 export default ConnectionStreamsContent

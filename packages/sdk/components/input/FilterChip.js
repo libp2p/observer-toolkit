@@ -43,6 +43,7 @@ function FilterChip({
   dispatchFilters,
   side = 'bottom',
   isOpen = false,
+  hidePrevious = null,
 }) {
   const {
     FilterUi,
@@ -142,6 +143,7 @@ function FilterChip({
               containerRef={rootNodeRef}
               fixOn={'no-hover'}
               initiallyOpen={isOpen}
+              hidePrevious={hidePrevious}
               toleranceY={null}
               override={{ Positioner, Tick }}
               content={
@@ -181,6 +183,7 @@ FilterChip.propTypes = {
   dispatchFilters: T.func.isRequired,
   side: T.string,
   isOpen: T.bool,
+  hidePrevious: T.func,
   children: T.node,
 }
 

@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 import isEqual from 'lodash.isequal'
 
 import {
+  useHidePrevious,
   FilterChip,
   FilterContext,
   FilterSetterContext,
@@ -35,6 +36,8 @@ function FiltersTray({ overrides = {} }) {
   const { filters } = useContext(FilterContext)
   const dispatchFilters = useContext(FilterSetterContext)
 
+  const hidePrevious = useHidePrevious()
+
   const areAllActive = filters.every(filter => filter.enabled)
   const areAllReset = filters.every(({ values, getFilterDef }) => {
     const { initialValues } = getFilterDef()
@@ -60,11 +63,12 @@ function FiltersTray({ overrides = {} }) {
             filter={filter}
             key={filter.name}
             dispatchFilters={dispatchFilters}
+            hidePrevious={hidePrevious}
           />
         ))}
       </FiltersList>
       <ToggleAllButton
-        onClick={!areAllReset && handleFilterAll}
+        onClick={!areAllReset ? handleFilterAll : undefined}
         disabled={areAllReset}
       >
         {!areAllReset && (

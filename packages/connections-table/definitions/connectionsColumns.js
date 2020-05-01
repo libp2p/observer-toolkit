@@ -120,9 +120,10 @@ const closedCol = {
 
 const streamsCol = {
   name: 'streams',
-  getProps: connection => ({
+  getProps: (connection, { hidePrevious }) => ({
     value: connection.getStreams().getStreamsList().length,
     connection,
+    hidePrevious,
   }),
   sort: numericSorter,
   renderContent: ConnectionStreamsContent,

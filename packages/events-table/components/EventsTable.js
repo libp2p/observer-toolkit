@@ -9,6 +9,7 @@ import {
   SourceContext,
   TimeContext,
   StyledButton,
+  useHidePrevious,
   useTabularData,
   TableHead,
 } from '@libp2p-observer/sdk'
@@ -55,6 +56,8 @@ function EventsTable({ theme }) {
   const [isPaused, setIsPaused] = useState(false)
   const [pausedEventsData, setPausedEventsData] = useState([])
   const source = useContext(SourceContext)
+
+  const hidePrevious = useHidePrevious()
 
   const hasLiveSource = source && source.type === 'live'
   const isLive = hasLiveSource && !isPaused && highlightedRowIndex === null
@@ -111,6 +114,7 @@ function EventsTable({ theme }) {
     data: !hasLiveSource || isLive ? eventsData : pausedEventsData,
     defaultSort: 'time',
     defaultRange: [0, rowsPerPageOptions[defaultPerPageIndex]],
+    metadata: { hidePrevious },
   })
 
   const pauseButtonText = isPaused ? 'Unpause' : 'Pause'

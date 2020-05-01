@@ -167,6 +167,7 @@ function Tooltip({
   toleranceY = 0,
   containerRef = { current: document.body },
   initiallyOpen = false,
+  hidePrevious,
   override = {},
 }) {
   const clickToFix = fixOn === 'click'
@@ -185,17 +186,32 @@ function Tooltip({
 
   if (!content) return <Target>{children}</Target>
 
-  const show = () => setIsShowing(true)
-  const hide = () => setIsShowing(false)
-  const toggleShow = () => setIsShowing(!isShowing)
-  const toggleFix = () => setIsFixed(!isFixed)
+  const hide = () => {
+    if (hidePrevious) hidePrevious(null)
+    setIsShowing(false)
+  }
+  const show = () => {
+    if (hidePrevious) hidePrevious(hide)
+    setIsShowing(true)
+  }
+  const unfix = () => {
+    if (hidePrevious) hidePrevious(null)
+    setIsFixed(false)
+  }
+  const fix = () => {
+    if (hidePrevious) hidePrevious(unfix)
+    setIsFixed(true)
+  }
+  const toggleShow = () => (isShowing ? hide() : show())
+  const toggleFix = () => (isFixed ? unfix() : fix())
+
   const stopPropagation = e => e.stopPropagation()
   const getColor = theme => theme.color(colorKey, colorIndex)
 
   const isClosable = (clickToFix && isFixed) || noHover
   const close = () => {
-    setIsFixed(false)
-    setIsShowing(false)
+    hide()
+    unfix()
   }
 
   const direction = getInvertedDirection(side)
@@ -260,6 +276,7 @@ Tooltip.propTypes = {
   toleranceX: T.number,
   toleranceY: T.number,
   initiallyOpen: T.bool,
+  hidePrevious: T.func,
   override: T.object,
   containerRef: T.object,
 }
