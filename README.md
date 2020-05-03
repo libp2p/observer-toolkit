@@ -6,9 +6,7 @@ User interface for visualising libp2p introspection data.
 
 To get started locally, clone the repo, and run `yarn install`.
 
-### Running the Catalogue
-
-Run `npm run start:catalogue` to run a dev build of the `catalogue` package, containing a UI for browsing built-in React widgets and connecting these to a data file upload, a websocket to a live LibP2P node, or to provided sample data sets. When the UI is loaded, several options are available to load data:
+Run `npm run start:catalogue` to run a dev build of the `catalogue` package, containing a UI for browsing built-in React widgets and connecting these to a data source. When the UI is loaded, three types of data source are available:
 
 ### Sample data
 
@@ -25,9 +23,14 @@ To get live introspection data streaming into the UI, it's possible to make a we
  - A mock data server can be started using the command `npm run mock-sock` with optional flags below. The predefined url `ws://127.0.0.1:8080/` can be used to connect. 
  - To connect to real live LibP2P data, find the port on which the `introspect` server is running and connect to that appending `/introspect`. For example, if it runs locally on port 12345, connect to `ws://localhost:12345/introspect`.
 
-## Mock server
+## Mock data
 
-To run your own mock server that randomly generates data, start it from the `samples` folder using `npm run mock-sock`.
+To run generate mock data that simulates a LibP2P network with randomised activity, use one of these two commands: 
+
+- `npm run mock-sock` starts a mock data server on port 8080 that can be connected to via a websocket 
+- `npm run mock-file` writes a mock data file that can be uploaded
+
+Both [accept several options](tree/master/packages/samples/readme.md) to define certain aspects of the mock P2P network or output.
 
 ## REPL
 
