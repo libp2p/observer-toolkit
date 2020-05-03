@@ -4,11 +4,11 @@ User interface for visualising libp2p introspection data.
 
 ## Setup
 
-This [Lerna monorepo](https://github.com/lerna/lerna), managed with [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). To get started, clone the TBD repo, and run `yarn install`.
+To get started locally, clone the repo, and run `yarn install`.
 
-## Catalogue
+### Running the Catalogue
 
-A browsable catalogue of whitelisted React components built on the LibP2P Introspection UI SDK, and wiring these into a data file upload, a websocket to a live LibP2P node, or to provided sample data sets. Start using it with `npm run start:catalogue`. When the UI is loaded, several options are available to load data.
+Run `npm run start:catalogue` to run a dev build of the `catalogue` package, containing a UI for browsing built-in React widgets and connecting these to a data file upload, a websocket to a live LibP2P node, or to provided sample data sets. When the UI is loaded, several options are available to load data:
 
 ### Sample data
 
@@ -16,11 +16,14 @@ Pre-made data samples are provided to show how the UI works. They can be loaded 
 
 ### Upload a file
 
-Just like the pre-made samples, it's possible to upload your own dataset. TBC reference mock samples.
+Just like the pre-made samples, it's possible to upload your own dataset. Compatible datasets can be exported using the ui's "Export data" button, and mock data files can be generated using the command `npm run mock-file` with optional flags below.
 
 ### Live connection
 
-To get live introspection data streaming into the UI, it's possible to make a websocket connection to a live LibP2P node. When using the mock data server, the predefined url can be used. When connecting to the REPL interface, make sure to set the correct port the server is listening on and suffix with `/introspect`. The complete url should look something like `ws://127.0.0.1:25834/introspect`.
+To get live introspection data streaming into the UI, it's possible to make a websocket connection to a live LibP2P node. 
+
+ - A mock data server can be started using the command `npm run mock-sock` with optional flags below. The predefined url `ws://127.0.0.1:8080/` can be used to connect. 
+ - To connect to real live LibP2P data, find the port on which the `introspect` server is running and connect to that appending `/introspect`. For example, if it runs locally on port 12345, connect to `ws://localhost:12345/introspect`.
 
 ## Mock server
 
@@ -28,7 +31,13 @@ To run your own mock server that randomly generates data, start it from the `sam
 
 ## REPL
 
-TBC
+A simple way to connect to real LibP2P activity is using the [LibP2P REPL](https://github.com/libp2p/repl):
+
+ 1. Clone https://github.com/libp2p/repl and follow its setup instructions
+ 2. Find and copy the REPL's listening port by:choosing "My Info" in the REPL CLI then finding the listed "Introspection server Listen Address"
+ 3. Generate some activity using the REPL CLI. The option "DHT: Bootstrap (public seeds)" generates a lot of connection and DHT activity.
+ 4. In the catalogue UI, connect to the websocket address copied earlier, appending `/introspect`. For example, if My Info gave a listening address of 127.0.0.1/12345, connect to `ws://127.0.0.1:12345/introspect`
+
 
 
 
