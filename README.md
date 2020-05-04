@@ -32,7 +32,7 @@ If no active LibP2P introspection server is available, in addition to the built-
 
 #### Mock data
 
-To run generate mock data that simulates a LibP2P network with randomised activity, use one of these two commands from the samples folder: 
+To run generate mock data that simulates a LibP2P network with randomised activity, use one of these two commands, from either the repo root directory or the samples package: 
 
 - `npm run mock-sock` starts a mock data server on port 8080 that can be connected to via a websocket 
 - `npm run mock-file` writes a mock data file that can be uploaded
