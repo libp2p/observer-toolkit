@@ -10,8 +10,7 @@
   "license": "MIT",
   "main": "index.test.js",
   "browser": "index.browser.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"

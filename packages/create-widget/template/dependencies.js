@@ -33,6 +33,7 @@ const peerDependenciesList = [
   '@libp2p-observer/data',
   '@libp2p-observer/sdk',
   'react',
+  'react-markdown',
   'styled-components',
 ]
 
