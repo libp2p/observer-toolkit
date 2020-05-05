@@ -18,23 +18,19 @@ const ExampleStyledContent = styled.div`
 function $WIDGET_COMPONENT({ children }) {
   // Function component logic here
   // Use the React Hooks model, see https://reactjs.org/docs/hooks-intro.html
-  const timepoints = useContext(DataContext)
-  const currentTimepoint = useContext(TimeContext)
+  const states = useContext(DataContext)
+  const currentState = useContext(TimeContext)
 
-  const { start, end } = getStateTimes(currentTimepoint)
-  const timeIndex = getTimeIndex(timepoints, end)
+  if (!states.length) return 'Awaiting data...'
 
-  // Allow user to try out data object methods in console
-  window.data = { start, end, currentTimepoint, timepoints }
-
-  /* eslint-disable-next-line no-console */
-  console.log('window.data: ', window.data)
+  const { start, end } = getStateTimes(currentState)
+  const timeIndex = getTimeIndex(states, end)
 
   return (
     <ExampleStyledContent>
       <ExampleStyledHeader>Hello $WIDGET_COMPONENT</ExampleStyledHeader>
       <p>
-        Time point <b>{timeIndex + 1}</b> of {timepoints.length} is selected,
+        State message <b>{timeIndex + 1}</b> of {states.length} is selected,
         containing data from <b>{new Date(start).toLocaleString()}</b> to{' '}
         <b>{new Date(end).toLocaleString()}</b>.
       </p>
