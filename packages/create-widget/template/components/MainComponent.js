@@ -42,7 +42,8 @@ function $WIDGET_COMPONENT({ children }) {
       <ExampleStyledHeader>Hello $WIDGET_COMPONENT</ExampleStyledHeader>
       <p>
         State message <b>{timeIndex + 1}</b> of {states.length} is selected,
-        containing data from <b>{new Date(start).toLocaleString()}</b> to{' '}</p>
+        containing data from <b>{new Date(start).toLocaleString()}</b> to{' '}
+      </p>
       <p>Open your browser's console to explore all available data.</p>
 
       <p>
