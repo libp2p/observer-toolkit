@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import $WIDGET_COMPONENT from './$WIDGET_COMPONENT'
+import Widget from '../Widget'
 
 storiesOf('$WIDGET_COMPONENT', module).add('$WIDGET_COMPONENT', () => (
-  <$WIDGET_COMPONENT />
+  <Widget />
 ))
