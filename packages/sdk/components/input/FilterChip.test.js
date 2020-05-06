@@ -27,7 +27,12 @@ const mockCs = [
   { type: 'c', num: 3 },
 ]
 const mockData = [...mockAs, ...mockBs, ...mockCs]
-mockData
+mockData.forEach(datum => {
+  // Add expected methods to fake states
+  datum.getStartTs = () => {}
+  datum.getInstantTs = () => {}
+  datum.getSnapshotDurationMs = () => {}
+})
 
 const filterName = 'mock list filter'
 
