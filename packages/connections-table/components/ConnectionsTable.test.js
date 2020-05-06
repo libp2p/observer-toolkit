@@ -2,6 +2,7 @@ import React from 'react'
 import { act, fireEvent } from '@testing-library/react'
 import {
   loadSample,
+  nudgeTimelineSlider,
   renderWithData,
   renderWithShell,
   within,
@@ -10,7 +11,7 @@ import { getConnections, getLatestTimepoint } from '@libp2p-observer/data'
 import ConnectionsTable from './ConnectionsTable'
 import WidgetContext from './context/WidgetContext'
 
-async function getSuitableRows(getAllByRole, timelineSlider) {
+async function getSuitableRows(getAllByRole, getByTestId) {
   const table = getAllByRole('table').filter(
     // Filter out sliding rows
     table => table.querySelectorAll('th').length
@@ -25,19 +26,9 @@ async function getSuitableRows(getAllByRole, timelineSlider) {
   if (rows.length) return rows
 
   // If no suitable rows, nudge slider left until we reach one
-  await nudgeSliderLeft(timelineSlider)
-  const olderRows = await getSuitableRows(getAllByRole, timelineSlider)
+  await nudgeTimelineSlider('left', getByTestId)
+  const olderRows = await getSuitableRows(getAllByRole, getByTestId)
   return olderRows
-}
-
-async function nudgeSliderLeft(timelineSlider) {
-  // Get the timeline slider in focus
-  await fireEvent.click(timelineSlider)
-
-  // Select previous state using left arrow keyboard shortcut
-  await act(async () => {
-    await fireEvent.keyDown(timelineSlider, { key: 'ArrowLeft', keyCode: 37 })
-  })
 }
 
 describe('ConnectionsTable', () => {
@@ -62,8 +53,7 @@ describe('ConnectionsTable', () => {
       </WidgetContext>
     )
 
-    const timelineSlider = getByTestId('timeline-slider')
-    const suitableRows = await getSuitableRows(getAllByRole, timelineSlider)
+    const suitableRows = await getSuitableRows(getAllByRole, getByTestId)
     expect(suitableRows).not.toHaveLength(0)
 
     const widget = within(getByTestId('widget'))
@@ -119,8 +109,7 @@ describe('ConnectionsTable', () => {
       </WidgetContext>
     )
 
-    const timelineSlider = getByTestId('timeline-slider')
-    const suitableRows = await getSuitableRows(getAllByRole, timelineSlider)
+    const suitableRows = await getSuitableRows(getAllByRole, getByTestId)
     expect(suitableRows).not.toHaveLength(0)
 
     const table = getByRole('table')
@@ -144,7 +133,7 @@ describe('ConnectionsTable', () => {
     const subtableTooltip = within(row).getByRole('tooltip')
     expect(within(subtableTooltip).queryByRole('table')).toBeInTheDocument()
 
-    await nudgeSliderLeft(timelineSlider)
+    await nudgeTimelineSlider('left', getByTestId)
 
     const row_2 = within(table).queryAllByTableRow([
       { column: /^peer id/i, textContent: peerId },
@@ -171,7 +160,7 @@ describe('ConnectionsTable', () => {
     expect(age_2_ms).toEqual(age_ms - msPerState)
     await fireEvent.mouseLeave(ageCellContent_2)
 
-    await nudgeSliderLeft(timelineSlider)
+    await nudgeTimelineSlider('left', getByTestId)
 
     const row_3 = within(table).queryAllByTableRow([
       { column: /^peer id/i, textContent: peerId },
