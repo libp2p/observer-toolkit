@@ -27,7 +27,9 @@ describe('StreamsSubtable', () => {
     )
     const streamsCount = getStreams(connection).length
     const rows = getAllByTableRow()
-    const perPage = getByRole('listbox', { selector: '[name="PerPage"]' })
+    const perPage = getByRole(/(listbox|combobox)/, {
+      selector: '[name="PerPage"]',
+    })
     const [perPageSelectedOption] = [
       ...within(perPage).getAllByRole('option'),
     ].filter(elem => elem.value === perPage.value)

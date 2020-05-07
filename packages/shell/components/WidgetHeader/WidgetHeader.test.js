@@ -12,6 +12,13 @@ import { renderWithData, within } from '@libp2p-observer/testing'
 import WidgetHeader from './WidgetHeader'
 
 const mockData = [{ type: 'a' }, { type: 'a' }, { type: 'b' }, { type: 'b' }]
+mockData.forEach(datum => {
+  // Add expected methods to fake states
+  datum.getStartTs = () => {}
+  datum.getInstantTs = () => {}
+  datum.getSnapshotDurationMs = () => {}
+})
+
 const mockFilterName = 'test filter'
 
 const mockWidgetName = 'test widget'

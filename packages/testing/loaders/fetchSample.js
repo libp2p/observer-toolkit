@@ -1,14 +1,13 @@
 import { parseImport } from '@libp2p-observer/data'
 
-const defaultFilename = 'sample-1min.mock'
-
-async function fetchSample(filename = defaultFilename) {
+async function fetchSample(sampleIndex = 0) {
   // Only to be used in browser environment where fetch is available
   if (typeof fetch !== 'function')
     throw new Error('fetchSample() requires the browser fetch() API')
 
   const { default: samples } = await import('@libp2p-observer/samples')
-  const sample = samples.find(({ file }) => file.includes(filename))
+  const sample = samples[sampleIndex]
+
   const response = await fetch(sample.file)
 
   if (!response.ok) {

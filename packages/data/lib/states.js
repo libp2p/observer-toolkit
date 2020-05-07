@@ -31,6 +31,25 @@ function getStateTimes(state) {
   }
 }
 
+function getStateRangeTimes(states) {
+  if (!states || !states.length) {
+    return {
+      start: 0,
+      end: 0,
+      duration: 0,
+    }
+  }
+
+  const start = states[0].getStartTs()
+  const end = states[states.length - 1].getInstantTs()
+  const duration = end - start
+  return {
+    start,
+    end,
+    duration,
+  }
+}
+
 function getTimeIndex(states, timestamp) {
   return states.findIndex(state => getTime(state) === timestamp)
 }
@@ -38,6 +57,7 @@ function getTimeIndex(states, timestamp) {
 module.exports = {
   getLatestTimepoint,
   getSubsystems,
+  getStateRangeTimes,
   getStateTimes,
   getTime,
   getTimeIndex,

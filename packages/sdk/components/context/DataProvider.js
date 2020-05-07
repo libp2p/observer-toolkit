@@ -1,7 +1,11 @@
 import React, { useMemo, useState, useRef, createContext } from 'react'
 import T from 'prop-types'
 
-import { getEventType, getLatestTimepoint } from '@libp2p-observer/data'
+import {
+  getEventType,
+  getLatestTimepoint,
+  getStateRangeTimes,
+} from '@libp2p-observer/data'
 import { useConsoleAPI, useDatastore, useFilter } from '../../hooks'
 import { getListFilter, getRangeFilter } from '../../filters'
 
@@ -14,12 +18,6 @@ const PeersContext = createContext()
 const SetterContext = createContext()
 const WebsocketContext = createContext()
 const GlobalFilterContext = createContext()
-
-function _getStateTime(state) {
-  if (state.getInstantTs) return state.getInstantTs()
-  // Don't fail on encountering anomalous state
-  return 0
-}
 
 function DataProvider({
   initialData: {
@@ -67,13 +65,15 @@ function DataProvider({
     timepoint,
   })
 
+  const { start, end } = getStateRangeTimes(states)
+
   const filterDefs = [
     getRangeFilter({
       name: 'Filter by time',
-      mapFilter: msg => (msg.getTs ? msg.getTs() : _getStateTime(msg)),
-      min: states.length ? _getStateTime(states[0]) : 0,
-      max: states.length ? _getStateTime(states[states.length - 1]) : 0,
-      stepInterval: 1,
+      mapFilter: msg =>
+        msg.getTs ? msg.getTs() : msg.getInstantTs && msg.getInstantTs(),
+      min: start,
+      max: end,
       numberFieldType: 'time',
     }),
     getListFilter({

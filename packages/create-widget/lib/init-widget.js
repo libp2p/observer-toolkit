@@ -62,6 +62,9 @@ async function initWidget() {
 
   await Promise.all([
     copyFile('./index.js', { replaceText }),
+    copyFile('./metadata.js', { replaceText }),
+    copyFile('./Widget.js', { replaceText }),
+
     copyFile('./description.md', { replaceText }),
     copyFile('./README.md', { replaceText }),
 
@@ -73,9 +76,16 @@ async function initWidget() {
       replaceText,
       outputFilename: `${widgetNameCamel}.stories.js`,
     }),
+    copyFile('./components/MainComponent.test.js', {
+      replaceText,
+      outputFilename: `${widgetNameCamel}.test.js`,
+    }),
+    copyFile('./components/context/WidgetContext.js', { replaceText }),
 
     copyFile('./.storybook/config.js'),
     copyFile('./.storybook/webpack.config.js'),
+
+    copyFile('./screenshot.png'),
 
     // Copy config from this repo where possible to avoid duplication
     // 'root-repo' files are copied on publication in prepublish script
