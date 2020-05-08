@@ -8,8 +8,8 @@ import {
   Histogram,
   PeerIdChip,
   TimeContext,
-} from '@libp2p-observer/sdk'
-import { getStateTimes } from '@libp2p-observer/data'
+} from '@libp2p/observer-sdk'
+import { getStateTimes } from '@libp2p/observer-data'
 
 import { DhtQueryContext } from '../context/DhtQueryProvider'
 

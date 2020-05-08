@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { fireEvent } from '@testing-library/react'
 
-import { renderWithTheme, within } from '@libp2p-observer/testing'
+import { renderWithTheme, within } from '@libp2p/observer-testing'
 
 import {
   DataContext,

@@ -1,10 +1,10 @@
 {
-  "name": "@libp2p-observer/events-table",
+  "name": "@libp2p/observer-events-table",
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },
   "version": "0.0.1",
-  "description": "React component built on libp2p-introspection-ui SDK, visualizing libp2p events in a data table",
+  "description": "React component built on libp2p-observer SDK, visualizing libp2p events in a data table",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
   "license": "MIT",
@@ -17,15 +17,15 @@
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
-    "@libp2p-observer/data": "^0.0.1",
-    "@libp2p-observer/sdk": "^0.0.1",
+    "@libp2p/observer-data": "^0.0.1",
+    "@libp2p/observer-sdk": "^0.0.1",
     "react": "^16.10.2",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
-    "@libp2p-observer/shell": "^0.0.1",
+    "@libp2p/observer-shell": "^0.0.1",
     "@storybook/react": "^5.2.4",
     "@testing-library/react": "^9.4.0",
     "babel-jest": "^24.9.0",

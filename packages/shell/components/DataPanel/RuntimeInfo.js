@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled, { css } from 'styled-components'
 
-import { formatDuration, RuntimeContext } from '@libp2p-observer/sdk'
+import { formatDuration, RuntimeContext } from '@libp2p/observer-sdk'
 
 const Container = styled.div`
   min-width: 280px;

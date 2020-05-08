@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { formatDataSize, useFileBlob } from '@libp2p-observer/sdk'
+import { formatDataSize, useFileBlob } from '@libp2p/observer-sdk'
 
 const StyledLink = styled.a`
   display: block;

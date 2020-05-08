@@ -2,8 +2,8 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { RootNodeProvider } from '@libp2p-observer/sdk'
-import { ControlPanel } from '@libp2p-observer/shell'
+import { RootNodeProvider } from '@libp2p/observer-sdk'
+import { ControlPanel } from '@libp2p/observer-shell'
 
 const Page = styled.div`
   position: fixed;

@@ -1,5 +1,5 @@
-import { parseBufferList } from '@libp2p-observer/data'
-import { proto } from '@libp2p-observer/proto'
+import { parseBufferList } from '@libp2p/observer-data'
+import { proto } from '@libp2p/observer-proto'
 import { BufferList } from 'bl'
 
 let eventsRelease = false

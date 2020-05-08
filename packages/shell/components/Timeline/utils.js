@@ -3,8 +3,8 @@ import {
   getConnections,
   getTime,
   getConnectionTraffic,
-} from '@libp2p-observer/data'
-import { validateNumbers } from '@libp2p-observer/sdk'
+} from '@libp2p/observer-data'
+import { validateNumbers } from '@libp2p/observer-sdk'
 
 function getTickOffsets(ticks, scale) {
   const tickGap = ticks[1] - ticks[0]

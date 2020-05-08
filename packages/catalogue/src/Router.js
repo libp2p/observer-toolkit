@@ -4,7 +4,7 @@ import {
   DataContext,
   RuntimeContext,
   SourceContext,
-} from '@libp2p-observer/sdk'
+} from '@libp2p/observer-sdk'
 
 import { Connected, Home } from './pages'
 

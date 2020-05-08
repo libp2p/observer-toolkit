@@ -1,8 +1,8 @@
 import React from 'react'
 import T from 'prop-types'
 
-import { statusNames } from '@libp2p-observer/data'
-import { Chip } from '@libp2p-observer/sdk'
+import { statusNames } from '@libp2p/observer-data'
+import { Chip } from '@libp2p/observer-sdk'
 
 function StatusChip({ status }) {
   const options = {

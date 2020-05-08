@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { RootNodeProvider } from '@libp2p-observer/sdk'
-import { ControlPanel } from '@libp2p-observer/shell'
+import { RootNodeProvider } from '@libp2p/observer-sdk'
+import { ControlPanel } from '@libp2p/observer-shell'
 
 import approvedWidgets from '../definitions/approvedWidgets'
 import CatalogueItem from '../components/CatalogueItem'

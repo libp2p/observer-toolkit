@@ -8,8 +8,8 @@ import {
   FilterProvider,
   RuntimeContext,
   TimeContext,
-} from '@libp2p-observer/sdk'
-import { getEventType } from '@libp2p-observer/data'
+} from '@libp2p/observer-sdk'
+import { getEventType } from '@libp2p/observer-data'
 
 function WidgetContext({ children }) {
   const runtime = useContext(RuntimeContext)

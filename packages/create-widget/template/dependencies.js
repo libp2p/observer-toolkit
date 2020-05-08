@@ -5,9 +5,9 @@ const devDependenciesList = [
   '@babel/core',
   '@babel/preset-env',
   '@babel/preset-react',
-  '@libp2p-observer/samples',
-  '@libp2p-observer/shell',
-  '@libp2p-observer/testing',
+  '@libp2p/observer-samples',
+  '@libp2p/observer-shell',
+  '@libp2p/observer-testing',
   '@storybook/react',
   'arraybuffer-loader',
   'babel',
@@ -30,8 +30,8 @@ const devDependenciesList = [
   'yarn',
 ]
 const peerDependenciesList = [
-  '@libp2p-observer/data',
-  '@libp2p-observer/sdk',
+  '@libp2p/observer-data',
+  '@libp2p/observer-sdk',
   'react',
   'react-markdown',
   'styled-components',

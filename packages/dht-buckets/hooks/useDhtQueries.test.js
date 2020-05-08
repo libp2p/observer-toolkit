@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 
-import { DataContext, EventsContext } from '@libp2p-observer/sdk'
-import { getDhtQueries } from '@libp2p-observer/data'
-import { renderWithData } from '@libp2p-observer/testing'
+import { DataContext, EventsContext } from '@libp2p/observer-sdk'
+import { getDhtQueries } from '@libp2p/observer-data'
+import { renderWithData } from '@libp2p/observer-testing'
 
 import useDhtQueries from './useDhtQueries'
 

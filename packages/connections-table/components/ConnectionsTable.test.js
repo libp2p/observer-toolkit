@@ -6,8 +6,8 @@ import {
   renderWithData,
   renderWithShell,
   within,
-} from '@libp2p-observer/testing'
-import { getConnections, getLatestTimepoint } from '@libp2p-observer/data'
+} from '@libp2p/observer-testing'
+import { getConnections, getLatestTimepoint } from '@libp2p/observer-data'
 import ConnectionsTable from './ConnectionsTable'
 import WidgetContext from './context/WidgetContext'
 

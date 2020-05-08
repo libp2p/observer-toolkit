@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { getEventType, getRuntimeEventTypes } from '@libp2p-observer/data'
-import { RuntimeContext, Tooltip } from '@libp2p-observer/sdk'
+import { getEventType, getRuntimeEventTypes } from '@libp2p/observer-data'
+import { RuntimeContext, Tooltip } from '@libp2p/observer-sdk'
 
 import EventTypesPropertyControls from './EventTypesPropertyControls'
 

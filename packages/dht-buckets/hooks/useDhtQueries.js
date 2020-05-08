@@ -1,7 +1,7 @@
 import { useContext, useMemo } from 'react'
 
-import { getDhtPeers, getDhtQueries, getTime } from '@libp2p-observer/data'
-import { EventsContext, FilterContext, TimeContext } from '@libp2p-observer/sdk'
+import { getDhtPeers, getDhtQueries, getTime } from '@libp2p/observer-data'
+import { EventsContext, FilterContext, TimeContext } from '@libp2p/observer-sdk'
 
 function getQueriesByPeerId(events, currentState, toTs, applyFilters) {
   const queriesByPeerId = getDhtPeers(currentState).reduce(

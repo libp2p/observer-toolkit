@@ -2,7 +2,7 @@
 
 const {
   proto: { Runtime },
-} = require('@libp2p-observer/proto')
+} = require('@libp2p/observer-proto')
 
 const {
   DEFAULT_CUTOFFTIME_SECONDS,

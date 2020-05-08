@@ -11,9 +11,9 @@ import {
   Slider,
   TimeContext,
   Tooltip,
-} from '@libp2p-observer/sdk'
+} from '@libp2p/observer-sdk'
 
-import { getTime } from '@libp2p-observer/data'
+import { getTime } from '@libp2p/observer-data'
 
 const FormWrapper = styled.div`
   height: inherit;

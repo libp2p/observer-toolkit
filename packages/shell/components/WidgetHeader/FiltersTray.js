@@ -10,7 +10,7 @@ import {
   FilterSetterContext,
   Icon,
   StyledButton,
-} from '@libp2p-observer/sdk'
+} from '@libp2p/observer-sdk'
 
 const Container = styled.div`
   display: flex;

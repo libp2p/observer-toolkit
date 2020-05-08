@@ -3,7 +3,7 @@
 const { argv } = require('yargs')
 const {
   proto: { Connection, EndpointPair, StreamList },
-} = require('@libp2p-observer/proto')
+} = require('@libp2p/observer-proto')
 
 const {
   HOST_PEER_ID,

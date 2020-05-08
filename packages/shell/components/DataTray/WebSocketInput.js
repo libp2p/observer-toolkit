@@ -6,7 +6,7 @@ import {
   uploadWebSocket,
   useHandlerOnRef,
   SetterContext,
-} from '@libp2p-observer/sdk'
+} from '@libp2p/observer-sdk'
 
 const defaultUrl = 'ws://localhost:8080'
 

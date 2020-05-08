@@ -1,4 +1,4 @@
-# libp2p-introspection-ui SDK hooks
+# libp2p-observer SDK hooks
 
 These hooks are used to modify and shape data for use in components, based on stored state about user preferences and selections about how that data should be shaped and shown.
 
@@ -16,4 +16,4 @@ They are [custom React hooks](https://reactjs.org/docs/hooks-intro.html), which 
 ### Data manipulation
 
 - **[`useSorter`](./useTabularData.md)** Generates data-specific sorting functions based on state storing user sorting preferences.
-- `useFilters` [WIP](https://github.com/nearform/libp2p-introspection-ui/pull/4) Manages an array of active filtering functions, configurable by user interactions with UI components, with state storing filter-specific preferences.
+- `useFilters` [WIP](https://github.com/nearform/libp2p-observer/pull/4) Manages an array of active filtering functions, configurable by user interactions with UI components, with state storing filter-specific preferences.

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { SetterContext, PeersContext, useAreaChart } from '@libp2p-observer/sdk'
+import { SetterContext, PeersContext, useAreaChart } from '@libp2p/observer-sdk'
 
 import DataTicks from './DataTicks'
 import TimeTicks from './TimeTicks'

@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { timeFormat } from 'd3'
 
-import { Icon, PeerIdChip, Tooltip } from '@libp2p-observer/sdk'
+import { Icon, PeerIdChip, Tooltip } from '@libp2p/observer-sdk'
 import { getRenderer } from '../utils/buildEventsColumns'
 const timeFormatter = timeFormat('%H:%M:%S.%L')
 

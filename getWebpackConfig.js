@@ -5,7 +5,7 @@ const path = require('path')
 const PeerDepsExternals = require('peer-deps-externals-webpack-plugin')
 const { jsxPackages } = require('./jsx-packages')
 
-// const jsxPackageNames = jsxPackages.map(name => `@libp2p-observer/${name}`)
+// const jsxPackageNames = jsxPackages.map(name => `@libp2p/${name}`)
 
 function getWebpackConfig(dirname) {
   const jsxPackagePaths = jsxPackages.map(name =>
