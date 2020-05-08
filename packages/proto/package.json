@@ -1,5 +1,5 @@
 {
-  "name": "@libp2p-observer/proto",
+  "name": "@libp2p/observer-proto",
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },

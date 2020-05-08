@@ -1,5 +1,5 @@
 {
-  "name": "@libp2p-observer/sdk",
+  "name": "@libp2p/observer-sdk",
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },
@@ -20,7 +20,7 @@
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
-    "@libp2p-observer/data": "^0.0.1",
+    "@libp2p/observer-data": "^0.0.1",
     "react": "^16.10.2",
     "react-dom": "^16.11.0",
     "styled-components": "^4.4.0"

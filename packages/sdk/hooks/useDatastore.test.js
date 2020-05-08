@@ -7,7 +7,7 @@ import {
   getMockRuntime,
   getMockState,
   getMockEvent,
-} from '@libp2p-observer/testing'
+} from '@libp2p/observer-testing'
 import useDatastore from './useDatastore'
 
 function TestOutput({ states = [], events = [], runtime, keepStaleDataMs }) {

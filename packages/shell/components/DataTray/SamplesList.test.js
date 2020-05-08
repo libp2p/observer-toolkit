@@ -3,14 +3,14 @@ import T from 'prop-types'
 import { fireEvent, act } from '@testing-library/react'
 import waitForExpect from 'wait-for-expect'
 
-import { SetterContext } from '@libp2p-observer/sdk'
+import { SetterContext } from '@libp2p/observer-sdk'
 
 import {
   renderWithData,
   renderWithShell,
   loadSample,
   within,
-} from '@libp2p-observer/testing'
+} from '@libp2p/observer-testing'
 
 import SamplesList from './SamplesList'
 

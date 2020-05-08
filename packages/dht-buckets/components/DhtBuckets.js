@@ -6,8 +6,8 @@ import {
   getAllDhtBuckets,
   getDhtPeersInBucket,
   getTime,
-} from '@libp2p-observer/data'
-import { TimeContext } from '@libp2p-observer/sdk'
+} from '@libp2p/observer-data'
+import { TimeContext } from '@libp2p/observer-sdk'
 
 import DhtColumn from './DhtColumn/DhtColumn'
 

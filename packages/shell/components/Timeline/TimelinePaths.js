@@ -7,8 +7,8 @@ import {
   SetterContext,
   PeersContext,
   useAreaChart,
-} from '@libp2p-observer/sdk'
-import { getStateRangeTimes } from '@libp2p-observer/data'
+} from '@libp2p/observer-sdk'
+import { getStateRangeTimes } from '@libp2p/observer-data'
 import { getStateWidth } from './utils'
 
 import DataTicks from './DataTicks'

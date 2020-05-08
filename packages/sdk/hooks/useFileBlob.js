@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { proto, fnv1a } from '@libp2p-observer/proto'
+import { proto, fnv1a } from '@libp2p/observer-proto'
 
 import {
   DataContext,

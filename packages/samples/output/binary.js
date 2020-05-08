@@ -1,6 +1,6 @@
 'use strict'
 
-const { fnv1a } = require('@libp2p-observer/proto')
+const { fnv1a } = require('@libp2p/observer-proto')
 
 function createBufferSegment(packet, version) {
   const { buffer, byteLength } = packet.serializeBinary()

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import T from 'prop-types'
 
-import { DataProvider } from '@libp2p-observer/sdk'
+import { DataProvider } from '@libp2p/observer-sdk'
 
 import ThemeWrapper from './ThemeWrapper'
 import fetchSample from '../loaders/fetchSample'

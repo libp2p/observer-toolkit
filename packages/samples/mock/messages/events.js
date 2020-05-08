@@ -2,7 +2,7 @@
 
 const {
   proto: { Event, EventType },
-} = require('@libp2p-observer/proto')
+} = require('@libp2p/observer-proto')
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb')
 
 const { createBufferSegment } = require('../../output/binary')

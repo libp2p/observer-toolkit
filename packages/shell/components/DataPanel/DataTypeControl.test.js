@@ -7,8 +7,8 @@ import {
   catchErrorSilently,
   renderWithTheme,
   getMockRuntime,
-} from '@libp2p-observer/testing'
-import { DataProvider } from '@libp2p-observer/sdk'
+} from '@libp2p/observer-testing'
+import { DataProvider } from '@libp2p/observer-sdk'
 import DataTypeControl from './DataTypeControl'
 
 const initialData = {

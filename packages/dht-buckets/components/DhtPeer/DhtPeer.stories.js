@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import styled from 'styled-components'
 
-import { DataDemoWrapper } from '@libp2p-observer/testing'
+import { DataDemoWrapper } from '@libp2p/observer-testing'
 
 import DhtPeer from './DhtPeer'
 

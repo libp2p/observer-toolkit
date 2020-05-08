@@ -1,6 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
-import { ThemeSetter, DataProvider, FilterProvider } from '@libp2p-observer/sdk'
+import { ThemeSetter, DataProvider, FilterProvider } from '@libp2p/observer-sdk'
 
 function ContextWrappers({ children }) {
   return (

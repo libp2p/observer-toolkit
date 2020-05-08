@@ -10,7 +10,7 @@ function getDepVersion(depName, depType, corePackageJson) {
   let version = corePackageJson[depType] && corePackageJson[depType][depName]
   if (!version) {
     // For sibling packages, use the latest version
-    const siblingMatch = depName.match(/^@libp2p-observer\/(.+)/)
+    const siblingMatch = depName.match(/^@libp2p\/(.+)/)
     const isSiblingPackage = !!siblingMatch
 
     // For other dependencies, use the version used by the SDK

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 
-import { Icon, SetterContext, WebsocketContext } from '@libp2p-observer/sdk'
+import { Icon, SetterContext, WebsocketContext } from '@libp2p/observer-sdk'
 
 // TODO: animate circle for incoming state using stroke-dasharray transition
 // like in https://stackoverflow.com/questions/26178095/svg-circle-animation

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 
-import { getTime, getStateTimes } from '@libp2p-observer/data'
+import { getTime, getStateTimes } from '@libp2p/observer-data'
 
 // High default cutoff time to avoid spurious trimming if runtime message is delayed
 const DEFAULT_CUTOFF_MS = 1000 * 60 * 60 * 24

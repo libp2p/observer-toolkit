@@ -2,7 +2,7 @@
 
 const {
   proto: { EventType },
-} = require('@libp2p-observer/proto')
+} = require('@libp2p/observer-proto')
 const { EventProperty } = EventType
 
 const InboundDHTQuery = new EventType(['InboundDHTQuery'])

@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { DataTableRow, TableRow } from '@libp2p-observer/sdk'
+import { DataTableRow, TableRow } from '@libp2p/observer-sdk'
 
 const EventsTableTr = styled(TableRow)`
   animation: 500ms ease-in 1 ${({ theme }) => theme.keyframes.fadeIn};

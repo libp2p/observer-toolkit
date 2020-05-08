@@ -5,7 +5,7 @@ import {
   ThemeWrapper,
   DataDemoWrapper,
   ShellDemoWrapper,
-} from '@libp2p-observer/testing'
+} from '@libp2p/observer-testing'
 import WidgetContext from '../components/context/WidgetContext'
 
 function getWrapper(wrapper) {

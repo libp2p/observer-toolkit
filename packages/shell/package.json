@@ -1,18 +1,18 @@
 {
-  "name": "@libp2p-observer/shell",
+  "name": "@libp2p/observer-shell",
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },
   "version": "0.0.1",
   "description": "Outer UI controls for libp2p-observer widgets, including interactive timeline, filters and data controls",
   "author": "AlanSl <alan.slater@nearform.com>",
-  "homepage": "https://github.com/nearform/libp2p-introspection-ui#readme",
+  "homepage": "https://github.com/nearform/libp2p-observer#readme",
   "license": "MIT",
   "main": "./build/index.js",
   "module": "./index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
+    "url": "git+https://github.com/nearform/libp2p-observer.git"
   },
   "scripts": {
     "prepare": "webpack",
@@ -21,17 +21,17 @@
     "update-snapshots": "npm run test -- -u"
   },
   "bugs": {
-    "url": "https://github.com/nearform/libp2p-introspection-ui/issues"
+    "url": "https://github.com/nearform/libp2p-observer/issues"
   },
   "dependencies": {
-    "@libp2p-observer/data": "^0.0.1"
+    "@libp2p/observer-data": "^0.0.1"
   },
   "peerDependencies": {
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "styled-components": "^4.4.0",
-    "@libp2p-observer/sdk": "^0.0.1",
-    "@libp2p-observer/samples": "^0.0.1"
+    "@libp2p/observer-sdk": "^0.0.1",
+    "@libp2p/observer-samples": "^0.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",

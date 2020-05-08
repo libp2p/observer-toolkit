@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { Icon, StyledButton, Tooltip } from '@libp2p-observer/sdk'
+import { Icon, StyledButton, Tooltip } from '@libp2p/observer-sdk'
 
 import StreamsSubtable from './StreamsSubtable'
 

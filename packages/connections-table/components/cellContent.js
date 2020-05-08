@@ -10,7 +10,7 @@ import {
   StatusChip,
   FormatedNumber,
   Tooltip,
-} from '@libp2p-observer/sdk'
+} from '@libp2p/observer-sdk'
 
 const Nowrap = styled.span`
   white-space: nowrap;
