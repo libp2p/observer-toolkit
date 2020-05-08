@@ -1,6 +1,7 @@
 'use strict'
 
-const { getSubsystems, getTime } = require('./states')
+const { getEnumByName, statusNames } = require('./enums')
+const { getSubsystems, getStateTimes, getTime } = require('./states')
 
 // Convenience functions for extracting connections (and their streams) from decoded protobuf
 
@@ -14,7 +15,7 @@ function getAllConnections(timepoints, { filter, latest = false } = {}) {
         test(testConn) &&
         !previousConns.some(
           existingConn =>
-            testConn.getId().toString() === existingConn.getId().toString()
+            getConnectionId(testConn) === getConnectionId(existingConn)
         )
     )
     if (!newConns.length) return previousConns
@@ -30,6 +31,63 @@ function getAllConnections(timepoints, { filter, latest = false } = {}) {
 function getConnections(timepoint) {
   const subsystems = getSubsystems(timepoint)
   return subsystems ? subsystems.getConnectionsList() : []
+}
+
+// Returns connections missing from states data as closed connections
+function getMissingClosedConnections(currentState, states) {
+  if (!currentState) return []
+
+  const now = performance.now()
+
+  const reversedStates = [...states].sort(
+    (a, b) => getStateTimes(b).end - getStateTimes(a).end
+  )
+  const previousStates = reversedStates.slice(
+    reversedStates.indexOf(currentState)
+  )
+  const currentConnections = getConnections(currentState)
+
+  // Times for the first state in which a connection was absent
+  // therefore it closed during that state's time interval
+  let previousStateTime = getStateTimes(currentState)
+  let foundConnIds = currentConnections.map(conn => getConnectionId(conn))
+
+  // Find missing connections from most recent state they were in
+  const missingConnections = previousStates.reduce(
+    (missingConnections, state) => {
+      const newClosedConns = getConnections(state).filter(
+        conn =>
+          statusNames[conn.getStatus()] === 'ACTIVE' &&
+          !foundConnIds.includes(getConnectionId(conn))
+      )
+      const newConnIds = newClosedConns.map(conn => getConnectionId(conn))
+      foundConnIds = [...foundConnIds, ...newConnIds]
+
+      const closedClones = newClosedConns.map(connection => {
+        const connClone = connection.clone()
+        connClone.setStatus(getEnumByName('CLOSED', statusNames))
+
+        // When closed connections are absent, we don't have a `close_ts`
+        // so the best we can do is report the middle of the possible range
+        const { start, end } = previousStateTime
+        const closeTimeEstimate = (start + end) / 2
+        connClone.getTimeline().setCloseTs(closeTimeEstimate)
+
+        return connClone
+      })
+
+      previousStateTime = getStateTimes(state)
+      return [...missingConnections, ...closedClones]
+    },
+    []
+  )
+
+  console.log(missingConnections.length, performance.now() - now)
+  return missingConnections
+}
+
+function getConnectionId(connection) {
+  return connection.getId().toString()
 }
 
 function getStreams(connection) {
@@ -111,6 +169,8 @@ module.exports = {
   getAllConnections,
   getAllStreamsAtTime,
   getConnections,
+  getMissingClosedConnections,
+  getConnectionId,
   getConnectionAge,
   getStreamAge,
   getConnectionTimeClosed,

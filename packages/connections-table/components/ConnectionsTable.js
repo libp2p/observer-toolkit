@@ -1,21 +1,32 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 
 import {
+  DataContext,
   DataTable,
   TimeContext,
   useHidePrevious,
   useTabularData,
 } from '@libp2p-observer/sdk'
-import { getConnections } from '@libp2p-observer/data'
+import {
+  getConnections,
+  getMissingClosedConnections,
+} from '@libp2p-observer/data'
 
 import ConnectionsTableRow from './ConnectionsTableRow'
 import connectionsColumnDefs from '../definitions/connectionsColumns'
 import { MetadataContext } from './context/MetadataProvider'
 
 function ConnectionsTable() {
-  const timepoint = useContext(TimeContext)
+  const currentState = useContext(TimeContext)
+  const states = useContext(DataContext)
   const metadata = useContext(MetadataContext)
   const hidePrevious = useHidePrevious()
+
+  const allConnections = useMemo(() => {
+    const connections = getConnections(currentState)
+    const missingConnections = getMissingClosedConnections(currentState, states)
+    return [...connections, ...missingConnections]
+  }, [currentState, states])
 
   const {
     columnDefs,
@@ -29,10 +40,10 @@ function ConnectionsTable() {
     rowCounts,
   } = useTabularData({
     columns: connectionsColumnDefs,
-    data: getConnections(timepoint),
+    data: allConnections,
     defaultSort: 'status',
     metadata: {
-      timepoint,
+      timepoint: currentState,
       hidePrevious,
       ...metadata,
     },
