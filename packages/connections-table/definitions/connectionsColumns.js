@@ -130,6 +130,8 @@ const streamsCol = {
   align: 'right',
 }
 
+// Transport column disabled while no data available
+// eslint-disable-next-line no-unused-vars
 const transportCol = {
   name: 'transport',
   getProps: connection => {
@@ -163,7 +165,8 @@ const statusCol = {
 const columns = [
   statusCol,
   peerIdCol,
-  transportCol,
+  // Transport column disabled while no data available
+  //  transportCol,
   ageCol,
   closedCol,
   dataInCol,
