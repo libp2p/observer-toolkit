@@ -3,18 +3,12 @@ import T from 'prop-types'
 
 import { fireEvent } from '@testing-library/react'
 
-import { catchErrorSilently, renderWithTheme } from '@libp2p-observer/testing'
+import { catchErrorSilently, renderWithTheme, getMockRuntime } from '@libp2p-observer/testing'
 import { DataProvider } from '@libp2p-observer/sdk'
 import DataTypeControl from './DataTypeControl'
 
 const initialData = {
-  runtime: {
-    getPeerId: () =>
-      '75171c9d7b5b5b99d6d93aaaa2e802dc9473369e41a323a0c1020837180ba20b',
-    getKeepStaleDataMs: () => 30000,
-    getSendStateIntervalMs: () => 2000,
-    getEventTypesList: () => [],
-  },
+  runtime: getMockRuntime(),
 }
 
 function DataTypeWithSource({ source, openDataTray = () => {} }) {

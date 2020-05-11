@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { fireEvent } from '@testing-library/react'
 
-import { renderWithTheme, within } from '@libp2p-observer/testing'
+import { renderWithTheme, within, getMockState } from '@libp2p-observer/testing'
 
 import {
   DataContext,
@@ -26,13 +26,7 @@ const mockCs = [
   { type: 'c', num: 6 },
   { type: 'c', num: 3 },
 ]
-const mockData = [...mockAs, ...mockBs, ...mockCs]
-mockData.forEach(datum => {
-  // Add expected methods to fake states
-  datum.getStartTs = () => {}
-  datum.getInstantTs = () => {}
-  datum.getSnapshotDurationMs = () => {}
-})
+const mockData = [...mockAs, ...mockBs, ...mockCs].map(getMockState)
 
 const filterName = 'mock list filter'
 
