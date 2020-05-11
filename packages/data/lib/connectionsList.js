@@ -37,8 +37,6 @@ function getConnections(timepoint) {
 function getMissingClosedConnections(currentState, states) {
   if (!currentState) return []
 
-  const now = performance.now()
-
   const reversedStates = [...states].sort(
     (a, b) => getStateTimes(b).end - getStateTimes(a).end
   )
@@ -82,7 +80,6 @@ function getMissingClosedConnections(currentState, states) {
     []
   )
 
-  console.log(missingConnections.length, performance.now() - now)
   return missingConnections
 }
 
