@@ -1,52 +1,170 @@
-import { useCallback, useReducer, useState } from 'react'
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 
-let CUTOFF_MS = 60000
-let PRESUMED_STATE_LENGTH = 2000
+import { getTime, getStateTimes } from '@libp2p-observer/data'
 
-function getStartTs(msg) {
-  if (msg.getTs) return msg.getTs()
+// High default cutoff time to avoid spurious trimming if runtime message is delayed
+const DEFAULT_CUTOFF_MS = 1000 * 60 * 60 * 24
 
-  return msg.getStartTs()
-    ? msg.getStartTs()
-    : msg.getInstantTs() - PRESUMED_STATE_LENGTH
+function getEventTime(event) {
+  return event.getTs()
+}
+function getStateEnd(state) {
+  return getTime(state)
+}
+function getMessageSorter(getTime) {
+  return (a, b) => getTime(a) - getTime(b)
+}
+const sortStates = getMessageSorter(getStateEnd)
+const sortEvents = getMessageSorter(getEventTime)
+
+// To access metadata inside useReducer dispatcher, it must be attached to the hook data
+function attachCutoff(messages, cutoff, cutoffKey) {
+  if (typeof cutoff !== 'number' || isNaN(cutoff)) {
+    throw new Error(
+      `${cutoffKey ||
+        'Undefined cutoff type'} ${cutoff} (${typeof cutoff}) is not a number`
+    )
+  }
+  if (cutoff === messages[cutoffKey]) return messages
+
+  messages[cutoffKey] = cutoff
+  return messages
+}
+const attachStatesCutoff = (states, cutoffMs) =>
+  attachCutoff(states, cutoffMs, 'cutoffMs')
+const attachEventsCutoff = (events, cutoffTime) => {
+  const after = attachCutoff(events, cutoffTime, 'cutoffTime')
+  return after
 }
 
-function updateStoredData(data) {
-  let latestTs = data
-    .map(msg => getStartTs(msg))
-    .sort()
-    .pop()
-  return data
-    .filter(msg => {
-      if (latestTs - getStartTs(msg) > CUTOFF_MS) return false
-      return true
-    })
-    .map(msg => {
-      if (!msg.getSubsystems) return msg
-      const stateTs = getStartTs(msg)
-      const subsystems = msg.getSubsystems()
-      const connections = subsystems.getConnectionsList()
-      const cns = connections.filter(cn => {
-        if (!cn.getTimeline().getCloseTs()) {
-          return true
-        }
-        const closeTs = cn.getTimeline().getCloseTs()
-        return stateTs - closeTs < CUTOFF_MS
-      })
-      subsystems.setConnectionsList(cns)
-      msg.setSubsystems(subsystems)
-      return msg
-    })
+function getEmptyEvents(cutoffTime = 0) {
+  const events = []
+  events.cutoffTime = cutoffTime
+  return events
 }
 
-function handleDispatchData(oldData, { action, data }) {
+function getEmptyStates(cutoffMs = DEFAULT_CUTOFF_MS) {
+  const states = []
+  states.cutoffMs = cutoffMs
+  return states
+}
+
+function getCutoffTime(states, cutoffMs) {
+  if (!states.length) return 0
+  const lastStateTs = getStateTimes(states[states.length - 1]).end
+  return lastStateTs - cutoffMs
+}
+
+function updateCutoffRef(cutoffRef, runtime) {
+  const newCutoffMs = runtime
+    ? runtime.getKeepStaleDataMs() || DEFAULT_CUTOFF_MS
+    : DEFAULT_CUTOFF_MS
+
+  if (cutoffRef.current === newCutoffMs) return null
+  cutoffRef.current = newCutoffMs
+  return newCutoffMs
+}
+
+function trimStaleMessages(messages, cutoffTime, getTime) {
+  if (!messages.length) return messages
+  const firstMessageTs = getTime(messages[0])
+
+  if (firstMessageTs >= cutoffTime) return messages
+
+  const trimmedMessages = messages.slice(
+    messages.findIndex(message => getTime(message) >= cutoffTime)
+  )
+  return trimmedMessages
+}
+
+function insertMessages(messages, oldMessages, getTime) {
+  if (!messages.length) return messages
+  const sortMessages = getMessageSorter(getTime)
+  const sortedNewMessages = [...messages.sort(sortMessages)]
+  const joinedMessages = [...oldMessages, ...sortedNewMessages]
+  if (!oldMessages.length) return joinedMessages
+
+  // If any new messages come before last old message, fix sort order
+  const firsSortedNewTs = getTime(sortedNewMessages[0])
+  const lastOldTs = getTime(oldMessages[oldMessages.length - 1])
+  if (firsSortedNewTs < lastOldTs) {
+    joinedMessages.sort(sortMessages)
+  }
+  return joinedMessages
+}
+
+function appendStates(newStates, oldStates, cutoffMs) {
+  const joinedStates = insertMessages(newStates, oldStates, getStateEnd)
+  const cutoffTime = getCutoffTime(joinedStates, cutoffMs)
+  return trimStaleMessages(joinedStates, cutoffTime, getStateEnd)
+}
+
+function replaceStates(states, cutoffMs) {
+  const sortedStates = [...states].sort(sortStates)
+  const cutoffTime = getCutoffTime(sortedStates, cutoffMs)
+  const trimmedStates = trimStaleMessages(sortedStates, cutoffTime, getStateEnd)
+  return trimmedStates
+}
+
+function appendEvents(newEvents, oldEvents, cutoffTime = 0) {
+  const joinedEvents = insertMessages(newEvents, oldEvents, getEventTime)
+  const trimmedEvents = trimStaleMessages(
+    joinedEvents,
+    cutoffTime,
+    getEventTime
+  )
+  return trimmedEvents
+}
+
+function replaceEvents(events) {
+  return [...events].sort(sortEvents)
+}
+
+function handleDispatchStates(oldData, { action, data, cutoffMs }) {
   switch (action) {
     case 'append':
-      return updateStoredData(appendToStoredData(data, oldData))
+      return attachStatesCutoff(appendStates(data, oldData, cutoffMs), cutoffMs)
     case 'replace':
-      return updateStoredData(replaceStoredData(data))
+      return attachStatesCutoff(replaceStates(data, cutoffMs), cutoffMs)
+    case 'setCutoff':
+      return attachStatesCutoff(
+        trimStaleMessages(
+          oldData,
+          getCutoffTime(oldData, cutoffMs),
+          getStateEnd
+        ),
+        cutoffMs
+      )
     case 'remove':
-      return []
+      return getEmptyStates()
+    default:
+      throw new Error(`Action "${action}" not valid in handleDispatchData`)
+  }
+}
+
+function handleDispatchEvents(oldData, { action, data, cutoffTime }) {
+  switch (action) {
+    case 'append':
+      return attachEventsCutoff(
+        appendEvents(data, oldData, oldData.cutoffTime),
+        oldData.cutoffTime
+      )
+    case 'replace':
+      return attachEventsCutoff(
+        replaceEvents(data),
+        0 // Replaced events cutoff will be applied in useEffect after states resolve
+      )
+    case 'setCutoff':
+      return cutoffTime !== oldData.cutoffTime
+        ? attachEventsCutoff(
+            cutoffTime
+              ? trimStaleMessages(oldData, cutoffTime, getEventTime)
+              : oldData,
+            cutoffTime
+          )
+        : oldData
+    case 'remove':
+      return getEmptyEvents()
     default:
       throw new Error(`Action "${action}" not valid in handleDispatchData`)
   }
@@ -63,16 +181,6 @@ function handleDispatchSource(oldSource, { action, source }) {
     default:
       throw new Error(`Action "${action}" not valid in handleDispatchSource`)
   }
-}
-
-function appendToStoredData(newData, oldData) {
-  if (!oldData) return newData
-  return [...oldData, ...newData]
-}
-
-function replaceStoredData(data) {
-  // E.g. after uploading a new file or connecting to a new source
-  return data
 }
 
 function handleDispatchWebsocket(oldWsData, { action, ...args }) {
@@ -135,12 +243,34 @@ function getEmptySource() {
 
 function useDatastore({
   initialRuntime,
-  initialStates = [],
-  initialEvents = [],
+  initialStates = getEmptyStates(),
+  initialEvents = getEmptyEvents(),
   initialSource = getEmptySource(),
 }) {
-  const [states, dispatchStates] = useReducer(handleDispatchData, initialStates)
-  const [events, dispatchEvents] = useReducer(handleDispatchData, initialEvents)
+  const cutoffRef = useRef(DEFAULT_CUTOFF_MS)
+  const [runtime, setRuntime] = useState(initialRuntime)
+  updateCutoffRef(cutoffRef, runtime)
+
+  const [states, dispatchStates] = useReducer(
+    handleDispatchStates,
+    initialStates,
+    initStates => {
+      const cutoffMs = cutoffRef.current
+      return attachStatesCutoff(replaceStates(initStates, cutoffMs), cutoffMs)
+    }
+  )
+
+  const [events, dispatchEvents] = useReducer(
+    handleDispatchEvents,
+    initialEvents,
+    initEvents => {
+      const cutoffTime = getCutoffTime(states, cutoffRef.current)
+      return attachEventsCutoff(
+        appendEvents(initEvents, [], cutoffTime),
+        cutoffTime
+      )
+    }
+  )
   const [source, dispatchSource] = useReducer(
     handleDispatchSource,
     initialSource
@@ -149,15 +279,7 @@ function useDatastore({
     handleDispatchWebsocket,
     null
   )
-  const [runtime, setRuntime] = useState(initialRuntime)
   const [peerIds, setPeerIds] = useState([])
-
-  if (runtime && runtime.getKeepStaleDataMs()) {
-    CUTOFF_MS = runtime.getKeepStaleDataMs()
-  }
-  if (runtime && runtime.getSendStateIntervalMs()) {
-    PRESUMED_STATE_LENGTH = runtime.getSendStateIntervalMs()
-  }
 
   const setIsLoading = useCallback(
     isLoading =>
@@ -165,59 +287,90 @@ function useDatastore({
     [dispatchSource]
   )
 
+  const updateRuntime = useCallback(
+    runtime => {
+      if (!runtime) {
+        setRuntime(null)
+        cutoffRef.current = DEFAULT_CUTOFF_MS
+        return
+      }
+
+      const newCutoffMs = updateCutoffRef(cutoffRef, runtime)
+      setRuntime(runtime)
+      if (newCutoffMs) {
+        dispatchStates({
+          action: 'setCutoff',
+          cutoffMs: newCutoffMs,
+        })
+        // Events cutoff will be updated by useEffect using updated states
+      }
+    },
+    [cutoffRef, setRuntime]
+  )
+
   const updateData = useCallback(
-    ({ states = [], events = [], runtime }) => {
-      if (states.length)
+    ({
+      states: newStates = [],
+      events: newEvents = [],
+      runtime: newRuntime,
+    }) => {
+      if (newRuntime) updateRuntime(newRuntime)
+
+      if (newStates.length) {
         dispatchStates({
           action: 'append',
-          data: states,
+          data: newStates,
+          cutoffMs: cutoffRef.current,
         })
-      if (events.length)
+      }
+
+      if (newEvents.length) {
         dispatchEvents({
           action: 'append',
-          data: events,
+          data: newEvents,
         })
-      if (runtime) setRuntime(runtime)
+      }
     },
-    [dispatchEvents, dispatchStates, setRuntime]
+    [updateRuntime, dispatchEvents, dispatchStates, cutoffRef]
   )
 
   const replaceData = useCallback(
-    ({ states = [], events = [], runtime, source }) => {
+    ({
+      states: newStates = [],
+      events: newEvents = [],
+      runtime: newRuntime,
+      source: newSource,
+    }) => {
+      updateRuntime(newRuntime || null)
       dispatchStates({
-        action: states.length ? 'replace' : 'remove',
-        data: states,
+        action: newStates.length ? 'replace' : 'remove',
+        data: newStates,
+        cutoffMs: newRuntime
+          ? newRuntime.getKeepStaleDataMs()
+          : DEFAULT_CUTOFF_MS,
       })
       dispatchEvents({
-        action: events.length ? 'replace' : 'remove',
-        data: events,
+        action: newEvents.length ? 'replace' : 'remove',
+        data: newEvents,
       })
-      setRuntime(runtime)
-
       dispatchWebsocket({
         action: 'close',
         reason: 'Connection replaced by user',
       })
-      source &&
+      newSource &&
         dispatchSource({
           action: 'update',
-          source,
+          source: newSource,
         })
     },
-    [
-      dispatchEvents,
-      dispatchStates,
-      dispatchSource,
-      dispatchWebsocket,
-      setRuntime,
-    ]
+    [updateRuntime]
   )
 
   const removeData = useCallback(
     source => {
       dispatchEvents({ action: 'remove' })
       dispatchStates({ action: 'remove' })
-      setRuntime(undefined)
+      updateRuntime(null)
 
       dispatchWebsocket({
         action: 'close',
@@ -225,14 +378,20 @@ function useDatastore({
       })
       dispatchSource({ action: source ? 'update' : 'remove', source })
     },
-    [
-      dispatchEvents,
-      dispatchStates,
-      dispatchSource,
-      dispatchWebsocket,
-      setRuntime,
-    ]
+    [updateRuntime]
   )
+
+  const cutoffMs = cutoffRef.current
+  useEffect(() => {
+    // Updating events cutoff time must be done after state updates have applied
+    const cutoffTime = getCutoffTime(states, cutoffMs)
+    // Check if cutoff time has changed in dispatch handler, so `events` isn't
+    // needed as useEffect dep, so this effect doesn't run on every new event
+    dispatchEvents({
+      action: 'setCutoff',
+      cutoffTime,
+    })
+  }, [dispatchEvents, states, cutoffMs])
 
   return {
     states,
@@ -245,6 +404,7 @@ function useDatastore({
     replaceData,
     removeData,
     setPeerIds,
+    updateRuntime,
     setRuntime,
     websocket,
     dispatchWebsocket,
