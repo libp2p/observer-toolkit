@@ -50,7 +50,7 @@ function DataTableRow({
       setTimeout(() => {
         if (!rowRef.current) return
         rowRef.current.style.transition = '500ms transform ease-in'
-        rowRef.current.style.transform = 'translateY(0px)'
+        rowRef.current.style.transform = ''
       })
     }
   }, [rowRef, yFrom])
