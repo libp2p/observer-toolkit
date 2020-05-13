@@ -1,7 +1,7 @@
 {
   "name": "@libp2p/observer-streams-table",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
   "version": "0.0.1",
   "description": "React component built on libp2p-observer SDK, visualizing libp2p streams in a data table",

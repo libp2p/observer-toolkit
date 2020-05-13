@@ -1,7 +1,7 @@
 {
   "name": "@libp2p/observer-data",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
   "version": "0.0.1",
   "description": "Javascript protobuf decoder for libp2p-introspection messages, with helper functions",

@@ -1,7 +1,7 @@
 {
   "name": "@libp2p/observer-sdk",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
   "version": "0.0.1",
   "description": "Core components, utilities and API for building libp2p introspection ui components",
