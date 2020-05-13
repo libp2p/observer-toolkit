@@ -56,7 +56,8 @@ function StatusChip({ status, timeOpen, timeClosed, duration }) {
   const runtime = useContext(RuntimeContext)
   const expiryMs = runtime ? runtime.getKeepStaleDataMs() : 0
   const fade = status === 'CLOSED' ? getFadeOpacity(timeClosed, expiryMs) : null
-  const glow = status === 'ACTIVE' ? getGlowOpacity(timeOpen, duration * 2) : null
+  const glow =
+    status === 'ACTIVE' ? getGlowOpacity(timeOpen, duration * 2) : null
 
   const secondsUntilExpire = fade && Math.round((expiryMs - timeClosed) / 1000)
 
@@ -85,6 +86,9 @@ function StatusChip({ status, timeOpen, timeClosed, duration }) {
 
 StatusChip.propTypes = {
   status: T.oneOf(Object.values(statusNames)),
+  timeOpen: T.number,
+  timeClosed: T.number,
+  duration: T.number,
 }
 
 export default StatusChip

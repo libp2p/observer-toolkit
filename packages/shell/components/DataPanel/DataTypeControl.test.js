@@ -3,7 +3,11 @@ import T from 'prop-types'
 
 import { fireEvent } from '@testing-library/react'
 
-import { catchErrorSilently, renderWithTheme, getMockRuntime } from '@libp2p-observer/testing'
+import {
+  catchErrorSilently,
+  renderWithTheme,
+  getMockRuntime,
+} from '@libp2p-observer/testing'
 import { DataProvider } from '@libp2p-observer/sdk'
 import DataTypeControl from './DataTypeControl'
 

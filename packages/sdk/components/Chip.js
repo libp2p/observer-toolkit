@@ -33,7 +33,16 @@ const ChipText = styled.span`
   vertical-align: middle;
 `
 
-function Chip({ type, options, prefix = '', suffix = '', fade, glow, children, ...props }) {
+function Chip({
+  type,
+  options,
+  prefix = '',
+  suffix = '',
+  fade,
+  glow,
+  children,
+  ...props
+}) {
   if (!options[type]) {
     throw new Error(
       `Chip option "${type}" not in "${Object.keys(options).join('", "')}"`
