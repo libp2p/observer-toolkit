@@ -1,8 +1,8 @@
 import React, { createContext, useContext } from 'react'
 import T from 'prop-types'
 
-import { getTime, getDhtPeers } from '@libp2p/observer-data'
-import { usePooledData, TimeContext } from '@libp2p/observer-sdk'
+import { getTime, getDhtPeers } from '@nearform/observer-data'
+import { usePooledData, TimeContext } from '@nearform/observer-sdk'
 
 import useDhtQueries from '../../hooks/useDhtQueries'
 import { getQueryTimesByPeer } from '../../utils/queries'

@@ -14,7 +14,7 @@ const {
   getDhtQueries,
   getDhtQueryTimes,
   dhtStatusNames,
-} = require('@libp2p/observer-data')
+} = require('@nearform/observer-data')
 
 function abortIfFailed(failCount, i) {
   // Don't clog up console when something fails in every / many states

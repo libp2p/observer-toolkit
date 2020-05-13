@@ -1,5 +1,5 @@
 import React from 'react'
-import { catchErrorSilently, renderWithTheme } from '@libp2p/observer-testing'
+import { catchErrorSilently, renderWithTheme } from '@nearform/observer-testing'
 import StatusChip from './StatusChip'
 
 describe('status chip', () => {

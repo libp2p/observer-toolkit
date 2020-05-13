@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { Icon, SourceContext } from '@libp2p/observer-sdk'
+import { Icon, SourceContext } from '@nearform/observer-sdk'
 
 import WebsocketControl from './WebsocketControl'
 

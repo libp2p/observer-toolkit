@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { Icon, TimeInput } from '@libp2p/observer-sdk'
+import { Icon, TimeInput } from '@nearform/observer-sdk'
 import { Formik } from 'formik'
 
 const Container = styled.div`

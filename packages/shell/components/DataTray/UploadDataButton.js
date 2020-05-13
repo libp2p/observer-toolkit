@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { useDropzone } from 'react-dropzone'
 
-import { uploadDataFile, useHandlerOnRef } from '@libp2p/observer-sdk'
+import { uploadDataFile, useHandlerOnRef } from '@nearform/observer-sdk'
 
 const FileButton = styled.button`
   cursor: pointer;

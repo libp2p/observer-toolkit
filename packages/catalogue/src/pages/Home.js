@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { DataTray } from '@libp2p/observer-shell'
+import { DataTray } from '@nearform/observer-shell'
 
 const Container = styled.div`
   display: flex;

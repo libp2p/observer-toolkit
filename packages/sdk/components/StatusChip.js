@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { statusNames } from '@libp2p/observer-data'
-import { Chip, RuntimeContext, Tooltip } from '@libp2p/observer-sdk'
+import { statusNames } from '@nearform/observer-data'
+import { Chip, RuntimeContext, Tooltip } from '@nearform/observer-sdk'
 
 const TooltipContainer = styled.div`
   width: 200%;

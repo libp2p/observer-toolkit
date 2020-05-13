@@ -11,8 +11,8 @@ import {
   Slider,
   TimeContext,
   Tooltip,
-} from '@libp2p/observer-sdk'
-import { getStateTimes, getStateRangeTimes } from '@libp2p/observer-data'
+} from '@nearform/observer-sdk'
+import { getStateTimes, getStateRangeTimes } from '@nearform/observer-data'
 
 import { validateStateIndex } from './utils'
 

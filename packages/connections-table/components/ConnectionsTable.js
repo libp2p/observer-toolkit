@@ -6,11 +6,11 @@ import {
   TimeContext,
   useHidePrevious,
   useTabularData,
-} from '@libp2p/observer-sdk'
+} from '@nearform/observer-sdk'
 import {
   getConnections,
   getMissingClosedConnections,
-} from '@libp2p/observer-data'
+} from '@nearform/observer-data'
 
 import ConnectionsTableRow from './ConnectionsTableRow'
 import connectionsColumnDefs from '../definitions/connectionsColumns'

@@ -2,8 +2,8 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import samples from '@libp2p/observer-samples'
-import { applySampleData } from '@libp2p/observer-sdk'
+import samples from '@nearform/observer-samples'
+import { applySampleData } from '@nearform/observer-sdk'
 
 const SamplesTray = styled.div`
   position: absolute;

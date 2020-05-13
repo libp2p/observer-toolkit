@@ -4,11 +4,11 @@ import {
   nudgeTimelineSlider,
   renderWithShell,
   within,
-} from '@libp2p/observer-testing'
+} from '@nearform/observer-testing'
 import $WIDGET_COMPONENT from './$WIDGET_COMPONENT'
 
 // Uses Jest and React Testing Library, with custom queries,
-// loaders and helpers in @libp2p/observer-testing
+// loaders and helpers in @nearform/observer-testing
 
 describe('$WIDGET_COMPONENT', () => {
   // Example showing how to test a widget's interaction with

@@ -4,12 +4,12 @@ import T from 'prop-types'
 import {
   dhtQueryDirectionNames,
   dhtQueryResultNames,
-} from '@libp2p/observer-data'
+} from '@nearform/observer-data'
 import {
   getListFilter,
   getRangeFilter,
   FilterProvider,
-} from '@libp2p/observer-sdk'
+} from '@nearform/observer-sdk'
 
 import { DhtQueryProvider } from './DhtQueryProvider'
 import { PeerSlotsProvider } from './PeerSlotsProvider'

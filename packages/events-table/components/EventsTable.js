@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
-import { getTime } from '@libp2p/observer-data'
+import { getTime } from '@nearform/observer-data'
 import {
   DataTable,
   EventsContext,
@@ -11,7 +11,7 @@ import {
   useHidePrevious,
   useTabularData,
   TableHead,
-} from '@libp2p/observer-sdk'
+} from '@nearform/observer-sdk'
 
 import EventsTableRow from './EventsTableRow'
 import EventsControlsBar from './EventsControlsBar'

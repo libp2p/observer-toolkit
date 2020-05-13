@@ -1,5 +1,5 @@
 {
-  "name": "@libp2p/observer-data",
+  "name": "@nearform/observer-data",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -20,10 +20,10 @@
     "url": "https://github.com/nearform/libp2p-observer/issues"
   },
   "dependencies": {
-    "@libp2p/observer-proto": "^0.0.1"
+    "@nearform/observer-proto": "^0.0.1"
   },
   "devDependencies": {
-    "@libp2p/observer-samples": "^0.0.1",
+    "@nearform/observer-samples": "^0.0.1",
     "jest": "^24.9.0",
     "jest-expect-message": "^1.0.2",
     "webpack-cli": "^3.3.10"

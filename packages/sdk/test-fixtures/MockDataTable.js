@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { ThemeWrapper } from '@libp2p/observer-testing'
+import { ThemeWrapper } from '@nearform/observer-testing'
 
 import { mockStates, mockColumnDefs } from './tabularData'
 import providers from './providers'

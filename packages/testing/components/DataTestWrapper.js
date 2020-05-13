@@ -1,7 +1,7 @@
 import React from 'react'
 import T from 'prop-types'
 
-import { DataProvider } from '@libp2p/observer-sdk'
+import { DataProvider } from '@nearform/observer-sdk'
 
 import ThemeWrapper from './ThemeWrapper'
 import loadSample from '../loaders/loadSample'

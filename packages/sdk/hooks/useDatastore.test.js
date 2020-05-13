@@ -7,7 +7,7 @@ import {
   getMockRuntime,
   getMockState,
   getMockEvent,
-} from '@libp2p/observer-testing'
+} from '@nearform/observer-testing'
 import useDatastore from './useDatastore'
 
 function TestOutput({ states = [], events = [], runtime, keepStaleDataMs }) {
