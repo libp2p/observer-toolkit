@@ -3,8 +3,8 @@ import {
   getStreamTraffic,
   statusNames,
   transportNames,
-} from '@libp2p/observer-data'
-import { getStringSorter, getNumericSorter } from '@libp2p/observer-sdk'
+} from '@nearform/observer-data'
+import { getStringSorter, getNumericSorter } from '@nearform/observer-sdk'
 
 import {
   AgeContent,

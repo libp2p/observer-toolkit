@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
 
-import { renderWithTheme } from '@libp2p/observer-testing'
+import { renderWithTheme } from '@nearform/observer-testing'
 
 import CatalogueItem from './CatalogueItem'
 

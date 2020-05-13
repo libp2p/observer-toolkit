@@ -1,5 +1,5 @@
 {
-  "name": "@libp2p/observer-streams-table",
+  "name": "@nearform/observer-streams-table",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -17,15 +17,15 @@
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
-    "@libp2p/observer-data": "^0.0.1",
-    "@libp2p/observer-sdk": "^0.0.1",
+    "@nearform/observer-data": "^0.0.1",
+    "@nearform/observer-sdk": "^0.0.1",
     "react": "^16.10.2",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
-    "@libp2p/observer-shell": "^0.0.1",
+    "@nearform/observer-shell": "^0.0.1",
     "@storybook/react": "^5.2.4",
     "@testing-library/react": "^9.4.0",
     "babel-jest": "^24.9.0",

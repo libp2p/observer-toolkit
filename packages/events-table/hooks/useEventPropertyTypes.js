@@ -3,8 +3,8 @@ import { useContext, useEffect, useReducer, useState } from 'react'
 import {
   getRuntimeEventTypes,
   getRuntimeEventProperties,
-} from '@libp2p/observer-data'
-import { RuntimeContext } from '@libp2p/observer-sdk'
+} from '@nearform/observer-data'
+import { RuntimeContext } from '@nearform/observer-sdk'
 
 function _getPropertyTypes(runtime) {
   const eventTypes = getRuntimeEventTypes(runtime)

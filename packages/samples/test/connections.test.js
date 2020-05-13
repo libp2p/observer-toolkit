@@ -9,7 +9,7 @@ const {
   getLatestTimepoint,
   getConnectionTraffic,
   statusNames,
-} = require('@libp2p/observer-data')
+} = require('@nearform/observer-data')
 
 const { SECOND_IN_MS } = require('../mock/utils')
 const {

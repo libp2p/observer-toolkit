@@ -2,7 +2,7 @@
 
 const {
   proto: { Runtime },
-} = require('@libp2p/observer-proto')
+} = require('@nearform/observer-proto')
 
 const {
   DEFAULT_CUTOFFTIME_SECONDS,

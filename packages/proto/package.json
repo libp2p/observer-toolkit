@@ -1,5 +1,5 @@
 {
-  "name": "@libp2p/observer-proto",
+  "name": "@nearform/observer-proto",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

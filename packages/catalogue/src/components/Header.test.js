@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { renderWithTheme } from '@libp2p/observer-testing'
+import { renderWithTheme } from '@nearform/observer-testing'
 
 import Header from './Header'
 

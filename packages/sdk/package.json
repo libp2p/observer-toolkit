@@ -1,5 +1,5 @@
 {
-  "name": "@libp2p/observer-sdk",
+  "name": "@nearform/observer-sdk",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -20,7 +20,7 @@
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
-    "@libp2p/observer-data": "^0.0.1",
+    "@nearform/observer-data": "^0.0.1",
     "react": "^16.10.2",
     "react-dom": "^16.11.0",
     "styled-components": "^4.4.0"

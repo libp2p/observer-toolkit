@@ -2,7 +2,7 @@ import React from 'react'
 import flatten from 'lodash.flatten'
 import { act, fireEvent } from '@testing-library/react'
 
-import { renderWithTheme } from '@libp2p/observer-testing'
+import { renderWithTheme } from '@nearform/observer-testing'
 import usePooledData from './usePooledData'
 
 const data = [

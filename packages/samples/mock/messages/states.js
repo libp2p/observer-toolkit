@@ -2,7 +2,7 @@
 
 const {
   proto: { State, Subsystems },
-} = require('@libp2p/observer-proto')
+} = require('@nearform/observer-proto')
 
 const { createTimestamp } = require('../utils')
 const { createTraffic, sumTraffic } = require('../messages/traffic')

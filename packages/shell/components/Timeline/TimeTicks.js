@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { formatTime } from '@libp2p/observer-sdk'
+import { formatTime } from '@nearform/observer-sdk'
 import { getTickOffsets } from './utils'
 
 const TicksContainer = styled.div`

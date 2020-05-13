@@ -14,8 +14,8 @@ const { statusList } = require('../enums/statusList')
 const { createQueries } = require('./dht-queries')
 const {
   proto: { DHT },
-} = require('@libp2p/observer-proto')
-const { getKademliaDistance } = require('@libp2p/observer-data')
+} = require('@nearform/observer-proto')
+const { getKademliaDistance } = require('@nearform/observer-data')
 
 const PEER_ADD_REMOVE_PROBABILITY = 1 / 40
 

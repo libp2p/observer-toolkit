@@ -8,8 +8,8 @@ import {
   FilterProvider,
   RuntimeContext,
   TimeContext,
-} from '@libp2p/observer-sdk'
-import { getEventType } from '@libp2p/observer-data'
+} from '@nearform/observer-sdk'
+import { getEventType } from '@nearform/observer-data'
 
 function WidgetContext({ children }) {
   const runtime = useContext(RuntimeContext)

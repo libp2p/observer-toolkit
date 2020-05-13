@@ -3,8 +3,8 @@ import T from 'prop-types'
 
 import { fireEvent } from '@testing-library/react'
 
-import { catchErrorSilently, renderWithTheme } from '@libp2p/observer-testing'
-import { DataProvider } from '@libp2p/observer-sdk'
+import { catchErrorSilently, renderWithTheme } from '@nearform/observer-testing'
+import { DataProvider } from '@nearform/observer-sdk'
 import DataTypeControl from './DataTypeControl'
 
 const initialData = {

@@ -2,7 +2,7 @@
 
 const {
   proto: { DataGauge, Traffic },
-} = require('@libp2p/observer-proto')
+} = require('@nearform/observer-proto')
 
 const {
   randomNormalDistribution,
