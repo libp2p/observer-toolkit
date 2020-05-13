@@ -46,8 +46,7 @@ function generatePeerId() {
   return generateHashId()
 }
 
-function generateRuntime(options = {}) {
-  const runtime = createRuntime(options)
+function generateRuntime(options = {}, runtime = createRuntime(options)) {
   const runtimePacket = createProtocolRuntimePacket(runtime)
   return createBufferSegment(runtimePacket)
 }
@@ -80,7 +79,6 @@ function generateConnectionEvents({
   msgQueue = [],
   utcNow,
   version,
-  runtime,
 }) {
   // send event when connection is opening/closing
   connections
@@ -99,7 +97,7 @@ function generateConnectionEvents({
   return msgQueue
 }
 
-function generateEventsFlood({ msgQueue = [], utcNow, version, runtime }) {
+function generateEventsFlood({ msgQueue = [], utcNow, version }) {
   // generate a flood of events
   const step = 50 // .. every 50ms
   for (let i = 0; i < 1000; i += step) {
@@ -150,7 +148,6 @@ function generateActivity({
       msgBuffers,
       utcNow: intervalStart,
       version,
-      runtime,
       duration,
     })
     const eventBuffers = events.map(({ event }) => event)
@@ -212,7 +209,6 @@ function generateComplete(
     utcTo,
     dht,
     version,
-    runtime,
     duration: durationSnapshot,
     cutoffSeconds,
   })
