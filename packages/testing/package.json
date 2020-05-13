@@ -1,7 +1,7 @@
 {
   "name": "@libp2p/observer-testing",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
   "version": "0.0.1",
   "description": "Test utilities, helpers and wrappers for libp2p-observer packages and widgets.",

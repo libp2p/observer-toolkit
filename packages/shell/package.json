@@ -1,7 +1,7 @@
 {
   "name": "@libp2p/observer-shell",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
   "version": "0.0.1",
   "description": "Outer UI controls for libp2p-observer widgets, including interactive timeline, filters and data controls",
