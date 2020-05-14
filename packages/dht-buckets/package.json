@@ -7,6 +7,10 @@
   "homepage": "",
   "license": "MIT",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
+  },
   "scripts": {
     "prepare": "webpack",
     "storybook": "start-storybook -p 9009",

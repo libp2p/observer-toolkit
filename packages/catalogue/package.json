@@ -9,6 +9,10 @@
   "homepage": "https://nearform.github.io/libp2p-observer",
   "license": "MIT",
   "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
+  },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
