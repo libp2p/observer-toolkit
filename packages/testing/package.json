@@ -13,7 +13,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/libp2p-observer.git"
+    "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
   },
   "peerDependencies": {
     "@nearform/observer-sdk": "^0.0.1",

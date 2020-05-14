@@ -9,6 +9,10 @@
   "homepage": "",
   "license": "MIT",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
+  },
   "scripts": {
     "protoc": "protoc --js_out=import_style=commonjs,binary:. lib/introspection.proto && node lib/prepend-disable-lint.js"
   },
