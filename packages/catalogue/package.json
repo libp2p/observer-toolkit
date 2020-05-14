@@ -11,7 +11,7 @@
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
+    "url": "git+https://github.com/nearform/libp2p-observer.git"
   },
   "scripts": {
     "start": "craco start",
