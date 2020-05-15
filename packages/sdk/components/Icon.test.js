@@ -12,8 +12,8 @@ describe('Icon', () => {
     ).toBeInstanceOf(Error)
   })
 
-  it("renders 'asc' icon as expected", () => {
-    const { asFragment } = renderWithTheme(<Icon type="asc" disabled={true} />)
+  it("renders 'edit' icon as expected", () => {
+    const { asFragment } = renderWithTheme(<Icon type="edit" disabled={true} />)
     expect(asFragment()).toMatchSnapshot()
   })
 
@@ -21,7 +21,7 @@ describe('Icon', () => {
     const mockFn = jest.fn()
 
     const { getByRole } = renderWithTheme(
-      <Icon type="asc" disabled={false} onClick={mockFn} />
+      <Icon type="edit" disabled={false} onClick={mockFn} />
     )
     fireEvent.click(getByRole('button'))
     expect(mockFn).toBeCalled()
@@ -31,7 +31,7 @@ describe('Icon', () => {
     const mockFn = jest.fn()
 
     const { getByRole, queryByRole } = renderWithTheme(
-      <Icon type="asc" disabled={true} onClick={mockFn} />
+      <Icon type="edit" disabled={true} onClick={mockFn} />
     )
     expect(queryByRole('button')).toBeNull()
 
