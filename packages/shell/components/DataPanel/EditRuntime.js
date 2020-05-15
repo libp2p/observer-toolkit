@@ -9,7 +9,7 @@ const Container = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: stretch;
 `
 
 const EditContainer = styled.div`
@@ -22,8 +22,12 @@ const EditContainer = styled.div`
   background: ${({ theme }) => theme.color('background')};
 `
 
-const ClickTarget = styled.span`
+const ClickTarget = styled.div`
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
 `
 
 function EditRuntime({ runtimeValue, handleSend, children }) {
@@ -79,7 +83,7 @@ function EditRuntime({ runtimeValue, handleSend, children }) {
                   />
                   <Icon
                     active={isActive}
-                    onClick={isActive && submitForm}
+                    onClick={isActive ? submitForm : null}
                     type={isActive ? 'check' : 'closed'}
                   />
                 </>

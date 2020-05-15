@@ -22,7 +22,7 @@ const Container = styled.span`
     !glow
       ? ''
       : css`
-          box-shadow: 0 0 ${theme.spacing()} 0 ${getColor(theme, glow)};
+          box-shadow: 0 0 ${theme.spacing(2)} 0 ${getColor(theme, glow)};
         `};
 `
 

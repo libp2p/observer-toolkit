@@ -48,8 +48,8 @@ function getFadeOpacity(value, maxValue) {
 const maxGlowOpacity = 0.4
 function getGlowOpacity(value, maxValue) {
   const glowAmount = Math.max(0, 1 - value / maxValue)
-  const glowOpacity = glowAmount / maxGlowOpacity - (1 - maxGlowOpacity)
-  return Math.max(glowOpacity, 0)
+  const glowOpacity = glowAmount * maxGlowOpacity
+  return glowOpacity
 }
 
 function StatusChip({ status, timeOpen, timeClosed, duration }) {
@@ -57,7 +57,7 @@ function StatusChip({ status, timeOpen, timeClosed, duration }) {
   const expiryMs = runtime ? runtime.getKeepStaleDataMs() : 0
   const fade = status === 'CLOSED' ? getFadeOpacity(timeClosed, expiryMs) : null
   const glow =
-    status === 'ACTIVE' ? getGlowOpacity(timeOpen, duration * 2) : null
+    status === 'ACTIVE' ? getGlowOpacity(timeOpen, duration * 4) : null
 
   const secondsUntilExpire = fade && Math.round((expiryMs - timeClosed) / 1000)
 
