@@ -82,10 +82,7 @@ function generateMessages({
   })
 
   const statePacket = generateState(connections, utcNow, dht, durationSnapshot)
-  const runtimePacket = generateRuntime({}, runtime)
-  const data = Buffer.concat([version, runtimePacket, statePacket]).toString(
-    'binary'
-  )
+  const data = Buffer.concat([version, statePacket]).toString('binary')
   msgQueue.push({ ts: utcTo, type: 'state', data })
 }
 
@@ -143,13 +140,7 @@ function handleClientMessage(client, server, msg) {
           hasChanged = true
           runtime.setKeepStaleDataMs(Number(content.keepStaleDataMs))
         }
-        if (hasChanged) {
-          const runtimePacket = generateRuntime({}, runtime)
-          const data = Buffer.concat([version, runtimePacket]).toString(
-            'binary'
-          )
-          msgQueue.push({ ts: Date.now(), type: 'runtime', data })
-        }
+        if (hasChanged) sendRuntime()
       } catch (error) {
         // log the failed signal and continue serving data
         console.warn('Error processing configuration signal', signal)
@@ -157,6 +148,12 @@ function handleClientMessage(client, server, msg) {
       }
     }
   }
+}
+
+function sendRuntime() {
+  const runtimePacket = generateRuntime({}, runtime)
+  const data = Buffer.concat([version, runtimePacket]).toString('binary')
+  msgQueue.push({ ts: Date.now(), type: 'runtime', data })
 }
 
 function start({
@@ -195,6 +192,8 @@ function start({
     ws.on('message', msg => {
       handleClientMessage(ws, wss, msg)
     })
+
+    sendRuntime()
   })
 
   server.on('upgrade', function upgrade(request, socket, head) {
