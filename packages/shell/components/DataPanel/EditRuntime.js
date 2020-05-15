@@ -50,7 +50,7 @@ function EditRuntime({ runtimeValue, handleSend, children }) {
     <Container>
       <ClickTarget onClick={() => setIsOpen(true)}>
         {children}
-        <Icon type="uncheck" />
+        <Icon type="edit" />
       </ClickTarget>
       {isOpen && (
         <EditContainer>

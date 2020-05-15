@@ -9,13 +9,15 @@ import sort from './icons/Sort'
 // Protocol Labs own icons
 import cancel from './icons/Cancel'
 import check from './icons/Check'
+import edit from './icons/Edit'
+import settings from './icons/Settings'
 import uncheck from './icons/Uncheck'
+import doc from './icons/Doc'
 
 // Created based on Protocol Labs icons
 import filter from './icons/Filter'
 import back from './icons/Back'
 import forward from './icons/Forward'
-import doc from './icons/Doc'
 import cloud from './icons/Cloud'
 import closed from './icons/Closed'
 import closing from './icons/Closing'
@@ -47,4 +49,6 @@ export default {
   remove,
   play,
   pause,
+  edit,
+  settings,
 }
