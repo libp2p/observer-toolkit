@@ -12,7 +12,7 @@
     "generate-icons": "lerna run --scope=\"@nearform/observer-sdk\" svgr-icons",
     "gh-publish": "lerna publish --no-git-tag-version --no-push --registry=\"https://npm.pkg.github.com/\"",
     "local-install": "yarn install --registry http://localhost:4873/ --frozen-lockfile",
-    "local-publish": "lerna publish --no-git-tag-version --no-push --registry=\"http://localhost:4873/\"",
+    "local-publish": "lerna publish from-package --no-git-tag-version --no-push --no-verify-access --registry=\"http://localhost:4873/\"",
     "local-unpublish": "lerna exec -- npm unpublish --registry=\"http://localhost:4873/\" \"\\${LERNA_PACKAGE_NAME}@\\$(npm view \\$LERNA_PACKAGE_NAME version)\"",
     "local-unpublish-all": "lerna exec -- npm unpublish -f --registry=\"http://localhost:4873/\" \"\\${LERNA_PACKAGE_NAME}\"",
     "lint": "eslint . --ext .js",
