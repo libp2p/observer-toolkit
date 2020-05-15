@@ -37,6 +37,8 @@ function RuntimeInfo() {
   const runtime = useContext(RuntimeContext)
   const wsData = useContext(WebsocketContext)
 
+  if (!runtime) return 'No runtime data available'
+
   const stateIntervalMs = runtime.getSendStateIntervalMs()
   const stateInterval = formatDuration(stateIntervalMs)
 

@@ -9,11 +9,9 @@ import {
 import { Connected, Home } from './pages'
 
 function testHasData(states, runtime, source) {
-  return !!runtime && states.length > 1
+  return !!runtime || states.length > 1
 }
 
-// This is a very basic switcher for now
-// TODO: When implementing pages (about us etc), use a real URL router
 function Router() {
   const states = useContext(DataContext)
   const runtime = useContext(RuntimeContext)
