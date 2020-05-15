@@ -16,11 +16,13 @@ const Nowrap = styled.span`
   white-space: nowrap;
 `
 
-function StatusContent({ value }) {
-  return <StatusChip status={value} />
+function StatusContent({ value, ...props }) {
+  return <StatusChip status={value} {...props} />
 }
 StatusContent.propTypes = {
   value: T.string,
+  timeOpen: T.number,
+  timeClosed: T.number,
 }
 
 function PeerIdContent({ value }) {

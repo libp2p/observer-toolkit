@@ -1,6 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Icon from './Icon'
 
@@ -12,6 +12,18 @@ const Container = styled.span`
   white-space: nowrap;
   font-size: 8pt;
   font-weight: 600;
+  ${({ fade }) =>
+    !fade
+      ? ''
+      : css`
+          opacity: ${fade};
+        `}
+  ${({ theme, getColor, glow }) =>
+    !glow
+      ? ''
+      : css`
+          box-shadow: 0 0 ${theme.spacing(2)} 0 ${getColor(theme, glow)};
+        `};
 `
 
 const ChipText = styled.span`
@@ -21,7 +33,16 @@ const ChipText = styled.span`
   vertical-align: middle;
 `
 
-function Chip({ type, options, prefix = '', suffix = '', children, ...props }) {
+function Chip({
+  type,
+  options,
+  prefix = '',
+  suffix = '',
+  fade,
+  glow,
+  children,
+  ...props
+}) {
   if (!options[type]) {
     throw new Error(
       `Chip option "${type}" not in "${Object.keys(options).join('", "')}"`
@@ -33,7 +54,7 @@ function Chip({ type, options, prefix = '', suffix = '', children, ...props }) {
     theme.color(colorKey, colorIndex || 0, opacity)
 
   return (
-    <Container getColor={getColor} {...props}>
+    <Container getColor={getColor} fade={fade} glow={glow} {...props}>
       {prefix}
       {icon && <Icon type={icon} />}
       <ChipText>{children || type}</ChipText>
@@ -47,6 +68,8 @@ Chip.propTypes = {
   options: T.object.isRequired,
   prefix: T.node,
   suffix: T.node,
+  fade: T.number,
+  glow: T.number,
   children: T.node,
 }
 

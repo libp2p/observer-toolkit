@@ -17,6 +17,7 @@ const {
   updateConnections,
   updateDHT,
 } = require('./generate')
+const { createRuntime } = require('./messages/runtime')
 
 const connections = []
 const version = generateVersion()
@@ -25,8 +26,6 @@ const wss = new WebSocket.Server({ noServer: true })
 
 const msgQueue = []
 
-let lastDurationSnapshot
-let lastCutoffSeconds
 let runtime
 let dht
 let sendInterval
@@ -43,17 +42,14 @@ function generateMessages({
   const utcTo = utcNow + durationSnapshot
   if (!dht) dht = generateDHT({ peersCount })
 
-  if (
-    !runtime ||
-    lastDurationSnapshot !== durationSnapshot ||
-    cutoffSeconds !== lastCutoffSeconds
-  ) {
-    runtime = generateRuntime({
+  if (runtime) {
+    durationSnapshot = runtime.getSendStateIntervalMs()
+    cutoffSeconds = runtime.getKeepStaleDataMs() / 1000
+  } else {
+    runtime = createRuntime({
       stateIntervalDuration: durationSnapshot,
       cutoffSeconds,
     })
-    lastDurationSnapshot = durationSnapshot
-    lastCutoffSeconds = cutoffSeconds
   }
 
   if (!connections.length) {
@@ -85,8 +81,8 @@ function generateMessages({
     durationSnapshot,
   })
 
-  const state = generateState(connections, utcNow, dht, durationSnapshot)
-  const data = Buffer.concat([version, runtime, state]).toString('binary')
+  const statePacket = generateState(connections, utcNow, dht, durationSnapshot)
+  const data = Buffer.concat([version, statePacket]).toString('binary')
   msgQueue.push({ ts: utcTo, type: 'state', data })
 }
 
@@ -111,6 +107,7 @@ function handleClientMessage(client, server, msg) {
   if (msg) {
     const clientSignal = ClientSignal.deserializeBinary(msg)
     const signal = clientSignal.getSignal()
+
     if (signal === ClientSignal.Signal.SEND_DATA) {
       sendQueue(client)
     } else if (signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER) {
@@ -123,20 +120,40 @@ function handleClientMessage(client, server, msg) {
     } else if (signal === ClientSignal.Signal.CONFIG_EMITTER) {
       try {
         const content = JSON.parse(clientSignal.getContent())
-        if (content.durationSnapshot) {
+        let hasChanged = false
+        const newDurationSnapshot =
+          Number(content.durationSnapshot) ||
+          Number(content.sendStateIntervalMs)
+
+        if (newDurationSnapshot) {
           clearInterval(server.generator)
           server.generator = setInterval(() => {
             generateMessages({
               connectionsCount: server.connectionsCount,
-              duration: content.durationSnapshot,
+              duration: newDurationSnapshot,
             })
-          }, content.durationSnapshot)
+          }, newDurationSnapshot)
+          hasChanged = true
+          runtime.setSendStateIntervalMs(newDurationSnapshot)
         }
+        if (content.keepStaleDataMs) {
+          hasChanged = true
+          runtime.setKeepStaleDataMs(Number(content.keepStaleDataMs))
+        }
+        if (hasChanged) sendRuntime()
       } catch (error) {
-        // ..
+        // log the failed signal and continue serving data
+        console.warn('Error processing configuration signal', signal)
+        console.error(error)
       }
     }
   }
+}
+
+function sendRuntime() {
+  const runtimePacket = generateRuntime({}, runtime)
+  const data = Buffer.concat([version, runtimePacket]).toString('binary')
+  msgQueue.push({ ts: Date.now(), type: 'runtime', data })
 }
 
 function start({
@@ -175,6 +192,8 @@ function start({
     ws.on('message', msg => {
       handleClientMessage(ws, wss, msg)
     })
+
+    sendRuntime()
   })
 
   server.on('upgrade', function upgrade(request, socket, head) {

@@ -1,21 +1,15 @@
-// Attribution:
-// Sort, Filter, Down and Up icons by Ryo Sato from the Noun Project
-
-// TODO: request the LibP2P icon set be expanded for these things
-import asc from './icons/Asc'
-import desc from './icons/Desc'
-import sort from './icons/Sort'
-
 // Protocol Labs own icons
 import cancel from './icons/Cancel'
 import check from './icons/Check'
+import edit from './icons/Edit'
+import settings from './icons/Settings'
 import uncheck from './icons/Uncheck'
+import doc from './icons/Doc'
 
 // Created based on Protocol Labs icons
 import filter from './icons/Filter'
 import back from './icons/Back'
 import forward from './icons/Forward'
-import doc from './icons/Doc'
 import cloud from './icons/Cloud'
 import closed from './icons/Closed'
 import closing from './icons/Closing'
@@ -28,9 +22,6 @@ import pause from './icons/Pause'
 
 // Export an object of url paths; importer picks path by key
 export default {
-  asc,
-  desc,
-  sort,
   cancel,
   check,
   uncheck,
@@ -47,4 +38,6 @@ export default {
   remove,
   play,
   pause,
+  edit,
+  settings,
 }

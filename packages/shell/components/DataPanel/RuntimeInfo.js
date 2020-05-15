@@ -1,7 +1,13 @@
 import React, { useContext } from 'react'
 import styled, { css } from 'styled-components'
 
-import { formatDuration, RuntimeContext } from '@libp2p-observer/sdk'
+import {
+  formatDuration,
+  RuntimeContext,
+  WebsocketContext,
+} from '@libp2p-observer/sdk'
+
+import EditRuntime from './EditRuntime'
 
 const Container = styled.div`
   min-width: 280px;
@@ -29,10 +35,15 @@ const InfoHead = styled.th`
 
 function RuntimeInfo() {
   const runtime = useContext(RuntimeContext)
+  const wsData = useContext(WebsocketContext)
 
-  const stateInterval = formatDuration(runtime.getSendStateIntervalMs())
+  if (!runtime) return 'No runtime data available'
 
-  const dataExpiry = formatDuration(runtime.getKeepStaleDataMs())
+  const stateIntervalMs = runtime.getSendStateIntervalMs()
+  const stateInterval = formatDuration(stateIntervalMs)
+
+  const dataExpiryMs = runtime.getKeepStaleDataMs()
+  const dataExpiry = formatDuration(dataExpiryMs)
 
   return (
     <Container>
@@ -52,11 +63,41 @@ function RuntimeInfo() {
           </tr>
           <tr>
             <InfoHead>State messages every:</InfoHead>
-            <InfoCell>{stateInterval}</InfoCell>
+            <InfoCell>
+              {wsData ? (
+                <EditRuntime
+                  runtimeValue={stateIntervalMs}
+                  handleSend={inputMs =>
+                    wsData.sendSignal('config', {
+                      sendStateIntervalMs: inputMs,
+                    })
+                  }
+                >
+                  {stateInterval}
+                </EditRuntime>
+              ) : (
+                stateInterval
+              )}
+            </InfoCell>
           </tr>
           <tr>
             <InfoHead>Discard data after:</InfoHead>
-            <InfoCell>{dataExpiry}</InfoCell>
+            <InfoCell>
+              {wsData ? (
+                <EditRuntime
+                  runtimeValue={dataExpiryMs}
+                  handleSend={inputMs =>
+                    wsData.sendSignal('config', {
+                      keepStaleDataMs: inputMs,
+                    })
+                  }
+                >
+                  {dataExpiry}
+                </EditRuntime>
+              ) : (
+                stateInterval
+              )}
+            </InfoCell>
           </tr>
         </tbody>
       </InfoTable>

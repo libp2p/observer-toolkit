@@ -120,9 +120,9 @@ function DataPanel() {
       <Tooltip fixOn={'no-hover'} content={<RuntimeInfo />}>
         <DataPanelItem>
           <IconContainer>
-            <Icon type="forward" />
+            <Icon type="settings" />
           </IconContainer>
-          About this peer
+          Info and settings
         </DataPanelItem>
       </Tooltip>
 
