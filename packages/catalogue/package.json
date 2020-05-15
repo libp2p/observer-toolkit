@@ -63,8 +63,12 @@
   "jest": {
     "transform": {
       "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/filePaths.js",
-      "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
+      "\\.js$": [
+        "babel-jest",
+        {
+          "rootMode": "upward"
+        }
+      ]
     }
   }
-
 }

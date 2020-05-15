@@ -27,11 +27,11 @@
     "@nearform/observer-data": "^0.0.1"
   },
   "peerDependencies": {
+    "@nearform/observer-samples": "^0.0.1",
+    "@nearform/observer-sdk": "^0.0.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "styled-components": "^4.4.0",
-    "@nearform/observer-sdk": "^0.0.1",
-    "@nearform/observer-samples": "^0.0.1"
+    "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
@@ -45,13 +45,20 @@
     "webpack-cli": "^3.3.10"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/../../__jest__/setupTest.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/../../__jest__/setupTest.js"
+    ],
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/../../__jest__/styleMock.js"
     },
     "transform": {
       "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/filePaths.js",
-      "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
+      "\\.js$": [
+        "babel-jest",
+        {
+          "rootMode": "upward"
+        }
+      ]
     },
     "coveragePathIgnorePatterns": [
       "/node_modules/",
