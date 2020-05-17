@@ -7,9 +7,10 @@ function scaleAreaChart(height, width, xScale, yScale, flip) {
   yScale.range(flip ? [0, height] : [height, 0])
 
   const areaMaker = area()
-    .x(d => xScale(d.data.time))
+    .x(d => xScale(d.data.end))
     .y0(d => yScale(d[0]))
     .y1(d => yScale(d[1]))
+    .defined(d => !d.data.noData)
 
   return areaMaker
 }

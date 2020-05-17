@@ -1,10 +1,13 @@
 import {
   getAllConnections,
   getConnections,
-  getTime,
   getConnectionTraffic,
+  getStateTimes,
 } from '@libp2p-observer/data'
 import { validateNumbers } from '@libp2p-observer/sdk'
+
+// Gaps between state messages above this will be treated as missing data
+const GAP_TOLERANCE_MS = 50
 
 function getTickOffsets(ticks, scale) {
   const tickGap = ticks[1] - ticks[0]
@@ -26,50 +29,91 @@ function getTickOffsets(ticks, scale) {
 }
 
 function getTrafficChangesByConn(direction) {
-  // Can't calculate bytes added in first timepoint, so skip where index is 0
-  const keyData = (dataset, keys) =>
-    dataset.slice(1).map(
-      // Get array of objects of mapped values added in each timepoint keyed by peerId
-      (timepoint, previousTimepointIndex) => {
-        const connectionsByKey = getConnections(timepoint).reduce(
-          (connectionsByKey, connection) => {
-            const key = getConnectionKey(connection)
-            connectionsByKey[key] = connection
-            return connectionsByKey
-          },
-          {}
+  // Can't calculate bytes added in first state, so skip where index is 0
+  const keyData = (states, keys) =>
+    states.slice(1).reduce(
+      // Get array of objects of mapped values added in each state keyed by connection
+      (keyedStates, state, previousStateIndex) => {
+        const connectionsByKey = keyByConnections(state)
+        const { start, end } = getStateTimes(state)
+
+        const previousState = states[previousStateIndex]
+        const connectionTrafficReducer = getConnectionTrafficReducer(
+          connectionsByKey,
+          previousState,
+          direction
         )
 
-        const trafficByConn = keys.reduce(
-          (trafficByConn, key) => {
-            const connection = connectionsByKey[key]
+        const trafficByConn = keys.reduce(connectionTrafficReducer, {
+          start,
+          end,
+        })
 
-            let bytes = 0
-
-            if (connection) {
-              bytes = getConnectionTraffic(connection, direction, 'bytes')
-
-              // Use only those bytes added in this time point
-              // Can't get bytes added first to previous, so skip it
-              const previousTimepoint = dataset[previousTimepointIndex]
-              const previousConn = getConnections(previousTimepoint).find(
-                conn => getConnectionKey(conn) === key
-              )
-              if (previousConn) {
-                bytes -= getConnectionTraffic(previousConn, direction, 'bytes')
-              }
-            }
-
-            trafficByConn[key] = bytes
-            return trafficByConn
-          },
-          { time: getTime(timepoint) }
-        )
         validateNumbers(trafficByConn)
-        return trafficByConn
-      }
+        return insertGapsBetweenStates(trafficByConn, keyedStates, start, keys)
+      },
+      []
     )
   return keyData
+}
+
+function getConnectionTrafficReducer(
+  connectionsByKey = null,
+  previousState = null,
+  direction = null
+) {
+  return (trafficByConn, key) => {
+    const connection = connectionsByKey ? connectionsByKey[key] : null
+    if (!connection) {
+      trafficByConn[key] = 0
+      return trafficByConn
+    }
+
+    let bytes = getConnectionTraffic(connection, direction, 'bytes')
+
+    // Use only those bytes added in this state
+    const previousConn = getConnections(previousState).find(
+      conn => getConnectionKey(conn) === key
+    )
+    if (previousConn) {
+      bytes -= getConnectionTraffic(previousConn, direction, 'bytes')
+    }
+
+    // A negative value for bytes is impossible unless the introspector has an unexpected
+    // behaviour e.g. correcting for a past error. We can't control that, so be defensive
+    trafficByConn[key] = Math.max(0, bytes)
+    return trafficByConn
+  }
+}
+
+function insertGapsBetweenStates(trafficByConn, keyedStates, start, keys) {
+  if (!keyedStates.length) return [trafficByConn]
+
+  const lastKeyedState = keyedStates[keyedStates.length - 1]
+  const previousEnd = lastKeyedState.end
+  const gapMs = start - previousEnd
+  if (gapMs <= GAP_TOLERANCE_MS) return [...keyedStates, trafficByConn]
+
+  const emptyConnectionReducer = getConnectionTrafficReducer()
+  const gapStart = keys.reduce(emptyConnectionReducer, {
+    start: previousEnd,
+    end: start,
+    noData: true,
+  })
+  const gapEnd = Object.assign({}, lastKeyedState, {
+    start,
+    end: start,
+  })
+
+  return [...keyedStates, gapStart, gapEnd, trafficByConn]
+}
+
+function keyByConnections(state) {
+  return getConnections(state).reduce((connectionsByKey, connection) => {
+    const key = getConnectionKey(connection)
+    connectionsByKey[key] = connection
+    return connectionsByKey
+  }, {})
 }
 
 function getTotalTraffic(connection) {
@@ -83,8 +127,8 @@ function getConnectionKey(connection) {
   return `${connection.getPeerId()}_${connection.getId()}`
 }
 
-function getConnectionKeys(dataset, sorter, applyFilters) {
-  const allConnections = getAllConnections(dataset)
+function getConnectionKeys(states, sorter, applyFilters) {
+  const allConnections = getAllConnections(states)
   const filteredConnections = allConnections.filter(applyFilters)
   filteredConnections.sort(sorter)
   const keys = filteredConnections.map(conn => getConnectionKey(conn))
