@@ -2,7 +2,16 @@
 
 exports[`Icon renders 'edit' icon as expected 1`] = `
 <DocumentFragment>
-  .c1 {
+  .c0 {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  -webkit-flex-direction: inherit;
+  -ms-flex-direction: inherit;
+  flex-direction: inherit;
+}
+
+.c1 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -12,15 +21,6 @@ exports[`Icon renders 'edit' icon as expected 1`] = `
   width: 2em;
   height: 2em;
   color: rgb(255,255,255);
-}
-
-.c0 {
-  width: inherit;
-  height: inherit;
-  display: inherit;
-  -webkit-flex-direction: inherit;
-  -ms-flex-direction: inherit;
-  flex-direction: inherit;
 }
 
 <div
