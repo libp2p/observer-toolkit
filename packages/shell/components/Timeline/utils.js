@@ -30,8 +30,8 @@ function getTickOffsets(ticks, scale) {
 
 function getTrafficChangesByConn(direction) {
   // Can't calculate bytes added in first state, so skip where index is 0
-  const keyData = (states, keys) =>
-    states.slice(1).reduce(
+  const keyData = (states, keys) => {
+    const keyedStates = states.slice(1).reduce(
       // Get array of objects of mapped values added in each state keyed by connection
       (keyedStates, state, previousStateIndex) => {
         const connectionsByKey = keyByConnections(state)
@@ -54,6 +54,9 @@ function getTrafficChangesByConn(direction) {
       },
       []
     )
+    const { start, end } = getStateTimes(states[0])
+    return [{ ...keyedStates[0], start, end }, ...keyedStates]
+  }
   return keyData
 }
 
@@ -135,9 +138,21 @@ function getConnectionKeys(states, sorter, applyFilters) {
   return keys
 }
 
+function getStateWidth(state, overallDuration, width) {
+  return (getStateTimes(state).duration / overallDuration) * width
+}
+
+function validateStateIndex(stateIndex, states) {
+  const lastStateIndex = states.length - 1
+  if (stateIndex < 0) return lastStateIndex
+  return Math.min(stateIndex, lastStateIndex)
+}
+
 export {
   getTickOffsets,
   getTrafficChangesByConn,
   getTotalTraffic,
   getConnectionKeys,
+  getStateWidth,
+  validateStateIndex,
 }

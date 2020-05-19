@@ -34,7 +34,11 @@ const ActiveSection = styled.div`
   border-radius: ${({ theme }) => theme.spacing()};
   user-select: none;
 `
-const InactiveSection = styled.div`
+const InactiveSection = styled.div.attrs(({ abovePercent }) => ({
+  style: {
+    width: `${abovePercent}%`,
+  },
+}))`
   height: 100%;
   background: ${({ theme }) => theme.color('highlight', 0)};
   user-select: none;
@@ -44,6 +48,7 @@ const Control = styled.div`
   position: absolute;
   width: ${({ width }) => width}px;
   height: ${({ width }) => width}px;
+  margin-left: -${({ width, isUpper, isLower }) => width / 2 + ((isUpper && -2) || (isLower && 2) || 0)}px;
   margin-top: -${BAR_HEIGHT / 2 + 2}px;
   border-radius: ${({ width, isLower, isUpper }) =>
     `${!isUpper ? `${width}px ` : '0 '} ${
@@ -54,8 +59,6 @@ const Control = styled.div`
   text-align: center;
   cursor: col-resize;
   ${({ theme }) => theme.boxShadow()}
-  ${({ isLower }) => isLower && `margin-left: 2px;`}
-  ${({ isUpper, width }) => isUpper && `margin-left: ${width - 2}px;`}
 `
 
 const NumberFieldsWrapper = styled.div`
@@ -76,12 +79,12 @@ function getMousePosition(mouseX, width) {
   return mouseX / width
 }
 
-function getStepPosition(stepIndex, min, max, steps) {
+function defaultGetStepPosition(stepIndex, steps) {
   if (!stepIndex) return 0
   return stepIndex / steps
 }
 
-function getStepIndex(position, steps) {
+function defaultGetStepIndex(position, steps) {
   const nearestStepIndex = Math.round(steps * position)
   return nearestStepIndex
 }
@@ -145,6 +148,8 @@ function Slider({
   width = WIDTH,
   numberFieldType = 'number',
   format = null,
+  getStepPosition = defaultGetStepPosition,
+  getStepIndex = defaultGetStepIndex,
   override = {},
   tooltipProps = {},
 }) {
@@ -195,11 +200,8 @@ function Slider({
   )
 
   // Position is a decimal number >=0 <=1 representing the % distance along the slider
-  const lowerPosition = getStepPosition(lowerStepIndex, min, max, steps)
-
-  const upperPosition = isRange
-    ? getStepPosition(upperStepIndex, min, max, steps)
-    : null
+  const lowerPosition = getStepPosition(lowerStepIndex, steps)
+  const upperPosition = isRange ? getStepPosition(upperStepIndex, steps) : null
 
   const getValidatedValue = (value, fieldName) => {
     const isLower = isRange && fieldName === fieldNames[0]
@@ -299,14 +301,9 @@ function Slider({
    *** Styling and inline style calculation
    **/
 
-  const belowPercent = `${Math.round(lowerPosition * 100)}%`
-  const abovePercent = `${Math.round(
-    (1 - (isRange ? upperPosition : lowerPosition)) * 100
-  )}%`
-
-  const controlOffset = `calc(${belowPercent} - ${controlWidth}px)`
-  const upperControlOffset =
-    isRange && `calc(${Math.round(upperPosition * 100)}% - ${controlWidth}px)`
+  const belowPercent = Math.round(lowerPosition * 1000) / 10
+  const abovePercent =
+    Math.round((1 - (isRange ? upperPosition : lowerPosition)) * 1000) / 10
 
   const FirstSection = isRange ? InactiveSection : ActiveSection
 
@@ -326,12 +323,12 @@ function Slider({
         ref={containerRef}
       >
         <FirstSection
-          style={{ width: belowPercent }}
+          style={{ width: `${belowPercent}%` }}
           as={override.FirstSection}
         />
         <Tooltip {...tooltipProps}>
           <Control
-            style={{ left: controlOffset }}
+            leftPercentOffset={belowPercent}
             width={controlWidth}
             onMouseDown={event => slideStart(event, fieldNames[0])}
             isLower={isRange}
@@ -352,7 +349,7 @@ function Slider({
             <ActiveSection as={override.ActiveSection} />
             <Tooltip {...tooltipProps}>
               <Control
-                style={{ left: upperControlOffset }}
+                rightPercentOffset={abovePercent}
                 width={controlWidth}
                 onMouseDown={event => slideStart(event, fieldNames[1])}
                 isUpper={isRange}
@@ -371,7 +368,8 @@ function Slider({
           </>
         )}
         <InactiveSection
-          style={{ width: abovePercent }}
+          abovePercent={abovePercent}
+          controlWidth={controlWidth}
           as={override.InactiveSection}
         />
       </Bar>
