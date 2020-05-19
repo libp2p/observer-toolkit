@@ -12,6 +12,8 @@ const TicksContainer = styled.div`
   margin-left: ${({ leftOffset }) => leftOffset}px;
   display: flex;
   align-items: center;
+  z-index: 4;
+  pointer-events: none;
 `
 
 const TickLabel = styled.label`
