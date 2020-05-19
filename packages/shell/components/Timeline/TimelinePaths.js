@@ -69,7 +69,7 @@ function TimelinePaths({
   const globalPeerIds = useContext(PeersContext)
   const { setPeerIds } = useContext(SetterContext)
   const flip = dataDirection === 'out'
-  
+
   const { duration: overallDuration } = getStateRangeTimes(states)
   const state0Width = getStateWidth(states[0], overallDuration, width)
   const state1Width = getStateWidth(states[1], overallDuration, width)
@@ -85,7 +85,11 @@ function TimelinePaths({
   })
 
   return (
-    <Container innerHeight={height} state0Width={state0Width} state1Width={state1Width}>
+    <Container
+      innerHeight={height}
+      state0Width={state0Width}
+      state1Width={state1Width}
+    >
       <DataTicks
         scale={yScale}
         width={leftGutter}
@@ -125,7 +129,9 @@ function TimelinePaths({
             })}
         </StyledSvg>
       </InnerContainer>
-      {dataDirection === 'in' && <TimeTicks scale={xScale} width={pathWidth} leftOffset={state0Width} />}
+      {dataDirection === 'in' && (
+        <TimeTicks scale={xScale} width={pathWidth} leftOffset={state0Width} />
+      )}
     </Container>
   )
 }

@@ -426,6 +426,8 @@ Slider.propTypes = {
   width: T.number,
   numberFieldType: T.string,
   format: T.func,
+  getStepPosition: T.func,
+  getStepIndex: T.func,
   override: T.object,
   tooltipProps: T.object,
 }

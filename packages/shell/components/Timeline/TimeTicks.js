@@ -22,7 +22,7 @@ const TickLabel = styled.label`
   ${({ theme }) => theme.text('label', 'small')}
 `
 
-function TimeTicks({ scale, width, leftOffset }) {
+function TimeTicks({ scale, width, leftOffset = 0 }) {
   const ticks = scale.ticks(Math.round(width / 120))
   const tickOffsets = getTickOffsets(ticks, scale)
 
@@ -43,6 +43,7 @@ function TimeTicks({ scale, width, leftOffset }) {
 TimeTicks.propTypes = {
   scale: T.func.isRequired,
   width: T.number.isRequired,
+  leftOffset: T.number,
 }
 
 export default TimeTicks
