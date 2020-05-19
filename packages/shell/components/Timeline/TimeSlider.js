@@ -12,8 +12,9 @@ import {
   TimeContext,
   Tooltip,
 } from '@libp2p-observer/sdk'
+import { getStateTimes, getStateRangeTimes } from '@libp2p-observer/data'
 
-import { getTime } from '@libp2p-observer/data'
+import { validateStateIndex } from './utils'
 
 const FormWrapper = styled.div`
   height: inherit;
@@ -37,6 +38,7 @@ const FirstSection = styled.div`
 const Control = styled.div.attrs(() => ({
   'data-testid': 'timeline-slider',
 }))`
+  margin-left: -${({ width }) => width}px;
   background-color: ${({ theme }) => theme.color('highlight', 0, 0.5)};
   outline: 2px solid ${({ theme }) => theme.color('highlight', 0, 0.3)};
   border: none;
@@ -45,18 +47,19 @@ const Control = styled.div.attrs(() => ({
   margin-top: 0;
   top: 0;
   z-index: 3;
-  // Position between data points
-  margin-left: ${({ width }) => width / 2}px;
   :focus {
     box-shadow: ${({ theme }) => theme.color('background', 0, 0.2)} 0 0 4px 2px;
   }
 `
-const InactiveSection = styled.div`
+const InactiveSection = styled.div.attrs(({ abovePercent, controlWidth }) => ({
+  style: {
+    // In current styled-components, width here gets overridden the wrong way, needs max-width too
+    width: `calc(${abovePercent}% - ${controlWidth / 2}px)`,
+    maxWidth: `calc(${abovePercent}% - ${controlWidth / 2}px)`,
+  },
+}))`
   background-color: ${({ theme }) => theme.color('contrast', 0, 0.8)};
   z-index: 2;
-  // Cover any x-axis labels that overspill with a hanging border
-  border-right: solid transparent ${({ theme }) => theme.spacing(2)};
-  margin-right: -${({ theme }) => theme.spacing(2)};
   box-sizing: content-box;
 `
 const NumberFieldsWrapper = styled.div`
@@ -100,6 +103,12 @@ const ResetTimeTooltip = styled.div`
 const ResetTimeTooltipTarget = styled.span`
   margin-right: ${({ theme }) => theme.spacing(-1)};
 `
+const Time = styled.span`
+  font-weight: 700;
+`
+const Milliseconds = styled.span`
+  font-weight: 300;
+`
 
 function TimeSlider({ width, override = {}, theme }) {
   const containerRef = useRef()
@@ -108,10 +117,37 @@ function TimeSlider({ width, override = {}, theme }) {
   const timepoint = useContext(TimeContext)
   const { setTimepoint } = useContext(SetterContext)
 
-  const timeIndex = dataset.indexOf(timepoint)
-  const readableTime = formatTime(getTime(timepoint))
+  if (dataset.length <= 1) return ''
 
-  const controlWidth = width / dataset.length
+  const timeIndex = dataset.indexOf(timepoint)
+  const { end: currentEndTs, duration } = getStateTimes(timepoint)
+  const readableTime = formatTime(currentEndTs)
+  const ms = new Date(currentEndTs).getMilliseconds()
+
+  const { start: minTs, duration: rangeMs } = getStateRangeTimes(dataset)
+
+  const getStepPosition = stepIndex => {
+    const validStepIndex = validateStateIndex(stepIndex, dataset)
+    const targetState = dataset[validStepIndex]
+    const { start: targetStartTs, end: targetEndTs } = getStateTimes(
+      targetState
+    )
+    const midpointTs = (targetStartTs + targetEndTs) / 2
+    const position = (midpointTs - minTs) / rangeMs
+    return position
+  }
+  const getStepIndex = position => {
+    const positionTs = position * rangeMs + minTs
+    const stepIndex = dataset.findIndex(targetState => {
+      const { start: targetStartTs, end: targetEndTs } = getStateTimes(
+        targetState
+      )
+      return positionTs > targetStartTs && positionTs <= targetEndTs
+    })
+    return validateStateIndex(stepIndex, dataset)
+  }
+
+  const controlWidth = width * (duration / rangeMs)
 
   const isLatestTimepoint = timeIndex === dataset.length - 1
   const unsetTimepoint = e => {
@@ -146,7 +182,10 @@ function TimeSlider({ width, override = {}, theme }) {
     toleranceY: parseInt(theme.spacing(2)),
     content: (
       <>
-        <TimeLabel>{readableTime}</TimeLabel>
+        <TimeLabel>
+          <Time>{readableTime}</Time>
+          <Milliseconds>.{ms}</Milliseconds>
+        </TimeLabel>
         {!isLatestTimepoint && (
           <Tooltip
             content={<ResetTimeTooltip>Reset to latest time</ResetTimeTooltip>}
@@ -182,6 +221,8 @@ function TimeSlider({ width, override = {}, theme }) {
             controlWidth={controlWidth}
             override={sliderOverrides}
             width={width}
+            getStepPosition={getStepPosition}
+            getStepIndex={getStepIndex}
             tooltipProps={tooltipProps}
           />
         )}

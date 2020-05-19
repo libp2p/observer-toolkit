@@ -53,7 +53,7 @@ const DataTrayContainer = styled.section`
   border: solid
     ${({ theme }) => `${theme.spacing()} ${theme.color('contrast', 0)}`};
   background: ${({ theme }) => theme.color('contrast', 1)};
-  padding-right: ${({ theme }) => theme.spacing(8)};
+  padding: ${({ theme }) => theme.spacing([4, 8, 8, 0])};
 `
 
 const CloseDataTray = styled.button`

@@ -23,11 +23,13 @@ function getStateTimes(state) {
 
   const end = getTime(state)
   const duration = state.getSnapshotDurationMs()
-  const start = end - duration
+  const start = state.getStartTs()
   return {
-    start,
-    end,
-    duration,
+    // Can't rely on introspection sending complete data
+    // Try to fill in any gaps with whatever we have
+    start: start || end - duration || 0,
+    end: end || start + duration || 0,
+    duration: duration || end - start || 0,
   }
 }
 

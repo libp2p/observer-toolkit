@@ -11,13 +11,10 @@ import { validateNumbers } from '../utils/helpers'
 
 function getMaxAreaPeak(stackedData) {
   return stackedData.reduce(
-    (maxOverall, timeDatum) =>
+    (maxOverall, datum) =>
       Math.max(
         maxOverall,
-        timeDatum.reduce(
-          (maxHere, [, upperAreaPoint]) => Math.max(maxHere, upperAreaPoint),
-          0
-        )
+        datum.reduce((maxInDatum, [y0, y1]) => Math.max(maxInDatum, y0, y1), 0)
       ),
     0
   )
@@ -50,10 +47,8 @@ function stackData(keyedData, keys, xSorter) {
   if (keyedData.length) {
     const maxY = getMaxAreaPeak(stackedData)
 
-    // Assumes all stacked data will be by timepoint - if not will need more options
-    // Scaling from dataset[0] leaves a gap of the width of 1 datapoint
-    const minX = keyedData[0].time
-    const maxX = keyedData[keyedData.length - 1].time
+    const minX = keyedData[0].end
+    const maxX = keyedData[keyedData.length - 1].end
 
     validateNumbers({
       maxY,
@@ -78,7 +73,7 @@ function useStackedData({
   mapYSorter,
   getYSorter = getNumericSorter,
   defaultYSortDirection = 'desc',
-  mapXSorter = d => d.time,
+  mapXSorter = d => d.end,
   getXSorter = getNumericSorter,
   defaultXSortDirection = 'asc',
 }) {

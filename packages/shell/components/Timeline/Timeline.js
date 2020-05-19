@@ -63,6 +63,8 @@ function Timeline({ width = 700, leftGutter }) {
   // Extend the yScale so that 3 tick labels fit nicely
   yScale.nice(3)
 
+  const innerWidth = width - leftGutter
+
   // Inject timeline graphic into slider bar so that both can be interacted with
   const Bar = forwardRef(({ controlWidth, onClick, children }, ref) => (
     <BarWrapper controlWidth={controlWidth} onClick={onClick} ref={ref}>
@@ -70,7 +72,7 @@ function Timeline({ width = 700, leftGutter }) {
         <PathsContainer>
           <TimelinePaths
             dataDirection="in"
-            width={width}
+            width={innerWidth}
             colorKey="primary"
             stackedData={stackedData}
             xScale={xScale}
@@ -81,7 +83,7 @@ function Timeline({ width = 700, leftGutter }) {
         <PathsContainer>
           <TimelinePaths
             dataDirection="out"
-            width={width}
+            width={innerWidth}
             colorKey="secondary"
             stackedData={stackedDataOut}
             xScale={xScale}
@@ -101,7 +103,7 @@ function Timeline({ width = 700, leftGutter }) {
 
   return (
     <Container leftGutter={leftGutter}>
-      <TimeSlider width={width - leftGutter} override={{ Bar }} />
+      <TimeSlider width={innerWidth} override={{ Bar }} />
     </Container>
   )
 }

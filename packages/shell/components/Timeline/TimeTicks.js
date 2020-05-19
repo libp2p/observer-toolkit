@@ -8,7 +8,12 @@ import { getTickOffsets } from './utils'
 const TicksContainer = styled.div`
   position: relative;
   height: 18px;
-  width: 100%;
+  width: ${({ width }) => width}px;
+  margin-left: ${({ leftOffset }) => leftOffset}px;
+  display: flex;
+  align-items: center;
+  z-index: 4;
+  pointer-events: none;
 `
 
 const TickLabel = styled.label`
@@ -19,12 +24,12 @@ const TickLabel = styled.label`
   ${({ theme }) => theme.text('label', 'small')}
 `
 
-function TimeTicks({ scale, width }) {
+function TimeTicks({ scale, width, leftOffset = 0 }) {
   const ticks = scale.ticks(Math.round(width / 120))
   const tickOffsets = getTickOffsets(ticks, scale)
 
   return (
-    <TicksContainer>
+    <TicksContainer leftOffset={leftOffset} width={width}>
       {ticks.map((tick, tickIndex) => (
         <TickLabel
           style={{ left: `${tickOffsets[tickIndex] * 100}%` }}
@@ -40,6 +45,7 @@ function TimeTicks({ scale, width }) {
 TimeTicks.propTypes = {
   scale: T.func.isRequired,
   width: T.number.isRequired,
+  leftOffset: T.number,
 }
 
 export default TimeTicks

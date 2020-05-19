@@ -53,9 +53,12 @@ describe('states data helpers', () => {
     for (const state of states) {
       const { start, end, duration } = getStateTimes(state)
 
-      expect(start + duration).toBe(end)
+      expect(start + duration).toBe(end + 1)
       if (previousTime !== null) {
-        expect(previousTime).toBe(start)
+        expect(previousTime).toBe(start - 1)
+
+        // Note: mock data can be made to be perfectly contiguous like this
+        // but real libp2p introspector data may have random gaps between states
         expect(previousTime + duration).toBe(end)
       }
       previousTime = end
