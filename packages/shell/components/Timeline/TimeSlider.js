@@ -38,6 +38,7 @@ const FirstSection = styled.div`
 const Control = styled.div.attrs(() => ({
   'data-testid': 'timeline-slider',
 }))`
+  margin-left: -${({ width }) => width}px;
   background-color: ${({ theme }) => theme.color('highlight', 0, 0.5)};
   outline: 2px solid ${({ theme }) => theme.color('highlight', 0, 0.3)};
   border: none;
@@ -55,7 +56,6 @@ const InactiveSection = styled.div.attrs(({ abovePercent, controlWidth }) => ({
     // In current styled-components, width here gets overridden the wrong way, needs max-width too
     width: `calc(${abovePercent}% - ${controlWidth / 2}px)`,
     maxWidth: `calc(${abovePercent}% - ${controlWidth / 2}px)`,
-    marginLeft: `${controlWidth / 2}px`,
   },
 }))`
   background-color: ${({ theme }) => theme.color('contrast', 0, 0.8)};
@@ -103,6 +103,12 @@ const ResetTimeTooltip = styled.div`
 const ResetTimeTooltipTarget = styled.span`
   margin-right: ${({ theme }) => theme.spacing(-1)};
 `
+const Time = styled.span`
+  font-weight: 700;
+`
+const Milliseconds = styled.span`
+  font-weight: 300;
+`
 
 function TimeSlider({ width, override = {}, theme }) {
   const containerRef = useRef()
@@ -116,6 +122,7 @@ function TimeSlider({ width, override = {}, theme }) {
   const timeIndex = dataset.indexOf(timepoint)
   const { end: currentEndTs, duration } = getStateTimes(timepoint)
   const readableTime = formatTime(currentEndTs)
+  const ms = new Date(currentEndTs).getMilliseconds()
 
   const { start: minTs, duration: rangeMs } = getStateRangeTimes(dataset)
 
@@ -175,7 +182,10 @@ function TimeSlider({ width, override = {}, theme }) {
     toleranceY: parseInt(theme.spacing(2)),
     content: (
       <>
-        <TimeLabel>{readableTime}</TimeLabel>
+        <TimeLabel>
+          <Time>{readableTime}</Time>
+          <Milliseconds>.{ms}</Milliseconds>
+        </TimeLabel>
         {!isLatestTimepoint && (
           <Tooltip
             content={<ResetTimeTooltip>Reset to latest time</ResetTimeTooltip>}
