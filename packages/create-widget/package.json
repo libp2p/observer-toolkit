@@ -35,5 +35,6 @@
     "split2": "^3.1.1",
     "tap": "^14.9.2",
     "tap-mocha-reporter": "^5.0.0"
-  }
+  },
+  "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
 }

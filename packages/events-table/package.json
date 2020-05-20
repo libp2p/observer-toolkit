@@ -58,5 +58,6 @@
   },
   "dependencies": {
     "react-json-view": "^1.19.1"
-  }
+  },
+  "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
 }
