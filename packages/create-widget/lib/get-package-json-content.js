@@ -33,13 +33,7 @@ async function getPackageJsonContent(
 
   const corePackageJson = JSON.parse(await readFile(corePackageJsonPath))
 
-  const coreScriptsToCopy = [
-    'lint',
-    'lint-fix',
-    'prettier',
-    'prettier-fix',
-    'test',
-  ]
+  const coreScriptsToCopy = ['lint', 'lint-fix', 'prettier', 'prettier-fix']
 
   const scripts = coreScriptsToCopy.reduce(
     (scripts, scriptName) => {
@@ -58,6 +52,7 @@ async function getPackageJsonContent(
     },
     {
       storybook: 'start-storybook -p 9009',
+      test: 'jest',
     }
   )
 
