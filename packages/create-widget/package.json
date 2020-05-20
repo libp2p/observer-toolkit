@@ -1,5 +1,5 @@
 {
-  "name": "@nearform/observer-create-widget",
+  "name": "@nearform/create-observer-widget",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
