@@ -12,7 +12,6 @@
     "generate-icons": "lerna run --scope=\"@nearform/observer-sdk\" svgr-icons",
     "gh-publish-bump": "lerna publish --no-push --registry=\"https://npm.pkg.github.com/\"",
     "gh-publish-same": "npm run gh-publish-bump -- --no-git-tag-version from-package",
-    "gh-unpublish": "lerna exec -- npm unpublish --force --registry=\"https://npm.pkg.github.com/\" \"\\${LERNA_PACKAGE_NAME}@\\$(npm view \\$LERNA_PACKAGE_NAME version)\"",
     "local-install": "yarn install --registry http://localhost:4873/ --frozen-lockfile",
     "local-publish-bump": "lerna publish --no-push --no-verify-access --registry=\"http://localhost:4873/\"",
     "local-publish-same": "npm run local-publish-bump -- --no-git-tag-version from-package",
