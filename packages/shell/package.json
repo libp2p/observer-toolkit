@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Outer UI controls for libp2p-observer widgets, including interactive timeline, filters and data controls",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://github.com/nearform/libp2p-observer#readme",
@@ -24,7 +24,7 @@
     "url": "https://github.com/nearform/libp2p-observer/issues"
   },
   "dependencies": {
-    "@nearform/observer-data": "^0.0.1"
+    "@nearform/observer-data": "^0.0.2"
   },
   "peerDependencies": {
     "@nearform/observer-samples": "^0.0.1",

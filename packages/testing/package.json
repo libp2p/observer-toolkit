@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Test utilities, helpers and wrappers for libp2p-observer packages and widgets.",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://github.com/nearform/libp2p-observer#readme",
@@ -22,7 +22,7 @@
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
-    "@nearform/observer-samples": "^0.0.1",
+    "@nearform/observer-samples": "^0.0.2",
     "@testing-library/react": "^9.4.0"
   },
   "jest": {

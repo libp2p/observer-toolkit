@@ -6,7 +6,7 @@
   "module": "./index.js",
   "homepage": "",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nearform/libp2p-observer.git"
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
-    "@nearform/observer-shell": "^0.0.1",
+    "@nearform/observer-shell": "^0.0.2",
     "@storybook/react": "^5.2.4",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",

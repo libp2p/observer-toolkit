@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React web app containing a browsable catalogue of ui components visualizing libp2p introspection data",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://nearform.github.io/libp2p-observer",
@@ -29,12 +29,12 @@
   "dependencies": {
     "@baristalabs/craco-raw-loader": "^1.1.1",
     "@craco/craco": "5.5.0",
-    "@nearform/observer-connections-table": "^0.0.1",
-    "@nearform/observer-dht-buckets": "^0.0.1",
-    "@nearform/observer-events-table": "^0.0.1",
-    "@nearform/observer-samples": "^0.0.1",
-    "@nearform/observer-shell": "^0.0.1",
-    "@nearform/observer-streams-table": "^0.0.1",
+    "@nearform/observer-connections-table": "^0.0.2",
+    "@nearform/observer-dht-buckets": "^0.0.2",
+    "@nearform/observer-events-table": "^0.0.2",
+    "@nearform/observer-samples": "^0.0.2",
+    "@nearform/observer-shell": "^0.0.2",
+    "@nearform/observer-streams-table": "^0.0.2",
     "arraybuffer-loader": "^1.0.8",
     "craco-babel-loader": "0.1.4",
     "react": "^16.11.0",
