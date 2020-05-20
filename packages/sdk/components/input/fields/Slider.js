@@ -34,9 +34,9 @@ const ActiveSection = styled.div`
   border-radius: ${({ theme }) => theme.spacing()};
   user-select: none;
 `
-const InactiveSection = styled.div.attrs(({ abovePercent }) => ({
+const InactiveSection = styled.div.attrs(({ widthPercent }) => ({
   style: {
-    width: `${abovePercent}%`,
+    width: `${widthPercent}%`,
   },
 }))`
   height: 100%;
@@ -323,7 +323,8 @@ function Slider({
         ref={containerRef}
       >
         <FirstSection
-          style={{ width: `${belowPercent}%` }}
+          widthPercent={belowPercent}
+          controlWidth={controlWidth}
           as={override.FirstSection}
         />
         <Tooltip {...tooltipProps}>
@@ -368,7 +369,7 @@ function Slider({
           </>
         )}
         <InactiveSection
-          abovePercent={abovePercent}
+          widthPercent={abovePercent}
           controlWidth={controlWidth}
           as={override.InactiveSection}
         />

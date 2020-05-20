@@ -51,11 +51,12 @@ const Control = styled.div.attrs(() => ({
     box-shadow: ${({ theme }) => theme.color('background', 0, 0.2)} 0 0 4px 2px;
   }
 `
-const InactiveSection = styled.div.attrs(({ abovePercent, controlWidth }) => ({
+const InactiveSection = styled.div.attrs(({ widthPercent, controlWidth }) => ({
   style: {
-    // In current styled-components, width here gets overridden the wrong way, needs max-width too
-    width: `calc(${abovePercent}% - ${controlWidth / 2}px)`,
-    maxWidth: `calc(${abovePercent}% - ${controlWidth / 2}px)`,
+    // In current styled-components, default InactiveSection width overrides this
+    // override's width (unlike CSS overrides) so also use non-competing max-width
+    width: `calc(${widthPercent}% - ${controlWidth / 2}px)`,
+    maxWidth: `calc(${widthPercent}% - ${controlWidth / 2}px)`,
   },
 }))`
   background-color: ${({ theme }) => theme.color('contrast', 0, 0.8)};
