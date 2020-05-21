@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import T from 'prop-types'
 
 import { RootNodeProvider } from '@nearform/observer-sdk'
 import { ControlPanel } from '@nearform/observer-shell'
 
-import approvedWidgets from '../definitions/approvedWidgets'
 import CatalogueItem from '../components/CatalogueItem'
 import Header from '../components/Header'
 
@@ -35,9 +35,9 @@ const CatalogueBkg = styled.div`
   display: flex;
 `
 
-function Connected() {
+function Connected({ widgets }) {
   const [selected, setSelected] = useState(null)
-  const selectedWidget = approvedWidgets[selected]
+  const selectedWidget = widgets[selected]
   const closeWidget = () => setSelected(null)
 
   return (
@@ -50,7 +50,7 @@ function Connected() {
               <selectedWidget.Widget closeWidget={closeWidget} />
             ) : (
               <CatalogueBkg>
-                {approvedWidgets.map(
+                {widgets.map(
                   ({ name, description, tags, screenshot }, index) => (
                     <CatalogueItem
                       key={name}
@@ -73,6 +73,9 @@ function Connected() {
       <ControlPanel />
     </Container>
   )
+}
+Connected.propTypes = {
+  widgets: T.array.isRequired,
 }
 
 export default Connected

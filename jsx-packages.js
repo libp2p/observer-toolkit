@@ -2,6 +2,7 @@
 
 // These packages in our repo export JSX and we must tell webpack to use babel loader on them
 const jsxPackages = [
+  'app',
   'catalogue',
   'connections-table',
   'dht-buckets',
@@ -14,7 +15,9 @@ const jsxPackages = [
 
 // Regex for all other packages
 const nonJsxPackagesRegex = new RegExp(
-  `node_modules[\\\\/](?!@nearform[\\\\/](${jsxPackages.join('|')}))[\\\\/]`
+  `node_modules[\\\\/](?!@nearform[\\\\/]observer-(${jsxPackages.join(
+    '|'
+  )}))[\\\\/]`
 )
 
 module.exports = {
