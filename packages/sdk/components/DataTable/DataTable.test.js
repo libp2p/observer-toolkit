@@ -1,6 +1,6 @@
 import React from 'react'
 import { act, fireEvent, wait } from '@testing-library/react'
-import { renderForSDK, within } from '@nearform/observer-testing'
+import { renderForSDK, within } from '@libp2p/observer-testing'
 
 import { ThemedMockDataTable } from '../../test-fixtures/MockDataTable'
 

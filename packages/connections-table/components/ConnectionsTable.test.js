@@ -6,8 +6,8 @@ import {
   renderWithData,
   renderWithShell,
   within,
-} from '@nearform/observer-testing'
-import { getConnections, getLatestState } from '@nearform/observer-data'
+} from '@libp2p/observer-testing'
+import { getConnections, getLatestState } from '@libp2p/observer-data'
 import ConnectionsTable from './ConnectionsTable'
 import WidgetContext from './context/WidgetContext'
 

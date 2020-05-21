@@ -1,6 +1,6 @@
 {
-  "name": "@nearform/observer-dht-buckets",
-  "description": "Widget built on @nearform/observer-sdk, visualising active and recent peers used in DHT queries",
+  "name": "@libp2p/observer-dht-buckets",
+  "description": "Widget built on @libp2p/observer-sdk, visualising active and recent peers used in DHT queries",
   "author": "AlanSl <alan.slater@nearform.com>",
   "main": "./build/index.js",
   "module": "./index.js",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
-    "@nearform/observer-shell": "^0.0.2",
+    "@libp2p/observer-shell": "^1.0.0",
     "@storybook/react": "^5.2.4",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
@@ -32,8 +32,8 @@
     "storybook": "^5.1.11"
   },
   "peerDependencies": {
-    "@nearform/observer-data": "^0.0.2",
-    "@nearform/observer-sdk": "^0.0.2",
+    "@libp2p/observer-data": "^0.0.2",
+    "@libp2p/observer-sdk": "^0.0.2",
     "react": "*",
     "styled-components": "*"
   },

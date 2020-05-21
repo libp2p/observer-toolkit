@@ -1,5 +1,5 @@
 {
-  "name": "@nearform/create-observer-widget",
+  "name": "@libp2p/create-observer-widget",
   "version": "0.0.2",
   "description": "A quickstart script to bootstrap a new libp2p-observer widget package",
   "author": "AlanSl <alan.slater@nearform.com>",

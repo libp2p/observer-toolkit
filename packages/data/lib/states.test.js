@@ -1,4 +1,4 @@
-import { loadSample } from '@nearform/observer-testing'
+import { loadSample } from '@libp2p/observer-testing'
 
 import {
   getSubsystems,

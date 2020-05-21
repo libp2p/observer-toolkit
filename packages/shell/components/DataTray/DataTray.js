@@ -6,7 +6,7 @@ import {
   RootNodeProvider,
   SetterContext,
   SourceContext,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 import DataTrayItem from './DataTrayItem'
 import SamplesList from './SamplesList'
 import WebSocketInput from './WebSocketInput'

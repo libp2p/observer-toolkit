@@ -1,6 +1,6 @@
 # `dht-buckets` @libp2p/observer-dht-buckets
 
-A libp2p Observer widget, built on built on @nearform/observer-sdk, visualising peers on the libp2p Distributed Hash Tables and their activity in DHT queries.
+A libp2p Observer widget, built on built on @libp2p/observer-sdk, visualising peers on the libp2p Distributed Hash Tables and their activity in DHT queries.
 
 [screenshot here]
 
@@ -9,14 +9,14 @@ A libp2p Observer widget, built on built on @nearform/observer-sdk, visualising 
 - Peers are represented as sqaures on a grid of grids representing the limited available "slots" in a Kademelia-based distrbuted hash table where a fixed number of peers can be stored for each Kademelia distance value.
 - Peers can be tracked as they slide on or off the table and from the `0` "catch-all" bucket to specific buckets as the `0` bucket overflows
 - Peers' "elevation" visualises relative time in the DHT, allowing older peers to be easily found.
-- DHT queries are visualised in real time, as flashes of yellow entering (inbound) or blue exiting (outbound) the peer, with a fading glow representing the scale of recent inbound or outbound activity 
+- DHT queries are visualised in real time, as flashes of yellow entering (inbound) or blue exiting (outbound) the peer, with a fading glow representing the scale of recent inbound or outbound activity
 - Histograms give a more detailed view of DHT query activity per bucket and, if a peer is selected, per peer.
 
 ## Exports
 
 Exports follow the standard format of libp2p Observer widgets:
 
-#### `Widget({ closeWidget })` 
+#### `Widget({ closeWidget })`
 
  - `closeWidget` (optional): function to close this widget, usually provided automatically by [@libp2p/observer-shell](../shell)
 

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { Icon, Tooltip, RootNodeContext } from '@nearform/observer-sdk'
+import { Icon, Tooltip, RootNodeContext } from '@libp2p/observer-sdk'
 
 const HEIGHT = 72
 const opacityTransition = {

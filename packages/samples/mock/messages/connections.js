@@ -3,7 +3,7 @@
 const { argv } = require('yargs')
 const {
   proto: { Connection, EndpointPair, StreamList },
-} = require('@nearform/observer-proto')
+} = require('@libp2p/observer-proto')
 
 const {
   HOST_PEER_ID,

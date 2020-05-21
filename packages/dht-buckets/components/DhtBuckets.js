@@ -6,8 +6,8 @@ import {
   getAllDhtBuckets,
   getDhtPeersInBucket,
   getStateTimes,
-} from '@nearform/observer-data'
-import { TimeContext } from '@nearform/observer-sdk'
+} from '@libp2p/observer-data'
+import { TimeContext } from '@libp2p/observer-sdk'
 
 import DhtBucketsKey from './DhtBucketsKey'
 import DhtColumn from './DhtColumn/DhtColumn'

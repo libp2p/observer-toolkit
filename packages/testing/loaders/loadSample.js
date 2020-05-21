@@ -1,4 +1,4 @@
-import { parseImport } from '@nearform/observer-data'
+import { parseImport } from '@libp2p/observer-data'
 
 const defaultFilename = 'sample-1min.mock'
 
@@ -8,7 +8,7 @@ function loadSample(filename = defaultFilename) {
   const path = require('path')
 
   // Avoid needing webpack file loader and build - make direct path
-  const samplesPath = require.resolve('@nearform/observer-samples')
+  const samplesPath = require.resolve('@libp2p/observer-samples')
   const sampleFilePath = path.resolve(
     path.dirname(samplesPath),
     'samples',

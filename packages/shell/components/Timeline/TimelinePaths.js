@@ -7,8 +7,8 @@ import {
   SetterContext,
   PeersContext,
   useAreaChart,
-} from '@nearform/observer-sdk'
-import { getStateRangeTimes } from '@nearform/observer-data'
+} from '@libp2p/observer-sdk'
+import { getStateRangeTimes } from '@libp2p/observer-data'
 import { getStateWidth } from './utils'
 
 import DataTicks from './DataTicks'

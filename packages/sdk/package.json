@@ -1,5 +1,5 @@
 {
-  "name": "@nearform/observer-sdk",
+  "name": "@libp2p/observer-sdk",
   "version": "0.0.2",
   "description": "Core components, utilities and API for building libp2p introspection ui components",
   "author": "AlanSl <alan.slater@nearform.com>",
@@ -21,7 +21,7 @@
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
-    "@nearform/observer-data": "^0.0.1",
+    "@libp2p/observer-data": "^0.0.1",
     "react": "^16.10.2",
     "react-dom": "^16.11.0",
     "styled-components": "^4.4.0"

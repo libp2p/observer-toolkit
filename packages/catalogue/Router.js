@@ -14,8 +14,7 @@ import {
   RuntimeContext,
   SourceContext,
   SetterContext,
-} from '@nearform/observer-sdk'
-import samples from '@nearform/observer-samples'
+} from '@libp2p/observer-sdk'
 
 import { Connected, Home } from './pages'
 

@@ -2,7 +2,7 @@
 
 const {
   proto: { Runtime },
-} = require('@nearform/observer-proto')
+} = require('@libp2p/observer-proto')
 
 const { HOST_PEER_ID } = require('../utils')
 

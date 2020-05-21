@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { PeersContext } from '@nearform/observer-sdk'
+import { PeersContext } from '@libp2p/observer-sdk'
 
 const Highlight = styled.div`
   position: absolute;

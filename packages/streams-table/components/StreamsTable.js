@@ -4,13 +4,13 @@ import {
   getAllStreamsAtTime,
   getStreamAge,
   getStreamTraffic,
-} from '@nearform/observer-data'
+} from '@libp2p/observer-data'
 import {
   DataTable,
   DataContext,
   TimeContext,
   useTabularData,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 
 import streamsColumnDefs from '../definitions/streamsColumns'
 

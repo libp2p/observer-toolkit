@@ -1,6 +1,6 @@
 'use strict'
 
-const { deserializeBinary, fnv1a } = require('@nearform/observer-proto')
+const { deserializeBinary, fnv1a } = require('@libp2p/observer-proto')
 
 const getEmptyMessages = () => ({
   states: [],

@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import T from 'prop-types'
 
-import { RootNodeProvider } from '@nearform/observer-sdk'
-import { ControlPanel } from '@nearform/observer-shell'
+import { RootNodeProvider } from '@libp2p/observer-sdk'
+import { ControlPanel } from '@libp2p/observer-shell'
 
 import CatalogueItem from '../components/CatalogueItem'
 import Header from '../components/Header'

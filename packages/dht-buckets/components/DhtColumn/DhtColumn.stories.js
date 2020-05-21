@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import { storiesOf } from '@storybook/react'
 
-import { TimeContext } from '@nearform/observer-sdk'
-import { getDhtPeersInBucket, getStateTimes } from '@nearform/observer-data'
+import { TimeContext } from '@libp2p/observer-sdk'
+import { getDhtPeersInBucket, getStateTimes } from '@libp2p/observer-data'
 
 import DhtColumn from './DhtColumn'
 

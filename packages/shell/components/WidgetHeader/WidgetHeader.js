@@ -7,7 +7,7 @@ import {
   Icon,
   SlideDown,
   Tooltip,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 import FiltersButton from './FiltersButton'
 import FiltersTray from './FiltersTray'
 

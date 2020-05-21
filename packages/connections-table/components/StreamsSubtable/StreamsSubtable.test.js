@@ -1,10 +1,10 @@
 import React from 'react'
-import { loadSample, renderWithData, within } from '@nearform/observer-testing'
+import { loadSample, renderWithData, within } from '@libp2p/observer-testing'
 import {
   getConnections,
   getStreams,
   getLatestState,
-} from '@nearform/observer-data'
+} from '@libp2p/observer-data'
 import StreamsSubtable from './StreamsSubtable'
 import WidgetContext from '../context/WidgetContext'
 
