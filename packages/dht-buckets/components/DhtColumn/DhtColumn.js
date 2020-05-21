@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { dhtStatusNames } from '@libp2p-observer/data'
+import { dhtStatusNames } from '@nearform/observer-data'
 
 import DhtBucketInfo from './DhtBucketInfo'
 import DhtBucket from '../DhtBucket/DhtBucket'

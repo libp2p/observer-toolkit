@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
 
-import { getStateRangeTimes } from '@libp2p-observer/data'
+import { getStateRangeTimes } from '@nearform/observer-data'
 import {
   getRangeFilter,
   FilterProvider,
   DataContext,
-} from '@libp2p-observer/sdk'
+} from '@nearform/observer-sdk'
 
 // WidgetContext is wrapped arpund every widget and its outer container,
 // allowing contexts to share with any component within the widget.

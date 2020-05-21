@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import { useStackedData } from '@libp2p-observer/sdk'
+import { useStackedData } from '@nearform/observer-sdk'
 
 import {
   getTrafficChangesByConn,

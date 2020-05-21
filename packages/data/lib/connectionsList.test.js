@@ -1,5 +1,5 @@
-import { proto } from '@libp2p-observer/proto'
-import { loadSample } from '@libp2p-observer/testing'
+import { proto } from '@nearform/observer-proto'
+import { loadSample } from '@nearform/observer-testing'
 
 import {
   getAllConnections,

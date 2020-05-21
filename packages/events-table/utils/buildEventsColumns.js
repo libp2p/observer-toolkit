@@ -1,4 +1,4 @@
-import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
+import { getStringSorter, getNumericSorter } from '@nearform/observer-sdk'
 
 import {
   RenderMultiple,

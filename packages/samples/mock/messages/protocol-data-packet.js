@@ -2,7 +2,7 @@
 
 const {
   proto: { ProtocolDataPacket, Version },
-} = require('@libp2p-observer/proto')
+} = require('@nearform/observer-proto')
 
 function createProtocolDataPacket(message, type) {
   const dataPacket = new ProtocolDataPacket()

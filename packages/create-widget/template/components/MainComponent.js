@@ -2,13 +2,13 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { getStateTimes, getTimeIndex } from '@libp2p-observer/data'
+import { getStateTimes, getTimeIndex } from '@nearform/observer-data'
 import {
   DataContext,
   EventsContext,
   FilterContext,
   TimeContext,
-} from '@libp2p-observer/sdk'
+} from '@nearform/observer-sdk'
 
 const ExampleStyledHeader = styled.h2`
   ${({ theme }) => theme.text('body', 'large')}

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { AccordionControl, FilterContext, Icon } from '@libp2p-observer/sdk'
+import { AccordionControl, FilterContext, Icon } from '@nearform/observer-sdk'
 
 const nbsp = '\u00a0'
 

@@ -1,18 +1,18 @@
 {
-  "name": "@libp2p-observer/shell",
+  "name": "@nearform/observer-shell",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Outer UI controls for libp2p-observer widgets, including interactive timeline, filters and data controls",
   "author": "AlanSl <alan.slater@nearform.com>",
-  "homepage": "https://github.com/nearform/libp2p-introspection-ui#readme",
+  "homepage": "https://github.com/nearform/libp2p-observer#readme",
   "license": "MIT",
   "main": "./build/index.js",
   "module": "./index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/libp2p-introspection-ui.git"
+    "url": "git+https://github.com/nearform/libp2p-observer.git"
   },
   "scripts": {
     "prepare": "webpack",
@@ -21,17 +21,17 @@
     "update-snapshots": "npm run test -- -u"
   },
   "bugs": {
-    "url": "https://github.com/nearform/libp2p-introspection-ui/issues"
+    "url": "https://github.com/nearform/libp2p-observer/issues"
   },
   "dependencies": {
-    "@libp2p-observer/data": "^0.0.1"
+    "@nearform/observer-data": "^0.0.2"
   },
   "peerDependencies": {
+    "@nearform/observer-samples": "^0.0.1",
+    "@nearform/observer-sdk": "^0.0.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "styled-components": "^4.4.0",
-    "@libp2p-observer/sdk": "^0.0.1",
-    "@libp2p-observer/samples": "^0.0.1"
+    "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
@@ -45,17 +45,25 @@
     "webpack-cli": "^3.3.10"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/../../__jest__/setupTest.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/../../__jest__/setupTest.js"
+    ],
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/../../__jest__/styleMock.js"
     },
     "transform": {
       "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/filePaths.js",
-      "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
+      "\\.js$": [
+        "babel-jest",
+        {
+          "rootMode": "upward"
+        }
+      ]
     },
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/build/"
     ]
-  }
+  },
+  "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
 }

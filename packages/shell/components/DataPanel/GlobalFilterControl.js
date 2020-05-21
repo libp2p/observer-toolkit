@@ -6,7 +6,7 @@ import {
   FilterChip,
   GlobalFilterContext,
   SetterContext,
-} from '@libp2p-observer/sdk'
+} from '@nearform/observer-sdk'
 
 const Container = styled.div`
   padding: ${({ theme }) => theme.spacing()};

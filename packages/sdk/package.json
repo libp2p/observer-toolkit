@@ -1,15 +1,19 @@
 {
-  "name": "@libp2p-observer/sdk",
+  "name": "@nearform/observer-sdk",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Core components, utilities and API for building libp2p introspection ui components",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
   "license": "MIT",
   "main": "./build/index.js",
   "module": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nearform/libp2p-observer.git"
+  },
   "scripts": {
     "prepare": "webpack",
     "storybook": "start-storybook -p 9009",
@@ -20,7 +24,7 @@
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
-    "@libp2p-observer/data": "^0.0.1",
+    "@nearform/observer-data": "^0.0.1",
     "react": "^16.10.2",
     "react-dom": "^16.11.0",
     "styled-components": "^4.4.0"
@@ -68,5 +72,6 @@
         }
       ]
     }
-  }
+  },
+  "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
 }

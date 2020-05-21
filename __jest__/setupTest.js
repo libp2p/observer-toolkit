@@ -12,7 +12,7 @@ jest.setTimeout(15000)
 global.fetch = async filepath => {
   if (path.extname(filepath) === '.mock') {
     const samplesPath = path.dirname(
-      require.resolve('@libp2p-observer/samples')
+      require.resolve('@nearform/observer-samples')
     )
     filepath = path.resolve(samplesPath, 'samples', path.basename(filepath))
   }

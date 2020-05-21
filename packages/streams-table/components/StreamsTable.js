@@ -1,12 +1,12 @@
 import React, { useContext, useMemo } from 'react'
 
-import { getAllStreamsAtTime, getStreamTraffic } from '@libp2p-observer/data'
+import { getAllStreamsAtTime, getStreamTraffic } from '@nearform/observer-data'
 import {
   DataTable,
   DataContext,
   TimeContext,
   useTabularData,
-} from '@libp2p-observer/sdk'
+} from '@nearform/observer-sdk'
 
 import streamsColumnDefs from '../definitions/streamsColumns'
 

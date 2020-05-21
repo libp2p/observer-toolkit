@@ -1,4 +1,4 @@
-# libp2p-introspection-ui
+# libp2p-observer
 
 User interface for visualising libp2p introspection data.
 

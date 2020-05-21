@@ -10,7 +10,7 @@ import {
   FilterSetterContext,
   Icon,
   StyledButton,
-} from '@libp2p-observer/sdk'
+} from '@nearform/observer-sdk'
 
 const Container = styled.div`
   display: flex;

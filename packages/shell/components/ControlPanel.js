@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-import { DataContext, RootNodeProvider } from '@libp2p-observer/sdk'
+import { DataContext, RootNodeProvider } from '@nearform/observer-sdk'
 import Timeline from './Timeline/Timeline'
 import DataPanel from './DataPanel/DataPanel'
 

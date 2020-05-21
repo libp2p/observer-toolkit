@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
 
-import { getStreams } from '@libp2p-observer/data'
-import { DataTable, useTabularData } from '@libp2p-observer/sdk'
+import { getStreams } from '@nearform/observer-data'
+import { DataTable, useTabularData } from '@nearform/observer-sdk'
 
 import { MetadataContext } from '../context/MetadataProvider'
 import streamsColumnDefs from '../../definitions/streamsColumns'

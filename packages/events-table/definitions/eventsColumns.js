@@ -1,5 +1,5 @@
-import { getStringSorter, getNumericSorter } from '@libp2p-observer/sdk'
-import { getEventType } from '@libp2p-observer/data'
+import { getStringSorter, getNumericSorter } from '@nearform/observer-sdk'
+import { getEventType } from '@nearform/observer-data'
 
 import { RenderTime } from '../components/contentRenderers'
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { storiesOf } from '@storybook/react'
 
-import { ThemeWrapper } from '@libp2p-observer/testing'
+import { ThemeWrapper } from '@nearform/observer-testing'
 
 import DhtBucket from './DhtBucket'
 

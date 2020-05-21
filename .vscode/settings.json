@@ -1,0 +1,9 @@
+{
+  "npm.exclude": "**/verdaccio/storage/**",
+  "files.watcherExclude": {
+    "**/.nyc_output/**": true,
+    "**/build/**": true,
+    "**/node_modules/**": true,
+    "**/verdaccio/storage/**": true
+  },
+}

@@ -1,14 +1,18 @@
 {
-  "name": "@libp2p-observer/catalogue",
+  "name": "@nearform/observer-catalogue",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React web app containing a browsable catalogue of ui components visualizing libp2p introspection data",
   "author": "AlanSl <alan.slater@nearform.com>",
-  "homepage": "https://nearform.github.io/libp2p-introspection-ui",
+  "homepage": "https://nearform.github.io/libp2p-observer",
   "license": "MIT",
   "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nearform/libp2p-observer.git"
+  },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
@@ -19,18 +23,18 @@
     "deploy": "gh-pages -d build"
   },
   "peerDependencies": {
-    "@libp2p-observer/data": "^0.0.1",
-    "@libp2p-observer/sdk": "^0.0.1"
+    "@nearform/observer-data": "^0.0.1",
+    "@nearform/observer-sdk": "^0.0.1"
   },
   "dependencies": {
     "@baristalabs/craco-raw-loader": "^1.1.1",
     "@craco/craco": "5.5.0",
-    "@libp2p-observer/connections-table": "^0.0.1",
-    "@libp2p-observer/dht-buckets": "^0.0.1",
-    "@libp2p-observer/events-table": "^0.0.1",
-    "@libp2p-observer/samples": "^0.0.1",
-    "@libp2p-observer/shell": "^0.0.1",
-    "@libp2p-observer/streams-table": "^0.0.1",
+    "@nearform/observer-connections-table": "^0.0.2",
+    "@nearform/observer-dht-buckets": "^0.0.2",
+    "@nearform/observer-events-table": "^0.0.2",
+    "@nearform/observer-samples": "^0.0.2",
+    "@nearform/observer-shell": "^0.0.2",
+    "@nearform/observer-streams-table": "^0.0.2",
     "arraybuffer-loader": "^1.0.8",
     "craco-babel-loader": "0.1.4",
     "react": "^16.11.0",
@@ -59,8 +63,13 @@
   "jest": {
     "transform": {
       "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/filePaths.js",
-      "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
+      "\\.js$": [
+        "babel-jest",
+        {
+          "rootMode": "upward"
+        }
+      ]
     }
-  }
-
+  },
+  "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
 }

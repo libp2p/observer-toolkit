@@ -5,7 +5,7 @@ import {
   formatDuration,
   RuntimeContext,
   WebsocketContext,
-} from '@libp2p-observer/sdk'
+} from '@nearform/observer-sdk'
 
 import EditRuntime from './EditRuntime'
 

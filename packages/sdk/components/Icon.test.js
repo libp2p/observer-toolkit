@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
-import { catchErrorSilently, renderWithTheme } from '@libp2p-observer/testing'
+import { catchErrorSilently, renderWithTheme } from '@nearform/observer-testing'
 import Icon from './Icon'
 
 describe('Icon', () => {

@@ -8,7 +8,7 @@ import {
   Icon,
   StyledButton,
   Tooltip,
-} from '@libp2p-observer/sdk'
+} from '@nearform/observer-sdk'
 
 import { RenderTime } from './contentRenderers'
 

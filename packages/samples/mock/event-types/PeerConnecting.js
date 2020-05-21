@@ -2,7 +2,7 @@
 
 const {
   proto: { EventType },
-} = require('@libp2p-observer/proto')
+} = require('@nearform/observer-proto')
 const { EventProperty } = EventType
 
 const PeerConnecting = new EventType(['PeerConnecting'])

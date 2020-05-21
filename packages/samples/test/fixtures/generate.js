@@ -1,7 +1,7 @@
 'use strict'
 
 const { generateComplete } = require('../../mock/generate')
-const { parseBuffer } = require('@libp2p-observer/data')
+const { parseBuffer } = require('@nearform/observer-data')
 
 const initialConnCount = 6
 const durationSeconds = 40

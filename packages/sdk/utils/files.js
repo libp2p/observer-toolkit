@@ -1,4 +1,4 @@
-import { parseBufferList } from '@libp2p-observer/data'
+import { parseBufferList } from '@nearform/observer-data'
 import { BufferList } from 'bl'
 
 function uploadDataFile(file, onUploadStart, onUploadFinished, onUploadChunk) {

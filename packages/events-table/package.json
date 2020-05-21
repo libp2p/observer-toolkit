@@ -1,14 +1,18 @@
 {
-  "name": "@libp2p-observer/events-table",
+  "name": "@nearform/observer-events-table",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
-  "version": "0.0.1",
-  "description": "React component built on libp2p-introspection-ui SDK, visualizing libp2p events in a data table",
+  "version": "0.0.2",
+  "description": "React component built on libp2p-observer SDK, visualizing libp2p events in a data table",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
   "license": "MIT",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nearform/libp2p-observer.git"
+  },
   "scripts": {
     "prepare": "webpack",
     "storybook": "start-storybook -p 9009",
@@ -17,15 +21,15 @@
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
-    "@libp2p-observer/data": "^0.0.1",
-    "@libp2p-observer/sdk": "^0.0.1",
+    "@nearform/observer-data": "^0.0.1",
+    "@nearform/observer-sdk": "^0.0.1",
     "react": "^16.10.2",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
-    "@libp2p-observer/shell": "^0.0.1",
+    "@nearform/observer-shell": "^0.0.2",
     "@storybook/react": "^5.2.4",
     "@testing-library/react": "^9.4.0",
     "babel-jest": "^24.9.0",
@@ -54,5 +58,6 @@
   },
   "dependencies": {
     "react-json-view": "^1.19.1"
-  }
+  },
+  "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
 }

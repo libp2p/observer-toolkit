@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { ThemeContext } from 'styled-components'
-import dataHelpers from '@libp2p-observer/data'
+import dataHelpers from '@nearform/observer-data'
 
 const getH1Style = theme =>
   `color: ${theme.color('secondary')}; font-size: 21px;`

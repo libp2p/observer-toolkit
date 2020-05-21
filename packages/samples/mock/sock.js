@@ -4,7 +4,7 @@ const http = require('http')
 const WebSocket = require('ws')
 const {
   proto: { ClientSignal },
-} = require('@libp2p-observer/proto')
+} = require('@nearform/observer-proto')
 const { DEFAULT_SNAPSHOT_DURATION } = require('./utils')
 const {
   generateConnections,

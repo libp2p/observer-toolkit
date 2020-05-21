@@ -1,8 +1,8 @@
 import React from 'react'
 import T from 'prop-types'
 
-import { getListFilter, FilterProvider } from '@libp2p-observer/sdk'
-import { statusNames } from '@libp2p-observer/data'
+import { getListFilter, FilterProvider } from '@nearform/observer-sdk'
+import { statusNames } from '@nearform/observer-data'
 
 const statusNamesList = Object.values(statusNames)
 

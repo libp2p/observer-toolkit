@@ -14,9 +14,7 @@ const jsxPackages = [
 
 // Regex for all other packages
 const nonJsxPackagesRegex = new RegExp(
-  `node_modules[\\\\/](?!@libp2p-observer[\\\\/](${jsxPackages.join(
-    '|'
-  )}))[\\\\/]`
+  `node_modules[\\\\/](?!@nearform[\\\\/](${jsxPackages.join('|')}))[\\\\/]`
 )
 
 module.exports = {

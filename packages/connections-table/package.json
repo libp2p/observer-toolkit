@@ -1,15 +1,19 @@
 {
-  "name": "@libp2p-observer/connections-table",
+  "name": "@nearform/observer-connections-table",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
+    "registry": "https://npm.pkg.github.com/"
   },
-  "version": "0.0.1",
-  "description": "React component built on libp2p-introspection-ui SDK, visualizing libp2p connections in a data table",
+  "version": "0.0.2",
+  "description": "React component built on libp2p-observer SDK, visualizing libp2p connections in a data table",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
   "license": "MIT",
   "main": "./build/index.js",
   "module": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nearform/libp2p-observer.git"
+  },
   "scripts": {
     "prepare": "webpack",
     "storybook": "start-storybook -p 9009",
@@ -18,15 +22,15 @@
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
-    "@libp2p-observer/data": "^0.0.1",
-    "@libp2p-observer/sdk": "^0.0.1",
+    "@nearform/observer-data": "^0.0.1",
+    "@nearform/observer-sdk": "^0.0.1",
     "react": "^16.10.2",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
-    "@libp2p-observer/shell": "^0.0.1",
+    "@nearform/observer-shell": "^0.0.2",
     "@storybook/react": "^5.2.4",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
@@ -37,13 +41,21 @@
     "storybook": "^5.1.11"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/../../__jest__/setupTest.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/../../__jest__/setupTest.js"
+    ],
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/../../__jest__/styleMock.js"
     },
     "transform": {
       "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/filePaths.js",
-      "\\.js$": [ "babel-jest", { "rootMode": "upward" } ]
+      "\\.js$": [
+        "babel-jest",
+        {
+          "rootMode": "upward"
+        }
+      ]
     }
-  }
+  },
+  "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
 }

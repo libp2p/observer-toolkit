@@ -1,7 +1,7 @@
 import React from 'react'
 import T from 'prop-types'
 
-import { ActiveWidget } from '@libp2p-observer/shell'
+import { ActiveWidget } from '@nearform/observer-shell'
 import { name, description } from './metadata'
 import WidgetContext from './components/context/WidgetContext'
 import EventsTable from './components/EventsTable'
