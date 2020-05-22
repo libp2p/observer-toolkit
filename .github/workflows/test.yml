@@ -18,6 +18,7 @@ jobs:
 
       - name: Initialise monorepo
         run: yarn install
-
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Run test scripts
         run: npx lerna run test
