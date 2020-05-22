@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Components to create a browsable catalogue of LibP2P Observer widgets",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://nearform.github.io/libp2p-observer",
