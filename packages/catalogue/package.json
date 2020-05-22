@@ -4,72 +4,65 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "version": "0.0.2",
-  "description": "React web app containing a browsable catalogue of ui components visualizing libp2p introspection data",
+  "description": "Components to create a browsable catalogue of LibP2P Observer widgets",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://nearform.github.io/libp2p-observer",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "./build/index.js",
+  "module": "./index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nearform/libp2p-observer.git"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "CI=true craco test",
-    "test:watch": "craco test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "prepare": "webpack",
+    "test": "CI=true jest",
+    "test:watch": "jest --watch",
+    "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
     "@nearform/observer-data": "^0.0.1",
-    "@nearform/observer-sdk": "^0.0.1"
-  },
-  "dependencies": {
-    "@baristalabs/craco-raw-loader": "^1.1.1",
-    "@craco/craco": "5.5.0",
-    "@nearform/observer-connections-table": "^0.0.2",
-    "@nearform/observer-dht-buckets": "^0.0.2",
-    "@nearform/observer-events-table": "^0.0.2",
+    "@nearform/observer-shell": "^0.0.1",
     "@nearform/observer-samples": "^0.0.2",
-    "@nearform/observer-shell": "^0.0.2",
-    "@nearform/observer-streams-table": "^0.0.2",
-    "arraybuffer-loader": "^1.0.8",
-    "craco-babel-loader": "0.1.4",
+    "@nearform/observer-sdk": "^0.0.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-markdown": "^4.2.2",
-    "styled-components": "^4.4.0",
-    "webpack": "4.41.0"
+    "styled-components": "^4.4.0"
+  },
+  "dependencies": {
+    "react-markdown": "^4.2.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.7.6",
+    "@babel/preset-react": "^7.7.4",
     "@testing-library/react": "^9.4.0",
-    "create-react-app": "3.2.0",
-    "gh-pages": "^2.1.1"
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "jest-styled-components": "^6.3.4",
+    "peer-deps-externals-webpack-plugin": "^1.0.4",
+    "raw-loader": "^3.1.0",
+    "webpack-cli": "^3.3.10"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "jest": {
-    "transform": {
-      "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/filePaths.js",
-      "\\.js$": [
-        "babel-jest",
-        {
-          "rootMode": "upward"
-        }
+    "jest": {
+      "setupFilesAfterEnv": [
+        "<rootDir>/../../__jest__/setupTest.js"
+      ],
+      "moduleNameMapper": {
+        "\\.(css|less)$": "<rootDir>/../../__jest__/styleMock.js"
+      },
+      "transform": {
+        "\\.(mock|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/../../__jest__/filePaths.js",
+        "\\.js$": [
+          "babel-jest",
+          {
+            "rootMode": "upward"
+          }
+        ]
+      },
+      "coveragePathIgnorePatterns": [
+        "/node_modules/",
+        "/build/"
       ]
-    }
-  },
-  "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
+    },
+    "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
 }

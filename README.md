@@ -8,7 +8,7 @@ To get started locally, first, clone the repo, and run `yarn install`. The UI ca
 
 ### Local deployment
 
-Run `npm run start:catalogue` to run a dev build of the `catalogue` package, containing a UI for browsing built-in React widgets and connecting these to a data source.
+Run `npm run start:app` to run a dev build of the `app` package, containing a catalogue UI for browsing built-in React widgets and connecting these to a data source.
 
 When the UI is loaded, three types of data sources are available:
 
@@ -54,9 +54,10 @@ This is a [Lerna monorepo](https://github.com/lerna/lerna), managed with [Yarn W
 
 ### Core UI packages
 
-- [**`packages/catalogue`**](packages/catalogue): A React app containing the interface for selecting a widget and connecting to a data source.
+- [**`packages/app`**](packages/app): A React app, based on [Craco](https://github.com/gsoft-inc/craco), which builds a demo LibP2P Observer catalogue containing the widgets included in this repo.
+- [**`packages/catalogue`**](packages/catalogue): React components, pages and routing for building browsable catalogues of LibP2P Observer widgets based on a provided list of widgets.
 - [**`packages/sdk`**](packages/sdk): A Software Development Kit consisting of a library of components, hooks and utilities used across all widgets and UI packages.
-- [**`packages/shell`**](packages/shell): Common React components comprising the interface around an active widget, including data timeline and filter controls.
+- [**`packages/shell`**](packages/shell): React components comprising the common interface around an active widget, such as data timeline, data selection tools, settings and filter controls.
 
 ### Node.js scripts
 

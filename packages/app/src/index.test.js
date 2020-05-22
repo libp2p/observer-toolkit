@@ -1,12 +1,15 @@
 import React from 'react'
 
 import { fireEvent, act, render } from '@testing-library/react'
+import Catalogue from '@nearform/observer-catalogue'
 
-import App from './App'
+import widgets from './widgets'
 
 describe('App', () => {
   it('can click through to a widget with sample data applied', async () => {
-    const { getByText, findByText, findByRole } = render(<App />)
+    const { getByText, findByText, findByRole } = render(
+      <Catalogue widgets={widgets} />
+    )
 
     const samples = getByText(/^Sample data/i)
     await act(async () => {
