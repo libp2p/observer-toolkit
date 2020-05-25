@@ -22,7 +22,7 @@ jobs:
           node-version: '12.x'
 
       - name: Initialise monorepo
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Run deploy script
         env:
