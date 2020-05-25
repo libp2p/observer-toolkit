@@ -30,10 +30,10 @@
   "dependencies": {
     "@baristalabs/craco-raw-loader": "^1.1.1",
     "@craco/craco": "5.5.0",
+    "@nearform/observer-catalogue": "^0.0.3",
     "@nearform/observer-connections-table": "^0.0.2",
     "@nearform/observer-dht-buckets": "^0.0.2",
     "@nearform/observer-events-table": "^0.0.2",
-    "@nearform/observer-catalogue": "^0.0.2",
     "@nearform/observer-samples": "^0.0.2",
     "@nearform/observer-streams-table": "^0.0.2",
     "arraybuffer-loader": "^1.0.8",

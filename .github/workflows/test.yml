@@ -17,7 +17,7 @@ jobs:
           node-version: '12.x'
 
       - name: Initialise monorepo
-        run: yarn install
+        run: yarn install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READ_PACKAGES_TOKEN }}
       - name: Run test scripts
