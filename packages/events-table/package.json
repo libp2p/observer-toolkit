@@ -1,8 +1,5 @@
 {
   "name": "@nearform/observer-events-table",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "version": "0.0.2",
   "description": "React component built on libp2p-observer SDK, visualizing libp2p events in a data table",
   "author": "AlanSl <alan.slater@nearform.com>",
@@ -59,5 +56,5 @@
   "dependencies": {
     "react-json-view": "^1.19.1"
   },
-  "gitHead": "2fc19b60ab856217355ed48ba2ea384b2e7e09e4"
+  "gitHead": "9a1f73f71e98b6e8f27ac26133c7fc63e1fc8f7d"
 }
