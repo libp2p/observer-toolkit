@@ -27,6 +27,29 @@ These functions are "vanilla" ES6+ JavaScript (with an ES5 webpack build availab
     - [getStreamAge\( Stream, State \)](#getstreamage-stream-state-)
     - [getStreamTimeClosed\( Stream, State \)](#getstreamtimeclosed-stream-state-)
     - [getStreamTraffic\( Connection, direction:string, type:string \)](#getstreamtraffic-connection-directionstring-typestring-)
+  - [dht.js](#dhtjs)
+  - [enums.js](#enumsjs)
+    - [getEnumByName\( name:string, Object \)](#getenumbyname-namestring-object-)
+    - [dhtStatusNames](#dhtstatusnames)
+    - [statusNames](#statusnames)
+    - [roleNames](#rolenames)
+    - [transportNames](#transportnames)
+    - [dhtQueryResultNames](#dhtqueryresultnames)
+    - [dhtQueryDirectionNames](#dhtquerydirectionnames)
+    - [dhtQueryEventNames](#dhtqueryeventnames)
+  - [events.js](#eventsjs)
+    - [getEventType\( Event \)](#geteventtype-event-)
+    - [getEventPropertyLookup\( EventType \)](#geteventpropertylookup-eventtype-)
+    - [getEventTypeWithProperties \({ eventType:Object, propertyTypeLookup: Object }\)](#geteventtypewithproperties--eventtypeobject-propertytypelookup-object-)
+  - [runtime.js](#runtimejs)
+    - [getRuntimeEventTypes\( Runtime \)](#getruntimeeventtypes-runtime-)
+    - [getRuntimeEventProperties\( Runtime \)](#getruntimeeventproperties-runtime-)
+  - [states.js](#statesjs)
+    - [getLatestState\( Array \)](#getlateststate-array-)
+    - [getSubsystems\( State \)](#getsubsystems-state-)
+    - [getStateRangeTimes\( Array \)](#getstaterangetimes-array-)
+    - [getStateTimes\( State \)](#getstatetimes-state-)
+    - [getTimeIndex\( Array, number \)](#gettimeindex-array-number-)
 
 <!-- /MarkdownTOC -->
 
@@ -138,3 +161,92 @@ Returns a number for the number of miliseconds the stream had been closed in the
 #### getStreamTraffic( Connection, direction:string, type:string )
 
 Returns the cumulative traffic of a stream for a given direction ('in' or 'out') and data type ('bytes' or 'packets'). 
+
+<a id="dhtjs"></a>
+### [dht.js](lib/dht.js)
+
+The DHT implementation and related introspection data model is currently in flux, so the DHT functions here should be considered unstable until this upstream work is complete.
+
+<a id="enumsjs"></a>
+### [enums.js](lib/enums.js)
+
+<a id="getenumbyname-namestring-object-"></a>
+#### getEnumByName( name:string, Object )
+
+Returns the number corresponding to the given name in the provided Object.
+
+<a id="dhtstatusnames"></a>
+#### dhtStatusNames
+<a id="statusnames"></a>
+#### statusNames
+<a id="rolenames"></a>
+#### roleNames
+<a id="transportnames"></a>
+#### transportNames
+<a id="dhtqueryresultnames"></a>
+#### dhtQueryResultNames
+<a id="dhtquerydirectionnames"></a>
+#### dhtQueryDirectionNames
+<a id="dhtqueryeventnames"></a>
+#### dhtQueryEventNames
+
+Objects inumerating the given names as per the protobuf definition given in [@libp2p/observer-proto](../proto)
+
+<a id="eventsjs"></a>
+### [events.js](lib/events.js)
+
+<a id="geteventtype-event-"></a>
+#### getEventType( Event )
+
+Returns a string of the event's event type name.
+
+<a id="geteventpropertylookup-eventtype-"></a>
+#### getEventPropertyLookup( EventType )
+
+For an EventType message object, returns an object enumerating property types defined in the protobuf, with numeric keys and string values.
+
+<a id="geteventtypewithproperties--eventtypeobject-propertytypelookup-object-"></a>
+#### getEventTypeWithProperties ({ eventType:Object, propertyTypeLookup: Object })
+
+Returns an array containing an object for each property type of an eventType, with the `name` and `type` as strings and a boolean value `hasMultiple` true if the property can have more than one vlue per event.
+
+<a id="runtimejs"></a>
+### [runtime.js](lib/runtime.js)
+
+<a id="getruntimeeventtypes-runtime-"></a>
+#### getRuntimeEventTypes( Runtime )
+
+Returns an array of objects containing the name and properties (as expanded by `getEventTypeWithProperties`) of each event type defined in the provided runtime; or an empty array if no runtime is present.
+
+<a id="getruntimeeventproperties-runtime-"></a>
+#### getRuntimeEventProperties( Runtime )
+
+Returns an array of all event properties in all event types in a runtime (as expanded by `getEventTypeWithProperties`), or an empty array if no runtime is present.
+
+<a id="statesjs"></a>
+### [states.js](lib/states.js)
+
+<a id="getlateststate-array-"></a>
+#### getLatestState( Array ) 
+
+For a sorted array of states, returns the most recent, or null if the array is empty.
+
+<a id="getsubsystems-state-"></a>
+#### getSubsystems( State )
+
+Returns the subsystems of a state, such as `connectionList` and `dht`, or `null` if no state is available.
+
+<a id="getstaterangetimes-array-"></a>
+#### getStateRangeTimes( Array )
+
+For an array of states, returns an object with the `start` and `end` timestamps of the earliest and latest State messages, and a `duration` value for the number miliseconds between these two points; or all values as 0 if the array is empty. 
+
+<a id="getstatetimes-state-"></a>
+#### getStateTimes( State )
+
+Returns an object with the `start` and `end` timestamps of the State message, and a `duration` value for the number of miliseconds spanned by the State message.
+
+<a id="gettimeindex-array-number-"></a>
+#### getTimeIndex( Array, number )
+
+For an array of states and numeric timestamp, returns the index number of the state that has the given timestamp as its "end" time.
