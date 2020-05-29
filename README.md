@@ -1,35 +1,58 @@
 # libp2p-observer
 
-User interface for visualising libp2p introspection data.
+A toolkit for building, hosting and deploying widgets that visualise LibP2P Introspection data.
 
+<!-- MarkdownTOC -->
+
+- [Setup](#setup)
+  - [Local deployment](#local-deployment)
+    - [Sample data](#sample-data)
+    - [Upload a file](#upload-a-file)
+    - [Live connection](#live-connection)
+  - [Getting data](#getting-data)
+    - [Mock data](#mock-data)
+    - [LibP2P REPL](#libp2p-repl)
+- [Packages](#packages)
+- [Documentation](#documentation)
+
+<!-- /MarkdownTOC -->
+
+
+<a id="setup"></a>
 ## Setup
 
 To get started locally, first, clone the repo, and run `yarn install`. The UI can then be deployed and connected to a data source:
 
+<a id="local-deployment"></a>
 ### Local deployment
 
 Run `npm run start:app` to run a dev build of the `app` package, containing a catalogue UI for browsing built-in React widgets and connecting these to a data source.
 
 When the UI is loaded, three types of data sources are available:
 
+<a id="sample-data"></a>
 #### Sample data
 
 Pre-made data samples are provided to show how the UI works. They can be loaded using the `Sample data` button and selecting one of the datasets.
 
+<a id="upload-a-file"></a>
 #### Upload a file
 
 Just like the pre-made samples, it's possible to upload your own dataset. Compatible datasets can be exported using the UI's "Export data" button, and mock data files can be generated using the command `npm run mock-file` with optional flags below.
 
+<a id="live-connection"></a>
 #### Live connection
 
 To get live introspection data streaming into the UI, enter the websockets address of a LibP2P introspection server.
 
 For example, if a LibP2P node is running an introspection server under `introspect` on local port 12345, connect to `ws://localhost:12345/introspect`.
 
+<a id="getting-data"></a>
 ### Getting data
 
 If no active LibP2P introspection server is available, in addition to the built-in data samples there are two easy ways to obtain data:
 
+<a id="mock-data"></a>
 #### Mock data
 
 To run generate mock data that simulates a LibP2P network with randomised activity, use one of these two commands, from either the repo root directory or the samples package: 
@@ -39,6 +62,7 @@ To run generate mock data that simulates a LibP2P network with randomised activi
 
 Both [accept several options](packages/samples/readme.md) to define certain aspects of the mock P2P network or output.
 
+<a id="libp2p-repl"></a>
 #### LibP2P REPL
 
 The [LibP2P REPL](https://github.com/libp2p/repl) provides a simple way to connect to real LibP2P activity:
@@ -48,29 +72,24 @@ The [LibP2P REPL](https://github.com/libp2p/repl) provides a simple way to conne
  3. Generate some activity using the REPL CLI. The option "DHT: Bootstrap (public seeds)" generates a lot of connection and DHT activity.
  4. In the catalogue UI, connect to the websocket address copied earlier, appending `/introspect`. For example, if My Info gave a listening address of 127.0.0.1/12345, connect to `ws://127.0.0.1:12345/introspect`
 
-## Packages overview
+<a id="packages"></a>
+## Packages
 
-This is a [Lerna monorepo](https://github.com/lerna/lerna), managed with [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/), containing the following packages:
+This is a [Lerna monorepo](https://github.com/lerna/lerna), managed with [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/).
 
-### Core UI packages
+**Each directory in the `packages` directory is an independent package**, published to NPM, installable and usable in projects. The packages can be grouped broadly into four types:
 
-- [**`packages/app`**](packages/app): A React app, based on [Craco](https://github.com/gsoft-inc/craco), which builds a demo LibP2P Observer catalogue containing the widgets included in this repo.
-- [**`packages/catalogue`**](packages/catalogue): React components, pages and routing for building browsable catalogues of LibP2P Observer widgets based on a provided list of widgets.
-- [**`packages/sdk`**](packages/sdk): A Software Development Kit consisting of a library of components, hooks and utilities used across all widgets and UI packages.
-- [**`packages/shell`**](packages/shell): React components comprising the common interface around an active widget, such as data timeline, data selection tools, settings and filter controls.
+ - **Core UI**. React component libraries: [`sdk`](packages/sdk) provides the core UI components and theming, [`shell`](packages/shell) provides the UI for selecting and controlling data and [`catalogue`](packages/catalogue) provides the UI for browsing and selecting widgets
+ - **Widgets**. four example widgets built on the SDK: [`connections-table`](packages/connections-table), [`dht-buckets`](packages/dht-buckets), [`streams-table`](packages/streams-table), [`events-table`](packages/events-table), [`streams-table`](packages/streams-table), 
+ - **Node.js scripts**. Utilities for creating new widgets ([`create-widget`](packages/create-widget)), performing common data operations in Node.js or a React build ([`data`](packages/data)), converting binary Protobuf messages to or from JavaScript ([`proto`](packages/proto)), and generating or importing mock LibP2P Introspection data in protobuf format ([`samples`](packages/samples))
+ - **Developer tools**. A demo [`app`](packages/app) that deploys a catalogue containing each example widget, and [`testing`](packages/testing) utilities to aid testing widget components in Jest and Storybook.
 
-### Node.js scripts
+For more detail on packages and a more detailed overview, see the [packages directory readme](packages)
 
-- [**`packages/create-widget`**](packages/create-widget): Generates a new empty widget based on CLI input, and is compatible with `npm init` and `yarn create`. 
-- [**`packages/data`**](packages/data): Helper functions for common operations on LibP2P Introspection protobuf data. 
-- [**`packages/proto`**](packages/proto): The definition and Javscript encoder/decoder of the protobuf used for LibP2P introspection data, with utilities for bundling and unpacking the protobuf data alongside checksums and byte counts. 
-- [**`packages/samples`**](packages/samples): Scripts for generating mock LibP2P Introspection data, saved to a binary file or via a mock websocket server. Also includes a set of pre-generated sample files. 
+<a id="documentation"></a>
+## Documentation
 
-### Widgets
-
-A "widget" is a React app based on the SDK for visualising LibP2P Introspection data that can be run inside the Catalogue or Shell.
-
-- [**`packages/connections-table`**](packages/connections-table) An interactive data table showing the connections observed at a user-selected point in time, including cumulative traffic, peer Ids, connection status and transports.
-- [**`packages/dht-buckets`**](packages/events-table) A visualisation of live activity of peers on the DHT routing table. Currently on hold due to ongoing changes to the LibP2P DHT model.
-- [**`packages/events-table`**](packages/events-table) A configurable interactive data table showing incoming events in real time, based on provided data about known event types.
-- [**`packages/streams-table`**](packages/streams-table) A streams datatable added to demonstrate switching between visualizations in the catalogue.
+ - [Contribute](docs/contribute) for how to contribute work built on this toolkit to the LibP2P community, and how to contribute to this project itself.
+ - [Developer Guide](docs/developer-guide) for a more detailed overview and explanation of how this project is structured, with pointers to developer resources available.
+ - [File Format](docs/file-format) for the specification of the format of binary data that the LibP2P Observer expects
+ - [Introspection Data Emitting Protocol] for an overview of the data protocol by which a LibP2P Observer widget and shell interacts with a LibP2P Introspection server

@@ -1,4 +1,4 @@
-# Contribution
+# Contribute
 
 <!-- MarkdownTOC -->
 
