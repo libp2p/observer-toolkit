@@ -6,7 +6,7 @@ const {
   getAllConnections,
   getConnections,
   getEnumByName,
-  getLatestTimepoint,
+  getLatestState,
   getConnectionTraffic,
   statusNames,
 } = require('@nearform/observer-data')
@@ -22,7 +22,7 @@ const {
 const timepointsExceptLatest = states.slice(0, -1)
 
 const initialConnectionsList = getConnections(states[0])
-const lastConnectionsList = getConnections(getLatestTimepoint(states))
+const lastConnectionsList = getConnections(getLatestState(states))
 const statesPerSecond = durationSnapshot / SECOND_IN_MS
 
 test('Expected connections exist', t => {

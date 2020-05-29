@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 
-import { getTime, getStateTimes } from '@nearform/observer-data'
+import { getStateTimes } from '@nearform/observer-data'
 
 // High default cutoff time to avoid spurious trimming if runtime message is delayed
 const DEFAULT_CUTOFF_MS = 1000 * 60 * 60 * 24
@@ -9,7 +9,7 @@ function getEventTime(event) {
   return event.getTs()
 }
 function getStateEnd(state) {
-  return getTime(state)
+  return getStateTimes(state).end
 }
 function getMessageSorter(getTime) {
   return (a, b) => getTime(a) - getTime(b)

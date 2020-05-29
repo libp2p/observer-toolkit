@@ -6,22 +6,13 @@ function getSubsystems(state) {
   return state.getSubsystems()
 }
 
-// TODO: deprecate or rename this
-function getTime(state) {
-  if (!state) return null
-  return state.getInstantTs()
-}
-
-// TODO: rename 'timepoints' to 'states' everywhere
-function getLatestTimepoint(timepoints) {
-  if (!timepoints.length) return null
-  return timepoints[timepoints.length - 1]
+function getLatestState(states) {
+  if (!states.length) return null
+  return states[states.length - 1]
 }
 
 function getStateTimes(state) {
-  if (!state) return null
-
-  const end = getTime(state)
+  const end = state.getInstantTs()
   const duration = state.getSnapshotDurationMs()
   const start = state.getStartTs()
   return {
@@ -53,11 +44,11 @@ function getStateRangeTimes(states) {
 }
 
 function getTimeIndex(states, timestamp) {
-  return states.findIndex(state => getTime(state) === timestamp)
+  return states.findIndex(state => getStateTimes(state).end === timestamp)
 }
 
 module.exports = {
-  getLatestTimepoint,
+  getLatestState,
   getSubsystems,
   getStateRangeTimes,
   getStateTimes,

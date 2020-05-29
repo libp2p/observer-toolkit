@@ -3,7 +3,7 @@ import T from 'prop-types'
 
 import {
   getEventType,
-  getLatestTimepoint,
+  getLatestState,
   getStateRangeTimes,
 } from '@nearform/observer-data'
 import { useConsoleAPI, useDatastore, useFilter } from '../../hooks'
@@ -53,7 +53,7 @@ function DataProvider({
     initialSource,
   })
 
-  if (!initialTime) initialTime = getLatestTimepoint(states)
+  if (!initialTime) initialTime = getLatestState(states)
   const [timepoint, setTimepoint] = useState(null)
 
   useConsoleAPI({

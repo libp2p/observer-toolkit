@@ -2,10 +2,9 @@ import { loadSample } from '@nearform/observer-testing'
 
 import {
   getSubsystems,
-  getLatestTimepoint,
+  getLatestState,
   getStateTimes,
-  getTime,
-  getTimeIndex,
+  getStateIndex,
 } from './states'
 
 import { getEnumByName, statusNames, roleNames, transportNames } from './enums'
@@ -15,21 +14,21 @@ const {
 } = loadSample()
 
 describe('states data helpers', () => {
-  it('gets timepoints from dataset', () => {
+  it('gets states from dataset', () => {
     let index = 0
     let lastTimestamp = 0
-    for (const timepoint of states) {
-      const timeIndex = getTimeIndex(states, getTime(timepoint))
+    for (const state of states) {
+      const timeIndex = getStateIndex(states, getStateTimes(state).end)
       expect(timeIndex).toBe(index)
 
-      const timestamp = getTime(timepoint)
+      const timestamp = getStateTimes(state).end
       expect(timestamp > lastTimestamp).toBeTruthy()
       expect(typeof timestamp).toBe('number')
 
       lastTimestamp = timestamp
       index++
     }
-    expect(states[index - 1]).toEqual(getLatestTimepoint(states))
+    expect(states[index - 1]).toEqual(getLatestState(states))
   }, 20000)
 
   it('gets valid enums only', () => {

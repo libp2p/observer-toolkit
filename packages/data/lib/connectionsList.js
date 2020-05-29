@@ -1,7 +1,7 @@
 'use strict'
 
 const { getEnumByName, statusNames } = require('./enums')
-const { getSubsystems, getStateTimes, getTime } = require('./states')
+const { getSubsystems, getStateTimes } = require('./states')
 
 // Convenience functions for extracting connections (and their streams) from decoded protobuf
 
@@ -117,7 +117,7 @@ function _getAge(timeline, state) {
   if (!openTs) return 0
 
   const closeTs = timeline.getCloseTs()
-  const endTime = closeTs || getTime(state)
+  const endTime = closeTs || getStateTimes(state).end
   return endTime - openTs
 }
 
@@ -133,7 +133,7 @@ function _getTimeClosed(timeline, state) {
   const closeTs = timeline.getCloseTs()
   if (!closeTs) return 0
 
-  const endTime = getTime(state)
+  const endTime = getStateTimes(state).end
   return endTime - closeTs
 }
 

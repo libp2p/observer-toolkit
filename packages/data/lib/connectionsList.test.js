@@ -11,7 +11,7 @@ import {
   getStreamTraffic,
 } from './connectionsList'
 
-import { getLatestTimepoint } from './states'
+import { getLatestState } from './states'
 
 const { Connection } = proto
 const {
@@ -100,7 +100,7 @@ describe('connectionsList data helpers', () => {
   it('gets traffic and age data from streams and connections', () => {
     const connections = new Set()
 
-    const timepoint = getLatestTimepoint(states)
+    const timepoint = getLatestState(states)
     const allStreamsWithConnection = getAllStreamsAtTime(timepoint)
     for (const { connection, stream } of allStreamsWithConnection) {
       // Traffic - streams

@@ -1,6 +1,10 @@
 import { useContext, useMemo } from 'react'
 
-import { getDhtPeers, getDhtQueries, getTime } from '@nearform/observer-data'
+import {
+  getDhtPeers,
+  getDhtQueries,
+  getStateTimes,
+} from '@nearform/observer-data'
 import {
   EventsContext,
   FilterContext,
@@ -36,7 +40,7 @@ function useDhtQueries() {
   const currentState = useContext(TimeContext)
   const { applyFilters } = useContext(FilterContext)
 
-  const timestamp = getTime(currentState)
+  const timestamp = getStateTimes(currentState).end
 
   const queriesByPeerId = useMemo(
     () => getQueriesByPeerId(events, currentState, timestamp, applyFilters),

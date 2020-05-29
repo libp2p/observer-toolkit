@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
-import { getTime } from '@nearform/observer-data'
+import { getStateTimes } from '@nearform/observer-data'
 import {
   DataTable,
   EventsContext,
@@ -35,7 +35,7 @@ function EventsTable({ theme }) {
   const isLive = hasLiveSource && !isPaused && highlightedRowIndex === null
 
   const timepoint = useContext(TimeContext)
-  const time = getTime(timepoint)
+  const time = getStateTimes(timepoint).end
 
   const snapshotDuration = timepoint ? timepoint.getSnapshotDurationMs() : 0
   const hideEventsAfter = time + snapshotDuration * 1.5
