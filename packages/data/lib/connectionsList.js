@@ -114,7 +114,7 @@ function getAllStreamsAtTime(state) {
 
 function _getAge(timeline, state) {
   const openTs = timeline.getOpenTs()
-  if (!openTs) return 0
+  if (!openTs || !state) return 0
 
   const closeTs = timeline.getCloseTs()
   const endTime = closeTs || getStateTimes(state).end
@@ -131,7 +131,7 @@ function getStreamAge(stream, state) {
 
 function _getTimeClosed(timeline, state) {
   const closeTs = timeline.getCloseTs()
-  if (!closeTs) return 0
+  if (!closeTs || !state) return 0
 
   const endTime = getStateTimes(state).end
   return endTime - closeTs

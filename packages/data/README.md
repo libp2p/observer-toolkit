@@ -47,12 +47,11 @@ These functions are "vanilla" ES6+ JavaScript (with an ES5 webpack build availab
   - [states.js](#statesjs)
     - [getLatestState\( Array \)](#getlateststate-array-)
     - [getSubsystems\( State \)](#getsubsystems-state-)
+    - [getStateIndex\( Array, number \)](#getstateindex-array-number-)
     - [getStateRangeTimes\( Array \)](#getstaterangetimes-array-)
     - [getStateTimes\( State \)](#getstatetimes-state-)
-    - [getTimeIndex\( Array, number \)](#gettimeindex-array-number-)
 
 <!-- /MarkdownTOC -->
-
 
 <a id="usage"></a>
 ## Usage
@@ -236,6 +235,11 @@ For a sorted array of states, returns the most recent, or null if the array is e
 
 Returns the subsystems of a state, such as `connectionList` and `dht`, or `null` if no state is available.
 
+<a id="getstateindex-array-number-"></a>
+#### getStateIndex( Array, number )
+
+For an array of states and numeric timestamp, returns the index number of the state that has the given timestamp as its "end" time.
+
 <a id="getstaterangetimes-array-"></a>
 #### getStateRangeTimes( Array )
 
@@ -245,8 +249,3 @@ For an array of states, returns an object with the `start` and `end` timestamps 
 #### getStateTimes( State )
 
 Returns an object with the `start` and `end` timestamps of the State message, and a `duration` value for the number of miliseconds spanned by the State message.
-
-<a id="gettimeindex-array-number-"></a>
-#### getTimeIndex( Array, number )
-
-For an array of states and numeric timestamp, returns the index number of the state that has the given timestamp as its "end" time.

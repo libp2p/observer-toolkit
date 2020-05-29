@@ -43,7 +43,7 @@ function getStateRangeTimes(states) {
   }
 }
 
-function getTimeIndex(states, timestamp) {
+function getStateIndex(states, timestamp) {
   return states.findIndex(state => getStateTimes(state).end === timestamp)
 }
 
@@ -52,6 +52,5 @@ module.exports = {
   getSubsystems,
   getStateRangeTimes,
   getStateTimes,
-  getTime,
-  getTimeIndex,
+  getStateIndex,
 }

@@ -34,10 +34,10 @@ function EventsTable({ theme }) {
   const hasLiveSource = source && source.type === 'live'
   const isLive = hasLiveSource && !isPaused && highlightedRowIndex === null
 
-  const timepoint = useContext(TimeContext)
-  const time = getStateTimes(timepoint).end
+  const state = useContext(TimeContext)
+  const time = getStateTimes(state).end
 
-  const snapshotDuration = timepoint ? timepoint.getSnapshotDurationMs() : 0
+  const snapshotDuration = state ? state.getSnapshotDurationMs() : 0
   const hideEventsAfter = time + snapshotDuration * 1.5
 
   const allEvents = useContext(EventsContext)
@@ -72,7 +72,7 @@ function EventsTable({ theme }) {
     setHighlightedRowIndex(rowIndex)
   }
 
-  // Re-pause if we've gone back in time so events beyond timepoint get removed
+  // Re-pause if we've gone back in time so events beyond state get removed
   if (eventsSincePause < 0 && isPaused) changePausedState(true)
 
   const currentEventsData =

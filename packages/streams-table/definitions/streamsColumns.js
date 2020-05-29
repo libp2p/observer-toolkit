@@ -77,11 +77,11 @@ const dataOutCol = {
 const ageCol = {
   name: 'age',
   header: 'Time open',
-  getProps: ({ stream }, { timepoint }) => {
-    const time = timepoint.getInstantTs()
+  getProps: ({ stream }, { state }) => {
+    const time = state.getInstantTs()
     const openTs = stream.getTimeline().getOpenTs()
     const closeTs = stream.getTimeline().getCloseTs()
-    const age = getStreamAge(stream, timepoint)
+    const age = getStreamAge(stream, state)
     return { value: age }
   },
   renderContent: AgeContent,

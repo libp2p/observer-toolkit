@@ -115,13 +115,13 @@ function TimeSlider({ width, override = {}, theme }) {
   const containerRef = useRef()
 
   const dataset = useContext(DataContext)
-  const timepoint = useContext(TimeContext)
-  const { setTimepoint } = useContext(SetterContext)
+  const currentState = useContext(TimeContext)
+  const { setCurrentState } = useContext(SetterContext)
 
   if (dataset.length <= 1) return ''
 
-  const timeIndex = dataset.indexOf(timepoint)
-  const { end: currentEndTs, duration } = getStateTimes(timepoint)
+  const timeIndex = dataset.indexOf(currentState)
+  const { end: currentEndTs, duration } = getStateTimes(currentState)
   const readableTime = formatTime(currentEndTs)
   const ms = new Date(currentEndTs).getMilliseconds()
 
@@ -150,13 +150,13 @@ function TimeSlider({ width, override = {}, theme }) {
 
   const controlWidth = width * (duration / rangeMs)
 
-  const isLatestTimepoint = timeIndex === dataset.length - 1
-  const unsetTimepoint = e => {
+  const isLatestState = timeIndex === dataset.length - 1
+  const unsetCurrentState = e => {
     e.stopPropagation()
-    setTimepoint(null)
+    setCurrentState(null)
   }
 
-  const handleChange = stepIndex => setTimepoint(dataset[stepIndex])
+  const handleChange = stepIndex => setCurrentState(dataset[stepIndex])
 
   const sliderOverrides = Object.assign(
     {
@@ -187,7 +187,7 @@ function TimeSlider({ width, override = {}, theme }) {
           <Time>{readableTime}</Time>
           <Milliseconds>.{ms}</Milliseconds>
         </TimeLabel>
-        {!isLatestTimepoint && (
+        {!isLatestState && (
           <Tooltip
             content={<ResetTimeTooltip>Reset to latest time</ResetTimeTooltip>}
             override={{ Target: ResetTimeTooltipTarget }}
@@ -195,7 +195,7 @@ function TimeSlider({ width, override = {}, theme }) {
             <Icon
               type="remove"
               aria-label="Close"
-              onClick={unsetTimepoint}
+              onClick={unsetCurrentState}
               override={{ Container: ResetTimeIcon }}
             />
           </Tooltip>

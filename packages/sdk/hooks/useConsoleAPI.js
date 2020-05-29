@@ -59,7 +59,7 @@ function useConsoleApi({
   runtime,
   source,
   websocket,
-  timepoint,
+  currentState,
 }) {
   const [isInitialised, setIsInitialised] = useState(false)
   const theme = useContext(ThemeContext)
@@ -81,7 +81,7 @@ function useConsoleApi({
     runtime,
     source,
     websocket,
-    timepoint,
+    currentState,
   }
 
   const logData = () => {

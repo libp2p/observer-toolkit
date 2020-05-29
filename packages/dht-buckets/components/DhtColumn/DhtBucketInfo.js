@@ -48,8 +48,8 @@ const ChartContainer = styled.div``
 function DhtBucketInfo({ peers }) {
   const { queriesByPeerId, poolSetsElapsed, poolSetsAge } =
     useContext(DhtQueryContext) || {}
-  const timepoint = useContext(TimeContext)
-  const { end: timeNow } = getStateTimes(timepoint)
+  const state = useContext(TimeContext)
+  const { end: timeNow } = getStateTimes(state)
 
   const { pooledData: ageData, poolSets: ageSets } = usePooledData({
     data: peers,

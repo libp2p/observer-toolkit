@@ -12,9 +12,9 @@ describe('StreamsSubtable', () => {
   const {
     data: { states },
   } = loadSample()
-  const timepoint = getLatestState(states)
+  const state = getLatestState(states)
 
-  const [connection] = getConnections(timepoint)
+  const [connection] = getConnections(state)
   const StreamsSubtableInContext = () => (
     <WidgetContext>
       <StreamsSubtable connection={connection} />
