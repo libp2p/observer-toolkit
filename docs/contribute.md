@@ -60,14 +60,4 @@ Requests for any of the following should be posted to and discussed on the [Libp
 
 PRs are welcome and will be reviewed by the core team. Please understand that our capacity is limited and we cannot guarentee a fast reply, but we will give your work the attention it deserves as quickly as we are able to.
 
-Please consider posting what you intend to do as an issue first to ensure no effort is wasted.
-
-This repo includes the following tools and scripts to aid collaboration and integration:
-
- - Storybook: Many React components can be built and tested in a browser in isolation for simpler in-browser testing using Storybook.
- - Lint: We use [eslint]() and [prettier]() to ensure consistency of coding styles. Commits apply auto-fixes using [husky]() and lint is automatically checked on each `git push`. You may find the following convenient:
-   - `npm run lint-fix` checks all packages, auto-fixes where possible and gives a report of any remaining problems.
-   - `npm run ... watch` automatically checks all file changes
-   - It is possible to get automatic feedback as you type in many text editors by simply installing their eslint plugins with no additional configuration needed - for example [vscode]
- - Tests: `npm run test` will build all packages that use webpack and run tests in all packages using these updated builds. This can take a long time, so while working on just one package, you may find it more convenient to either run `npm test` in that package directory or, for a given $PACKAGE_NAME, run `npx lerna exec --scope="$PACKAGE_NAME" -- npm run test`
- - CI: This repo uses GitHub Actions to run the full test suite on each push to a published branch.
+Please consider posting what you intend to do as an issue first to ensure no effort is wasted, and refer to the [Developer Guide](developer-guide.md)
