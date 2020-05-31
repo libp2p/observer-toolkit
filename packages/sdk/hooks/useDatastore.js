@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
+import T from 'prop-types'
 
 import { getStateTimes } from '@nearform/observer-data'
 
@@ -241,12 +242,15 @@ function getEmptySource() {
   }
 }
 
-function useDatastore({
-  initialRuntime,
-  initialStates = getEmptyStates(),
-  initialEvents = getEmptyEvents(),
-  initialSource = getEmptySource(),
-}) {
+function useDatastore(props) {
+  T.checkPropTypes(useDatastore.propTypes, props, 'prop', 'useDatastore')
+  const {
+    initialRuntime = null,
+    initialStates = getEmptyStates(),
+    initialEvents = getEmptyEvents(),
+    initialSource = getEmptySource(),
+  } = props
+
   const cutoffRef = useRef(DEFAULT_CUTOFF_MS)
   const [runtime, setRuntime] = useState(initialRuntime)
   updateCutoffRef(cutoffRef, runtime)
@@ -408,6 +412,12 @@ function useDatastore({
     websocket,
     dispatchWebsocket,
   }
+}
+useDatastore.propTypes = {
+  initialRuntime: T.object,
+  initialStates: T.array,
+  initialEvents: T.array,
+  initialSource: T.object,
 }
 
 export default useDatastore

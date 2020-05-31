@@ -44,6 +44,7 @@ function poolData(data, poolSets, poolings, setIndex) {
 
     const isWithinPool = datum => {
       const mappedDatum = mapData ? mapData(datum) : datum
+
       // e.g. if 80-90% shouldn't include === 90% but 90-100% should include === 100%
       if (mappedDatum === upperLimit && isLastPool) return true
       if (mappedDatum >= lowerLimit && mappedDatum < upperLimit) return true
@@ -57,7 +58,10 @@ function poolData(data, poolSets, poolings, setIndex) {
   })
 }
 
-function usePooledData({ data, poolings = {}, poolSets: providedPoolSets }) {
+function usePooledData(props) {
+  T.checkPropTypes(usePooledData.propTypes, props, 'prop', 'usePooledData')
+  const { data, poolings = {}, poolSets: providedPoolSets } = props
+
   const [poolingsArray, dispatchPoolings] = useReducer(
     updatePoolings,
     poolings,
@@ -105,6 +109,7 @@ const poolingShape = T.shape({
 usePooledData.propTypes = {
   data: T.array.isRequired,
   poolings: T.oneOfType([T.arrayOf(poolingShape), poolingShape]),
+  poolSets: T.array,
 }
 
 export default usePooledData

@@ -1,5 +1,4 @@
 import { useCallback, useReducer, useRef } from 'react'
-import T from 'prop-types'
 import isEqual from 'lodash.isequal'
 
 function updateFilters(filters, { action, name, values }) {
@@ -92,10 +91,6 @@ function useFilter(filterDefs) {
     initializeFilters(filterDefsRef)
   )
 
-  // Separate filter definitions and state
-  // values and enabled in filters
-  // defs pass straight through
-
   const applyFilters = useCallback(
     datum => {
       const activeFilters = filters.filter(filter => filter.enabled)
@@ -109,18 +104,6 @@ function useFilter(filterDefs) {
   )
 
   return { applyFilters, dispatchFilters, filters }
-}
-
-useFilter.propTypes = {
-  initialFilters: T.arrayOf(
-    T.shape({
-      name: T.string.isRequired,
-      doFilter: T.func.isRequired,
-      initialValues: T.any,
-      mapFilter: T.func,
-    })
-  ),
-  mapFilter: T.func,
 }
 
 export default useFilter

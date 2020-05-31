@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
+import T from 'prop-types'
 import { ThemeContext } from 'styled-components'
+
 import dataHelpers from '@nearform/observer-data'
 
 const getH1Style = theme =>
@@ -53,14 +55,10 @@ This is documented at [TODO: add link when docs are complete]
   )
 }
 
-function useConsoleApi({
-  states,
-  events,
-  runtime,
-  source,
-  websocket,
-  currentState,
-}) {
+function useConsoleApi(props) {
+  T.checkPropTypes(useConsoleApi.propTypes, props, 'prop', 'useConsoleApi')
+  const { states, events, runtime, source, websocket, currentState } = props
+
   const [isInitialised, setIsInitialised] = useState(false)
   const theme = useContext(ThemeContext)
 
@@ -98,6 +96,14 @@ function useConsoleApi({
     theme,
     logData,
   }
+}
+useConsoleApi.propTypes = {
+  states: T.array,
+  events: T.array,
+  runtime: T.object,
+  source: T.object,
+  websocket: T.object,
+  currentState: T.object,
 }
 
 export default useConsoleApi
