@@ -20,6 +20,7 @@ function peerPresentInBucket(peer) {
 }
 
 function getDht(state) {
+  if (!state) return null
   const dht = state.getSubsystems().getDht()
   return dht
 }
@@ -38,6 +39,8 @@ function getDhtStatus(state) {
 }
 
 function getDhtPeers(state, status = null) {
+  if (!state) return []
+
   const peers = getAllDhtBuckets(state).reduce(
     (peers, bucket) => [...peers, ...bucket.getPeersList()],
     []

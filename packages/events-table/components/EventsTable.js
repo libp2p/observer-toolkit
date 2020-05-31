@@ -32,10 +32,11 @@ function EventsTable({ theme }) {
   const hidePrevious = useHidePrevious()
 
   const hasLiveSource = source && source.type === 'live'
+  const isLoading = source && source.isLoading
   const isLive = hasLiveSource && !isPaused && highlightedRowIndex === null
 
   const state = useContext(TimeContext)
-  const time = getStateTimes(state).end
+  const time = state ? getStateTimes(state).end : 0
 
   const snapshotDuration = state ? state.getSnapshotDurationMs() : 0
   const hideEventsAfter = time + snapshotDuration * 1.5
@@ -96,6 +97,9 @@ function EventsTable({ theme }) {
   })
 
   const barHeight = hasLiveSource ? theme.spacing(4, true) : 0
+
+  // Run all hooks but don't render anything while no data loaded
+  if (!state || !source || isLoading) return 'Loading...'
 
   return (
     <>

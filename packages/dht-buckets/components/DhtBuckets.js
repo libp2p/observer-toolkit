@@ -22,6 +22,8 @@ const Container = styled.div`
 
 function DhtBuckets({ children }) {
   const currentState = useContext(TimeContext)
+  if (!currentState) return 'Loading...'
+
   const timestamp = getStateTimes(currentState).end
 
   const bucketsData = getAllDhtBuckets(currentState)

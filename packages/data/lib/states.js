@@ -11,7 +11,15 @@ function getLatestState(states) {
   return states[states.length - 1]
 }
 
+const emptyTimes = {
+  start: 0,
+  end: 0,
+  duration: 0,
+}
+
 function getStateTimes(state) {
+  if (!state) return emptyTimes
+
   const end = state.getInstantTs()
   const duration = state.getSnapshotDurationMs()
   const start = state.getStartTs()
@@ -25,13 +33,7 @@ function getStateTimes(state) {
 }
 
 function getStateRangeTimes(states) {
-  if (!states || !states.length) {
-    return {
-      start: 0,
-      end: 0,
-      duration: 0,
-    }
-  }
+  if (!states || !states.length) return emptyTimes
 
   const start = states[0].getStartTs()
   const end = states[states.length - 1].getInstantTs()
