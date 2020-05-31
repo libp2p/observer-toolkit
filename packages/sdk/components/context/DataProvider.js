@@ -40,10 +40,10 @@ function DataProvider({
 
     // Data setters
     updateData,
+    updateRuntime,
     replaceData,
     removeData,
     setPeerIds,
-    setRuntime,
     setIsLoading,
     dispatchWebsocket,
   } = useDatastore({
@@ -98,7 +98,7 @@ function DataProvider({
   // Bundle setters and make bundle persist, as defining this in normal function flow
   // causes context `value` to see a new object each run, causing re-renders every time
   const dataSetters = useRef({
-    setRuntime,
+    updateRuntime,
     setCurrentState,
     setPeerIds,
     updateData,

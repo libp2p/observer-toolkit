@@ -405,7 +405,6 @@ function useDatastore({
     removeData,
     setPeerIds,
     updateRuntime,
-    setRuntime,
     websocket,
     dispatchWebsocket,
   }
