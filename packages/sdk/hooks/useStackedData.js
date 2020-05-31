@@ -2,7 +2,6 @@ import { useContext, useMemo } from 'react'
 
 import useSorter from '../hooks/useSorter'
 import { FilterContext } from '../components/context/FilterProvider'
-import { DataContext } from '../components/context/DataProvider'
 import { getNumericSorter } from '../sorters'
 
 import { scaleLinear, scaleTime, stack } from 'd3'
@@ -73,7 +72,6 @@ function useStackedData({
   mapYSorter,
   getYSorter = getNumericSorter,
   defaultYSortDirection = 'desc',
-  mapXSorter = d => d.end,
   getXSorter = getNumericSorter,
   defaultXSortDirection = 'asc',
 }) {

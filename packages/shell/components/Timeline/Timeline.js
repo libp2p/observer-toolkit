@@ -1,9 +1,9 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
-import { useStackedData } from '@nearform/observer-sdk'
+import { useStackedData, DataContext } from '@nearform/observer-sdk'
 
 import {
   getTrafficChangesByConn,
@@ -43,13 +43,17 @@ const PathsContainer = styled.div`
 `
 
 function Timeline({ width = 700, leftGutter }) {
+  const states = useContext(DataContext)
+
   const { stackedData, xScale, yScale: yScaleIn } = useStackedData({
+    data: states,
     keyData: getTrafficChangesByConn('in'),
     getKeys: getConnectionKeys,
     mapYSorter: getTotalTraffic,
   })
 
   const { stackedData: stackedDataOut, yScale: yScaleOut } = useStackedData({
+    data: states,
     keyData: getTrafficChangesByConn('out'),
     getKeys: getConnectionKeys,
     mapYSorter: getTotalTraffic,
