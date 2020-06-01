@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.css"],"names":[],"mappings":"AACA,KACE,QACF","file":"main.737171de.chunk.css","sourcesContent":["/* Set global CSS with styled-components in SDK theme.js */\nbody {\n  margin: 0;\n}\n"]}
