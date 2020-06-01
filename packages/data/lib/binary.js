@@ -135,6 +135,7 @@ function parseImport(rawData) {
   if (rawData instanceof Buffer) return parseBuffer(rawData)
   if (rawData instanceof ArrayBuffer) return parseArrayBuffer(rawData)
   if (rawData instanceof String) return parseBase64(rawData)
+  return parseBufferList(rawData)
 }
 
 module.exports = {

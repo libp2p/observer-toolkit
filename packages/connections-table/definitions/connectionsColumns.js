@@ -92,8 +92,8 @@ const bwOut = {
 const ageCol = {
   name: 'age',
   header: 'Time open',
-  getProps: (connection, { timepoint, maxAge }) => {
-    const age = getConnectionAge(connection, timepoint)
+  getProps: (connection, { state, maxAge }) => {
+    const age = getConnectionAge(connection, state)
     return {
       value: age,
       maxValue: maxAge,
@@ -107,8 +107,8 @@ const ageCol = {
 const closedCol = {
   name: 'closed',
   header: 'Time closed',
-  getProps: (connection, { timepoint, maxAge }) => {
-    const age = getConnectionTimeClosed(connection, timepoint)
+  getProps: (connection, { state, maxAge }) => {
+    const age = getConnectionTimeClosed(connection, state)
     return {
       value: age,
       maxValue: maxAge,
@@ -148,11 +148,11 @@ const transportCol = {
 
 const statusCol = {
   name: 'status',
-  getProps: (connection, { timepoint }) => {
+  getProps: (connection, { state }) => {
     const status = statusNames[connection.getStatus()]
-    const timeOpen = getConnectionAge(connection, timepoint)
-    const timeClosed = getConnectionTimeClosed(connection, timepoint)
-    const { duration } = getStateTimes(timepoint)
+    const timeOpen = getConnectionAge(connection, state)
+    const timeClosed = getConnectionTimeClosed(connection, state)
+    const { duration } = getStateTimes(state)
     return {
       value: status,
       sortValue: [status, timeOpen, timeClosed],

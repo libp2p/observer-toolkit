@@ -10,10 +10,10 @@ import {
 
 import streamsColumnDefs from '../definitions/streamsColumns'
 
-function getMaxValues(timepoints) {
-  const maxValues = timepoints.reduce(
-    (maxValues, timepoint) =>
-      getAllStreamsAtTime(timepoint).reduce((timeMax, { stream }) => {
+function getMaxValues(states) {
+  const maxValues = states.reduce(
+    (maxValues, state) =>
+      getAllStreamsAtTime(state).reduce((timeMax, { stream }) => {
         const { maxTraffic } = timeMax
         const dataIn = getStreamTraffic(stream, 'in', 'bytes')
         const dataOut = getStreamTraffic(stream, 'out', 'bytes')
@@ -29,11 +29,11 @@ function getMaxValues(timepoints) {
 }
 
 function StreamsTable() {
-  const timepoint = useContext(TimeContext)
-  const streamsData = getAllStreamsAtTime(timepoint)
+  const currentState = useContext(TimeContext)
+  const streamsData = getAllStreamsAtTime(currentState)
 
-  const timepoints = useContext(DataContext)
-  const metadata = useMemo(() => getMaxValues(timepoints), [timepoints])
+  const states = useContext(DataContext)
+  const metadata = useMemo(() => getMaxValues(states), [states])
 
   const defaultPerPageIndex = 2
 

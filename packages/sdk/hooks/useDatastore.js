@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
+import T from 'prop-types'
 
-import { getTime, getStateTimes } from '@nearform/observer-data'
+import { getStateTimes } from '@nearform/observer-data'
 
 // High default cutoff time to avoid spurious trimming if runtime message is delayed
 const DEFAULT_CUTOFF_MS = 1000 * 60 * 60 * 24
@@ -9,7 +10,7 @@ function getEventTime(event) {
   return event.getTs()
 }
 function getStateEnd(state) {
-  return getTime(state)
+  return getStateTimes(state).end
 }
 function getMessageSorter(getTime) {
   return (a, b) => getTime(a) - getTime(b)
@@ -241,12 +242,15 @@ function getEmptySource() {
   }
 }
 
-function useDatastore({
-  initialRuntime,
-  initialStates = getEmptyStates(),
-  initialEvents = getEmptyEvents(),
-  initialSource = getEmptySource(),
-}) {
+function useDatastore(props) {
+  T.checkPropTypes(useDatastore.propTypes, props, 'prop', 'useDatastore')
+  const {
+    initialRuntime = null,
+    initialStates = getEmptyStates(),
+    initialEvents = getEmptyEvents(),
+    initialSource = getEmptySource(),
+  } = props
+
   const cutoffRef = useRef(DEFAULT_CUTOFF_MS)
   const [runtime, setRuntime] = useState(initialRuntime)
   updateCutoffRef(cutoffRef, runtime)
@@ -405,10 +409,15 @@ function useDatastore({
     removeData,
     setPeerIds,
     updateRuntime,
-    setRuntime,
     websocket,
     dispatchWebsocket,
   }
+}
+useDatastore.propTypes = {
+  initialRuntime: T.object,
+  initialStates: T.array,
+  initialEvents: T.array,
+  initialSource: T.object,
 }
 
 export default useDatastore

@@ -24,14 +24,10 @@ function getPathDefs(stackedData, areaMaker) {
   return pathDefs
 }
 
-function useAreaChart({
-  height,
-  width,
-  stackedData,
-  xScale,
-  yScale,
-  flip = false,
-}) {
+function useAreaChart(props) {
+  T.checkPropTypes(useAreaChart.propTypes, props, 'prop', 'useAreaChart')
+  const { height, width, stackedData, xScale, yScale, flip = false } = props
+
   // Both steps are potentially very expensive if applied to large,
   // rapidly changing data sets, so don't rescale unless needed
 
@@ -54,6 +50,7 @@ useAreaChart.propTypes = {
   stackedData: T.array.isRequired,
   xScale: T.func.isRequired,
   yScale: T.func.isRequired,
+  flip: T.bool,
 }
 
 export default useAreaChart

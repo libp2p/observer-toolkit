@@ -4,9 +4,9 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { Normalize } from 'styled-normalize'
 
 import fontFaces from '../../theme/fontFaces'
-import theme from '../../theme/theme.js'
+import defaultTheme from '../../theme/theme.js'
 
-function ThemeSetter({ children }) {
+function ThemeSetter({ theme = defaultTheme, children }) {
   // Ensure we don't add global styles twice
   if (useContext(ThemeProvider)) {
     throw new Error(
@@ -52,6 +52,7 @@ function ThemeSetter({ children }) {
 
 ThemeSetter.propTypes = {
   children: T.node,
+  theme: T.object,
 }
 
 export default ThemeSetter

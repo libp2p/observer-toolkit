@@ -3,12 +3,15 @@ import T from 'prop-types'
 
 // Adds an event handler to a ref as a side effect of mounting this
 // hook's parent, and removes it if this hook's parent is unmounted
-function useHandlerOnRef({
-  handler,
-  targetRef,
-  eventType = 'click',
-  className = 'clickable',
-}) {
+function useHandlerOnRef(props) {
+  T.checkPropTypes(useHandlerOnRef.propTypes, props, 'prop', 'useHandlerOnRef')
+  const {
+    handler,
+    targetRef,
+    eventType = 'click',
+    className = 'clickable',
+  } = props
+
   const cleanupBinding = useCallback(() => {
     if (targetRef && targetRef.current) {
       targetRef.current.removeEventListener(eventType, handler)

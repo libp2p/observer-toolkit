@@ -3,7 +3,7 @@ import T from 'prop-types'
 
 import {
   getEventType,
-  getLatestTimepoint,
+  getLatestState,
   getStateRangeTimes,
 } from '@nearform/observer-data'
 import { useConsoleAPI, useDatastore, useFilter } from '../../hooks'
@@ -26,7 +26,7 @@ function DataProvider({
     runtime: initialRuntime,
   } = {},
   initialSource,
-  initialTime,
+  initialState,
   children,
 }) {
   const {
@@ -40,10 +40,10 @@ function DataProvider({
 
     // Data setters
     updateData,
+    updateRuntime,
     replaceData,
     removeData,
     setPeerIds,
-    setRuntime,
     setIsLoading,
     dispatchWebsocket,
   } = useDatastore({
@@ -53,8 +53,8 @@ function DataProvider({
     initialSource,
   })
 
-  if (!initialTime) initialTime = getLatestTimepoint(states)
-  const [timepoint, setTimepoint] = useState(null)
+  if (!initialState) initialState = getLatestState(states)
+  const [currentState, setCurrentState] = useState(null)
 
   useConsoleAPI({
     states,
@@ -62,7 +62,7 @@ function DataProvider({
     runtime,
     source,
     websocket,
-    timepoint,
+    currentState,
   })
 
   const { start, end } = getStateRangeTimes(states)
@@ -98,8 +98,8 @@ function DataProvider({
   // Bundle setters and make bundle persist, as defining this in normal function flow
   // causes context `value` to see a new object each run, causing re-renders every time
   const dataSetters = useRef({
-    setRuntime,
-    setTimepoint,
+    updateRuntime,
+    setCurrentState,
     setPeerIds,
     updateData,
     replaceData,
@@ -110,11 +110,11 @@ function DataProvider({
     globalFilters,
   })
 
-  if (timepoint && !states.includes(timepoint)) {
-    setTimepoint(null)
+  if (currentState && !states.includes(currentState)) {
+    setCurrentState(null)
   }
 
-  const displayedTimepoint = timepoint || initialTime || null
+  const displayedState = currentState || initialState || null
 
   const filteredStates = useMemo(() => states.filter(applyFilters), [
     states,
@@ -130,7 +130,7 @@ function DataProvider({
   return (
     <DataContext.Provider value={filteredStates}>
       <RuntimeContext.Provider value={runtime}>
-        <TimeContext.Provider value={displayedTimepoint}>
+        <TimeContext.Provider value={displayedState}>
           <EventsContext.Provider value={filteredEvents}>
             <PeersContext.Provider value={peerIds}>
               <SourceContext.Provider value={source}>
@@ -156,7 +156,7 @@ DataProvider.propTypes = {
     type: T.string,
     name: T.string,
   }),
-  initialTime: T.number,
+  initialState: T.object,
   children: T.node.isRequired,
 }
 

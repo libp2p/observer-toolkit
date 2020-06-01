@@ -11,7 +11,7 @@ import {
   getStreamTraffic,
 } from './connectionsList'
 
-import { getLatestTimepoint } from './states'
+import { getLatestState } from './states'
 
 const { Connection } = proto
 const {
@@ -42,13 +42,13 @@ describe('connectionsList data helpers', () => {
 
     const allConnectionIds_2 = new Set()
 
-    for (const timepoint of states) {
-      const connections = getConnections(timepoint)
+    for (const state of states) {
+      const connections = getConnections(state)
       expect(connections).toBeInstanceOf(Array)
 
       expect(
         connections.length <= allConnections.length,
-        'No timepoint should contain more connections than total'
+        'No state should contain more connections than total'
       ).toBeTruthy()
 
       for (const connection of connections) {
@@ -67,15 +67,15 @@ describe('connectionsList data helpers', () => {
   })
 
   it('gets stream data from sample protobuf file', () => {
-    for (const timepoint of states) {
-      const allStreamsWithConnection = getAllStreamsAtTime(timepoint)
+    for (const state of states) {
+      const allStreamsWithConnection = getAllStreamsAtTime(state)
       const streamIds_1 = new Set(
         allStreamsWithConnection.map(({ stream }) => stream.getId().toString())
       )
 
       const streamIds_2 = new Set()
       let connStreamMismatches = 0
-      for (const connection of getConnections(timepoint)) {
+      for (const connection of getConnections(state)) {
         const streams = connection.getStreams().getStreamsList()
         for (const stream of streams) {
           streamIds_2.add(stream.getId().toString())
@@ -100,8 +100,8 @@ describe('connectionsList data helpers', () => {
   it('gets traffic and age data from streams and connections', () => {
     const connections = new Set()
 
-    const timepoint = getLatestTimepoint(states)
-    const allStreamsWithConnection = getAllStreamsAtTime(timepoint)
+    const state = getLatestState(states)
+    const allStreamsWithConnection = getAllStreamsAtTime(state)
     for (const { connection, stream } of allStreamsWithConnection) {
       // Traffic - streams
       const bytesIn = getStreamTraffic(stream, 'in', 'bytes')
@@ -142,11 +142,11 @@ describe('connectionsList data helpers', () => {
       }
 
       // Age
-      const connectionAge = getConnectionAge(connection, timepoint)
+      const connectionAge = getConnectionAge(connection, state)
       expect(typeof connectionAge).toBe('number')
       expect(connectionAge >= 0).toBeTruthy()
 
-      const streamAge = getStreamAge(stream, timepoint)
+      const streamAge = getStreamAge(stream, state)
       expect(typeof streamAge).toBe('number')
       expect(streamAge >= 0).toBeTruthy()
     }

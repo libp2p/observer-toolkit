@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react'
 import T from 'prop-types'
 
-import { getTime, getDhtPeers } from '@nearform/observer-data'
+import { getStateTimes, getDhtPeers } from '@nearform/observer-data'
 import { usePooledData, TimeContext } from '@nearform/observer-sdk'
 
 import useDhtQueries from '../../hooks/useDhtQueries'
@@ -11,7 +11,7 @@ const DhtQueryContext = createContext()
 
 function DhtQueryProvider({ children }) {
   const currentState = useContext(TimeContext)
-  const timeNow = getTime(currentState)
+  const timeNow = getStateTimes(currentState).end
 
   const queriesByPeerId = useDhtQueries()
 

@@ -43,7 +43,7 @@ function ConnectionsTable() {
     data: allConnections,
     defaultSort: 'status',
     metadata: {
-      timepoint: currentState,
+      state: currentState,
       hidePrevious,
       ...metadata,
     },

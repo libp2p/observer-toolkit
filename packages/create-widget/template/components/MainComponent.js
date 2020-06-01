@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { getStateTimes, getTimeIndex } from '@nearform/observer-data'
+import { getStateTimes, getStateIndex } from '@nearform/observer-data'
 import {
   DataContext,
   EventsContext,
@@ -31,7 +31,7 @@ function $WIDGET_COMPONENT({ children }) {
   if (!states.length) return 'Awaiting data...'
 
   const { start, end } = getStateTimes(currentState)
-  const timeIndex = getTimeIndex(states, end)
+  const timeIndex = getStateIndex(states, end)
 
   const filteredEvents = events
     .filter(applyFilters)

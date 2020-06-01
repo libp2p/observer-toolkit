@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {
   getAllDhtBuckets,
   getDhtPeersInBucket,
-  getTime,
+  getStateTimes,
 } from '@nearform/observer-data'
 import { TimeContext } from '@nearform/observer-sdk'
 
@@ -22,7 +22,9 @@ const Container = styled.div`
 
 function DhtBuckets({ children }) {
   const currentState = useContext(TimeContext)
-  const timestamp = getTime(currentState)
+  if (!currentState) return 'Loading...'
+
+  const timestamp = getStateTimes(currentState).end
 
   const bucketsData = getAllDhtBuckets(currentState)
     .map(bucket => ({

@@ -1,8 +1,8 @@
 import { useContext, useMemo } from 'react'
+import T from 'prop-types'
 
 import useSorter from '../hooks/useSorter'
 import { FilterContext } from '../components/context/FilterProvider'
-import { DataContext } from '../components/context/DataProvider'
 import { getNumericSorter } from '../sorters'
 
 import { scaleLinear, scaleTime, stack } from 'd3'
@@ -20,19 +20,12 @@ function getMaxAreaPeak(stackedData) {
   )
 }
 
-function getKeyedData(
-  dataset,
-  xSorter,
-  ySorter,
-  applyFilters,
-  getKeys,
-  keyData
-) {
-  const keys = getKeys(dataset, ySorter, applyFilters)
+function getKeyedData(data, xSorter, ySorter, applyFilters, getKeys, keyData) {
+  const keys = getKeys(data, ySorter, applyFilters)
 
   // Returns array of objects with a numeric value for each key
   // and a property for the x-axis value.
-  const keyedData = keyData(dataset, keys)
+  const keyedData = keyData(data, keys)
   keyedData.sort(xSorter)
   return { keys, keyedData }
 }
@@ -67,17 +60,20 @@ function stackData(keyedData, keys, xSorter) {
   }
 }
 
-function useStackedData({
-  getKeys,
-  keyData,
-  mapYSorter,
-  getYSorter = getNumericSorter,
-  defaultYSortDirection = 'desc',
-  mapXSorter = d => d.end,
-  getXSorter = getNumericSorter,
-  defaultXSortDirection = 'asc',
-}) {
-  const dataset = useContext(DataContext)
+function useStackedData(props) {
+  T.checkPropTypes(useStackedData.propTypes, props, 'prop', 'useStackedData')
+  const {
+    data,
+    getKeys,
+    keyData,
+    mapYSorter,
+    getYSorter = getNumericSorter,
+    defaultYSortDirection = 'desc',
+    mapXSorter = d => d.end,
+    getXSorter = getNumericSorter,
+    defaultXSortDirection = 'asc',
+  } = props
+
   const { applyFilters } = useContext(FilterContext)
 
   const { sorter: xSorter, setSortDirection: setXSortDirection } = useSorter({
@@ -93,9 +89,8 @@ function useStackedData({
   })
 
   const { keys, keyedData } = useMemo(
-    () =>
-      getKeyedData(dataset, xSorter, ySorter, applyFilters, getKeys, keyData),
-    [dataset, xSorter, ySorter, applyFilters, getKeys, keyData]
+    () => getKeyedData(data, xSorter, ySorter, applyFilters, getKeys, keyData),
+    [data, xSorter, ySorter, applyFilters, getKeys, keyData]
   )
 
   // If we need to optimise this further for live data, can compare new data to
@@ -113,7 +108,16 @@ function useStackedData({
     setYSortDirection,
   }
 }
-
-useStackedData.propTypes = {}
+useStackedData.propTypes = {
+  data: T.array.isRequired,
+  getKeys: T.func.isRequired,
+  keyData: T.func.isRequired,
+  mapYSorter: T.func,
+  getYSorter: T.func,
+  defaultYSortDirection: T.string,
+  mapXSorter: T.func,
+  getXSorter: T.func,
+  defaultXSortDirection: T.string,
+}
 
 export default useStackedData

@@ -5,8 +5,6 @@ const path = require('path')
 const PeerDepsExternals = require('peer-deps-externals-webpack-plugin')
 const { jsxPackages } = require('./jsx-packages')
 
-// const jsxPackageNames = jsxPackages.map(name => `@nearform/${name}`)
-
 function getWebpackConfig(dirname) {
   const jsxPackagePaths = jsxPackages.map(name =>
     path.resolve(dirname, '..', name)
@@ -43,7 +41,6 @@ function getWebpackConfig(dirname) {
         },
       ],
     },
-    //    externals: jsxPackageNames,
     plugins: [new PeerDepsExternals()],
   }
 }

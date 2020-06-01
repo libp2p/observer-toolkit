@@ -24,14 +24,14 @@ import { MetadataProvider } from './MetadataProvider'
 
 const statusNamesList = Object.values(statusNames)
 
-function getMaxValues(timepoints) {
-  const maxValues = timepoints.reduce(
-    (maxValues, timepoint) =>
-      getConnections(timepoint).reduce((timeMax, connection) => {
+function getMaxValues(states) {
+  const maxValues = states.reduce(
+    (maxValues, state) =>
+      getConnections(state).reduce((timeMax, connection) => {
         const { maxTraffic, maxAge } = timeMax
         const dataIn = getConnectionTraffic(connection, 'in', 'bytes')
         const dataOut = getConnectionTraffic(connection, 'out', 'bytes')
-        const age = getConnectionAge(connection, timepoint)
+        const age = getConnectionAge(connection, state)
         return {
           maxTraffic: Math.max(maxTraffic, dataIn, dataOut),
           maxAge: Math.max(maxAge, age),
@@ -46,20 +46,20 @@ function getMaxValues(timepoints) {
 }
 
 function WidgetContext({ children }) {
-  const timepoints = useContext(DataContext)
-  const currentTimepoint = useContext(TimeContext)
+  const states = useContext(DataContext)
+  const currentState = useContext(TimeContext)
 
   // If performance becomes an issue on live-streaming data, use
   // useReducer and compare appended data only instead of whole dataset
-  const metadata = useMemo(() => getMaxValues(timepoints), [timepoints])
+  const metadata = useMemo(() => getMaxValues(states), [states])
 
   const maxStreams = useCalculation(
-    ({ timepoint }) =>
-      getConnections(timepoint).reduce(
+    ({ state }) =>
+      getConnections(state).reduce(
         (max, conn) => Math.max(max, getStreams(conn).length),
         0
       ),
-    ['timepoint']
+    ['state']
   )
 
   const filterDefs = [
@@ -90,14 +90,14 @@ function WidgetContext({ children }) {
     }),
     getRangeFilter({
       name: 'Filter miliseconds open',
-      mapFilter: conn => getConnectionAge(conn, currentTimepoint),
+      mapFilter: conn => getConnectionAge(conn, currentState),
       min: 0,
       max: metadata.maxAge,
       format: formatDuration,
     }),
     getRangeFilter({
       name: 'Filter miliseconds closed',
-      mapFilter: conn => getConnectionTimeClosed(conn, currentTimepoint),
+      mapFilter: conn => getConnectionTimeClosed(conn, currentState),
       min: 0,
       max: metadata.maxAge,
       format: formatDuration,

@@ -3,7 +3,7 @@ import { loadSample, renderWithData, within } from '@nearform/observer-testing'
 import {
   getConnections,
   getStreams,
-  getLatestTimepoint,
+  getLatestState,
 } from '@nearform/observer-data'
 import StreamsSubtable from './StreamsSubtable'
 import WidgetContext from '../context/WidgetContext'
@@ -12,9 +12,9 @@ describe('StreamsSubtable', () => {
   const {
     data: { states },
   } = loadSample()
-  const timepoint = getLatestTimepoint(states)
+  const state = getLatestState(states)
 
-  const [connection] = getConnections(timepoint)
+  const [connection] = getConnections(state)
   const StreamsSubtableInContext = () => (
     <WidgetContext>
       <StreamsSubtable connection={connection} />

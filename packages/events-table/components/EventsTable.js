@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
-import { getTime } from '@nearform/observer-data'
+import { getStateTimes } from '@nearform/observer-data'
 import {
   DataTable,
   EventsContext,
@@ -32,12 +32,13 @@ function EventsTable({ theme }) {
   const hidePrevious = useHidePrevious()
 
   const hasLiveSource = source && source.type === 'live'
+  const isLoading = source && source.isLoading
   const isLive = hasLiveSource && !isPaused && highlightedRowIndex === null
 
-  const timepoint = useContext(TimeContext)
-  const time = getTime(timepoint)
+  const state = useContext(TimeContext)
+  const time = state ? getStateTimes(state).end : 0
 
-  const snapshotDuration = timepoint ? timepoint.getSnapshotDurationMs() : 0
+  const snapshotDuration = state ? state.getSnapshotDurationMs() : 0
   const hideEventsAfter = time + snapshotDuration * 1.5
 
   const allEvents = useContext(EventsContext)
@@ -72,7 +73,7 @@ function EventsTable({ theme }) {
     setHighlightedRowIndex(rowIndex)
   }
 
-  // Re-pause if we've gone back in time so events beyond timepoint get removed
+  // Re-pause if we've gone back in time so events beyond state get removed
   if (eventsSincePause < 0 && isPaused) changePausedState(true)
 
   const currentEventsData =
@@ -96,6 +97,9 @@ function EventsTable({ theme }) {
   })
 
   const barHeight = hasLiveSource ? theme.spacing(4, true) : 0
+
+  // Run all hooks but don't render anything while no data loaded
+  if (!state || !source || isLoading) return 'Loading...'
 
   return (
     <>

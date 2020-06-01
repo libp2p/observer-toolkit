@@ -122,6 +122,7 @@ function NumberInput({
             value={fieldValue}
             onBlur={handleBlur}
             updateValue={updateValue}
+            defaultValue={defaultValue}
             as={override.NumberInputField}
             {...props}
           />

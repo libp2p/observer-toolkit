@@ -32,13 +32,16 @@ const defaultOptions = [
   ['desc', 'descending'],
 ]
 
-function useSorter({
-  getSorter,
-  mapSorter,
-  defaultDirection,
-  directionOptions = defaultOptions,
-  disabled = false,
-}) {
+function useSorter(props) {
+  T.checkPropTypes(useSorter.propTypes, props, 'prop', 'useSorter')
+  const {
+    getSorter,
+    mapSorter,
+    defaultDirection,
+    directionOptions = defaultOptions,
+    disabled = false,
+  } = props
+
   const [sortDirection, setSortDirection] = useState(defaultDirection || null)
 
   if (disabled || !getSorter)
@@ -55,17 +58,10 @@ function useSorter({
 }
 
 useSorter.propTypes = {
-  data: T.array.isRequired,
-  getSorter: T.func.isRequired,
+  getSorter: T.func,
   mapSorter: T.func,
   defaultDirection: T.string,
-  directionOptions: T.arrayOf([
-    T.arrayOf([
-      T.string, // direction name
-      T.string, // optional user-facing direction label
-      T.node, // optional icon
-    ]),
-  ]),
+  directionOptions: T.array,
   disabled: T.bool,
 }
 

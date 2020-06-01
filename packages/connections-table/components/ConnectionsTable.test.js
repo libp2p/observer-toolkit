@@ -7,7 +7,7 @@ import {
   renderWithShell,
   within,
 } from '@nearform/observer-testing'
-import { getConnections, getLatestTimepoint } from '@nearform/observer-data'
+import { getConnections, getLatestState } from '@nearform/observer-data'
 import ConnectionsTable from './ConnectionsTable'
 import WidgetContext from './context/WidgetContext'
 
@@ -35,10 +35,10 @@ describe('ConnectionsTable', () => {
   const {
     data: { states },
   } = loadSample()
-  const timepoint = getLatestTimepoint(states)
-  const connections = getConnections(timepoint)
+  const state = getLatestState(states)
+  const connections = getConnections(state)
 
-  it("has rows for each connection in sample's last timepoint, plus row of column headers", () => {
+  it("has rows for each connection in sample's last state, plus row of column headers", () => {
     const { getAllByRole } = renderWithData(<ConnectionsTable />)
 
     const rows = getAllByRole('row')

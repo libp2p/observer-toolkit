@@ -79,14 +79,10 @@ function getInitialSortDef(sortColumn, columnDefs, defaultSort) {
   }
 }
 
-function useTabularData({
-  columns,
-  data,
-  defaultSort,
-  defaultFilter,
-  defaultRange,
-  metadata = {},
-}) {
+function useTabularData(props) {
+  T.checkPropTypes(useTabularData.propTypes, props, 'prop', 'useTabularData')
+  const { columns, data, defaultSort, defaultRange, metadata = {} } = props
+
   const [sortColumn, setSortColumn] = useState(defaultSort)
   const [range, setRange] = useState(defaultRange)
   const { applyFilters } = useContext(FilterContext)
@@ -155,7 +151,6 @@ useTabularData.propTypes = {
       sort: T.shape({
         sorter: T.func,
         defaultDirection: T.string,
-        directionOptions: T.instanceOf(Map),
       }),
       filter: T.shape({
         doFilter: T.func.isRequired,
@@ -167,9 +162,8 @@ useTabularData.propTypes = {
   ).isRequired,
   data: T.arrayOf(T.object).isRequired,
   defaultSort: T.string,
-  defaultFilter: T.obj,
   defaultRange: T.arrayOf(T.number),
-  metadata: T.obj,
+  metadata: T.object,
 }
 
 export default useTabularData

@@ -14,10 +14,10 @@ import { getEventType } from '@nearform/observer-data'
 function WidgetContext({ children }) {
   const runtime = useContext(RuntimeContext)
   const states = useContext(DataContext)
-  const currentTimepoint = useContext(TimeContext)
+  const currentState = useContext(TimeContext)
 
   const firstStateTime = (states[0] && states[0].getInstantTs()) || 0
-  const lastStateTime = currentTimepoint ? currentTimepoint.getInstantTs() : 0
+  const lastStateTime = currentState ? currentState.getInstantTs() : 0
 
   const filterDefs = [
     getRangeFilter({

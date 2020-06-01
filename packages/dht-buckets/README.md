@@ -1,5 +1,39 @@
-# `dht-buckets`
+# `dht-buckets` @libp2p/observer-dht-buckets
 
-Widget built on @nearform/observer-sdk, visualising active and recent peers used in DHT queries
+A LibP2P Observer widget, built on built on @nearform/observer-sdk, visualising peers on the LibP2P Distributed Hash Tables and their activity in DHT queries.
 
-Created using the [libp2p-observer SDK](), consuming and displaying data from [libp2p-introspection]().
+[screenshot here]
+
+## Key features
+
+- Peers are represented as sqaures on a grid of grids representing the limited available "slots" in a Kademelia-based distrbuted hash table where a fixed number of peers can be stored for each Kademelia distance value.
+- Peers can be tracked as they slide on or off the table and from the `0` "catch-all" bucket to specific buckets as the `0` bucket overflows
+- Peers' "elevation" visualises relative time in the DHT, allowing older peers to be easily found.
+- DHT queries are visualised in real time, as flashes of yellow entering (inbound) or blue exiting (outbound) the peer, with a fading glow representing the scale of recent inbound or outbound activity 
+- Histograms give a more detailed view of DHT query activity per bucket and, if a peer is selected, per peer.
+
+## Exports
+
+Exports follow the standard format of LibP2P Observer widgets:
+
+#### `Widget({ closeWidget })` 
+
+ - `closeWidget` (optional): function to close this widget, usually provided automatically by [@libp2p/observer-shell](../shell)
+
+React component rendering this widget. Expects to be rendered inside `ThemeSetter` and `DataProvider` contexts from [@libp2p/observer-sdk](../sdk). These are usually provided by [@libp2p/observer-catalogue](../catalogue) or [@libp2p/observer-testing]](../testing).
+
+#### description
+
+String in plain text or markdown format, describing this widget. 
+
+#### name
+
+String containging this widget's name.
+
+#### screenshot
+
+PNG image displaying a thumbnail image of this widget. Importing packages should have an appropriate webpack loader for handling images.
+
+#### tags
+
+Array of strings listing topics this widget relates to.

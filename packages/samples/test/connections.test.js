@@ -6,7 +6,7 @@ const {
   getAllConnections,
   getConnections,
   getEnumByName,
-  getLatestTimepoint,
+  getLatestState,
   getConnectionTraffic,
   statusNames,
 } = require('@nearform/observer-data')
@@ -19,10 +19,10 @@ const {
   durationSnapshot,
 } = require('./fixtures/generate')
 
-const timepointsExceptLatest = states.slice(0, -1)
+const statesExceptLatest = states.slice(0, -1)
 
 const initialConnectionsList = getConnections(states[0])
-const lastConnectionsList = getConnections(getLatestTimepoint(states))
+const lastConnectionsList = getConnections(getLatestState(states))
 const statesPerSecond = durationSnapshot / SECOND_IN_MS
 
 test('Expected connections exist', t => {
@@ -60,7 +60,7 @@ test('Connections have unique IDs', t => {
 
 test('Open connections increase traffic', t => {
   const activeStatus = getEnumByName('ACTIVE', statusNames)
-  const everOpenConnections = getAllConnections(timepointsExceptLatest, {
+  const everOpenConnections = getAllConnections(statesExceptLatest, {
     filter: connection => connection.getStatus() === activeStatus,
   })
 
@@ -141,7 +141,7 @@ test('Open connections increase traffic', t => {
 
 test('Closed connections have static traffic', t => {
   const closedStatus = getEnumByName('CLOSED', statusNames)
-  const closedConnections = getAllConnections(timepointsExceptLatest, {
+  const closedConnections = getAllConnections(statesExceptLatest, {
     filter: connection => connection.getStatus() === closedStatus,
   })
 

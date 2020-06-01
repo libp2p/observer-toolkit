@@ -54,8 +54,8 @@ const dataOutCol = {
 const ageCol = {
   name: 'age',
   header: 'Time open',
-  getProps: (stream, timepoint, metadata) => {
-    const age = getStreamAge(stream, timepoint)
+  getProps: (stream, state, metadata) => {
+    const age = getStreamAge(stream, state)
     console.log(age, metadata.maxAge)
     return {
       value: age,
@@ -76,10 +76,10 @@ const protocolCol = {
 const streamStatusCol = {
   name: 'stream-status',
   header: 'status',
-  getProps: (stream, { timepoint }) => {
+  getProps: (stream, { state }) => {
     const status = statusNames[stream.getStatus()]
-    const timeOpen = getStreamAge(stream, timepoint)
-    const timeClosed = getStreamTimeClosed(stream, timepoint)
+    const timeOpen = getStreamAge(stream, state)
+    const timeClosed = getStreamTimeClosed(stream, state)
     return {
       value: status,
       sortValue: [status, timeOpen, timeClosed],

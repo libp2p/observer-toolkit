@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useRef } from 'react'
+import T from 'prop-types'
 
 function getScaledContext(canvasRef, width, height, canvasContextType) {
   const canvasElem = canvasRef.current
@@ -30,14 +31,17 @@ function getTweenPosition(startTime, animationDuration) {
   return Math.min(1, timeElapsed / animationDuration)
 }
 
-function useCanvas({
-  width,
-  height,
-  canvasContextType = '2d',
-  animateCanvas = null,
-  animationDuration = 0,
-  animationEasing,
-}) {
+function useCanvas(props) {
+  T.checkPropTypes(useCanvas.propTypes, props, 'prop', 'useCanvas')
+  const {
+    width,
+    height,
+    canvasContextType = '2d',
+    animateCanvas = null,
+    animationDuration = 0,
+    animationEasing,
+  } = props
+
   const canvasRef = useRef()
   const animationRef = useRef({
     isAnimating: false,
@@ -104,6 +108,14 @@ function useCanvas({
     animationRef,
     getCanvasContext,
   }
+}
+useCanvas.propTypes = {
+  width: T.number,
+  height: T.number,
+  canvasContextType: T.string,
+  animateCanvas: T.func,
+  animationDuration: T.number,
+  animationEasing: T.func,
 }
 
 export default useCanvas

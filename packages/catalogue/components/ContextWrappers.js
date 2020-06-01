@@ -6,9 +6,9 @@ import {
   FilterProvider,
 } from '@nearform/observer-sdk'
 
-function ContextWrappers({ children }) {
+function ContextWrappers({ children, theme }) {
   return (
-    <ThemeSetter>
+    <ThemeSetter theme={theme}>
       <FilterProvider>
         <DataProvider>{children}</DataProvider>
       </FilterProvider>
@@ -17,6 +17,7 @@ function ContextWrappers({ children }) {
 }
 ContextWrappers.propTypes = {
   children: T.node,
+  theme: T.object,
 }
 
 export default ContextWrappers
