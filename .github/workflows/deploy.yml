@@ -3,8 +3,7 @@ name: Deploy master or staging to GitHub Pages
 on:
   push:
     branches:
-      # TODO: Make DHT widget demoable with old data then uncomment
-      # - master
+      - master
       - staging
 
 jobs:
