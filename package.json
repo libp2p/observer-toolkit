@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "deploy:catalogue": "lerna exec --scope=\"@nearform/observer-catalogue\" -- npm run deploy",
+    "deploy:app": "lerna exec --scope=\"@nearform/observer-app\" -- npm run deploy",
     "generate-icons": "lerna run --scope=\"@nearform/observer-sdk\" svgr-icons",
     "gh-publish-bump": "lerna publish --no-push --registry=\"https://npm.pkg.github.com/\"",
     "gh-publish-same": "npm run gh-publish-bump -- --no-git-tag-version from-package",
