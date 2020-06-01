@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import T from 'prop-types'
 
 import { ThemeWrapper } from '@nearform/observer-testing'
 
@@ -76,6 +77,10 @@ function MockDataTable({ states = mockStates, hasPagination = false }) {
       />
     </div>
   )
+}
+MockDataTable.propTypes = {
+  states: T.array,
+  hasPagination: T.bool,
 }
 
 function ThemedMockDataTable(props) {

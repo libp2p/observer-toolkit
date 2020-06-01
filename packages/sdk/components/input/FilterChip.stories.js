@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { storiesOf } from '@storybook/react'
+import T from 'prop-types'
 
 import { getListFilter, getRangeFilter } from '../../filters'
 import { useFilter } from '../../hooks'
@@ -33,6 +34,10 @@ function FilterWrapper({ filterDef, items }) {
       ></FilterChip>
     </div>
   )
+}
+FilterWrapper.propTypes = {
+  filterDef: T.object,
+  items: T.array,
 }
 
 const slideItems = [
