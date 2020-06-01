@@ -73,14 +73,14 @@ The [LibP2P REPL](https://github.com/libp2p/repl) provides a simple way to conne
  4. In the catalogue UI, connect to the websocket address copied earlier, appending `/introspect`. For example, if My Info gave a listening address of 127.0.0.1/12345, connect to `ws://127.0.0.1:12345/introspect`
 
 <a id="packages"></a>
-## Packages
+## [Packages](packages)
 
 This is a [Lerna monorepo](https://github.com/lerna/lerna), managed with [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/).
 
-**Each directory in the `packages` directory is an independent package**, published to NPM, installable and usable in projects. The packages can be grouped broadly into four types:
+**Each directory in the [`packages`](packages) directory is an independent package**, published to NPM, installable and usable in projects. The packages can be grouped broadly into four types:
 
  - **Core UI**. React component libraries: [`sdk`](packages/sdk) provides the core UI components and theming, [`shell`](packages/shell) provides the UI for selecting and controlling data and [`catalogue`](packages/catalogue) provides the UI for browsing and selecting widgets
- - **Widgets**. four example widgets built on the SDK: [`connections-table`](packages/connections-table), [`dht-buckets`](packages/dht-buckets), [`streams-table`](packages/streams-table), [`events-table`](packages/events-table), [`streams-table`](packages/streams-table), 
+ - **Widgets**. four example widgets built on the SDK: [`connections-table`](packages/connections-table), [`dht-buckets`](packages/dht-buckets), [`streams-table`](packages/streams-table), [`events-table`](packages/events-table), [`streams-table`](packages/streams-table),
  - **Node.js scripts**. Utilities for creating new widgets ([`create-widget`](packages/create-widget)), performing common data operations in Node.js or a React build ([`data`](packages/data)), converting binary Protobuf messages to or from JavaScript ([`proto`](packages/proto)), and generating or importing mock LibP2P Introspection data in protobuf format ([`samples`](packages/samples))
  - **Developer tools**. A demo [`app`](packages/app) that deploys a catalogue containing each example widget, and [`testing`](packages/testing) utilities to aid testing widget components in Jest and Storybook.
 
@@ -93,3 +93,4 @@ For more detail on packages and a more detailed overview, see the [packages dire
  - [Developer Guide](docs/developer-guide) for a more detailed overview and explanation of how this project is structured, with pointers to developer resources available.
  - [File Format](docs/file-format) for the specification of the format of binary data that the LibP2P Observer expects
  - [Introspection Data Emitting Protocol] for an overview of the data protocol by which a LibP2P Observer widget and shell interacts with a LibP2P Introspection server
+ - [Packages readme](packages) details how packages are used and each individual package has its own readme documentation
