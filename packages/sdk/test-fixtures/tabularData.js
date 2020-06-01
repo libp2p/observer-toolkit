@@ -20,6 +20,40 @@ const _mockState_0 = [
 
 const mockStates = [_mockState_0, _mockState_1]
 
+const _mockState_2 = [
+  Object.assign({}, _mockState_1[4]),
+  Object.assign({}, _mockState_1[3]),
+  Object.assign({}, _mockState_1[2]),
+  Object.assign({}, _mockState_1[1], { mockNumber: 3 }),
+  Object.assign({}, _mockState_1[0], { mockBool: false }),
+]
+
+const _mockState_3 = [
+  Object.assign({}, _mockState_2[4], { mockNumber: 7 }),
+  Object.assign({}, _mockState_2[3], { mockPercentCalc: 14 }),
+  Object.assign({}, _mockState_2[2]),
+  Object.assign({}, _mockState_2[1], { mockNumber: 4 }),
+  Object.assign({}, _mockState_2[0], { mockBool: true, mockPercentCalc: 5 }),
+]
+
+const _mockState_4 = [
+  Object.assign({}, _mockState_3[4], { mockNumber: 9 }),
+  Object.assign({}, _mockState_3[3], { mockPercentCalc: 15 }),
+  Object.assign({}, _mockState_3[2]),
+  Object.assign({}, _mockState_3[1], { mockNumber: 5 }),
+  Object.assign({}, _mockState_3[0], { mockBool: false, mockPercentCalc: 7 }),
+  { mockName: 'b2', mockNumber: 6, mockBool: true, mockPercentCalc: 12 },
+  { mockName: 'c2', mockNumber: 8, mockBool: false, mockPercentCalc: 18 },
+]
+
+const longerMockStates = [
+  _mockState_0,
+  _mockState_1,
+  _mockState_2,
+  _mockState_3,
+  _mockState_4,
+]
+
 const _MockBoolRenderer = function({ boolProp, value }) {
   return boolProp ? <em>{value}</em> : <strong role="alert">{value}</strong>
 }
@@ -74,4 +108,4 @@ const mockColumnDefs = [
   },
 ]
 
-export { mockStates, mockColumnDefs }
+export { mockStates, mockColumnDefs, longerMockStates }
