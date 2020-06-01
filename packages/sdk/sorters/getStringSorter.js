@@ -1,4 +1,4 @@
-function getStringSorter(direction) {
+function getStringSorter(direction = 'asc') {
   const caselessSorter = Intl.Collator('en').compare
   const stringSorter = (a, b) => {
     const sortNum = caselessSorter(a, b)
