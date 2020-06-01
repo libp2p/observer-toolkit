@@ -5,11 +5,6 @@ import { renderForSDK, within } from '@nearform/observer-testing'
 import { ThemedMockDataTable } from '../../test-fixtures/MockDataTable'
 
 describe('DataTable', () => {
-  it('Renders as expected, matching snapshot', () => {
-    const { asFragment } = renderForSDK(<ThemedMockDataTable />)
-    expect(asFragment()).toMatchSnapshot()
-  })
-
   it('Renders cell contents correctly', () => {
     const { getByTableRow } = renderForSDK(<ThemedMockDataTable />)
 
