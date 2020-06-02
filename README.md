@@ -89,8 +89,8 @@ For more detail on packages and a more detailed overview, see the [packages dire
 <a id="documentation"></a>
 ## Documentation
 
- - [Contribute](docs/contribute) for how to contribute work built on this toolkit to the LibP2P community, and how to contribute to this project itself.
- - [Developer Guide](docs/developer-guide) for a more detailed overview and explanation of how this project is structured, with pointers to developer resources available.
- - [File Format](docs/file-format) for the specification of the format of binary data that the LibP2P Observer expects
- - [Introspection Data Emitting Protocol] for an overview of the data protocol by which a LibP2P Observer widget and shell interacts with a LibP2P Introspection server
+ - [Contribute](docs/contribute.md) for how to contribute work built on this toolkit to the LibP2P community, and how to contribute to this project itself.
+ - [Developer Guide](docs/developer-guide.md) for a more detailed overview and explanation of how this project is structured, with pointers to developer resources available.
+ - [File Format](docs/file-format.md) for the specification of the format of binary data that the LibP2P Observer expects
+ - [Introspection Data Emitting Protocol](docs/introspection-data-emitting-protocol.md) for an overview of the data protocol by which a LibP2P Observer widget and shell interacts with a LibP2P Introspection server
  - [Packages readme](packages) details how packages are used and each individual package has its own readme documentation
