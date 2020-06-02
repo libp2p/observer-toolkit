@@ -33,7 +33,7 @@ function createRuntime({
   runtime.addEventTypes(InboundDHTQuery)
   runtime.addEventTypes(OutboundDHTQuery)
   runtime.setSendStateIntervalMs(stateIntervalDuration)
-  runtime.setKeepStaleDataMs(cutoffSeconds * SECOND_IN_MS)
+  runtime.setRetentionPeriodMs(cutoffSeconds * SECOND_IN_MS)
   return runtime
 }
 

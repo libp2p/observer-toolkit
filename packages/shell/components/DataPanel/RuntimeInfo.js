@@ -42,7 +42,7 @@ function RuntimeInfo() {
   const stateIntervalMs = runtime.getSendStateIntervalMs()
   const stateInterval = formatDuration(stateIntervalMs)
 
-  const dataExpiryMs = runtime.getKeepStaleDataMs()
+  const dataExpiryMs = runtime.getRetentionPeriodMs()
   const dataExpiry = formatDuration(dataExpiryMs)
 
   return (
@@ -88,7 +88,7 @@ function RuntimeInfo() {
                   runtimeValue={dataExpiryMs}
                   handleSend={inputMs =>
                     wsData.sendSignal('config', {
-                      keepStaleDataMs: inputMs,
+                      retentionPeriodMs: inputMs,
                     })
                   }
                 >

@@ -89,8 +89,8 @@ message Runtime {
     string platform                 = 3;
     // our peer id - the peer id of the host system
     string peer_id                  = 4;
-    // length of time to keep stale data
-    uint32 keep_stale_data_ms       = 5;
+    // length of time after which data may be discarded
+    uint32 retention_period_ms      = 5;
     // frequency to send new states
     uint32 send_state_interval_ms   = 6;
     // metadata describing configured event types
