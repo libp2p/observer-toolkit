@@ -58,7 +58,7 @@ function getCutoffTime(states, cutoffMs) {
 
 function updateCutoffRef(cutoffRef, runtime) {
   const newCutoffMs = runtime
-    ? runtime.getKeepStaleDataMs() || DEFAULT_CUTOFF_MS
+    ? runtime.getRetentionPeriodMs() || DEFAULT_CUTOFF_MS
     : DEFAULT_CUTOFF_MS
 
   if (cutoffRef.current === newCutoffMs) return null
@@ -350,7 +350,7 @@ function useDatastore(props) {
         action: newStates.length ? 'replace' : 'remove',
         data: newStates,
         cutoffMs: newRuntime
-          ? newRuntime.getKeepStaleDataMs()
+          ? newRuntime.getRetentionPeriodMs()
           : DEFAULT_CUTOFF_MS,
       })
       dispatchEvents({

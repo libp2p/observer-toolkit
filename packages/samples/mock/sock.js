@@ -44,7 +44,7 @@ function generateMessages({
 
   if (runtime) {
     durationSnapshot = runtime.getSendStateIntervalMs()
-    cutoffSeconds = runtime.getKeepStaleDataMs() / 1000
+    cutoffSeconds = runtime.getRetentionPeriodMs() / 1000
   } else {
     runtime = createRuntime({
       stateIntervalDuration: durationSnapshot,
@@ -136,9 +136,9 @@ function handleClientMessage(client, server, msg) {
           hasChanged = true
           runtime.setSendStateIntervalMs(newDurationSnapshot)
         }
-        if (content.keepStaleDataMs) {
+        if (content.retentionPeriodMs) {
           hasChanged = true
-          runtime.setKeepStaleDataMs(Number(content.keepStaleDataMs))
+          runtime.setRetentionPeriodMs(Number(content.retentionPeriodMs))
         }
         if (hasChanged) sendRuntime()
       } catch (error) {

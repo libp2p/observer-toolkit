@@ -10,7 +10,7 @@ import {
 } from '@nearform/observer-testing'
 import useDatastore from './useDatastore'
 
-function TestOutput({ states = [], events = [], runtime, keepStaleDataMs }) {
+function TestOutput({ states = [], events = [], runtime, retentionPeriodMs }) {
   let output = ''
   if (states.length)
     output += `States: ${states.map(state => state.testOutput).join('')}; `
@@ -18,7 +18,7 @@ function TestOutput({ states = [], events = [], runtime, keepStaleDataMs }) {
     output += `Events: ${events.map(event => event.testOutput).join('')}; `
   if (runtime)
     output += `Runtime: ${runtime.getPeerId ? runtime.getPeerId() : runtime}; `
-  if (keepStaleDataMs) output += `keepStaleDataMs: ${keepStaleDataMs}; `
+  if (retentionPeriodMs) output += `retentionPeriodMs: ${retentionPeriodMs}; `
 
   return <div data-testid="output">{output}</div>
 }
@@ -26,15 +26,15 @@ TestOutput.propTypes = {
   states: T.array.isRequired,
   events: T.array.isRequired,
   runtime: T.object,
-  keepStaleDataMs: T.number,
+  retentionPeriodMs: T.number,
 }
 
-function expectedOutput({ states, events, runtime, keepStaleDataMs }) {
+function expectedOutput({ states, events, runtime, retentionPeriodMs }) {
   let output = ''
   if (states) output += `States: ${states}; `
   if (events) output += `Events: ${events}; `
   if (runtime) output += `Runtime: ${runtime}; `
-  if (keepStaleDataMs) output += `keepStaleDataMs: ${keepStaleDataMs}; `
+  if (retentionPeriodMs) output += `retentionPeriodMs: ${retentionPeriodMs}; `
   return output
 }
 
@@ -373,12 +373,12 @@ describe('useDataStore hook adds, replaces and sorts data', () => {
   })
 })
 
-describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
+describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
   it('Discards states and events older than threshold whenever new states are added', async () => {
-    const keepStaleDataMs = 4
+    const retentionPeriodMs = 4
 
     const TestComponent = () => {
-      const initialRuntime = getMockRuntime({ keepStaleDataMs })
+      const initialRuntime = getMockRuntime({ retentionPeriodMs })
       const initialEvents = [
         { testOutput: '1', time: 1 },
         { testOutput: '6', time: 6 },
@@ -487,7 +487,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
           <TestOutput
             states={states}
             events={events}
-            keepStaleDataMs={runtime ? runtime.getKeepStaleDataMs() : null}
+            retentionPeriodMs={runtime ? runtime.getRetentionPeriodMs() : null}
           />
         </div>
       )
@@ -500,7 +500,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
       expectedOutput({
         events: '23456',
         states: '23456',
-        keepStaleDataMs,
+        retentionPeriodMs,
       }).trim()
     )
     expect(output1).toBeInTheDocument()
@@ -513,7 +513,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
       expectedOutput({
         events: '56789',
         states: '56789',
-        keepStaleDataMs,
+        retentionPeriodMs,
       }).trim()
     )
     expect(output2).toBeInTheDocument()
@@ -526,7 +526,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
       expectedOutput({
         events: '161820',
         states: '161820',
-        keepStaleDataMs,
+        retentionPeriodMs,
       }).trim()
     )
     expect(output3).toBeInTheDocument()
@@ -539,7 +539,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
       expectedOutput({
         events: '202224',
         states: '202224',
-        keepStaleDataMs,
+        retentionPeriodMs,
       }).trim()
     )
     expect(output4).toBeInTheDocument()
@@ -571,7 +571,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
       expectedOutput({
         events: '56789',
         states: '56789',
-        keepStaleDataMs,
+        retentionPeriodMs,
       }).trim()
     )
     expect(output6).toBeInTheDocument()
@@ -586,7 +586,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
         runtime,
         states,
       } = useDatastore({
-        initialRuntime: getMockRuntime({ keepStaleDataMs: 10 }),
+        initialRuntime: getMockRuntime({ retentionPeriodMs: 10 }),
         initialEvents: [
           { testOutput: '1', time: 1 },
           { testOutput: '6', time: 6 },
@@ -609,7 +609,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
           <button
             data-testid="update-runtime"
             onClick={() =>
-              updateRuntime(getMockRuntime({ keepStaleDataMs: 4 }))
+              updateRuntime(getMockRuntime({ retentionPeriodMs: 4 }))
             }
           />
           <button
@@ -630,14 +630,14 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
                   { testOutput: '18', ...getMockStateTimes(18) },
                   { testOutput: '20', ...getMockStateTimes(20) },
                 ].map(getMockState),
-                runtime: getMockRuntime({ keepStaleDataMs: 7 }),
+                runtime: getMockRuntime({ retentionPeriodMs: 7 }),
               })
             }
           />
           <TestOutput
             states={states}
             events={events}
-            keepStaleDataMs={runtime ? runtime.getKeepStaleDataMs() : null}
+            retentionPeriodMs={runtime ? runtime.getRetentionPeriodMs() : null}
           />
         </div>
       )
@@ -649,7 +649,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
       expectedOutput({
         events: '123456',
         states: '123456',
-        keepStaleDataMs: 10,
+        retentionPeriodMs: 10,
       })
     )
 
@@ -658,7 +658,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
       fireEvent.click(button1)
     })
     expect(getOutput()).toEqual(
-      expectedOutput({ events: '23456', states: '23456', keepStaleDataMs: 4 })
+      expectedOutput({ events: '23456', states: '23456', retentionPeriodMs: 4 })
     )
 
     const button2 = getByTestId('replace-all')
@@ -669,7 +669,7 @@ describe('useDataStore hook respects keepStaleDataMs runtime setting', () => {
       expectedOutput({
         events: '14161820',
         states: '14161820',
-        keepStaleDataMs: 7,
+        retentionPeriodMs: 7,
       })
     )
   })

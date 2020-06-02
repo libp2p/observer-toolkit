@@ -54,7 +54,7 @@ function getGlowOpacity(value, maxValue) {
 
 function StatusChip({ status, timeOpen, timeClosed, duration }) {
   const runtime = useContext(RuntimeContext)
-  const expiryMs = runtime ? runtime.getKeepStaleDataMs() : 0
+  const expiryMs = runtime ? runtime.getRetentionPeriodMs() : 0
   const fade = status === 'CLOSED' ? getFadeOpacity(timeClosed, expiryMs) : null
   const glow =
     status === 'ACTIVE' ? getGlowOpacity(timeOpen, duration * 4) : null
