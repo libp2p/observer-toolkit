@@ -339,6 +339,7 @@ message Event {
     // stringified json; top-level keys and value types match EventProperty definitions
     string content                     = 3;
 }
+
 // ServerMessage wraps messages to be sent to clients to allow extension
 // based on new types of data sources
 message ServerMessage {
