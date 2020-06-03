@@ -22,22 +22,23 @@ function getBinary(message) {
   return Buffer.concat([metaBuffer, contentBuffer])
 }
 
-function getPacket(message, type) {
-  const dataPacket = new proto.ProtocolDataPacket()
+function getServerMessage(message, type) {
+  const serverMessage = new proto.ServerMessage()
 
-  dataPacket.setVersion(new proto.Version(version))
+  serverMessage.setVersion(new proto.Version(version))
 
   if (type === 'runtime') {
-    dataPacket.setRuntime(message)
+    serverMessage.setRuntime(message)
   } else if (type === 'event') {
-    dataPacket.setEvent(message)
+    serverMessage.setEvent(message)
   } else if (type === 'state') {
-    dataPacket.setState(message)
+    serverMessage.setState(message)
+    // Don't export response or notice messages
   } else {
-    throw new Error(`Unrecognised packet type "${type}"`)
+    throw new Error(`Unrecognised ServerMessage payload type "${type}"`)
   }
 
-  return dataPacket
+  return serverMessage
 }
 
 function getVersionBinary() {
@@ -53,9 +54,9 @@ function useFileBlob() {
   const events = useContext(EventsContext)
   const runtime = useContext(RuntimeContext)
 
-  const statePackets = states.map(state => getPacket(state, 'state'))
-  const eventPackets = events.map(event => getPacket(event, 'event'))
-  const runtimePacket = getPacket(runtime, 'runtime')
+  const statePackets = states.map(state => getServerMessage(state, 'state'))
+  const eventPackets = events.map(event => getServerMessage(event, 'event'))
+  const runtimePacket = getServerMessage(runtime, 'runtime')
 
   const blob = new Blob([
     ...getVersionBinary(),

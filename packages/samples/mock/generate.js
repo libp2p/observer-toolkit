@@ -23,9 +23,9 @@ const {
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
 const {
-  createProtocolRuntimePacket,
-  createProtocolStatePacket,
-} = require('./messages/protocol-data-packet')
+  createRuntimeServerMessage,
+  createStateServerMessage,
+} = require('./messages/server-message')
 const { statusList } = require('./enums/statusList')
 
 function generateConnections(total, now) {
@@ -47,7 +47,7 @@ function generatePeerId() {
 }
 
 function generateRuntime(options = {}, runtime = createRuntime(options)) {
-  const runtimePacket = createProtocolRuntimePacket(runtime)
+  const runtimePacket = createRuntimeServerMessage(runtime)
   return createBufferSegment(runtimePacket)
 }
 
@@ -112,7 +112,7 @@ function generateEventsFlood({ msgQueue = [], utcNow, version }) {
 
 function generateState(connections, now, dht, duration) {
   const state = createState(connections, now, dht, duration)
-  const statePacket = createProtocolStatePacket(state)
+  const statePacket = createStateServerMessage(state)
   return createBufferSegment(statePacket)
 }
 

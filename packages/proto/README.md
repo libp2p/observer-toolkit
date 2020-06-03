@@ -11,7 +11,7 @@ For more details on the protobuf format and operation, see the [official Google 
   - [Updating the protobuf schema](#updating-the-protobuf-schema)
 - [Message types](#message-types)
   - [Data messages](#data-messages)
-    - [`ProtocolDataPacket` messages](#protocoldatapacket-messages)
+    - [`ServerMessage` messages](#servermessage-messages)
     - [`Runtime` messages](#runtime-messages)
     - [`State` messages](#state-messages)
     - [`Event` messages](#event-messages)
@@ -49,8 +49,8 @@ This section gives an overview of the main LibP2P Introspection message times an
 
 These are sent from the Introspection server to the Observer client.
 
-<a id="protocoldatapacket-messages"></a>
-#### `ProtocolDataPacket` messages
+<a id="servermessage-messages"></a>
+#### `ServerMessage` messages
 
 These serve as an outer wrapper for data messages (`state`, `event` and `runtime`) sent from the Introspection server to the Observer client. They carry the version number of the protocol, so that future versions that expand the protobuf definition can maintain backwards compatibility and avoid calling new methods that won't exist in old data.
 
@@ -94,7 +94,7 @@ These are sent from the Observer client to the Introspection server.
 <a id="clientsignal-messages"></a>
 #### `ClientSignal` messages
 
-All signals from the Observer client to the server use this message type. It contains a `version` similar to the `version` of a `ProtocolDataPacket` message, a `signal` enum indicating the type of signal, and optional fields specific to signal types.
+All signals from the Observer client to the server use this message type. It contains a `version` similar to the `version` of a `ServerMessage` message, a `signal` enum indicating the type of signal, and optional fields specific to signal types.
 
 Signal types available are:
 
