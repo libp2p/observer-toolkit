@@ -354,8 +354,8 @@ message ServerMessage {
 
 // Configuration encapsulates configuration fields for the protocol and commands.
 message Configuration {
-    uint64 retention_period_secs    = 1;
-    uint64 snapshot_interval_secs   = 2;
+    uint64 retention_period_ms          = 1;
+    uint64 state_snapshot_interval_ms   = 2;
 }
 
 // ClientCommand is a command sent from the client to the server.
