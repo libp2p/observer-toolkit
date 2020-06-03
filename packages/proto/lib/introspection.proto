@@ -339,47 +339,86 @@ message Event {
     // stringified json; top-level keys and value types match EventProperty definitions
     string content                     = 3;
 }
-
-// ProtocolDataPacket wraps messages to be sent to clients to allow extension
+// ServerMessage wraps messages to be sent to clients to allow extension
 // based on new types of data sources
-message ProtocolDataPacket {
-  // Version of this protobuf
-  Version version     = 1;
-  // The Message this contains
-  oneof message {
-      State state     = 2;
-      Runtime runtime = 3;
-      Event event     = 4;
-  }
+message ServerMessage {
+    // Version of this protobuf.
+    Version version     = 1;
+    // The payload this message contains.
+    oneof payload {
+        State state     = 2;
+        Runtime runtime = 3;
+        Event event     = 4;
+
+        CommandResponse response = 5;
+        ServerNotice notice = 6;
+    }
 }
 
-// ClientSignal is a type of message to be sent from clients to the server to signal
-// within the operation of the protocol
-message ClientSignal {
-  // The signal to be sent to the server
-  enum Signal {
-    // SEND_DATA with `data_source` requests messages from pull-based data emitters
-    SEND_DATA            = 0;
-    // PAUSE_ & UNPAUSE_PUSH_EMITTER allows control of push-based data emitters
-    PAUSE_PUSH_EMITTER   = 1;
-    UNPAUSE_PUSH_EMITTER = 2;
+// Configuration encapsulates configuration fields for the protocol and commands.
+message Configuration {
+    uint64 retention_period_secs    = 1;
+    uint64 snapshot_interval_secs   = 2;
+}
 
-    // CONFIG_EMITTER with `content` sends a JSON object of settings to the emitter
-    CONFIG_EMITTER       = 10;
-  }
+// ClientCommand is a command sent from the client to the server.
+message ClientCommand {
+    enum Source {
+        STATE   = 0; // full state snapshot.
+        RUNTIME = 1; // runtime data message.
+        EVENTS  = 2; // eventbus events.
+    }
 
-  // The source the data is expected to come from
-  enum DataSource {
-    STATE   = 0; // A full state snapshot
-    RUNTIME = 1; // A runtime data message
-  }
+    enum Command {
+        // HELLO is the first command that a client must send to greet the server.
+        // Connections that do not respect this invariant will be terminated.
+        HELLO = 0;
 
-  // Version of this protobuf
-  Version version           = 1;
-  // Signal to be sent
-  Signal signal             = 2;
-  // Correlated DataSource for this signal (if any)
-  DataSource data_source    = 3;
-  // Optional: JSON stringified content to be sent to the emitter
-  string content            = 4;
+        // REQUEST is applicable to STATE and RUNTIME sources.
+        REQUEST         = 1;
+
+        // PUSH streams can only be started for STATE and EVENTS sources.
+        START_PUSH      = 2;
+        STOP_PUSH       = 3;
+        PAUSE_PUSH      = 4;
+        RESUME_PUSH     = 5;
+
+        // UPDATE_CONFIG requests a configuration update. The config field is
+        // compulsory.
+        //
+        // The server reserves the right to override the requested values, and
+        // will return the effective configuration in the response.
+        UPDATE_CONFIG   = 7;
+    }
+
+    Version version         = 1;
+    uint64 id               = 2; // a unique ID for this request.
+    Command command         = 3;
+    Source source           = 4;
+    Configuration config    = 5;
+}
+
+// CommandResponse is a response to a command sent by the client.
+message CommandResponse {
+    enum Result {
+        OK  = 0;
+        ERR = 1;
+    }
+
+    uint64 id       = 1; // for correlation with the request.
+    Result result   = 2;
+    string error    = 3;
+
+    // effective_config is the effective configuration the server holds for
+    // this connection. It is returned in response to HELLO and UPDATE_CONFIG
+    // commands.
+    Configuration effective_config  = 4;
+}
+
+// ServerNotice represents a NOTICE sent from the server to the client.
+message ServerNotice {
+    enum Kind {
+        DISCARDING_EVENTS = 0;
+    }
+    Kind kind = 1;
 }
