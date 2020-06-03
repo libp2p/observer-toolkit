@@ -375,10 +375,10 @@ message ClientCommand {
         REQUEST         = 1;
 
         // PUSH streams can only be started for STATE and EVENTS sources.
-        START_PUSH      = 2;
-        STOP_PUSH       = 3;
-        PAUSE_PUSH      = 4;
-        RESUME_PUSH     = 5;
+        PUSH_ENABLE     = 2; // enables pushing for a given source.
+        PUSH_DISABLE    = 3; // disables pushing for a given source.
+        PUSH_PAUSE      = 4; // pauses pushing for all sources.
+        PUSH_RESUME     = 5; // resumes pushing for all sources.
 
         // UPDATE_CONFIG requests a configuration update. The config field is
         // compulsory.
