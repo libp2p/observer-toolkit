@@ -37,25 +37,27 @@ The following are used extensively in LibP2P Observer:
    - The default LibP2P Observer theme is defined in [sdk/theme](packages/sdk/theme)
    - Themes are propogated using the SDK's [ThemeSetter component](packages/sdk/components/context/ThemeSetter.js)
    - The [catalogue package](packages/catalogue)'s exported `Catalogue` component accepts `theme` as an optional prop and applies either it or the default theme using ThemeSetter
-  3. [**D3**](https://d3js.org/) is used, but only for processing data and generating component props, such as co-ordinates, lengths and path definitions. D3's methods that interact directly with the DOM, such as `.select()`, `.enter()` and `.append()`, are *_not_* used, to avoid conflicts with React's tight management of a virtual DOM.  
+  3. [**D3**](https://d3js.org/) is used, but only for processing data and generating component props, such as co-ordinates, lengths and path definitions. D3's methods that interact directly with the DOM, such as `.select()`, `.enter()` and `.append()`, are *_not_* used, to avoid conflicts with React's tight management of a virtual DOM.
 
 <a id="11-recieving-data-in-the-react-app"></a>
 ### 1.1 Recieving data in the React app
 
 - Data from a LibP2P Introspection server are received, wrapped in metadata for versioning as defined on the [File Format](/file-format.md) documentation.
 - Binary protobuf messages are extracted and parsed using the Javascript protobuf parser in the [proto](packages/proto) package. This generated file is updated only in rare cases where the protobuf definition shared with the LibP2P Introspection module changes.
-- Parsed protobuf messages become JavaScript objects, containing data in arrays and with an API of getter and setter methods based on the protobuf schema. For example, if the protobuf message schema includes a field `some_field`, it will be decoded in JavaScript as an object with an array that includes the field's value and prototype methods `.getSomeField()` and `.setSomeField()`. 
+- Parsed protobuf messages become JavaScript objects, containing data in arrays and with an API of getter and setter methods based on the protobuf schema. For example, if the protobuf message schema includes a field `some_field`, it will be decoded in JavaScript as an object with an array that includes the field's value and prototype methods `.getSomeField()` and `.setSomeField()`.
 - The main message types received by the LibP2P Observer are:
   - Runtime: An object containing information about the LibP2P Introspection server and the system it runs on, including metadata about known event types and settings on data lifespan and frequency. Only one runtime message is stored, with new runtime messages replacing the old.
   - Events: An array of objects with a `type` string, a timestamp integer, and JSON content conforming to a schema expected to be defined for this particular `type` in the runtime. Event messages are expected to be pushed by the LibP2P Introspection server as soon as possible after the event occurs.
-  - States: An array objects describing the state of the introspection server at a moment in time. Unlike event messages, these are expected to be sent at a regular, agreed schedule defined in the runtime and edittable by `signal` 
+  - States: An array objects describing the state of the introspection server at a moment in time. Unlike event messages, these are expected to be sent at a regular, agreed schedule defined in the runtime and edittable by `signal`
 - The LibP2P Observer may also send `signal` messages to the LibP2P Introspection server, of the following types:
   - Pause signals, which cause events and state messages to be queued instead of sent
   - Unpause signals, which send any message queue and resume normal sending
   - Config signals, for setting variables such as the time interval between state messages and the maximum time period to keep old messages.
 
+For more detail on protobuf message types, see the documentation for the [`proto` package](../packages/proto).
+
 <a id="12-consuming-data-in-the-react-app"></a>
-### 1.2 Consuming data in the React app  
+### 1.2 Consuming data in the React app
 
 - In the [React Hooks](https://reactjs.org/docs/hooks-overview.html)-based LibP2P Observer app, these extracted LibP2P Introspection messages (Runtime, Events and States) are stored, sorted and filtered using the custom hook [`useDatastore`](), propogated throughout the app using the custom context provider [DataProvider](packages/sdk/components/context/DataProvider), and managed by the user using the [Observer Shell](packages/shell)
 - The Data package provides many pure-JavaScript helper functions for facilitating common operations on LibP2P Introspection data. These may be used both inside the LibP2P Observer React components, and outside of React in node.js scripts or other UI tools.
