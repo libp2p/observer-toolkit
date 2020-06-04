@@ -134,7 +134,7 @@ function DhtPeer({
   const { setPeerIds } = useContext(SetterContext)
 
   const config = useContext(ConfigContext)
-  const stateDuration = config.getSendStateIntervalMs()
+  const stateDuration = config.getStateSnapshotIntervalMs()
 
   const runtime = useContext(RuntimeContext)
   const distance = getKademliaDistance(peerId, runtime.getPeerId())

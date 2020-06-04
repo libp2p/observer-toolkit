@@ -2,12 +2,12 @@
 // needed to not crash when used in shell-based tests.
 function getMockConfig({
   retentionPeriodMs = 120000,
-  sendStateIntervalMs = 2000,
+  stateSnapshotIntervalMs = 2000,
   ...props
 } = {}) {
   return {
     getRetentionPeriodMs: () => retentionPeriodMs,
-    getSendStateIntervalMs: () => sendStateIntervalMs,
+    getStateSnapshotIntervalMs: () => stateSnapshotIntervalMs,
     ...props,
   }
 }

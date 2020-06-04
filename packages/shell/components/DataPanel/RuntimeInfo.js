@@ -12,7 +12,7 @@ import EditRuntime from './EditRuntime'
 
 function getStateInterval(config, missingConfig) {
   if (!config) return { stateIntervalText: missingConfig }
-  const stateIntervalMs = config.getSendStateIntervalMs()
+  const stateIntervalMs = config.getStateSnapshotIntervalMs()
   const stateIntervalText = formatDuration(stateIntervalMs)
   return {
     stateIntervalMs,
@@ -99,7 +99,7 @@ function RuntimeInfo() {
                   runtimeValue={stateIntervalMs}
                   handleSend={inputMs =>
                     wsData.sendSignal('config', {
-                      sendStateIntervalMs: inputMs,
+                      stateSnapshotIntervalMs: inputMs,
                     })
                   }
                 >

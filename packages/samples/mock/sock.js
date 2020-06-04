@@ -49,11 +49,11 @@ function generateMessages({
   if (!dht) dht = generateDHT({ peersCount })
 
   if (effectiveConfig) {
-    durationSnapshot = effectiveConfig.getSendStateIntervalMs()
+    durationSnapshot = effectiveConfig.getStateSnapshotIntervalMs()
     cutoffSeconds = effectiveConfig.getRetentionPeriodMs() / 1000
   } else {
     effectiveConfig = new Configuration()
-    effectiveConfig.setSendStateIntervalMs(durationSnapshot)
+    effectiveConfig.setStateSnapshotIntervalMs(durationSnapshot)
     effectiveConfig.setRetentionPeriodMs(cutoffSeconds * 1000)
   }
 
@@ -169,7 +169,7 @@ function handleClientMessage(client, server, msg) {
 function updateConfig(newConfig, commandId) {
   let hasChanged = false
 
-  const newStateInterval = newConfig.getSendStateIntervalMs()
+  const newStateInterval = newConfig.getStateSnapshotIntervalMs()
   const newRetentionPeriod = newConfig.getRetentionPeriodMs()
 
   if (newStateInterval) {
@@ -181,7 +181,7 @@ function updateConfig(newConfig, commandId) {
       })
     }, newStateInterval)
     hasChanged = true
-    effectiveConfig.setSendStateIntervalMs(newStateInterval)
+    effectiveConfig.setStateSnapshotIntervalMs(newStateInterval)
   }
   if (newRetentionPeriod) {
     hasChanged = true

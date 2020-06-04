@@ -66,10 +66,10 @@ It can be considered that all requests for specific data and the response is a p
 This includes the snapshot sending flow of data.
 
 The protocol also allows a signal to subscribe to push emitters, or to unsubscribe from them.
-Clients that implement this must deal with backpressure and be able to pause/unpause emitters as needed.
+Clients that implement this must deal with backpressure and be able to pause/resume emitters as needed.
 An emitter pause message can also be sent over the connection to allow a temporary buffer period.
-An unpause message then can be sent when ready for more data.
+An resume message then can be sent when ready for more data.
 If there is no push emitter operating for the client, pausing, unpausing and unsubscribing will cause no change in operation.
 If the emitter is already paused, sending another pause should have no direct affect.
-If the emitter is sending data then an unpause signal should also have no direct affect.
+If the emitter is sending data then a resume signal should also have no direct affect.
 It is up to the server implementation to handle the specifics of buffering/queuing further data to be sent during a pause period of the push emitter.
