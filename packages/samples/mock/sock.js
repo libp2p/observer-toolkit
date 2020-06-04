@@ -46,16 +46,8 @@ function generateMessages({
   const utcNow = Date.now()
   const utcFrom = utcNow
   const utcTo = utcNow + durationSnapshot
-  if (!dht) dht = generateDHT({ peersCount })
 
-  if (effectiveConfig) {
-    durationSnapshot = effectiveConfig.getStateSnapshotIntervalMs()
-    cutoffSeconds = effectiveConfig.getRetentionPeriodMs() / 1000
-  } else {
-    effectiveConfig = new Configuration()
-    effectiveConfig.setStateSnapshotIntervalMs(durationSnapshot)
-    effectiveConfig.setRetentionPeriodMs(cutoffSeconds * 1000)
-  }
+  if (!dht) dht = generateDHT({ peersCount })
 
   if (!runtime) runtime = createRuntime()
 
@@ -145,7 +137,7 @@ function handleClientMessage(ws, server, clientCommand) {
   ) {
     const newConfig = clientCommand.getConfig()
     if (newConfig) {
-      updateConfig(newConfig, commandId, ws)
+      updateConfig(newConfig, commandId, ws, server)
       sendEmptyOKResponse = false
     } else if (command === ClientCommand.Command.HELLO) {
       // Send default config
@@ -180,7 +172,7 @@ function handleClientMessage(ws, server, clientCommand) {
   }
 }
 
-function updateConfig(newConfig, commandId, ws) {
+function updateConfig(newConfig, commandId, ws, server) {
   let hasChanged = false
 
   const newStateInterval = newConfig.getStateSnapshotIntervalMs()
@@ -201,14 +193,15 @@ function updateConfig(newConfig, commandId, ws) {
     hasChanged = true
     effectiveConfig.setRetentionPeriodMs(newRetentionPeriod)
   }
-  if (hasChanged)
+  if (hasChanged) {
     sendCommandResponse(
       {
-        commandId,
+        id: commandId,
         effectiveConfig,
       },
       ws
     )
+  }
 }
 
 function sendRuntime() {
@@ -229,7 +222,15 @@ function start({
   peersCount,
   cutoffSeconds,
 } = {}) {
-  // generate states
+  if (effectiveConfig) {
+    duration = effectiveConfig.getStateSnapshotIntervalMs()
+    cutoffSeconds = effectiveConfig.getRetentionPeriodMs() / 1000
+  } else {
+    effectiveConfig = new Configuration()
+    effectiveConfig.setStateSnapshotIntervalMs(duration)
+    effectiveConfig.setRetentionPeriodMs(cutoffSeconds * 1000)
+  }
+
   wss.connectionsCount = connectionsCount
 
   clearInterval(generateInterval)

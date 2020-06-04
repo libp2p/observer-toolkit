@@ -99,7 +99,9 @@ function RuntimeInfo() {
                   configValue={stateIntervalMs}
                   handleSend={inputMs =>
                     wsData.sendCommand('config', {
-                      stateSnapshotIntervalMs: inputMs,
+                      config: {
+                        stateSnapshotIntervalMs: inputMs,
+                      },
                     })
                   }
                 >
@@ -118,7 +120,9 @@ function RuntimeInfo() {
                   configValue={retentionMs}
                   handleSend={inputMs =>
                     wsData.sendCommand('config', {
-                      retentionPeriodMs: inputMs,
+                      config: {
+                        retentionPeriodMs: inputMs,
+                      },
                     })
                   }
                 >
