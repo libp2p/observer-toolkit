@@ -7002,8 +7002,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.introspection.Configuration.toObject = function(includeInstance, msg) {
     var f,
       obj = {
-        retentionPeriodSecs: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        snapshotIntervalSecs: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        retentionPeriodMs: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        stateSnapshotIntervalMs: jspb.Message.getFieldWithDefault(msg, 2, 0),
       }
 
     if (includeInstance) {
@@ -7046,11 +7046,11 @@ proto.introspection.Configuration.deserializeBinaryFromReader = function(
     switch (field) {
       case 1:
         var value = /** @type {number} */ (reader.readUint64())
-        msg.setRetentionPeriodSecs(value)
+        msg.setRetentionPeriodMs(value)
         break
       case 2:
         var value = /** @type {number} */ (reader.readUint64())
-        msg.setSnapshotIntervalSecs(value)
+        msg.setStateSnapshotIntervalMs(value)
         break
       default:
         reader.skipField()
@@ -7082,41 +7082,41 @@ proto.introspection.Configuration.serializeBinaryToWriter = function(
   writer
 ) {
   var f = undefined
-  f = message.getRetentionPeriodSecs()
+  f = message.getRetentionPeriodMs()
   if (f !== 0) {
     writer.writeUint64(1, f)
   }
-  f = message.getSnapshotIntervalSecs()
+  f = message.getStateSnapshotIntervalMs()
   if (f !== 0) {
     writer.writeUint64(2, f)
   }
 }
 
 /**
- * optional uint64 retention_period_secs = 1;
+ * optional uint64 retention_period_ms = 1;
  * @return {number}
  */
-proto.introspection.Configuration.prototype.getRetentionPeriodSecs = function() {
+proto.introspection.Configuration.prototype.getRetentionPeriodMs = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0))
 }
 
 /** @param {number} value */
-proto.introspection.Configuration.prototype.setRetentionPeriodSecs = function(
+proto.introspection.Configuration.prototype.setRetentionPeriodMs = function(
   value
 ) {
   jspb.Message.setProto3IntField(this, 1, value)
 }
 
 /**
- * optional uint64 snapshot_interval_secs = 2;
+ * optional uint64 state_snapshot_interval_ms = 2;
  * @return {number}
  */
-proto.introspection.Configuration.prototype.getSnapshotIntervalSecs = function() {
+proto.introspection.Configuration.prototype.getStateSnapshotIntervalMs = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0))
 }
 
 /** @param {number} value */
-proto.introspection.Configuration.prototype.setSnapshotIntervalSecs = function(
+proto.introspection.Configuration.prototype.setStateSnapshotIntervalMs = function(
   value
 ) {
   jspb.Message.setProto3IntField(this, 2, value)
@@ -7305,10 +7305,10 @@ proto.introspection.ClientCommand.Source = {
 proto.introspection.ClientCommand.Command = {
   HELLO: 0,
   REQUEST: 1,
-  START_PUSH: 2,
-  STOP_PUSH: 3,
-  PAUSE_PUSH: 4,
-  RESUME_PUSH: 5,
+  PUSH_ENABLE: 2,
+  PUSH_DISABLE: 3,
+  PUSH_PAUSE: 4,
+  PUSH_RESUME: 5,
   UPDATE_CONFIG: 7,
 }
 
