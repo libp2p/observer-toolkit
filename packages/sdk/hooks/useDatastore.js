@@ -262,7 +262,7 @@ function getEmptySource() {
 }
 
 function getConfigFromResponses(responses) {
-  if (!responses.length) return null
+  if (!responses || responses.length) return null
 
   const config = responses.reduce((latestConfig, response) => {
     // Get config from latest response that has one
