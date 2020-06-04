@@ -8,7 +8,7 @@ import {
   WebsocketContext,
 } from '@nearform/observer-sdk'
 
-import EditRuntime from './EditRuntime'
+import EditConfig from './EditConfig'
 
 function getStateInterval(config, missingConfig) {
   if (!config) return { stateIntervalText: missingConfig }
@@ -95,8 +95,8 @@ function RuntimeInfo() {
             <InfoHead>State messages every:</InfoHead>
             <InfoCell>
               {wsData && config ? (
-                <EditRuntime
-                  runtimeValue={stateIntervalMs}
+                <EditConfig
+                  configValue={stateIntervalMs}
                   handleSend={inputMs =>
                     wsData.sendCommand('config', {
                       stateSnapshotIntervalMs: inputMs,
@@ -104,7 +104,7 @@ function RuntimeInfo() {
                   }
                 >
                   {stateIntervalText}
-                </EditRuntime>
+                </EditConfig>
               ) : (
                 stateIntervalText
               )}
@@ -114,8 +114,8 @@ function RuntimeInfo() {
             <InfoHead>Discard data after:</InfoHead>
             <InfoCell>
               {wsData && config ? (
-                <EditRuntime
-                  runtimeValue={retentionMs}
+                <EditConfig
+                  configValue={retentionMs}
                   handleSend={inputMs =>
                     wsData.sendCommand('config', {
                       retentionPeriodMs: inputMs,
@@ -123,7 +123,7 @@ function RuntimeInfo() {
                   }
                 >
                   {retentionText}
-                </EditRuntime>
+                </EditConfig>
               ) : (
                 retentionText
               )}
