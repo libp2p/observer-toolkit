@@ -10,16 +10,19 @@ function _getResult(error) {
 }
 
 function createCommandResponse({
-  commandId,
+  id,
   effectiveConfig,
   error,
   result = _getResult(error),
 }) {
+  if (id === undefined)
+    throw new Error('CommandResponse needs an ID matching command ID')
+
   const response = new CommandResponse()
   response.setResult(result)
   response.setError(error)
   response.setEffectiveConfig(effectiveConfig)
-  response.setId(commandId)
+  response.setId(id)
   return response
 }
 

@@ -38,9 +38,19 @@ function createStateServerMessage(message) {
   return createServerMessage(message, 'state')
 }
 
+function createResponseServerMessage(message) {
+  return createServerMessage(message, 'response')
+}
+
+function createNoticeServerMessage(message) {
+  return createServerMessage(message, 'notice')
+}
+
 module.exports = {
   createServerMessage,
   createEventServerMessage,
   createRuntimeServerMessage,
   createStateServerMessage,
+  createResponseServerMessage,
+  createNoticeServerMessage,
 }

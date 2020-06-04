@@ -117,56 +117,60 @@ function sendQueue(ws) {
     })
 }
 
-function handleClientMessage(client, server, msg) {
-  if (msg) {
-    let sendEmptyOKResponse = true
+function handleClientMessage(ws, server, clientCommand) {
+  let sendEmptyOKResponse = true
 
-    const clientCommand = ClientCommand.deserializeBinary(msg)
-    const command = clientCommand.getCommand()
-    const commandId = clientCommand.getId()
-    const commandSource = command.getSource()
+  const command = clientCommand.getCommand()
+  const commandId = clientCommand.getId()
+  const commandSource = clientCommand.getSource()
 
-    if (command === ClientCommand.Command.REQUEST) {
-      sendQueue(client)
-    } else if (command === ClientCommand.Command.START_PUSH) {
-      if (commandSource === ClientCommand.Source.STATE) pushStates = true
-      if (commandSource === ClientCommand.Source.EVENTS) pushEvents = true
-    } else if (command === ClientCommand.Command.STOP_PUSH) {
-      if (commandSource === ClientCommand.Source.STATE) pushStates = false
-      if (commandSource === ClientCommand.Source.EVENTS) pushEvents = false
-    } else if (command === ClientCommand.Command.RESUME_PUSH) {
-      clearInterval(sendInterval)
-      sendInterval = setInterval(() => {
-        sendQueue(client)
-      }, 200)
-    } else if (command === ClientCommand.Command.PAUSE_PUSH) {
-      clearInterval(sendInterval)
-    } else if (
-      command === ClientCommand.Command.UPDATE_CONFIG ||
-      command === ClientCommand.Command.HELLO
-    ) {
-      const newConfig = clientCommand.getConfig()
-      if (newConfig) {
-        updateConfig(newConfig, client)
-        sendEmptyOKResponse = false
-      }
-    } else {
-      sendCommandResponse({
-        id: commandId,
-        error: `Command ${command} ("${ClientCommand.Command[command]}") unrecognised by server`,
-      })
+  if (command === ClientCommand.Command.REQUEST) {
+    sendQueue(ws)
+  } else if (command === ClientCommand.Command.PUSH_ENABLE) {
+    if (commandSource === ClientCommand.Source.STATE) pushStates = true
+    if (commandSource === ClientCommand.Source.EVENTS) pushEvents = true
+  } else if (command === ClientCommand.Command.PUSH_DISABLE) {
+    if (commandSource === ClientCommand.Source.STATE) pushStates = false
+    if (commandSource === ClientCommand.Source.EVENTS) pushEvents = false
+  } else if (command === ClientCommand.Command.PUSH_RESUME) {
+    clearInterval(sendInterval)
+    sendInterval = setInterval(() => {
+      sendQueue(ws)
+    }, 200)
+  } else if (command === ClientCommand.Command.PUSH_PAUSE) {
+    clearInterval(sendInterval)
+  } else if (
+    command === ClientCommand.Command.UPDATE_CONFIG ||
+    command === ClientCommand.Command.HELLO
+  ) {
+    const newConfig = clientCommand.getConfig()
+    if (newConfig) {
+      updateConfig(newConfig, commandId, ws)
       sendEmptyOKResponse = false
     }
-
-    if (sendEmptyOKResponse) {
-      sendCommandResponse({
+  } else {
+    sendCommandResponse(
+      {
         id: commandId,
-      })
-    }
+        error: `Command ${command} ("${ClientCommand.Command[command]}") unrecognised by server`,
+      },
+      ws
+    )
+
+    sendEmptyOKResponse = false
+  }
+
+  if (sendEmptyOKResponse) {
+    sendCommandResponse(
+      {
+        id: commandId,
+      },
+      ws
+    )
   }
 }
 
-function updateConfig(newConfig, commandId) {
+function updateConfig(newConfig, commandId, ws) {
   let hasChanged = false
 
   const newStateInterval = newConfig.getStateSnapshotIntervalMs()
@@ -188,10 +192,13 @@ function updateConfig(newConfig, commandId) {
     effectiveConfig.setRetentionPeriodMs(newRetentionPeriod)
   }
   if (hasChanged)
-    sendCommandResponse({
-      commandId,
-      effectiveConfig,
-    })
+    sendCommandResponse(
+      {
+        commandId,
+        effectiveConfig,
+      },
+      ws
+    )
 }
 
 function sendRuntime() {
@@ -240,16 +247,19 @@ function start({
     })
     // handle incoming messages
     ws.on('message', msg => {
+      if (!msg) return
+      const command = ClientCommand.deserializeBinary(msg)
       try {
-        handleClientMessage(ws, wss, msg)
+        handleClientMessage(ws, wss, command)
       } catch (err) {
         sendCommandResponse(
           {
-            id: msg.getId(),
+            id: command.getId(),
             error: err.toString(),
           },
           ws
         )
+        throw err
       }
     })
 
