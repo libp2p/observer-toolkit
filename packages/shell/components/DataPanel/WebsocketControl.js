@@ -41,7 +41,7 @@ const ActionLabel = styled.div`
 
 function WebsocketControl() {
   const [hasFocus, setHasFocus] = useState(false)
-  const { isPaused, sendSignal } = useContext(WebsocketContext) || {}
+  const { isPaused, sendCommand } = useContext(WebsocketContext) || {}
   const { dispatchWebsocket } = useContext(SetterContext)
 
   const showPauseIcon = hasFocus ? !isPaused : isPaused
@@ -62,10 +62,10 @@ function WebsocketControl() {
     e.stopPropagation()
 
     // Data may have been disconnected before click is handled
-    if (!sendSignal) return
+    if (!sendCommand) return
 
     const signalType = isPaused ? 'resume' : 'pause'
-    sendSignal(signalType)
+    sendCommand(signalType)
 
     // TODO: move this to some sort of callback (non-trivial, ws.send lacks callback support)
     dispatchWebsocket({

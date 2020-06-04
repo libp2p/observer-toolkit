@@ -98,7 +98,7 @@ function RuntimeInfo() {
                 <EditRuntime
                   runtimeValue={stateIntervalMs}
                   handleSend={inputMs =>
-                    wsData.sendSignal('config', {
+                    wsData.sendCommand('config', {
                       stateSnapshotIntervalMs: inputMs,
                     })
                   }
@@ -117,7 +117,7 @@ function RuntimeInfo() {
                 <EditRuntime
                   runtimeValue={retentionMs}
                   handleSend={inputMs =>
-                    wsData.sendSignal('config', {
+                    wsData.sendCommand('config', {
                       retentionPeriodMs: inputMs,
                     })
                   }
