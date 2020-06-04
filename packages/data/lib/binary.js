@@ -6,6 +6,8 @@ const getEmptyMessages = () => ({
   states: [],
   events: [],
   runtime: null,
+  responses: [],
+  notices: [],
 })
 
 function getMessageChecksum(buffer) {
@@ -63,6 +65,8 @@ function addMessage(message, messages) {
   const runtimeContent = message.getRuntime()
   const stateContent = message.getState()
   const eventContent = message.getEvent()
+  const responseContent = message.getResponse()
+  const noticeContent = message.getNotice()
 
   if (stateContent) {
     messages.states.push(stateContent)
@@ -71,9 +75,14 @@ function addMessage(message, messages) {
     messages.events.push(eventContent)
   }
   if (runtimeContent) {
-    // By current proto def, runtime data can't reasonably change during a session, so,
-    // Runtime has no timestamp. If this changes, make `runtime` an array and push here.
+    // Only one runtime at a time
     messages.runtime = runtimeContent
+  }
+  if (responseContent) {
+    messages.responses.push(responseContent)
+  }
+  if (noticeContent) {
+    messages.notices.push(noticeContent)
   }
 }
 

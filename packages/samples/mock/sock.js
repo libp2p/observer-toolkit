@@ -35,7 +35,7 @@ let generateInterval
 let pushEvents = false
 let pushStates = false
 
-const effectiveConfig = new Configuration()
+let effectiveConfig
 
 function generateMessages({
   connectionsCount,
@@ -48,15 +48,16 @@ function generateMessages({
   const utcTo = utcNow + durationSnapshot
   if (!dht) dht = generateDHT({ peersCount })
 
-  if (runtime) {
-    durationSnapshot = runtime.getSendStateIntervalMs()
-    cutoffSeconds = runtime.getRetentionPeriodMs() / 1000
+  if (effectiveConfig) {
+    durationSnapshot = effectiveConfig.getSendStateIntervalMs()
+    cutoffSeconds = effectiveConfig.getRetentionPeriodMs() / 1000
   } else {
-    runtime = createRuntime({
-      stateIntervalDuration: durationSnapshot,
-      cutoffSeconds,
-    })
+    effectiveConfig = new Configuration()
+    effectiveConfig.setSendStateIntervalMs(durationSnapshot)
+    effectiveConfig.setRetentionPeriodMs(cutoffSeconds * 1000)
   }
+
+  if (!runtime) runtime = createRuntime()
 
   if (!connections.length) {
     connections.length = 0

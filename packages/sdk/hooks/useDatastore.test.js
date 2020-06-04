@@ -5,6 +5,7 @@ import { act, fireEvent } from '@testing-library/react'
 import {
   renderWithTheme,
   getMockRuntime,
+  getMockConfig,
   getMockState,
   getMockEvent,
 } from '@nearform/observer-testing'
@@ -373,12 +374,12 @@ describe('useDataStore hook adds, replaces and sorts data', () => {
   })
 })
 
-describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
+describe('useDataStore hook respects retentionPeriodMs config setting', () => {
   it('Discards states and events older than threshold whenever new states are added', async () => {
     const retentionPeriodMs = 4
 
     const TestComponent = () => {
-      const initialRuntime = getMockRuntime({ retentionPeriodMs })
+      const initialConfig = getMockConfig({ retentionPeriodMs })
       const initialEvents = [
         { testOutput: '1', time: 1 },
         { testOutput: '6', time: 6 },
@@ -400,12 +401,12 @@ describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
         removeData,
         replaceData,
         updateData,
-        updateRuntime,
+        updateConfig,
         events,
-        runtime,
+        config,
         states,
       } = useDatastore({
-        initialRuntime,
+        initialConfig,
         initialEvents,
         initialStates,
       })
@@ -451,7 +452,7 @@ describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
                   { testOutput: '18', ...getMockStateTimes(18) },
                   { testOutput: '20', ...getMockStateTimes(20) },
                 ].map(getMockState),
-                runtime: initialRuntime,
+                config: initialConfig,
               })
             }
           />
@@ -481,13 +482,13 @@ describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
             }
           />
           <button
-            data-testid="add-runtime"
-            onClick={() => updateRuntime(initialRuntime)}
+            data-testid="add-config"
+            onClick={() => updateConfig(initialConfig)}
           />
           <TestOutput
             states={states}
             events={events}
-            retentionPeriodMs={runtime ? runtime.getRetentionPeriodMs() : null}
+            retentionPeriodMs={config ? config.getRetentionPeriodMs() : null}
           />
         </div>
       )
@@ -562,8 +563,8 @@ describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
     )
     expect(output5).toBeInTheDocument()
 
-    // Simulate runtime message not being received until after states and events
-    const button6 = getByTestId('add-runtime')
+    // Simulate config message not being received until after states and events
+    const button6 = getByTestId('add-config')
     await act(async () => {
       fireEvent.click(button6)
     })
@@ -581,12 +582,12 @@ describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
     const TestComponent = () => {
       const {
         replaceData,
-        updateRuntime,
+        updateConfig,
         events,
-        runtime,
+        config,
         states,
       } = useDatastore({
-        initialRuntime: getMockRuntime({ retentionPeriodMs: 10 }),
+        initialConfig: getMockConfig({ retentionPeriodMs: 10 }),
         initialEvents: [
           { testOutput: '1', time: 1 },
           { testOutput: '6', time: 6 },
@@ -607,9 +608,9 @@ describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
       return (
         <div>
           <button
-            data-testid="update-runtime"
+            data-testid="update-config"
             onClick={() =>
-              updateRuntime(getMockRuntime({ retentionPeriodMs: 4 }))
+              updateConfig(getMockConfig({ retentionPeriodMs: 4 }))
             }
           />
           <button
@@ -630,14 +631,14 @@ describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
                   { testOutput: '18', ...getMockStateTimes(18) },
                   { testOutput: '20', ...getMockStateTimes(20) },
                 ].map(getMockState),
-                runtime: getMockRuntime({ retentionPeriodMs: 7 }),
+                config: getMockConfig({ retentionPeriodMs: 7 }),
               })
             }
           />
           <TestOutput
             states={states}
             events={events}
-            retentionPeriodMs={runtime ? runtime.getRetentionPeriodMs() : null}
+            retentionPeriodMs={config ? config.getRetentionPeriodMs() : null}
           />
         </div>
       )
@@ -653,7 +654,7 @@ describe('useDataStore hook respects retentionPeriodMs runtime setting', () => {
       })
     )
 
-    const button1 = getByTestId('update-runtime')
+    const button1 = getByTestId('update-config')
     await act(async () => {
       fireEvent.click(button1)
     })

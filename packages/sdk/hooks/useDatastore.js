@@ -56,9 +56,9 @@ function getCutoffTime(states, cutoffMs) {
   return lastStateTs - cutoffMs
 }
 
-function updateCutoffRef(cutoffRef, runtime) {
-  const newCutoffMs = runtime
-    ? runtime.getRetentionPeriodMs() || DEFAULT_CUTOFF_MS
+function updateCutoffRef(cutoffRef, config) {
+  const newCutoffMs = config
+    ? config.getRetentionPeriodMs() || DEFAULT_CUTOFF_MS
     : DEFAULT_CUTOFF_MS
 
   if (cutoffRef.current === newCutoffMs) return null
@@ -242,18 +242,34 @@ function getEmptySource() {
   }
 }
 
+function getConfigFromResponses(responses) {
+  if (!responses.length) return null
+
+  const config = responses.reduce((latestConfig, response) => {
+    // Get config from latest response that has one
+    const responseConfig = response.getEffectiveConfig()
+    if (!responseConfig) return latestConfig
+    return responseConfig
+  }, null)
+
+  return config || null
+}
+
 function useDatastore(props) {
   T.checkPropTypes(useDatastore.propTypes, props, 'prop', 'useDatastore')
   const {
     initialRuntime = null,
+    initialConfig = null,
     initialStates = getEmptyStates(),
     initialEvents = getEmptyEvents(),
     initialSource = getEmptySource(),
   } = props
 
-  const cutoffRef = useRef(DEFAULT_CUTOFF_MS)
   const [runtime, setRuntime] = useState(initialRuntime)
-  updateCutoffRef(cutoffRef, runtime)
+
+  const cutoffRef = useRef(DEFAULT_CUTOFF_MS)
+  const [config, setConfig] = useState(initialConfig)
+  updateCutoffRef(cutoffRef, config)
 
   const [states, dispatchStates] = useReducer(
     handleDispatchStates,
@@ -292,15 +308,23 @@ function useDatastore(props) {
   )
 
   const updateRuntime = useCallback(
-    runtime => {
-      if (!runtime) {
-        setRuntime(null)
+    // This currently just wraps `setRuntime`
+    // but may need event type validation in future
+    runtime => setRuntime(runtime),
+    [setRuntime]
+  )
+
+  const updateConfig = useCallback(
+    config => {
+      if (!config) {
+        // Pass in null not an array to remove config
+        setConfig(null)
         cutoffRef.current = DEFAULT_CUTOFF_MS
-        return
+        return null
       }
 
-      const newCutoffMs = updateCutoffRef(cutoffRef, runtime)
-      setRuntime(runtime)
+      const newCutoffMs = updateCutoffRef(cutoffRef, config)
+      setConfig(config)
       if (newCutoffMs) {
         dispatchStates({
           action: 'setCutoff',
@@ -308,8 +332,9 @@ function useDatastore(props) {
         })
         // Events cutoff will be updated by useEffect using updated states
       }
+      return config
     },
-    [cutoffRef, setRuntime]
+    [cutoffRef, setConfig]
   )
 
   const updateData = useCallback(
@@ -317,8 +342,13 @@ function useDatastore(props) {
       states: newStates = [],
       events: newEvents = [],
       runtime: newRuntime,
+      responses: newResponses = [],
+      config: newConfig,
     }) => {
       if (newRuntime) updateRuntime(newRuntime)
+
+      const updatedConfig = newConfig || getConfigFromResponses(newResponses)
+      if (updatedConfig) updateConfig(updatedConfig)
 
       if (newStates.length) {
         dispatchStates({
@@ -335,7 +365,7 @@ function useDatastore(props) {
         })
       }
     },
-    [updateRuntime, dispatchEvents, dispatchStates, cutoffRef]
+    [updateRuntime, updateConfig, dispatchEvents, dispatchStates, cutoffRef]
   )
 
   const replaceData = useCallback(
@@ -343,14 +373,20 @@ function useDatastore(props) {
       states: newStates = [],
       events: newEvents = [],
       runtime: newRuntime,
+      responses: newResponses,
+      config = null,
       source: newSource,
     }) => {
       updateRuntime(newRuntime || null)
+      const newConfig = updateConfig(
+        config || getConfigFromResponses(newResponses)
+      )
+
       dispatchStates({
         action: newStates.length ? 'replace' : 'remove',
         data: newStates,
-        cutoffMs: newRuntime
-          ? newRuntime.getRetentionPeriodMs()
+        cutoffMs: newConfig
+          ? newConfig.getRetentionPeriodMs()
           : DEFAULT_CUTOFF_MS,
       })
       dispatchEvents({
@@ -367,7 +403,7 @@ function useDatastore(props) {
           source: newSource,
         })
     },
-    [updateRuntime]
+    [updateConfig, updateRuntime]
   )
 
   const removeData = useCallback(
@@ -375,6 +411,7 @@ function useDatastore(props) {
       dispatchEvents({ action: 'remove' })
       dispatchStates({ action: 'remove' })
       updateRuntime(null)
+      updateConfig(null)
 
       dispatchWebsocket({
         action: 'close',
@@ -382,7 +419,7 @@ function useDatastore(props) {
       })
       dispatchSource({ action: source ? 'update' : 'remove', source })
     },
-    [updateRuntime]
+    [updateConfig, updateRuntime]
   )
 
   const cutoffMs = cutoffRef.current
@@ -401,6 +438,7 @@ function useDatastore(props) {
     states,
     events,
     runtime,
+    config,
     peerIds,
     source,
     setIsLoading,
@@ -409,6 +447,7 @@ function useDatastore(props) {
     removeData,
     setPeerIds,
     updateRuntime,
+    updateConfig,
     websocket,
     dispatchWebsocket,
   }

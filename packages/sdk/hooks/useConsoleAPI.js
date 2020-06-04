@@ -57,7 +57,15 @@ This is documented at [TODO: add link when docs are complete]
 
 function useConsoleApi(props) {
   T.checkPropTypes(useConsoleApi.propTypes, props, 'prop', 'useConsoleApi')
-  const { states, events, runtime, source, websocket, currentState } = props
+  const {
+    states,
+    events,
+    runtime,
+    config,
+    source,
+    websocket,
+    currentState,
+  } = props
 
   const [isInitialised, setIsInitialised] = useState(false)
   const theme = useContext(ThemeContext)
@@ -77,6 +85,7 @@ function useConsoleApi(props) {
     states,
     events,
     runtime,
+    config,
     source,
     websocket,
     currentState,

@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import { statusNames } from '@nearform/observer-data'
-import { Chip, RuntimeContext, Tooltip } from '@nearform/observer-sdk'
+import { Chip, ConfigContext, Tooltip } from '@nearform/observer-sdk'
 
 const TooltipContainer = styled.div`
   width: 200%;
@@ -53,8 +53,8 @@ function getGlowOpacity(value, maxValue) {
 }
 
 function StatusChip({ status, timeOpen, timeClosed, duration }) {
-  const runtime = useContext(RuntimeContext)
-  const expiryMs = runtime ? runtime.getRetentionPeriodMs() : 0
+  const config = useContext(ConfigContext)
+  const expiryMs = config ? config.getRetentionPeriodMs() : 0
   const fade = status === 'CLOSED' ? getFadeOpacity(timeClosed, expiryMs) : null
   const glow =
     status === 'ACTIVE' ? getGlowOpacity(timeOpen, duration * 4) : null

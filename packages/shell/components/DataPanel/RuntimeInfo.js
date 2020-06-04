@@ -4,10 +4,31 @@ import styled, { css } from 'styled-components'
 import {
   formatDuration,
   RuntimeContext,
+  ConfigContext,
   WebsocketContext,
 } from '@nearform/observer-sdk'
 
 import EditRuntime from './EditRuntime'
+
+function getStateInterval(config, missingConfig) {
+  if (!config) return { stateIntervalText: missingConfig }
+  const stateIntervalMs = config.getSendStateIntervalMs()
+  const stateIntervalText = formatDuration(stateIntervalMs)
+  return {
+    stateIntervalMs,
+    stateIntervalText,
+  }
+}
+
+function getRetentionPeriod(config, missingConfig) {
+  if (!config) return missingConfig
+  const retentionMs = config.getRetentionPeriodMs()
+  const retentionText = formatDuration(retentionMs)
+  return {
+    retentionMs,
+    retentionText,
+  }
+}
 
 const Container = styled.div`
   min-width: 280px;
@@ -35,15 +56,24 @@ const InfoHead = styled.th`
 
 function RuntimeInfo() {
   const runtime = useContext(RuntimeContext)
+  const config = useContext(ConfigContext)
   const wsData = useContext(WebsocketContext)
 
-  if (!runtime) return 'No runtime data available'
+  const missingRuntime = 'No Runtime message available'
+  const missingConfig = 'No Configuration message available'
 
-  const stateIntervalMs = runtime.getSendStateIntervalMs()
-  const stateInterval = formatDuration(stateIntervalMs)
+  const { stateIntervalMs, stateIntervalText } = getStateInterval(
+    config,
+    missingConfig
+  )
+  const { retentionMs, retentionText } = getRetentionPeriod(
+    config,
+    missingConfig
+  )
 
-  const dataExpiryMs = runtime.getRetentionPeriodMs()
-  const dataExpiry = formatDuration(dataExpiryMs)
+  const implementation = runtime ? runtime.getImplementation() : missingRuntime
+  const version = runtime ? runtime.getVersion() : missingRuntime
+  const platform = runtime ? runtime.getPlatform() : missingRuntime
 
   return (
     <Container>
@@ -51,20 +81,20 @@ function RuntimeInfo() {
         <tbody>
           <tr>
             <InfoHead>Implementation:</InfoHead>
-            <InfoCell>{runtime.getImplementation()}</InfoCell>
+            <InfoCell>{implementation}</InfoCell>
           </tr>
           <tr>
             <InfoHead>Version:</InfoHead>
-            <InfoCell>{runtime.getVersion()}</InfoCell>
+            <InfoCell>{version}</InfoCell>
           </tr>
           <tr>
             <InfoHead>Platform:</InfoHead>
-            <InfoCell>{runtime.getPlatform()}</InfoCell>
+            <InfoCell>{platform}</InfoCell>
           </tr>
           <tr>
             <InfoHead>State messages every:</InfoHead>
             <InfoCell>
-              {wsData ? (
+              {wsData && config ? (
                 <EditRuntime
                   runtimeValue={stateIntervalMs}
                   handleSend={inputMs =>
@@ -73,29 +103,29 @@ function RuntimeInfo() {
                     })
                   }
                 >
-                  {stateInterval}
+                  {stateIntervalText}
                 </EditRuntime>
               ) : (
-                stateInterval
+                stateIntervalText
               )}
             </InfoCell>
           </tr>
           <tr>
             <InfoHead>Discard data after:</InfoHead>
             <InfoCell>
-              {wsData ? (
+              {wsData && config ? (
                 <EditRuntime
-                  runtimeValue={dataExpiryMs}
+                  runtimeValue={retentionMs}
                   handleSend={inputMs =>
                     wsData.sendSignal('config', {
                       retentionPeriodMs: inputMs,
                     })
                   }
                 >
-                  {dataExpiry}
+                  {retentionText}
                 </EditRuntime>
               ) : (
-                stateInterval
+                retentionText
               )}
             </InfoCell>
           </tr>

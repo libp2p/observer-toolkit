@@ -13,7 +13,7 @@ function createCommandResponse({
   commandId,
   effectiveConfig,
   error,
-  result = getResult(error),
+  result = _getResult(error),
 }) {
   const response = new CommandResponse()
   response.setResult(result)

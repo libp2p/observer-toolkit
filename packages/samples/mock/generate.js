@@ -22,7 +22,7 @@ const {
 } = require('./messages/events')
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
-const { createCommandResponse } = require('./messages/createCommandResponse')
+const { createCommandResponse } = require('./messages/command-response')
 const {
   createResponseServerMessage,
   createRuntimeServerMessage,
