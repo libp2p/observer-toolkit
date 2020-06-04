@@ -147,6 +147,16 @@ function handleClientMessage(ws, server, clientCommand) {
     if (newConfig) {
       updateConfig(newConfig, commandId, ws)
       sendEmptyOKResponse = false
+    } else if (command === ClientCommand.Command.HELLO) {
+      // Send default config
+      sendCommandResponse(
+        {
+          id: commandId,
+          effectiveConfig,
+        },
+        ws
+      )
+      sendEmptyOKResponse = false
     }
   } else {
     sendCommandResponse(
