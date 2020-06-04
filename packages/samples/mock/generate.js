@@ -22,7 +22,9 @@ const {
 } = require('./messages/events')
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
+const { createCommandResponse } = require('./messages/createCommandResponse')
 const {
+  createResponseServerMessage,
   createRuntimeServerMessage,
   createStateServerMessage,
 } = require('./messages/server-message')
@@ -49,6 +51,14 @@ function generatePeerId() {
 function generateRuntime(options = {}, runtime = createRuntime(options)) {
   const runtimePacket = createRuntimeServerMessage(runtime)
   return createBufferSegment(runtimePacket)
+}
+
+function generateCommandResponse(
+  options = {},
+  response = createCommandResponse(options)
+) {
+  const responsePacket = createResponseServerMessage(response)
+  return createBufferSegment(responsePacket)
 }
 
 function updateConnections(connections, total, now, duration, cutoffSeconds) {
@@ -217,6 +227,7 @@ function generateComplete(
 }
 
 module.exports = {
+  generateCommandResponse,
   generateComplete,
   generateConnections,
   generateConnectionEvents,

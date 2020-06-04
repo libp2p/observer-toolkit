@@ -3,10 +3,11 @@
 const http = require('http')
 const WebSocket = require('ws')
 const {
-  proto: { ClientSignal },
+  proto: { ClientCommand, Configuration },
 } = require('@nearform/observer-proto')
 const { DEFAULT_SNAPSHOT_DURATION } = require('./utils')
 const {
+  generateCommandResponse,
   generateConnections,
   generateConnectionEvents,
   // generateEventsFlood,
@@ -30,6 +31,11 @@ let runtime
 let dht
 let sendInterval
 let generateInterval
+
+let pushEvents = false
+let pushStates = false
+
+const effectiveConfig = new Configuration()
 
 function generateMessages({
   connectionsCount,
@@ -70,7 +76,7 @@ function generateMessages({
     durationSnapshot,
     cutoffSeconds
   )
-  updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version })
+  updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version, pushEvents })
 
   generateConnectionEvents({
     connections,
@@ -79,11 +85,19 @@ function generateMessages({
     version,
     runtime,
     durationSnapshot,
+    pushEvents,
   })
 
-  const statePacket = generateState(connections, utcNow, dht, durationSnapshot)
-  const data = Buffer.concat([version, statePacket]).toString('binary')
-  msgQueue.push({ ts: utcTo, type: 'state', data })
+  if (pushStates) {
+    const statePacket = generateState(
+      connections,
+      utcNow,
+      dht,
+      durationSnapshot
+    )
+    const data = Buffer.concat([version, statePacket]).toString('binary')
+    msgQueue.push({ ts: utcTo, type: 'state', data })
+  }
 }
 
 function sendQueue(ws) {
@@ -103,57 +117,92 @@ function sendQueue(ws) {
 }
 
 function handleClientMessage(client, server, msg) {
-  // check client signal
   if (msg) {
-    const clientSignal = ClientSignal.deserializeBinary(msg)
-    const signal = clientSignal.getSignal()
+    let sendEmptyOKResponse = true
 
-    if (signal === ClientSignal.Signal.SEND_DATA) {
+    const clientCommand = ClientCommand.deserializeBinary(msg)
+    const command = clientCommand.getCommand()
+    const commandId = clientCommand.getId()
+    const commandSource = command.getSource()
+
+    if (command === ClientCommand.Command.REQUEST) {
       sendQueue(client)
-    } else if (signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER) {
+    } else if (command === ClientCommand.Command.START_PUSH) {
+      if (commandSource === ClientCommand.Source.STATE) pushStates = true
+      if (commandSource === ClientCommand.Source.EVENTS) pushEvents = true
+    } else if (command === ClientCommand.Command.STOP_PUSH) {
+      if (commandSource === ClientCommand.Source.STATE) pushStates = false
+      if (commandSource === ClientCommand.Source.EVENTS) pushEvents = false
+    } else if (command === ClientCommand.Command.RESUME_PUSH) {
       clearInterval(sendInterval)
       sendInterval = setInterval(() => {
         sendQueue(client)
       }, 200)
-    } else if (signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER) {
+    } else if (command === ClientCommand.Command.PAUSE_PUSH) {
       clearInterval(sendInterval)
-    } else if (signal === ClientSignal.Signal.CONFIG_EMITTER) {
-      try {
-        const content = JSON.parse(clientSignal.getContent())
-        let hasChanged = false
-        const newDurationSnapshot =
-          Number(content.durationSnapshot) ||
-          Number(content.sendStateIntervalMs)
-
-        if (newDurationSnapshot) {
-          clearInterval(server.generator)
-          server.generator = setInterval(() => {
-            generateMessages({
-              connectionsCount: server.connectionsCount,
-              duration: newDurationSnapshot,
-            })
-          }, newDurationSnapshot)
-          hasChanged = true
-          runtime.setSendStateIntervalMs(newDurationSnapshot)
-        }
-        if (content.retentionPeriodMs) {
-          hasChanged = true
-          runtime.setRetentionPeriodMs(Number(content.retentionPeriodMs))
-        }
-        if (hasChanged) sendRuntime()
-      } catch (error) {
-        // log the failed signal and continue serving data
-        console.warn('Error processing configuration signal', signal)
-        console.error(error)
+    } else if (
+      command === ClientCommand.Command.UPDATE_CONFIG ||
+      command === ClientCommand.Command.HELLO
+    ) {
+      const newConfig = clientCommand.getConfig()
+      if (newConfig) {
+        updateConfig(newConfig, client)
+        sendEmptyOKResponse = false
       }
+    } else {
+      sendCommandResponse({
+        id: commandId,
+        error: `Command ${command} ("${ClientCommand.Command[command]}") unrecognised by server`,
+      })
+      sendEmptyOKResponse = false
+    }
+
+    if (sendEmptyOKResponse) {
+      sendCommandResponse({
+        id: commandId,
+      })
     }
   }
+}
+
+function updateConfig(newConfig, commandId) {
+  let hasChanged = false
+
+  const newStateInterval = newConfig.getSendStateIntervalMs()
+  const newRetentionPeriod = newConfig.getRetentionPeriodMs()
+
+  if (newStateInterval) {
+    clearInterval(server.generator)
+    server.generator = setInterval(() => {
+      generateMessages({
+        connectionsCount: server.connectionsCount,
+        duration: newStateInterval,
+      })
+    }, newStateInterval)
+    hasChanged = true
+    effectiveConfig.setSendStateIntervalMs(newStateInterval)
+  }
+  if (newRetentionPeriod) {
+    hasChanged = true
+    effectiveConfig.setRetentionPeriodMs(newRetentionPeriod)
+  }
+  if (hasChanged)
+    sendCommandResponse({
+      commandId,
+      effectiveConfig,
+    })
 }
 
 function sendRuntime() {
   const runtimePacket = generateRuntime({}, runtime)
   const data = Buffer.concat([version, runtimePacket]).toString('binary')
   msgQueue.push({ ts: Date.now(), type: 'runtime', data })
+}
+
+function sendCommandResponse(props, ws) {
+  const responsePacket = generateCommandResponse(props)
+  const data = Buffer.concat([version, responsePacket]).toString('binary')
+  ws.send(data)
 }
 
 function start({
@@ -190,7 +239,17 @@ function start({
     })
     // handle incoming messages
     ws.on('message', msg => {
-      handleClientMessage(ws, wss, msg)
+      try {
+        handleClientMessage(ws, wss, msg)
+      } catch (err) {
+        sendCommandResponse(
+          {
+            id: msg.getId(),
+            error: err.toString(),
+          },
+          ws
+        )
+      }
     })
 
     sendRuntime()
