@@ -8,18 +8,27 @@ setInterval(() => {
   eventsRelease = true
 }, 200)
 
-function createClientCommandMessage(
-  command,
-  content = {},
-  datasource = proto.ClientCommand.Source.STATE
-) {
-  if (!command) return
+// Give each command a unique integer id
+let id = 0
+
+function createClientCommandMessage(command, { config, source } = {}) {
+  if (command === undefined) throw new Error('ClientCommand requires a command')
+
+  id++
   const clientCommand = new proto.ClientCommand()
+  clientCommand.setId(id)
   clientCommand.setVersion(new proto.Version(1))
   clientCommand.setCommand(command)
-  clientCommand.setContent(JSON.stringify(content))
-  clientCommand.setSource(datasource)
-  return clientCommand.serializeBinary()
+  clientCommand.setSource(source)
+  if (config) clientCommand.setConfig(createConfiguration(config))
+  return clientCommand
+}
+
+function createConfiguration({ stateSnapshotIntervalMs, retentionPeriodMs }) {
+  const configMessage = new proto.Configuration()
+  configMessage.setStateSnapshotIntervalMs(stateSnapshotIntervalMs)
+  configMessage.setRetentionPeriodMs(retentionPeriodMs)
+  return configMessage
 }
 
 function getMessageDataBuffer(msg, done) {
@@ -36,21 +45,32 @@ function getMessageDataBuffer(msg, done) {
 }
 
 function getCommand(cmd) {
-  if (cmd === 'data') return proto.ClientCommand.Command.SEND_DATA
-  if (cmd === 'pause') return proto.ClientCommand.Command.PAUSE_PUSH
-  if (cmd === 'resume') return proto.ClientCommand.Command.RESUME_PUSH
+  if (cmd === 'hello') return proto.ClientCommand.Command.HELLO
+  if (cmd === 'request') return proto.ClientCommand.Command.REQUEST
+  if (cmd === 'start') return proto.ClientCommand.Command.PUSH_ENABLE
+  if (cmd === 'stop') return proto.ClientCommand.Command.PUSH_DISABLE
+  if (cmd === 'pause') return proto.ClientCommand.Command.PUSH_PAUSE
+  if (cmd === 'resume') return proto.ClientCommand.Command.PUSH_RESUME
   if (cmd === 'config') return proto.ClientCommand.Command.UPDATE_CONFIG
   throw new Error(`Unrecognised command type "${cmd}"`)
 }
 
-function sendWsCommand(ws, cmd, content) {
+function sendWsCommand(ws, dispatchWebsocket, cmd, props, callback) {
   const command = getCommand(cmd)
-  const data = createClientCommandMessage(command, content)
 
-  if (!data)
-    throw new Error(
-      `No command data from command "${cmd}" with content "${content}"`
-    )
+  const commandMessage = createClientCommandMessage(command, props)
+  const commandId = commandMessage.getId()
+  const data = commandMessage.serializeBinary()
+
+  if (callback) {
+    dispatchWebsocket({
+      action: 'attachCallback',
+      commandId,
+      callback,
+    })
+  }
+
+  if (!data) throw new Error(`No command data from command "${cmd}"`)
   ws.send(data)
 }
 
@@ -67,7 +87,7 @@ function uploadWebSocket(
 
   if (!url) return
   const ws = new WebSocket(url)
-  const sendCommand = (...args) => sendWsCommand(ws, ...args)
+  const sendCommand = (...args) => sendWsCommand(ws, dispatchWebsocket, ...args)
 
   ws.addEventListener('error', function(evt) {
     console.error('WebSocket Error', evt)
@@ -112,7 +132,18 @@ function uploadWebSocket(
       ws,
       sendCommand,
     })
-    if (!usePushEmitter) sendCommand('data')
+
+    const callback = () => {
+      sendCommand('request', { source: proto.ClientCommand.Source.RUNTIME })
+      sendCommand('start', { source: proto.ClientCommand.Source.EVENTS })
+      if (usePushEmitter) {
+        sendCommand('start', { source: proto.ClientCommand.Source.STATE })
+      } else {
+        sendCommand('request', { source: proto.ClientCommand.Source.STATE })
+      }
+    }
+
+    sendCommand('hello', undefined, callback)
   })
 }
 

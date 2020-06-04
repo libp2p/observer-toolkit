@@ -192,6 +192,10 @@ function handleDispatchWebsocket(oldWsData, { action, ...args }) {
       return onWebsocketData(oldWsData, args)
     case 'onPauseChange':
       return onWebsocketPauseChange(oldWsData, args)
+    case 'attachCallback':
+      return attachWebsocketCallback(oldWsData, args)
+    case 'runCallback':
+      return runWebsocketCallback(oldWsData, args)
     case 'close':
       if (oldWsData) closeWebsocket(oldWsData.ws, args)
     // fall through
@@ -202,12 +206,13 @@ function handleDispatchWebsocket(oldWsData, { action, ...args }) {
   }
 }
 
-function onWebsocketOpen({ ws, sendSignal }) {
+function onWebsocketOpen({ ws, sendCommand }) {
   return {
     ws,
-    sendSignal,
+    sendCommand,
     isPaused: false,
     hasData: false,
+    callbacksByCommandId: {},
   }
 }
 
@@ -232,6 +237,20 @@ function onWebsocketPauseChange(oldWsData, { isPaused }) {
     ...oldWsData,
     isPaused,
   }
+}
+
+function attachWebsocketCallback(oldWsData, { commandId, callback }) {
+  oldWsData.callbacksByCommandId[commandId] = callback
+  return { ...oldWsData }
+}
+
+function runWebsocketCallback(oldWsData, { commandId }) {
+  const callback = oldWsData.callbacksByCommandId[commandId]
+  if (callback) {
+    callback()
+    delete oldWsData.callbacksByCommandId[commandId]
+  }
+  return { ...oldWsData }
 }
 
 function getEmptySource() {
@@ -346,6 +365,15 @@ function useDatastore(props) {
       config: newConfig,
     }) => {
       if (newRuntime) updateRuntime(newRuntime)
+
+      newResponses.forEach(response => {
+        const isError = !!response.getError()
+        if (!isError)
+          dispatchWebsocket({
+            action: 'runCallback',
+            commandId: response.getId(),
+          })
+      })
 
       const updatedConfig = newConfig || getConfigFromResponses(newResponses)
       if (updatedConfig) updateConfig(updatedConfig)
