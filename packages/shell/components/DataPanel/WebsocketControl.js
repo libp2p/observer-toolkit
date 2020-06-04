@@ -64,7 +64,7 @@ function WebsocketControl() {
     // Data may have been disconnected before click is handled
     if (!sendSignal) return
 
-    const signalType = isPaused ? 'unpause' : 'pause'
+    const signalType = isPaused ? 'resume' : 'pause'
     sendSignal(signalType)
 
     // TODO: move this to some sort of callback (non-trivial, ws.send lacks callback support)

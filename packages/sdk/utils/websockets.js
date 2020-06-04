@@ -8,18 +8,18 @@ setInterval(() => {
   eventsRelease = true
 }, 200)
 
-function createClientSignalMessage(
-  signal,
+function createClientCommandMessage(
+  command,
   content = {},
-  datasource = proto.ClientSignal.DataSource.STATE
+  datasource = proto.ClientCommand.Source.STATE
 ) {
-  if (!signal) return
-  const clientSignal = new proto.ClientSignal()
-  clientSignal.setVersion(new proto.Version(1))
-  clientSignal.setSignal(signal)
-  clientSignal.setContent(JSON.stringify(content))
-  clientSignal.setDataSource(datasource)
-  return clientSignal.serializeBinary()
+  if (!command) return
+  const clientCommand = new proto.ClientCommand()
+  clientCommand.setVersion(new proto.Version(1))
+  clientCommand.setCommand(command)
+  clientCommand.setContent(JSON.stringify(content))
+  clientCommand.setSource(datasource)
+  return clientCommand.serializeBinary()
 }
 
 function getMessageDataBuffer(msg, done) {
@@ -35,21 +35,21 @@ function getMessageDataBuffer(msg, done) {
   }
 }
 
-function getSignal(cmd) {
-  if (cmd === 'data') return proto.ClientSignal.Signal.SEND_DATA
-  if (cmd === 'pause') return proto.ClientSignal.Signal.PAUSE_PUSH_EMITTER
-  if (cmd === 'unpause') return proto.ClientSignal.Signal.UNPAUSE_PUSH_EMITTER
-  if (cmd === 'config') return proto.ClientSignal.Signal.CONFIG_EMITTER
-  throw new Error(`Unrecognised signal type "${cmd}"`)
+function getCommand(cmd) {
+  if (cmd === 'data') return proto.ClientCommand.Command.SEND_DATA
+  if (cmd === 'pause') return proto.ClientCommand.Command.PAUSE_PUSH
+  if (cmd === 'resume') return proto.ClientCommand.Command.RESUME_PUSH
+  if (cmd === 'config') return proto.ClientCommand.Command.UPDATE_CONFIG
+  throw new Error(`Unrecognised command type "${cmd}"`)
 }
 
-function sendWsSignal(ws, cmd, content) {
-  const signal = getSignal(cmd)
-  const data = createClientSignalMessage(signal, content)
+function sendWsCommand(ws, cmd, content) {
+  const command = getCommand(cmd)
+  const data = createClientCommandMessage(command, content)
 
   if (!data)
     throw new Error(
-      `No signal data from command "${cmd}" with content "${content}"`
+      `No command data from command "${cmd}" with content "${content}"`
     )
   ws.send(data)
 }
@@ -67,7 +67,7 @@ function uploadWebSocket(
 
   if (!url) return
   const ws = new WebSocket(url)
-  const sendSignal = (...args) => sendWsSignal(ws, ...args)
+  const sendCommand = (...args) => sendWsCommand(ws, ...args)
 
   ws.addEventListener('error', function(evt) {
     console.error('WebSocket Error', evt)
@@ -93,7 +93,7 @@ function uploadWebSocket(
     if (!usePushEmitter) {
       // request data manually
       setTimeout(() => {
-        sendSignal('data')
+        sendCommand('data')
       }, 1000)
     }
   })
@@ -110,9 +110,9 @@ function uploadWebSocket(
     dispatchWebsocket({
       action: 'onOpen',
       ws,
-      sendSignal,
+      sendCommand,
     })
-    if (!usePushEmitter) sendSignal('data')
+    if (!usePushEmitter) sendCommand('data')
   })
 }
 
@@ -135,4 +135,4 @@ function processUploadBuffer({ bufferList, eventsBuffer, onUploadChunk }) {
   }
 }
 
-export { sendWsSignal, uploadWebSocket }
+export { sendWsCommand, uploadWebSocket }
