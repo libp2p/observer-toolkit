@@ -53,6 +53,7 @@ exports[`status chip renders ACTIVE status as expected 1`] = `
     >
       <span
         class="c2"
+        style="box-shadow: 0 0 16px 0 rgba(13, 62, 80, NaN);"
       >
         <span
           class="c3"
