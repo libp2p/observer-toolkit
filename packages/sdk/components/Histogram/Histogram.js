@@ -1,8 +1,7 @@
-import React, { useCallback, useContext, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
-import { SetterContext } from '../context'
 import CanvasCover from '../CanvasCover'
 import { getTicks } from '../../utils'
 import paintGrid from './paintGrid'
@@ -33,6 +32,7 @@ function Histogram({
   verticalLines = 8,
   xAxisSpace = 20,
   yAxisSpace = 4,
+  onHighlight,
   theme,
 }) {
   const [previousData, setPreviousData] = useState({
@@ -40,7 +40,6 @@ function Histogram({
     poolSets,
   })
   const [highlightedArea, setHighlightedArea] = useState(null)
-  const { setPeerIds } = useContext(SetterContext)
 
   const hotSpotsRef = useRef([])
 
@@ -71,7 +70,7 @@ function Histogram({
         }
 
         const hotSpots = []
-        hotSpots.defaultAction = () => setPeerIds([])
+        hotSpots.defaultAction = () => onHighlight && onHighlight(null)
 
         canvasContext.clearRect(0, 0, width, height)
 
@@ -112,10 +111,9 @@ function Histogram({
           ...paintProps,
         })
 
-        // TODO: un-hardcode the expectation of peer IDs
-        const actions = pooledData.map(arr => () => {
-          setPeerIds(arr.map(item => item.peerId))
-        })
+        const actions = pooledData.map((items, depthIndex) => () =>
+          onHighlight && onHighlight(items, depthIndex, hotSpotsRef)
+        )
 
         paintBars({
           counts,
@@ -146,6 +144,7 @@ function Histogram({
           return {
             action,
             area,
+            label,
           }
         })
 
@@ -165,13 +164,13 @@ function Histogram({
       yAxisSpace,
       theme,
       onAnimationComplete,
-      setPeerIds,
+      onHighlight,
       xAxisSuffix,
     ]
   )
 
   const handleMouseOut = () => {
-    setPeerIds([])
+    if (onHighlight) onHighlight(null)
     setHighlightedArea(null)
   }
 
@@ -200,6 +199,7 @@ Histogram.propTypes = {
   verticalLines: T.number,
   xAxisSpace: T.number,
   yAxisSpace: T.number,
+  onHighlight: T.func,
   theme: T.object,
 }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -7,6 +7,7 @@ import {
   AccordionControl,
   Histogram,
   PeerIdChip,
+  SetterContext,
   TimeContext,
 } from '@nearform/observer-sdk'
 import { getStateTimes } from '@nearform/observer-data'
@@ -49,6 +50,7 @@ function DhtBucketInfo({ peers }) {
   const { queriesByPeerId, poolSetsElapsed, poolSetsAge } =
     useContext(DhtQueryContext) || {}
   const state = useContext(TimeContext)
+  const { setPeerIds } = useContext(SetterContext)
   const { end: timeNow } = getStateTimes(state)
 
   const { pooledData: ageData, poolSets: ageSets } = usePooledData({
@@ -84,6 +86,17 @@ function DhtBucketInfo({ peers }) {
   })
 
   const [peerIdListIsOpen, setPeerIdListIsOpen] = useState(false)
+
+  const handleBarHighlight = useCallback(
+    items => {
+      if (!items) {
+        setPeerIds([])
+        return
+      }
+      setPeerIds(items.map(item => item.peerId))
+    },
+    [setPeerIds]
+  )
 
   return (
     <InfoList>
@@ -129,6 +142,7 @@ function DhtBucketInfo({ peers }) {
             poolSets={inboundSets}
             xAxisSuffix={'ms ago'}
             verticalLines={3}
+            onHighlight={handleBarHighlight}
           />
         </ChartContainer>
       </InfoItem>
@@ -140,6 +154,7 @@ function DhtBucketInfo({ peers }) {
             poolSets={outboundSets}
             xAxisSuffix={'ms ago'}
             verticalLines={3}
+            onHighlight={handleBarHighlight}
           />
         </ChartContainer>
       </InfoItem>
@@ -151,6 +166,7 @@ function DhtBucketInfo({ peers }) {
             poolSets={ageSets}
             xAxisSuffix={'ms'}
             verticalLines={3}
+            onHighlight={handleBarHighlight}
           />
         </ChartContainer>
       </InfoItem>
