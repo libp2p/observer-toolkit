@@ -14,7 +14,7 @@ const Spacer = styled.div`
 
 const initialAge = 7000
 
-const mapQueryTimes = time => ({ start: time })
+const mapQueryTimes = time => ({ sentTs: time })
 const inboundQueries = [
   1000,
   1800,
