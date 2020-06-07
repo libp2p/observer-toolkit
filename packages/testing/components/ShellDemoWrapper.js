@@ -4,9 +4,9 @@ import T from 'prop-types'
 import DataDemoWrapper from './DataDemoWrapper'
 import ShellInnerWrapper from './ShellInnerWrapper'
 
-function ShellDemoWrapper({ children }) {
+function ShellDemoWrapper({ children, sample, sampleIndex }) {
   return (
-    <DataDemoWrapper>
+    <DataDemoWrapper sample={sample} sampleIndex={sampleIndex}>
       <ShellInnerWrapper>{children}</ShellInnerWrapper>
     </DataDemoWrapper>
   )
@@ -14,6 +14,8 @@ function ShellDemoWrapper({ children }) {
 
 ShellDemoWrapper.propTypes = {
   children: T.node.isRequired,
+  sampleIndex: T.number,
+  sample: T.object,
 }
 
 export default ShellDemoWrapper
