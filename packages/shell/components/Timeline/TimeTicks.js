@@ -5,11 +5,14 @@ import styled from 'styled-components'
 import { formatTime } from '@nearform/observer-sdk'
 import { getTickOffsets } from './utils'
 
-const TicksContainer = styled.div`
+const TicksContainer = styled.div.attrs(({ leftOffset, width }) => ({
+  style: {
+    marginLeft: `${leftOffset}px`,
+    width: `${width}px`,
+  },
+}))`
   position: relative;
   height: 18px;
-  width: ${({ width }) => width}px;
-  margin-left: ${({ leftOffset }) => leftOffset}px;
   display: flex;
   align-items: center;
   z-index: 4;

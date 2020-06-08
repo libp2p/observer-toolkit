@@ -35,10 +35,12 @@ const FirstSection = styled.div`
   border-radius: none;
   pointer-events: none;
 `
-const Control = styled.div.attrs(() => ({
+const Control = styled.div.attrs(({ width }) => ({
   'data-testid': 'timeline-slider',
+  style: {
+    marginLeft: `-${width}px`,
+  },
 }))`
-  margin-left: -${({ width }) => width}px;
   background-color: ${({ theme }) => theme.color('highlight', 0, 0.5)};
   outline: 2px solid ${({ theme }) => theme.color('highlight', 0, 0.3)};
   border: none;

@@ -1,10 +1,15 @@
 import React from 'react'
 import T from 'prop-types'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import Icon from './Icon'
 
-const Container = styled.span`
+const Container = styled.span.attrs(({ theme, getColor, glow, fade }) => ({
+  style: {
+    opacity: fade,
+    boxShadow: `0 0 ${theme.spacing(2)} 0 ${getColor(theme, glow)}`,
+  },
+}))`
   display: inline-block;
   padding: ${({ theme }) => theme.spacing([0, 0.5])};
   background: ${({ theme, getColor }) => getColor(theme, 0.15)};
@@ -12,18 +17,6 @@ const Container = styled.span`
   white-space: nowrap;
   font-size: 8pt;
   font-weight: 600;
-  ${({ fade }) =>
-    !fade
-      ? ''
-      : css`
-          opacity: ${fade};
-        `}
-  ${({ theme, getColor, glow }) =>
-    !glow
-      ? ''
-      : css`
-          box-shadow: 0 0 ${theme.spacing(2)} 0 ${getColor(theme, glow)};
-        `};
 `
 
 const ChipText = styled.span`

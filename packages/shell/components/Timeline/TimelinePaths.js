@@ -18,22 +18,25 @@ const height = 52
 
 const Container = styled.div`
   position: relative;
-  :after {
-    content: '';
-    display: block;
-    position: absolute;
-    height: ${({ innerHeight }) => innerHeight}px;
-    top: 0;
-    /* +/- 2 to make sure no partial pixel edges show through */
-    left: ${({ state0Width }) => state0Width - 2}px;
-    width: ${({ state1Width }) => state1Width + 2}px;
-    background: linear-gradient(
-      90deg,
-      ${({ theme }) => theme.color('contrast', 1)},
-      transparent
-    );
-    mix-blend-mode: darken;
-  }
+`
+
+const State1Gradient = styled.div.attrs(({ state0Width, state1Width }) => ({
+  style: {
+    left: `${state0Width - 2}px`,
+    width: `${state1Width + 2}px`,
+  },
+}))`
+  display: block;
+  position: absolute;
+  height: ${({ innerHeight }) => innerHeight}px;
+  top: 0;
+  /* +/- 2 to make sure no partial pixel edges show through */
+  background: linear-gradient(
+    90deg,
+    ${({ theme }) => theme.color('contrast', 1)},
+    transparent
+  );
+  mix-blend-mode: darken;
 `
 
 const StyledSvg = styled.svg`
@@ -41,10 +44,14 @@ const StyledSvg = styled.svg`
   height: 100%;
 `
 
-const InnerContainer = styled.div`
+const InnerContainer = styled.div.attrs(({ state0Width }) => ({
+  style: {
+    paddingLeft: `${state0Width}px`,
+  },
+}))`
   height: ${height}px;
   background: ${({ theme }) => theme.color('contrast', 1)};
-  padding: 0 0 0 ${({ state0Width }) => state0Width}px;
+  padding: 0;
 `
 
 const StyledPath = styled.path.attrs(
@@ -85,17 +92,18 @@ function TimelinePaths({
   })
 
   return (
-    <Container
-      innerHeight={height}
-      state0Width={state0Width}
-      state1Width={state1Width}
-    >
+    <Container>
       <DataTicks
         scale={yScale}
         width={leftGutter}
         height={height}
         dataDirection={dataDirection}
         colorKey={colorKey}
+      />
+      <State1Gradient
+        innerHeight={height}
+        state0Width={state0Width}
+        state1Width={state1Width}
       />
       <InnerContainer height={height} state0Width={state0Width}>
         <StyledSvg>
