@@ -8,6 +8,8 @@ import {
 } from '@nearform/observer-testing'
 import WidgetContext from '../components/context/WidgetContext'
 
+import sampleUrl from '../test-fixtures/sample-dht-2min.mock'
+
 function getWrapper(wrapper) {
   switch (wrapper) {
     case 'shell':
@@ -24,7 +26,7 @@ function getWrapper(wrapper) {
 addDecorator((render, { parameters }) => {
   const Wrapper = getWrapper(parameters.wrapper || 'shell')
   return (
-    <Wrapper>
+    <Wrapper sample={sampleUrl}>
       <WidgetContext>{render()}</WidgetContext>
     </Wrapper>
   )
