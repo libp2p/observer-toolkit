@@ -1,15 +1,15 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "82d3df704271c5e1342124d215599a3d",
+    "revision": "403add625401f0adecfe6f7acfd59296",
     "url": "/libp2p-observer/index.html"
   },
   {
-    "revision": "2e79ebcc4767fe23d402",
-    "url": "/libp2p-observer/static/js/2.94ca6da8.chunk.js"
+    "revision": "d49f716d9f9524b63d8f",
+    "url": "/libp2p-observer/static/js/2.7de0b6f1.chunk.js"
   },
   {
-    "revision": "9a1d63982c8e79611cdc",
-    "url": "/libp2p-observer/static/js/main.eee5c783.chunk.js"
+    "revision": "c26c3f0a4d161198f7cf",
+    "url": "/libp2p-observer/static/js/main.58c8e8f9.chunk.js"
   },
   {
     "revision": "aca053d2297bfb5f71d7",
@@ -68,24 +68,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/libp2p-observer/static/media/sample-1min.7e73cafb.png"
   },
   {
-    "revision": "87eaa8d3476dbb12899abad7cd07a1d2",
-    "url": "/libp2p-observer/static/media/sample-1min.87eaa8d3.mock"
-  },
-  {
-    "revision": "096c883a3e146cf14382cb2603a7b2c2",
-    "url": "/libp2p-observer/static/media/sample-2min.096c883a.mock"
+    "revision": "89e9e4bda80afaca0f6781d6af0b403d",
+    "url": "/libp2p-observer/static/media/sample-1min.89e9e4bd.mock"
   },
   {
     "revision": "1041f34551eb39051f98decbc2e53412",
     "url": "/libp2p-observer/static/media/sample-2min.1041f345.png"
   },
   {
-    "revision": "5014d7d7e431e41b33a7dae04b96d243",
-    "url": "/libp2p-observer/static/media/sample-3min.5014d7d7.mock"
+    "revision": "9d7b38f94aec1dae6e3567d8c53cc6e6",
+    "url": "/libp2p-observer/static/media/sample-2min.9d7b38f9.mock"
   },
   {
     "revision": "e30f2a1b5b4596c77d24ad1c377ed11c",
     "url": "/libp2p-observer/static/media/sample-3min.e30f2a1b.png"
+  },
+  {
+    "revision": "f1d182fa87c93a4839a2781d46ab7ae6",
+    "url": "/libp2p-observer/static/media/sample-3min.f1d182fa.mock"
   },
   {
     "revision": "3a5301f87ed750dd69aac1cd8fab13d3",
