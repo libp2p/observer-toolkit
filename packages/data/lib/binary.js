@@ -14,7 +14,7 @@ function getMessageChecksum(buffer) {
   return fnv1a(buffer)
 }
 
-function parseBuffer(buf) {
+function parseBuffer(buf, deserialize = deserializeBinary) {
   // Expects a binary file with this structure:
   // - 4-byte version number
   // - The following is repeated
@@ -48,7 +48,7 @@ function parseBuffer(buf) {
 
     // TODO: bubble an error message for an invalid checksum
     if (validChecksum) {
-      addMessageContent(messageBin, messages)
+      addMessageContent(messageBin, messages, deserialize)
     } else {
       console.error(
         `Skipped bytes from ${messageStart} to ${messageEnd} due to checksum mismatch`
@@ -86,20 +86,20 @@ function addMessage(message, messages) {
   }
 }
 
-function addMessageContent(messageBin, messages) {
-  const message = deserializeBinary(messageBin)
+function addMessageContent(messageBin, messages, deserialize) {
+  const message = deserialize(messageBin)
   addMessage(message, messages)
 }
 
-function parseArrayBuffer(arrayBuf) {
-  return parseBuffer(Buffer.from(arrayBuf))
+function parseArrayBuffer(arrayBuf, deserialize) {
+  return parseBuffer(Buffer.from(arrayBuf), deserialize)
 }
 
-function parseBase64(dataString) {
-  return parseBuffer(Buffer.from(dataString, 'base64'))
+function parseBase64(dataString, deserialize) {
+  return parseBuffer(Buffer.from(dataString, 'base64'), deserialize)
 }
 
-function parseBufferList(bufferList) {
+function parseBufferList(bufferList, deserialize = deserializeBinary) {
   const messageChecksumLength = 4
   const messageSizeLength = 4
   const messages = getEmptyMessages()
@@ -127,9 +127,9 @@ function parseBufferList(bufferList) {
       ? getMessageChecksum(messageBuf)
       : messageChecksum
     const valid = messageChecksum === calcChecksum
-    // deserialize and add message
+
     if (valid) {
-      const message = deserializeBinary(messageBuf)
+      const message = deserialize(messageBuf)
       addMessage(message, messages)
     } else {
       console.error('Invalid data in buffer')
@@ -140,11 +140,12 @@ function parseBufferList(bufferList) {
   return messages
 }
 
-function parseImport(rawData) {
-  if (rawData instanceof Buffer) return parseBuffer(rawData)
-  if (rawData instanceof ArrayBuffer) return parseArrayBuffer(rawData)
-  if (rawData instanceof String) return parseBase64(rawData)
-  return parseBufferList(rawData)
+function parseImport(rawData, deserialize) {
+  if (rawData instanceof Buffer) return parseBuffer(rawData, deserialize)
+  if (rawData instanceof ArrayBuffer)
+    return parseArrayBuffer(rawData, deserialize)
+  if (rawData instanceof String) return parseBase64(rawData, deserialize)
+  return parseBufferList(rawData, deserialize)
 }
 
 module.exports = {
