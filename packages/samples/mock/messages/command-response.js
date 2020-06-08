@@ -12,7 +12,7 @@ function _getResult(error) {
 function createCommandResponse({
   id,
   effectiveConfig,
-  error,
+  error = null,
   result = _getResult(error),
 }) {
   if (id === undefined)

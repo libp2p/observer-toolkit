@@ -185,6 +185,9 @@ function handleDispatchSource(oldSource, { action, source }) {
 }
 
 function handleDispatchWebsocket(oldWsData, { action, ...args }) {
+  // No-op for non-open actions when there's no open websocket
+  if (!oldWsData && action !== 'onOpen') return
+
   switch (action) {
     case 'onOpen':
       return onWebsocketOpen(args)

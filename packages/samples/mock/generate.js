@@ -7,6 +7,9 @@ const {
   generateHashId,
 } = require('./utils')
 
+const {
+  proto: { Configuration },
+} = require('@nearform/observer-proto')
 const { createBufferSegment } = require('../output/binary')
 const {
   createConnection,
@@ -196,12 +199,17 @@ function generateComplete(
   const utcFrom = utcTo - durationSeconds * SECOND_IN_MS
 
   const version = generateVersion()
-  const runtime = generateRuntime({
-    stateIntervalDuration: durationSnapshot,
-    cutoffSeconds,
-  })
+  const runtime = generateRuntime()
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
+
+  const effectiveConfig = new Configuration()
+  effectiveConfig.setStateSnapshotIntervalMs(durationSnapshot)
+  effectiveConfig.setRetentionPeriodMs(cutoffSeconds * 1000)
+  const helloResponse = generateCommandResponse({
+    id: 0,
+    effectiveConfig,
+  })
 
   const startTs = utcFrom - Math.floor(random() * durationSnapshot)
   const dht = generateDHT({
@@ -223,7 +231,7 @@ function generateComplete(
     cutoffSeconds,
   })
 
-  return Buffer.concat([version, runtime, ...activityMsgs])
+  return Buffer.concat([version, runtime, helloResponse, ...activityMsgs])
 }
 
 module.exports = {
