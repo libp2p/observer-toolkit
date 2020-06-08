@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -59,19 +59,22 @@ function DhtBucketInfo({ peers }) {
     poolSets: poolSetsAge,
   })
 
-  const peerIds = peers.map(peer => peer.peerId)
-  const inboundQueries = getQueryTimesByPeer({
-    queriesByPeerId,
-    peerIds,
-    direction: 'INBOUND',
-    timeNow,
-  })
-  const outboundQueries = getQueryTimesByPeer({
-    queriesByPeerId,
-    peerIds,
-    direction: 'OUTBOUND',
-    timeNow,
-  })
+  const { inboundQueries, outboundQueries } = useMemo(() => {
+    const peerIds = peers.map(peer => peer.peerId)
+    const inboundQueries = getQueryTimesByPeer({
+      queriesByPeerId,
+      peerIds,
+      direction: 'INBOUND',
+      timeNow,
+    })
+    const outboundQueries = getQueryTimesByPeer({
+      queriesByPeerId,
+      peerIds,
+      direction: 'OUTBOUND',
+      timeNow,
+    })
+    return { inboundQueries, outboundQueries }
+  }, [timeNow, peers, queriesByPeerId])
 
   const { pooledData: inboundData, poolSets: inboundSets } = usePooledData({
     data: inboundQueries,

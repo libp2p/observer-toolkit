@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 import T from 'prop-types'
 
 import { getStateTimes, getDhtPeers } from '@nearform/observer-data'
@@ -9,37 +9,44 @@ import { getQueryTimesByPeer } from '../../utils/queries'
 
 const DhtQueryContext = createContext()
 
+const elapsedPoolings = [{ mapData: query => query.elapsed }]
+const agePoolings = [{ mapData: peer => peer.getAgeInBucket() }]
+
 function DhtQueryProvider({ children }) {
   const currentState = useContext(TimeContext)
-  const timeNow = getStateTimes(currentState).end
-
   const queriesByPeerId = useDhtQueries()
 
-  const allQueryTimes = getQueryTimesByPeer({
-    queriesByPeerId,
-    timeNow,
-  })
-
-  const peers = getDhtPeers(currentState, 'present')
+  const { allQueryTimes, peers } = useMemo(() => {
+    const timeNow = getStateTimes(currentState).end
+    const allQueryTimes = getQueryTimesByPeer({
+      queriesByPeerId,
+      timeNow,
+    })
+    const peers = getDhtPeers(currentState, 'present')
+    return { allQueryTimes, peers }
+  }, [currentState, queriesByPeerId])
 
   const { poolSets: poolSetsElapsed } = usePooledData({
     data: allQueryTimes,
-    poolings: [{ mapData: query => query.elapsed }],
+    poolings: elapsedPoolings,
   })
 
   const { poolSets: poolSetsAge } = usePooledData({
     data: peers,
-    poolings: [{ mapData: peer => peer.getAgeInBucket() }],
+    poolings: agePoolings,
   })
 
+  const contextValue = useMemo(
+    () => ({
+      queriesByPeerId,
+      poolSetsElapsed,
+      poolSetsAge,
+    }),
+    [queriesByPeerId, poolSetsElapsed, poolSetsAge]
+  )
+
   return (
-    <DhtQueryContext.Provider
-      value={{
-        queriesByPeerId,
-        poolSetsElapsed,
-        poolSetsAge,
-      }}
-    >
+    <DhtQueryContext.Provider value={contextValue}>
       {children}
     </DhtQueryContext.Provider>
   )

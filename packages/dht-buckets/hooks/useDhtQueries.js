@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react'
+import { useCallback, useContext, useMemo, useRef } from 'react'
 
 import {
   getDhtPeers,
@@ -39,12 +39,23 @@ function useDhtQueries() {
   const events = useContext(EventsContext)
   const currentState = useContext(TimeContext)
   const { applyFilters } = useContext(FilterContext)
-
   const timestamp = getStateTimes(currentState).end
 
+  const eventsRef = useRef({
+    timestamp,
+    events,
+  })
+
+  // Don't look at new events until we have a new timestamp
+  if (timestamp !== eventsRef.current.timestamp) {
+    eventsRef.current = { events, timestamp }
+  }
+  const getEvents = useCallback(() => eventsRef.current.events, [eventsRef])
+
   const queriesByPeerId = useMemo(
-    () => getQueriesByPeerId(events, currentState, timestamp, applyFilters),
-    [events, currentState, timestamp, applyFilters]
+    () =>
+      getQueriesByPeerId(getEvents(), currentState, timestamp, applyFilters),
+    [getEvents, currentState, timestamp, applyFilters]
   )
 
   return queriesByPeerId

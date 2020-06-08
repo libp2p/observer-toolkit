@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -22,17 +22,23 @@ const Container = styled.div`
 
 function DhtBuckets({ children }) {
   const currentState = useContext(TimeContext)
+  const { catchAllBucketData, numberedBucketData } = useMemo(() => {
+    if (!currentState) return {}
+    const bucketsData = getAllDhtBuckets(currentState)
+      .map(bucket => ({
+        distance: bucket.getCpl(),
+        peers: getDhtPeersInBucket(bucket, currentState),
+      }))
+      .sort((a, b) => a.distance - b.distance)
+    const [catchAllBucketData, ...numberedBucketData] = bucketsData
+    return {
+      catchAllBucketData,
+      numberedBucketData,
+    }
+  }, [currentState])
+
   if (!currentState) return 'Loading...'
-
   const timestamp = getStateTimes(currentState).end
-
-  const bucketsData = getAllDhtBuckets(currentState)
-    .map(bucket => ({
-      distance: bucket.getCpl(),
-      peers: getDhtPeersInBucket(bucket, currentState),
-    }))
-    .sort((a, b) => a.distance - b.distance)
-  const [catchAllBucketData, ...numberedBucketData] = bucketsData
 
   return (
     <Container>

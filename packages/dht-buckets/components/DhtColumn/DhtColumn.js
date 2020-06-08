@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -30,8 +30,11 @@ const sortByAge = (a, b) => b.age - a.age
 function DhtColumn({ peers = [], bucketNum = 1, timestamp, title }) {
   const [selectedPeer, setSelectedPeer] = useState(null)
 
-  const processedPeers = processPeers(peers)
-  processedPeers.sort(sortByAge)
+  const processedPeers = useMemo(() => {
+    const processedPeers = processPeers(peers)
+    processedPeers.sort(sortByAge)
+    return processedPeers
+  }, [peers])
 
   useEffect(() => {
     if (

@@ -73,27 +73,30 @@ function DataProvider({
 
   const { start, end } = getStateRangeTimes(states)
 
-  const filterDefs = [
-    getRangeFilter({
-      name: 'Filter by time',
-      mapFilter: msg =>
-        msg.getTs ? msg.getTs() : msg.getInstantTs && msg.getInstantTs(),
-      min: start,
-      max: end,
-      numberFieldType: 'time',
-    }),
-    getListFilter({
-      name: 'Filter event types',
-      mapFilter: msg => {
-        if (!msg.getType) return null
-        const eventType = getEventType(msg)
-        return eventType || null
-      },
-      valueNames: runtime
-        ? runtime.getEventTypesList().map(type => type.getName())
-        : [],
-    }),
-  ]
+  const filterDefs = useMemo(
+    () => [
+      getRangeFilter({
+        name: 'Filter by time',
+        mapFilter: msg =>
+          msg.getTs ? msg.getTs() : msg.getInstantTs && msg.getInstantTs(),
+        min: start,
+        max: end,
+        numberFieldType: 'time',
+      }),
+      getListFilter({
+        name: 'Filter event types',
+        mapFilter: msg => {
+          if (!msg.getType) return null
+          const eventType = getEventType(msg)
+          return eventType || null
+        },
+        valueNames: runtime
+          ? runtime.getEventTypesList().map(type => type.getName())
+          : [],
+      }),
+    ],
+    [end, runtime, start]
+  )
 
   const {
     applyFilters,
