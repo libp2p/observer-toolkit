@@ -54,12 +54,12 @@ function WidgetContext({ children }) {
   const metadata = useMemo(() => getMaxValues(states), [states])
 
   const maxStreams = useCalculation(
-    ({ state }) =>
-      getConnections(state).reduce(
+    ({ currentState }) =>
+      getConnections(currentState).reduce(
         (max, conn) => Math.max(max, getStreams(conn).length),
         0
       ),
-    ['state']
+    ['currentState']
   )
 
   const filterDefs = [

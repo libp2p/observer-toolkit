@@ -10,7 +10,7 @@ import { FilterContext } from '../components/context/FilterProvider'
 
 function useCalculation(doCalculation, deps) {
   // Do an expensive calculation on latest context data and cache the result in a memo
-  const dataset = useContext(DataContext)
+  const states = useContext(DataContext)
   const currentState = useContext(TimeContext)
   const runtime = useContext(RuntimeContext)
   const { filters, applyFilters } = useContext(FilterContext)
@@ -18,8 +18,8 @@ function useCalculation(doCalculation, deps) {
   let calcProps = {}
 
   // Let the caller tell us which hooks should cause the memoised function to rerun
-  if (deps.includes('dataset')) calcProps = { dataset, ...calcProps }
-  if (deps.includes('state')) calcProps = { currentState, ...calcProps }
+  if (deps.includes('states')) calcProps = { states, ...calcProps }
+  if (deps.includes('currentState')) calcProps = { currentState, ...calcProps }
   if (deps.includes('runtime')) calcProps = { runtime, ...calcProps }
   if (deps.includes('filters')) {
     calcProps = { filters, applyFilters, ...calcProps }
