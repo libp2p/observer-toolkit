@@ -9,6 +9,7 @@ import DhtColumn from './DhtColumn'
 
 function DhtColumnFixture({ bucketNum, title }) {
   const currentState = useContext(TimeContext)
+  if (!currentState) return ''
   const peers = getDhtPeersInBucket(bucketNum, currentState)
   const timestamp = getStateTimes(currentState).end
 

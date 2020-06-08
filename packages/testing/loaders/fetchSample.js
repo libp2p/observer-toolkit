@@ -6,8 +6,8 @@ async function fetchSample(sampleIndex = 0, providedSample) {
     throw new Error('fetchSample() requires the browser fetch() API')
 
   const { default: samples } = await import('@nearform/observer-samples')
-  const sample = providedSample || samples[sampleIndex]
-  const response = await fetch(sample.file)
+  const sample = providedSample || samples[sampleIndex].file
+  const response = await fetch(sample)
 
   if (!response.ok) {
     const { status, statusText, url } = response
