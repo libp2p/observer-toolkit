@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/libp2p-observer/static/js/main.2ff90ca7.chunk.js",
-    "main.js.map": "/libp2p-observer/static/js/main.2ff90ca7.chunk.js.map",
+    "main.js": "/libp2p-observer/static/js/main.cc22d2db.chunk.js",
+    "main.js.map": "/libp2p-observer/static/js/main.cc22d2db.chunk.js.map",
     "runtime-main.js": "/libp2p-observer/static/js/runtime-main.a1ffeedb.js",
     "runtime-main.js.map": "/libp2p-observer/static/js/runtime-main.a1ffeedb.js.map",
-    "static/js/2.a5d26e9a.chunk.js": "/libp2p-observer/static/js/2.a5d26e9a.chunk.js",
-    "static/js/2.a5d26e9a.chunk.js.map": "/libp2p-observer/static/js/2.a5d26e9a.chunk.js.map",
+    "static/js/2.5f38aea8.chunk.js": "/libp2p-observer/static/js/2.5f38aea8.chunk.js",
+    "static/js/2.5f38aea8.chunk.js.map": "/libp2p-observer/static/js/2.5f38aea8.chunk.js.map",
     "index.html": "/libp2p-observer/index.html",
-    "precache-manifest.fafc4cbdb534d9d413900aa82693c7ae.js": "/libp2p-observer/precache-manifest.fafc4cbdb534d9d413900aa82693c7ae.js",
+    "precache-manifest.17382a9385d464d527e74fc66a8ec6c4.js": "/libp2p-observer/precache-manifest.17382a9385d464d527e74fc66a8ec6c4.js",
     "service-worker.js": "/libp2p-observer/service-worker.js",
     "static/media/IBMPlexMono-Light.otf": "/libp2p-observer/static/media/IBMPlexMono-Light.f9679767.otf",
     "static/media/IBMPlexMono-SemiBold.otf": "/libp2p-observer/static/media/IBMPlexMono-SemiBold.dbf7ec0b.otf",
@@ -31,7 +31,7 @@
   },
   "entrypoints": [
     "static/js/runtime-main.a1ffeedb.js",
-    "static/js/2.a5d26e9a.chunk.js",
-    "static/js/main.2ff90ca7.chunk.js"
+    "static/js/2.5f38aea8.chunk.js",
+    "static/js/main.cc22d2db.chunk.js"
   ]
 }
