@@ -215,7 +215,7 @@ function onWebsocketOpen({ ws, sendCommand }) {
     sendCommand,
     isPaused: false,
     hasData: false,
-    callbacksByCommandId: {},
+    callbacksByCommandId: new Map(),
   }
 }
 
@@ -243,16 +243,15 @@ function onWebsocketPauseChange(oldWsData, { isPaused }) {
 }
 
 function attachWebsocketCallback(oldWsData, { commandId, callback }) {
-  oldWsData.callbacksByCommandId[commandId] = callback
+  oldWsData.callbacksByCommandId.set(commandId, callback)
   return { ...oldWsData }
 }
 
 function runWebsocketCallback(oldWsData, { commandId }) {
-  const callback = oldWsData.callbacksByCommandId[commandId]
-  if (callback) {
-    callback()
-    delete oldWsData.callbacksByCommandId[commandId]
-  }
+  if (!oldWsData.callbacksByCommandId.has(commandId)) return oldWsData
+
+  oldWsData.callbacksByCommandId.get(commandId)()
+  oldWsData.callbacksByCommandId.delete(commandId)
   return { ...oldWsData }
 }
 
