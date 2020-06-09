@@ -41,7 +41,7 @@ describe('DHT data helpers', () => {
       const allPeers = getDhtPeers(state)
       const activePeers = getDhtPeers(state, 'ACTIVE')
       const presentPeers = getDhtPeers(state, 'present')
-      const disconnectedPeers = getDhtPeers(state, 'DISCONNECTED')
+      const disconnectedPeers = getDhtPeers(state, 'REJECTED')
 
       expect(allPeers.length).toBeGreaterThanOrEqual(activePeers.length)
 
@@ -56,7 +56,7 @@ describe('DHT data helpers', () => {
       )
       expect(peerIdSet(activePeers)).toEqual(peerIdSet(activeInPresent))
 
-      const disconnected = getEnumByName('DISCONNECTED', dhtStatusNames)
+      const disconnected = getEnumByName('REJECTED', dhtStatusNames)
       const filteredDisconnectedPeers = allPeers.filter(
         peer => peer.getStatus() === disconnected
       )
