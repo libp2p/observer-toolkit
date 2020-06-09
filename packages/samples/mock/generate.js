@@ -193,7 +193,7 @@ function generateComplete(
   durationSeconds,
   peersCount,
   durationSnapshot,
-  cutoffSeconds
+  cutoffSeconds = durationSeconds
 ) {
   const utcTo = Date.now()
   const utcFrom = utcTo - durationSeconds * SECOND_IN_MS
