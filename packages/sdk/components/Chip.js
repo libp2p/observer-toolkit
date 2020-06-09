@@ -7,7 +7,9 @@ import Icon from './Icon'
 const Container = styled.span.attrs(({ theme, getColor, glow, fade }) => ({
   style: {
     opacity: fade,
-    boxShadow: `0 0 ${theme.spacing(2)} 0 ${getColor(theme, glow)}`,
+    boxShadow: glow
+      ? `0 0 ${theme.spacing(2)} 0 ${getColor(theme, glow)}`
+      : 'none',
   },
 }))`
   display: inline-block;
