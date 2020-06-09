@@ -1,10 +1,9 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
 import {
   usePooledData,
-  AccordionControl,
   Histogram,
   PeerIdChip,
   RootNodeContext,
@@ -95,8 +94,6 @@ function DhtBucketInfo({ peers }) {
     poolings: [{ mapData: query => query.elapsed / 1000 }],
     poolSets: poolSetsElapsed,
   })
-
-  const [peerIdListIsOpen, setPeerIdListIsOpen] = useState(false)
 
   const handleBarHighlight = useCallback(
     items => {
