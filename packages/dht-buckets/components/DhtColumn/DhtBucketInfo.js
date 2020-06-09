@@ -55,7 +55,7 @@ function DhtBucketInfo({ peers }) {
 
   const { pooledData: ageData, poolSets: ageSets } = usePooledData({
     data: peers,
-    poolings: [{ mapData: peer => peer.age }],
+    poolings: [{ mapData: peer => peer.age / 1000 }],
     poolSets: poolSetsAge,
   })
 
@@ -78,13 +78,13 @@ function DhtBucketInfo({ peers }) {
 
   const { pooledData: inboundData, poolSets: inboundSets } = usePooledData({
     data: inboundQueries,
-    poolings: [{ mapData: query => query.elapsed }],
+    poolings: [{ mapData: query => query.elapsed / 1000 }],
     poolSets: poolSetsElapsed,
   })
 
   const { pooledData: outboundData, poolSets: outboundSets } = usePooledData({
     data: outboundQueries,
-    poolings: [{ mapData: query => query.elapsed }],
+    poolings: [{ mapData: query => query.elapsed / 1000 }],
     poolSets: poolSetsElapsed,
   })
 
@@ -143,7 +143,7 @@ function DhtBucketInfo({ peers }) {
           <Histogram
             pooledData={inboundData}
             poolSets={inboundSets}
-            xAxisSuffix={'ms ago'}
+            xAxisSuffix={' secs ago'}
             verticalLines={3}
             onHighlight={handleBarHighlight}
           />
@@ -155,7 +155,7 @@ function DhtBucketInfo({ peers }) {
           <Histogram
             pooledData={outboundData}
             poolSets={outboundSets}
-            xAxisSuffix={'ms ago'}
+            xAxisSuffix={' secs ago'}
             verticalLines={3}
             onHighlight={handleBarHighlight}
           />
@@ -167,7 +167,7 @@ function DhtBucketInfo({ peers }) {
           <Histogram
             pooledData={ageData}
             poolSets={ageSets}
-            xAxisSuffix={'ms'}
+            xAxisSuffix={' seconds'}
             verticalLines={3}
             onHighlight={handleBarHighlight}
           />

@@ -83,6 +83,8 @@ function usePooledData(props) {
           ticksCount,
           scaleType,
           mapData,
+          min: pooling.min,
+          max: pooling.max,
         })
       })
     const pooledData = poolData(data, poolSets, poolingsArray, 0)
@@ -104,6 +106,8 @@ const poolingShape = T.shape({
   mapData: T.func,
   poolsCount: T.number,
   scaleType: T.string,
+  min: T.number,
+  max: T.number,
 })
 
 usePooledData.propTypes = {
