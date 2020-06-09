@@ -8,6 +8,7 @@ import {
   getMockConfig,
   getMockState,
   getMockEvent,
+  getMockResponse,
 } from '@nearform/observer-testing'
 import useDatastore from './useDatastore'
 
@@ -578,7 +579,7 @@ describe('useDataStore hook respects retentionPeriodMs config setting', () => {
     expect(output6).toBeInTheDocument()
   })
 
-  it('Discards states and events correctly if threshold is shortened', async () => {
+  it('Discards states and events correctly if threshold is shortened by command responses', async () => {
     const TestComponent = () => {
       const {
         replaceData,
@@ -631,7 +632,14 @@ describe('useDataStore hook respects retentionPeriodMs config setting', () => {
                   { testOutput: '18', ...getMockStateTimes(18) },
                   { testOutput: '20', ...getMockStateTimes(20) },
                 ].map(getMockState),
-                config: getMockConfig({ retentionPeriodMs: 7 }),
+                responses: [
+                  getMockResponse({
+                    effectiveConfig: { retentionPeriodMs: 5 },
+                  }),
+                  getMockResponse({
+                    effectiveConfig: { retentionPeriodMs: 7 },
+                  }),
+                ],
               })
             }
           />
@@ -667,6 +675,7 @@ describe('useDataStore hook respects retentionPeriodMs config setting', () => {
       fireEvent.click(button2)
     })
     expect(getOutput()).toEqual(
+      // Latest of multiple command responses in one data packet is applied
       expectedOutput({
         events: '14161820',
         states: '14161820',
