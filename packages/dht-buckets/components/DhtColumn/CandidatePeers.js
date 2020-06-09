@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { RootNodeContext, TimeContext, Tooltip } from '@libp2p-observer/sdk'
-import { getDhtBucket, dhtStatusNames } from '@libp2p-observer/data'
+import { RootNodeContext, TimeContext, Tooltip } from '@nearform/observer-sdk'
+import { getDhtBucket, dhtStatusNames } from '@nearform/observer-data'
 
-import CandidatePeersTable from './CandidatePeersTable'
+import PeersTable from './PeersTable'
 
 const Container = styled.div`
   display: block;
@@ -22,6 +22,10 @@ function CandidatePeers({ bucketNum }) {
   const candidatePeers = bucket
     .getPeersList()
     .filter(peer => dhtStatusNames[peer.getStatus()] === 'CANDIDATE')
+    .map(peer => ({
+      peerId: peer.getPeerId(),
+      age: peer.getAgeInBucket(),
+    }))
   const candidateCount = candidatePeers.length
 
   return (
@@ -30,7 +34,7 @@ function CandidatePeers({ bucketNum }) {
       fixOn="no-hover"
       hang
       containerRef={rootNodeRef}
-      content={<CandidatePeersTable candidatePeers={candidatePeers} />}
+      content={<PeersTable peers={candidatePeers} />}
       override={{
         Target: Container,
       }}

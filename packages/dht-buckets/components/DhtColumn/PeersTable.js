@@ -8,7 +8,9 @@ import {
   PeerIdChip,
   getStringSorter,
   getNumericSorter,
-} from '@libp2p-observer/sdk'
+} from '@nearform/observer-sdk'
+
+import PeersTableRow from './PeersTableRow'
 
 const stringSorter = {
   getSorter: getStringSorter,
@@ -23,6 +25,7 @@ const numericSorter = {
 const Container = styled.div`
   width: 640px;
   max-height: 500px;
+  padding: ${({ theme }) => theme.spacing()};
   overflow: auto;
 `
 
@@ -35,7 +38,7 @@ const columnsDef = [
   {
     name: 'peerId',
     header: 'Peer ID',
-    getProps: peer => ({ value: peer.getPeerId() }),
+    getProps: peer => ({ value: peer.peerId }),
     renderContent: PeerIdCell,
     sort: stringSorter,
     rowKey: 'peerId',
@@ -43,12 +46,12 @@ const columnsDef = [
   {
     name: 'time',
     header: 'Time in bucket',
-    getProps: peer => ({ value: peer.getAgeInBucket() }),
+    getProps: peer => ({ value: peer.age }),
     sort: numericSorter,
   },
 ]
 
-function CandidatePeersTable({ candidatePeers }) {
+function PeersTable({ peers }) {
   const rowsPerPageOptions = [5, 10, 25, 50, 100]
 
   const {
@@ -63,7 +66,7 @@ function CandidatePeersTable({ candidatePeers }) {
     rowCounts,
   } = useTabularData({
     columns: columnsDef,
-    data: candidatePeers,
+    data: peers,
     defaultSort: 'time',
   })
 
@@ -82,13 +85,14 @@ function CandidatePeersTable({ candidatePeers }) {
         hasPagination
         hasSlidingRows={false}
         rowsPerPageOptions={rowsPerPageOptions}
+        override={{ DataTableRow: PeersTableRow }}
       />
     </Container>
   )
 }
 
-CandidatePeersTable.propTypes = {
-  candidatePeers: T.array.isRequired,
+PeersTable.propTypes = {
+  peers: T.array.isRequired,
 }
 
-export default CandidatePeersTable
+export default PeersTable

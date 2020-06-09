@@ -7,14 +7,16 @@ import {
   AccordionControl,
   Histogram,
   PeerIdChip,
+  RootNodeContext,
   SetterContext,
   TimeContext,
+  Tooltip,
 } from '@nearform/observer-sdk'
 import { getStateTimes } from '@nearform/observer-data'
 
 import { DhtQueryContext } from '../context/DhtQueryProvider'
-
 import { getQueryTimesByPeer } from '../../utils/queries'
+import PeersTable from './PeersTable'
 
 const InfoList = styled.ul`
   padding: 0;
@@ -39,7 +41,12 @@ const InfoItemLabel = styled.label`
   color: ${({ theme }) => theme.color('tertiary', 2)};
 `
 
-const AccordionButton = styled.button`
+const ShowPeers = styled.div`
+  cursor: pointer;
+  position: relative;
+  display: block;
+  padding: ${({ theme }) => theme.spacing(1)};
+  background: ${({ theme }) => theme.color('background')};
   margin: 0;
   ${({ theme }) => theme.text('body', 'medium')}
 `
@@ -51,6 +58,7 @@ function DhtBucketInfo({ peers }) {
     useContext(DhtQueryContext) || {}
   const state = useContext(TimeContext)
   const { setPeerIds } = useContext(SetterContext)
+  const rootNodeRef = useContext(RootNodeContext)
   const { end: timeNow } = getStateTimes(state)
 
   const { pooledData: ageData, poolSets: ageSets } = usePooledData({
@@ -116,24 +124,18 @@ function DhtBucketInfo({ peers }) {
         ) : (
           <>
             <InfoItemLabel>Peer IDs</InfoItemLabel>
-            <AccordionControl
-              isOpen={peerIdListIsOpen}
-              setIsOpen={setPeerIdListIsOpen}
+            <Tooltip
+              side="right"
+              fixOn="no-hover"
+              hang={4}
+              containerRef={rootNodeRef}
+              content={<PeersTable peers={peers} />}
               override={{
-                AccordionButton,
+                Target: ShowPeers,
               }}
             >
               Show {peers.length} peer IDs
-            </AccordionControl>
-            {peerIdListIsOpen && (
-              <InfoList>
-                {peers.map(peer => (
-                  <PeerListItem key={peer.peerId}>
-                    <PeerIdChip peerId={peer.peerId} />
-                  </PeerListItem>
-                ))}
-              </InfoList>
-            )}
+            </Tooltip>
           </>
         )}
       </InfoItem>
