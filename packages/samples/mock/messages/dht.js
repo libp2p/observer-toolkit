@@ -149,6 +149,7 @@ function updateDHT({
   msgQueue,
   msgBuffers,
   version,
+  pushEvents,
 }) {
   const peers = dht
     .getBucketsList()
@@ -170,7 +171,9 @@ function updateDHT({
     version,
   })
 
-  queries.forEach(event => msgTarget.push(event))
+  if (!isLiveWebsocket || pushEvents) {
+    queries.forEach(event => msgTarget.push(event))
+  }
 }
 
 function validateBucketSizes(dht, buckets = dht.getBucketsList()) {

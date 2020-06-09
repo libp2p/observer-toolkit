@@ -4,10 +4,31 @@ import styled, { css } from 'styled-components'
 import {
   formatDuration,
   RuntimeContext,
+  ConfigContext,
   WebsocketContext,
 } from '@nearform/observer-sdk'
 
-import EditRuntime from './EditRuntime'
+import EditConfig from './EditConfig'
+
+function getStateInterval(config, missingConfig) {
+  if (!config) return { stateIntervalText: missingConfig }
+  const stateIntervalMs = config.getStateSnapshotIntervalMs()
+  const stateIntervalText = formatDuration(stateIntervalMs)
+  return {
+    stateIntervalMs,
+    stateIntervalText,
+  }
+}
+
+function getRetentionPeriod(config, missingConfig) {
+  if (!config) return missingConfig
+  const retentionMs = config.getRetentionPeriodMs()
+  const retentionText = formatDuration(retentionMs)
+  return {
+    retentionMs,
+    retentionText,
+  }
+}
 
 const Container = styled.div`
   min-width: 280px;
@@ -35,15 +56,24 @@ const InfoHead = styled.th`
 
 function RuntimeInfo() {
   const runtime = useContext(RuntimeContext)
+  const config = useContext(ConfigContext)
   const wsData = useContext(WebsocketContext)
 
-  if (!runtime) return 'No runtime data available'
+  const missingRuntime = 'No Runtime message available'
+  const missingConfig = 'No Configuration message available'
 
-  const stateIntervalMs = runtime.getSendStateIntervalMs()
-  const stateInterval = formatDuration(stateIntervalMs)
+  const { stateIntervalMs, stateIntervalText } = getStateInterval(
+    config,
+    missingConfig
+  )
+  const { retentionMs, retentionText } = getRetentionPeriod(
+    config,
+    missingConfig
+  )
 
-  const dataExpiryMs = runtime.getKeepStaleDataMs()
-  const dataExpiry = formatDuration(dataExpiryMs)
+  const implementation = runtime ? runtime.getImplementation() : missingRuntime
+  const version = runtime ? runtime.getVersion() : missingRuntime
+  const platform = runtime ? runtime.getPlatform() : missingRuntime
 
   return (
     <Container>
@@ -51,51 +81,55 @@ function RuntimeInfo() {
         <tbody>
           <tr>
             <InfoHead>Implementation:</InfoHead>
-            <InfoCell>{runtime.getImplementation()}</InfoCell>
+            <InfoCell>{implementation}</InfoCell>
           </tr>
           <tr>
             <InfoHead>Version:</InfoHead>
-            <InfoCell>{runtime.getVersion()}</InfoCell>
+            <InfoCell>{version}</InfoCell>
           </tr>
           <tr>
             <InfoHead>Platform:</InfoHead>
-            <InfoCell>{runtime.getPlatform()}</InfoCell>
+            <InfoCell>{platform}</InfoCell>
           </tr>
           <tr>
             <InfoHead>State messages every:</InfoHead>
             <InfoCell>
-              {wsData ? (
-                <EditRuntime
-                  runtimeValue={stateIntervalMs}
+              {wsData && config ? (
+                <EditConfig
+                  configValue={stateIntervalMs}
                   handleSend={inputMs =>
-                    wsData.sendSignal('config', {
-                      sendStateIntervalMs: inputMs,
+                    wsData.sendCommand('config', {
+                      config: {
+                        stateSnapshotIntervalMs: inputMs,
+                      },
                     })
                   }
                 >
-                  {stateInterval}
-                </EditRuntime>
+                  {stateIntervalText}
+                </EditConfig>
               ) : (
-                stateInterval
+                stateIntervalText
               )}
             </InfoCell>
           </tr>
           <tr>
             <InfoHead>Discard data after:</InfoHead>
             <InfoCell>
-              {wsData ? (
-                <EditRuntime
-                  runtimeValue={dataExpiryMs}
+              {wsData && config ? (
+                <EditConfig
+                  configValue={retentionMs}
                   handleSend={inputMs =>
-                    wsData.sendSignal('config', {
-                      keepStaleDataMs: inputMs,
+                    wsData.sendCommand('config', {
+                      config: {
+                        retentionPeriodMs: inputMs,
+                      },
                     })
                   }
                 >
-                  {dataExpiry}
-                </EditRuntime>
+                  {retentionText}
+                </EditConfig>
               ) : (
-                stateInterval
+                retentionText
               )}
             </InfoCell>
           </tr>

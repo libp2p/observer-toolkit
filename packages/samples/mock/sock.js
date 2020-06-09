@@ -3,10 +3,11 @@
 const http = require('http')
 const WebSocket = require('ws')
 const {
-  proto: { ClientSignal },
+  proto: { ClientCommand, Configuration },
 } = require('@nearform/observer-proto')
 const { DEFAULT_SNAPSHOT_DURATION } = require('./utils')
 const {
+  generateCommandResponse,
   generateConnections,
   generateConnectionEvents,
   // generateEventsFlood,
@@ -31,6 +32,11 @@ let dht
 let sendInterval
 let generateInterval
 
+let pushEvents = false
+let pushStates = false
+
+let effectiveConfig
+
 function generateMessages({
   connectionsCount,
   duration: durationSnapshot,
@@ -40,17 +46,10 @@ function generateMessages({
   const utcNow = Date.now()
   const utcFrom = utcNow
   const utcTo = utcNow + durationSnapshot
+
   if (!dht) dht = generateDHT({ peersCount })
 
-  if (runtime) {
-    durationSnapshot = runtime.getSendStateIntervalMs()
-    cutoffSeconds = runtime.getKeepStaleDataMs() / 1000
-  } else {
-    runtime = createRuntime({
-      stateIntervalDuration: durationSnapshot,
-      cutoffSeconds,
-    })
-  }
+  if (!runtime) runtime = createRuntime()
 
   if (!connections.length) {
     connections.length = 0
@@ -70,7 +69,7 @@ function generateMessages({
     durationSnapshot,
     cutoffSeconds
   )
-  updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version })
+  updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version, pushEvents })
 
   generateConnectionEvents({
     connections,
@@ -79,11 +78,19 @@ function generateMessages({
     version,
     runtime,
     durationSnapshot,
+    pushEvents,
   })
 
-  const statePacket = generateState(connections, utcNow, dht, durationSnapshot)
-  const data = Buffer.concat([version, statePacket]).toString('binary')
-  msgQueue.push({ ts: utcTo, type: 'state', data })
+  if (pushStates) {
+    const statePacket = generateState(
+      connections,
+      utcNow,
+      dht,
+      durationSnapshot
+    )
+    const data = Buffer.concat([version, statePacket]).toString('binary')
+    msgQueue.push({ ts: utcTo, type: 'state', data })
+  }
 }
 
 function sendQueue(ws) {
@@ -102,51 +109,98 @@ function sendQueue(ws) {
     })
 }
 
-function handleClientMessage(client, server, msg) {
-  // check client signal
-  if (msg) {
-    const clientSignal = ClientSignal.deserializeBinary(msg)
-    const signal = clientSignal.getSignal()
+function handleClientMessage(ws, server, clientCommand) {
+  let sendEmptyOKResponse = true
 
-    if (signal === ClientSignal.Signal.SEND_DATA) {
-      sendQueue(client)
-    } else if (signal === ClientSignal.Signal.UNPAUSE_PUSH_EMITTER) {
-      clearInterval(sendInterval)
-      sendInterval = setInterval(() => {
-        sendQueue(client)
-      }, 200)
-    } else if (signal === ClientSignal.Signal.PAUSE_PUSH_EMITTER) {
-      clearInterval(sendInterval)
-    } else if (signal === ClientSignal.Signal.CONFIG_EMITTER) {
-      try {
-        const content = JSON.parse(clientSignal.getContent())
-        let hasChanged = false
-        const newDurationSnapshot =
-          Number(content.durationSnapshot) ||
-          Number(content.sendStateIntervalMs)
+  const command = clientCommand.getCommand()
+  const commandId = clientCommand.getId()
+  const commandSource = clientCommand.getSource()
 
-        if (newDurationSnapshot) {
-          clearInterval(server.generator)
-          server.generator = setInterval(() => {
-            generateMessages({
-              connectionsCount: server.connectionsCount,
-              duration: newDurationSnapshot,
-            })
-          }, newDurationSnapshot)
-          hasChanged = true
-          runtime.setSendStateIntervalMs(newDurationSnapshot)
-        }
-        if (content.keepStaleDataMs) {
-          hasChanged = true
-          runtime.setKeepStaleDataMs(Number(content.keepStaleDataMs))
-        }
-        if (hasChanged) sendRuntime()
-      } catch (error) {
-        // log the failed signal and continue serving data
-        console.warn('Error processing configuration signal', signal)
-        console.error(error)
-      }
+  if (command === ClientCommand.Command.REQUEST) {
+    sendQueue(ws)
+  } else if (command === ClientCommand.Command.PUSH_ENABLE) {
+    if (commandSource === ClientCommand.Source.STATE) pushStates = true
+    if (commandSource === ClientCommand.Source.EVENTS) pushEvents = true
+  } else if (command === ClientCommand.Command.PUSH_DISABLE) {
+    if (commandSource === ClientCommand.Source.STATE) pushStates = false
+    if (commandSource === ClientCommand.Source.EVENTS) pushEvents = false
+  } else if (command === ClientCommand.Command.PUSH_RESUME) {
+    clearInterval(sendInterval)
+    sendInterval = setInterval(() => {
+      sendQueue(ws)
+    }, 200)
+  } else if (command === ClientCommand.Command.PUSH_PAUSE) {
+    clearInterval(sendInterval)
+  } else if (
+    command === ClientCommand.Command.UPDATE_CONFIG ||
+    command === ClientCommand.Command.HELLO
+  ) {
+    const newConfig = clientCommand.getConfig()
+    if (newConfig) {
+      updateConfig(newConfig, commandId, ws, server)
+      sendEmptyOKResponse = false
+    } else if (command === ClientCommand.Command.HELLO) {
+      // Send default config
+      sendCommandResponse(
+        {
+          id: commandId,
+          effectiveConfig,
+        },
+        ws
+      )
+      sendEmptyOKResponse = false
     }
+  } else {
+    sendCommandResponse(
+      {
+        id: commandId,
+        error: `Command ${command} ("${ClientCommand.Command[command]}") unrecognised by server`,
+      },
+      ws
+    )
+
+    sendEmptyOKResponse = false
+  }
+
+  if (sendEmptyOKResponse) {
+    sendCommandResponse(
+      {
+        id: commandId,
+      },
+      ws
+    )
+  }
+}
+
+function updateConfig(newConfig, commandId, ws, server) {
+  let hasChanged = false
+
+  const newStateInterval = newConfig.getStateSnapshotIntervalMs()
+  const newRetentionPeriod = newConfig.getRetentionPeriodMs()
+
+  if (newStateInterval) {
+    clearInterval(server.generator)
+    server.generator = setInterval(() => {
+      generateMessages({
+        connectionsCount: server.connectionsCount,
+        duration: newStateInterval,
+      })
+    }, newStateInterval)
+    hasChanged = true
+    effectiveConfig.setStateSnapshotIntervalMs(newStateInterval)
+  }
+  if (newRetentionPeriod) {
+    hasChanged = true
+    effectiveConfig.setRetentionPeriodMs(newRetentionPeriod)
+  }
+  if (hasChanged) {
+    sendCommandResponse(
+      {
+        id: commandId,
+        effectiveConfig,
+      },
+      ws
+    )
   }
 }
 
@@ -156,13 +210,27 @@ function sendRuntime() {
   msgQueue.push({ ts: Date.now(), type: 'runtime', data })
 }
 
+function sendCommandResponse(props, ws) {
+  const responsePacket = generateCommandResponse(props)
+  const data = Buffer.concat([version, responsePacket]).toString('binary')
+  ws.send(data)
+}
+
 function start({
   connectionsCount = 0,
   duration = DEFAULT_SNAPSHOT_DURATION,
   peersCount,
   cutoffSeconds,
 } = {}) {
-  // generate states
+  if (effectiveConfig) {
+    duration = effectiveConfig.getStateSnapshotIntervalMs()
+    cutoffSeconds = effectiveConfig.getRetentionPeriodMs() / 1000
+  } else {
+    effectiveConfig = new Configuration()
+    effectiveConfig.setStateSnapshotIntervalMs(duration)
+    effectiveConfig.setRetentionPeriodMs(cutoffSeconds * 1000)
+  }
+
   wss.connectionsCount = connectionsCount
 
   clearInterval(generateInterval)
@@ -190,7 +258,20 @@ function start({
     })
     // handle incoming messages
     ws.on('message', msg => {
-      handleClientMessage(ws, wss, msg)
+      if (!msg) return
+      const command = ClientCommand.deserializeBinary(msg)
+      try {
+        handleClientMessage(ws, wss, command)
+      } catch (err) {
+        sendCommandResponse(
+          {
+            id: command.getId(),
+            error: err.toString(),
+          },
+          ws
+        )
+        throw err
+      }
     })
 
     sendRuntime()

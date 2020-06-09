@@ -13,6 +13,7 @@ const SourceContext = createContext()
 const DataContext = createContext()
 const EventsContext = createContext()
 const RuntimeContext = createContext()
+const ConfigContext = createContext()
 const TimeContext = createContext()
 const PeersContext = createContext()
 const SetterContext = createContext()
@@ -24,6 +25,7 @@ function DataProvider({
     states: initialStates = [],
     events: initialEvents = [],
     runtime: initialRuntime,
+    config: initialConfig,
   } = {},
   initialSource,
   initialState,
@@ -34,6 +36,7 @@ function DataProvider({
     states,
     events,
     runtime,
+    config,
     peerIds,
     source,
     websocket,
@@ -41,6 +44,7 @@ function DataProvider({
     // Data setters
     updateData,
     updateRuntime,
+    updateConfig,
     replaceData,
     removeData,
     setPeerIds,
@@ -50,6 +54,7 @@ function DataProvider({
     initialStates,
     initialEvents,
     initialRuntime,
+    initialConfig,
     initialSource,
   })
 
@@ -60,6 +65,7 @@ function DataProvider({
     states,
     events,
     runtime,
+    config,
     source,
     websocket,
     currentState,
@@ -99,6 +105,7 @@ function DataProvider({
   // causes context `value` to see a new object each run, causing re-renders every time
   const dataSetters = useRef({
     updateRuntime,
+    updateConfig,
     setCurrentState,
     setPeerIds,
     updateData,
@@ -130,21 +137,23 @@ function DataProvider({
   return (
     <DataContext.Provider value={filteredStates}>
       <RuntimeContext.Provider value={runtime}>
-        <TimeContext.Provider value={displayedState}>
-          <EventsContext.Provider value={filteredEvents}>
-            <PeersContext.Provider value={peerIds}>
-              <SourceContext.Provider value={source}>
-                <WebsocketContext.Provider value={websocket}>
-                  <GlobalFilterContext.Provider value={globalFilters}>
-                    <SetterContext.Provider value={dataSetters.current}>
-                      {children}
-                    </SetterContext.Provider>
-                  </GlobalFilterContext.Provider>
-                </WebsocketContext.Provider>
-              </SourceContext.Provider>
-            </PeersContext.Provider>
-          </EventsContext.Provider>
-        </TimeContext.Provider>
+        <ConfigContext.Provider value={config}>
+          <TimeContext.Provider value={displayedState}>
+            <EventsContext.Provider value={filteredEvents}>
+              <PeersContext.Provider value={peerIds}>
+                <SourceContext.Provider value={source}>
+                  <WebsocketContext.Provider value={websocket}>
+                    <GlobalFilterContext.Provider value={globalFilters}>
+                      <SetterContext.Provider value={dataSetters.current}>
+                        {children}
+                      </SetterContext.Provider>
+                    </GlobalFilterContext.Provider>
+                  </WebsocketContext.Provider>
+                </SourceContext.Provider>
+              </PeersContext.Provider>
+            </EventsContext.Provider>
+          </TimeContext.Provider>
+        </ConfigContext.Provider>
       </RuntimeContext.Provider>
     </DataContext.Provider>
   )
@@ -164,6 +173,7 @@ export {
   DataProvider,
   DataContext,
   RuntimeContext,
+  ConfigContext,
   TimeContext,
   PeersContext,
   SetterContext,

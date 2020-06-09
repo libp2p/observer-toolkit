@@ -3,7 +3,11 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import { getKademliaDistance } from '@nearform/observer-data'
-import { RuntimeContext, SetterContext } from '@nearform/observer-sdk'
+import {
+  ConfigContext,
+  RuntimeContext,
+  SetterContext,
+} from '@nearform/observer-sdk'
 
 import DhtPeerHighlighting from './DhtPeerHighlighting'
 import DhtPeerGlow from './DhtPeerGlow'
@@ -129,9 +133,11 @@ function DhtPeer({
 }) {
   const { setPeerIds } = useContext(SetterContext)
 
+  const config = useContext(ConfigContext)
+  const stateDuration = config.getStateSnapshotIntervalMs()
+
   const runtime = useContext(RuntimeContext)
   const distance = getKademliaDistance(peerId, runtime.getPeerId())
-  const stateDuration = runtime.getSendStateIntervalMs()
 
   const peerRef = useRef()
   const transitionStyles = getTransitionStyles(slotRef, previousSlotRef)

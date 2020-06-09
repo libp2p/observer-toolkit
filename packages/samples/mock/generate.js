@@ -7,6 +7,9 @@ const {
   generateHashId,
 } = require('./utils')
 
+const {
+  proto: { Configuration },
+} = require('@nearform/observer-proto')
 const { createBufferSegment } = require('../output/binary')
 const {
   createConnection,
@@ -22,10 +25,12 @@ const {
 } = require('./messages/events')
 const { createState } = require('./messages/states')
 const { createRuntime } = require('./messages/runtime')
+const { createCommandResponse } = require('./messages/command-response')
 const {
-  createProtocolRuntimePacket,
-  createProtocolStatePacket,
-} = require('./messages/protocol-data-packet')
+  createResponseServerMessage,
+  createRuntimeServerMessage,
+  createStateServerMessage,
+} = require('./messages/server-message')
 const { statusList } = require('./enums/statusList')
 
 function generateConnections(total, now) {
@@ -47,8 +52,16 @@ function generatePeerId() {
 }
 
 function generateRuntime(options = {}, runtime = createRuntime(options)) {
-  const runtimePacket = createProtocolRuntimePacket(runtime)
+  const runtimePacket = createRuntimeServerMessage(runtime)
   return createBufferSegment(runtimePacket)
+}
+
+function generateCommandResponse(
+  options = {},
+  response = createCommandResponse(options)
+) {
+  const responsePacket = createResponseServerMessage(response)
+  return createBufferSegment(responsePacket)
 }
 
 function updateConnections(connections, total, now, duration, cutoffSeconds) {
@@ -112,7 +125,7 @@ function generateEventsFlood({ msgQueue = [], utcNow, version }) {
 
 function generateState(connections, now, dht, duration) {
   const state = createState(connections, now, dht, duration)
-  const statePacket = createProtocolStatePacket(state)
+  const statePacket = createStateServerMessage(state)
   return createBufferSegment(statePacket)
 }
 
@@ -180,18 +193,23 @@ function generateComplete(
   durationSeconds,
   peersCount,
   durationSnapshot,
-  cutoffSeconds
+  cutoffSeconds = durationSeconds
 ) {
   const utcTo = Date.now()
   const utcFrom = utcTo - durationSeconds * SECOND_IN_MS
 
   const version = generateVersion()
-  const runtime = generateRuntime({
-    stateIntervalDuration: durationSnapshot,
-    cutoffSeconds,
-  })
+  const runtime = generateRuntime()
   const connections = generateConnections(connectionsCount, utcFrom)
   const peerIds = connections.map(c => c.getPeerId())
+
+  const effectiveConfig = new Configuration()
+  effectiveConfig.setStateSnapshotIntervalMs(durationSnapshot)
+  effectiveConfig.setRetentionPeriodMs(cutoffSeconds * 1000)
+  const helloResponse = generateCommandResponse({
+    id: 0,
+    effectiveConfig,
+  })
 
   const startTs = utcFrom - Math.floor(random() * durationSnapshot)
   const dht = generateDHT({
@@ -213,10 +231,11 @@ function generateComplete(
     cutoffSeconds,
   })
 
-  return Buffer.concat([version, runtime, ...activityMsgs])
+  return Buffer.concat([version, runtime, helloResponse, ...activityMsgs])
 }
 
 module.exports = {
+  generateCommandResponse,
   generateComplete,
   generateConnections,
   generateConnectionEvents,

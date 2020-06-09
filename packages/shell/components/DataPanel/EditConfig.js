@@ -30,8 +30,8 @@ const ClickTarget = styled.div`
   flex-grow: 1;
 `
 
-function EditRuntime({ runtimeValue, handleSend, children }) {
-  const [previousRuntimeValue, setPreviousRuntimeValue] = useState(runtimeValue)
+function EditConfig({ configValue, handleSend, children }) {
+  const [previousConfigValue, setPreviousConfigValue] = useState(configValue)
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const handleFormSubmit = value => {
@@ -40,11 +40,11 @@ function EditRuntime({ runtimeValue, handleSend, children }) {
   }
 
   useEffect(() => {
-    if (runtimeValue !== previousRuntimeValue) {
+    if (configValue !== previousConfigValue) {
       setIsLoading(false)
-      setPreviousRuntimeValue(runtimeValue)
+      setPreviousConfigValue(configValue)
     }
-  }, [runtimeValue, previousRuntimeValue])
+  }, [configValue, previousConfigValue])
 
   return (
     <Container>
@@ -55,7 +55,7 @@ function EditRuntime({ runtimeValue, handleSend, children }) {
       {isOpen && (
         <EditContainer>
           <Formik
-            initialValues={{ value: runtimeValue }}
+            initialValues={{ value: configValue }}
             onSubmit={({ value }) => handleFormSubmit(value)}
             enableReinitialize
           >
@@ -96,10 +96,10 @@ function EditRuntime({ runtimeValue, handleSend, children }) {
     </Container>
   )
 }
-EditRuntime.propTypes = {
-  runtimeValue: T.number.isRequired,
+EditConfig.propTypes = {
+  configValue: T.number.isRequired,
   handleSend: T.func.isRequired,
   children: T.node.isRequired,
 }
 
-export default EditRuntime
+export default EditConfig

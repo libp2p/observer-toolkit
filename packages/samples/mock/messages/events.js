@@ -11,7 +11,7 @@ const { transportList } = require('../enums/transportList')
 const { roleList } = require('../enums/roleList')
 const { decodeBinToNum } = require('../utils')
 
-const { createProtocolEventPacket } = require('./protocol-data-packet')
+const { createEventServerMessage } = require('./server-message')
 
 function createEvent({ now = Date.now(), type = '', content = {} } = {}) {
   const event = new Event()
@@ -24,7 +24,7 @@ function createEvent({ now = Date.now(), type = '', content = {} } = {}) {
 
 function generateEvent({ now = Date.now(), type = '', content = {} } = {}) {
   const event = createEvent({ now, type, content })
-  const eventPacket = createProtocolEventPacket(event)
+  const eventPacket = createEventServerMessage(event)
   return createBufferSegment(eventPacket)
 }
 
