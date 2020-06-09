@@ -637,7 +637,14 @@ describe('useDataStore hook respects retentionPeriodMs config setting', () => {
                     effectiveConfig: { retentionPeriodMs: 5 },
                   }),
                   getMockResponse({
+                    effectiveConfig: null,
+                  }),
+                  getMockResponse({
+                    // This, and only this latest config should be applied
                     effectiveConfig: { retentionPeriodMs: 7 },
+                  }),
+                  getMockResponse({
+                    effectiveConfig: null,
                   }),
                 ],
               })

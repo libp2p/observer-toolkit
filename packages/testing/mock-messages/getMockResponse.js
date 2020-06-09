@@ -14,7 +14,7 @@ function getMockResponse({
     commandId++
   }
 
-  const mockConfig = getMockConfig(effectiveConfig)
+  const mockConfig = effectiveConfig ? getMockConfig(effectiveConfig) : null
 
   return {
     getEffectiveConfig: () => mockConfig,
