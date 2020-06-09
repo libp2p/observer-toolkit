@@ -18,6 +18,7 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: start;
   padding: ${({ theme }) => theme.spacing([1, 0.5])};
+  overflow-x: scroll;
 `
 
 function DhtBuckets({ children }) {
