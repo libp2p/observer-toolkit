@@ -1,15 +1,15 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7b2ae6ff99decb3d576217bae39f04c8",
+    "revision": "038723dc48e987ce890b65ff6ba73ff7",
     "url": "/libp2p-observer/index.html"
   },
   {
-    "revision": "002ba8b19da02d2e7f81",
-    "url": "/libp2p-observer/static/js/2.769a3ff1.chunk.js"
+    "revision": "1af85a27436fc1d7dc9e",
+    "url": "/libp2p-observer/static/js/2.cf8ef3af.chunk.js"
   },
   {
-    "revision": "0a36b5ec91e5afa9a6a8",
-    "url": "/libp2p-observer/static/js/main.c1d62c9f.chunk.js"
+    "revision": "bc050b7de143534c8af7",
+    "url": "/libp2p-observer/static/js/main.9f543968.chunk.js"
   },
   {
     "revision": "1b0005d065e90f510b81",
