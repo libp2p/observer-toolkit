@@ -103,7 +103,7 @@ function DataPanel() {
           <IconContainer>
             <Icon type="marker" />
           </IconContainer>
-          Peer id —
+          Peer
           <IconContainer>
             <PeerIdAvatar peerId={peerId} />
           </IconContainer>
@@ -114,7 +114,7 @@ function DataPanel() {
           <IconContainer>
             <Icon type="marker" />
           </IconContainer>
-          Peer id — Not connected
+          Not connected to a peer
         </DataPanelItem>
       )}
       <Tooltip fixOn={'no-hover'} content={<RuntimeInfo />}>
