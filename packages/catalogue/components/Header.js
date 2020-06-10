@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const HeaderOuter = styled.div`
   display: flex;
@@ -40,9 +41,16 @@ const NavLink = styled.a`
 function Header() {
   return (
     <HeaderOuter>
-      <LogoContainer>
-        <Logo src="logo_medium.png" /> Observation Deck
-      </LogoContainer>
+      <Link
+        to={{
+          pathname: '/',
+          state: { fromLink: true },
+        }}
+      >
+        <LogoContainer>
+          <Logo src="logo_medium.png" /> Observation Deck
+        </LogoContainer>
+      </Link>
       <NavTray>
         <NavLink>About</NavLink>
         <NavLink>Documentation</NavLink>

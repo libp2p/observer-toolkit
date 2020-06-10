@@ -56,6 +56,7 @@ function Router({ widgets, Content, title }) {
 
   const history = useHistory()
   const location = useLocation()
+  const fromLink = location.state ? location.state.fromLink : false
 
   const sourceType = source.type
 
@@ -99,9 +100,13 @@ function Router({ widgets, Content, title }) {
   const currentlyHasData = testHasData(states, runtime)
 
   useEffect(() => {
-    if (willApplyUrlRef.current) {
+    if (fromLink || willApplyUrlRef.current) {
       updateStateFromParams(routeMatch.params)
       willApplyUrlRef.current = false
+      if (fromLink) {
+        // Reset location state
+        history.replace({ ...location, state: {} })
+      }
     } else {
       if (currentPathname !== routeUri) {
         history.push(routeUri)
@@ -125,11 +130,13 @@ function Router({ widgets, Content, title }) {
     currentlyHasData,
     source,
     history,
+    location,
     routeUri,
     routeMatch,
     currentPathname,
     handlePopState,
     updateStateFromParams,
+    fromLink,
   ])
 
   const initialSourceType = routeMatch.params.sourceType
