@@ -28,7 +28,7 @@ function testHasData(states, runtime, source) {
 
 function getRouteUri(hasData, source, selectedWidget) {
   let route = '/'
-  if (!hasData) return route
+  if (!hasData || !source.type) return route
   route += `${source.type}/${source.name}/`
   if (!selectedWidget) return route
   route += selectedWidget.name
