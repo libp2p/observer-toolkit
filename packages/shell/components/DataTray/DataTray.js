@@ -57,7 +57,9 @@ function DataTray({ handleNewData, initialSourceType }) {
   const source = useContext(SourceContext)
   const { removeData, updateData, setIsLoading } = useContext(SetterContext)
 
-  const [selectedIndex, setSelectedIndex] = useState(getInitialIndex(source, initialSourceType))
+  const [selectedIndex, setSelectedIndex] = useState(
+    getInitialIndex(source, initialSourceType)
+  )
 
   const deselect = e => {
     e.stopPropagation()

@@ -6,12 +6,7 @@ import React, {
   useState,
 } from 'react'
 import T from 'prop-types'
-import {
-  useHistory,
-  useLocation,
-  useRouteMatch,
-  matchPath,
-} from 'react-router-dom'
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 
 import {
   DataContext,
