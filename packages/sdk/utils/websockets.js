@@ -6,7 +6,7 @@ let eventsRelease = false
 
 setInterval(() => {
   eventsRelease = true
-}, 200)
+}, 1000)
 
 // Give each command a unique integer id
 let id = 0

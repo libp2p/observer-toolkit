@@ -64,7 +64,7 @@ const InnerChip = styled.div.attrs(({ theme, age }) => {
     status === 'ACTIVE'
       ? theme.color('contrast', 2)
       : theme.color('background', 2, 0.25)};
-  ${({ theme }) => theme.transition()}
+  ${({ theme, noTransition }) => (noTransition ? '' : theme.transition())}
 `
 
 const Distance = styled.div`
@@ -130,6 +130,7 @@ function DhtPeer({
   slotRef,
   previousSlotRef,
   showDistance = false,
+  noTransition = false,
 }) {
   const { setPeerIds } = useContext(SetterContext)
 
@@ -142,6 +143,7 @@ function DhtPeer({
   const peerRef = useRef()
   const transitionStyles = getTransitionStyles(slotRef, previousSlotRef)
   useEffect(() => {
+    if (noTransition) return
     const applyTransitionStyles = async i => {
       const styles = transitionStyles[i]
       if (!styles || !peerRef.current) return
@@ -170,7 +172,7 @@ function DhtPeer({
         timestamp={timestamp}
         stateDuration={stateDuration}
       />
-      <InnerChip age={age} status={status} />
+      <InnerChip age={age} status={status} noTransition={noTransition} />
       {showDistance && <Distance>{distance}</Distance>}
       <DhtPeerHighlighting peerId={peerId} />
     </Container>
@@ -187,6 +189,7 @@ DhtPeer.propTypes = {
   slotRef: T.object,
   previousSlotRef: T.object,
   showDistance: T.bool,
+  noTransition: T.bool,
 }
 
 export default DhtPeer

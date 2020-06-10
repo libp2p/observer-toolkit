@@ -176,6 +176,7 @@ function handleDispatchSource(oldSource, { action, source }) {
     case 'update':
       return Object.assign({}, oldSource, source)
     case 'setIsLoading':
+      if (oldSource.isLoading === source.isLoading) return oldSource
       return { ...oldSource, isLoading: source.isLoading }
     case 'remove':
       return getEmptySource()
@@ -186,7 +187,7 @@ function handleDispatchSource(oldSource, { action, source }) {
 
 function handleDispatchWebsocket(oldWsData, { action, ...args }) {
   // No-op for non-open actions when there's no open websocket
-  if (!oldWsData && action !== 'onOpen') return
+  if (!oldWsData && action !== 'onOpen') return oldWsData
 
   switch (action) {
     case 'onOpen':

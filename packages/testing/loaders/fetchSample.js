@@ -1,14 +1,13 @@
 import { parseImport } from '@nearform/observer-data'
 
-async function fetchSample(sampleIndex = 0) {
+async function fetchSample(sampleIndex = 0, providedSample, deserialize) {
   // Only to be used in browser environment where fetch is available
   if (typeof fetch !== 'function')
     throw new Error('fetchSample() requires the browser fetch() API')
 
   const { default: samples } = await import('@nearform/observer-samples')
-  const sample = samples[sampleIndex]
-
-  const response = await fetch(sample.file)
+  const sample = providedSample || samples[sampleIndex].file
+  const response = await fetch(sample)
 
   if (!response.ok) {
     const { status, statusText, url } = response
@@ -17,7 +16,7 @@ async function fetchSample(sampleIndex = 0) {
 
   const fileData = await response.arrayBuffer()
 
-  const sampleData = parseImport(fileData)
+  const sampleData = parseImport(fileData, deserialize)
 
   const source = {
     type: 'sample',

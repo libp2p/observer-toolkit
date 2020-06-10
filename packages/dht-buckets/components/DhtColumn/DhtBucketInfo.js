@@ -1,19 +1,21 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
 import {
   usePooledData,
-  AccordionControl,
   Histogram,
   PeerIdChip,
+  RootNodeContext,
+  SetterContext,
   TimeContext,
+  Tooltip,
 } from '@nearform/observer-sdk'
 import { getStateTimes } from '@nearform/observer-data'
 
 import { DhtQueryContext } from '../context/DhtQueryProvider'
-
 import { getQueryTimesByPeer } from '../../utils/queries'
+import PeersTable from './PeersTable'
 
 const InfoList = styled.ul`
   padding: 0;
@@ -38,7 +40,12 @@ const InfoItemLabel = styled.label`
   color: ${({ theme }) => theme.color('tertiary', 2)};
 `
 
-const AccordionButton = styled.button`
+const ShowPeers = styled.div`
+  cursor: pointer;
+  position: relative;
+  display: block;
+  padding: ${({ theme }) => theme.spacing(1)};
+  background: ${({ theme }) => theme.color('background')};
   margin: 0;
   ${({ theme }) => theme.text('body', 'medium')}
 `
@@ -49,41 +56,55 @@ function DhtBucketInfo({ peers }) {
   const { queriesByPeerId, poolSetsElapsed, poolSetsAge } =
     useContext(DhtQueryContext) || {}
   const state = useContext(TimeContext)
+  const { setPeerIds } = useContext(SetterContext)
+  const rootNodeRef = useContext(RootNodeContext)
   const { end: timeNow } = getStateTimes(state)
 
   const { pooledData: ageData, poolSets: ageSets } = usePooledData({
     data: peers,
-    poolings: [{ mapData: peer => peer.age }],
+    poolings: [{ mapData: peer => peer.age / 1000 }],
     poolSets: poolSetsAge,
   })
 
-  const peerIds = peers.map(peer => peer.peerId)
-  const inboundQueries = getQueryTimesByPeer({
-    queriesByPeerId,
-    peerIds,
-    direction: 'INBOUND',
-    timeNow,
-  })
-  const outboundQueries = getQueryTimesByPeer({
-    queriesByPeerId,
-    peerIds,
-    direction: 'OUTBOUND',
-    timeNow,
-  })
+  const { inboundQueries, outboundQueries } = useMemo(() => {
+    const peerIds = peers.map(peer => peer.peerId)
+    const inboundQueries = getQueryTimesByPeer({
+      queriesByPeerId,
+      peerIds,
+      direction: 'INBOUND',
+      timeNow,
+    })
+    const outboundQueries = getQueryTimesByPeer({
+      queriesByPeerId,
+      peerIds,
+      direction: 'OUTBOUND',
+      timeNow,
+    })
+    return { inboundQueries, outboundQueries }
+  }, [timeNow, peers, queriesByPeerId])
 
   const { pooledData: inboundData, poolSets: inboundSets } = usePooledData({
     data: inboundQueries,
-    poolings: [{ mapData: query => query.elapsed }],
+    poolings: [{ mapData: query => query.elapsed / 1000 }],
     poolSets: poolSetsElapsed,
   })
 
   const { pooledData: outboundData, poolSets: outboundSets } = usePooledData({
     data: outboundQueries,
-    poolings: [{ mapData: query => query.elapsed }],
+    poolings: [{ mapData: query => query.elapsed / 1000 }],
     poolSets: poolSetsElapsed,
   })
 
-  const [peerIdListIsOpen, setPeerIdListIsOpen] = useState(false)
+  const handleBarHighlight = useCallback(
+    items => {
+      if (!items) {
+        setPeerIds([])
+        return
+      }
+      setPeerIds(items.map(item => item.peerId))
+    },
+    [setPeerIds]
+  )
 
   return (
     <InfoList>
@@ -100,24 +121,18 @@ function DhtBucketInfo({ peers }) {
         ) : (
           <>
             <InfoItemLabel>Peer IDs</InfoItemLabel>
-            <AccordionControl
-              isOpen={peerIdListIsOpen}
-              setIsOpen={setPeerIdListIsOpen}
+            <Tooltip
+              side="right"
+              fixOn="no-hover"
+              hang={4}
+              containerRef={rootNodeRef}
+              content={<PeersTable peers={peers} />}
               override={{
-                AccordionButton,
+                Target: ShowPeers,
               }}
             >
               Show {peers.length} peer IDs
-            </AccordionControl>
-            {peerIdListIsOpen && (
-              <InfoList>
-                {peers.map(peer => (
-                  <PeerListItem key={peer.peerId}>
-                    <PeerIdChip peerId={peer.peerId} />
-                  </PeerListItem>
-                ))}
-              </InfoList>
-            )}
+            </Tooltip>
           </>
         )}
       </InfoItem>
@@ -127,8 +142,9 @@ function DhtBucketInfo({ peers }) {
           <Histogram
             pooledData={inboundData}
             poolSets={inboundSets}
-            xAxisSuffix={'ms ago'}
+            xAxisSuffix={' secs ago'}
             verticalLines={3}
+            onHighlight={handleBarHighlight}
           />
         </ChartContainer>
       </InfoItem>
@@ -138,8 +154,9 @@ function DhtBucketInfo({ peers }) {
           <Histogram
             pooledData={outboundData}
             poolSets={outboundSets}
-            xAxisSuffix={'ms ago'}
+            xAxisSuffix={' secs ago'}
             verticalLines={3}
+            onHighlight={handleBarHighlight}
           />
         </ChartContainer>
       </InfoItem>
@@ -149,8 +166,9 @@ function DhtBucketInfo({ peers }) {
           <Histogram
             pooledData={ageData}
             poolSets={ageSets}
-            xAxisSuffix={'ms'}
+            xAxisSuffix={' seconds'}
             verticalLines={3}
+            onHighlight={handleBarHighlight}
           />
         </ChartContainer>
       </InfoItem>

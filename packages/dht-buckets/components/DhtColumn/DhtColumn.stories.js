@@ -3,13 +3,14 @@ import T from 'prop-types'
 import { storiesOf } from '@storybook/react'
 
 import { TimeContext } from '@nearform/observer-sdk'
-import { getDhtBucketPeers, getStateTimes } from '@nearform/observer-data'
+import { getDhtPeersInBucket, getStateTimes } from '@nearform/observer-data'
 
 import DhtColumn from './DhtColumn'
 
 function DhtColumnFixture({ bucketNum, title }) {
   const currentState = useContext(TimeContext)
-  const peers = getDhtBucketPeers(bucketNum, currentState)
+  if (!currentState) return ''
+  const peers = getDhtPeersInBucket(bucketNum, currentState)
   const timestamp = getStateTimes(currentState).end
 
   return (

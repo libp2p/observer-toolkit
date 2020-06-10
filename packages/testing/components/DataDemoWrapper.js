@@ -6,7 +6,7 @@ import { DataProvider } from '@nearform/observer-sdk'
 import ThemeWrapper from './ThemeWrapper'
 import fetchSample from '../loaders/fetchSample'
 
-function DataDemoWrapper({ children }) {
+function DataDemoWrapper({ children, sampleIndex, sample, deserialize }) {
   const [mock, setMock] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -16,13 +16,13 @@ function DataDemoWrapper({ children }) {
     setIsLoading(true)
 
     const applyMock = async () => {
-      const mock = await fetchSample()
+      const mock = await fetchSample(sampleIndex, sample, deserialize)
 
       setMock(mock)
       setIsLoading(false)
     }
     applyMock()
-  }, [isLoading, mock, setMock, setIsLoading])
+  }, [isLoading, mock, setMock, setIsLoading, sampleIndex, sample, deserialize])
 
   return !mock ? (
     'Preparing sample data...'
@@ -37,6 +37,9 @@ function DataDemoWrapper({ children }) {
 
 DataDemoWrapper.propTypes = {
   children: T.node.isRequired,
+  sampleIndex: T.number,
+  sample: T.object,
+  deserialize: T.func,
 }
 
 export default DataDemoWrapper
