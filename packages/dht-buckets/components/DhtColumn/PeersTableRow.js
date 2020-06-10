@@ -1,10 +1,6 @@
 import React, { useContext } from 'react'
 import T from 'prop-types'
-import {
-  DataTableRow,
-  PeersContext,
-  SetterContext,
-} from '@nearform/observer-sdk'
+import { DataTableRow, PeersContext, SetterContext } from '@libp2p/observer-sdk'
 
 function PeersTableRow({ rowContent, ...rowProps }) {
   const globalPeerIds = useContext(PeersContext)

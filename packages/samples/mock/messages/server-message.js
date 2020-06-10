@@ -2,7 +2,7 @@
 
 const {
   proto: { ServerMessage, Version },
-} = require('@nearform/observer-proto')
+} = require('@libp2p/observer-proto')
 
 function createServerMessage(message, type) {
   const serverMessage = new ServerMessage()

@@ -1,6 +1,6 @@
 # `streams-table` @libp2p/observer-streams-table
 
-A libp2p Observer widget, built on built on @nearform/observer-sdk, visualising current and recent data streams in libp2p Introspection data.
+A libp2p Observer widget, built on built on @libp2p/observer-sdk, visualising current and recent data streams in libp2p Introspection data.
 
 [screenshot here]
 

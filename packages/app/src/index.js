@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Catalogue, { serviceWorker } from '@nearform/observer-catalogue'
+import Catalogue, { serviceWorker } from '@libp2p/observer-catalogue'
 
 import widgets from './widgets.js'
 

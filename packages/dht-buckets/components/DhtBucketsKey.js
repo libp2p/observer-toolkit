@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { RuntimeContext } from '@nearform/observer-sdk'
+import { RuntimeContext } from '@libp2p/observer-sdk'
 
 import DhtPeer from './DhtPeer/DhtPeer'
 import { slotSize, borderWidth } from '../utils/constants'

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { fireEvent, act, render } from '@testing-library/react'
-import Catalogue from '@nearform/observer-catalogue'
+import Catalogue from '@libp2p/observer-catalogue'
 
 import widgets from './widgets'
 

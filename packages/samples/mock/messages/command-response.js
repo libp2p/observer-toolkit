@@ -2,7 +2,7 @@
 
 const {
   proto: { CommandResponse },
-} = require('@nearform/observer-proto')
+} = require('@libp2p/observer-proto')
 
 function _getResult(error) {
   if (error) return CommandResponse.Result.ERR
