@@ -86,6 +86,7 @@ function DhtBucketsKey() {
             <Slot>
               <DhtPeer
                 status="ACTIVE"
+                timestamp={timestamp}
                 peerId={peerId}
                 age={3000}
                 noTransition
@@ -99,6 +100,7 @@ function DhtBucketsKey() {
             <Slot>
               <DhtPeer
                 status="MISSING"
+                timestamp={timestamp}
                 peerId={peerId}
                 age={3000}
                 noTransition
