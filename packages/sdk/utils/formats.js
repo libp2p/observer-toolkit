@@ -37,7 +37,7 @@ function _formatNumberRecursion(num, units, maxRecursions) {
   const remainder = num - unitsInt * perUnit
   const nextSegment = _formatNumberRecursion(remainder, units, maxRecursions)
   const nextSegmentNum = Number(nextSegment.match(/^[\d|.]*/)[0])
-  return nextSegmentNum ? `${segment}, ${nextSegment}` : segment
+  return nextSegmentNum ? `${segment} ${nextSegment}` : segment
 }
 
 function formatDuration(ms, maxRecursions = 2, shortForm = false) {
