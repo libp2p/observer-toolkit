@@ -60,12 +60,12 @@ This is used to assist drawing Canvas elements that persist on re-renders, resiz
 <a id="useconsoleapi"></a>
 #### [`useConsoleAPI( props )`](useConsoleAPI.js)
 
-Exposes LibP2P observer data to the console via the `window` object and prints a description of the data available.
+Exposes libp2p observer data to the console via the `window` object and prints a description of the data available.
 
 <a id="usedatastore"></a>
 #### [`useDatastore( props )`](useDatastore.js)
 
-Manages the central source of LibP2P Introspection data and metadata and returns the current data and updater functions.
+Manages the central source of libp2p Introspection data and metadata and returns the current data and updater functions.
 
 The data stored in `useDatastore` represents what is held in memory: data removed here will be unretrievable and up for garbage collection. Any filters selected by the user using UI tools are applied outside of this hook (for example, global filters are applied in [`DataProvider`](), before propogating the data store contents as contexts).
 

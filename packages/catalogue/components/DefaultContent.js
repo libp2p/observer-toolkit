@@ -23,8 +23,8 @@ function DefaultContent() {
       <DetailsItem>
         <DetailsHeading>About</DetailsHeading>
         <p>
-          The LibP2P Observation Deck helps users observe LibP2P activity,
-          providing a catalogue of widgets to visualise LibP2P introspection
+          The libp2p Observation Deck helps users observe libp2p activity,
+          providing a catalogue of widgets to visualise libp2p introspection
           data.
         </p>
       </DetailsItem>

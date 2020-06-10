@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import { getEventType, getRuntimeEventTypes } from '@nearform/observer-data'
-import { RuntimeContext, Tooltip } from '@nearform/observer-sdk'
+import { RuntimeContext, Monospace, Tooltip } from '@nearform/observer-sdk'
 
 import EventTypesPropertyControls from './EventTypesPropertyControls'
 
@@ -108,7 +108,7 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
             }
           >
             <EventType hasFilters={hasFilters}>
-              {count} {name}
+              {count} <Monospace>{name}</Monospace>
               <EventTypeColumnSummary hasFilters={hasFilters}>
                 {propertyData.length} column
                 {propertyData.length === 1 ? '' : 's'},{' '}

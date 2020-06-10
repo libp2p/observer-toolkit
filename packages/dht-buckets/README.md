@@ -1,6 +1,6 @@
 # `dht-buckets` @libp2p/observer-dht-buckets
 
-A LibP2P Observer widget, built on built on @nearform/observer-sdk, visualising peers on the LibP2P Distributed Hash Tables and their activity in DHT queries.
+A libp2p Observer widget, built on built on @nearform/observer-sdk, visualising peers on the libp2p Distributed Hash Tables and their activity in DHT queries.
 
 [screenshot here]
 
@@ -14,7 +14,7 @@ A LibP2P Observer widget, built on built on @nearform/observer-sdk, visualising 
 
 ## Exports
 
-Exports follow the standard format of LibP2P Observer widgets:
+Exports follow the standard format of libp2p Observer widgets:
 
 #### `Widget({ closeWidget })` 
 

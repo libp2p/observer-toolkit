@@ -18,12 +18,12 @@ const SegmentedPeerId = styled.div`
   user-select: text;
 `
 
-const LastSegment = styled.span`
+const TruncatedSegment = styled.span`
   font-weight: 500;
 `
 
-function getPeerSegment(segmentText, i, isLast) {
-  if (!isLast)
+function getPeerSegment(segmentText, i, isFirst) {
+  if (!isFirst)
     return (
       <span key={`segment-${i}`}>
         {segmentText}
@@ -32,15 +32,12 @@ function getPeerSegment(segmentText, i, isLast) {
     )
 
   const truncated = getTruncatedPeerId(segmentText)
-  const mainSegment = segmentText.slice(
-    0,
-    segmentText.length - truncated.length
-  )
+  const mainSegment = segmentText.slice(truncated.length)
 
   return (
     <span key={`segment-${i}`}>
+      <TruncatedSegment>{truncated}</TruncatedSegment>
       {mainSegment}
-      <LastSegment>{truncated}</LastSegment>
     </span>
   )
 }
@@ -54,13 +51,14 @@ function PeerIdTooltip({ peerId, children, override = {} }) {
   const peerIdSegments = []
   let i = 0
   while (i < segmentsCount) {
+    const isFirst = i === 0
     const isLast = i + 1 === segmentsCount
 
     const segmentText = peerId.slice(
       segmentsLength * i,
       segmentsLength * (i + 1)
     )
-    peerIdSegments.push(getPeerSegment(segmentText, i, isLast))
+    peerIdSegments.push(getPeerSegment(segmentText, i, isFirst))
     if (!isLast) peerIdSegments.push(<wbr key={`break-${i}`} />)
 
     i++

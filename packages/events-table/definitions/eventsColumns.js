@@ -3,7 +3,7 @@ import { getEventType } from '@nearform/observer-data'
 
 import { RenderTime } from '../components/contentRenderers'
 
-import { ShowJsonButton } from '../components/cellContent'
+import { MonospaceContent, ShowJsonButton } from '../components/cellContent'
 
 const stringSorter = {
   getSorter: getStringSorter,
@@ -32,6 +32,7 @@ const typeCol = {
   name: 'type',
   getProps: event => ({ value: getEventType(event) }),
   sort: stringSorter,
+  renderContent: MonospaceContent,
   cellProps: {
     width: '12%',
   },

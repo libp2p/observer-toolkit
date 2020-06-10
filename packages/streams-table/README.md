@@ -1,16 +1,16 @@
 # `streams-table` @libp2p/observer-streams-table
 
-A LibP2P Observer widget, built on built on @nearform/observer-sdk, visualising current and recent data streams in LibP2P Introspection data.
+A libp2p Observer widget, built on built on @nearform/observer-sdk, visualising current and recent data streams in libp2p Introspection data.
 
 [screenshot here]
 
 ## Key features
 
-- Note: currently data such as a stream's data traffic, latency and connection transport are unavailable to LibP2P Introspection. This widget therefore currently has a limited feature set of basic data table functionality 
+- Note: currently data such as a stream's data traffic, latency and connection transport are unavailable to libp2p Introspection. This widget therefore currently has a limited feature set of basic data table functionality 
 
 ## Exports
 
-Exports follow the standard format of LibP2P Observer widgets:
+Exports follow the standard format of libp2p Observer widgets:
 
 #### `Widget({ closeWidget })` 
 

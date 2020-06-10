@@ -9,6 +9,7 @@ import { getStringSorter, getNumericSorter } from '@nearform/observer-sdk'
 import {
   AgeContent,
   BytesContent,
+  MonospaceContent,
   PeerIdContent,
   StatusContent,
 } from '../components/cellContent'
@@ -93,6 +94,7 @@ const ageCol = {
 const protocolCol = {
   name: 'protocol',
   getProps: ({ stream }) => ({ value: stream.getProtocol() }),
+  renderContent: MonospaceContent,
   sort: stringSorter,
 }
 

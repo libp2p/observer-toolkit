@@ -1,16 +1,16 @@
 # `create-widget` @libp2p/create-observer-widget
 
-This script, compatible with `yarn create` and `npm init`, kickstarts the creation of a widgets for visualising LibP2P Introspection data. When run in an empty directory, this script:
+This script, compatible with `yarn create` and `npm init`, kickstarts the creation of a widgets for visualising libp2p Introspection data. When run in an empty directory, this script:
 
- - Writes a `package.json` file with the core dependencies necessary for a LibP2P Observer widget
+ - Writes a `package.json` file with the core dependencies necessary for a libp2p Observer widget
  - Writes core files to export the expected combination set of React `Widget` component, markdown `description`, `name` string, `screenshot` and `tags`
  - Creates a base central component file for the new widget
- - Writes files connecting this to Storybook and [@libp2p/observer-shell](../shell) allowing immediate live-updating in-browser testing with sample LibP2P Introspection data files
- - Sets up config files to match LibP2P Observer's lint and testing standards
+ - Writes files connecting this to Storybook and [@libp2p/observer-shell](../shell) allowing immediate live-updating in-browser testing with sample libp2p Introspection data files
+ - Sets up config files to match libp2p Observer's lint and testing standards
 
 ## Usage
 
-To bootstrap a new widget project built on the LibP2P Observer:
+To bootstrap a new widget project built on the libp2p Observer:
 
 - Create and navigate to a new, empty project directory
 - Run either:

@@ -37,7 +37,7 @@ Then begin developing your widget in:
 Use Storybook to try your widget on sample data as you go:
   ${chalk.white('npm run storybook')}
 
-See how to deploy it and share it with the LibP2P community:
+See how to deploy it and share it with the libp2p community:
   ${chalk.white(GITHUB_REPO_URL)}
 `)
   )

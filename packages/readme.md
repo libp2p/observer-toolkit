@@ -39,17 +39,17 @@ When working locally, after running `yarn install`:
 <a id="21-core-ui-packages"></a>
 ### 2.1 Core UI packages
 
-- [**`packages/catalogue`**](catalogue): React components, pages and routing for building browsable catalogues of LibP2P Observer widgets based on a provided list of widgets.
+- [**`packages/catalogue`**](catalogue): React components, pages and routing for building browsable catalogues of libp2p Observer widgets based on a provided list of widgets.
 - [**`packages/sdk`**](sdk): A Software Development Kit consisting of a library of core components, hooks, theming and utilities used across all widgets and UI packages.
 - [**`packages/shell`**](shell): React components comprising the common interface around an active widget, such as data timeline, data selection tools, settings and filter controls.
 
 <a id="22-widgets"></a>
 ### 2.2 Widgets
 
-A "widget" is a React app based on the [LibP2P Observer SDK](sdk), for visualising LibP2P Introspection data. Each widget is expected to run inside the [LibP2P Observer Shell](shell) and may be included in a [LibP2P Observer Catalogue](catalogue).
+A "widget" is a React app based on the [libp2p Observer SDK](sdk), for visualising libp2p Introspection data. Each widget is expected to run inside the [libp2p Observer Shell](shell) and may be included in a [libp2p Observer Catalogue](catalogue).
 
 - [**`packages/connections-table`**](connections-table) An interactive data table showing the connections observed at a user-selected point in time, including cumulative traffic, peer Ids, connection status and transports.
-- [**`packages/dht-buckets`**](events-table) A visualisation of live activity of peers on the DHT routing table. Currently on hold due to ongoing changes to the LibP2P DHT model.
+- [**`packages/dht-buckets`**](events-table) A visualisation of live activity of peers on the DHT routing table. Currently on hold due to ongoing changes to the libp2p DHT model.
 - [**`packages/events-table`**](events-table) A configurable interactive data table showing incoming events in real time, based on provided data about known event types.
 - [**`packages/streams-table`**](streams-table) A streams datatable added to demonstrate switching between visualizations in the catalogue.
 
@@ -58,13 +58,13 @@ A "widget" is a React app based on the [LibP2P Observer SDK](sdk), for visualisi
 ### 2.3 Node.js scripts
 
 - [**`packages/create-widget`**](create-widget): Generates a new empty widget based on CLI input, and is compatible with `npm init` and `yarn create`. 
-- [**`packages/data`**](data): Helper functions for common operations on LibP2P Introspection protobuf data. 
-- [**`packages/proto`**](proto): The definition and Javscript encoder/decoder of the protobuf used for LibP2P introspection data, with utilities for bundling and unpacking the protobuf data alongside checksums and byte counts. 
-- [**`packages/samples`**](samples): Scripts for generating mock LibP2P Introspection data, saved to a binary file or via a mock websocket server. Also includes a set of pre-generated sample files. 
+- [**`packages/data`**](data): Helper functions for common operations on libp2p Introspection protobuf data. 
+- [**`packages/proto`**](proto): The definition and Javscript encoder/decoder of the protobuf used for libp2p introspection data, with utilities for bundling and unpacking the protobuf data alongside checksums and byte counts. 
+- [**`packages/samples`**](samples): Scripts for generating mock libp2p Introspection data, saved to a binary file or via a mock websocket server. Also includes a set of pre-generated sample files. 
 
 
 <a id="24-developer-tools"></a>
 ### 2.4 Developer tools
 
-- [**`packages/app`**](app): A React app, based on [Craco](https://github.com/gsoft-inc/craco), which builds a demo LibP2P Observer catalogue containing the widgets included in this repo.
+- [**`packages/app`**](app): A React app, based on [Craco](https://github.com/gsoft-inc/craco), which builds a demo libp2p Observer catalogue containing the widgets included in this repo.
 - [**`packages/testing`**](testing) Utilities for easing testing of React components, including scripts and fixtures for loading data in Jest and Storybook, and custom queries for [react-testing-library](https://testing-library.com/docs/react-testing-library/intro).

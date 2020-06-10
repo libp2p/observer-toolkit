@@ -6,6 +6,7 @@ import {
   formatDuration,
   Bubble,
   DataNumber,
+  Monospace,
   PeerIdChip,
   StatusChip,
   TimeNumber,
@@ -68,4 +69,17 @@ AgeContent.propTypes = {
   maxValue: T.num,
 }
 
-export { AgeContent, BytesContent, PeerIdContent, StatusContent }
+function MonospaceContent({ value }) {
+  return <Monospace>{value}</Monospace>
+}
+MonospaceContent.propTypes = {
+  value: T.string,
+}
+
+export {
+  AgeContent,
+  BytesContent,
+  MonospaceContent,
+  PeerIdContent,
+  StatusContent,
+}

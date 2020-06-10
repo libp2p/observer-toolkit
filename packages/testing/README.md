@@ -1,6 +1,6 @@
 # `testing` @libp2p/observer-testing
 
-This package contains testing utilities to ease development of LibP2P Observer widgets and the LibP2P Observer project itself.
+This package contains testing utilities to ease development of libp2p Observer widgets and the libp2p Observer project itself.
 
 ## Environments
 

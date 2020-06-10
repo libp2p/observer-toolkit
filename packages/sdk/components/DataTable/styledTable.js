@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-// TODO: develop these placeholders further
 const Table = styled.table`
   border-collapse: collapse;
   table-layout: fixed;
@@ -55,4 +54,17 @@ const THeadRow = styled.tr`
 `
 const TBody = styled.tbody``
 
-export { Table, TableRow, TableHead, TableCell, THead, THeadRow, TBody }
+const Monospace = styled.span`
+  font-family: plex-mono;
+`
+
+export {
+  Table,
+  TableRow,
+  TableHead,
+  TableCell,
+  THead,
+  THeadRow,
+  TBody,
+  Monospace,
+}

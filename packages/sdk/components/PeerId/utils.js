@@ -1,6 +1,6 @@
 function getTruncatedPeerId(peerId) {
-  const truncationLength = 5
-  return peerId.slice(peerId.length - truncationLength)
+  const truncationLength = 8
+  return peerId.slice(0, truncationLength)
 }
 
 export { getTruncatedPeerId }

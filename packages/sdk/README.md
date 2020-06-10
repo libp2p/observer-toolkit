@@ -1,12 +1,12 @@
 # `sdk` @libp2p/observer-sdk
 
-This package contains the core React hooks and components on which LibP2P Observer widgets are built. It is also used for other LibP2P Observer UIs such as the [catalogue](../catalogue) and [shell](../shell).
+This package contains the core React hooks and components on which libp2p Observer widgets are built. It is also used for other libp2p Observer UIs such as the [catalogue](../catalogue) and [shell](../shell).
 
 ## 1. Usage
 
 ### 1.1 Including the SDK in a widget
 
-To create a LibP2P Observer data visualisation widget, use the [create-widget](../create-widget) script. This sets up a new repository including this package alongside Webpack and Storybook configuration, setting the widget up to be compatible with LibP2P Observer [Catalogues](../catalogue)and to run inside the LibP2P Observer [Shell](../shell).
+To create a libp2p Observer data visualisation widget, use the [create-widget](../create-widget) script. This sets up a new repository including this package alongside Webpack and Storybook configuration, setting the widget up to be compatible with libp2p Observer [Catalogues](../catalogue)and to run inside the libp2p Observer [Shell](../shell).
 
 ### 1.2 Including the SDK in any other project
 
@@ -16,14 +16,14 @@ The following is intended for use cases where `create-widget` does not apply. It
 
 To use this package as a base for other types of UI, choose the [type of dependency](https://classic.yarnpkg.com/en/docs/dependency-types/) which this package should be depending on based on whether the project is standalone:
 
- - If the project is intended to run alongside or inside the LibP2P Observer Catalogue, include this package as a *peer dependency*, so that only one version of this package and its dependencies can be included in the build, and also as a *dev dependency*, so that it is available locally during development for use (for example, for use with Storybook and Jest).
- - If the project is standalone and independent of the catalogue, for example if it is alternative to or fork of the LibP2P Catalogue, include this package as an ordinary dependency.
+ - If the project is intended to run alongside or inside the libp2p Observer Catalogue, include this package as a *peer dependency*, so that only one version of this package and its dependencies can be included in the build, and also as a *dev dependency*, so that it is available locally during development for use (for example, for use with Storybook and Jest).
+ - If the project is standalone and independent of the catalogue, for example if it is alternative to or fork of the libp2p Catalogue, include this package as an ordinary dependency.
 
  #### 1.2.2 Webpack config
 
  This package exports font files, it is recommended to use `file-loader` with a test matching at least the `otf` extension.
 
- Configuration including the following is recommended, as it covers fonts as well as other useful file types including sample binary files in the [samples](../samples) package and the markdown files and PNG images used in standard LibP2P widgets:
+ Configuration including the following is recommended, as it covers fonts as well as other useful file types including sample binary files in the [samples](../samples) package and the markdown files and PNG images used in standard libp2p widgets:
 
 ```js
 return {
@@ -58,7 +58,7 @@ These [custom react hooks](https://reactjs.org/docs/hooks-custom.html) contain J
 
 To give a broad overview, uses of custom hooks in the SDK include:
 
-- **Data management**. For example, [`useDatastore`](hooks#usedatastore) handles the central management of all LibP2P Introspection messages and metadata held in memory.
+- **Data management**. For example, [`useDatastore`](hooks#usedatastore) handles the central management of all libp2p Introspection messages and metadata held in memory.
 - **Shaping data for specific uses**. For example, [`usePooledData`](hooks#usepooleddata) creates pooled tallies of data usable for histograms and metrics, and [`useStackedData`](hooks#usestackeddata) stacks data cumulatively ready for use drawing area charts and stacked bar charts.
 - **Producing props use by visualisation components**, for example [`useAreaChart`](hooks#useareachart) generates path co-ordinates ready to pass to SVG or Canvas components, and [`useTabularData`](hooks#usetabulardata) outputs sorted and paginated rows of props ready to pass to specific column renderers.
 - **Generating and caching data and functions**, for example [`useSorter`](hooks#usesorter) and [`useFilter`](hooks#usefilter) generate functions for sorting and filtering data and update them as the user selects different options.
@@ -141,7 +141,7 @@ Returns filter definitions for a filter controlled by a range slider UI where va
 
 ### [Components](components)
 
-Running `npm run storybook:sdk` in the LibP2P Observer root directory launches a storybook instance demonstrating several of these components and their interactions with other child components and simple data.
+Running `npm run storybook:sdk` in the libp2p Observer root directory launches a storybook instance demonstrating several of these components and their interactions with other child components and simple data.
 
 All components have complete propType objects specifying the type of props they consume and which are required. These propTypes definitions are checked automatically by lint.
 

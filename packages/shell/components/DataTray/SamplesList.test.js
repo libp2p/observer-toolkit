@@ -51,7 +51,7 @@ describe('SamplesList', () => {
     const peerId = runtime.getPeerId()
 
     const getCurrentPeerId = async () => {
-      const shellPeerIdButton = await findByText(/^peer id —/i)
+      const shellPeerIdButton = await findByText(/^peer/i)
       await act(async () => {
         await fireEvent.mouseEnter(shellPeerIdButton)
       })
