@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import T from 'prop-types'
 
@@ -35,10 +35,9 @@ const CatalogueBkg = styled.div`
   display: flex;
 `
 
-function Connected({ widgets }) {
-  const [selected, setSelected] = useState(null)
-  const selectedWidget = widgets[selected]
-  const closeWidget = () => setSelected(null)
+function Connected({ widgets, widgetIndex, setWidgetIndex }) {
+  const selectedWidget = widgets[widgetIndex] || null
+  const closeWidget = () => setWidgetIndex(null)
 
   return (
     <Container>
@@ -59,9 +58,9 @@ function Connected({ widgets }) {
                       tags={tags}
                       screenshot={screenshot}
                       handleSelect={() =>
-                        setSelected(index === selected ? null : index)
+                        setWidgetIndex(index === widgetIndex ? null : index)
                       }
-                      isSelected={selected === index}
+                      isSelected={widgetIndex === index}
                     />
                   )
                 )}
@@ -76,6 +75,8 @@ function Connected({ widgets }) {
 }
 Connected.propTypes = {
   widgets: T.array.isRequired,
+  widgetIndex: T.number,
+  setWidgetIndex: T.func.isRequired,
 }
 
 export default Connected
