@@ -6,6 +6,7 @@ import ReactJson from 'react-json-view'
 import {
   copyToClipboard,
   Icon,
+  Monospace,
   StyledButton,
   Tooltip,
 } from '@nearform/observer-sdk'
@@ -114,4 +115,11 @@ RawJsonExpanded.propTypes = {
   value: T.string,
 }
 
-export { TimeContent, ShowJsonButton }
+function MonospaceContent({ value }) {
+  return <Monospace>{value}</Monospace>
+}
+MonospaceContent.propTypes = {
+  value: T.string,
+}
+
+export { MonospaceContent, TimeContent, ShowJsonButton }
