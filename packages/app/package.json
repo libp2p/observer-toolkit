@@ -1,7 +1,7 @@
 {
   "name": "@nearform/observer-app",
   "version": "0.0.1",
-  "description": "Demo app showing built-in LibP2P Observer widgets in a catalogue",
+  "description": "Demo app showing built-in libp2p Observer widgets in a catalogue",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "https://nearform.github.io/libp2p-observer",
   "license": "MIT",

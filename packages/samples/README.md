@@ -1,6 +1,6 @@
 # Libp2p Observer Samples
 
-These scripts simulate a LibP2P network and generate data in LibP2P Introspection protobuf format describing the activity of tht mock network.
+These scripts simulate a libp2p network and generate data in libp2p Introspection protobuf format describing the activity of tht mock network.
 
 ## 1. Generating sample data
 

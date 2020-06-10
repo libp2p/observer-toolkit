@@ -1,6 +1,6 @@
 # `data` @libp2p/observer-data
 
-Helper functions to perform common operations on LibP2P Introspection data.
+Helper functions to perform common operations on libp2p Introspection data.
 
 These functions are "vanilla" ES6+ JavaScript (with an ES5 webpack build available) and may therefore be imported and used in React components, in Node.js scripts and in tests alike. 
 
@@ -8,48 +8,48 @@ These functions are "vanilla" ES6+ JavaScript (with an ES5 webpack build availab
 
 - [Usage](#usage)
 - [Exported functions by file](#exported-functions-by-file)
-  - [binary.js](#binaryjs)
-    - [parseArrayBuffer\( ArrayBuffer \)](#parsearraybuffer-arraybuffer-)
-    - [parseBase64\( string \)](#parsebase64-string-)
-    - [parseBuffer\( Buffer \)](#parsebuffer-buffer-)
-    - [parseBufferList\( BufferList \)](#parsebufferlist-bufferlist-)
-    - [parseImport\( any \)](#parseimport-any-)
-  - [connectionsList.js](#connectionslistjs)
-    - [getAllConnections\( Array, { filter: function, latest: boolean } \)](#getallconnections-array--filter-function-latest-boolean--)
-    - [getAllStreamsAtTime\( State \)](#getallstreamsattime-state-)
-    - [getConnections\( State \)](#getconnections-state-)
-    - [getMissingClosedConnections\( State, Array \)](#getmissingclosedconnections-state-array-)
-    - [getConnectionId\( Connection \)](#getconnectionid-connection-)
-    - [getConnectionAge\( Connection, State \)](#getconnectionage-connection-state-)
-    - [getConnectionTimeClosed\( Connection, State \)](#getconnectiontimeclosed-connection-state-)
-    - [getConnectionTraffic\( Connection, direction:string, type:string \)](#getconnectiontraffic-connection-directionstring-typestring-)
-    - [getStreams\( Connection \)](#getstreams-connection-)
-    - [getStreamAge\( Stream, State \)](#getstreamage-stream-state-)
-    - [getStreamTimeClosed\( Stream, State \)](#getstreamtimeclosed-stream-state-)
-    - [getStreamTraffic\( Connection, direction:string, type:string \)](#getstreamtraffic-connection-directionstring-typestring-)
-  - [dht.js](#dhtjs)
-  - [enums.js](#enumsjs)
-    - [getEnumByName\( name:string, Object \)](#getenumbyname-namestring-object-)
-    - [dhtStatusNames](#dhtstatusnames)
-    - [statusNames](#statusnames)
-    - [roleNames](#rolenames)
-    - [transportNames](#transportnames)
-    - [dhtQueryResultNames](#dhtqueryresultnames)
-    - [dhtQueryDirectionNames](#dhtquerydirectionnames)
-    - [dhtQueryEventNames](#dhtqueryeventnames)
-  - [events.js](#eventsjs)
-    - [getEventType\( Event \)](#geteventtype-event-)
-    - [getEventPropertyLookup\( EventType \)](#geteventpropertylookup-eventtype-)
-    - [getEventTypeWithProperties \({ eventType:Object, propertyTypeLookup: Object }\)](#geteventtypewithproperties--eventtypeobject-propertytypelookup-object-)
-  - [runtime.js](#runtimejs)
-    - [getRuntimeEventTypes\( Runtime \)](#getruntimeeventtypes-runtime-)
-    - [getRuntimeEventProperties\( Runtime \)](#getruntimeeventproperties-runtime-)
-  - [states.js](#statesjs)
-    - [getLatestState\( Array \)](#getlateststate-array-)
-    - [getSubsystems\( State \)](#getsubsystems-state-)
-    - [getStateIndex\( Array, number \)](#getstateindex-array-number-)
-    - [getStateRangeTimes\( Array \)](#getstaterangetimes-array-)
-    - [getStateTimes\( State \)](#getstatetimes-state-)
+    - [binary.js](#binaryjs)
+        - [parseArrayBuffer\( ArrayBuffer \)](#parsearraybuffer-arraybuffer-)
+        - [parseBase64\( string \)](#parsebase64-string-)
+        - [parseBuffer\( Buffer \)](#parsebuffer-buffer-)
+        - [parseBufferList\( BufferList \)](#parsebufferlist-bufferlist-)
+        - [parseImport\( any \)](#parseimport-any-)
+    - [connectionsList.js](#connectionslistjs)
+        - [getAllConnections\( Array, { filter: function, latest: boolean } \)](#getallconnections-array--filter-function-latest-boolean--)
+        - [getAllStreamsAtTime\( State \)](#getallstreamsattime-state-)
+        - [getConnections\( State \)](#getconnections-state-)
+        - [getMissingClosedConnections\( State, Array \)](#getmissingclosedconnections-state-array-)
+        - [getConnectionId\( Connection \)](#getconnectionid-connection-)
+        - [getConnectionAge\( Connection, State \)](#getconnectionage-connection-state-)
+        - [getConnectionTimeClosed\( Connection, State \)](#getconnectiontimeclosed-connection-state-)
+        - [getConnectionTraffic\( Connection, direction:string, type:string \)](#getconnectiontraffic-connection-directionstring-typestring-)
+        - [getStreams\( Connection \)](#getstreams-connection-)
+        - [getStreamAge\( Stream, State \)](#getstreamage-stream-state-)
+        - [getStreamTimeClosed\( Stream, State \)](#getstreamtimeclosed-stream-state-)
+        - [getStreamTraffic\( Connection, direction:string, type:string \)](#getstreamtraffic-connection-directionstring-typestring-)
+    - [dht.js](#dhtjs)
+    - [enums.js](#enumsjs)
+        - [getEnumByName\( name:string, Object \)](#getenumbyname-namestring-object-)
+        - [dhtStatusNames](#dhtstatusnames)
+        - [statusNames](#statusnames)
+        - [roleNames](#rolenames)
+        - [transportNames](#transportnames)
+        - [dhtQueryResultNames](#dhtqueryresultnames)
+        - [dhtQueryDirectionNames](#dhtquerydirectionnames)
+        - [dhtQueryEventNames](#dhtqueryeventnames)
+    - [events.js](#eventsjs)
+        - [getEventType\( Event \)](#geteventtype-event-)
+        - [getEventPropertyLookup\( EventType \)](#geteventpropertylookup-eventtype-)
+        - [getEventTypeWithProperties \({ eventType:Object, propertyTypeLookup: Object }\)](#geteventtypewithproperties--eventtypeobject-propertytypelookup-object-)
+    - [runtime.js](#runtimejs)
+        - [getRuntimeEventTypes\( Runtime \)](#getruntimeeventtypes-runtime-)
+        - [getRuntimeEventProperties\( Runtime \)](#getruntimeeventproperties-runtime-)
+    - [states.js](#statesjs)
+        - [getLatestState\( Array \)](#getlateststate-array-)
+        - [getSubsystems\( State \)](#getsubsystems-state-)
+        - [getStateIndex\( Array, number \)](#getstateindex-array-number-)
+        - [getStateRangeTimes\( Array \)](#getstaterangetimes-array-)
+        - [getStateTimes\( State \)](#getstatetimes-state-)
 
 <!-- /MarkdownTOC -->
 
@@ -58,7 +58,7 @@ These functions are "vanilla" ES6+ JavaScript (with an ES5 webpack build availab
 
 An easy way to browse and experiment with the available functions is to:
 
-- Run the LibP2P Observer demo app with `npm run start:app`
+- Run the libp2p Observer demo app with `npm run start:app`
 - Select a data sample from the UI menu
 - Open browser developer tools
 - Explore the functions on `window.libp2pObs.data`
@@ -74,27 +74,27 @@ Guidance is printed to the browser console on what data and other resources are 
 <a id="parsearraybuffer-arraybuffer-"></a>
 #### parseArrayBuffer( ArrayBuffer )
 
-Decode LibP2P Introspection binary data that has been provided as an ArrayBuffer
+Decode libp2p Introspection binary data that has been provided as an ArrayBuffer
 
 <a id="parsebase64-string-"></a>
 #### parseBase64( string )
 
-Decode LibP2P Introspection binary data that has been provided as a Base64 string.
+Decode libp2p Introspection binary data that has been provided as a Base64 string.
 
 <a id="parsebuffer-buffer-"></a>
 #### parseBuffer( Buffer )
 
-Decode LibP2P Introspection binary data that has been provided as a singular buffer.
+Decode libp2p Introspection binary data that has been provided as a singular buffer.
 
 <a id="parsebufferlist-bufferlist-"></a>
 #### parseBufferList( BufferList )
 
-Decode LibP2P Introspection binary data that has been provided as a BufferList.
+Decode libp2p Introspection binary data that has been provided as a BufferList.
 
 <a id="parseimport-any-"></a>
 #### parseImport( any )
 
-Decode LibP2P Introspection binary data of any supported type.
+Decode libp2p Introspection binary data of any supported type.
 
 <a id="connectionslistjs"></a>
 ### [connectionsList.js](lib/connectionsList.js)

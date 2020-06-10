@@ -210,7 +210,7 @@ function mockConnectionTimeline({ timeline, open, close, upgraded }) {
 }
 
 function getTransportFromConnection(connection) {
-  // In real LibP2P, transports are stored on the swarm
+  // In real libp2p, transports are stored on the swarm
   // How to preserve refs to transports across restarts is unresolved
   return transportList.getItem(decodeBinToNum(connection.getTransportId()))
 }

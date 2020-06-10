@@ -1,6 +1,6 @@
 # `proto` @libp2p/observer-proto
 
-This package contains [the `.proto` protobuf schema](lib/introspection.proto) shared with the LibP2P Introspection module, and the [JavaScript implementation](lib/introspection.proto) of this schema generated with ProtoC, as well as a checksum script, [fnv1a](lib/fnv1a.js) for verifying LibP2P Introspection binary.
+This package contains [the `.proto` protobuf schema](lib/introspection.proto) shared with the libp2p Introspection module, and the [JavaScript implementation](lib/introspection.proto) of this schema generated with ProtoC, as well as a checksum script, [fnv1a](lib/fnv1a.js) for verifying libp2p Introspection binary.
 
 For more details on the protobuf format and operation, see the [official Google protobuf documentation](https://developers.google.com/protocol-buffers).
 
@@ -31,18 +31,18 @@ Decoded protobuf objects in JavaScript convert field names in the protobuf schem
 <a id="updating-the-protobuf-schema"></a>
 ### Updating the protobuf schema
 
-In the rare event of needing to update the protobuf definition and generated JavaScript implementation, run `npm run protoc` (requires [`protoc`](http://google.github.io/proto-lens/installing-protoc.html)). Ensure that changes are versioned and also mirrored in the LibP2P Introspection module.
+In the rare event of needing to update the protobuf definition and generated JavaScript implementation, run `npm run protoc` (requires [`protoc`](http://google.github.io/proto-lens/installing-protoc.html)). Ensure that changes are versioned and also mirrored in the libp2p Introspection module.
 
 <a id="message-types"></a>
 ## Message types
 
-This section gives an overview of the main LibP2P Introspection message times and how they inter-relate. See also:
+This section gives an overview of the main libp2p Introspection message times and how they inter-relate. See also:
 
 - The [protobuf schema]((lib/introspection.proto)) for the detail on each individual submessage and field
 - The [file format documentation](../../docs/file-format.md) for how these binary-encodded messages are packaged
 - The [data emitting protocol docs](../../docs/introspection-data-emitting-protocol.md) for how the data server and client interact
-- The [console API](../../docs/developer-guide.md#23-accessing-data-in-the-browser-console), which may be used to explore JavaScript-decoded LibP2P Introspection message objects in the browser console
-- The [data package](../data), which contains JavaScript helper functions performing common operations on decoded LibP2P Introspection data, such as making common calculations and extracting deep-nested fields.
+- The [console API](../../docs/developer-guide.md#23-accessing-data-in-the-browser-console), which may be used to explore JavaScript-decoded libp2p Introspection message objects in the browser console
+- The [data package](../data), which contains JavaScript helper functions performing common operations on decoded libp2p Introspection data, such as making common calculations and extracting deep-nested fields.
 
 <a id="data-messages"></a>
 ### Data messages
@@ -57,10 +57,10 @@ These serve as an outer wrapper for data messages (`state`, `event` and `runtime
 <a id="runtime-messages"></a>
 #### `Runtime` messages
 
-These contain metadata and settings about the LibP2P Introspection server and environment. This includes:
+These contain metadata and settings about the libp2p Introspection server and environment. This includes:
 
- - System metadata such as the `implementation` (e.g. Go, Rust, JavaScript) of LibP2P being used, the `version` of that implementation, the `platform` (operating system) it is run on and the `peer_id` of the LibP2P node hosting the introspection server.
- - `event_types` lists metadata about types of events that have been observed by the LibP2P Introspection server, including properties of these events and data types of those properties. When a new event type is observed, this is updated and a new `Runtime` message is sent.
+ - System metadata such as the `implementation` (e.g. Go, Rust, JavaScript) of libp2p being used, the `version` of that implementation, the `platform` (operating system) it is run on and the `peer_id` of the libp2p node hosting the introspection server.
+ - `event_types` lists metadata about types of events that have been observed by the libp2p Introspection server, including properties of these events and data types of those properties. When a new event type is observed, this is updated and a new `Runtime` message is sent.
  - `retention_period_ms` indicates for how long data will be retained before being discarded. The practical implications of this are, on the UI side, the maximum length of the [shell](../shell) timeline and the cutoff point at which the [datastore](../sdk/hooks#usedatastore) allows old data to be garbage collected, and on the server side, the maximum buffer size that should be queued while data is paused.
  - `send_state_interval_ms` indicates how frequently new `State` messages are to be generated by the Introspection server and sent to the Observer.
 
@@ -82,7 +82,7 @@ As well as the `subsystems`, each `State` message carries a `Traffic` submessage
 <a id="event-messages"></a>
 #### `Event` messages
 
-These are sent immediately on an event being observed by the LibP2P Introspection server. The LibP2P Observer then updates its datastore immediately, applying a small buffer to prevent excessive UI redraws in cases of extremely high-frequency events.
+These are sent immediately on an event being observed by the libp2p Introspection server. The libp2p Observer then updates its datastore immediately, applying a small buffer to prevent excessive UI redraws in cases of extremely high-frequency events.
 
 They contain a `type` that corresponds to a `name` in the `Runtime`'s `event_types` list, a `content` string containing stringified JSON of a schema matching the `property_type`s of the appropriate runtime `event_type`, and an integer timestamp `ts` of the moment the event was observed.
 

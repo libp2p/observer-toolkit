@@ -1,6 +1,6 @@
 # `ConnectionsTable`
 
-A LibP2P Observer example widget, visualising LibP2P connections in a "drifting" data table.
+A libp2p Observer example widget, visualising libp2p connections in a "drifting" data table.
 
 [screenshot here]
 
@@ -13,7 +13,7 @@ A LibP2P Observer example widget, visualising LibP2P connections in a "drifting"
 
 ## Exports
 
-Exports follow the standard format of LibP2P Observer widgets:
+Exports follow the standard format of libp2p Observer widgets:
 
 #### `Widget({ closeWidget })` 
 

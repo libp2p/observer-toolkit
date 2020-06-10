@@ -1,6 +1,6 @@
 # `catalogue` @libp2p/observer-catalogue
 
-This package exports components allowing the deployment of a browsable catalogue of LibP2P Introspection Widgets
+This package exports components allowing the deployment of a browsable catalogue of libp2p Introspection Widgets
 
 <!-- MarkdownTOC -->
 

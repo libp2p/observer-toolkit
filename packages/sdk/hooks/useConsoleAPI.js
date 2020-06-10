@@ -12,14 +12,14 @@ const getBodyStyle = theme =>
 function outputWelcome(theme) {
   console.log(
     `%c
-Welcome to the LibP2P Observer!
+Welcome to the libp2p Observer!
 `,
     getH1Style(theme)
   )
   console.log(
     `%c
 Here the console, you may explore \`libp2pObs\` on the global scope.
-This contains many entries useful for debugging or exploring the LibP2P Observer:
+This contains many entries useful for debugging or exploring the libp2p Observer:
   `,
     getBodyStyle(theme)
   )

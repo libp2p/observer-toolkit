@@ -1,6 +1,6 @@
 # `events-table` @libp2p/observer-events-table
 
-A LibP2P Observer widget, built on built on @nearform/observer-sdk, visualising recent events observed on a LibP2P Introspection server in a table that responds to observed event types.
+A libp2p Observer widget, built on built on @nearform/observer-sdk, visualising recent events observed on a libp2p Introspection server in a table that responds to observed event types.
 
 [screenshot here]
 
@@ -14,7 +14,7 @@ A LibP2P Observer widget, built on built on @nearform/observer-sdk, visualising 
 
 ## Exports
 
-Exports follow the standard format of LibP2P Observer widgets:
+Exports follow the standard format of libp2p Observer widgets:
 
 #### `Widget({ closeWidget })` 
 

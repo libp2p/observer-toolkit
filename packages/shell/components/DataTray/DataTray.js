@@ -41,7 +41,7 @@ const items = [
     name: 'Live connection',
     type: 'live',
     iconType: 'play',
-    description: 'Connect to LibP2P via a local websocket',
+    description: 'Connect to libp2p via a local websocket',
     Component: WebSocketInput,
   },
 ]

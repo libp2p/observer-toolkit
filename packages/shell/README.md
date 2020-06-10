@@ -1,6 +1,6 @@
 # `shell`
 
-This package exports components allowing the deployment of a UI containing data controls, widget filters and an interactive timeline wrapping around and controlling a LibP2P Observer widget.
+This package exports components allowing the deployment of a UI containing data controls, widget filters and an interactive timeline wrapping around and controlling a libp2p Observer widget.
 
 ## Exported API
 
@@ -12,7 +12,7 @@ A context-driven component needing no props listing buttons showing and allowing
  - `GlobalFilterControl` shows how many global filters are currently active and allows these to be set and unset.
  - `FileDownload` allows the current dataset shared by `DataProvider` to be exported as a binary file and shows the size of that file
  - Peer Id of the current runtime message is shown and can be copied to the clipboard
- - `RuntimeInfo` shows system info about the system supplying the LibP2P Introspection data and allows signals to be sent changing runtime settings.
+ - `RuntimeInfo` shows system info about the system supplying the libp2p Introspection data and allows signals to be sent changing runtime settings.
 
 #### `DataTray({ handleNewData })`
 
@@ -36,7 +36,7 @@ A visualisation of states data dispatched by `DataProvider` showing data in and 
 
 #### `WidgetHeader({ name, description, closeWidget })`
 
-A common header for open LibP2P Introspection widgets, including name, expandable description, close icon and filter controls.
+A common header for open libp2p Introspection widgets, including name, expandable description, close icon and filter controls.
 
  - `FiltersButton` displays how many filters are active and toggles the visibility of the `FiltersTray`
  - `FiltersTray` displays available filters for this widget
