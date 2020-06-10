@@ -2,11 +2,7 @@ import React, { createContext, useContext, useMemo } from 'react'
 import T from 'prop-types'
 
 import { getStateTimes, getDhtPeers } from '@libp2p/observer-data'
-import {
-  usePooledData,
-  ConfigContext,
-  TimeContext,
-} from '@libp2p/observer-sdk'
+import { usePooledData, ConfigContext, TimeContext } from '@libp2p/observer-sdk'
 
 import useDhtQueries from '../../hooks/useDhtQueries'
 import { getQueryTimesByPeer } from '../../utils/queries'
