@@ -9,11 +9,16 @@ import {
 } from '@nearform/observer-data'
 import { TimeContext } from '@nearform/observer-sdk'
 
+import DhtBucketsKey from './DhtBucketsKey'
 import DhtColumn from './DhtColumn/DhtColumn'
 
 const Container = styled.div`
   background: ${({ theme, backgroundColorIndex }) =>
     theme.color('background', 1)};
+  padding: ${({ theme }) => theme.spacing([1, 0.5])};
+`
+
+const ColumnsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -43,20 +48,23 @@ function DhtBuckets({ children }) {
 
   return (
     <Container>
-      <DhtColumn
-        peers={catchAllBucketData.peers}
-        timestamp={timestamp}
-        bucketNum={0}
-        key={`bucket_0`}
-      />
-      {numberedBucketData.map(({ distance, peers }) => (
+      <DhtBucketsKey />
+      <ColumnsWrapper>
         <DhtColumn
-          peers={peers}
+          peers={catchAllBucketData.peers}
           timestamp={timestamp}
-          bucketNum={distance}
-          key={`bucket_${distance}`}
+          bucketNum={0}
+          key={`bucket_0`}
         />
-      ))}
+        {numberedBucketData.map(({ distance, peers }) => (
+          <DhtColumn
+            peers={peers}
+            timestamp={timestamp}
+            bucketNum={distance}
+            key={`bucket_${distance}`}
+          />
+        ))}
+      </ColumnsWrapper>
     </Container>
   )
 }
