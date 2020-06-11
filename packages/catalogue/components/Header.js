@@ -96,6 +96,7 @@ function Header({ title, content = [] }) {
           item =>
             (item.content && (
               <Tooltip
+                key={item.title}
                 content={<ReactMarkdown source={item.content} />}
                 side="bottom"
                 toleranceY={null}
@@ -110,7 +111,7 @@ function Header({ title, content = [] }) {
               </Tooltip>
             )) ||
             (item.url && (
-              <NavLink href={item.url} target="_blank">
+              <NavLink key={item.title} href={item.url} target="_blank">
                 {item.title}
               </NavLink>
             )) ||
