@@ -40,6 +40,7 @@ const options = {
 // Don't fade so much it becomes unreadable
 const minFadeOpacity = 0.2
 function getFadeOpacity(value, maxValue) {
+  if (typeof value !== 'number' || typeof maxValue !== 'number') return 1
   const fadeAmount = Math.max(0, 1 - value / maxValue)
   const fadeOpacity = minFadeOpacity + (1 - minFadeOpacity) * fadeAmount
   return fadeOpacity
@@ -47,6 +48,7 @@ function getFadeOpacity(value, maxValue) {
 
 const maxGlowOpacity = 0.4
 function getGlowOpacity(value, maxValue) {
+  if (typeof value !== 'number' || typeof maxValue !== 'number') return 0
   const glowAmount = Math.max(0, 1 - value / maxValue)
   const glowOpacity = glowAmount * maxGlowOpacity
   return glowOpacity
