@@ -9,11 +9,13 @@ import T from 'prop-types'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 
 import {
+  applySampleData,
   DataContext,
   RuntimeContext,
   SourceContext,
   SetterContext,
 } from '@nearform/observer-sdk'
+import samples from '@nearform/observer-samples'
 
 import { Connected, Home } from './pages'
 
@@ -38,7 +40,7 @@ function Router({ widgets, Content, title }) {
   const states = useContext(DataContext)
   const runtime = useContext(RuntimeContext)
   const source = useContext(SourceContext)
-  const { removeData } = useContext(SetterContext)
+  const { removeData, updateData, setIsLoading } = useContext(SetterContext)
   const [hasData, setHasData] = useState(() => testHasData(states, runtime))
   const [widgetIndex, setWidgetIndex] = useState(null)
   const selectedWidget = widgets[widgetIndex]
@@ -71,6 +73,7 @@ function Router({ widgets, Content, title }) {
           setWidgetIndex(newWidgetIndex)
         }
       }
+
       if (params.sourceType !== sourceType) {
         if (!params.sourceType && sourceType) {
           const okay = confirm(
@@ -81,10 +84,40 @@ function Router({ widgets, Content, title }) {
           } else {
             updateUrlFromState()
           }
+        } else if (params.sourceType === 'sample' && params.sourceName) {
+          const sample = samples.find(
+            sample =>
+              sample.file.includes(params.sourceName) ||
+              sample.name === params.sourceName
+          )
+          const sampleFile = sample.file
+          const handleUploadStart = () =>
+            removeData({
+              type: 'sample',
+              name: params.sourceName,
+              isLoading: true,
+            })
+          const handleUploadChunk = data => updateData(data)
+          const handleUploadFinished = () => setIsLoading(false)
+
+          applySampleData(
+            sampleFile,
+            handleUploadStart,
+            handleUploadFinished,
+            handleUploadChunk
+          )
         }
       }
     },
-    [widgetName, sourceType, widgets, removeData, updateUrlFromState]
+    [
+      widgetName,
+      sourceType,
+      widgets,
+      removeData,
+      updateUrlFromState,
+      updateData,
+      setIsLoading,
+    ]
   )
 
   const handlePopState = useCallback(() => {
