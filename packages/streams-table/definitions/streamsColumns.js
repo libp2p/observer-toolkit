@@ -68,7 +68,6 @@ const ageCol = {
   name: 'age',
   header: 'Duration open',
   getProps: ({ stream }, { currentState, maxAge }) => {
-    const time = currentState.getInstantTs()
     const age = getStreamAge(stream, currentState)
     return { value: age, maxValue: maxAge }
   },
