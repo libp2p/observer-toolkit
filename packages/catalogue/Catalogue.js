@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import ContextWrappers from './components/ContextWrappers'
 import Router from './Router'
 
-function Catalogue({ widgets, Content, title, theme }) {
+function Catalogue({ widgets, content, title, theme }) {
   useEffect(() => {
     if (title) document.title = title
   }, [title])
@@ -13,14 +13,14 @@ function Catalogue({ widgets, Content, title, theme }) {
   return (
     <ContextWrappers theme={theme}>
       <BrowserRouter>
-        <Router Content={Content} widgets={widgets} />
+        <Router content={content} widgets={widgets} title={title} />
       </BrowserRouter>
     </ContextWrappers>
   )
 }
 Catalogue.propTypes = {
   widgets: T.array.isRequired,
-  Content: T.elementType,
+  content: T.array,
   title: T.string,
   theme: T.object,
 }
