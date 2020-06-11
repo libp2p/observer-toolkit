@@ -35,14 +35,14 @@ const CatalogueBkg = styled.div`
   display: flex;
 `
 
-function Connected({ widgets, widgetIndex, setWidgetIndex }) {
+function Connected({ widgets, widgetIndex, setWidgetIndex, content, title }) {
   const selectedWidget = widgets[widgetIndex] || null
   const closeWidget = () => setWidgetIndex(null)
 
   return (
     <Container>
       <ScrollArea>
-        <Header />
+        <Header content={content} title={title} />
         <Main>
           <RootNodeProvider>
             {selectedWidget ? (
@@ -77,6 +77,8 @@ Connected.propTypes = {
   widgets: T.array.isRequired,
   widgetIndex: T.number,
   setWidgetIndex: T.func.isRequired,
+  content: T.array,
+  title: T.string,
 }
 
 export default Connected

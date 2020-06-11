@@ -172,6 +172,7 @@ function Router({ widgets, content, title }) {
   return hasData ? (
     <Connected
       title={title}
+      content={content}
       widgets={widgets}
       setWidgetIndex={setWidgetIndex}
       widgetIndex={widgetIndex}
