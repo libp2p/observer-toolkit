@@ -1,4 +1,5 @@
 import React from 'react'
+import T from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
@@ -118,6 +119,11 @@ function Header({ title, content = [] }) {
       </NavTray>
     </HeaderOuter>
   )
+}
+
+Header.propTypes = {
+  title: T.string,
+  content: T.array,
 }
 
 export default Header
