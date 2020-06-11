@@ -4,7 +4,7 @@ import T from 'prop-types'
 
 import { DataTray } from '@nearform/observer-shell'
 
-import DefaultContent from '../components/DefaultContent'
+import Content from '../components/Content'
 
 const Container = styled.div`
   display: flex;
@@ -94,16 +94,16 @@ const CallToActionSubHeading = styled.h3`
   color: ${({ theme }) => theme.color('secondary', 1)};
 `
 
-function Home({ Content = DefaultContent, initialSourceType }) {
+function Home({ content, title, initialSourceType }) {
   return (
     <Container>
       <Header>
         <LogoSection>
           <Logo src="logo_large.png" />
-          <LogoText>Observation Deck</LogoText>
+          <LogoText>{title}</LogoText>
         </LogoSection>
         <DetailsSection>
-          <Content />
+          <Content content={content} />
         </DetailsSection>
       </Header>
       <Main>
@@ -121,8 +121,9 @@ function Home({ Content = DefaultContent, initialSourceType }) {
   )
 }
 Home.propTypes = {
-  Content: T.elementType,
+  content: T.array,
   initialSourceType: T.string,
+  title: T.string,
 }
 
 export default Home

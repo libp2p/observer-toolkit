@@ -36,7 +36,7 @@ const matchOptions = {
   path: '/:sourceType?/:sourceName?/:widgetName?',
 }
 
-function Router({ widgets, Content, title }) {
+function Router({ widgets, content, title }) {
   const states = useContext(DataContext)
   const runtime = useContext(RuntimeContext)
   const source = useContext(SourceContext)
@@ -171,17 +171,22 @@ function Router({ widgets, Content, title }) {
 
   return hasData ? (
     <Connected
+      title={title}
       widgets={widgets}
       setWidgetIndex={setWidgetIndex}
       widgetIndex={widgetIndex}
     />
   ) : (
-    <Home Content={Content} initialSourceType={initialSourceType} />
+    <Home
+      content={content}
+      title={title}
+      initialSourceType={initialSourceType}
+    />
   )
 }
 Router.propTypes = {
   widgets: T.array.isRequired,
-  Content: T.elementType,
+  content: T.array,
   title: T.string,
 }
 
