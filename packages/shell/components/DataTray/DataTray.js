@@ -46,16 +46,20 @@ const items = [
   },
 ]
 
-function getInitialIndex(source) {
-  const index = items.findIndex(({ type }) => type === source.type)
+function getInitialIndex(source, initialSourceType) {
+  const sourceType = source.type || initialSourceType
+  if (!sourceType) return null
+  const index = items.findIndex(({ type }) => type === sourceType)
   return index !== -1 ? index : null
 }
 
-function DataTray({ handleNewData }) {
+function DataTray({ handleNewData, initialSourceType }) {
   const source = useContext(SourceContext)
   const { removeData, updateData, setIsLoading } = useContext(SetterContext)
 
-  const [selectedIndex, setSelectedIndex] = useState(getInitialIndex(source))
+  const [selectedIndex, setSelectedIndex] = useState(
+    getInitialIndex(source, initialSourceType)
+  )
 
   const deselect = e => {
     e.stopPropagation()
@@ -113,6 +117,7 @@ function DataTray({ handleNewData }) {
 
 DataTray.propTypes = {
   handleNewData: T.func,
+  initialSourceType: T.string,
 }
 
 export default DataTray

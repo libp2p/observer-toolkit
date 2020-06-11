@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const HeaderOuter = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ const LogoContainer = styled.div`
   margin: ${({ theme }) => theme.spacing(1)};
   ${({ theme }) => theme.text('body', 'medium')};
   color: ${({ theme }) => theme.color('contrast', 1)};
+  text-decoration: none;
 `
 
 const Logo = styled.img`
@@ -37,12 +39,24 @@ const NavLink = styled.a`
   margin: ${({ theme }) => theme.spacing([0, 2])};
 `
 
+const StyledLink = styled(Link)`
+  color: ${({ theme }) => theme.color('contrast', 1)};
+  text-decoration: none;
+`
+
 function Header() {
   return (
     <HeaderOuter>
-      <LogoContainer>
-        <Logo src="logo_medium.png" /> Observation Deck
-      </LogoContainer>
+      <StyledLink
+        to={{
+          pathname: '/',
+          state: { fromLink: true },
+        }}
+      >
+        <LogoContainer>
+          <Logo src="logo_medium.png" /> Observation Deck
+        </LogoContainer>
+      </StyledLink>
       <NavTray>
         <NavLink>About</NavLink>
         <NavLink>Documentation</NavLink>

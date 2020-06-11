@@ -94,7 +94,7 @@ const CallToActionSubHeading = styled.h3`
   color: ${({ theme }) => theme.color('secondary', 1)};
 `
 
-function Home({ Content = DefaultContent }) {
+function Home({ Content = DefaultContent, initialSourceType }) {
   return (
     <Container>
       <Header>
@@ -115,13 +115,14 @@ function Home({ Content = DefaultContent }) {
             </CallToActionSubHeading>
           </div>
         </CallToActionSection>
-        <DataTray />
+        <DataTray initialSourceType={initialSourceType} />
       </Main>
     </Container>
   )
 }
 Home.propTypes = {
   Content: T.elementType,
+  initialSourceType: T.string,
 }
 
 export default Home
