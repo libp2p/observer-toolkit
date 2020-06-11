@@ -18,15 +18,9 @@ const content = [
 ]
 
 const title = 'Observer Demo App'
-const basename = '/libp2p-observer'
 
 ReactDOM.render(
-  <Catalogue
-    widgets={widgets}
-    content={content}
-    title={title}
-    basename={basename}
-  />,
+  <Catalogue widgets={widgets} content={content} title={title} />,
   document.getElementById('root')
 )
 
