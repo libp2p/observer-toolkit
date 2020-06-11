@@ -2,7 +2,6 @@ import {
   getStreamAge,
   getStreamTraffic,
   statusNames,
-  transportNames,
 } from '@nearform/observer-data'
 import { getStringSorter, getNumericSorter } from '@nearform/observer-sdk'
 
@@ -12,6 +11,7 @@ import {
   MonospaceContent,
   PeerIdContent,
   StatusContent,
+  TimeContent,
 } from '../components/cellContent'
 
 import * as statusSorter from '../utils/statusSorter'
@@ -29,22 +29,13 @@ const numericSorter = {
 const peerIdCol = {
   name: 'peerId',
   header: 'Peer ID',
-  getProps: ({ connection }) => ({ value: connection.getPeerId() }),
+  getProps: ({ connection, stream }) => ({
+    value: connection.getPeerId(),
+    rowKey: connection.getPeerId() + ':' + stream.getId().toString(),
+  }),
   renderContent: PeerIdContent,
   sort: stringSorter,
-}
-
-const transportCol = {
-  name: 'transport',
-  getProps: ({ connection }) => {
-    const transportIdBin = connection.getTransportId()
-    const transportIdInt = Buffer.from(transportIdBin).readUIntLE(
-      0,
-      transportIdBin.length
-    )
-    return { value: transportNames[transportIdInt] }
-  },
-  sort: stringSorter,
+  rowKey: 'rowKey',
 }
 
 const dataInCol = {
@@ -73,23 +64,30 @@ const dataOutCol = {
   align: 'right',
 }
 
-// TODO: fix this, calculation incorrect for mock streams
-/* eslint-disable no-unused-vars */
 const ageCol = {
   name: 'age',
-  header: 'Time open',
-  getProps: ({ stream }, { state }) => {
-    const time = state.getInstantTs()
-    const openTs = stream.getTimeline().getOpenTs()
-    const closeTs = stream.getTimeline().getCloseTs()
-    const age = getStreamAge(stream, state)
-    return { value: age }
+  header: 'Duration open',
+  getProps: ({ stream }, { currentState, maxAge }) => {
+    const time = currentState.getInstantTs()
+    const age = getStreamAge(stream, currentState)
+    return { value: age, maxValue: maxAge }
   },
   renderContent: AgeContent,
   sort: numericSorter,
   align: 'right',
 }
-/* eslint-enable no-unused-vars */
+
+const openCol = {
+  name: 'open',
+  header: 'Time opened',
+  getProps: ({ stream }) => {
+    const openTs = stream.getTimeline().getOpenTs()
+    return { value: openTs }
+  },
+  renderContent: TimeContent,
+  sort: numericSorter,
+  align: 'right',
+}
 
 const protocolCol = {
   name: 'protocol',
@@ -108,13 +106,13 @@ const streamStatusCol = {
 
 // Define column order
 const columns = [
+  peerIdCol,
   streamStatusCol,
-  protocolCol,
+  ageCol,
+  openCol,
   dataInCol,
   dataOutCol,
-  transportCol,
-  peerIdCol,
-  // ageCol,
+  protocolCol,
 ]
 
 export default columns
