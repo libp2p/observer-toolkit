@@ -28,7 +28,7 @@ exports[`Header renders as expected 1`] = `
   justify-content: space-between;
 }
 
-.c2 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -43,15 +43,17 @@ exports[`Header renders as expected 1`] = `
   font-size: 10pt;
   line-height: 1.6em;
   color: rgb(78,23,91);
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
-.c3 {
+.c4 {
   height: 48px;
   display: block;
   margin-right: 16px;
 }
 
-.c4 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -65,10 +67,16 @@ exports[`Header renders as expected 1`] = `
   font-weight: 600;
 }
 
-.c5 {
+.c6 {
   display: block;
   white-space: nowrap;
   margin: 0px 16px;
+}
+
+.c2 {
+  color: rgb(78,23,91);
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 <div
@@ -77,40 +85,45 @@ exports[`Header renders as expected 1`] = `
     <div
       class="c1"
     >
-      <div
+      <a
         class="c2"
+        href="/"
       >
-        <img
+        <div
           class="c3"
-          src="logo_medium.png"
-        />
-         Observation Deck
-      </div>
+        >
+          <img
+            class="c4"
+            src="logo_medium.png"
+          />
+           Observation Deck
+        </div>
+      </a>
       <nav
-        class="c4"
+        class="c5"
       >
         <a
-          class="c5"
+          class="c6"
         >
           About
         </a>
         <a
-          class="c5"
+          class="c6"
         >
           Documentation
         </a>
         <a
-          class="c5"
+          class="c6"
         >
           GitHub
         </a>
         <a
-          class="c5"
+          class="c6"
         >
           Contribute
         </a>
         <a
-          class="c5"
+          class="c6"
         >
           Browse widgets
         </a>

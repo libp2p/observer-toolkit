@@ -16,6 +16,7 @@ const LogoContainer = styled.div`
   margin: ${({ theme }) => theme.spacing(1)};
   ${({ theme }) => theme.text('body', 'medium')};
   color: ${({ theme }) => theme.color('contrast', 1)};
+  text-decoration: none;
 `
 
 const Logo = styled.img`
@@ -38,10 +39,15 @@ const NavLink = styled.a`
   margin: ${({ theme }) => theme.spacing([0, 2])};
 `
 
+const StyledLink = styled(Link)`
+  color: ${({ theme }) => theme.color('contrast', 1)};
+  text-decoration: none;
+`
+
 function Header() {
   return (
     <HeaderOuter>
-      <Link
+      <StyledLink
         to={{
           pathname: '/',
           state: { fromLink: true },
@@ -50,7 +56,7 @@ function Header() {
         <LogoContainer>
           <Logo src="logo_medium.png" /> Observation Deck
         </LogoContainer>
-      </Link>
+      </StyledLink>
       <NavTray>
         <NavLink>About</NavLink>
         <NavLink>Documentation</NavLink>
