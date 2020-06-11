@@ -69,8 +69,9 @@ function updateOffset(
     !containerRef.current ||
     !positionerRef.current ||
     !tickRef.current
-  )
+  ) {
     return
+  }
 
   const elemRect = positionerRef.current.getBoundingClientRect()
   const boundsRect = containerRef.current.getBoundingClientRect()
@@ -187,7 +188,7 @@ function Tooltip({
   content,
   toleranceX = 0,
   toleranceY = 0,
-  containerRef = { current: document.body },
+  containerRef = { current: document.getElementById('root').firstChild },
   initiallyOpen = false,
   hidePrevious,
   override = {},
