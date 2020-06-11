@@ -5,14 +5,14 @@ import { BrowserRouter } from 'react-router-dom'
 import ContextWrappers from './components/ContextWrappers'
 import Router from './Router'
 
-function Catalogue({ widgets, content, title, theme }) {
+function Catalogue({ widgets, content, title, theme, basename }) {
   useEffect(() => {
     if (title) document.title = title
   }, [title])
 
   return (
     <ContextWrappers theme={theme}>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Router content={content} widgets={widgets} title={title} />
       </BrowserRouter>
     </ContextWrappers>
