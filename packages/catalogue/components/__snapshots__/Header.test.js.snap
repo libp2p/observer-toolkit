@@ -58,6 +58,10 @@ exports[`Header renders as expected 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   margin: 16px;
   font-family: plex-sans,sans-serif;
   line-height: 1.6em;
@@ -65,12 +69,6 @@ exports[`Header renders as expected 1`] = `
   line-height: 1.6em;
   color: rgb(128,130,133);
   font-weight: 600;
-}
-
-.c6 {
-  display: block;
-  white-space: nowrap;
-  margin: 0px 16px;
 }
 
 .c2 {
@@ -96,38 +94,12 @@ exports[`Header renders as expected 1`] = `
             class="c4"
             src="logo_medium.png"
           />
-           Observation Deck
+           
         </div>
       </a>
       <nav
         class="c5"
-      >
-        <a
-          class="c6"
-        >
-          About
-        </a>
-        <a
-          class="c6"
-        >
-          Documentation
-        </a>
-        <a
-          class="c6"
-        >
-          GitHub
-        </a>
-        <a
-          class="c6"
-        >
-          Contribute
-        </a>
-        <a
-          class="c6"
-        >
-          Browse widgets
-        </a>
-      </nav>
+      />
     </div>
   </div>
 </DocumentFragment>
