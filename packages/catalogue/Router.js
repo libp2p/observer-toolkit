@@ -15,6 +15,7 @@ import {
   SourceContext,
   SetterContext,
 } from '@libp2p/observer-sdk'
+import samples from '@libp2p/observer-samples'
 
 import { Connected, Home } from './pages'
 
