@@ -19,7 +19,7 @@
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
-    "@libp2p/observer-samples": "^1.0.0",
+    "@libp2p/observer-samples": "^0.0.2",
     "@testing-library/react": "^9.4.0"
   },
   "jest": {

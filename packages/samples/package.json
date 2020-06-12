@@ -21,8 +21,8 @@
     "url": "https://github.com/libp2p/libp2p-observer/issues"
   },
   "devDependencies": {
-    "@libp2p/observer-data": "^1.0.0",
-    "@libp2p/observer-proto": "^1.0.0",
+    "@libp2p/observer-data": "^0.0.2",
+    "@libp2p/observer-proto": "^0.0.2",
     "tap": "^14.9.2",
     "tap-mocha-reporter": "^5.0.0"
   },

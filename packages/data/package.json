@@ -17,10 +17,10 @@
     "url": "https://github.com/libp2p/libp2p-observer/issues"
   },
   "dependencies": {
-    "@libp2p/observer-proto": "^1.0.0"
+    "@libp2p/observer-proto": "^0.0.2"
   },
   "devDependencies": {
-    "@libp2p/observer-samples": "^1.0.0",
+    "@libp2p/observer-samples": "^0.0.2",
     "jest": "^24.9.0",
     "jest-expect-message": "^1.0.2",
     "webpack-cli": "^3.3.10"
