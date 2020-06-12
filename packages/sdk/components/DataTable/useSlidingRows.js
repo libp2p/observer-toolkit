@@ -3,13 +3,13 @@ import T from 'prop-types'
 
 function getChangedShownRows(
   shownRows,
-  previousAllContent,
+  previousShownContent,
   rowHeight,
   firstIndex
 ) {
   const { appearingRows, slidingShownRows } = shownRows.reduce(
     ({ appearingRows, slidingShownRows }, row) => {
-      const previousRow = previousAllContent.find(
+      const previousRow = previousShownContent.find(
         oldRow => oldRow.key === row.key
       )
       if (!previousRow)
@@ -88,7 +88,7 @@ function getSlidingRowsByType(
 ) {
   const { appearingRows, slidingShownRows } = getChangedShownRows(
     shownContent,
-    previousAllContent,
+    previousShownContent,
     rowHeight,
     firstIndex
   )
