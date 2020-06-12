@@ -11,11 +11,11 @@ function Catalogue({ widgets, content, title, theme }) {
   }, [title])
 
   return (
-    <ContextWrappers theme={theme}>
-      <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <ContextWrappers theme={theme}>
         <Router content={content} widgets={widgets} title={title} />
-      </BrowserRouter>
-    </ContextWrappers>
+      </ContextWrappers>
+    </BrowserRouter>
   )
 }
 Catalogue.propTypes = {
