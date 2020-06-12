@@ -19,8 +19,8 @@ Do you want to help make LibP2P data more observable and explorable? There are f
   - See the [docs for the create-widget package](packages/create-widget).
 - **Create your own catalogues of LibP2P Observer widgets**. The LibP2P Observer [catalogue](packages/catalogue) package may be imported and used to connect a collection of LibP2P Observer widgets to LibP2P introspection data and the [LibP2P Observer shell](packages/shell). These may be run either as a standalone React app (and the [app package](packages/app) gives a simple example of this), or as a component within another React app.
   - See the [docs for the catalogue package](packages/catalogue).
-- **Contribute a widget to the public LibP2P Observation Deck**. If you believe a widget you have worked on is useful to others in the LibP2P community, you may submit it for review to be included in Protocol Labs' ["LibP2P Observation Deck"](https://github.com/nearform/libp2p-observation-deck/), a public catalogue of useful LibP2P Observer apps that have been approved as meeting a quality threshold.
-  - See the [contribution guidelines on the LibP2P Observation Deck repo](https://github.com/nearform/libp2p-observation-deck/contribute.md).
+- **Contribute a widget to the public LibP2P Observation Deck**. If you believe a widget you have worked on is useful to others in the LibP2P community, you may submit it for review to be included in Protocol Labs' ["LibP2P Observation Deck"](https://github.com/libp2p/libp2p-observation-deck/), a public catalogue of useful LibP2P Observer apps that have been approved as meeting a quality threshold.
+  - See the [contribution guidelines on the LibP2P Observation Deck repo](https://github.com/libp2p/libp2p-observation-deck/contribute.md).
 - **Help develop and maintain LibP2P Observer itself**. This project welcomes open source contributions who either have, or wish to sharpen, skills in React, data visualisation, Protobuf and node.js data handling.
   - See the remainder of this document!
 
@@ -38,7 +38,7 @@ The widgets included in this monorepo, such as [`connections-table`](packages/co
 
  1. Create it as a standalone repository using the [`create-widget` package](packages/create-widget)
  2. Publish and maintain it on your own or your company's GitHub account
- 3. If you believe it has widespread value to the LibP2P community and wish to share it directly, publish it to NPM and submit it for review by posting a PR to the [LibP2P Observation Deck repo](https://github.com/nearform/libp2p-observation-deck/), following that repo's [community guidelines](https://github.com/nearform/libp2p-observation-deck/contribute.md). If approved, this adds your published package to the included set of widgets.
+ 3. If you believe it has widespread value to the LibP2P community and wish to share it directly, publish it to NPM and submit it for review by posting a PR to the [LibP2P Observation Deck repo](https://github.com/libp2p/libp2p-observation-deck/), following that repo's [community guidelines](https://github.com/libp2p/libp2p-observation-deck/contribute.md). If approved, this adds your published package to the included set of widgets.
 
 <a id="posting-bug-reports-feature-requests-and-discussions"></a>
 ## Posting bug reports, feature requests and discussions
@@ -53,7 +53,7 @@ Please also note that feature requests on this repo should be limited to the sco
  - [`sdk`](packages/sdk) for universal base components and hooks usable by a wide variety of LibP2P Observer widgets
  - [`shell`](packages/shell) for global controls applicable to all LibP2P Observer widgets
 
-Requests for any of the following should be posted to and discussed on the [Libp2p Observation Deck](https://github.com/nearform/libp2p-observation-deck/) instead:
+Requests for any of the following should be posted to and discussed on the [Libp2p Observation Deck](https://github.com/libp2p/libp2p-observation-deck/) instead:
 
  - Ideas or requests for new widgets you'd like to see, use or build
  - Requests for a way to explore data that aren't coverred by this repo's built-in widgets

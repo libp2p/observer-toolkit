@@ -8,7 +8,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/libp2p-observer.git"
+    "url": "git+https://github.com/libp2p/libp2p-observer.git"
   },
   "scripts": {
     "prepare": "webpack",

@@ -1,7 +1,7 @@
 'use strict'
 
 // This will change
-const GITHUB_REPO_URL = 'https://github.com/nearform/libp2p-observation-deck'
+const GITHUB_REPO_URL = 'https://github.com/libp2p/libp2p-observation-deck'
 
 const chalk = require('chalk')
 

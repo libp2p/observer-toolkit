@@ -3,13 +3,13 @@
   "version": "0.0.2",
   "description": "A quickstart script to bootstrap a new libp2p-observer widget package",
   "author": "AlanSl <alan.slater@nearform.com>",
-  "homepage": "https://github.com/nearform/libp2p-observer#readme",
+  "homepage": "https://github.com/libp2p/libp2p-observer#readme",
   "license": "MIT",
   "main": "index.js",
   "bin": "./index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/libp2p-observer.git"
+    "url": "git+https://github.com/libp2p/libp2p-observer.git"
   },
   "scripts": {
     "postpublish": "node ./postpublish.js",
@@ -17,7 +17,7 @@
     "test": "tap --no-esm test"
   },
   "bugs": {
-    "url": "https://github.com/nearform/libp2p-observer/issues"
+    "url": "https://github.com/libp2p/libp2p-observer/issues"
   },
   "dependencies": {
     "chalk": "^3.0.0",

@@ -3,14 +3,14 @@
   "version": "0.0.2",
   "description": "Test utilities, helpers and wrappers for libp2p-observer packages and widgets.",
   "author": "AlanSl <alan.slater@nearform.com>",
-  "homepage": "https://github.com/nearform/libp2p-observer#readme",
+  "homepage": "https://github.com/libp2p/libp2p-observer#readme",
   "license": "MIT",
   "main": "index.test.js",
   "browser": "index.browser.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/libp2p-observer.git"
+    "url": "git+https://github.com/libp2p/libp2p-observer.git"
   },
   "peerDependencies": {
     "@libp2p/observer-sdk": "^0.0.1",
