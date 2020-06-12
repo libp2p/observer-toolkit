@@ -126,7 +126,7 @@ describe('ConnectionsTable', () => {
     const age_ms = parseFloat(ageCellTooltip.textContent)
     await fireEvent.mouseLeave(ageCellContent)
 
-    const showStreamsButton = within(row).getByText('View streams')
+    const showStreamsButton = within(row).getByText(/View \d+ streams/)
 
     // Expand its streams table
     await fireEvent.click(showStreamsButton)
