@@ -1,5 +1,5 @@
 {
-  "name": "@nearform/observer-connections-table",
+  "name": "@libp2p/observer-connections-table",
   "version": "0.0.2",
   "description": "React component built on libp2p-observer SDK, visualizing libp2p connections in a data table",
   "author": "AlanSl <alan.slater@nearform.com>",
@@ -9,7 +9,7 @@
   "module": "./index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/libp2p-observer.git"
+    "url": "git+https://github.com/libp2p/libp2p-observer.git"
   },
   "scripts": {
     "prepare": "webpack",
@@ -19,15 +19,15 @@
     "update-snapshots": "npm run test -- -u"
   },
   "peerDependencies": {
-    "@nearform/observer-data": "^0.0.1",
-    "@nearform/observer-sdk": "^0.0.1",
+    "@libp2p/observer-data": "^0.0.1",
+    "@libp2p/observer-sdk": "^0.0.1",
     "react": "^16.10.2",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
-    "@nearform/observer-shell": "^0.0.2",
+    "@libp2p/observer-shell": "^0.0.2",
     "@storybook/react": "^5.2.4",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",

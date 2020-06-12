@@ -1,25 +1,25 @@
 {
-  "name": "@nearform/observer-testing",
+  "name": "@libp2p/observer-testing",
   "version": "0.0.2",
   "description": "Test utilities, helpers and wrappers for libp2p-observer packages and widgets.",
   "author": "AlanSl <alan.slater@nearform.com>",
-  "homepage": "https://github.com/nearform/libp2p-observer#readme",
+  "homepage": "https://github.com/libp2p/libp2p-observer#readme",
   "license": "MIT",
   "main": "index.test.js",
   "browser": "index.browser.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/libp2p-observer.git"
+    "url": "git+https://github.com/libp2p/libp2p-observer.git"
   },
   "peerDependencies": {
-    "@nearform/observer-sdk": "^0.0.1",
-    "@nearform/observer-shell": "^0.0.1",
+    "@libp2p/observer-sdk": "^0.0.1",
+    "@libp2p/observer-shell": "^0.0.1",
     "react": "^16.10.2",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
-    "@nearform/observer-samples": "^0.0.2",
+    "@libp2p/observer-samples": "^0.0.2",
     "@testing-library/react": "^9.4.0"
   },
   "jest": {

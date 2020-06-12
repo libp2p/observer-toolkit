@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
-import { useCanvas } from '@nearform/observer-sdk'
+import { useCanvas } from '@libp2p/observer-sdk'
 
 import { DhtQueryContext } from '../context/DhtQueryProvider'
 import { paintQueryGlows } from '../../utils/paint'

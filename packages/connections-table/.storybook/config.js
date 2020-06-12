@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { configure, addDecorator } from '@storybook/react'
-import { ShellDemoWrapper } from '@nearform/observer-testing'
+import { ShellDemoWrapper } from '@libp2p/observer-testing'
 
 addDecorator(renderStory => (
   <ShellDemoWrapper>{renderStory()}</ShellDemoWrapper>

@@ -10,8 +10,8 @@ import {
   SetterContext,
   TimeContext,
   Tooltip,
-} from '@nearform/observer-sdk'
-import { getStateTimes } from '@nearform/observer-data'
+} from '@libp2p/observer-sdk'
+import { getStateTimes } from '@libp2p/observer-data'
 
 import { DhtQueryContext } from '../context/DhtQueryProvider'
 import { getQueryTimesByPeer } from '../../utils/queries'

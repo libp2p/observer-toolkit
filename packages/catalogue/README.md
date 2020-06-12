@@ -26,8 +26,8 @@ Example:
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Catalogue from '@libp2p/observer-catalogue'
-import * as connectionsTable from '@nearform/observer-connections-table'
-import * as eventsTable from '@nearform/observer-events-table'
+import * as connectionsTable from '@libp2p/observer-connections-table'
+import * as eventsTable from '@libp2p/observer-events-table'
 
 const widgets = [connectionsTable, eventsTable]
 ReactDOM.render(

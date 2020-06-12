@@ -8,7 +8,7 @@ import {
   PeerIdChip,
   getStringSorter,
   getNumericSorter,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 
 import PeersTableRow from './PeersTableRow'
 

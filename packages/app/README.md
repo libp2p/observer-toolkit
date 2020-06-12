@@ -6,6 +6,6 @@ This is deployed using [CRACO](https://www.npmjs.com/package/@craco/craco), whic
 
 ## Usage
 
-This app is auto-deployed to http://nearform.github.io/libp2p-observer/ on each push to the `master` or `staging` branches, following the GitHub action defined in [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml).
+This app is auto-deployed to http://libp2p.github.io/libp2p-observer/ on each push to the `master` or `staging` branches, following the GitHub action defined in [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml).
 
 To deploy a local development build, run `npm run start:app` in the root libp2p Observer directory. This will automatically update as you make any changes to libp2p Observer packages.

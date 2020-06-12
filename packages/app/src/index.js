@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Catalogue, { serviceWorker } from '@nearform/observer-catalogue'
+import Catalogue, { serviceWorker } from '@libp2p/observer-catalogue'
 
 import widgets from './widgets.js'
 
@@ -10,10 +10,10 @@ import contribute from './contribute.md'
 const content = [
   { title: 'About', content: about },
   { title: 'Contribute', content: contribute },
-  { title: 'GitHub', url: 'https://github.com/nearform/libp2p-observer' },
+  { title: 'GitHub', url: 'https://github.com/libp2p/libp2p-observer' },
   {
     title: 'Documentation',
-    url: 'https://github.com/nearform/libp2p-observer#libp2p-observer',
+    url: 'https://github.com/libp2p/libp2p-observer#libp2p-observer',
   },
 ]
 

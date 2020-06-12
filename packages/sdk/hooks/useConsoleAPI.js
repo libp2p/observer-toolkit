@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import T from 'prop-types'
 import { ThemeContext } from 'styled-components'
 
-import dataHelpers from '@nearform/observer-data'
+import dataHelpers from '@libp2p/observer-data'
 
 const getH1Style = theme =>
   `color: ${theme.color('secondary')}; font-size: 21px;`

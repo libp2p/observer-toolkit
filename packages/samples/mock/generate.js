@@ -9,7 +9,7 @@ const {
 
 const {
   proto: { Configuration },
-} = require('@nearform/observer-proto')
+} = require('@libp2p/observer-proto')
 const { createBufferSegment } = require('../output/binary')
 const {
   createConnection,

@@ -8,7 +8,7 @@ import {
   getConnectionTimeClosed,
   getStreams,
   statusNames,
-} from '@nearform/observer-data'
+} from '@libp2p/observer-data'
 import {
   formatDuration,
   formatDataSize,
@@ -18,7 +18,7 @@ import {
   FilterProvider,
   DataContext,
   TimeContext,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 
 import { MetadataProvider } from './MetadataProvider'
 

@@ -6,7 +6,7 @@ import {
   RuntimeContext,
   ConfigContext,
   WebsocketContext,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 
 import EditConfig from './EditConfig'
 

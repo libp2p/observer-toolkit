@@ -11,7 +11,7 @@ module.exports = async ({ config }) => {
   })
 
   config.module.rules.push({
-    test: /@nearform\b.+\.js$/,
+    test: /@libp2p\b.+\.js$/,
     loader: 'babel-loader',
   })
 

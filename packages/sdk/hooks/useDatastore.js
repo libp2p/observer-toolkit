@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import T from 'prop-types'
 
-import { getStateTimes } from '@nearform/observer-data'
+import { getStateTimes } from '@libp2p/observer-data'
 
 // High default cutoff time to avoid spurious trimming if runtime message is delayed
 const DEFAULT_CUTOFF_MS = 1000 * 60 * 60 * 24

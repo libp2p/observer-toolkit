@@ -2,12 +2,12 @@ import React, { useContext, useRef, useEffect } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { getKademliaDistance } from '@nearform/observer-data'
+import { getKademliaDistance } from '@libp2p/observer-data'
 import {
   ConfigContext,
   RuntimeContext,
   SetterContext,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 
 import DhtPeerHighlighting from './DhtPeerHighlighting'
 import DhtPeerGlow from './DhtPeerGlow'

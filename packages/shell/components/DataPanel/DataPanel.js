@@ -9,7 +9,7 @@ import {
   PeerIdTooltip,
   PeerIdTruncated,
   Tooltip,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 import DataTypeControl from './DataTypeControl'
 import FileDownload from './FileDownload'
 import GlobalFilterControl from './GlobalFilterControl'

@@ -86,7 +86,7 @@ For more detail on protobuf message types, see the documentation for the [`proto
 <a id="2-in-browser-testing"></a>
 ## 2. In-browser testing
 
-The [app](packages/app) package is built to GitHub pages and is accessible at https://nearform.github.io/libp2p-observer/
+The [app](packages/app) package is built to GitHub pages and is accessible at https://libp2p.github.io/libp2p-observer/
 
 <a id="21-app-development-builds"></a>
 ### 2.1 App development builds
@@ -190,10 +190,10 @@ In some cases, it may be useful to publish work-in-progress to a mock local NPM 
 A locally-pubished test package set on Verdaccio then be used to create a test widget with:
 
 ```
-YARN_REGISTRY="http://localhost:4873/" yarn create @nearform/observer-widget`
+YARN_REGISTRY="http://localhost:4873/" yarn create @libp2p/observer-widget`
 ```
 
-Locally published packages can be installed into a respository, such as a widget, catalogue, or local branch of [LibP2P Observation Deck](https://github.com/nearform/libp2p-observation-deck/), using the same env variable with `yarn install`:
+Locally published packages can be installed into a respository, such as a widget, catalogue, or local branch of [LibP2P Observation Deck](https://github.com/libp2p/libp2p-observation-deck/), using the same env variable with `yarn install`:
 
 ```
 YARN_REGISTRY="http://localhost:4873/" npx yarn install

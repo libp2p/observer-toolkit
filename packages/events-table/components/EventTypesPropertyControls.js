@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { Icon } from '@nearform/observer-sdk'
+import { Icon } from '@libp2p/observer-sdk'
 
 const CheckIconButton = styled.a`
   border-radius: 50%;

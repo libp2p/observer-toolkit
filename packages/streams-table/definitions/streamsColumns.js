@@ -2,8 +2,8 @@ import {
   getStreamAge,
   getStreamTraffic,
   statusNames,
-} from '@nearform/observer-data'
-import { getStringSorter, getNumericSorter } from '@nearform/observer-sdk'
+} from '@libp2p/observer-data'
+import { getStringSorter, getNumericSorter } from '@libp2p/observer-sdk'
 
 import {
   AgeContent,

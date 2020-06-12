@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import T from 'prop-types'
 
-import { DataTray } from '@nearform/observer-shell'
+import { DataTray } from '@libp2p/observer-shell'
 
 import Content from '../components/Content'
 

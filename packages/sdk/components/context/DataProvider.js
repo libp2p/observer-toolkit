@@ -5,7 +5,7 @@ import {
   getEventType,
   getLatestState,
   getStateRangeTimes,
-} from '@nearform/observer-data'
+} from '@libp2p/observer-data'
 import { useConsoleAPI, useDatastore, useFilter } from '../../hooks'
 import { getListFilter, getRangeFilter } from '../../filters'
 

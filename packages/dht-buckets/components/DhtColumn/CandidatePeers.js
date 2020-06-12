@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { RootNodeContext, TimeContext, Tooltip } from '@nearform/observer-sdk'
-import { getDhtBucket, dhtStatusNames } from '@nearform/observer-data'
+import { RootNodeContext, TimeContext, Tooltip } from '@libp2p/observer-sdk'
+import { getDhtBucket, dhtStatusNames } from '@libp2p/observer-data'
 
 import PeersTable from './PeersTable'
 

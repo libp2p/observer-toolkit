@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 
-import { useHidePrevious, Icon, Tooltip } from '@nearform/observer-sdk'
+import { useHidePrevious, Icon, Tooltip } from '@libp2p/observer-sdk'
 
 const HeaderOuter = styled.div`
   display: flex;

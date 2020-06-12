@@ -5,7 +5,7 @@ import {
   ThemeWrapper,
   DataDemoWrapper,
   ShellDemoWrapper,
-} from '@nearform/observer-testing'
+} from '@libp2p/observer-testing'
 
 function getWrapper(wrapper) {
   switch (wrapper) {

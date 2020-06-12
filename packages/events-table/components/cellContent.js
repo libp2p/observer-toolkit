@@ -9,7 +9,7 @@ import {
   Monospace,
   StyledButton,
   Tooltip,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 
 import { RenderTime } from './contentRenderers'
 

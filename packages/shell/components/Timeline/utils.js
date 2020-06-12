@@ -3,8 +3,8 @@ import {
   getConnections,
   getConnectionTraffic,
   getStateTimes,
-} from '@nearform/observer-data'
-import { validateNumbers } from '@nearform/observer-sdk'
+} from '@libp2p/observer-data'
+import { validateNumbers } from '@libp2p/observer-sdk'
 
 // Gaps between state messages above this will be treated as missing data
 const GAP_TOLERANCE_MS = 50

@@ -13,7 +13,7 @@ import {
   StatusChip,
   TimeNumber,
   Tooltip,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 
 const Nowrap = styled.span`
   white-space: nowrap;

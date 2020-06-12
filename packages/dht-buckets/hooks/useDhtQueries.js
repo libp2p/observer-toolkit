@@ -4,12 +4,8 @@ import {
   getDhtPeers,
   getDhtQueries,
   getStateTimes,
-} from '@nearform/observer-data'
-import {
-  EventsContext,
-  FilterContext,
-  TimeContext,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-data'
+import { EventsContext, FilterContext, TimeContext } from '@libp2p/observer-sdk'
 
 function getQueriesByPeerId(events, currentState, toTs, applyFilters) {
   const queriesByPeerId = getDhtPeers(currentState).reduce(

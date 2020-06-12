@@ -1,6 +1,6 @@
 'use strict'
 
-const { proto } = require('@nearform/observer-proto')
+const { proto } = require('@libp2p/observer-proto')
 
 const {
   SECOND_IN_MS,

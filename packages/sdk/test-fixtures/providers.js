@@ -10,6 +10,6 @@ const providers = {
   RootNodeProvider,
 }
 
-// In SDK tests, import test wrappers from '@nearform/observer-testing'
+// In SDK tests, import test wrappers from '@libp2p/observer-testing'
 // and wrap test components with that, passing this as 'providers' prop
 export default providers

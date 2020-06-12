@@ -4,7 +4,7 @@ const http = require('http')
 const WebSocket = require('ws')
 const {
   proto: { ClientCommand, Configuration },
-} = require('@nearform/observer-proto')
+} = require('@libp2p/observer-proto')
 const { DEFAULT_SNAPSHOT_DURATION } = require('./utils')
 const {
   generateCommandResponse,

@@ -1,11 +1,11 @@
-import { parseImport } from '@nearform/observer-data'
+import { parseImport } from '@libp2p/observer-data'
 
 async function fetchSample(sampleIndex = 0, providedSample, deserialize) {
   // Only to be used in browser environment where fetch is available
   if (typeof fetch !== 'function')
     throw new Error('fetchSample() requires the browser fetch() API')
 
-  const { default: samples } = await import('@nearform/observer-samples')
+  const { default: samples } = await import('@libp2p/observer-samples')
   const sample = providedSample || samples[sampleIndex].file
   const response = await fetch(sample)
 

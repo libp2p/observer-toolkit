@@ -6,12 +6,8 @@ import {
   getListFilter,
   DataProvider,
   FilterProvider,
-} from '@nearform/observer-sdk'
-import {
-  renderWithData,
-  within,
-  getMockState,
-} from '@nearform/observer-testing'
+} from '@libp2p/observer-sdk'
+import { renderWithData, within, getMockState } from '@libp2p/observer-testing'
 
 import WidgetHeader from './WidgetHeader'
 

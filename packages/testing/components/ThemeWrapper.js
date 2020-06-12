@@ -5,7 +5,7 @@ import {
   FilterProvider,
   RootNodeProvider,
   ThemeSetter,
-} from '@nearform/observer-sdk'
+} from '@libp2p/observer-sdk'
 
 function ThemeWrapper({ providers = {}, children }) {
   const _RootNodeProvider = providers.RootNodeProvider || RootNodeProvider

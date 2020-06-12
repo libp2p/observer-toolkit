@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import T from 'prop-types'
 import styled, { css } from 'styled-components'
 
-import { AccordionControl, StyledButton, Tooltip } from '@nearform/observer-sdk'
+import { AccordionControl, StyledButton, Tooltip } from '@libp2p/observer-sdk'
 
 import EventsTypeControls from './EventsTypeControls'
 

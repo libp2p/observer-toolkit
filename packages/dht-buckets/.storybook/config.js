@@ -5,7 +5,7 @@ import {
   ThemeWrapper,
   DataDemoWrapper,
   ShellDemoWrapper,
-} from '@nearform/observer-testing'
+} from '@libp2p/observer-testing'
 import WidgetContext from '../components/context/WidgetContext'
 
 import sampleUrl from '../test-fixtures/sample-dht-2min.mock'
