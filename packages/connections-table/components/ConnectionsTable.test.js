@@ -11,23 +11,39 @@ import { getConnections, getLatestState } from '@nearform/observer-data'
 import ConnectionsTable from './ConnectionsTable'
 import WidgetContext from './context/WidgetContext'
 
-async function getSuitableRows(getAllByRole, getByTestId) {
+async function getSuitableRows(
+  getAllByRole,
+  getByTestId,
+  statesCount,
+  nudgeCount = 0
+) {
   const table = getAllByRole('table').filter(
     // Filter out sliding rows
     table => table.querySelectorAll('th').length
   )[0]
+
   // Look up a row that has age > 1 s and streams > 0
   const rows = within(table).queryAllByTableRow([
     { column: /status/i, textContent: /active/i },
-    { column: /time open/i, numericContent: num => num >= 1 },
-    { column: /streams/i, numericContent: num => num >= 2 },
+    { column: /duration open/i, numericContent: num => num >= 1 },
+    { column: /streams/i, textContent: /view/i },
   ])
 
   if (rows.length) return rows
 
   // If no suitable rows, nudge slider left until we reach one
+  nudgeCount++
+  if (nudgeCount >= statesCount) {
+    throw new Error('No suitable rows found in any state')
+  }
+
   await nudgeTimelineSlider('left', getByTestId)
-  const olderRows = await getSuitableRows(getAllByRole, getByTestId)
+  const olderRows = await getSuitableRows(
+    getAllByRole,
+    getByTestId,
+    statesCount,
+    nudgeCount
+  )
   return olderRows
 }
 
@@ -53,7 +69,11 @@ describe('ConnectionsTable', () => {
       </WidgetContext>
     )
 
-    const suitableRows = await getSuitableRows(getAllByRole, getByTestId)
+    const suitableRows = await getSuitableRows(
+      getAllByRole,
+      getByTestId,
+      states.length
+    )
     expect(suitableRows).not.toHaveLength(0)
 
     const widget = within(getByTestId('widget'))
@@ -98,6 +118,7 @@ describe('ConnectionsTable', () => {
       highlightedRowsFromPath,
       highlightedPathsFromPath,
     ] = testHighlighting(true)
+
     expect(highlightedRowsFromPath[0]).toBe(firstDataRow)
     expect(highlightedPathsFromPath[0]).toBe(previouslyHighlightedPath)
   })
@@ -109,7 +130,11 @@ describe('ConnectionsTable', () => {
       </WidgetContext>
     )
 
-    const suitableRows = await getSuitableRows(getAllByRole, getByTestId)
+    const suitableRows = await getSuitableRows(
+      getAllByRole,
+      getByTestId,
+      states.length
+    )
     expect(suitableRows).not.toHaveLength(0)
 
     const table = getByRole('table')
@@ -119,7 +144,7 @@ describe('ConnectionsTable', () => {
     const peerIdCell = within(row).getByTableColumn(/^peer id/i)
     const peerId = peerIdCell.textContent
 
-    const ageCell = within(row).getByTableColumn(/^time open/i)
+    const ageCell = within(row).getByTableColumn(/^duration open/i)
     const ageCellContent = within(ageCell).getByText(/\d+ ?\w+/)
     await fireEvent.mouseEnter(ageCellContent)
     const ageCellTooltip = await within(ageCell).findByRole('tooltip')
@@ -150,7 +175,7 @@ describe('ConnectionsTable', () => {
     expect(within(row_2).queryByRole('tooltip')).not.toBeInTheDocument()
 
     // Do this after closing the tooltip else it'll find subtable rows
-    const ageCell_2 = within(row_2).getByTableColumn(/^time open/i)
+    const ageCell_2 = within(row_2).getByTableColumn(/^duration open/i)
     const ageCellContent_2 = within(ageCell_2).getByText(/\d+ ?\w+/)
     await fireEvent.mouseEnter(ageCellContent_2)
     const ageCellTooltip_2 = await within(ageCell_2).findByRole('tooltip')
