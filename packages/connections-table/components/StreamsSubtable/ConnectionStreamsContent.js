@@ -6,15 +6,9 @@ import { Icon, StyledButton, Tooltip } from '@nearform/observer-sdk'
 
 import StreamsSubtable from './StreamsSubtable'
 
-const Container = styled.span`
+const Container = styled.div`
   text-align: right;
   white-space: nowrap;
-`
-
-const StreamsNumber = styled.span`
-  margin-right: ${({ theme }) => theme.spacing(2)};
-  min-width: ${({ theme }) => theme.spacing(4)};
-  display: inline-block;
 `
 
 const ExpandIcon = styled.span`
@@ -27,10 +21,24 @@ const ExpandIcon = styled.span`
 `
 
 const ExpandButton = styled(StyledButton)`
+  position: relative;
+  right: ${({ theme }) => theme.spacing(-1)};
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: ${({ theme }) => theme.spacing(17)};
   ${({ theme }) => theme.transition()}
   [data-tooltip="open"] > & {
     background: ${({ theme }) => theme.color('background', 1)};
   }
+`
+
+const TooltipTarget = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 `
 
 function ConnectionStreamsContent({
@@ -39,11 +47,12 @@ function ConnectionStreamsContent({
   connection,
   hidePrevious,
 }) {
-  const streamsButtonText = streamsCount ? `View streams` : 'No streams'
+  const streamsButtonText = streamsCount
+    ? `View ${streamsCount} streams`
+    : 'No streams'
 
   return (
     <Container>
-      <StreamsNumber>{streamsCount}</StreamsNumber>
       <Tooltip
         side="bottom"
         fixOn="no-hover"
@@ -51,6 +60,7 @@ function ConnectionStreamsContent({
         toleranceX={-32}
         hidePrevious={hidePrevious}
         content={<StreamsSubtable connection={connection} />}
+        override={{ Target: TooltipTarget }}
       >
         <ExpandButton disabled={!streamsCount}>
           {streamsButtonText}
