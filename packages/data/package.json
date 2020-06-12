@@ -3,18 +3,18 @@
   "version": "0.0.2",
   "description": "Javascript protobuf decoder for libp2p-introspection messages, with helper functions",
   "author": "AlanSl <alan.slater@nearform.com>",
-  "homepage": "https://github.com/libp2p/libp2p-observer#readme",
+  "homepage": "https://github.com/libp2p/observer-toolkit#readme",
   "license": "MIT",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/libp2p/libp2p-observer.git"
+    "url": "git+https://github.com/libp2p/observer-toolkit.git"
   },
   "scripts": {
     "test": "CI=true jest"
   },
   "bugs": {
-    "url": "https://github.com/libp2p/libp2p-observer/issues"
+    "url": "https://github.com/libp2p/observer-toolkit/issues"
   },
   "dependencies": {
     "@libp2p/observer-proto": "^0.0.2"
