@@ -1,6 +1,6 @@
 {
   "name": "@libp2p/observer-proto",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Protobuf definition, JavaScript protobuf encoder/decorder, and scripts generating mock libp2p introspection data",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
