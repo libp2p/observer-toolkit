@@ -40,7 +40,7 @@ const TableHead = styled.th`
 
 const TableCell = styled.td`
   ${({ theme }) => theme.styles.tableCell}
-  padding: ${({ theme, padding = [1, 4, 1, 3] }) => theme.spacing(padding)};
+  padding: ${({ theme, padding = [1, 3.5, 1, 0] }) => theme.spacing(padding)};
   font-weight: 400;
   font-family: plex-sans;
   color: ${({ theme }) => theme.color('text', 1)};

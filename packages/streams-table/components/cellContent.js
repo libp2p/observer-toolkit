@@ -1,6 +1,8 @@
 import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
+import { timeFormat } from 'd3'
+const timeFormatter = timeFormat('%H:%M:%S.%L')
 
 import {
   formatDuration,
@@ -33,7 +35,7 @@ PeerIdContent.propTypes = {
 
 function BytesContent({ value, maxValue, colorKey }) {
   return (
-    <Tooltip content={<Nowrap>{value} bytes</Nowrap>}>
+    <Tooltip side="right" content={<Nowrap>{value} bytes</Nowrap>}>
       <Nowrap>
         <DataNumber value={value} />
         <Bubble
@@ -56,7 +58,7 @@ BytesContent.propTypes = {
 function AgeContent({ value, maxValue }) {
   const ageSeconds = Math.round(value / 1000)
   return (
-    <Tooltip content={<Nowrap>{formatDuration(value)}</Nowrap>}>
+    <Tooltip side="right" content={<Nowrap>{formatDuration(value)}</Nowrap>}>
       <Nowrap>
         <TimeNumber value={ageSeconds} />
         <Bubble value={value} maxValue={maxValue} inline size={24} />
@@ -67,6 +69,17 @@ function AgeContent({ value, maxValue }) {
 AgeContent.propTypes = {
   value: T.string,
   maxValue: T.num,
+}
+
+function TimeContent({ value }) {
+  return (
+    <Tooltip side="right" content={<Nowrap>{value}</Nowrap>}>
+      {value ? timeFormatter(value) : '-'}
+    </Tooltip>
+  )
+}
+TimeContent.propTypes = {
+  value: T.num,
 }
 
 function MonospaceContent({ value }) {
@@ -82,4 +95,5 @@ export {
   MonospaceContent,
   PeerIdContent,
   StatusContent,
+  TimeContent,
 }

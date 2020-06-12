@@ -4,7 +4,6 @@ import {
   getConnectionTraffic,
   getStateTimes,
   statusNames,
-  transportNames,
 } from '@nearform/observer-data'
 import { getStringSorter, getNumericSorter } from '@nearform/observer-sdk'
 
@@ -13,6 +12,7 @@ import {
   BytesContent,
   PeerIdContent,
   StatusContent,
+  TimeContent,
 } from '../components/cellContent'
 
 import ConnectionStreamsContent from '../components/StreamsSubtable/ConnectionStreamsContent'
@@ -91,7 +91,7 @@ const bwOut = {
 
 const ageCol = {
   name: 'age',
-  header: 'Time open',
+  header: 'Duration open',
   getProps: (connection, { state, maxAge }) => {
     const age = getConnectionAge(connection, state)
     return {
@@ -104,17 +104,26 @@ const ageCol = {
   align: 'right',
 }
 
+const openCol = {
+  name: 'open',
+  header: 'Time opened',
+  getProps: connection => {
+    const openTs = connection.getTimeline().getOpenTs()
+    return { value: openTs }
+  },
+  renderContent: TimeContent,
+  sort: numericSorter,
+  align: 'right',
+}
+
 const closedCol = {
   name: 'closed',
   header: 'Time closed',
-  getProps: (connection, { state, maxAge }) => {
-    const age = getConnectionTimeClosed(connection, state)
-    return {
-      value: age,
-      maxValue: maxAge,
-    }
+  getProps: connection => {
+    const closeTs = connection.getTimeline().getCloseTs()
+    return { value: closeTs }
   },
-  renderContent: AgeContent,
+  renderContent: TimeContent,
   sort: numericSorter,
   align: 'right',
 }
@@ -129,21 +138,6 @@ const streamsCol = {
   sort: numericSorter,
   renderContent: ConnectionStreamsContent,
   align: 'right',
-}
-
-// Transport column disabled while no data available
-// eslint-disable-next-line no-unused-vars
-const transportCol = {
-  name: 'transport',
-  getProps: connection => {
-    const transportIdBin = connection.getTransportId()
-    const transportIdInt = Buffer.from(transportIdBin).readUIntLE(
-      0,
-      transportIdBin.length
-    )
-    return { value: transportNames[transportIdInt] }
-  },
-  sort: stringSorter,
 }
 
 const statusCol = {
@@ -170,9 +164,8 @@ const statusCol = {
 const columns = [
   statusCol,
   peerIdCol,
-  // Transport column disabled while no data available
-  //  transportCol,
   ageCol,
+  openCol,
   closedCol,
   dataInCol,
   bwIn,

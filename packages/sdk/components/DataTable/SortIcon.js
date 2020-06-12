@@ -9,7 +9,6 @@ const IconContainer = styled.span`
   width: ${({ size }) => size};
   display: inline-block;
   vertical-align: middle;
-  margin-left: ${({ theme }) => theme.spacing(0.5)};
   ${({ theme, hover }) =>
     hover ? `color: ${theme.color('secondary', 0)};` : ''}
   ${({ theme, isSorted }) =>

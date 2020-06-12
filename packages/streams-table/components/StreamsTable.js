@@ -1,6 +1,10 @@
 import React, { useContext, useMemo } from 'react'
 
-import { getAllStreamsAtTime, getStreamTraffic } from '@nearform/observer-data'
+import {
+  getAllStreamsAtTime,
+  getStreamAge,
+  getStreamTraffic,
+} from '@nearform/observer-data'
 import {
   DataTable,
   DataContext,
@@ -10,19 +14,22 @@ import {
 
 import streamsColumnDefs from '../definitions/streamsColumns'
 
-function getMaxValues(states) {
+function getMaxValues(states, currentState) {
   const maxValues = states.reduce(
     (maxValues, state) =>
       getAllStreamsAtTime(state).reduce((timeMax, { stream }) => {
-        const { maxTraffic } = timeMax
+        const { maxTraffic, maxAge } = timeMax
         const dataIn = getStreamTraffic(stream, 'in', 'bytes')
         const dataOut = getStreamTraffic(stream, 'out', 'bytes')
+        const age = getStreamAge(stream, state)
         return {
           maxTraffic: Math.max(maxTraffic, dataIn, dataOut),
+          maxAge: Math.max(maxAge, age),
         }
       }, maxValues),
     {
       maxTraffic: 0,
+      maxAge: 0,
     }
   )
   return maxValues
@@ -33,7 +40,11 @@ function StreamsTable() {
   const streamsData = getAllStreamsAtTime(currentState)
 
   const states = useContext(DataContext)
-  const metadata = useMemo(() => getMaxValues(states), [states])
+  const maxValues = useMemo(() => getMaxValues(states), [states])
+  const metadata = useMemo(() => ({ ...maxValues, currentState }), [
+    maxValues,
+    currentState,
+  ])
 
   const defaultPerPageIndex = 2
 

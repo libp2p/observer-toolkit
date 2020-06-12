@@ -4,6 +4,12 @@ import styled, { css } from 'styled-components'
 
 import Icon from './Icon'
 
+function getDefaultContainer() {
+  const root = document.getElementById('root')
+  if (root) return root.firstChild
+  return document.body.firstChild
+}
+
 function getInvertedDirection(direction) {
   const directionInverse = {
     top: 'bottom',
@@ -69,8 +75,9 @@ function updateOffset(
     !containerRef.current ||
     !positionerRef.current ||
     !tickRef.current
-  )
+  ) {
     return
+  }
 
   const elemRect = positionerRef.current.getBoundingClientRect()
   const boundsRect = containerRef.current.getBoundingClientRect()
@@ -187,7 +194,7 @@ function Tooltip({
   content,
   toleranceX = 0,
   toleranceY = 0,
-  containerRef = { current: document.body },
+  containerRef = { current: getDefaultContainer() },
   initiallyOpen = false,
   hidePrevious,
   override = {},
