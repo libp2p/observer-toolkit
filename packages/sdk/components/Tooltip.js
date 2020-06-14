@@ -192,9 +192,6 @@ const ExpandIcon = styled.span`
   transform: rotate(
     ${({ isOpen, directions }) => (isOpen ? directions[0] : directions[1])}deg
   );
-  [data-tooltip='open'] > * > & {
-    console.logtransform: rotate(180deg);
-  }
   ${({ theme }) => theme.transition({ property: 'transform' })}
   margin-bottom: 2px;
   color: currentColor;
