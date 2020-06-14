@@ -7,7 +7,7 @@ import {
 } from '@libp2p/observer-sdk'
 import { getEventType } from '@libp2p/observer-data'
 
-import { ShowJsonButton } from '../components/cellContent'
+import ShowJsonButton from '../components/ShowJsonButton'
 
 const stringSorter = {
   getSorter: getStringSorter,
