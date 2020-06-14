@@ -5,15 +5,15 @@ import {
   getStateTimes,
   statusNames,
 } from '@libp2p/observer-data'
-import { getStringSorter, getNumericSorter } from '@libp2p/observer-sdk'
-
 import {
-  AgeContent,
+  getStringSorter,
+  getNumericSorter,
+  DurationContent,
   BytesContent,
   PeerIdContent,
   StatusContent,
   TimeContent,
-} from '../components/cellContent'
+} from '@libp2p/observer-sdk'
 
 import ConnectionStreamsContent from '../components/StreamsSubtable/ConnectionStreamsContent'
 
@@ -99,7 +99,7 @@ const ageCol = {
       maxValue: maxAge,
     }
   },
-  renderContent: AgeContent,
+  renderContent: DurationContent,
   sort: numericSorter,
   align: 'right',
 }

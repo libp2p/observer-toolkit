@@ -54,17 +54,4 @@ const THeadRow = styled.tr`
 `
 const TBody = styled.tbody``
 
-const Monospace = styled.span`
-  font-family: plex-mono;
-`
-
-export {
-  Table,
-  TableRow,
-  TableHead,
-  TableCell,
-  THead,
-  THeadRow,
-  TBody,
-  Monospace,
-}
+export { Table, TableRow, TableHead, TableCell, THead, THeadRow, TBody }

@@ -4,13 +4,12 @@ import {
   getStreamTraffic,
   statusNames,
 } from '@libp2p/observer-data'
-import { getStringSorter, getNumericSorter } from '@libp2p/observer-sdk'
-
 import {
-  // AgeContent,
+  getStringSorter,
+  getNumericSorter,
   BytesContent,
   StatusContent,
-} from '../components/cellContent'
+} from '@libp2p/observer-sdk'
 
 import * as statusSorter from '../utils/statusSorter'
 
@@ -50,23 +49,6 @@ const dataOutCol = {
   align: 'right',
 }
 
-/* TODO: fix stream age in mock data
-const ageCol = {
-  name: 'age',
-  header: 'Time open',
-  getProps: (stream, state, metadata) => {
-    const age = getStreamAge(stream, state)
-    console.log(age, metadata.maxAge)
-    return {
-      value: age,
-      maxValue: metadata.maxAge,
-    }
-  },
-  renderContent: AgeContent,
-  sort: numericSorter,
-}
-*/
-
 const protocolCol = {
   name: 'protocol',
   getProps: stream => ({ value: stream.getProtocol() }),
@@ -92,12 +74,6 @@ const streamStatusCol = {
 }
 
 // Define column order
-const columns = [
-  streamStatusCol,
-  protocolCol,
-  dataInCol,
-  dataOutCol,
-  //  ageCol,
-]
+const columns = [streamStatusCol, protocolCol, dataInCol, dataOutCol]
 
 export default columns

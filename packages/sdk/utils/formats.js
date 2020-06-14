@@ -1,3 +1,5 @@
+import { timeFormat } from 'd3'
+
 function padZero(num) {
   return num.toLocaleString(undefined, { minimumIntegerDigits: 2 })
 }
@@ -68,12 +70,11 @@ function formatDataSize(num, string = false) {
   return string ? `${partsArray[0]} ${partsArray[1]}` : partsArray
 }
 
-function formatTime(timestamp) {
-  const time = new Date(timestamp)
-  const hr = padZero(time.getHours())
-  const min = padZero(time.getMinutes())
-  const sec = padZero(time.getSeconds())
-  return `${hr}:${min}:${sec}`
+const timeFormatter = timeFormat('%H:%M:%S')
+const timeFormatterMs = timeFormat('%H:%M:%S.%L')
+function formatTime(timestamp, includeMs = false) {
+  const formatter = includeMs ? timeFormatter : timeFormatterMs
+  return formatter(timestamp)
 }
 
 export {

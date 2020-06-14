@@ -6,12 +6,9 @@ import ReactJson from 'react-json-view'
 import {
   copyToClipboard,
   Icon,
-  Monospace,
   StyledButton,
   Tooltip,
 } from '@libp2p/observer-sdk'
-
-import { RenderTime } from './contentRenderers'
 
 const RawJsonContainer = styled.div`
   display: flex;
@@ -64,13 +61,6 @@ const ExpandButton = styled(StyledButton)`
   }
 `
 
-function TimeContent({ value }) {
-  return <RenderTime content={value} />
-}
-TimeContent.propTypes = {
-  value: T.string,
-}
-
 function ShowJsonButton({ value = '', hidePrevious }) {
   if (!value) return ''
   return (
@@ -115,11 +105,4 @@ RawJsonExpanded.propTypes = {
   value: T.string,
 }
 
-function MonospaceContent({ value }) {
-  return <Monospace>{value}</Monospace>
-}
-MonospaceContent.propTypes = {
-  value: T.string,
-}
-
-export { MonospaceContent, TimeContent, ShowJsonButton }
+export { ShowJsonButton }
