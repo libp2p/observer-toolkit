@@ -83,7 +83,7 @@ function CheckboxList({
 
   const iconsMapping = {
     true: 'check',
-    mixed: 'closed',
+    mixed: 'mixed',
     false: 'uncheck',
   }
 
