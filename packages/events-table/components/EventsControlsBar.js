@@ -83,20 +83,6 @@ const AccordionButton = styled.button`
   ${({ theme }) => theme.text('body', 'small')}
 `
 
-const NewColumnsContainer = styled.div`
-  text-align: center;
-  ${({ theme }) => theme.text('label', 'large')}
-`
-
-const NewColumnsTooltip = styled.div`
-  width: 280px;
-  font-weight: 400;
-`
-
-const NewColumnsButton = styled(StyledButton)`
-  padding: ${({ theme }) => theme.spacing([1.5, 2])};
-`
-
 function EventsControlsBar({
   barHeight,
   currentEventsData,
@@ -108,8 +94,6 @@ function EventsControlsBar({
   highlightedRowIndex,
   propertyTypes,
   dispatchPropertyTypes,
-  unappliedPropertyTypes,
-  setUnappliedPropertyTypes,
 }) {
   const [isTypesOpen, setIsTypesOpen] = useState(false)
 
@@ -118,14 +102,6 @@ function EventsControlsBar({
     !isPaused && highlightedRowIndex !== null
       ? 'Paused while row highlighted'
       : 'Incoming events paused'
-
-  const handleApplyPropertyTypes = () => {
-    dispatchPropertyTypes({
-      action: 'applyMultiple',
-      data: unappliedPropertyTypes,
-    })
-    setUnappliedPropertyTypes(null)
-  }
 
   const showButtonText = getShowButtonText(eventsSincePause, isLive)
 
@@ -143,20 +119,6 @@ function EventsControlsBar({
             Types, column settings
           </AccordionControl>
         </EventsHeadingBlock>
-        {unappliedPropertyTypes && (
-          <NewColumnsContainer>
-            <Tooltip
-              fixOn="never"
-              toleranceX={null}
-              content={`${unappliedPropertyTypes.length} new property types were found in newly discovered event types, which may be added as columns`}
-              override={{ Content: NewColumnsTooltip }}
-            >
-              <NewColumnsButton onClick={handleApplyPropertyTypes}>
-                Add {unappliedPropertyTypes.length} new <br /> columns
-              </NewColumnsButton>
-            </Tooltip>
-          </NewColumnsContainer>
-        )}
         {isTypesOpen && (
           <EventsTypeControls
             events={currentEventsData}
@@ -203,8 +165,6 @@ EventsControlsBar.propTypes = {
   highlightedRowIndex: T.number,
   propertyTypes: T.array.isRequired,
   dispatchPropertyTypes: T.func.isRequired,
-  unappliedPropertyTypes: T.array,
-  setUnappliedPropertyTypes: T.func.isRequired,
 }
 
 export default EventsControlsBar

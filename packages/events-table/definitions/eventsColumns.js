@@ -46,9 +46,6 @@ const typeCol = {
   getProps: event => ({ value: getEventType(event) }),
   sort: stringSorter,
   renderContent: EventTypeChip,
-  cellProps: {
-    width: '12%',
-  },
 }
 
 const jsonCol = {
@@ -59,9 +56,6 @@ const jsonCol = {
     hidePrevious,
   }),
   renderContent: ShowJsonButton,
-  cellProps: {
-    width: '16%',
-  },
 }
 
 // Define column order

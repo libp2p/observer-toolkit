@@ -51,19 +51,18 @@ function EventsTable({ theme }) {
   const rowsPerPageOptions = [10, 25, 50, 100]
   const defaultPerPageIndex = 0
 
-  const {
-    propertyTypes,
-    dispatchPropertyTypes,
-    unappliedPropertyTypes,
-    setUnappliedPropertyTypes,
-  } = useEventPropertyTypes()
+  const { propertyTypes, dispatchPropertyTypes } = useEventPropertyTypes()
+
   const columns = buildEventsColumns(
     eventsColumnDefs,
     propertyTypes,
     dispatchPropertyTypes
   )
 
-  const eventsSincePause = eventsData.length - pausedEventsData.length
+  const eventsSincePause = eventsData.filter(
+    event => !pausedEventsData.includes(event)
+  ).length
+
   const changePausedState = (pause = true) => {
     setIsPaused(pause)
     setPausedEventsData(eventsData)
@@ -78,7 +77,7 @@ function EventsTable({ theme }) {
   }
 
   // Re-pause if we've gone back in time so events beyond currentState get removed
-  if (eventsSincePause < 0 && isPaused) changePausedState(true)
+  // if (eventsSincePause < 0 && isPaused) changePausedState(true)
 
   const currentEventsData =
     !hasLiveSource || isLive ? eventsData : pausedEventsData
@@ -118,8 +117,6 @@ function EventsTable({ theme }) {
         highlightedRowIndex={highlightedRowIndex}
         propertyTypes={propertyTypes}
         dispatchPropertyTypes={dispatchPropertyTypes}
-        unappliedPropertyTypes={unappliedPropertyTypes}
-        setUnappliedPropertyTypes={setUnappliedPropertyTypes}
       />
       <DataTable
         allContent={allContent}
