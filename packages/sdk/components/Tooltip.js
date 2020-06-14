@@ -126,6 +126,14 @@ const Target = styled.span.attrs(({ isOpen }) => ({
 }))`
   position: relative;
   display: inline-block;
+  ${({ hasExpandIcon }) =>
+    hasExpandIcon
+      ? css`
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        `
+      : ''}
   ${({ isClickable, noHover, isFixed, theme }) =>
     isClickable
       ? css`
@@ -141,7 +149,7 @@ const Positioner = styled.div`
   ${({ direction, tickSize, hang, theme }) =>
     getOuterPosition(direction, '100%', hang, theme)}
 
-  // Give a little space that tolerates small mouseouts around the tick shape
+  /* Give a little space that tolerates small mouseouts around the tick shape */
   ${({ direction, tickSize }) =>
     `border-${direction}: ${tickSize}px solid transparent`};
 `
@@ -180,6 +188,18 @@ const CloseIcon = styled.a`
   }
 `
 
+const ExpandIcon = styled.span`
+  transform: rotate(
+    ${({ isOpen, directions }) => (isOpen ? directions[0] : directions[1])}deg
+  );
+  [data-tooltip='open'] > * > & {
+    console.logtransform: rotate(180deg);
+  }
+  ${({ theme }) => theme.transition({ property: 'transform' })}
+  margin-bottom: 2px;
+  color: currentColor;
+`
+
 const sideOptions = ['top', 'right', 'bottom', 'left']
 const fixOnOptions = ['click', 'no-hover', 'always', 'never']
 
@@ -197,8 +217,14 @@ function Tooltip({
   containerRef = { current: getDefaultContainer() },
   initiallyOpen = false,
   hidePrevious,
+  expandIcon = false,
   override = {},
 }) {
+  const hasExpandIcon = !!expandIcon
+  const expandIconDirections = Array.isArray(expandIcon)
+    ? expandIcon
+    : [180, 90]
+
   const clickToFix = fixOn === 'click'
   const alwaysFix = fixOn === 'always'
   const noHover = fixOn === 'no-hover'
@@ -260,6 +286,7 @@ function Tooltip({
       isClickable={isClickable}
       isFixed={isFixed}
       isOpen={isOpen}
+      hasExpandIcon={hasExpandIcon}
       as={override.Target}
     >
       {children}
@@ -297,6 +324,14 @@ function Tooltip({
           </Content>
         </Positioner>
       )}
+      {hasExpandIcon && (
+        <Icon
+          type="expand"
+          isOpen={isOpen}
+          directions={expandIconDirections}
+          override={{ Container: ExpandIcon }}
+        />
+      )}
     </Target>
   )
 }
@@ -315,6 +350,7 @@ Tooltip.propTypes = {
   hidePrevious: T.func,
   override: T.object,
   containerRef: T.object,
+  expandIcon: T.oneOfType([T.bool, T.Array]),
   hang: T.oneOfType([T.bool, T.number]),
 }
 
