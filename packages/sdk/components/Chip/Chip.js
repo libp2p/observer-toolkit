@@ -3,6 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import Icon from '../Icon'
+import Tooltip from '../Tooltip'
 
 const Container = styled.span.attrs(({ theme, glowColor, fade }) => ({
   style: {
@@ -26,6 +27,18 @@ const ChipText = styled.span`
   vertical-align: middle;
 `
 
+const SvgImage = styled.span.attrs(({ svgB64 }) => ({
+  style: {
+    backgroundImage: `url('data:image/svg+xml;base64,${svgB64}')`,
+  },
+}))`
+  display: inline-block;
+  height: ${({ size }) => (size ? `${size}px` : 'inherit')};
+  width: ${({ size }) => (size ? `${size}px` : 'inherit')};
+  color: currentColor;
+  vertical-align: middle;
+`
+
 function Chip({
   color,
   backgroundColor,
@@ -33,6 +46,8 @@ function Chip({
   icon,
   prefix = '',
   suffix = '',
+  svgB64,
+  iconSize,
   fade,
   children,
   ...props
@@ -46,7 +61,12 @@ function Chip({
       {...props}
     >
       {prefix}
-      {icon && <Icon type={icon} />}
+      {svgB64 && (
+        <Tooltip content={'Generated icon'} side="left">
+          <SvgImage svgB64={svgB64} size={iconSize} />
+        </Tooltip>
+      )}
+      {icon && <Icon type={icon} size={iconSize} />}
       <ChipText>{children}</ChipText>
       {suffix}
     </Container>
@@ -60,6 +80,8 @@ Chip.propTypes = {
   icon: T.string,
   prefix: T.node,
   suffix: T.node,
+  svgB64: T.string,
+  iconSize: T.number,
   fade: T.number,
   children: T.node,
 }

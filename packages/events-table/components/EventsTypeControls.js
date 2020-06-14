@@ -15,6 +15,7 @@ import {
 } from '@libp2p/observer-sdk'
 
 import EventTypesPropertyControls from './EventTypesPropertyControls'
+import EventTypeChip from './EventTypeChip'
 
 function getEventTypeMetadata(eventName, eventTypes) {
   return eventTypes.find(type => type.name === eventName)
@@ -77,7 +78,6 @@ const EventTypeOuter = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 15%;
-  background: ${({ theme }) => theme.color('background')};
   display: flex;
   flex-direction: column;
   max-width: ${({ theme }) => theme.spacing(40)};
@@ -94,11 +94,16 @@ const EventTypeSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: ${({ theme }) => theme.color('background')};
+  cursor: pointer;
+  :hover {
+    background: ${({ theme }) => theme.color('background', 2)};
+  }
   ${({ isShown, theme }) =>
     isShown
       ? ''
       : css`
-          color: ${theme.color('text', 2, 0.6)};
+          opacity: 0.5;
         `}
 `
 
@@ -107,10 +112,6 @@ const EventTypeName = styled.h4`
   color: inherit;
   white-space: nowrap;
   padding-right: ${({ theme }) => theme.spacing(0.5)};
-  cursor: pointer;
-  :hover {
-    background: ${({ theme }) => theme.color('background', 1)};
-  }
 `
 
 const EventCount = styled.div`
@@ -241,10 +242,9 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
 
         return (
           <EventTypeOuter key={name}>
-            <EventTypeSection isShown={isShown}>
-              <EventTypeName onClick={handleToggleEventType}>
-                <Icon type={iconType} />
-                <Monospace>{name}</Monospace>
+            <EventTypeSection isShown={isShown} onClick={handleToggleEventType}>
+              <EventTypeName>
+                <Icon type={iconType} /> <EventTypeChip value={name} />
               </EventTypeName>
               <EventCount>{count} events</EventCount>
             </EventTypeSection>

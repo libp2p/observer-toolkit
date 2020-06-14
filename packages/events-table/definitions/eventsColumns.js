@@ -2,11 +2,11 @@ import {
   getStringSorter,
   getNumericSorter,
   DurationContent,
-  MonospaceContent,
   TimeContent,
 } from '@libp2p/observer-sdk'
 import { getEventType } from '@libp2p/observer-data'
 
+import EventTypeChip from '../components/EventTypeChip'
 import ShowJsonButton from '../components/ShowJsonButton'
 
 const stringSorter = {
@@ -45,7 +45,7 @@ const typeCol = {
   name: 'type',
   getProps: event => ({ value: getEventType(event) }),
   sort: stringSorter,
-  renderContent: MonospaceContent,
+  renderContent: EventTypeChip,
   cellProps: {
     width: '12%',
   },
