@@ -17,7 +17,6 @@ const NumWrapper = styled.span`
 `
 
 const Unit = styled.span`
-  /* Use cell right padding for units, aligning with icons */
   font-family: 'plex-sans';
   font-weight: 300;
   font-size: 90%;

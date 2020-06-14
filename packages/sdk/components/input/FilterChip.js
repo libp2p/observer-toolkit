@@ -5,7 +5,7 @@ import { Formik } from 'formik'
 import isEqual from 'lodash.isequal'
 
 import Icon from '../Icon'
-import Chip from '../Chip'
+import Chip from '../Chip/Chip'
 import Tooltip from '../Tooltip'
 import { RootNodeContext } from '../context/RootNodeProvider'
 

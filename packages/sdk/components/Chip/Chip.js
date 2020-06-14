@@ -2,7 +2,7 @@ import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import Icon from './Icon'
+import Icon from '../Icon'
 
 const Container = styled.span.attrs(({ theme, getColor, glow, fade }) => ({
   style: {
