@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { proto } from '@libp2p/observer-proto'
 import { getRuntimeEventTypes } from '@libp2p/observer-data'
 import {
+  FilterContext,
+  Icon,
   RuntimeContext,
   Monospace,
   Tooltip,
@@ -45,19 +47,47 @@ function getEventPropertyData(
 const EventTypesContainer = styled.div`
   display: flex;
   padding: ${({ theme }) => theme.spacing()};
+  flex-grow: 1;
+  flex-wrap: wrap;
 `
 
-const EventType = styled.div`
-  white-space: nowrap;
-  margin: ${({ theme }) => theme.spacing(0.5)};
-  color: ${({ theme, hasFilters }) =>
-    theme.color(hasFilters ? 'highlight' : 'text')};
-  padding: ${({ theme }) => theme.spacing(1)};
+const EventTypeOuter = styled.div`
+  margin: ${({ theme }) => theme.spacing([0.5, 1])};
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 15%;
   background: ${({ theme }) => theme.color('background')};
+  display: flex;
+  flex-direction: column;
+  max-width: ${({ theme }) => theme.spacing(40)};
 `
 
-const EventTypeColumnSummary = styled.div`
-  margin: ${({ theme }) => theme.spacing([0.5, 0])};
+const EventPropertiesInner = styled.div`
+  padding: ${({ theme }) => theme.spacing()};
+  width: 100%;
+  white-space: nowrap;
+`
+
+const EventTypeSection = styled.div`
+  padding: ${({ theme }) => theme.spacing()};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const EventTypeName = styled.h4`
+  ${({ theme }) => theme.text('heading', 'small')};
+  white-space: nowrap;
+`
+
+const EventCount = styled.div`
+  ${({ theme }) => theme.text('label', 'small')};
+  margin: ${({ theme }) => theme.spacing(1)};
+  white-space: nowrap;
+`
+
+const EventPropertiesSection = styled.div`
+  background: ${({ theme }) => theme.color('background', 1)};
   ${({ theme }) => theme.text('label', 'small')};
   color: ${({ theme, hasFilters }) =>
     theme.color(hasFilters ? 'highlight' : 'text', 1)};
@@ -70,6 +100,8 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
     propertiesFromEvents: {},
   })
   const runtime = useContext(RuntimeContext)
+  const filters = useContext(FilterContext)
+  console.log(filters)
 
   const eventTypes = runtime ? getRuntimeEventTypes(runtime) : []
 
@@ -157,22 +189,29 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
         )
 
         return (
-          <Tooltip
-            key={name}
-            side="bottom"
-            toleranceY={null}
-            fixOn="no-hover"
-            content={TooltipContent}
-          >
-            <EventType hasFilters={hasFilters}>
-              {count} <Monospace>{name}</Monospace>
-              <EventTypeColumnSummary hasFilters={hasFilters}>
+          <EventTypeOuter key={name}>
+            <EventTypeSection>
+              <EventTypeName>
+                <Icon type={'check'} />
+                <Monospace>{name}</Monospace>
+              </EventTypeName>
+              <EventCount>{count} events</EventCount>
+            </EventTypeSection>
+            <EventPropertiesSection hasFilters={hasFilters}>
+              <Tooltip
+                side="bottom"
+                toleranceY={null}
+                fixOn="no-hover"
+                content={TooltipContent}
+                expandIcon
+                override={{ Target: EventPropertiesInner }}
+              >
                 {propertyData.length} column
                 {propertyData.length === 1 ? '' : 's'},{' '}
                 {filteredProperties.length} hidden
-              </EventTypeColumnSummary>
-            </EventType>
-          </Tooltip>
+              </Tooltip>
+            </EventPropertiesSection>
+          </EventTypeOuter>
         )
       })}
     </EventTypesContainer>

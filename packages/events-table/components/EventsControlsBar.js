@@ -21,7 +21,6 @@ const EventsControlsContainer = styled.section`
   align-items: center;
   justify-content: space-between;
   height: ${({ barHeight }) => barHeight}px;
-  padding: ${({ theme }) => theme.spacing([1, 0])};
   background: ${({ theme }) => theme.color('secondary', 2)};
   ${({ theme }) => theme.text('body', 'medium')}
 `
@@ -30,6 +29,7 @@ const EventTypesBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  flex-grow: 1;
 `
 
 const PauseControlsBlock = styled.div`
