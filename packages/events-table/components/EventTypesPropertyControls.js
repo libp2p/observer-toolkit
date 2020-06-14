@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
@@ -26,10 +26,42 @@ const EventsPropertyItem = styled.li`
   cursor: pointer;
   white-space: nowrap;
 `
+const EventsPropertyCheckAll = styled(EventsPropertyItem)`
+  border-bottom: 1px solid ${({ theme }) => theme.color('background', 2)};
+`
 
 const EventsPropertyName = styled.span`
   margin-left: ${({ theme }) => theme.spacing(1)};
 `
+
+const EventsPropertyCheckAllLabel = styled(EventsPropertyName)`
+  font-weight: 400;
+`
+
+function getAllCheckedStatus(propertyData) {
+  let anyChecked = false
+  let anyUnchecked = false
+  for (const { enabled } of propertyData) {
+    if ((enabled && anyUnchecked) || (!enabled && anyChecked)) return 'mixed'
+    if (enabled) {
+      anyChecked = true
+    } else {
+      anyUnchecked = true
+    }
+  }
+  return anyChecked ? 'all' : 'none'
+}
+
+function getCheckAllVars(allCheckedStatus) {
+  switch (allCheckedStatus) {
+    case 'all':
+      return ['check', 'Showing all columns']
+    case 'mixed':
+      return ['mixed', 'Showing some columns']
+    case 'none':
+      return ['uncheck', 'Showing no columns']
+  }
+}
 
 function EventsTypePropertyControls({
   eventName,
@@ -37,8 +69,25 @@ function EventsTypePropertyControls({
   propertyTypes,
   dispatchPropertyTypes,
 }) {
+  const allCheckedStatus = getAllCheckedStatus(propertyData)
+  const [checkAllIcon, checkAllText] = getCheckAllVars(allCheckedStatus)
+  const buttonChecksAll = checkAllIcon !== 'check'
+
+  const handleCheckAll = useCallback(() => {
+    propertyData.forEach(propertyStatus =>
+      dispatchPropertyTypes({
+        action: buttonChecksAll ? 'enable' : 'disable',
+        data: propertyStatus,
+      })
+    )
+  }, [buttonChecksAll, dispatchPropertyTypes, propertyData])
+
   return (
     <EventsPropertyList>
+      <EventsPropertyCheckAll onClick={handleCheckAll}>
+        <Icon type={checkAllIcon} override={{ Container: CheckIconButton }} />
+        <EventsPropertyCheckAllLabel>{checkAllText}</EventsPropertyCheckAllLabel>
+      </EventsPropertyCheckAll>
       {propertyData.map(propertyStatus => {
         const { name, enabled } = propertyStatus
         const handleClick = () =>
