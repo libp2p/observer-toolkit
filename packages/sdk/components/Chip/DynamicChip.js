@@ -28,6 +28,7 @@ function getHex(value) {
 function DynamicChip({
   value,
   splitter = '/',
+  splitIndex = 0,
   glow,
   iconSize,
   theme,
@@ -39,10 +40,11 @@ function DynamicChip({
     const hex = getHex(value)
 
     const parts = value.split(splitter)
-    if (parts.length > 1) {
-      // Give values like 'something/1.2' and 'something/2.6/mod' the same hue but different saturations
-      const end = parts.slice(1).join(splitter)
-      hsl = colorHash.hsl(getHex(parts[0]))
+    if (parts.length > splitIndex + 1) {
+      // Give values like 'something/1.2' and 'something/mod/2.6' same hue, different saturations
+      const start = parts.slice(0, splitIndex + 1).join(splitter)
+      const end = splitter + parts.slice(splitIndex + 1).join(splitter)
+      hsl = colorHash.hsl(getHex(start))
       const [, saturation] = colorHash.hsl(getHex(end))
       hsl[1] = saturation
     } else {
@@ -74,9 +76,9 @@ function DynamicChip({
           .join(''),
       }).replace(/="#\w+"/g, `="${theme.color('background')}"`)
 
-      const svgTag = shape.match(/(<svg.*?\>)/)[1]
-      const paths1 = shape.match(/.*\<svg.*?\>(.*)\<\/svg\>/)[1]
-      const paths2 = shape2.match(/.*\<svg.*?\>(.*)\<\/svg\>/)[1]
+      const svgTag = shape.match(/(<svg.*?>)/)[1]
+      const paths1 = shape.match(/.*<svg.*?>(.*)<\/svg>/)[1]
+      const paths2 = shape2.match(/.*<svg.*?>(.*)<\/svg>/)[1]
 
       const svg = `${svgTag}${paths2}${paths1}</svg>`
       svgB64 = btoa(svg)
@@ -88,7 +90,7 @@ function DynamicChip({
       glowColor,
       svgB64,
     }
-  }, [glow, iconSize, splitter, value, theme])
+  }, [value, splitter, splitIndex, glow, iconSize, theme])
 
   return (
     <Chip
@@ -109,6 +111,7 @@ DynamicChip.propTypes = {
   glow: T.number,
   iconSize: T.number,
   theme: T.object.isRequired,
+  splitIndex: T.number,
 }
 
 export default withTheme(DynamicChip)

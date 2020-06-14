@@ -49,9 +49,14 @@ function WidgetContext({ children }) {
   const states = useContext(DataContext)
   const currentState = useContext(TimeContext)
 
-  // If performance becomes an issue on live-streaming data, use
-  // useReducer and compare appended data only instead of whole dataset
-  const metadata = useMemo(() => getMaxValues(states), [states])
+  const maxValues = useMemo(() => getMaxValues(states), [states])
+  const metadata = useMemo(
+    () => ({
+      ...maxValues,
+      currentState,
+    }),
+    [maxValues, currentState]
+  )
 
   const maxStreams = useCalculation(
     ({ currentState }) =>

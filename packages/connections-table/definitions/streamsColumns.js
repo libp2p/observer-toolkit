@@ -8,6 +8,8 @@ import {
   getStringSorter,
   getNumericSorter,
   BytesContent,
+  TimeContent,
+  ProtocolChip,
   StatusContent,
 } from '@libp2p/observer-sdk'
 
@@ -21,6 +23,18 @@ const stringSorter = {
 const numericSorter = {
   getSorter: getNumericSorter,
   defaultDirection: 'desc',
+}
+
+const openCol = {
+  name: 'open',
+  header: 'Time opened',
+  getProps: (stream) => {
+    const openTs = stream.getTimeline().getOpenTs()
+    return { value: openTs }
+  },
+  renderContent: TimeContent,
+  sort: numericSorter,
+  align: 'right',
 }
 
 const dataInCol = {
@@ -49,10 +63,15 @@ const dataOutCol = {
   align: 'right',
 }
 
+
 const protocolCol = {
   name: 'protocol',
   getProps: stream => ({ value: stream.getProtocol() }),
+  renderContent: ProtocolChip,
   sort: stringSorter,
+  cellProps: {
+    width: '40%',
+  },
 }
 
 const streamStatusCol = {
@@ -74,6 +93,6 @@ const streamStatusCol = {
 }
 
 // Define column order
-const columns = [streamStatusCol, protocolCol, dataInCol, dataOutCol]
+const columns = [streamStatusCol, protocolCol, openCol, dataInCol, dataOutCol]
 
 export default columns

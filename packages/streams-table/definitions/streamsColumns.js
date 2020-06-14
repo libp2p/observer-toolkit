@@ -8,7 +8,7 @@ import {
   getNumericSorter,
   BytesContent,
   DurationContent,
-  MonospaceContent,
+  ProtocolChip,
   PeerIdContent,
   StatusContent,
   TimeContent,
@@ -91,8 +91,11 @@ const openCol = {
 const protocolCol = {
   name: 'protocol',
   getProps: ({ stream }) => ({ value: stream.getProtocol() }),
-  renderContent: MonospaceContent,
+  renderContent: ProtocolChip,
   sort: stringSorter,
+  cellProps: {
+    width: '25%',
+  },
 }
 
 const streamStatusCol = {
@@ -107,11 +110,11 @@ const streamStatusCol = {
 const columns = [
   peerIdCol,
   streamStatusCol,
+  protocolCol,
   ageCol,
   openCol,
   dataInCol,
   dataOutCol,
-  protocolCol,
 ]
 
 export default columns

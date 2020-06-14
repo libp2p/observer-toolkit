@@ -88,9 +88,17 @@ BubbleContent.propTypes = {
 }
 
 function DurationContent({ value, maxValue, ...props }) {
+  const effectiveValue = Math.max(0, value)
+  if (!maxValue) {
+    return (
+      <RawNumberTooltip value={effectiveValue} unit={'ms'}>
+        <DurationNumber value={effectiveValue}></DurationNumber>
+      </RawNumberTooltip>
+    )
+  }
   return (
     <BubbleContent
-      value={value}
+      value={effectiveValue}
       maxValue={maxValue}
       NumberField={DurationNumber}
       baseUnit="ms"
