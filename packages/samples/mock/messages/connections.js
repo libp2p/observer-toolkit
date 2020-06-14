@@ -159,6 +159,7 @@ function updateConnection(connection, now, duration) {
       // Open a new stream
       const newStream = createStream({
         status: statusList.getNum('OPENING'),
+        open: now,
         connection,
       })
       const streamList = connection.getStreams()
