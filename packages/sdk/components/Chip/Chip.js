@@ -4,18 +4,16 @@ import styled from 'styled-components'
 
 import Icon from '../Icon'
 
-const Container = styled.span.attrs(({ theme, getColor, glow, fade }) => ({
+const Container = styled.span.attrs(({ theme, glowColor, fade }) => ({
   style: {
     opacity: fade,
-    boxShadow: glow
-      ? `0 0 ${theme.spacing(2)} 0 ${getColor(theme, glow)}`
-      : 'none',
+    boxShadow: glowColor ? `0 0 ${theme.spacing(2)} 0 ${glowColor}` : 'none',
   },
 }))`
   display: inline-block;
   padding: ${({ theme }) => theme.spacing([0, 0.5])};
-  background: ${({ theme, getColor }) => getColor(theme, 0.15)};
-  color: ${({ theme, getColor }) => getColor(theme, 1)};
+  background: ${({ theme, backgroundColor }) => backgroundColor};
+  color: ${({ theme, color }) => color};
   white-space: nowrap;
   font-size: 8pt;
   font-weight: 600;
@@ -29,42 +27,40 @@ const ChipText = styled.span`
 `
 
 function Chip({
-  type,
-  options,
+  color,
+  backgroundColor,
+  glowColor,
+  icon,
   prefix = '',
   suffix = '',
   fade,
-  glow,
   children,
   ...props
 }) {
-  if (!options[type]) {
-    throw new Error(
-      `Chip option "${type}" not in "${Object.keys(options).join('", "')}"`
-    )
-  }
-  const { icon, colorKey, colorIndex } = options[type]
-
-  const getColor = (theme, opacity) =>
-    theme.color(colorKey, colorIndex || 0, opacity)
-
   return (
-    <Container getColor={getColor} fade={fade} glow={glow} {...props}>
+    <Container
+      color={color}
+      backgroundColor={backgroundColor}
+      glowColor={glowColor}
+      fade={fade}
+      {...props}
+    >
       {prefix}
       {icon && <Icon type={icon} />}
-      <ChipText>{children || type}</ChipText>
+      <ChipText>{children}</ChipText>
       {suffix}
     </Container>
   )
 }
 
 Chip.propTypes = {
-  type: T.string.isRequired,
-  options: T.object.isRequired,
+  color: T.string.isRequired,
+  backgroundColor: T.string.isRequired,
+  glowColor: T.string,
+  icon: T.string,
   prefix: T.node,
   suffix: T.node,
   fade: T.number,
-  glow: T.number,
   children: T.node,
 }
 

@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import { statusNames } from '@libp2p/observer-data'
-import { Chip, ConfigContext, Tooltip } from '@libp2p/observer-sdk'
+import { StaticChip, ConfigContext, Tooltip } from '@libp2p/observer-sdk'
 
 const TooltipContainer = styled.div`
   width: 200%;
@@ -79,9 +79,9 @@ function StatusChip({ status, timeOpen, timeClosed, duration }) {
       fixOn={'never'}
       override={{ Content: TooltipContainer }}
     >
-      <Chip type={status} options={options} fade={fade} glow={glow}>
+      <StaticChip type={status} options={options} fade={fade} glow={glow}>
         {status}
-      </Chip>
+      </StaticChip>
     </Tooltip>
   )
 }

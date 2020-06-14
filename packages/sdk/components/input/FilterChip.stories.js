@@ -5,7 +5,7 @@ import T from 'prop-types'
 import { getListFilter, getRangeFilter } from '../../filters'
 import { useFilter } from '../../hooks'
 import { formatTime } from '../../utils'
-import Chip from '../Chip'
+import StaticChip from '../StaticChip'
 import FilterChip from './FilterChip'
 
 function FilterWrapper({ filterDef, items }) {
@@ -21,11 +21,11 @@ function FilterWrapper({ filterDef, items }) {
     <div>
       <div>
         {items.filter(applyFilters).map(item => (
-          <Chip
+          <StaticChip
             key={item.value}
             type={item.type}
             options={chipOptions}
-          >{`"${item.value}"`}</Chip>
+          >{`"${item.value}"`}</StaticChip>
         ))}
       </div>
       <FilterChip
