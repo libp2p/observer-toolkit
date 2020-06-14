@@ -71,7 +71,6 @@ TimeNumber.propTypes = {
 }
 
 function DurationNumber({ value, maxUnits = 2, shortForm = true }) {
-  console.log('duration value', value)
   return <Nowrap>{formatDuration(value, maxUnits, shortForm)}</Nowrap>
 }
 DurationNumber.propTypes = {
