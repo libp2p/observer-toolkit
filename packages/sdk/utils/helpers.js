@@ -1,5 +1,4 @@
 function copyToClipboard(text) {
-  // TODO: expand this and include a toast notice on success
   navigator.clipboard.writeText(text)
 }
 
