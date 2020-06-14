@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { proto } from '@libp2p/observer-proto'
 import { getRuntimeEventTypes } from '@libp2p/observer-data'
 import {
   FilterContext,
+  FilterSetterContext,
   Icon,
   RuntimeContext,
   Monospace,
@@ -44,6 +45,26 @@ function getEventPropertyData(
   return eventPropertyData
 }
 
+function getFilterData(filters, eventTypes) {
+  const eventTypeFilter = filters.find(filter =>
+    filter.name.match(/event types/i)
+  )
+  if (!eventTypeFilter) {
+    console.warn(`No filter name matches "event types"`)
+    return {
+      filterName: null,
+      filterValues: eventTypes.reduce((values, typeName) => {
+        values[typeName] = true
+        return values
+      }, {}),
+    }
+  }
+  return {
+    filterName: eventTypeFilter.name,
+    filterValues: eventTypeFilter.values,
+  }
+}
+
 const EventTypesContainer = styled.div`
   display: flex;
   padding: ${({ theme }) => theme.spacing()};
@@ -73,11 +94,23 @@ const EventTypeSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  ${({ isShown, theme }) =>
+    isShown
+      ? ''
+      : css`
+          color: ${theme.color('text', 2, 0.6)};
+        `}
 `
 
 const EventTypeName = styled.h4`
   ${({ theme }) => theme.text('heading', 'small')};
+  color: inherit;
   white-space: nowrap;
+  padding-right: ${({ theme }) => theme.spacing(0.5)};
+  cursor: pointer;
+  :hover {
+    background: ${({ theme }) => theme.color('background', 1)};
+  }
 `
 
 const EventCount = styled.div`
@@ -91,6 +124,9 @@ const EventPropertiesSection = styled.div`
   ${({ theme }) => theme.text('label', 'small')};
   color: ${({ theme, hasFilters }) =>
     theme.color(hasFilters ? 'highlight' : 'text', 1)};
+  :hover {
+    background: ${({ theme }) => theme.color('background', 2)};
+  }
 `
 
 function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
@@ -100,10 +136,11 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
     propertiesFromEvents: {},
   })
   const runtime = useContext(RuntimeContext)
-  const filters = useContext(FilterContext)
-  console.log(filters)
+  const { filters } = useContext(FilterContext)
+  const dispatchFilters = useContext(FilterSetterContext)
 
   const eventTypes = runtime ? getRuntimeEventTypes(runtime) : []
+  const { filterName, filterValues } = getFilterData(filters, eventTypes)
 
   const initialEventTypesCount = eventTypes.reduce((types, { name }) => {
     types[name] = 0
@@ -176,6 +213,20 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
           propStatus => !propStatus.enabled
         )
         const hasFilters = !!filteredProperties.length
+        const isShown = filterValues[name]
+        const iconType = isShown ? 'check' : 'uncheck'
+        const handleToggleEventType = () => {
+          if (!filterName) return
+
+          dispatchFilters({
+            action: 'update',
+            name: filterName,
+            values: {
+              ...filterValues,
+              [name]: !filterValues[name],
+            },
+          })
+        }
 
         const TooltipContent = isMissing ? (
           `No event properties metadata available for event type "${name}"`
@@ -190,9 +241,9 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
 
         return (
           <EventTypeOuter key={name}>
-            <EventTypeSection>
-              <EventTypeName>
-                <Icon type={'check'} />
+            <EventTypeSection isShown={isShown}>
+              <EventTypeName onClick={handleToggleEventType}>
+                <Icon type={iconType} />
                 <Monospace>{name}</Monospace>
               </EventTypeName>
               <EventCount>{count} events</EventCount>

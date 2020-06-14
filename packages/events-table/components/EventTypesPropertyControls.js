@@ -86,7 +86,9 @@ function EventsTypePropertyControls({
     <EventsPropertyList>
       <EventsPropertyCheckAll onClick={handleCheckAll}>
         <Icon type={checkAllIcon} override={{ Container: CheckIconButton }} />
-        <EventsPropertyCheckAllLabel>{checkAllText}</EventsPropertyCheckAllLabel>
+        <EventsPropertyCheckAllLabel>
+          {checkAllText}
+        </EventsPropertyCheckAllLabel>
       </EventsPropertyCheckAll>
       {propertyData.map(propertyStatus => {
         const { name, enabled } = propertyStatus
