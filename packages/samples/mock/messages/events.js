@@ -13,17 +13,51 @@ const { decodeBinToNum } = require('../utils')
 
 const { createEventServerMessage } = require('./server-message')
 
-function createEvent({ now = Date.now(), type = '', content = {} } = {}) {
+const PeerConnecting = require('../event-types/PeerConnecting')
+const PeerDisconnecting = require('../event-types/PeerDisconnecting')
+const InboundDHTQuery = require('../event-types/InboundDHTQuery')
+const OutboundDHTQuery = require('../event-types/OutboundDHTQuery')
+const eventTypes = {
+  PeerConnecting,
+  PeerDisconnecting,
+  InboundDHTQuery,
+  OutboundDHTQuery,
+}
+
+function createEvent({
+  now = Date.now(),
+  type = '',
+  content = {},
+  runtime,
+} = {}) {
   const event = new Event()
 
-  event.setType(new EventType([type]))
+  if (
+    !eventTypes[type] ||
+    runtime.getEventTypesList().some(eventType => eventType.getName() === type)
+  ) {
+    // Known event type or dummy event type, send name only
+    event.setType(new EventType([type]))
+  } else {
+    console.log(`Server encountered event type "${type}" for the first time`)
+    // Novel real event type, send full type metadata
+    const eventType = eventTypes[type]
+    event.setType(eventType)
+    runtime.addEventTypes(eventType)
+  }
+
   event.setTs(new Timestamp([now]))
   event.setContent(JSON.stringify(content))
   return event
 }
 
-function generateEvent({ now = Date.now(), type = '', content = {} } = {}) {
-  const event = createEvent({ now, type, content })
+function generateEvent({
+  now = Date.now(),
+  type = '',
+  content = {},
+  runtime,
+} = {}) {
+  const event = createEvent({ now, type, content, runtime })
   const eventPacket = createEventServerMessage(event)
   return createBufferSegment(eventPacket)
 }

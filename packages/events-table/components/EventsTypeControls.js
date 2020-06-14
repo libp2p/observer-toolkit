@@ -1,36 +1,44 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { getEventType, getRuntimeEventTypes } from '@libp2p/observer-data'
-import { RuntimeContext, Monospace, Tooltip } from '@libp2p/observer-sdk'
+import { proto } from '@libp2p/observer-proto'
+import { getRuntimeEventTypes } from '@libp2p/observer-data'
+import {
+  RuntimeContext,
+  Monospace,
+  Tooltip,
+  WebsocketContext,
+} from '@libp2p/observer-sdk'
 
 import EventTypesPropertyControls from './EventTypesPropertyControls'
 
-function getEventPropertyData(eventName, eventTypes, propertyTypes) {
-  const eventType = eventTypes.find(type => type.name === eventName)
+function getEventTypeMetadata(eventName, eventTypes) {
+  return eventTypes.find(type => type.name === eventName)
+}
 
-  /* istanbul ignore next: unreachable unless a bug is introduced */
-  if (!eventType)
-    throw new Error(
-      `Runtime does not have event type "${eventName}"; has "${eventTypes
-        .map(type => type.name)
-        .join('", "')}"`
+function getEventPropertyData(
+  eventName,
+  eventTypes,
+  propertyTypes,
+  propertiesFromEvents
+) {
+  const eventType = getEventTypeMetadata(eventName, eventTypes)
+  const properties = eventType
+    ? eventType.properties
+    : propertiesFromEvents[eventName]
+  if (!properties) return null
+
+  const eventPropertyData = properties.reduce((propertyData, property) => {
+    const propertyStatus = propertyTypes.find(
+      propStatus => propStatus.name === property.name
     )
 
-  const eventPropertyData = eventType.properties.reduce(
-    (propertyData, property) => {
-      const propertyStatus = propertyTypes.find(
-        propStatus => propStatus.name === property.name
-      )
+    // Is typically missing on first pass before effect updates hook state
+    if (!propertyStatus) return propertyData
 
-      // Is typically missing on first pass before effect updates hook state
-      if (!propertyStatus) return propertyData
-
-      return [...propertyData, propertyStatus]
-    },
-    []
-  )
+    return [...propertyData, propertyStatus]
+  }, [])
   return eventPropertyData
 }
 
@@ -56,10 +64,14 @@ const EventTypeColumnSummary = styled.div`
 `
 
 function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
+  const websocketData = useContext(WebsocketContext)
+  const eventTypesRef = useRef({
+    requestedTypes: [],
+    propertiesFromEvents: {},
+  })
   const runtime = useContext(RuntimeContext)
-  if (!runtime) return ''
 
-  const eventTypes = getRuntimeEventTypes(runtime)
+  const eventTypes = runtime ? getRuntimeEventTypes(runtime) : []
 
   const initialEventTypesCount = eventTypes.reduce((types, { name }) => {
     types[name] = 0
@@ -67,30 +79,82 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
   }, {})
 
   const eventTypeCounts = events.reduce((types, event) => {
-    const eventType = getEventType(event)
-    if (!types[eventType]) {
-      types[eventType] = 1
+    const eventType = event.getType()
+    const eventTypeName = eventType.getName()
+
+    const eventTypeProperties = eventType.getPropertyTypesList()
+    const hasProperties = eventTypeProperties && eventTypeProperties.length
+    if (eventTypeProperties) {
+      eventTypesRef.current.propertiesFromEvents[eventTypeName] = hasProperties
+        ? eventTypeProperties
+        : null
+    }
+
+    if (!types[eventTypeName]) {
+      types[eventTypeName] = 1
     } else {
-      types[eventType]++
+      types[eventTypeName]++
     }
     return types
   }, initialEventTypesCount)
 
   const eventTypesbyFrequency = Object.entries(eventTypeCounts)
+
+  // Sort alphabetically to avoid dancing around as live data comes in
   eventTypesbyFrequency.sort((a, b) => (a[0] < b[0] ? -1 : 1))
+
+  useEffect(() => {
+    if (!websocketData) return
+    // Request a new runtime from the server the first time we see an
+    // event type that we don't have metadata for
+    const newMissingTypes = eventTypesbyFrequency.filter(
+      ([name]) =>
+        !getEventTypeMetadata(name, eventTypes) &&
+        !eventTypesRef.current.requestedTypes.includes(name) &&
+        !eventTypesRef.current.propertiesFromEvents[name]
+    )
+
+    if (newMissingTypes.length) {
+      eventTypesRef.current.requestedTypes = [
+        ...eventTypesRef.current.requestedTypes,
+        ...newMissingTypes.map(([name]) => name),
+      ]
+      websocketData.sendCommand('request', {
+        source: proto.ClientCommand.Source.RUNTIME,
+      })
+    }
+  }, [eventTypes, eventTypesbyFrequency, websocketData, eventTypesRef])
 
   return (
     <EventTypesContainer>
       {eventTypesbyFrequency.map(([name, count]) => {
-        const propertyData = getEventPropertyData(
+        let isMissing = false
+        let propertyData = getEventPropertyData(
           name,
           eventTypes,
-          propertyTypes
+          propertyTypes,
+          eventTypesRef.current.propertiesFromEvents
         )
+
+        if (!propertyData) {
+          isMissing = true
+          propertyData = []
+        }
         const filteredProperties = propertyData.filter(
           propStatus => !propStatus.enabled
         )
         const hasFilters = !!filteredProperties.length
+
+        const TooltipContent = isMissing ? (
+          `No event properties metadata available for event type "${name}"`
+        ) : (
+          <EventTypesPropertyControls
+            eventName={name}
+            propertyData={propertyData}
+            propertyTypes={propertyTypes}
+            dispatchPropertyTypes={dispatchPropertyTypes}
+          />
+        )
 
         return (
           <Tooltip
@@ -98,14 +162,7 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
             side="bottom"
             toleranceY={null}
             fixOn="no-hover"
-            content={
-              <EventTypesPropertyControls
-                eventName={name}
-                propertyData={propertyData}
-                propertyTypes={propertyTypes}
-                dispatchPropertyTypes={dispatchPropertyTypes}
-              />
-            }
+            content={TooltipContent}
           >
             <EventType hasFilters={hasFilters}>
               {count} <Monospace>{name}</Monospace>

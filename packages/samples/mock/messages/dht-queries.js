@@ -106,6 +106,7 @@ function createQuery({
   sentTs = randomQuerySentTime(utcTo, utcFrom),
   isLiveWebsocket = false,
   version = null,
+  runtime,
 } = {}) {
   const queryJSON = {
     direction: dhtQueryDirectionList.getItem(direction),
@@ -123,6 +124,7 @@ function createQuery({
     now: sentTs,
     type: getEventType(direction),
     content: queryJSON,
+    runtime,
   })
 
   return isLiveWebsocket
