@@ -42,7 +42,6 @@ function createEvent({
     // Known event type or dummy event type, send name only
     event.setType(new EventType([type]))
   } else {
-    console.log(`Server encountered event type "${type}" for the first time`)
     // Novel real event type, send full type metadata
     const eventType = eventTypes[type]
     event.setType(eventType)
