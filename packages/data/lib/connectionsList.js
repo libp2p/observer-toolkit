@@ -1,7 +1,7 @@
 'use strict'
 
 const { getEnumByName, statusNames } = require('./enums')
-const { getSubsystems, getStateTimes } = require('./states')
+const { getSubsystems, getStateTime } = require('./states')
 
 // Convenience functions for extracting connections (and their streams) from decoded protobuf
 
@@ -38,7 +38,7 @@ function getMissingClosedConnections(currentState, states) {
   if (!currentState) return []
 
   const reversedStates = [...states].sort(
-    (a, b) => getStateTimes(b).end - getStateTimes(a).end
+    (a, b) => getStateTime(b) - getStateTime(a)
   )
   const previousStates = reversedStates.slice(
     reversedStates.indexOf(currentState)
@@ -47,7 +47,7 @@ function getMissingClosedConnections(currentState, states) {
 
   // Times for the first state in which a connection was absent
   // therefore it closed during that state's time interval
-  let previousStateTime = getStateTimes(currentState)
+  let previousStateTime = getStateTime(currentState)
   let foundConnIds = currentConnections.map(conn => getConnectionId(conn))
 
   // Find missing connections from most recent state they were in
@@ -64,17 +64,12 @@ function getMissingClosedConnections(currentState, states) {
       const closedClones = newClosedConns.map(connection => {
         const connClone = connection.clone()
         connClone.setStatus(getEnumByName('CLOSED', statusNames))
-
-        // When closed connections are absent, we don't have a `close_ts`
-        // so the best we can do is report the middle of the possible range
-        const { start, end } = previousStateTime
-        const closeTimeEstimate = (start + end) / 2
-        connClone.getTimeline().setCloseTs(closeTimeEstimate)
+        connClone.getTimeline().setCloseTs(previousStateTime)
 
         return connClone
       })
 
-      previousStateTime = getStateTimes(state)
+      previousStateTime = getStateTime(state)
       return [...missingConnections, ...closedClones]
     },
     []
@@ -117,7 +112,7 @@ function _getAge(timeline, state) {
   if (!openTs || !state) return 0
 
   const closeTs = timeline.getCloseTs()
-  const endTime = closeTs || getStateTimes(state).end
+  const endTime = closeTs || getStateTime(state)
   return endTime - openTs
 }
 
@@ -133,7 +128,7 @@ function _getTimeClosed(timeline, state) {
   const closeTs = timeline.getCloseTs()
   if (!closeTs || !state) return 0
 
-  const endTime = getStateTimes(state).end
+  const endTime = getStateTime(state)
   return endTime - closeTs
 }
 

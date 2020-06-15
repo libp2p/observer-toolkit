@@ -25,7 +25,7 @@ describe('useDhtQueries hook', () => {
       const events = useContext(EventsContext)
 
       for (const currentState of states) {
-        const queries = getDhtQueries(events, { state: currentState })
+        const queries = getDhtQueries(events, { state: currentState, states })
 
         const absentQueries = queries.filter(
           query => !isQueryPresent(query, queriesByPeerId)

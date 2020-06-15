@@ -8,7 +8,7 @@ import {
 } from 'react'
 import T from 'prop-types'
 
-import { getStateTimes } from '@libp2p/observer-data'
+import { getStateTime } from '@libp2p/observer-data'
 
 // High default cutoff time to avoid spurious trimming if runtime message is delayed
 const DEFAULT_CUTOFF_MS = 1000 * 60 * 60 * 24
@@ -17,7 +17,7 @@ function getEventTime(event) {
   return event.getTs()
 }
 function getStateEnd(state) {
-  return getStateTimes(state).end
+  return getStateTime(state)
 }
 function getMessageSorter(getTime) {
   return (a, b) => getTime(a) - getTime(b)
@@ -71,7 +71,7 @@ function getEmptyStates(cutoffMs = DEFAULT_CUTOFF_MS) {
 
 function getCutoffTime(states, cutoffMs) {
   if (!states.length) return 0
-  const lastStateTs = getStateTimes(states[states.length - 1]).end
+  const lastStateTs = getStateTime(states[states.length - 1])
   return lastStateTs - cutoffMs
 }
 

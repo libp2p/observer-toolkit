@@ -54,12 +54,11 @@ function getGlowOpacity(value, maxValue) {
   return glowOpacity
 }
 
-function StatusChip({ status, timeOpen, timeClosed, duration }) {
+function StatusChip({ status, timeOpen, timeClosed }) {
   const config = useContext(ConfigContext)
   const expiryMs = config ? config.getRetentionPeriodMs() : 0
   const fade = status === 'CLOSED' ? getFadeOpacity(timeClosed, expiryMs) : null
-  const glow =
-    status === 'ACTIVE' ? getGlowOpacity(timeOpen, duration * 4) : null
+  const glow = status === 'ACTIVE' ? getGlowOpacity(timeOpen, 8000) : null
 
   const secondsUntilExpire = fade && Math.round((expiryMs - timeClosed) / 1000)
 

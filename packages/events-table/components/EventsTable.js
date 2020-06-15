@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
-import { getStateTimes } from '@libp2p/observer-data'
+import { getStateTime } from '@libp2p/observer-data'
 import {
   DataTable,
   ConfigContext,
@@ -38,7 +38,7 @@ function EventsTable({ theme }) {
   const isLoading = source && source.isLoading
   const isLive = hasLiveSource && !isPaused && highlightedRowIndex === null
 
-  const time = currentState ? getStateTimes(currentState).end : 0
+  const time = currentState ? getStateTime(currentState) : 0
 
   const snapshotDuration = currentState
     ? currentState.getSnapshotDurationMs()

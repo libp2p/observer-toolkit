@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {
   getAllDhtBuckets,
   getDhtPeersInBucket,
-  getStateTimes,
+  getStateTime,
 } from '@libp2p/observer-data'
 import { TimeContext } from '@libp2p/observer-sdk'
 
@@ -44,7 +44,7 @@ function DhtBuckets({ children }) {
   }, [currentState])
 
   if (!currentState) return 'Loading...'
-  const timestamp = getStateTimes(currentState).end
+  const timestamp = getStateTime(currentState)
 
   return (
     <Container>

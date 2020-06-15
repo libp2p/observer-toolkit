@@ -2,7 +2,6 @@ import {
   getConnectionAge,
   getConnectionTimeClosed,
   getConnectionTraffic,
-  getStateTimes,
   statusNames,
 } from '@libp2p/observer-data'
 import {
@@ -149,13 +148,11 @@ const statusCol = {
     const status = statusNames[connection.getStatus()]
     const timeOpen = getConnectionAge(connection, state)
     const timeClosed = getConnectionTimeClosed(connection, state)
-    const { duration } = getStateTimes(state)
     return {
       value: status,
       sortValue: [status, timeOpen, timeClosed],
       timeOpen,
       timeClosed,
-      duration,
     }
   },
   renderContent: StatusContent,

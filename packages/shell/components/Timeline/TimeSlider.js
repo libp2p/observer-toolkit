@@ -12,7 +12,12 @@ import {
   TimeContext,
   Tooltip,
 } from '@libp2p/observer-sdk'
-import { getStateTimes, getStateRangeTimes } from '@libp2p/observer-data'
+import {
+  getPreviousStateTime,
+  getStateIndex,
+  getStateTime,
+  getStateRangeTimes,
+} from '@libp2p/observer-data'
 
 import { validateStateIndex } from './utils'
 
@@ -124,18 +129,21 @@ function TimeSlider({ width, override = {}, theme }) {
   if (dataset.length <= 1) return ''
 
   const timeIndex = dataset.indexOf(currentState)
-  const { end: currentEndTs, duration } = getStateTimes(currentState)
-  const readableTime = formatTime(currentEndTs)
-  const ms = ('00' + new Date(currentEndTs).getMilliseconds()).slice(-3)
+  const currentTs = getStateTime(currentState)
+  const readableTime = formatTime(currentTs)
+
+  const stateInterval = currentTs - getPreviousStateTime(timeIndex, dataset)
+
+  const ms = ('00' + new Date(currentTs).getMilliseconds()).slice(-3)
 
   const { start: minTs, duration: rangeMs } = getStateRangeTimes(dataset)
 
   const getStepPosition = stepIndex => {
     const validStepIndex = validateStateIndex(stepIndex, dataset)
     const targetState = dataset[validStepIndex]
-    const { start: targetStartTs, end: targetEndTs } = getStateTimes(
-      targetState
-    )
+    const targetEndTs = getStateTime(targetState)
+    const targetStartTs = getPreviousStateTime(validStepIndex, dataset)
+
     const midpointTs = (targetStartTs + targetEndTs) / 2
     const position = (midpointTs - minTs) / rangeMs
     return position
@@ -143,15 +151,16 @@ function TimeSlider({ width, override = {}, theme }) {
   const getStepIndex = position => {
     const positionTs = position * rangeMs + minTs
     const stepIndex = dataset.findIndex(targetState => {
-      const { start: targetStartTs, end: targetEndTs } = getStateTimes(
-        targetState
-      )
+      const targetEndTs = getStateTime(targetState)
+      const timeIndex = getStateIndex(dataset, targetEndTs)
+      const targetStartTs = getPreviousStateTime(timeIndex, dataset)
+
       return positionTs > targetStartTs && positionTs <= targetEndTs
     })
     return validateStateIndex(stepIndex, dataset)
   }
 
-  const controlWidth = width * (duration / rangeMs)
+  const controlWidth = width * (stateInterval / rangeMs)
 
   const isLatestState = timeIndex === dataset.length - 1
   const unsetCurrentState = e => {
