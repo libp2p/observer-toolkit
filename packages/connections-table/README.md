@@ -2,7 +2,7 @@
 
 A libp2p Observer example widget, visualising libp2p connections in a "drifting" data table.
 
-[screenshot here]
+[screenshot](./screenshot.png)
 
 ## Key features
 

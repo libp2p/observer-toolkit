@@ -2,7 +2,7 @@
 
 A libp2p Observer widget, built on built on @libp2p/observer-sdk, visualising current and recent data streams in libp2p Introspection data.
 
-[screenshot here]
+[screenshot](./screenshot.png)
 
 ## Key features
 
