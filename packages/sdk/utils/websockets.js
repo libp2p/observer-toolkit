@@ -86,11 +86,19 @@ function uploadWebSocket(
   const usePushEmitter = true
 
   if (!url) return
-  const ws = new WebSocket(url)
+  let ws
+  try {
+    ws = new WebSocket(url)
+  } catch (error) {
+    console.error(error.toString())
+    alert(error.toString())
+    return
+  }
   const sendCommand = (...args) => sendWsCommand(ws, dispatchWebsocket, ...args)
 
   ws.addEventListener('error', function(evt) {
     console.error('WebSocket Error', evt)
+    alert('WebSocket Error')
   })
   ws.addEventListener('message', function(msg) {
     // process incoming message
@@ -120,9 +128,9 @@ function uploadWebSocket(
   ws.addEventListener('close', function(evt) {
     dispatchWebsocket({ action: 'onClose' })
     if (!evt.wasClean) {
-      console.error(
-        `WebSocket close was not clean (code: ${evt.code} / reason: "${evt.reason}")`
-      )
+      const msg = `WebSocket close was not clean (code: ${evt.code}, reason: "${evt.reason}")`
+      console.error(msg)
+      alert(msg)
     }
   })
   ws.addEventListener('open', function() {
