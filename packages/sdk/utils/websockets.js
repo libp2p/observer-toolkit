@@ -143,7 +143,16 @@ function uploadWebSocket(
       }
     }
 
-    sendCommand('hello', undefined, callback)
+    sendCommand(
+      'hello',
+      {
+        config: {
+          stateSnapshotIntervalMs: 2000,
+          retentionPeriodMs: 120000,
+        },
+      },
+      callback
+    )
   })
 }
 
