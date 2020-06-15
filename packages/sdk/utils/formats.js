@@ -73,7 +73,7 @@ function formatDataSize(num, string = false) {
 const timeFormatter = timeFormat('%H:%M:%S')
 const timeFormatterMs = timeFormat('%H:%M:%S.%L')
 function formatTime(timestamp, includeMs = false) {
-  const formatter = includeMs ? timeFormatter : timeFormatterMs
+  const formatter = includeMs ? timeFormatterMs : timeFormatter
   return formatter(timestamp)
 }
 

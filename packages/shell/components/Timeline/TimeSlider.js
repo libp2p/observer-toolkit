@@ -86,6 +86,7 @@ const TooltipPositioner = styled.div`
 
 const TimeLabel = styled.label`
   vertical-align: middle;
+  ${({ theme }) => theme.text('label', 'medium')}
 `
 
 const ResetTimeIcon = styled.button`
@@ -125,7 +126,7 @@ function TimeSlider({ width, override = {}, theme }) {
   const timeIndex = dataset.indexOf(currentState)
   const { end: currentEndTs, duration } = getStateTimes(currentState)
   const readableTime = formatTime(currentEndTs)
-  const ms = new Date(currentEndTs).getMilliseconds()
+  const ms = ('00' + new Date(currentEndTs).getMilliseconds()).slice(-3)
 
   const { start: minTs, duration: rangeMs } = getStateRangeTimes(dataset)
 
