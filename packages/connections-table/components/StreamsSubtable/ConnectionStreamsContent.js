@@ -48,7 +48,7 @@ function ConnectionStreamsContent({
   hidePrevious,
 }) {
   const streamsButtonText = streamsCount
-    ? `View ${streamsCount} streams`
+    ? `View ${streamsCount} stream${streamsCount === 1 ? '' : 's'}`
     : 'No streams'
 
   return (
@@ -64,8 +64,10 @@ function ConnectionStreamsContent({
       >
         <ExpandButton disabled={!streamsCount}>
           {streamsButtonText}
-          {streamsCount && (
+          {streamsCount ? (
             <Icon type="expand" override={{ Container: ExpandIcon }} />
+          ) : (
+            ''
           )}
         </ExpandButton>
       </Tooltip>

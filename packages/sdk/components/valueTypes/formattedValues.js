@@ -37,7 +37,7 @@ function FormatedNumber({ value, unit = '' }) {
 
   return (
     <NumWrapper>
-      {value} <Unit>{unit}</Unit>
+      {value} <Unit>{unit || ''}</Unit>
     </NumWrapper>
   )
 }
