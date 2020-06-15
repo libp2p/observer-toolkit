@@ -137,6 +137,9 @@ const streamsCol = {
   }),
   sort: numericSorter,
   renderContent: ConnectionStreamsContent,
+  cellProps: {
+    style: { padding: '0 8px 0 0' },
+  },
   align: 'right',
 }
 
