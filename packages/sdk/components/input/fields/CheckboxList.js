@@ -57,7 +57,7 @@ const StyledToggleButton = styled.button`
   text-align: left;
   font-weight: ${({ checked }) => (checked ? 600 : 300)};
   color: ${({ theme, checked }) =>
-    theme.color(checked ? 'text' : 'highlight', 1)};
+    theme.color('text', checked ? 0 : 2)};
   :focus {
     outline: none;
   }
