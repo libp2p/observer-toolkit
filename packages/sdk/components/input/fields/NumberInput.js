@@ -3,6 +3,8 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import TimeInput from './TimeInput'
+import BytesInput from './BytesInput'
+import DurationInput from './DurationInput'
 import Icon from '../../Icon'
 
 const NumberInputField = styled.input`
@@ -123,6 +125,26 @@ function NumberInput({
       )) ||
         (type === 'time' && (
           <TimeInput
+            value={fieldValue}
+            onBlur={handleBlur}
+            updateValue={updateValue}
+            defaultValue={defaultValue}
+            as={override.NumberInputField}
+            {...props}
+          />
+        )) ||
+        (type === 'bytes' && (
+          <BytesInput
+            value={fieldValue}
+            onBlur={handleBlur}
+            updateValue={updateValue}
+            defaultValue={defaultValue}
+            as={override.NumberInputField}
+            {...props}
+          />
+        )) ||
+        (type === 'duration' && (
+          <DurationInput
             value={fieldValue}
             onBlur={handleBlur}
             updateValue={updateValue}

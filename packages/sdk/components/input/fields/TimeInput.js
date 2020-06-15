@@ -15,6 +15,7 @@ function splitTime(timestamp) {
 const TimeInputContainer = styled.span``
 
 const TimeInputField = styled.input`
+  text-align: right;
   font-family: 'plex-mono';
   background: ${({ theme }) => theme.color('background', 1)};
   border: none;

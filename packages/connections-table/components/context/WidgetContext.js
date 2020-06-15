@@ -84,28 +84,28 @@ function WidgetContext({ children }) {
       mapFilter: conn => getConnectionTraffic(conn, 'in', 'bytes'),
       min: 0,
       max: metadata.maxTraffic,
-      format: formatDataSize,
+      numberFieldType: 'bytes',
     }),
     getRangeFilter({
       name: 'Filter total bytes out',
       mapFilter: conn => getConnectionTraffic(conn, 'out', 'bytes'),
       min: 0,
       max: metadata.maxTraffic,
-      format: formatDataSize,
+      numberFieldType: 'bytes',
     }),
     getRangeFilter({
       name: 'Filter miliseconds open',
       mapFilter: conn => getConnectionAge(conn, currentState),
       min: 0,
       max: metadata.maxAge,
-      format: formatDuration,
+      numberFieldType: 'duration',
     }),
     getRangeFilter({
       name: 'Filter miliseconds closed',
       mapFilter: conn => getConnectionTimeClosed(conn, currentState),
       min: 0,
       max: metadata.maxAge,
-      format: formatDuration,
+      numberFieldType: 'duration',
     }),
   ]
 

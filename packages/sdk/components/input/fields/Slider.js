@@ -66,6 +66,7 @@ const NumberFieldsWrapper = styled.div`
   justify-content: space-between;
   padding: ${({ theme }) => theme.spacing([1, 0])};
   margin-top: ${({ theme }) => theme.spacing()};
+  flex-wrap: wrap;
 `
 
 function getMouseX(event, containerRef) {
