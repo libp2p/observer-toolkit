@@ -1,6 +1,6 @@
 {
   "name": "@libp2p/observer-events-table",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "React component built on libp2p-observer SDK, visualizing libp2p events in a data table",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
@@ -26,7 +26,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
-    "@libp2p/observer-shell": "^1.0.0",
+    "@libp2p/observer-shell": "^1.1.0",
     "@storybook/react": "^5.2.4",
     "@testing-library/react": "^9.4.0",
     "babel-jest": "^24.9.0",

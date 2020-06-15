@@ -1,6 +1,6 @@
 {
   "name": "@libp2p/observer-sdk",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Core components, utilities and API for building libp2p introspection ui components",
   "author": "AlanSl <alan.slater@nearform.com>",
   "homepage": "",
