@@ -14,8 +14,6 @@ function getShowButtonText(eventsSincePause, isLive) {
 }
 
 const EventsControlsContainer = styled.section`
-  position: sticky;
-  top: 0;
   z-index: 9;
   display: flex;
   align-items: center;

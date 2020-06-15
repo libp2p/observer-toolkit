@@ -132,7 +132,7 @@ function EventsTable({ theme }) {
         defaultPerPageIndex={defaultPerPageIndex}
         hasPagination
         hasSlidingRows={false}
-        sticky={barHeight || true}
+        sticky={true}
         rowProps={{
           highlightedRowIndex,
           changeHighlightedRowIndex,
