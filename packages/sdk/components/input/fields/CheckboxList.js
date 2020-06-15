@@ -1,6 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Field } from 'formik'
 
 import Icon from '../../Icon'
@@ -31,10 +31,15 @@ const Container = styled.div`
 `
 
 const StyledHeader = styled.div`
-  border-right: 1px solid ${({ theme }) => theme.color('background', 2)};
   font-weight: 900;
-  padding-right: ${({ theme }) => theme.spacing(2)};
-  margin-right: ${({ theme }) => theme.spacing()};
+  ${({ theme, orientation }) => {
+    const side = orientation === 'row' ? 'right' : 'bottom'
+    return css`
+      border-${side}: 1px solid ${theme.color('background', 2)};
+      padding-${side}: ${theme.spacing(2)};
+      margin-${side}: ${theme.spacing()};
+    `
+  }}
 `
 
 const StyledList = styled.ul`
@@ -42,6 +47,7 @@ const StyledList = styled.ul`
   padding: 0;
   text-align: left;
   display: flex;
+  flex-direction: ${({ orientation }) => orientation};
 `
 
 const StyledListItem = styled.li`
@@ -96,7 +102,7 @@ function CheckboxList({
 
   return (
     <Container orientation={orientation} as={override.Container}>
-      <StyledHeader as={override.StyledHeader}>
+      <StyledHeader orientation={orientation} as={override.StyledHeader}>
         <StyledToggleButton
           onClick={() => toggleAll(values, fieldNames, setFieldValue, onChange)}
           role="checkbox"
@@ -108,7 +114,7 @@ function CheckboxList({
           <label>{labelMapping[checkAllChecked]}</label>
         </StyledToggleButton>
       </StyledHeader>
-      <StyledList as={override.StyledList}>
+      <StyledList orientation={orientation} as={override.StyledList}>
         {fieldNames.map(name => (
           <StyledListItem key={name} as={override.StyledListItem}>
             <StyledToggleButton
