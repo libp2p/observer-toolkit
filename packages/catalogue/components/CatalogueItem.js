@@ -30,6 +30,7 @@ const CatalogueCard = styled.div`
 const CardContent = styled.div`
   padding: 0 ${({ theme }) => `${theme.spacing(2)} ${theme.spacing(2)}`};
   flex-grow: 1;
+  ${({ theme }) => theme.text('body', 'medium')}
 `
 
 const Tag = styled.li`
@@ -52,17 +53,9 @@ const StyledImg = styled.img`
 `
 
 const StyledHeader = styled.h3`
-  position: absolute;
-  top: ${({ theme }) => theme.spacing()};
-  left: ${({ theme }) => theme.spacing()};
-`
-
-const StyledHeaderInner = styled.span`
-  padding: ${({ theme }) => theme.spacing()};
-  display: inline-block;
-  background: ${({ theme }) => theme.color('contrast', 1, 0.8)};
-  color: ${({ theme }) => theme.color('text', 3)};
-  line-height: 1em;
+  color: ${({ theme }) => theme.color('contrast', 2)};
+  ${({ theme }) => theme.text('heading', 'large')}
+  margin-top: ${({ theme }) => theme.spacing(2)};
 `
 
 function CatalogueItem({ name, description, tags, handleSelect, screenshot }) {
@@ -76,10 +69,8 @@ function CatalogueItem({ name, description, tags, handleSelect, screenshot }) {
       tabIndex={0}
     >
       <StyledImg src={screenshot} />
-      <StyledHeader>
-        <StyledHeaderInner>{name}</StyledHeaderInner>
-      </StyledHeader>
       <CardContent>
+        <StyledHeader>{name}</StyledHeader>
         <ReactMarkdown source={description} />
       </CardContent>
       <TagList>
