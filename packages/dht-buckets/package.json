@@ -32,8 +32,8 @@
     "storybook": "^5.1.11"
   },
   "peerDependencies": {
-    "@libp2p/observer-data": "^1.0.0",
-    "@libp2p/observer-sdk": "^1.0.0",
+    "@libp2p/observer-data": "^1.1.0",
+    "@libp2p/observer-sdk": "^1.1.0",
     "react": "*",
     "styled-components": "*"
   },

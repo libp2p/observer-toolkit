@@ -13,8 +13,8 @@
     "url": "git+https://github.com/libp2p/observer-toolkit.git"
   },
   "peerDependencies": {
-    "@libp2p/observer-sdk": "^1.0.0",
-    "@libp2p/observer-shell": "^1.0.0",
+    "@libp2p/observer-sdk": "^1.1.0",
+    "@libp2p/observer-shell": "^1.1.0",
     "react": "^16.10.2",
     "styled-components": "^4.4.0"
   },
