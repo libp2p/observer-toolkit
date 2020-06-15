@@ -31,8 +31,10 @@ const Container = styled.div`
 `
 
 const StyledHeader = styled.div`
-  border: 1px solid ${({ theme }) => theme.color('background', 2)};
+  border-right: 1px solid ${({ theme }) => theme.color('background', 2)};
   font-weight: 900;
+  padding-right: ${({ theme }) => theme.spacing(2)};
+  margin-right: ${({ theme }) => theme.spacing()};
 `
 
 const StyledList = styled.ul`
@@ -87,6 +89,12 @@ function CheckboxList({
     false: 'uncheck',
   }
 
+  const labelMapping = {
+    true: 'Showing all',
+    mixed: 'Showing some',
+    false: 'Showing none',
+  }
+
   return (
     <Container orientation={orientation} as={override.Container}>
       <StyledHeader as={override.StyledHeader}>
@@ -98,7 +106,7 @@ function CheckboxList({
         >
           <Field type="hidden" name="set-all" value={allAreChecked} />
           <Icon type={iconsMapping[checkAllChecked]} />
-          <label>{`${allAreChecked ? 'Uncheck' : 'Check'} all`}</label>
+          <label>{labelMapping[checkAllChecked]}</label>
         </StyledToggleButton>
       </StyledHeader>
       <StyledList as={override.StyledList}>
