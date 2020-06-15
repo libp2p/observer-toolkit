@@ -86,7 +86,8 @@ function CatalogueList({ widgets, widgetIndex, setWidgetIndex }) {
               handleSelect={() =>
                 setWidgetIndex(index === widgetIndex ? null : index)
               }
-              isSelected={widgetIndex === index}
+              tagFilter={filters[1]}
+              dispatchFilters={dispatchFilters}
             />
           )
         )}

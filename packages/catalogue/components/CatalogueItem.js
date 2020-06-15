@@ -1,8 +1,22 @@
 import React from 'react'
+import styled, { withTheme } from 'styled-components'
 import T from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 
-import styled from 'styled-components'
+import { Chip } from '@libp2p/observer-sdk'
+
+function getChipProps(theme) {
+  const colorKey = 'contrast'
+  const colorIndex = 1
+  return {
+    color: theme.color(colorKey, colorIndex, 0.6),
+    backgroundColor: theme.color(colorKey, colorIndex, 0.1),
+  }
+}
+
+function getNewValues(values, tag) {
+  return { ...values, [tag]: !values[tag] }
+}
 
 const CatalogueCard = styled.div`
   cursor: pointer;
@@ -33,15 +47,6 @@ const CardContent = styled.div`
   ${({ theme }) => theme.text('body', 'medium')}
 `
 
-const Tag = styled.li`
-  margin: ${({ theme }) => `${theme.spacing(0.5)}`};
-  padding: ${({ theme }) => `${theme.spacing(0.5)}`};
-  list-style: none;
-  display: inline-block;
-  ${({ theme }) => theme.text('label', 'medium', theme.color('text', 0, 0.8))}
-  font-weight: 700;
-`
-
 const TagList = styled.ul`
   padding: 0 ${({ theme }) => `${theme.spacing(2)} ${theme.spacing(2)}`};
   margin: ${({ theme }) => `${theme.spacing()}`};
@@ -58,10 +63,22 @@ const StyledHeader = styled.h3`
   margin-top: ${({ theme }) => theme.spacing(2)};
 `
 
-function CatalogueItem({ name, description, tags, handleSelect, screenshot }) {
+function CatalogueItem({
+  name,
+  description,
+  tags,
+  handleSelect,
+  screenshot,
+  tagFilter,
+  dispatchFilters,
+  theme,
+}) {
   const handleKeyPress = e => {
     if (e.key === 'Enter' || e.keyCode === 13) handleSelect()
   }
+
+  const chipProps = getChipProps(theme)
+
   return (
     <CatalogueCard
       onClick={handleSelect}
@@ -75,7 +92,22 @@ function CatalogueItem({ name, description, tags, handleSelect, screenshot }) {
       </CardContent>
       <TagList>
         {tags.map(tag => (
-          <Tag key={tag}>{tag}</Tag>
+          <Chip
+            onClick={event => {
+              event.stopPropagation()
+              dispatchFilters({
+                action: 'update',
+                name: tagFilter.name,
+                values: getNewValues(tagFilter.values, tag),
+              })
+            }}
+            key={tag}
+            margin={0.5}
+            opacity={tagFilter.values[tag] ? 1 : 0.5}
+            {...chipProps}
+          >
+            {tag}
+          </Chip>
         ))}
       </TagList>
     </CatalogueCard>
@@ -89,6 +121,9 @@ CatalogueItem.propTypes = {
   tags: T.array,
   handleSelect: T.func,
   screenshot: T.any,
+  tagFilter: T.object.isRequired,
+  dispatchFilters: T.func.isRequired,
+  theme: T.object.isRequired,
 }
 
-export default CatalogueItem
+export default withTheme(CatalogueItem)

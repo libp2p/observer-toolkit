@@ -18,6 +18,9 @@ const Container = styled.span.attrs(({ theme, glowColor, fade }) => ({
   white-space: nowrap;
   font-size: 8pt;
   font-weight: 600;
+  margin: ${({ theme, margin }) => theme.spacing(margin)};
+  ${({ opacity }) =>
+    typeof opacity === 'number' ? `opacity: ${opacity};` : ''};
 `
 
 const ChipText = styled.span`
