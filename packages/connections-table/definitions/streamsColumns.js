@@ -28,7 +28,7 @@ const numericSorter = {
 const openCol = {
   name: 'open',
   header: 'Time opened',
-  getProps: (stream) => {
+  getProps: stream => {
     const openTs = stream.getTimeline().getOpenTs()
     return { value: openTs }
   },
@@ -62,7 +62,6 @@ const dataOutCol = {
   sort: numericSorter,
   align: 'right',
 }
-
 
 const protocolCol = {
   name: 'protocol',

@@ -9,7 +9,6 @@ import {
   FilterSetterContext,
   Icon,
   RuntimeContext,
-  Monospace,
   Tooltip,
   WebsocketContext,
 } from '@libp2p/observer-sdk'

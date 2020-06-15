@@ -40,7 +40,7 @@ function applyMultiplePropertyTypes(oldPropertyTypes, newPropertyTypes) {
 function updatePropertyType(
   oldPropertyTypes,
   { name, eventTypes, type, hasMultiple },
-  enabled = false,
+  enabled = false
 ) {
   const matchIndex = oldPropertyTypes.findIndex(
     prop => prop.name === name && prop.type === type

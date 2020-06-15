@@ -10,8 +10,6 @@ import {
   statusNames,
 } from '@libp2p/observer-data'
 import {
-  formatDuration,
-  formatDataSize,
   getListFilter,
   getRangeFilter,
   useCalculation,
