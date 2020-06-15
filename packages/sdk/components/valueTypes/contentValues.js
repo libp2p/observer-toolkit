@@ -69,19 +69,21 @@ function BubbleContent({ value, maxValue, NumberField, baseUnit, colorKey }) {
       <Nowrap>
         <ValueContainer value={value} />
       </Nowrap>
-      <Bubble
-        value={value}
-        maxValue={maxValue}
-        inline
-        size={24}
-        colorKey={colorKey}
-      />
+      {maxValue && (
+        <Bubble
+          value={value}
+          maxValue={maxValue}
+          inline
+          size={24}
+          colorKey={colorKey}
+        />
+      )}
     </Wrapper>
   )
 }
 BubbleContent.propTypes = {
   value: T.number.isRequired,
-  maxValue: T.number.isRequired,
+  maxValue: T.number,
   NumberField: T.elementType,
   baseUnit: T.string,
   colorKey: T.string,
