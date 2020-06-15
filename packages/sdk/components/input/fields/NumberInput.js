@@ -92,7 +92,11 @@ function NumberInput({
     if (isValueManagedByParent) setDisplayValue(defaultValue)
   }
 
-  const fieldValue = displayValue === defaultValue ? value : displayValue
+  const isInFocus = document.activeElement === inputRef.current
+  const fieldValue =
+    !isInFocus || displayValue === defaultValue
+      ? value || defaultValue
+      : displayValue
   const isDefault = fieldValue === defaultValue
 
   const hasFormattedValue = !!format && typeof fieldValue === 'number'

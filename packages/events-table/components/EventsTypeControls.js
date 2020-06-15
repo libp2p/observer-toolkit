@@ -54,15 +54,14 @@ function getFilterData(filters, eventTypes) {
     console.warn(`No filter name matches "event types"`)
     return {
       filterName: null,
-      filterValues: eventTypes.reduce((values, typeName) => {
-        values[typeName] = true
-        return values
-      }, {}),
+      isFilterEnabled: false,
+      filterValues: {},
     }
   }
   return {
     filterName: eventTypeFilter.name,
     filterValues: eventTypeFilter.values,
+    isFilterEnabled: eventTypeFilter.enabled,
   }
 }
 
@@ -141,7 +140,10 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
   const dispatchFilters = useContext(FilterSetterContext)
 
   const eventTypes = runtime ? getRuntimeEventTypes(runtime) : []
-  const { filterName, filterValues } = getFilterData(filters, eventTypes)
+  const { filterName, filterValues, isFilterEnabled } = getFilterData(
+    filters,
+    eventTypes
+  )
 
   const initialEventTypesCount = eventTypes.reduce((types, { name }) => {
     types[name] = 0
@@ -214,7 +216,7 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
           propStatus => !propStatus.enabled
         )
         const hasFilters = !!filteredProperties.length
-        const isShown = filterValues[name]
+        const isShown = !isFilterEnabled || filterValues[name] !== false
         const iconType = isShown ? 'check' : 'uncheck'
         const handleToggleEventType = () => {
           if (!filterName) return
@@ -224,7 +226,7 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
             name: filterName,
             values: {
               ...filterValues,
-              [name]: !filterValues[name],
+              [name]: !isShown,
             },
           })
         }
