@@ -45,7 +45,11 @@ function Connected({ widgets, widgetIndex, setWidgetIndex, content, title }) {
             {selectedWidget ? (
               <selectedWidget.Widget closeWidget={closeWidget} />
             ) : (
-              <CatalogueList widgets={widgets} widgetIndex={widgetIndex} setWidgetIndex={setWidgetIndex} />
+              <CatalogueList
+                widgets={widgets}
+                widgetIndex={widgetIndex}
+                setWidgetIndex={setWidgetIndex}
+              />
             )}
           </RootNodeProvider>
         </Main>

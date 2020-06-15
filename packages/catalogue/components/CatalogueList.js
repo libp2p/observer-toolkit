@@ -96,4 +96,10 @@ function CatalogueList({ widgets, widgetIndex, setWidgetIndex }) {
   )
 }
 
+CatalogueList.propTypes = {
+  widgets: T.array.isRequired,
+  widgetIndex: T.number,
+  setWidgetIndex: T.func.isRequired,
+}
+
 export default CatalogueList

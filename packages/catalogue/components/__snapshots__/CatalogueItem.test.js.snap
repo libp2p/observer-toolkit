@@ -11,6 +11,25 @@ exports[`CatalogueItem renders as expected 1`] = `
   flex-direction: inherit;
 }
 
+.c6 {
+  display: inline-block;
+  padding: 0px 4px;
+  background: rgba(78,23,91,0.1);
+  color: rgba(78,23,91,0.6);
+  white-space: nowrap;
+  font-size: 8pt;
+  font-weight: 600;
+  margin: 4px;
+  opacity: 0.5;
+}
+
+.c7 {
+  line-height: 2em;
+  display: inline-block;
+  padding: 4px;
+  vertical-align: middle;
+}
+
 .c1 {
   cursor: pointer;
   position: relative;
@@ -31,28 +50,19 @@ exports[`CatalogueItem renders as expected 1`] = `
   outline: 4px solid rgb(209,14,102);
 }
 
-.c5 {
+.c3 {
   padding: 0 16px 16px;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-}
-
-.c7 {
-  margin: 4px;
-  padding: 4px;
-  list-style: none;
-  display: inline-block;
   font-family: plex-sans,sans-serif;
   line-height: 1.6em;
-  font-size: 9pt;
-  line-height: 1.2em;
-  color: rgba(0,0,0,0.8);
-  font-weight: 700;
+  font-size: 10pt;
+  line-height: 1.6em;
 }
 
-.c6 {
+.c5 {
   padding: 0 16px 16px;
   margin: 8px;
   padding: 0;
@@ -62,18 +72,15 @@ exports[`CatalogueItem renders as expected 1`] = `
   width: 100%;
 }
 
-.c3 {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-}
-
 .c4 {
-  padding: 8px;
-  display: inline-block;
-  background: rgba(78,23,91,0.8);
-  color: rgb(255,255,255);
-  line-height: 1em;
+  color: rgb(121,27,137);
+  font-family: plex-sans,sans-serif;
+  line-height: 1.6em;
+  font-size: 16pt;
+  margin: 4px 0px;
+  font-weight: 500;
+  line-height: 1.2em;
+  margin-top: 16px;
 }
 
 @media (min-width:480px) {
@@ -105,35 +112,45 @@ exports[`CatalogueItem renders as expected 1`] = `
         class="c2"
         src="mock.png"
       />
-      <h3
+      <div
         class="c3"
       >
-        <span
+        <h3
           class="c4"
         >
           Mock widget
-        </span>
-      </h3>
-      <div
-        class="c5"
-      >
+        </h3>
         <p>
           Mock widget description
         </p>
       </div>
       <ul
-        class="c6"
+        class="c5"
       >
-        <li
-          class="c7"
+        <span
+          class="c6"
+          color="rgba(78, 23, 91, 0.6)"
+          opacity="0.5"
+          style="box-shadow: none;"
         >
-          Tag
-        </li>
-        <li
-          class="c7"
+          <span
+            class="c7"
+          >
+            Tag
+          </span>
+        </span>
+        <span
+          class="c6"
+          color="rgba(78, 23, 91, 0.6)"
+          opacity="0.5"
+          style="box-shadow: none;"
         >
-          Another tag
-        </li>
+          <span
+            class="c7"
+          >
+            Another tag
+          </span>
+        </span>
       </ul>
     </div>
   </div>

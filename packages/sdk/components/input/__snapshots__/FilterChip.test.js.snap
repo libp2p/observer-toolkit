@@ -25,6 +25,7 @@ exports[`FilterChip renders, matching snapshot 1`] = `
   white-space: nowrap;
   font-size: 8pt;
   font-weight: 600;
+  margin: 8px;
 }
 
 .c4 {
@@ -51,6 +52,7 @@ exports[`FilterChip renders, matching snapshot 1`] = `
       >
         <span
           class="c3"
+          color="rgba(128, 130, 133, 1)"
           style="box-shadow: none;"
         >
           <span

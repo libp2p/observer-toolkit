@@ -44,7 +44,6 @@ function WidgetContext({ children }) {
       name: 'Filter JSON string',
       mapFilter: msg => msg.getContent(),
     }),
-
   ]
 
   return <FilterProvider filterDefs={filterDefs}>{children}</FilterProvider>

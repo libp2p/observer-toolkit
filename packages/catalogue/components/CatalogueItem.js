@@ -93,17 +93,21 @@ function CatalogueItem({
       <TagList>
         {tags.map(tag => (
           <Chip
-            onClick={event => {
-              event.stopPropagation()
-              dispatchFilters({
-                action: 'update',
-                name: tagFilter.name,
-                values: getNewValues(tagFilter.values, tag),
-              })
-            }}
+            onClick={
+              dispatchFilters
+                ? event => {
+                    event.stopPropagation()
+                    dispatchFilters({
+                      action: 'update',
+                      name: tagFilter.name,
+                      values: getNewValues(tagFilter.values, tag),
+                    })
+                  }
+                : null
+            }
             key={tag}
             margin={0.5}
-            opacity={tagFilter.values[tag] ? 1 : 0.5}
+            opacity={tagFilter && tagFilter.values[tag] ? 1 : 0.5}
             {...chipProps}
           >
             {tag}
@@ -121,9 +125,9 @@ CatalogueItem.propTypes = {
   tags: T.array,
   handleSelect: T.func,
   screenshot: T.any,
-  tagFilter: T.object.isRequired,
-  dispatchFilters: T.func.isRequired,
-  theme: T.object.isRequired,
+  tagFilter: T.object,
+  dispatchFilters: T.func,
+  theme: T.object,
 }
 
 export default withTheme(CatalogueItem)

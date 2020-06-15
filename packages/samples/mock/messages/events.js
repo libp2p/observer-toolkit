@@ -34,7 +34,10 @@ function createEvent({
 
   if (
     !eventTypes[type] ||
-    runtime.getEventTypesList().some(eventType => eventType.getName() === type)
+    (runtime &&
+      runtime
+        .getEventTypesList()
+        .some(eventType => eventType.getName() === type))
   ) {
     // Known event type or dummy event type, send name only
     event.setType(new EventType([type]))
@@ -43,7 +46,7 @@ function createEvent({
     // Novel real event type, send full type metadata
     const eventType = eventTypes[type]
     event.setType(eventType)
-    runtime.addEventTypes(eventType)
+    if (runtime) runtime.addEventTypes(eventType)
   }
 
   event.setTs(new Timestamp([now]))

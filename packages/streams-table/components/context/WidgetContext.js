@@ -1,7 +1,11 @@
 import React from 'react'
 import T from 'prop-types'
 
-import { getListFilter, getStringFilter, FilterProvider } from '@libp2p/observer-sdk'
+import {
+  getListFilter,
+  getStringFilter,
+  FilterProvider,
+} from '@libp2p/observer-sdk'
 import { statusNames } from '@libp2p/observer-data'
 
 const statusNamesList = Object.values(statusNames)
