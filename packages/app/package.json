@@ -20,9 +20,9 @@
     "deploy": "gh-pages -d build"
   },
   "peerDependencies": {
-    "@libp2p/observer-data": "^0.0.1",
-    "@libp2p/observer-sdk": "^0.0.1",
-    "@libp2p/observer-shell": "^0.0.1"
+    "@libp2p/observer-data": "^1.0.0",
+    "@libp2p/observer-sdk": "^1.0.0",
+    "@libp2p/observer-shell": "^1.0.0"
   },
   "dependencies": {
     "@baristalabs/craco-raw-loader": "^1.1.1",
