@@ -20,7 +20,8 @@ function getColorString([h, sDec, lDec], a) {
 function getHex(value) {
   let hex = ''
   for (let i = 0; i < value.length; i++) {
-    hex += value.charCodeAt(i).toString(16)
+    const hexChar = value.charCodeAt(i).toString(16)
+    hex = i % 2 ? `${hex}${hexChar}` : `${hexChar}${hex}`
   }
   return hex
 }
@@ -60,9 +61,12 @@ function DynamicChip({
       const identiconProps = {
         type: 'POLYGONAL',
         segments: 6,
-        size: 2,
+        size: 7,
         width: iconSize,
-        hash: hex,
+        hash: hex
+          .split('')
+          .reverse()
+          .join(''),
       }
       const shape = identicon(identiconProps).replace(
         /="#\w+"/g,
@@ -70,10 +74,7 @@ function DynamicChip({
       )
       const shape2 = identicon({
         ...identiconProps,
-        hash: hex
-          .split('')
-          .reverse()
-          .join(''),
+        hash: hex,
       }).replace(/="#\w+"/g, `="${theme.color('background')}"`)
 
       const svgTag = shape.match(/(<svg.*?>)/)[1]
