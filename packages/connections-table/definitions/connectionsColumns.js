@@ -2,18 +2,17 @@ import {
   getConnectionAge,
   getConnectionTimeClosed,
   getConnectionTraffic,
-  getStateTimes,
   statusNames,
 } from '@libp2p/observer-data'
-import { getStringSorter, getNumericSorter } from '@libp2p/observer-sdk'
-
 import {
-  AgeContent,
+  getStringSorter,
+  getNumericSorter,
+  DurationContent,
   BytesContent,
   PeerIdContent,
   StatusContent,
   TimeContent,
-} from '../components/cellContent'
+} from '@libp2p/observer-sdk'
 
 import ConnectionStreamsContent from '../components/StreamsSubtable/ConnectionStreamsContent'
 
@@ -99,7 +98,7 @@ const ageCol = {
       maxValue: maxAge,
     }
   },
-  renderContent: AgeContent,
+  renderContent: DurationContent,
   sort: numericSorter,
   align: 'right',
 }
@@ -137,6 +136,9 @@ const streamsCol = {
   }),
   sort: numericSorter,
   renderContent: ConnectionStreamsContent,
+  cellProps: {
+    style: { padding: '0 8px 0 0' },
+  },
   align: 'right',
 }
 
@@ -146,13 +148,11 @@ const statusCol = {
     const status = statusNames[connection.getStatus()]
     const timeOpen = getConnectionAge(connection, state)
     const timeClosed = getConnectionTimeClosed(connection, state)
-    const { duration } = getStateTimes(state)
     return {
       value: status,
       sortValue: [status, timeOpen, timeClosed],
       timeOpen,
       timeClosed,
-      duration,
     }
   },
   renderContent: StatusContent,

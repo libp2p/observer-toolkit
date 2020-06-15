@@ -7,7 +7,7 @@ import {
   RenderNumber,
   RenderTime,
 } from '../components/contentRenderers'
-import { ShowJsonButton } from '../components/cellContent'
+import ShowJsonButton from '../components/ShowJsonButton'
 
 const stringSorter = {
   getSorter: getStringSorter,

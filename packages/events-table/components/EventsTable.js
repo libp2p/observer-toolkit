@@ -2,9 +2,10 @@ import React, { useContext, useState } from 'react'
 import T from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 
-import { getStateTimes } from '@libp2p/observer-data'
+import { getStateTime } from '@libp2p/observer-data'
 import {
   DataTable,
+  ConfigContext,
   EventsContext,
   SourceContext,
   TimeContext,
@@ -27,7 +28,9 @@ function EventsTable({ theme }) {
   const [highlightedRowIndex, setHighlightedRowIndex] = useState(null)
   const [isPaused, setIsPaused] = useState(false)
   const [pausedEventsData, setPausedEventsData] = useState([])
+  const config = useContext(ConfigContext)
   const source = useContext(SourceContext)
+  const currentState = useContext(TimeContext)
 
   const hidePrevious = useHidePrevious()
 
@@ -35,10 +38,11 @@ function EventsTable({ theme }) {
   const isLoading = source && source.isLoading
   const isLive = hasLiveSource && !isPaused && highlightedRowIndex === null
 
-  const state = useContext(TimeContext)
-  const time = state ? getStateTimes(state).end : 0
+  const time = currentState ? getStateTime(currentState) : 0
 
-  const snapshotDuration = state ? state.getSnapshotDurationMs() : 0
+  const snapshotDuration = currentState
+    ? currentState.getSnapshotDurationMs()
+    : 0
   const hideEventsAfter = time + snapshotDuration * 1.5
 
   const allEvents = useContext(EventsContext)
@@ -47,19 +51,18 @@ function EventsTable({ theme }) {
   const rowsPerPageOptions = [10, 25, 50, 100]
   const defaultPerPageIndex = 0
 
-  const {
-    propertyTypes,
-    dispatchPropertyTypes,
-    unappliedPropertyTypes,
-    setUnappliedPropertyTypes,
-  } = useEventPropertyTypes()
+  const { propertyTypes, dispatchPropertyTypes } = useEventPropertyTypes()
+
   const columns = buildEventsColumns(
     eventsColumnDefs,
     propertyTypes,
     dispatchPropertyTypes
   )
 
-  const eventsSincePause = eventsData.length - pausedEventsData.length
+  const eventsSincePause = eventsData.filter(
+    event => !pausedEventsData.includes(event)
+  ).length
+
   const changePausedState = (pause = true) => {
     setIsPaused(pause)
     setPausedEventsData(eventsData)
@@ -73,8 +76,8 @@ function EventsTable({ theme }) {
     setHighlightedRowIndex(rowIndex)
   }
 
-  // Re-pause if we've gone back in time so events beyond state get removed
-  if (eventsSincePause < 0 && isPaused) changePausedState(true)
+  // Re-pause if we've gone back in time so events beyond currentState get removed
+  // if (eventsSincePause < 0 && isPaused) changePausedState(true)
 
   const currentEventsData =
     !hasLiveSource || isLive ? eventsData : pausedEventsData
@@ -93,13 +96,13 @@ function EventsTable({ theme }) {
     data: currentEventsData,
     defaultSort: 'time',
     defaultRange: [0, rowsPerPageOptions[defaultPerPageIndex]],
-    metadata: { hidePrevious },
+    metadata: { hidePrevious, currentState, config },
   })
 
   const barHeight = hasLiveSource ? theme.spacing(4, true) : 0
 
   // Run all hooks but don't render anything while no data loaded
-  if (!state || !source || isLoading) return 'Loading...'
+  if (!currentState || !source || isLoading) return 'Loading...'
 
   return (
     <>
@@ -114,8 +117,6 @@ function EventsTable({ theme }) {
         highlightedRowIndex={highlightedRowIndex}
         propertyTypes={propertyTypes}
         dispatchPropertyTypes={dispatchPropertyTypes}
-        unappliedPropertyTypes={unappliedPropertyTypes}
-        setUnappliedPropertyTypes={setUnappliedPropertyTypes}
       />
       <DataTable
         allContent={allContent}
@@ -131,7 +132,7 @@ function EventsTable({ theme }) {
         defaultPerPageIndex={defaultPerPageIndex}
         hasPagination
         hasSlidingRows={false}
-        sticky={barHeight || true}
+        sticky={true}
         rowProps={{
           highlightedRowIndex,
           changeHighlightedRowIndex,

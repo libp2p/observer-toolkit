@@ -34,7 +34,7 @@ function updateValues(filters, targetFilter, values) {
   if (targetFilter.values === values) return filters
   const { initialValues } = targetFilter.getFilterDef()
 
-  if (!targetFilter.enabled && isEqual(targetFilter.values, initialValues)) {
+  if (!targetFilter.enabled && !isEqual(values, initialValues)) {
     targetFilter.enabled = true
   }
 

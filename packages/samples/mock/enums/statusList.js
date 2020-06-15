@@ -32,9 +32,9 @@ function mockCloseTimeByStatus(status, open, now) {
 
 function mockOpenTimeByStatus(status, secondsOpen, now) {
   switch (statusList.getItem(status)) {
-    case 'OPENING':
     case 'ERROR':
       return null
+    case 'OPENING':
     case 'ACTIVE':
     case 'CLOSING':
     case 'CLOSED':

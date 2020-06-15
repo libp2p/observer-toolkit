@@ -14,6 +14,7 @@ import cloud from './icons/Cloud'
 import closed from './icons/Closed'
 import closing from './icons/Closing'
 import opening from './icons/Opening'
+import mixed from './icons/Mixed'
 import marker from './icons/Marker'
 import expand from './icons/Expand'
 import remove from './icons/Remove'
@@ -33,6 +34,7 @@ export default {
   closed,
   closing,
   opening,
+  mixed,
   marker,
   expand,
   remove,

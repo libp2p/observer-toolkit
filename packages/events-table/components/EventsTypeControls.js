@@ -1,65 +1,148 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-import { getEventType, getRuntimeEventTypes } from '@libp2p/observer-data'
-import { RuntimeContext, Monospace, Tooltip } from '@libp2p/observer-sdk'
+import { proto } from '@libp2p/observer-proto'
+import { getRuntimeEventTypes } from '@libp2p/observer-data'
+import {
+  FilterContext,
+  FilterSetterContext,
+  Icon,
+  RuntimeContext,
+  Tooltip,
+  WebsocketContext,
+} from '@libp2p/observer-sdk'
 
 import EventTypesPropertyControls from './EventTypesPropertyControls'
+import EventTypeChip from './EventTypeChip'
 
-function getEventPropertyData(eventName, eventTypes, propertyTypes) {
-  const eventType = eventTypes.find(type => type.name === eventName)
+function getEventTypeMetadata(eventName, eventTypes) {
+  return eventTypes.find(type => type.name === eventName)
+}
 
-  /* istanbul ignore next: unreachable unless a bug is introduced */
-  if (!eventType)
-    throw new Error(
-      `Runtime does not have event type "${eventName}"; has "${eventTypes
-        .map(type => type.name)
-        .join('", "')}"`
+function getEventPropertyData(
+  eventName,
+  eventTypes,
+  propertyTypes,
+  propertiesFromEvents
+) {
+  const eventType = getEventTypeMetadata(eventName, eventTypes)
+  const properties = eventType
+    ? eventType.properties
+    : propertiesFromEvents[eventName]
+  if (!properties) return null
+
+  const eventPropertyData = properties.reduce((propertyData, property) => {
+    const propertyStatus = propertyTypes.find(
+      propStatus => propStatus.name === property.name
     )
 
-  const eventPropertyData = eventType.properties.reduce(
-    (propertyData, property) => {
-      const propertyStatus = propertyTypes.find(
-        propStatus => propStatus.name === property.name
-      )
+    // Is typically missing on first pass before effect updates hook state
+    if (!propertyStatus) return propertyData
 
-      // Is typically missing on first pass before effect updates hook state
-      if (!propertyStatus) return propertyData
-
-      return [...propertyData, propertyStatus]
-    },
-    []
-  )
+    return [...propertyData, propertyStatus]
+  }, [])
   return eventPropertyData
+}
+
+function getFilterData(filters, eventTypes) {
+  const eventTypeFilter = filters.find(filter =>
+    filter.name.match(/event types/i)
+  )
+  if (!eventTypeFilter) {
+    console.warn(`No filter name matches "event types"`)
+    return {
+      filterName: null,
+      isFilterEnabled: false,
+      filterValues: {},
+    }
+  }
+  return {
+    filterName: eventTypeFilter.name,
+    filterValues: eventTypeFilter.values,
+    isFilterEnabled: eventTypeFilter.enabled,
+  }
 }
 
 const EventTypesContainer = styled.div`
   display: flex;
   padding: ${({ theme }) => theme.spacing()};
+  flex-grow: 1;
+  flex-wrap: wrap;
 `
 
-const EventType = styled.div`
+const EventTypeOuter = styled.div`
+  margin: ${({ theme }) => theme.spacing([0.5, 1])};
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 15%;
+  display: flex;
+  flex-direction: column;
+  max-width: ${({ theme }) => theme.spacing(40)};
+`
+
+const EventPropertiesInner = styled.div`
+  padding: ${({ theme }) => theme.spacing()};
+  width: 100%;
   white-space: nowrap;
-  margin: ${({ theme }) => theme.spacing(0.5)};
-  color: ${({ theme, hasFilters }) =>
-    theme.color(hasFilters ? 'highlight' : 'text')};
-  padding: ${({ theme }) => theme.spacing(1)};
-  background: ${({ theme }) => theme.color('background')};
 `
 
-const EventTypeColumnSummary = styled.div`
-  margin: ${({ theme }) => theme.spacing([0.5, 0])};
+const EventTypeSection = styled.div`
+  padding: ${({ theme }) => theme.spacing()};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: ${({ theme }) => theme.color('background')};
+  cursor: pointer;
+  :hover {
+    background: ${({ theme }) => theme.color('background', 2)};
+  }
+  ${({ isShown, theme }) =>
+    isShown
+      ? ''
+      : css`
+          opacity: 0.5;
+        `}
+`
+
+const EventTypeName = styled.h4`
+  ${({ theme }) => theme.text('heading', 'small')};
+  color: inherit;
+  white-space: nowrap;
+  padding-right: ${({ theme }) => theme.spacing(0.5)};
+`
+
+const EventCount = styled.div`
+  ${({ theme }) => theme.text('label', 'small')};
+  margin: ${({ theme }) => theme.spacing(1)};
+  white-space: nowrap;
+`
+
+const EventPropertiesSection = styled.div`
+  background: ${({ theme }) => theme.color('background', 1)};
   ${({ theme }) => theme.text('label', 'small')};
   color: ${({ theme, hasFilters }) =>
     theme.color(hasFilters ? 'highlight' : 'text', 1)};
+  :hover {
+    background: ${({ theme }) => theme.color('background', 2)};
+  }
 `
 
 function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
+  const websocketData = useContext(WebsocketContext)
+  const eventTypesRef = useRef({
+    requestedTypes: [],
+    propertiesFromEvents: {},
+  })
   const runtime = useContext(RuntimeContext)
-  if (!runtime) return ''
+  const { filters } = useContext(FilterContext)
+  const dispatchFilters = useContext(FilterSetterContext)
 
-  const eventTypes = getRuntimeEventTypes(runtime)
+  const eventTypes = runtime ? getRuntimeEventTypes(runtime) : []
+  const { filterName, filterValues, isFilterEnabled } = getFilterData(
+    filters,
+    eventTypes
+  )
 
   const initialEventTypesCount = eventTypes.reduce((types, { name }) => {
     types[name] = 0
@@ -67,55 +150,120 @@ function EventsTypeControls({ events, propertyTypes, dispatchPropertyTypes }) {
   }, {})
 
   const eventTypeCounts = events.reduce((types, event) => {
-    const eventType = getEventType(event)
-    if (!types[eventType]) {
-      types[eventType] = 1
+    const eventType = event.getType()
+    const eventTypeName = eventType.getName()
+
+    const eventTypeProperties = eventType.getPropertyTypesList()
+    const hasProperties = eventTypeProperties && eventTypeProperties.length
+    if (eventTypeProperties) {
+      eventTypesRef.current.propertiesFromEvents[eventTypeName] = hasProperties
+        ? eventTypeProperties
+        : null
+    }
+
+    if (!types[eventTypeName]) {
+      types[eventTypeName] = 1
     } else {
-      types[eventType]++
+      types[eventTypeName]++
     }
     return types
   }, initialEventTypesCount)
 
   const eventTypesbyFrequency = Object.entries(eventTypeCounts)
+
+  // Sort alphabetically to avoid dancing around as live data comes in
   eventTypesbyFrequency.sort((a, b) => (a[0] < b[0] ? -1 : 1))
+
+  useEffect(() => {
+    if (!websocketData) return
+    // Request a new runtime from the server the first time we see an
+    // event type that we don't have metadata for
+    const newMissingTypes = eventTypesbyFrequency.filter(
+      ([name]) =>
+        !getEventTypeMetadata(name, eventTypes) &&
+        !eventTypesRef.current.requestedTypes.includes(name) &&
+        !eventTypesRef.current.propertiesFromEvents[name]
+    )
+
+    if (newMissingTypes.length) {
+      eventTypesRef.current.requestedTypes = [
+        ...eventTypesRef.current.requestedTypes,
+        ...newMissingTypes.map(([name]) => name),
+      ]
+      websocketData.sendCommand('request', {
+        source: proto.ClientCommand.Source.RUNTIME,
+      })
+    }
+  }, [eventTypes, eventTypesbyFrequency, websocketData, eventTypesRef])
 
   return (
     <EventTypesContainer>
       {eventTypesbyFrequency.map(([name, count]) => {
-        const propertyData = getEventPropertyData(
+        let isMissing = false
+        let propertyData = getEventPropertyData(
           name,
           eventTypes,
-          propertyTypes
+          propertyTypes,
+          eventTypesRef.current.propertiesFromEvents
         )
+
+        if (!propertyData) {
+          isMissing = true
+          propertyData = []
+        }
         const filteredProperties = propertyData.filter(
           propStatus => !propStatus.enabled
         )
         const hasFilters = !!filteredProperties.length
+        const isShown = !isFilterEnabled || filterValues[name] !== false
+        const iconType = isShown ? 'check' : 'uncheck'
+        const handleToggleEventType = () => {
+          if (!filterName) return
+
+          dispatchFilters({
+            action: 'update',
+            name: filterName,
+            values: {
+              ...filterValues,
+              [name]: !isShown,
+            },
+          })
+        }
+
+        const TooltipContent = isMissing ? (
+          `No event properties metadata available for event type "${name}"`
+        ) : (
+          <EventTypesPropertyControls
+            eventName={name}
+            propertyData={propertyData}
+            propertyTypes={propertyTypes}
+            dispatchPropertyTypes={dispatchPropertyTypes}
+          />
+        )
 
         return (
-          <Tooltip
-            key={name}
-            side="bottom"
-            toleranceY={null}
-            fixOn="no-hover"
-            content={
-              <EventTypesPropertyControls
-                eventName={name}
-                propertyData={propertyData}
-                propertyTypes={propertyTypes}
-                dispatchPropertyTypes={dispatchPropertyTypes}
-              />
-            }
-          >
-            <EventType hasFilters={hasFilters}>
-              {count} <Monospace>{name}</Monospace>
-              <EventTypeColumnSummary hasFilters={hasFilters}>
+          <EventTypeOuter key={name}>
+            <EventTypeSection isShown={isShown} onClick={handleToggleEventType}>
+              <EventTypeName>
+                <Icon type={iconType} /> <EventTypeChip value={name} />
+              </EventTypeName>
+              <EventCount>{count} events</EventCount>
+            </EventTypeSection>
+            <EventPropertiesSection hasFilters={hasFilters}>
+              <Tooltip
+                side="bottom"
+                toleranceY={null}
+                fixOn="no-hover"
+                content={TooltipContent}
+                expandIcon
+                override={{ Target: EventPropertiesInner }}
+              >
                 {propertyData.length} column
                 {propertyData.length === 1 ? '' : 's'},{' '}
                 {filteredProperties.length} hidden
-              </EventTypeColumnSummary>
-            </EventType>
-          </Tooltip>
+              </Tooltip>
+            </EventPropertiesSection>
+          </EventTypeOuter>
         )
       })}
     </EventTypesContainer>

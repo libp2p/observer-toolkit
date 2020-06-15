@@ -1,8 +1,22 @@
 import React from 'react'
+import styled, { withTheme } from 'styled-components'
 import T from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 
-import styled from 'styled-components'
+import { Chip } from '@libp2p/observer-sdk'
+
+function getChipProps(theme) {
+  const colorKey = 'contrast'
+  const colorIndex = 1
+  return {
+    color: theme.color(colorKey, colorIndex, 0.6),
+    backgroundColor: theme.color(colorKey, colorIndex, 0.1),
+  }
+}
+
+function getNewValues(values, tag) {
+  return { ...values, [tag]: !values[tag] }
+}
 
 const CatalogueCard = styled.div`
   cursor: pointer;
@@ -30,15 +44,7 @@ const CatalogueCard = styled.div`
 const CardContent = styled.div`
   padding: 0 ${({ theme }) => `${theme.spacing(2)} ${theme.spacing(2)}`};
   flex-grow: 1;
-`
-
-const Tag = styled.li`
-  margin: ${({ theme }) => `${theme.spacing(0.5)}`};
-  padding: ${({ theme }) => `${theme.spacing(0.5)}`};
-  list-style: none;
-  display: inline-block;
-  ${({ theme }) => theme.text('label', 'medium', theme.color('text', 0, 0.8))}
-  font-weight: 700;
+  ${({ theme }) => theme.text('body', 'medium')}
 `
 
 const TagList = styled.ul`
@@ -52,23 +58,27 @@ const StyledImg = styled.img`
 `
 
 const StyledHeader = styled.h3`
-  position: absolute;
-  top: ${({ theme }) => theme.spacing()};
-  left: ${({ theme }) => theme.spacing()};
+  color: ${({ theme }) => theme.color('contrast', 2)};
+  ${({ theme }) => theme.text('heading', 'large')}
+  margin-top: ${({ theme }) => theme.spacing(2)};
 `
 
-const StyledHeaderInner = styled.span`
-  padding: ${({ theme }) => theme.spacing()};
-  display: inline-block;
-  background: ${({ theme }) => theme.color('contrast', 1, 0.8)};
-  color: ${({ theme }) => theme.color('text', 3)};
-  line-height: 1em;
-`
-
-function CatalogueItem({ name, description, tags, handleSelect, screenshot }) {
+function CatalogueItem({
+  name,
+  description,
+  tags,
+  handleSelect,
+  screenshot,
+  tagFilter,
+  dispatchFilters,
+  theme,
+}) {
   const handleKeyPress = e => {
     if (e.key === 'Enter' || e.keyCode === 13) handleSelect()
   }
+
+  const chipProps = getChipProps(theme)
+
   return (
     <CatalogueCard
       onClick={handleSelect}
@@ -76,15 +86,32 @@ function CatalogueItem({ name, description, tags, handleSelect, screenshot }) {
       tabIndex={0}
     >
       <StyledImg src={screenshot} />
-      <StyledHeader>
-        <StyledHeaderInner>{name}</StyledHeaderInner>
-      </StyledHeader>
       <CardContent>
+        <StyledHeader>{name}</StyledHeader>
         <ReactMarkdown source={description} />
       </CardContent>
       <TagList>
         {tags.map(tag => (
-          <Tag key={tag}>{tag}</Tag>
+          <Chip
+            onClick={
+              dispatchFilters
+                ? event => {
+                    event.stopPropagation()
+                    dispatchFilters({
+                      action: 'update',
+                      name: tagFilter.name,
+                      values: getNewValues(tagFilter.values, tag),
+                    })
+                  }
+                : null
+            }
+            key={tag}
+            margin={0.5}
+            opacity={tagFilter && tagFilter.values[tag] ? 1 : 0.5}
+            {...chipProps}
+          >
+            {tag}
+          </Chip>
         ))}
       </TagList>
     </CatalogueCard>
@@ -98,6 +125,9 @@ CatalogueItem.propTypes = {
   tags: T.array,
   handleSelect: T.func,
   screenshot: T.any,
+  tagFilter: T.object,
+  dispatchFilters: T.func,
+  theme: T.object,
 }
 
-export default CatalogueItem
+export default withTheme(CatalogueItem)

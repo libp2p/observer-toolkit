@@ -4,6 +4,7 @@ import T from 'prop-types'
 import {
   getListFilter,
   getRangeFilter,
+  getStringFilter,
   DataContext,
   FilterProvider,
   RuntimeContext,
@@ -38,6 +39,10 @@ function WidgetContext({ children }) {
       valueNames: runtime
         ? runtime.getEventTypesList().map(type => type.getName())
         : [],
+    }),
+    getStringFilter({
+      name: 'Filter JSON string',
+      mapFilter: msg => msg.getContent(),
     }),
   ]
 

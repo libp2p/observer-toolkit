@@ -78,8 +78,8 @@ function TimelinePaths({
   const flip = dataDirection === 'out'
 
   const { duration: overallDuration } = getStateRangeTimes(states)
-  const state0Width = getStateWidth(states[0], overallDuration, width)
-  const state1Width = getStateWidth(states[1], overallDuration, width)
+  const state0Width = getStateWidth(0, states, overallDuration, width)
+  const state1Width = getStateWidth(1, states, overallDuration, width)
   const pathWidth = width - state0Width
 
   const pathDefs = useAreaChart({

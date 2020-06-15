@@ -1,7 +1,14 @@
-import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react'
 import T from 'prop-types'
 
-import { getStateTimes } from '@libp2p/observer-data'
+import { getStateTime } from '@libp2p/observer-data'
 
 // High default cutoff time to avoid spurious trimming if runtime message is delayed
 const DEFAULT_CUTOFF_MS = 1000 * 60 * 60 * 24
@@ -10,7 +17,7 @@ function getEventTime(event) {
   return event.getTs()
 }
 function getStateEnd(state) {
-  return getStateTimes(state).end
+  return getStateTime(state)
 }
 function getMessageSorter(getTime) {
   return (a, b) => getTime(a) - getTime(b)
@@ -33,9 +40,21 @@ function attachCutoff(messages, cutoff, cutoffKey) {
 }
 const attachStatesCutoff = (states, cutoffMs) =>
   attachCutoff(states, cutoffMs, 'cutoffMs')
-const attachEventsCutoff = (events, cutoffTime) => {
-  const after = attachCutoff(events, cutoffTime, 'cutoffTime')
-  return after
+
+const attachEventsMetadata = (events, cutoffTime) => {
+  const eventsWithCutoff = attachCutoff(events, cutoffTime, 'cutoffTime')
+
+  // Find any new events that included new event type metadata and expose in prop
+  const newEventTypes = events.reduce((eventTypes, event) => {
+    const eventType = event.getType()
+    const propertyList = eventType && eventType.getPropertyTypesList()
+    const hasProperties = propertyList && propertyList.length
+    if (!hasProperties) return eventTypes
+    return [...eventTypes, eventType]
+  }, events.newEventTypes || [])
+  eventsWithCutoff.newEventTypes = newEventTypes
+
+  return eventsWithCutoff
 }
 
 function getEmptyEvents(cutoffTime = 0) {
@@ -52,7 +71,7 @@ function getEmptyStates(cutoffMs = DEFAULT_CUTOFF_MS) {
 
 function getCutoffTime(states, cutoffMs) {
   if (!states.length) return 0
-  const lastStateTs = getStateTimes(states[states.length - 1]).end
+  const lastStateTs = getStateTime(states[states.length - 1])
   return lastStateTs - cutoffMs
 }
 
@@ -146,18 +165,18 @@ function handleDispatchStates(oldData, { action, data, cutoffMs }) {
 function handleDispatchEvents(oldData, { action, data, cutoffTime }) {
   switch (action) {
     case 'append':
-      return attachEventsCutoff(
+      return attachEventsMetadata(
         appendEvents(data, oldData, oldData.cutoffTime),
         oldData.cutoffTime
       )
     case 'replace':
-      return attachEventsCutoff(
+      return attachEventsMetadata(
         replaceEvents(data),
         0 // Replaced events cutoff will be applied in useEffect after states resolve
       )
     case 'setCutoff':
       return cutoffTime !== oldData.cutoffTime
-        ? attachEventsCutoff(
+        ? attachEventsMetadata(
             cutoffTime
               ? trimStaleMessages(oldData, cutoffTime, getEventTime)
               : oldData,
@@ -307,7 +326,7 @@ function useDatastore(props) {
     initialEvents,
     initEvents => {
       const cutoffTime = getCutoffTime(states, cutoffRef.current)
-      return attachEventsCutoff(
+      return attachEventsMetadata(
         appendEvents(initEvents, [], cutoffTime),
         cutoffTime
       )
@@ -454,7 +473,29 @@ function useDatastore(props) {
   )
 
   const cutoffMs = cutoffRef.current
+  const newEventTypes = useMemo(() => events.newEventTypes, [
+    events.newEventTypes,
+  ])
+
   useEffect(() => {
+    // Update our stored runtime with any new event types shared inside events
+    if (runtime && newEventTypes) {
+      const eventTypesToAdd = newEventTypes.filter(eventType => {
+        const knownEventTypes = runtime.getEventTypesList()
+        const eventTypeIsKnown = knownEventTypes.some(
+          knownType => knownType.getName() === eventType.getName()
+        )
+        return !eventTypeIsKnown
+      })
+      if (eventTypesToAdd.length) {
+        const newRuntime = runtime.clone()
+        eventTypesToAdd.forEach(eventType => {
+          newRuntime.addEventTypes(eventType)
+        })
+        updateRuntime(newRuntime)
+      }
+    }
+
     // Updating events cutoff time must be done after state updates have applied
     const cutoffTime = getCutoffTime(states, cutoffMs)
     // Check if cutoff time has changed in dispatch handler, so `events` isn't
@@ -463,7 +504,7 @@ function useDatastore(props) {
       action: 'setCutoff',
       cutoffTime,
     })
-  }, [dispatchEvents, states, cutoffMs])
+  }, [dispatchEvents, states, cutoffMs, newEventTypes, runtime, updateRuntime])
 
   return {
     states,

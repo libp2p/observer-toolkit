@@ -2,7 +2,7 @@
 
 A libp2p Observer widget, built on built on @libp2p/observer-sdk, visualising peers on the libp2p Distributed Hash Tables and their activity in DHT queries.
 
-[screenshot here]
+[screenshot](./screenshot.png)
 
 ## Key features
 

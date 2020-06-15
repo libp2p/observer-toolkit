@@ -49,7 +49,13 @@ function generateMessages({
 
   if (!dht) dht = generateDHT({ peersCount })
 
-  if (!runtime) runtime = createRuntime()
+  if (!runtime) {
+    runtime = createRuntime({}, [
+      'PeerConnecting',
+      'PeerDisconnecting',
+      'OutboundDHTQuery',
+    ])
+  }
 
   if (!connections.length) {
     connections.length = 0
@@ -69,7 +75,16 @@ function generateMessages({
     durationSnapshot,
     cutoffSeconds
   )
-  updateDHT({ dht, connections, utcFrom, utcTo, msgQueue, version, pushEvents })
+  updateDHT({
+    dht,
+    connections,
+    utcFrom,
+    utcTo,
+    msgQueue,
+    version,
+    pushEvents,
+    runtime,
+  })
 
   generateConnectionEvents({
     connections,
@@ -109,7 +124,7 @@ function sendQueue(ws) {
     })
 }
 
-function handleClientMessage(ws, server, clientCommand) {
+function handleClientMessage(ws, server, clientCommand, props) {
   let sendEmptyOKResponse = true
 
   const command = clientCommand.getCommand()
@@ -117,7 +132,14 @@ function handleClientMessage(ws, server, clientCommand) {
   const commandSource = clientCommand.getSource()
 
   if (command === ClientCommand.Command.REQUEST) {
-    sendQueue(ws)
+    if (commandSource === ClientCommand.Source.RUNTIME) {
+      console.log('Sending requested runtime')
+      sendRuntime()
+    } else {
+      console.log('Sending requested messages')
+      generateMessages(props)
+      sendQueue(ws)
+    }
   } else if (command === ClientCommand.Command.PUSH_ENABLE) {
     if (commandSource === ClientCommand.Source.STATE) pushStates = true
     if (commandSource === ClientCommand.Source.EVENTS) pushEvents = true
@@ -204,7 +226,12 @@ function updateConfig(newConfig, commandId, ws, server) {
   }
 }
 
-function sendRuntime() {
+function sendRuntime(attempts = 0) {
+  if (!runtime) {
+    // If connection requests runtime before runtime generated, wait and try again
+    if (attempts < 20) setTimeout(() => sendRuntime(attempts + 1), 500)
+    return
+  }
   const runtimePacket = generateRuntime({}, runtime)
   const data = Buffer.concat([version, runtimePacket]).toString('binary')
   msgQueue.push({ ts: Date.now(), type: 'runtime', data })
@@ -216,12 +243,14 @@ function sendCommandResponse(props, ws) {
   ws.send(data)
 }
 
-function start({
-  connectionsCount = 0,
-  duration = DEFAULT_SNAPSHOT_DURATION,
-  peersCount,
-  cutoffSeconds,
-} = {}) {
+function start(props = {}) {
+  let {
+    connectionsCount = 0,
+    duration = DEFAULT_SNAPSHOT_DURATION,
+    peersCount,
+    cutoffSeconds,
+  } = props
+
   if (effectiveConfig) {
     duration = effectiveConfig.getStateSnapshotIntervalMs()
     cutoffSeconds = effectiveConfig.getRetentionPeriodMs() / 1000
@@ -261,7 +290,7 @@ function start({
       if (!msg) return
       const command = ClientCommand.deserializeBinary(msg)
       try {
-        handleClientMessage(ws, wss, command)
+        handleClientMessage(ws, wss, command, props)
       } catch (err) {
         sendCommandResponse(
           {

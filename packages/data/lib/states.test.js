@@ -3,7 +3,7 @@ import { loadSample } from '@libp2p/observer-testing'
 import {
   getSubsystems,
   getLatestState,
-  getStateTimes,
+  getStateTime,
   getStateIndex,
 } from './states'
 
@@ -18,10 +18,10 @@ describe('states data helpers', () => {
     let index = 0
     let lastTimestamp = 0
     for (const state of states) {
-      const timeIndex = getStateIndex(states, getStateTimes(state).end)
+      const timeIndex = getStateIndex(states, getStateTime(state))
       expect(timeIndex).toBe(index)
 
-      const timestamp = getStateTimes(state).end
+      const timestamp = getStateTime(state)
       expect(timestamp > lastTimestamp).toBeTruthy()
       expect(typeof timestamp).toBe('number')
 
@@ -44,23 +44,6 @@ describe('states data helpers', () => {
     for (const state of states) {
       const subsystems = getSubsystems(state)
       expect(typeof subsystems.getConnectionsList).toBe('function')
-    }
-  })
-
-  it('state timestamps follow defined sample interval', () => {
-    let previousTime = null
-    for (const state of states) {
-      const { start, end, duration } = getStateTimes(state)
-
-      expect(start + duration).toBe(end + 1)
-      if (previousTime !== null) {
-        expect(previousTime).toBe(start - 1)
-
-        // Note: mock data can be made to be perfectly contiguous like this
-        // but real libp2p introspector data may have random gaps between states
-        expect(previousTime + duration).toBe(end)
-      }
-      previousTime = end
     }
   })
 })

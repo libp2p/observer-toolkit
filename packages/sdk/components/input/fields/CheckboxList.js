@@ -1,6 +1,6 @@
 import React from 'react'
 import T from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Field } from 'formik'
 
 import Icon from '../../Icon'
@@ -31,8 +31,15 @@ const Container = styled.div`
 `
 
 const StyledHeader = styled.div`
-  border: 1px solid ${({ theme }) => theme.color('background', 2)};
   font-weight: 900;
+  ${({ theme, orientation }) => {
+    const side = orientation === 'row' ? 'right' : 'bottom'
+    return css`
+      border-${side}: 1px solid ${theme.color('background', 2)};
+      padding-${side}: ${theme.spacing(2)};
+      margin-${side}: ${theme.spacing()};
+    `
+  }}
 `
 
 const StyledList = styled.ul`
@@ -40,6 +47,7 @@ const StyledList = styled.ul`
   padding: 0;
   text-align: left;
   display: flex;
+  flex-direction: ${({ orientation }) => orientation};
 `
 
 const StyledListItem = styled.li`
@@ -56,8 +64,7 @@ const StyledToggleButton = styled.button`
   width: 100%;
   text-align: left;
   font-weight: ${({ checked }) => (checked ? 600 : 300)};
-  color: ${({ theme, checked }) =>
-    theme.color(checked ? 'text' : 'highlight', 1)};
+  color: ${({ theme, checked }) => theme.color('text', checked ? 0 : 2)};
   :focus {
     outline: none;
   }
@@ -83,13 +90,19 @@ function CheckboxList({
 
   const iconsMapping = {
     true: 'check',
-    mixed: 'closed',
+    mixed: 'mixed',
     false: 'uncheck',
+  }
+
+  const labelMapping = {
+    true: 'Showing all',
+    mixed: 'Showing some',
+    false: 'Showing none',
   }
 
   return (
     <Container orientation={orientation} as={override.Container}>
-      <StyledHeader as={override.StyledHeader}>
+      <StyledHeader orientation={orientation} as={override.StyledHeader}>
         <StyledToggleButton
           onClick={() => toggleAll(values, fieldNames, setFieldValue, onChange)}
           role="checkbox"
@@ -98,10 +111,10 @@ function CheckboxList({
         >
           <Field type="hidden" name="set-all" value={allAreChecked} />
           <Icon type={iconsMapping[checkAllChecked]} />
-          <label>{`${allAreChecked ? 'Uncheck' : 'Check'} all`}</label>
+          <label>{labelMapping[checkAllChecked]}</label>
         </StyledToggleButton>
       </StyledHeader>
-      <StyledList as={override.StyledList}>
+      <StyledList orientation={orientation} as={override.StyledList}>
         {fieldNames.map(name => (
           <StyledListItem key={name} as={override.StyledListItem}>
             <StyledToggleButton

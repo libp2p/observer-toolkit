@@ -1,9 +1,13 @@
-import { getStringSorter, getNumericSorter } from '@libp2p/observer-sdk'
+import {
+  getStringSorter,
+  getNumericSorter,
+  DurationContent,
+  TimeContent,
+} from '@libp2p/observer-sdk'
 import { getEventType } from '@libp2p/observer-data'
 
-import { RenderTime } from '../components/contentRenderers'
-
-import { MonospaceContent, ShowJsonButton } from '../components/cellContent'
+import EventTypeChip from '../components/EventTypeChip'
+import ShowJsonButton from '../components/ShowJsonButton'
 
 const stringSorter = {
   getSorter: getStringSorter,
@@ -18,24 +22,30 @@ const numericSorter = {
 const timeCol = {
   name: 'time',
   getProps: event => {
-    return { value: event.getTs() }
+    return { value: event.getTs(), includeMs: true }
   },
-  renderContent: RenderTime,
+  renderContent: TimeContent,
   sort: numericSorter,
   align: 'right',
-  cellProps: {
-    width: '10%',
-  },
+}
+
+const elapsedCol = {
+  name: 'elapsed',
+  header: 'Time since event',
+  getProps: (event, { currentState, config }) => ({
+    value: currentState.getInstantTs() - event.getTs(),
+    maxValue: config.getRetentionPeriodMs(),
+  }),
+  renderContent: DurationContent,
+  sort: numericSorter,
+  align: 'right',
 }
 
 const typeCol = {
   name: 'type',
   getProps: event => ({ value: getEventType(event) }),
   sort: stringSorter,
-  renderContent: MonospaceContent,
-  cellProps: {
-    width: '12%',
-  },
+  renderContent: EventTypeChip,
 }
 
 const jsonCol = {
@@ -46,12 +56,9 @@ const jsonCol = {
     hidePrevious,
   }),
   renderContent: ShowJsonButton,
-  cellProps: {
-    width: '16%',
-  },
 }
 
 // Define column order
-const columns = [timeCol, typeCol, jsonCol]
+const columns = [timeCol, elapsedCol, typeCol, jsonCol]
 
 export default columns

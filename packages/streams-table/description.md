@@ -1,5 +1,6 @@
-Interactive datatable showing streams at a point in time, including:
+Interactive datatable showing current and recently active streams, including:
+ - Stream protocols
  - Peer ID
  - Traffic in and out
- - Stream protocol
+ - Times streams opened
  - Stream status (active, closed...)

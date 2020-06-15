@@ -17,6 +17,9 @@ function getListFilter({
     )
 
   const defaultFilter = (targetValue, values) => {
+    if (Array.isArray(targetValue)) {
+      return targetValue.some(value => !!values[value])
+    }
     if (targetValue === null || targetValue === undefined)
       return includeMissingValues
     return !!values[targetValue]

@@ -3,16 +3,16 @@ import {
   getStreamTraffic,
   statusNames,
 } from '@libp2p/observer-data'
-import { getStringSorter, getNumericSorter } from '@libp2p/observer-sdk'
-
 import {
-  AgeContent,
+  getStringSorter,
+  getNumericSorter,
   BytesContent,
-  MonospaceContent,
+  DurationContent,
+  ProtocolChip,
   PeerIdContent,
   StatusContent,
   TimeContent,
-} from '../components/cellContent'
+} from '@libp2p/observer-sdk'
 
 import * as statusSorter from '../utils/statusSorter'
 
@@ -71,7 +71,7 @@ const ageCol = {
     const age = getStreamAge(stream, currentState)
     return { value: age, maxValue: maxAge }
   },
-  renderContent: AgeContent,
+  renderContent: DurationContent,
   sort: numericSorter,
   align: 'right',
 }
@@ -91,8 +91,11 @@ const openCol = {
 const protocolCol = {
   name: 'protocol',
   getProps: ({ stream }) => ({ value: stream.getProtocol() }),
-  renderContent: MonospaceContent,
+  renderContent: ProtocolChip,
   sort: stringSorter,
+  cellProps: {
+    width: '25%',
+  },
 }
 
 const streamStatusCol = {
@@ -107,11 +110,11 @@ const streamStatusCol = {
 const columns = [
   peerIdCol,
   streamStatusCol,
+  protocolCol,
   ageCol,
   openCol,
   dataInCol,
   dataOutCol,
-  protocolCol,
 ]
 
 export default columns

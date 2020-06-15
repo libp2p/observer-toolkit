@@ -5,7 +5,7 @@ import { Formik } from 'formik'
 import isEqual from 'lodash.isequal'
 
 import Icon from '../Icon'
-import Chip from '../Chip'
+import StaticChip from '../Chip/StaticChip'
 import Tooltip from '../Tooltip'
 import { RootNodeContext } from '../context/RootNodeProvider'
 
@@ -159,14 +159,14 @@ function FilterChip({
                 />
               }
             >
-              <Chip
+              <StaticChip
                 type={chipType}
                 options={chipOptions}
                 prefix={chipPrefix}
                 suffix={chipSuffix}
               >
                 {name}
-              </Chip>
+              </StaticChip>
             </Tooltip>
           </Container>
         )

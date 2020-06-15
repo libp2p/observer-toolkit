@@ -17,25 +17,28 @@ const emptyTimes = {
   duration: 0,
 }
 
-function getStateTimes(state) {
-  if (!state) return emptyTimes
+function getStateTime(state) {
+  if (!state) return null
+  const ts = state.getInstantTs()
+  return ts
+}
 
-  const end = state.getInstantTs()
-  const duration = state.getSnapshotDurationMs()
-  const start = state.getStartTs()
-  return {
-    // Can't rely on introspection sending complete data
-    // Try to fill in any gaps with whatever we have
-    start: start || end - duration || 0,
-    end: end || start + duration || 0,
-    duration: duration || end - start || 0,
-  }
+function getPreviousStateTime(timeIndex, states) {
+  if (!states.length) return 0
+  if (states.length === 1) return getStateTime(states[0])
+  if (timeIndex > 0) return getStateTime(states[timeIndex - 1])
+
+  // If there's no previous time, start at one state interval before the first
+  const nextTime = getStateTime(states[timeIndex + 1])
+  const currentTime = getStateTime(states[timeIndex])
+  const firstStateInterval = nextTime - currentTime
+  return currentTime - firstStateInterval
 }
 
 function getStateRangeTimes(states) {
   if (!states || !states.length) return emptyTimes
 
-  const start = states[0].getStartTs()
+  const start = getPreviousStateTime(0, states)
   const end = states[states.length - 1].getInstantTs()
   const duration = end - start
   return {
@@ -46,13 +49,14 @@ function getStateRangeTimes(states) {
 }
 
 function getStateIndex(states, timestamp) {
-  return states.findIndex(state => getStateTimes(state).end === timestamp)
+  return states.findIndex(state => getStateTime(state) === timestamp)
 }
 
 module.exports = {
   getLatestState,
   getSubsystems,
   getStateRangeTimes,
-  getStateTimes,
+  getStateTime,
+  getPreviousStateTime,
   getStateIndex,
 }

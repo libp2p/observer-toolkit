@@ -19,9 +19,9 @@ function updatePropertyTypes(oldPropertyTypes, { action, data }) {
     case 'applyMultiple':
       return applyMultiplePropertyTypes(oldPropertyTypes, data)
     case 'enable':
-      return enablePropertyType(oldPropertyTypes, data)
+      return updatePropertyType(oldPropertyTypes, data, true)
     case 'disable':
-      return disablePropertyType(oldPropertyTypes, data)
+      return updatePropertyType(oldPropertyTypes, data, false)
     default:
       throw new Error(`updatePropertyTypes has no action "${action}"`)
   }
@@ -30,16 +30,17 @@ function updatePropertyTypes(oldPropertyTypes, { action, data }) {
 function applyMultiplePropertyTypes(oldPropertyTypes, newPropertyTypes) {
   const updatedPropertyTypes = newPropertyTypes.reduce(
     (propertyTypes, typeData) => {
-      return enablePropertyType(propertyTypes, typeData)
+      return updatePropertyType(propertyTypes, typeData)
     },
     oldPropertyTypes
   )
   return updatedPropertyTypes
 }
 
-function enablePropertyType(
+function updatePropertyType(
   oldPropertyTypes,
-  { name, eventTypes, type, hasMultiple }
+  { name, eventTypes, type, hasMultiple },
+  enabled = false
 ) {
   const matchIndex = oldPropertyTypes.findIndex(
     prop => prop.name === name && prop.type === type
@@ -47,33 +48,20 @@ function enablePropertyType(
   if (matchIndex >= 0) {
     const match = oldPropertyTypes[matchIndex]
     const newTypes = [...oldPropertyTypes]
-    newTypes[matchIndex] = { ...match, enabled: true }
+    newTypes[matchIndex] = { ...match, enabled }
     return newTypes
   } else {
     return [
       ...oldPropertyTypes,
-      { name, eventTypes, type, hasMultiple, enabled: true },
+      { name, eventTypes, type, hasMultiple, enabled },
     ]
-  }
-}
-
-function disablePropertyType(oldPropertyTypes, { name, eventTypes, type }) {
-  const matchIndex = oldPropertyTypes.findIndex(
-    prop => prop.name === name && prop.type === type
-  )
-  if (matchIndex >= 0) {
-    const match = oldPropertyTypes[matchIndex]
-    const newTypes = [...oldPropertyTypes]
-    newTypes[matchIndex] = { ...match, enabled: false }
-    return newTypes
   }
 }
 
 function useEventPropertyTypes() {
   const runtime = useContext(RuntimeContext)
+  const [runtimeState, setRuntimeState] = useState()
 
-  const [runtimeState, setRuntimeState] = useState(null)
-  const [unappliedPropertyTypes, setUnappliedPropertyTypes] = useState(null)
   const [propertyTypes, dispatchPropertyTypes] = useReducer(
     updatePropertyTypes,
     []
@@ -118,24 +106,18 @@ function useEventPropertyTypes() {
             oldProperty => property.name === oldProperty.name
           )
       )
+      dispatchPropertyTypes({
+        action: 'applyMultiple',
+        data: newPropertyTypes,
+      })
 
-      if (newPropertyTypes.length) {
-        setUnappliedPropertyTypes(newPropertyTypes)
-      }
+      setRuntimeState(runtime)
     }
-  }, [
-    runtime,
-    runtimeState,
-    dispatchPropertyTypes,
-    setRuntimeState,
-    setUnappliedPropertyTypes,
-  ])
+  }, [runtime, dispatchPropertyTypes, runtimeState])
 
   return {
     propertyTypes,
     dispatchPropertyTypes,
-    unappliedPropertyTypes,
-    setUnappliedPropertyTypes,
   }
 }
 

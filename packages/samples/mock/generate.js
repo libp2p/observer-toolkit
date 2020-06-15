@@ -92,6 +92,7 @@ function generateConnectionEvents({
   msgQueue = [],
   utcNow,
   version,
+  runtime,
 }) {
   // send event when connection is opening/closing
   connections
@@ -102,7 +103,10 @@ function generateConnectionEvents({
         cn.getStatus() === 2
           ? getPeerConnectingProps
           : getPeerDisconnectingProps
-      const event = generateEvent(getEventProps(now, cn))
+
+      const eventProps = getEventProps(now, cn)
+      eventProps.runtime = runtime
+      const event = generateEvent(eventProps)
       const data = Buffer.concat([version, event]).toString('binary')
       msgQueue.push({ ts: now, type: 'event', data, event })
     })
@@ -110,12 +114,12 @@ function generateConnectionEvents({
   return msgQueue
 }
 
-function generateEventsFlood({ msgQueue = [], utcNow, version }) {
+function generateEventsFlood({ msgQueue = [], utcNow, version, runtime }) {
   // generate a flood of events
   const step = 50 // .. every 50ms
   for (let i = 0; i < 1000; i += step) {
     const now = utcNow + i
-    const event = generateEvent({ now, type: 'flood' })
+    const event = generateEvent({ now, type: 'flood', runtime })
     const data = Buffer.concat([version, event]).toString('binary')
     msgQueue.push({ ts: now, type: 'event', data, event })
   }
@@ -162,6 +166,7 @@ function generateActivity({
       utcNow: intervalStart,
       version,
       duration,
+      runtime,
     })
     const eventBuffers = events.map(({ event }) => event)
     msgBuffers = [...msgBuffers, ...eventBuffers]
@@ -173,6 +178,7 @@ function generateActivity({
       utcTo: intervalEnd,
       msgBuffers,
       duration,
+      runtime,
     })
 
     const statePacket = generateState(connections, intervalEnd, dht, duration)

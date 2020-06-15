@@ -1,8 +1,15 @@
 import React from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
+import { formatDataSize, formatDuration, formatTime } from '../../utils/formats'
 
-import { formatDataSize } from '../../utils/formats'
+const Monospace = styled.span`
+  font-family: plex-mono;
+`
+
+const Nowrap = styled.span`
+  white-space: nowrap;
+`
 
 const NumWrapper = styled.span`
   font-family: 'plex-mono';
@@ -10,13 +17,10 @@ const NumWrapper = styled.span`
 `
 
 const Unit = styled.span`
-  // Use cell right padding for units, aligning with icons
-  margin-right: -${({ theme }) => theme.spacing()};
-  padding-left: ${({ theme }) => theme.spacing()};
   font-family: 'plex-sans';
   font-weight: 300;
   font-size: 90%;
-  width: ${({ theme }) => theme.spacing(4)};
+  min-width: ${({ theme }) => theme.spacing(2)};
   display: inline-block;
   text-align: left;
 `
@@ -33,22 +37,19 @@ function FormatedNumber({ value, unit = '' }) {
 
   return (
     <NumWrapper>
-      {value}
-      <Unit>{unit}</Unit>
+      {value} <Unit>{unit || ''}</Unit>
     </NumWrapper>
   )
 }
-
 FormatedNumber.propTypes = {
   value: T.oneOfType([T.number, T.string]).isRequired,
   unit: T.string,
 }
 
-function TimeNumber({ value }) {
+function SecondsNumber({ value }) {
   return <FormatedNumber value={value} unit="s" />
 }
-
-TimeNumber.propTypes = {
+SecondsNumber.propTypes = {
   value: T.number.isRequired,
 }
 
@@ -56,9 +57,35 @@ function DataNumber({ value }) {
   const [formattedValue, unit] = formatDataSize(value)
   return <FormatedNumber value={formattedValue} unit={unit} />
 }
-
 DataNumber.propTypes = {
   value: T.number.isRequired,
 }
 
-export { TimeNumber, DataNumber, FormatedNumber }
+function TimeNumber({ value, includeMs }) {
+  const time = formatTime(value, includeMs)
+  return <NumWrapper>{time}</NumWrapper>
+}
+TimeNumber.propTypes = {
+  value: T.number.isRequired,
+  includeMs: T.bool,
+}
+
+function DurationNumber({ value, maxUnits = 2, shortForm = true }) {
+  return <Nowrap>{formatDuration(value, maxUnits, shortForm)}</Nowrap>
+}
+DurationNumber.propTypes = {
+  value: T.number.isRequired,
+  maxUnits: T.number,
+  shortForm: T.bool,
+}
+
+export {
+  DataNumber,
+  DurationNumber,
+  SecondsNumber,
+  FormatedNumber,
+  TimeNumber,
+  Monospace,
+  Nowrap,
+  NumWrapper,
+}

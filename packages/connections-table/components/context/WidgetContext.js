@@ -10,8 +10,6 @@ import {
   statusNames,
 } from '@libp2p/observer-data'
 import {
-  formatDuration,
-  formatDataSize,
   getListFilter,
   getRangeFilter,
   useCalculation,
@@ -49,9 +47,14 @@ function WidgetContext({ children }) {
   const states = useContext(DataContext)
   const currentState = useContext(TimeContext)
 
-  // If performance becomes an issue on live-streaming data, use
-  // useReducer and compare appended data only instead of whole dataset
-  const metadata = useMemo(() => getMaxValues(states), [states])
+  const maxValues = useMemo(() => getMaxValues(states), [states])
+  const metadata = useMemo(
+    () => ({
+      ...maxValues,
+      currentState,
+    }),
+    [maxValues, currentState]
+  )
 
   const maxStreams = useCalculation(
     ({ currentState }) =>
@@ -79,28 +82,28 @@ function WidgetContext({ children }) {
       mapFilter: conn => getConnectionTraffic(conn, 'in', 'bytes'),
       min: 0,
       max: metadata.maxTraffic,
-      format: formatDataSize,
+      numberFieldType: 'bytes',
     }),
     getRangeFilter({
       name: 'Filter total bytes out',
       mapFilter: conn => getConnectionTraffic(conn, 'out', 'bytes'),
       min: 0,
       max: metadata.maxTraffic,
-      format: formatDataSize,
+      numberFieldType: 'bytes',
     }),
     getRangeFilter({
       name: 'Filter miliseconds open',
       mapFilter: conn => getConnectionAge(conn, currentState),
       min: 0,
       max: metadata.maxAge,
-      format: formatDuration,
+      numberFieldType: 'duration',
     }),
     getRangeFilter({
       name: 'Filter miliseconds closed',
       mapFilter: conn => getConnectionTimeClosed(conn, currentState),
       min: 0,
       max: metadata.maxAge,
-      format: formatDuration,
+      numberFieldType: 'duration',
     }),
   ]
 

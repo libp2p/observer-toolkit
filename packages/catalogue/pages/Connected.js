@@ -5,7 +5,7 @@ import T from 'prop-types'
 import { RootNodeProvider } from '@libp2p/observer-sdk'
 import { ControlPanel } from '@libp2p/observer-shell'
 
-import CatalogueItem from '../components/CatalogueItem'
+import CatalogueList from '../components/CatalogueList'
 import Header from '../components/Header'
 
 const Container = styled.div`
@@ -28,11 +28,8 @@ const ScrollArea = styled.div`
 const Main = styled.div`
   padding: ${({ theme }) => theme.spacing([2, 1])};
   background-color: ${({ theme }) => theme.color('background', 1)};
+  height: 100%;
   position: relative;
-`
-
-const CatalogueBkg = styled.div`
-  display: flex;
 `
 
 function Connected({ widgets, widgetIndex, setWidgetIndex, content, title }) {
@@ -48,23 +45,11 @@ function Connected({ widgets, widgetIndex, setWidgetIndex, content, title }) {
             {selectedWidget ? (
               <selectedWidget.Widget closeWidget={closeWidget} />
             ) : (
-              <CatalogueBkg>
-                {widgets.map(
-                  ({ name, description, tags, screenshot }, index) => (
-                    <CatalogueItem
-                      key={name}
-                      name={name}
-                      description={description}
-                      tags={tags}
-                      screenshot={screenshot}
-                      handleSelect={() =>
-                        setWidgetIndex(index === widgetIndex ? null : index)
-                      }
-                      isSelected={widgetIndex === index}
-                    />
-                  )
-                )}
-              </CatalogueBkg>
+              <CatalogueList
+                widgets={widgets}
+                widgetIndex={widgetIndex}
+                setWidgetIndex={setWidgetIndex}
+              />
             )}
           </RootNodeProvider>
         </Main>

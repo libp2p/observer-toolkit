@@ -150,6 +150,7 @@ function updateDHT({
   msgBuffers,
   version,
   pushEvents,
+  runtime,
 }) {
   const peers = dht
     .getBucketsList()
@@ -169,6 +170,7 @@ function updateDHT({
     utcTo,
     isLiveWebsocket,
     version,
+    runtime,
   })
 
   if (!isLiveWebsocket || pushEvents) {

@@ -1,13 +1,4 @@
-// Temporary function for temp tooltip placeholder - flattens jsx-ified template strings
-// Remove this as soon as it's not needed
-function childrenToString(children) {
-  if (typeof children === 'string') return children
-  if (Array.isArray(children)) return children.join('')
-  if (!children) return ''
-}
-
 function copyToClipboard(text) {
-  // TODO: expand this and include a toast notice on success
   navigator.clipboard.writeText(text)
 }
 
@@ -68,7 +59,6 @@ function validateNumbers(obj) {
 
 export {
   calculatableProp,
-  childrenToString,
   copyToClipboard,
   isNotNumeric,
   throwIf,

@@ -3,7 +3,7 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import { statusNames } from '@libp2p/observer-data'
-import { Chip, ConfigContext, Tooltip } from '@libp2p/observer-sdk'
+import { StaticChip, ConfigContext, Tooltip } from '@libp2p/observer-sdk'
 
 const TooltipContainer = styled.div`
   width: 200%;
@@ -54,12 +54,11 @@ function getGlowOpacity(value, maxValue) {
   return glowOpacity
 }
 
-function StatusChip({ status, timeOpen, timeClosed, duration }) {
+function StatusChip({ status, timeOpen, timeClosed }) {
   const config = useContext(ConfigContext)
   const expiryMs = config ? config.getRetentionPeriodMs() : 0
   const fade = status === 'CLOSED' ? getFadeOpacity(timeClosed, expiryMs) : null
-  const glow =
-    status === 'ACTIVE' ? getGlowOpacity(timeOpen, duration * 4) : null
+  const glow = status === 'ACTIVE' ? getGlowOpacity(timeOpen, 8000) : null
 
   const secondsUntilExpire = fade && Math.round((expiryMs - timeClosed) / 1000)
 
@@ -79,9 +78,9 @@ function StatusChip({ status, timeOpen, timeClosed, duration }) {
       fixOn={'never'}
       override={{ Content: TooltipContainer }}
     >
-      <Chip type={status} options={options} fade={fade} glow={glow}>
+      <StaticChip type={status} options={options} fade={fade} glow={glow}>
         {status}
-      </Chip>
+      </StaticChip>
     </Tooltip>
   )
 }

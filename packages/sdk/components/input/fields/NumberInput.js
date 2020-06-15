@@ -3,6 +3,8 @@ import T from 'prop-types'
 import styled from 'styled-components'
 
 import TimeInput from './TimeInput'
+import BytesInput from './BytesInput'
+import DurationInput from './DurationInput'
 import Icon from '../../Icon'
 
 const NumberInputField = styled.input`
@@ -92,7 +94,11 @@ function NumberInput({
     if (isValueManagedByParent) setDisplayValue(defaultValue)
   }
 
-  const fieldValue = displayValue === defaultValue ? value : displayValue
+  const isInFocus = document.activeElement === inputRef.current
+  const fieldValue =
+    !isInFocus || displayValue === defaultValue
+      ? value || defaultValue
+      : displayValue
   const isDefault = fieldValue === defaultValue
 
   const hasFormattedValue = !!format && typeof fieldValue === 'number'
@@ -119,6 +125,26 @@ function NumberInput({
       )) ||
         (type === 'time' && (
           <TimeInput
+            value={fieldValue}
+            onBlur={handleBlur}
+            updateValue={updateValue}
+            defaultValue={defaultValue}
+            as={override.NumberInputField}
+            {...props}
+          />
+        )) ||
+        (type === 'bytes' && (
+          <BytesInput
+            value={fieldValue}
+            onBlur={handleBlur}
+            updateValue={updateValue}
+            defaultValue={defaultValue}
+            as={override.NumberInputField}
+            {...props}
+          />
+        )) ||
+        (type === 'duration' && (
+          <DurationInput
             value={fieldValue}
             onBlur={handleBlur}
             updateValue={updateValue}

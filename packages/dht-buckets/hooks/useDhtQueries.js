@@ -1,10 +1,6 @@
 import { useCallback, useContext, useMemo, useRef } from 'react'
 
-import {
-  getDhtPeers,
-  getDhtQueries,
-  getStateTimes,
-} from '@libp2p/observer-data'
+import { getDhtPeers, getDhtQueries, getStateTime } from '@libp2p/observer-data'
 import { EventsContext, FilterContext, TimeContext } from '@libp2p/observer-sdk'
 
 function getQueriesByPeerId(events, currentState, toTs, applyFilters) {
@@ -35,7 +31,7 @@ function useDhtQueries() {
   const events = useContext(EventsContext)
   const currentState = useContext(TimeContext)
   const { applyFilters } = useContext(FilterContext)
-  const timestamp = getStateTimes(currentState).end
+  const timestamp = getStateTime(currentState)
 
   const eventsRef = useRef({
     timestamp,

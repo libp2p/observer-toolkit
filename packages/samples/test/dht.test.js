@@ -10,7 +10,7 @@ const {
   getDhtStatus,
   getAllDhtBuckets,
   getDhtPeersInBucket,
-  getStateTimes,
+  getStateTime,
   getDhtQueries,
   getDhtQueryTimes,
   dhtStatusNames,
@@ -95,19 +95,20 @@ test('DHT query timestamps and peer IDs correspond to this state snapshot.', t =
   let previousState = null
 
   states.forEach((state, i) => {
-    const { start, end } = getStateTimes(state)
+    const ts = getStateTime(state)
+    const previousTs = previousState ? getStateTime(previousState) : null
 
-    const queries = getDhtQueries(events, { state })
+    const queries = getDhtQueries(events, { state, states })
 
     // Check all queries are from this state's time interval
     const invalidTimes = queries
       .map(query => getDhtQueryTimes(query))
-      .filter(times => times.end < start || times.start > end)
+      .filter(times => times.end < previousTs || times.start > ts)
 
     t.strictSame(
       invalidTimes,
       [],
-      `invalidTimes should be empty at { start: ${start}, end: ${end} }`
+      `invalidTimes should be empty at time ${ts} }`
     )
 
     // Check all queries involve a peer ID that is or was in the DHT at the right time

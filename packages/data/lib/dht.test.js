@@ -12,7 +12,7 @@ import {
 
 import { dhtStatusNames, getEnumByName } from './enums'
 
-import { getStateTimes } from './states'
+import { getStateTime } from './states'
 
 const {
   data: { states, events },
@@ -107,11 +107,11 @@ describe('DHT data helpers', () => {
     const duplicatedQueries = []
 
     for (const state of states) {
-      const allQueries = getDhtQueries(events, { state })
+      const allQueries = getDhtQueries(events, { state, states })
       allQueries.forEach(query => {
         if (allQueriesAccumulated.has(query)) {
           duplicatedQueries.push({
-            stateTimes: getStateTimes(state),
+            stateTime: getStateTime(state),
             query,
           })
         }
@@ -120,6 +120,7 @@ describe('DHT data helpers', () => {
 
       const inboundSuccessQueries = getDhtQueries(events, {
         state,
+        states,
         result: 'SUCCESS',
         direction: 'INBOUND',
       })

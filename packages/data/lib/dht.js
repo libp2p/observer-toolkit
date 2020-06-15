@@ -2,7 +2,11 @@
 
 const { getEnumByName, dhtStatusNames, dhtQueryEventNames } = require('./enums')
 const { getEventType } = require('./events')
-const { getStateTimes } = require('./states')
+const {
+  getStateIndex,
+  getStateTime,
+  getPreviousStateTime,
+} = require('./states')
 
 const maxBucketNum = 255
 
@@ -70,15 +74,19 @@ function getDhtPeersInBucket(bucket, state) {
   return bucket.getPeersList().filter(peerPresentInBucket)
 }
 
-function getDhtQueries(events, { state, ...options } = {}) {
+function getDhtQueries(
+  events,
+  { state, previousState, states, ...options } = {}
+) {
   if (state) {
-    // If a state is passed as an option, get queries from its time interval
-    const { start, end } = getStateTimes(state)
-
+    const ts = getStateTime(state)
     return getDhtQueries(events, {
       // If an explicit from or to timestamp has been passed, use that
-      fromTs: options.fromTs || start,
-      toTs: options.toTs || end,
+      fromTs:
+        options.fromTs || previousState
+          ? getStateTime(previousState)
+          : getPreviousStateTime(getStateIndex(states, ts), states),
+      toTs: options.toTs || ts,
       ...options,
     })
   }

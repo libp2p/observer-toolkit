@@ -35,6 +35,7 @@ exports[`status chip renders ACTIVE status as expected 1`] = `
   white-space: nowrap;
   font-size: 8pt;
   font-weight: 600;
+  margin: 8px;
 }
 
 .c4 {
@@ -53,6 +54,7 @@ exports[`status chip renders ACTIVE status as expected 1`] = `
     >
       <span
         class="c2"
+        color="rgba(13, 62, 80, 1)"
         style="box-shadow: none;"
       >
         <span

@@ -1,6 +1,5 @@
 export { default as DataTable } from './DataTable'
 export { default as DataTableHead } from './DataTableHead'
 export { default as DataTableRow } from './DataTableRow'
-export * from './numberFields'
 export * from './sorters'
 export * from './styledTable'

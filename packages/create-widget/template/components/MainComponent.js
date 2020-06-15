@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import T from 'prop-types'
 import styled from 'styled-components'
 
-import { getStateTimes, getStateIndex } from '@libp2p/observer-data'
+import { getStateTime, getStateIndex } from '@libp2p/observer-data'
 import {
   DataContext,
   EventsContext,
@@ -30,19 +30,19 @@ function $WIDGET_COMPONENT({ children }) {
 
   if (!states.length) return 'Awaiting data...'
 
-  const { start, end } = getStateTimes(currentState)
-  const timeIndex = getStateIndex(states, end)
+  const ts = getStateTime(currentState)
+  const timeIndex = getStateIndex(states, ts)
 
   const filteredEvents = events
     .filter(applyFilters)
-    .filter(event => event.getTs() < end)
+    .filter(event => event.getTs() < ts)
 
   return (
     <ExampleStyledContent>
       <ExampleStyledHeader>Hello $WIDGET_COMPONENT</ExampleStyledHeader>
       <p>
         State message <b>{timeIndex + 1}</b> of {states.length} is selected,
-        containing data from <b>{new Date(start).toLocaleString()}</b> to{' '}
+        containing data at <b>{new Date(ts).toLocaleString()}</b> to{' '}
       </p>
       <p>Open your browser's console to explore all available data.</p>
 
