@@ -278,6 +278,31 @@ message DHT {
     // Bucket may need more fields depending on WIP remodeling
   }
 
+  message Query {
+    string target               = 1;
+    // timestamp (ms since epoch) of start.
+    uint64 start_ts             = 2;
+    // timestamp (ms since epoch) of end.
+    uint64 end_ts               = 3;
+    // closer peers obtained.
+    repeated string peer_id     = 4;
+    // query status
+    string status               = 5;
+    // query distance
+    float distance             = 6;
+  }
+
+  // A DHT "Lookup"
+  message Lookup {
+    string target               = 1;
+    // timestamp (ms since epoch) of start.
+    uint64 start_ts             = 2;
+    // timestamp (ms since epoch) of end.
+    uint64 end_ts               = 3;
+    // queries performed
+    repeated Query queries      = 4;
+  }
+
   // Counters of query events, by status
   message QueryGauge {
     // Cumulative counter of queries with "SUCCESS" status
@@ -302,6 +327,8 @@ message DHT {
   QueryGauge incoming_queries         = 6;
   // counts outbound queries dispatched by this peer
   QueryGauge outgoing_queries         = 7;
+  // track DHT lookups
+  repeated Lookup lookups             = 8;
 }
 
 // Subsystems encapsulates all instrumented subsystems for a libp2p host.

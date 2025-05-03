@@ -57,6 +57,10 @@ function getDhtPeers(state, status = null) {
   return peers.filter(peer => peer.getStatus() === statusNum)
 }
 
+function getAllDhtLookups(state) {
+  return getDht(state).getLookupsList()
+}
+
 function getAllDhtBuckets(state) {
   return getDht(state).getBucketsList()
 }
@@ -160,4 +164,5 @@ module.exports = {
   getAllDhtBuckets,
   getDhtQueryTimes,
   getKademliaDistance,
+  getAllDhtLookups,
 }
