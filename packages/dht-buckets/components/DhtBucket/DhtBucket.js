@@ -39,7 +39,7 @@ function DhtBucket({
   const emptySlots = bucketCapacity - peers.length
   if (emptySlots < 0) {
     console.warn(
-      `Invalid data recieved: ${peers.length} peers in bucket ${bucketNum} with capacity ${bucketCapacity}`
+      `Invalid data received: ${peers.length} peers in bucket ${bucketNum} with capacity ${bucketCapacity}`
     )
   }
   const validatedEmptySlots = Math.max(0, emptySlots)
