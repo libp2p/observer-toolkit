@@ -253,7 +253,7 @@ function closeWebsocket(ws, { reason, statusCode = 1000 }) {
 }
 
 function onWebsocketPauseChange(oldWsData, { isPaused }) {
-  // No error if connection closed between pause signal being sent and recieved
+  // No error if connection closed between pause signal being sent and received
   if (!oldWsData) return null
 
   return {
